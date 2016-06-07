@@ -1,0 +1,19 @@
+Package: envirocan
+Type: Package
+Title: Download weather data from the Environment Canada website
+Version: 0.1.0
+Author: Steffi LaZerte
+Maintainer: Steffi LaZerte <stefanie.lazerte@unbc.ca>
+Description: This package provides means of grabbing station information and
+    weather data from the Environment Canada website.
+License: What license is it under?
+LazyData: TRUE
+Imports:
+    dplyr,
+    httr,
+    lubridate,
+    magrittr,
+    plyr,
+    tidyr,
+    xml2
+RoxygenNote: 5.0.1
