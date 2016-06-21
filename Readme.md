@@ -1,5 +1,5 @@
-Introducing 'envirocan'
------------------------
+envirocan
+=========
 
 This package is makes it easier to search for and download multiple
 months/years of historical weather data from Environment Canada webiste.
