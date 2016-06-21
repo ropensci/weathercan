@@ -13,6 +13,16 @@ library(envirocan)
 
 This package is makes it easier to search for and download multiple months/years of historical weather data from Environment Canada webiste.
 
+## Installation
+
+Use the `devtools` package to directly install R packages from github:
+
+```{r, eval = FALSE}
+install.packages("devtools") # If not already installed
+devtools::install_github("steffilazerte/envirocan", ref = "v0.1.0") 
+## For first release, omit "ref = " to download most recent version
+```
+
 ## Basic usage:
 
 To download data, you first need to know the `station_id` associated with the station you're interested in.

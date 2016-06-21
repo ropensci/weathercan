@@ -4,6 +4,15 @@ Introducing 'envirocan'
 This package is makes it easier to search for and download multiple
 months/years of historical weather data from Environment Canada webiste.
 
+Installation
+------------
+
+Use the `devtools` package to directly install R packages from github:
+
+    install.packages("devtools") # If not already installed
+    devtools::install_github("steffilazerte/envirocan", ref = "v0.1.0") 
+    ## For first release, omit "ref = " to download most recent version
+
 Basic usage:
 ------------
 
@@ -142,4 +151,4 @@ And plot it:
       theme(legend.position = "top") +
       geom_line()
 
-![](Readme_files/figure-markdown_strict/unnamed-chunk-6-1.png)<!-- -->
+![](Readme_files/figure-markdown_strict/unnamed-chunk-7-1.png)<!-- -->

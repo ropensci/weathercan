@@ -1,2 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^extra$
+^data-raw$
+^testing.R$
+^Readme
