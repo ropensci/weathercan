@@ -1,106 +1,159 @@
-
-#' @import magrittr
-stations_dl <- function(startRow = 1,
-                        province = "all",
-                        url = "http://climate.weather.gc.ca/historical_data/search_historic_data_stations_e.html") {
-
-  if(province == "all") province = ""
-
-  html <- httr::GET(paste0(url, "?searchType=stnProv&timeframe=1&lstProvince=", province, "&optLimit=yearRange&StartYear=1840&EndYear=", format(Sys.Date(),  "%Y"), "&Year=2016&Month=1&Day=1&selRowPerPage=100&txtCentralLatMin=0&txtCentralLatSec=0&txtCentralLongMin=0&txtCentralLongSec=0&startRow=", startRow))
-
-  s <- readLines(textConnection(httr::content(html, "text", encoding = "UTF-8"))) %>%
-    .[sapply(grep("stnRequest[0-9]+\">", .), FUN = function(x) seq(from = x, to = x + 16, by = 1))] %>%
-    data.frame(code = .) %>%
-    dplyr::mutate(n = sort(rep(1:(length(code)/17), 17)),
-                  variable = stringr::str_extract(code, "(hlyRange)|(dlyRange)|(mlyRange)|(StationID)|(Prov)|(urlExtension)|(searchType)|(optLimit)|(StartYear)|(EndYear)|(selRowPerPage)|(Line)|(Month)|(Day)"),
-                  value = stringr::str_extract(stringr::str_extract(stringr::str_extract(code, "value=\".+\""), "\".+\""), "[^\"]+"),
-                  station_name = stringr::str_extract(stringr::str_extract(code, ">(.)+<"), "[^><]+")) %>%
-    dplyr::group_by(n) %>%
-    dplyr::mutate(station_name = station_name[!is.na(station_name)]) %>%
-    dplyr::filter(!is.na(variable), !is.na(value)) %>%
-    dplyr::mutate(value = replace(value, value == "|", NA)) %>%
-    dplyr::select(-code) %>%
-    dplyr::ungroup() %>%
-    dplyr::distinct() %>%
-    tidyr::spread(variable, value) %>%
-    dplyr::rename(station_ID = StationID, prov = Prov) %>%
-    tidyr::separate(hlyRange, c("hly_start", "hly_end"), sep = "\\|", remove = TRUE) %>%
-    tidyr::separate(dlyRange, c("dly_start", "dly_end"), sep = "\\|", remove = TRUE) %>%
-    tidyr::separate(mlyRange, c("mly_start", "mly_end"), sep = "\\|", remove = TRUE) %>%
-    tidyr::gather(timeframe, date, -prov, -station_name, -station_ID) %>%
-    tidyr::separate(timeframe, c("timeframe", "type"), sep = "_") %>%
-    tidyr::spread(type, date) %>%
-    dplyr::mutate(timeframe = replace(timeframe, timeframe == "hly", "hour"),
-                  timeframe = replace(timeframe, timeframe == "dly", "day"),
-                  timeframe = replace(timeframe, timeframe == "mly", "month"),
-                  int = lubridate::interval(start, end)) %>%
-    dplyr::select(prov, station_name, station_ID, timeframe, start, end, int, -StartYear, -EndYear, -Month, -Day, -optLimit, -searchType, -selRowPerPage, -urlExtension) %>%
-
-    return(s)
-}
-
-
 #' Get available stations
 #'
-#' This function can be used to download up-to-date station information from
-#' Environment Canada. Note that the 'stations' data set contains station data
-#' downloaded on June 2nd 2016, so it may not be necessary to call this
-#' function.
+#' This function can be used to download a Station Inventory CSV file from
+#' Environment Canada. Note that the 'stations' data set included in this
+#' package contains station data downloaded when the package was last compiled,
+#' so it may not be necessary to call this function (and this function may take a few
+#' minutes to run).
 #'
-#' @param province Character. Single or multiple character vector defining
-#'   provinces in two letter codes (\"ON\", \"BC\", etc.) or "all".
 #' @param url Character. Url from which to grab the station information
+#' @param skip Numeric. Number of lines to skip at the beginning of the csv. If
+#'   NULL, automatically derived.
 #'
-#' @return Data frame containing station names, station ID codes and dates of operation
+#' @return Data frame containing station names, station ID codes and dates of
+#'   operation
 #'
 #' @import magrittr
 #' @export
+
+stations_all <- function(url = "ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/Station Inventory EN.csv",
+                        skip = NULL) {
+
+  if(!grep(".csv$", url)) stop("'url' must point to a csv file either local or online.")
+
+  headings <- readLines(url, n = 5)
+
+  if(is.null(skip)) skip <- grep("(.*?)(Name)(.*?)(Province)(.*?)(Climate ID)(.*?)(Station ID)(.*?)(WMO ID)(.*?)(TC ID)(.*?)", headings) - 1
+
+  message("According to Environment Canada, ", grep("Modified Date", headings, value = TRUE))
+  message("Environment Canada Disclaimers:\n", paste0(grep("Disclaimer", headings, value = TRUE), collapse = "\n"))
+
+
+  stn <- read.csv(file = url,
+                  skip = skip,
+                  strip.white = TRUE) %>%
+    dplyr::select("prov" = Province,
+                  "station_name" = Name,
+                  "station_id" = Station.ID,
+                  "climate_id" = Climate.ID,
+                  "hour_start" = matches("HLY.First"),
+                  "hour_end" = matches("HLY.Last"),
+                  "day_start" = matches("DLY.First"),
+                  "day_end" = matches("DLY.Last"),
+                  "month_start" = matches("MLY.First"),
+                  "month_end" = matches("MLY.Last"),
+                  "WMO_id" = WMO.ID,
+                  "TC_id" = TC.ID,
+                  "lat" = matches("Latitude..Decimal"),
+                  "lon" = matches("Longitude..Decimal"),
+                  "elev" = starts_with("Elev")) %>%
+    tidyr::gather(timeframe, date, matches("(start)|(end)")) %>%
+    tidyr::separate(timeframe, c("timeframe", "type"), sep = "_") %>%
+    dplyr::mutate(type = factor(type, levels = c("start", "end")),
+                  station_name = as.character(station_name),
+                  station_id = factor(station_id),
+                  lat = replace(lat, lat == 0, NA),
+                  lon = replace(lon, lon == 0, NA),
+                  WMO_id = factor(WMO_id),
+                  date = replace(date, date == "", NA),
+                  TC_id = replace(TC_id, TC_id == "", NA),
+                  prov = factor(prov, levels = c("ALBERTA",
+                                                 "BRITISH COLUMBIA",
+                                                 "MANITOBA",
+                                                 "NEW BRUSNWICK",
+                                                 "NEWFOUNDLAND",
+                                                 "NORTHWEST TERRITORIES",
+                                                 "NOVA SCOTIA",
+                                                 "NUNAVUT",
+                                                 "ONTARIO",
+                                                 "PRINCE EDWARD ISLAND",
+                                                 "QUEBEC",
+                                                 "SASKATCHEWAN",
+                                                 "YUKON TERRITORY"),
+                                labels = c("AB", "BC", "MB", "NB", "NL", "NT","NS", "NU", "ON", "PE", "QC", "SK", "YT"))) %>%
+    tidyr::spread(type, date)
+
+  return(stn)
+}
+
+#' Search for stations by name or location
 #'
+#' Returns stations that match the name provided OR which are within \code{dist}
+#' km of the location provided. This is designed to provide the user with
+#' information with which to decide which station to then get weather data from.
+#'
+#' @param name Character. A vector of length 1 or more with text against which
+#'   to match. Will match station names that contain all components of
+#'   \code{name}, but they can be in different orders and separated by other
+#'   text.
+#' @param coords Numeric. A vector of length 2 with latitude and longitude of a
+#'   place to match against. Overrides \code{lat} and \code{lon} if also
+#'   provided.
+#' @param dist Numeric. Match all stations within this many kilometers of the
+#'   \code{coords}.
+#' @param timeframe Character. Return only stations with data at these
+#'   timeframes. Must be any of "hour", "day", "month".
+#' @param stn Data frame. The \code{stations} data frame to use. Will use the
+#'   one included in the package unless otherwise specified.
+#'
+#' @return Returns a subset of the stations data frame which match the search
+#'   parameters. If the search was by location, an extra column 'distance' shows
+#'   the distance in kilometres from the location to the station
 #'
 #' @examples
 #'
+#' stations_search(name = "Kamloops")
+#' stations_search(name = "Kamloops", timeframe = "hour")
 #'
-stations_all <- function(province = "all",
-                         url = "http://climate.weather.gc.ca/historical_data/search_historic_data_stations_e.html") {
+#' stations_search(coords = c(53.915495, -122.739379))
+#'
+#' \dontrun{
+#' loc <- ggmap::geocode("Prince George, BC")
+#' stations_search(coords = loc[c("lat", "lon")])
+#' }
+#'
+#' @export
 
-  if(!all(province %in% c("all", "AB", "BC", "MB", "NB", "NL", "NS", "NT", "NU", "ON", "PE", "QC", "SK", "XX", "YT"))) stop("Unknown province. Must be either \"all\" or provincial two-letter codes: \"AB\", \"BC\", \"MB\", \"NB\", \"NL\", \"NS\", \"NT\", \"NU\", \"ON\", \"PE\", \"QC\", \"SK\", \"XX\", \"YT\"")
+stations_search <- function(name = NULL,
+                            coords = NULL,
+                            dist = 10,
+                            timeframe = c("hour", "day", "month"),
+                            stn = NULL) {
+  if(all(is.null(name), is.null(coords)) | all(!is.null(name), !is.null(coords))) stop("Need a search name OR search coordinate")
 
-  if(length(province) > 1 & any(province == "all")) {
-    message("Both \"all\" and provincial codes specified. Ignoring \"all\".")
-    province <- province[province != "all"]
+  if(!is.null(coords)) {
+    suppressWarnings({coords <- try(as.numeric(as.character(coords)), silent = TRUE)})
+    if(length(coords) != 2 | all(is.na(coords)) | class(coords) == "try-error") stop("'coord' takes one pair of lat and lon in a numeric vector")
   }
 
-  if(any(province == "all")) province <- ""
+  if(is.null(stn)) stn <- envirocan::stations
 
-  data <- data.frame()
-  for(p in province){
-    if(p == "") p.nice = "All provinces" else p.nice = p
-    message(paste0("Currently downloading stations from: ", p.nice, "\n"))
-    startRow = 1
-    html <- httr::GET(paste0(url, "?searchType=stnProv&timeframe=1&lstProvince=", p, "&optLimit=yearRange&StartYear=1840&EndYear=", format(Sys.Date(),  "%Y"), "&Year=2016&Month=1&Day=1&selRowPerPage=25&txtCentralLatMin=0&txtCentralLatSec=0&txtCentralLongMin=0&txtCentralLongSec=0&startRow=", startRow))
+  if(!is.null(name)) {
+    if(class(try(as.character(name), silent = TRUE)) == "try-error") stop("'name' needs to be coercible into a character")
+    name <- gsub("([A-Z]*)", "\\L\\1", name, perl = TRUE)
+    temp <- gsub("([A-Z]*)", "\\L\\1", stn$station_name, perl=TRUE)
 
-    n.total <- readLines(textConnection(httr::content(html, "text", encoding = "UTF-8"))) %>%
-      grep("[0-9]+ locations match", ., value = TRUE) %>%
-      stringr::str_extract(., "[0-9]+ locations match") %>%
-      stringr::str_extract(., "[0-9]+") %>% as.numeric(.)
-    n <- seq(0, n.total, by = 101)
-
-    d <- plyr::ldply(n, stations_dl, province = p, .progress = "text")
-    data <- rbind(data, d)
-
-    if(nrow(d)/6 != n.total) message(paste0("Province ", p, ": Didn't get all the stations expected to"))
+    i <- list()
+    for(a in name) i[[length(i)+1]] <- grep(a, temp)
+    i <- Reduce(intersect, i)
   }
 
-  data <- data  %>%
-    dplyr::mutate(prov = factor(prov),
-                  station_name = factor(station_name),
-                  station_ID = factor(station_ID),
-                  timeframe = factor(timeframe),
-                  type = factor(type),
-                  date = as.Date(date))
+  if(!is.null(coords)){
+    coords <- as.numeric(as.character(coords))
+    stn$distance <- NA
+    stn$distance[!is.na(stn$lat)] <- sp::spDistsN1(pts = as.matrix(stn[!is.na(stn$lat), c("lon", "lat")]), pt = c(coords[2], coords[1]), longlat = TRUE)
+    #distance <- sp::spDistsN1(pts = as.matrix(locs[, c("lon", "lat")]), pt = c(coords[2], coords[1]), longlat = TRUE)
 
-  return(data)
+    i <- which(stn$distance <= dist)
+    if(length(i) == 0) {
+     i <- which(stn$distance <= min(stn$distance, na.rm = TRUE) + dist)
+     message("No stations within ", dist, "km. Returning closest stations within ", dist, " km of each other.")
+    }
+  }
+  stn <- stn[i,] %>%
+      dplyr::filter_(lazyeval::interp(~ timeframe %in% tf & !is.na(start), tf = timeframe))
+  if(!is.null(name)) stn <- dplyr::arrange(stn, station_name, station_id, timeframe)
+  if(!is.null(coords)) stn <- dplyr::arrange(stn, distance, station_name, station_id, timeframe)
+  return(stn)
 }
 
-
-#stations_closest

@@ -1,41 +1,266 @@
-weather_dl <- function(station_ID, date,
-                            by = "hour",
-                            url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html") {
+#' Download Environment Canada Weather data
+#'
+#'
+#' First check for interval and timeframe specified. Then if that doesn't match,
+#' prioritorize according to the following: - Maximize the amount of time
+#' covered by the interval: Download by smaller time frames to allow averaging
+#' (override with '\code{best = FALSE}') - Move the start/end dates to the
+#' min/max ranges available
+#'
+#' @details best, string_as.
+#'
+#' @param station_ids Numeric/Character. A vector containing the ID(s) of the
+#'   station(s) you wish to download data from. See the \code{\link{stations}}
+#'   data frame or the \code{\link{stations_search}} function to find IDs.
+#' @param start Date/Character. The start date of the data in YYYY-MM-DD format
+#'   (applies to all stations_ids).
+#' @param end Date/Character. The start date of the data in YYYY-MM-DD format
+#'   (applies to all station_ids).
+#' @param timeframe Character. Timeframe of the data, one of "hour", "day",
+#'   "month".
+#' @param avg Character. (NOT USEABLE) Whether and how to average the data
+#' @param best Logical. (NOT USEABLE) If TRUE, returns data at the best frame to
+#'   maximize data according to the date range (this could result in less data
+#'   from other weather measurements, see Details). If FALSE, returns data from
+#'   exact timeframe specified.
+#' @param format Logical. If TRUE, formats data for immediate use. If FALSE,
+#'   returns data exactly as downloaded from Environment Canda. Useful for
+#'   dealing with changes by Environment Canada to the format of data downloads.
+#' @param string_as Character. What value to replace character strings in a
+#'   numeric measurement with. See Details.
+#' @param tz_disp Character. What timezone to display times in (must be one of
+#'   \code{OlsonNames()}).
+#' @param stn Data frame. The \code{stations} data frame to use. Will use the
+#'   one included in the package unless otherwise specified.
+#' @param url Character. Url from which to grab the weather data
+#' @param verbose Logical. Include messages
+#'
+#' @return Data frame with station ID, name and weather data.
+#'
+#' @export
+#' @import lubridate
+#' @import magrittr
+#'
+#' @examples
+#'
+#' \dontrun{
+#' kam <- weather(station_ids = 51423,
+#'                start = "2016-01-01", end = "2016-02-15")
+#' }
+#'
+#' stations_search("Kamloops A$", timeframe = "hour")
+#' stations_search("Prince George Airport", timeframe = "hour")
+#'\dontrun{
+#' kam.pg <- weather(station_ids = c(48248, 51423),
+#'                   start = "2016-01-01", end = "2016-02-15")
+#'
+#' library(ggplot2)
+#'
+#' ggplot(data = kam.pg, aes(x = time, y = temp, group = station_name, colour = station_name)) +
+#'        geom_line()
+#'}
+#'
+weather <- function(station_ids,
+                    start = NULL, end = NULL,
+                    timeframe = "hour",
+                    avg = "none",
+                    best = FALSE,
+                    format = TRUE,
+                    string_as = NA,
+                    tz_disp = NULL,
+                    stn = NULL,
+                    url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html",
+                    verbose = FALSE) {
 
-  if(by == "hour") skip <- 16
-  if(by == "day") skip <- 25
-  if(by == "month") skip <- 19
+  # station_id = 51423; start = "2016-01-01"; end = "2016-02-15"; format = FALSE; timeframe = "hour"; avg = "none"; string_as = NA; stn = NULL; url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html"
+  #'
+  ## AVERAGE CAN ONLY BE day, month, year
+  ## AVERAGE Has to be larger timeframe than timeframe
 
-  html <- httr::GET(url, query = list(format = 'csv',
-                                      stationID = station_ID,
-                                      timeframe = ifelse(by == "hour", 1, ifelse(by == "day", 2, 3)),
-                                      Year = format(date, "%Y"),
-                                      Month = format(date, "%m"),
-                                      submit='Download+Data'))
+  ## Address as.POSIXct...
+  if((!is.null(start) & class(try(as.Date(start), silent = TRUE)) == "try-error") |
+     (!is.null(end) & class(try(as.Date(end), silent = TRUE)) == "try-error")) {
+    stop("'start' and 'end' must be either a standard date format (YYYY-MM-DD) or NULL")
+  }
 
-  w <- read.csv(text = httr::content(html, as = "text", type = "text/csv", encoding = "ISO-8859-1"),
-           strip.white = TRUE,
-           colClasses = "character",
-           skip = skip)
-  return(w)
+  if(!is.null(start)) start <- as.Date(as.character(start))
+  if(!is.null(end)) end <- as.Date(as.character(end))
+
+  if(length(timeframe) > 1) stop("'timeframe' must be either 'hour', 'day', OR 'month'")
+  if(!(timeframe %in% c("hour", "day", "month"))) stop("'timeframe' must be either 'hour', 'day', OR 'month'")
+
+  w_all <- data.frame()
+  for(s in station_ids) {
+    if(verbose) message("Getting station: ", s)
+
+    stn <- envirocan::stations %>%
+      dplyr::filter_(lazyeval::interp("station_id %in% x & !is.na(start)", x = s)) %>%
+      dplyr::arrange(timeframe)
+
+    if(class(try(as.Date(stn$start), silent = TRUE)) == "try-error") {
+      stn <- dplyr::mutate(stn,
+                           start = floor_date(as_date(as.character(start), "%Y"), "year"),
+                           end = ceiling_date(as_date(as.character(end), "%Y"), "year"))
+    }
+    stn <- stn %>%
+      dplyr::mutate(end = replace(end, end > Sys.Date(), Sys.Date()),
+                    int = interval(start, end),
+                    timeframe = factor(timeframe, levels = c("hour", "day", "month"), ordered = TRUE))
+
+    dates <- interval(start, end)
+
+    ## If the selected time frame is not complely available change the parameters and warn
+
+    if(best == TRUE){
+      message("The 'best' option is currently unavailable")
+      best <- FALSE
+    }
+    if(!(dates %within% stn$int[stn$timeframe == timeframe]) & best) {
+
+      ## Compare number of days in each interval, pick the most days if smaller time frame
+      stn$n_days <- int_length(intersect(dates, stn$int)) / 60 / 60 /24
+
+      if(nrow(stn[stn$timeframe <= timeframe & !is.na(stn$n_days),]) == 0) stop("Station doesn't have enough data to retrieve or calculate data at this interval")
+
+      max_stn <- stn[stn$timeframe <= timeframe & !is.na(stn$n_days) & stn$n_days == max(stn$n_days, na.rm = TRUE), ]
+
+      if(nrow(max_stn) == 0 | any(max_stn$timeframe == timeframe)) {
+        # If there's nothing smaller or better
+        timeframe <- timeframe
+      } else {
+        ## Get by a smaller time frame and average
+        message("Station doesn't have enough data by the ", timeframe, " for that interval. Downloading by ", max(max_stn$timeframe))
+        #, ", averaging by ", timeframe, ".")
+        #avg <- timeframe
+        timeframe <- max(max_stn$timeframe)
+      }
+
+      ## If dates overlap, but not nested, date range not available, change dates to match
+      if(!(dates %within% stn$int[stn$timeframe == timeframe])) {
+        message("Station doesn't have data for the whole interval (", stn$n_days[stn$timeframe == timeframe], "/", round(int_length(dates) / 60 / 60 /24, 2), " days).")
+
+        if(start < stn$start[stn$timeframe == timeframe]) {
+          message("Moving start date to: ", stn$start[stn$timeframe == timeframe])
+          start <- as.Date(stn$start[stn$timeframe == timeframe])
+        }
+        if(end > stn$end[stn$timeframe == timeframe]) {
+          message("Moving end date to: ", stn$end[stn$timeframe == timeframe])
+          end <- as.Date(stn$end[stn$timeframe == timeframe])
+        }
+      }
+    }
+
+    date_range <- seq(floor_date(start, unit = "month"),
+                      floor_date(end, unit = "month"),
+                      by = ifelse(timeframe == "hour", "month", "year"))
+
+    preamble <- weather_dl(station_id = s, date = date_range[1], timeframe = timeframe, nrows = 25, header = FALSE)
+    skip <- grep("Date/Time", preamble[, 1])
+
+    #test <- read.csv(text = httr::content(html, as = "text", type = "text/csv", encoding = "ISO-8859-1"), skip = skip)
+
+    if(verbose) message("Downloading station data")
+    w <- data.frame()
+    for(i in 1:length(date_range)){
+      w <- rbind(w, weather_dl(station_id = s,
+                               date = date_range[i],
+                               timeframe = timeframe,
+                               skip = skip,
+                               url = url))
+    }
+
+    ## Add header info
+    w <- w %>%
+      dplyr::mutate(prov = unique(stn$prov),
+                    station_name = preamble$V2[preamble$V1 %in% "Station Name"],
+                    station_id = s,
+                    lat = as.numeric(as.character(preamble$V2[preamble$V1 %in% "Latitude"])),
+                    lon = as.numeric(as.character(preamble$V2[preamble$V1 %in% "Longitude"])),
+                    elev = as.numeric(as.character(preamble$V2[preamble$V1 %in% "Elevation"])),
+                    climat_id = preamble$V2[preamble$V1 %in% "Climate Identifier"],
+                    WMO_id = preamble$V2[preamble$V1 %in% "WMO Identifier"],
+                    TC_id = preamble$V2[preamble$V1 %in% "TC Identifier"]
+      )
+
+    ## Format data if requested
+    if(format) {
+      if(verbose) message("Formating station data")
+      w <- weather_format(w = w,
+                          timeframe = timeframe,
+                          tz_disp = tz_disp,
+                          string_as = string_as)
+    }
+    w_all <- rbind(w_all, w)
+  }
+
+  ## Trim to match date range
+  w_all <- w_all[w_all$date >= start & w_all$date <= end, ]
+
+
+    ## Average if requested
+  if(avg != "none"){
+   if(verbose) message("Averaging station data")
+    message("Averaging is currently unavailable")
+  }
+
+  ## Arrange
+  w_all <- dplyr::select(w_all, station_name, station_id, everything())
+
+  return(w_all)
 }
 
+
+weather_dl <- function(station_id,
+                   date,
+                   timeframe = "hour",
+                   skip = 0,
+                   nrows = -1,
+                   header = TRUE,
+                   url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html",
+                   encoding = "ISO-8859-1") {
+
+  html <- httr::GET(url, query = list(format = 'csv',
+                              stationID = station_id,
+                              timeframe = ifelse(timeframe == "hour", 1, ifelse(timeframe == "day", 2, 3)),
+                              Year = format(date, "%Y"),
+                              Month = format(date, "%m"),
+                              submit = 'Download+Data'))
+
+  read.csv(text = httr::content(html, as = "text", type = "text/csv", encoding = encoding),
+                       nrows = nrows, strip.white = TRUE, skip = skip, header = header, colClasses = "character")
+}
+
+
+
+
 #' @import magrittr
-weather_format <- function(w, by = "hour", string_as = "NA") {
 
-  if(by == "hour") skip <- 17
-  if(by == "day") skip <- 26
-  if(by == "month") skip <- 19
+weather_format <- function(w, timeframe = "hour", string_as = "NA", tz_disp = NULL) {
 
-  if(by == "hour") n <- c("time", "year", "month", "day", "hour", "qual", "temp", "temp_flag", "temp_dew", "temp_dew_flag", "rel_hum", "rel_hum_flag", "wind_dir", "wind_dir_flag", "wind_spd", "wind_spd_flag", "visib", "visib_flag", "pressure", "pressure_flag", "hmdx", "hmdx_flag", "wind_chill", "wind_chill_flag", "weather")
-  if(by == "day") n <- c("date", "year", "month", "day", "qual", "max_temp", "max_temp_flag", "min_temp", "min_temp_flag", "mean_temp", "mean_temp_flag", "heat_deg_days", "heat_deg_days_flag", "cool_deg_days", "cool_deg_days_flag", "total_rain", "total_rain_flag", "total_snow", "total_snow_flag", "total_precip", "total_precip_flag", "snow_grnd_last_day", "snow_grnd_last_day_flag", "dir_max_gust", "dir_max_gust_flag","spd_max_gust", "spd_max_gust_flag")
-  if(by == "month") n <- c("date", "year", "month", "mean_max_temp", "mean_max_temp_flag", "mean_min_temp", "mean_min_temp_flag", "mean_temp", "mean_temp_flag", "extr_max_temp", "extr_max_temp_flag", "extr_min_temp", "extr_min_temp_flag", "total_rain", "total_rain_flag", "total_snow", "total_snow_flag", "total_precip", "total_precip_flag", "snow_grnd_last_day", "snow_grnd_last_day_flag", "dir_max_gust", "dir_max_gust_flag","spd_max_gust", "spd_max_gust_flag")
+  if(timeframe == "hour") n <- c("time", "year", "month", "day", "hour", "qual", "temp", "temp_flag", "temp_dew", "temp_dew_flag", "rel_hum", "rel_hum_flag", "wind_dir", "wind_dir_flag", "wind_spd", "wind_spd_flag", "visib", "visib_flag", "pressure", "pressure_flag", "hmdx", "hmdx_flag", "wind_chill", "wind_chill_flag", "weather")
+  if(timeframe == "day") n <- c("date", "year", "month", "day", "qual", "max_temp", "max_temp_flag", "min_temp", "min_temp_flag", "mean_temp", "mean_temp_flag", "heat_deg_days", "heat_deg_days_flag", "cool_deg_days", "cool_deg_days_flag", "total_rain", "total_rain_flag", "total_snow", "total_snow_flag", "total_precip", "total_precip_flag", "snow_grnd_last_day", "snow_grnd_last_day_flag", "dir_max_gust", "dir_max_gust_flag","spd_max_gust", "spd_max_gust_flag")
+  if(timeframe == "month") n <- c("date", "year", "month", "mean_max_temp", "mean_max_temp_flag", "mean_min_temp", "mean_min_temp_flag", "mean_temp", "mean_temp_flag", "extr_max_temp", "extr_max_temp_flag", "extr_min_temp", "extr_min_temp_flag", "total_rain", "total_rain_flag", "total_snow", "total_snow_flag", "total_precip", "total_precip_flag", "snow_grnd_last_day", "snow_grnd_last_day_flag", "dir_max_gust", "dir_max_gust_flag","spd_max_gust", "spd_max_gust_flag")
+
+  # Omit preamble stuff for now
+  preamble <- w[, c("prov", "station_name", "station_id", "lat", "lon", "elev", "climat_id", "WMO_id", "TC_id")]
+  w <- w[, !(names(w) %in% names(preamble))]
 
   names(w) <- n
 
-  if(by == "hour") w <- dplyr::mutate(w, time = as.POSIXct(time), date = as.Date(time))
-  if(by != "hour") w <- dplyr::mutate(w, date = as.Date(date))
+  if(timeframe == "hour") w <- dplyr::mutate(w, time = as.POSIXct(time), date = as.Date(time))
+  if(timeframe != "hour") w <- dplyr::mutate(w, date = as.Date(date))
 
+  ## Get correct timezone
+  if("time" %in% names(w)){
+    tz <- get_tz(coords = unique(preamble[, c("lat", "lon")]), etc = TRUE)
+    w$time <- as.POSIXct(w$time, tz = tz)
+    w$date <- as.Date(w$time, tz = tz)
+    if(!is.null(tz_disp)){
+      w$time <- lubridate::with_tz(w$time, tz = tz_disp)    ## Display in timezone
+    }
+  }
+
+  ## Replace some flagged values with NA
   w <- w %>%
     tidyr::gather_("variable", "value", names(w)[!(names(w) %in% c("date", "year", "month", "day", "hour", "time", "qual", "weather"))]) %>%
     tidyr::separate(variable, into = c("variable", "type"), sep = "_flag", fill = "right") %>%
@@ -48,7 +273,7 @@ weather_format <- function(w, by = "hour", string_as = "NA") {
                   qual = replace(qual, qual == "\u0086", "Only preliminary quality checking")) %>%
     tidyr::gather(type, value, flag, value) %>%
     dplyr::mutate(variable = replace(variable, type == "flag", paste0(variable[type == "flag"], "_flag")))   %>%
-    dplyr::select(-type) %>%
+    dplyr::select(date, everything(), -type) %>%
     tidyr::spread(variable, value)
 
   ## Can we convert to numeric?
@@ -61,7 +286,7 @@ weather_format <- function(w, by = "hour", string_as = "NA") {
     for(i in names(num)[sapply(num, FUN = function(x) is(x, "warning"))]) {
       problems <- w[grep("<|>|\\)|\\(", w[,i]), names(w) %in% c("date", "year", "month", "day", "hour", "time", i)]
       if(nrow(problems) > 20) rows <- 20 else rows <- nrow(problems)
-      message(paste0(capture.output(problems[1:rows,]), collapse = "\n"))
+      message(paste0(capture.output(problems[1:rows,]), collapse = "\n"), if (rows < nrow(problems)) "\n...")
     }
     if(!is.null(string_as)) {
       message("Replacing with ", string_as, ". Use 'string_as = NULL' to keep as characters (see ?weather).")
@@ -74,12 +299,14 @@ weather_format <- function(w, by = "hour", string_as = "NA") {
     w[, !(names(w) %in% c("date", "year", "month", "day", "hour", "time", "qual", "weather", grep("flag", names(w), value = TRUE)))] <- num
   }
 
-  ## Daylight savings
+  w <- cbind(preamble[, c("prov", "station_name", "station_id", "lat", "lon")], w, preamble[, c("elev", "climat_id", "WMO_id", "TC_id")])
+
+
 
   return(w)
 }
 
-weather_avg <- function(w, by = "hour", avg = "none") {
+weather_avg <- function(w, timeframe = "hour", avg = "none") {
   ## Average if requested
   if(avg != "none") {
 
@@ -115,7 +342,7 @@ weather_avg <- function(w, by = "hour", avg = "none") {
         dplyr::left_join(w %>%
                            dplyr::group_by(year, month, day) %>%
                            dplyr::summarize_each(dplyr::funs(n = length(.[!is.na(.)])), everything()),
-                         by = c("year", "month", "day"))
+                         timeframe = c("year", "month", "day"))
 
       # Add degree days
     }
@@ -138,142 +365,3 @@ weather_avg <- function(w, by = "hour", avg = "none") {
 
 
 
-#' Download Environment Canada Weather data
-#'
-#'
-#' First check for interval and timeframe specified. Then if that doesn't match,
-#' prioritorize according to the following: - Maximize the amount of time
-#' covered by the interval: Download by smaller time frames to allow averaging
-#' (override with '\code{best = FALSE}') - Move the start/end dates to the
-#' min/max ranges available
-#'
-#' @param station_ID
-#' @param start
-#' @param end
-#' @param by
-#' @param avg
-#' @param url
-#'
-#' @return
-#' @export
-#' @import lubridate
-#' @import magrittr
-#'
-#' @examples
-weather <- function(station_ID, start = NULL, end = NULL,
-                    by = "hour",
-                    avg = "none",
-                    best = TRUE,
-                    format = TRUE,
-                    string_as = NA,
-                    url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html") {
-
-  ## AVERAGE CAN ONLY BE day, month, year
-  ## AVERAGE Has to be larger timeframe than by
-
-  if((!is.null(start) & class(try(as.Date(start), silent = TRUE)) == "try-error") |
-     (!is.null(end) & class(try(as.Date(end), silent = TRUE)) == "try-error")) {
-   stop("'start' and 'end' must be either a standard date format (YYYY-MM-DD) or NULL")
-  }
-
-  if(!is.null(start)) start <- as.Date(start)
-  if(!is.null(end)) end <- as.Date(end)
-
-  if(length(by) > 1) stop("'by' must be either 'hour', 'day', OR 'month'")
-  if(!(by %in% c("hour", "day", "month"))) stop("'by' must be either 'hour', 'day', OR 'month'")
-
-  stn <- stations %>%
-    dplyr::filter_(lazyeval::interp("station_ID == x", x = station_ID)) %>%
-    dplyr::arrange(timeframe) %>%
-    tidyr::spread(type, date) %>%
-    dplyr::mutate(int = interval(start, end),
-                  timeframe = factor(timeframe, levels = c("hour", "day", "month"), ordered = TRUE))
-
-  dates <- interval(start, end)
-
-  ## If the selected time frame is not complely available change the parameters and warn
-  if(!(dates %within% stn$int[stn$timeframe == by]) & best) {
-
-    ## Compare number of days in each interval, pick the most days if smaller time frame
-    stn$n_days <- int_length(intersect(dates, stn$int)) / 60 / 60 /24
-
-    if(nrow(stn[stn$timeframe <= by & !is.na(stn$n_days),]) == 0) stop("Station doesn't have enough data to retrieve or calculate data at this interval")
-
-    max_stn <- stn[stn$timeframe <= by & !is.na(stn$n_days) & stn$n_days == max(stn$n_days, na.rm = TRUE), ]
-
-    if(nrow(max_stn) == 0 | any(max_stn$timeframe == by)) {
-      # If there's nothing smaller or better
-      by <- by
-    } else {
-      ## Get by a smaller time frame and average
-      message("Station doesn't have enough data by the ", by, " for that interval. Downloading by ", max(max_stn$timeframe))
-      #, ", averaging by ", by, ".")
-      #avg <- by
-      by <- max(max_stn$timeframe)
-    }
-
-    ## If dates overlap, but not nested, date range not available, change dates to match
-    if(!(dates %within% stn$int[stn$timeframe == by])) {
-      message("Station doesn't have data for the whole interval (", stn$n_days[stn$timeframe == by], "/", round(int_length(dates) / 60 / 60 /24, 2), " days).")
-
-      if(start < stn$start[stn$timeframe == by]) {
-        message("Moving start date to: ", stn$start[stn$timeframe == by])
-        start <- as.Date(stn$start[stn$timeframe == by])
-      }
-      if(end > stn$end[stn$timeframe == by]) {
-        message("Moving end date to: ", stn$end[stn$timeframe == by])
-        end <- as.Date(stn$end[stn$timeframe == by])
-      }
-    }
-  }
-
-
-  date_range <- seq(floor_date(start, unit = "month"),
-                    floor_date(end, unit = "month"),
-                    by = ifelse(by == "hour", "month", "year"))
-
-  html <- httr::GET(url, query = list(format = 'csv',
-                                      stationID = station_ID,
-                                      timeframe = ifelse(by == "hour", 1, ifelse(by == "day", 2, 3)),
-                                      submit='Download+Data'))
-
-  if(by == "hour") skip <- 9
-  if(by == "day") skip <- 26
-  if(by == "month") skip <- 19
-
-  preamble <- read.csv(text = httr::content(html, as = "text", type = "text/csv", encoding = "ISO-8859-1"),
-                       strip.white = TRUE,
-                       colClasses = "character",
-                       nrows = skip, header = FALSE)
-
-  w <- data.frame()
-  for(i in 1:length(date_range)){
-    w <- rbind(w, weather_dl(station_ID = station_ID,
-                                  date = date_range[i],
-                                  by = by, url = url))
-  }
-
-  ## Format data if requested
-  if(format) w <- weather_format(w = w, by = by, string_as = string_as)
-
-  ## Add header info
-  w <- w %>%
-    dplyr::mutate(station_name = preamble$V2[preamble$V1 == "Station Name"],
-                  station_ID = station_ID,
-                  lat = as.numeric(preamble$V2[preamble$V1 == "Latitude"]),
-                  lon = as.numeric(preamble$V2[preamble$V1 == "Longitude"]),
-                  elevation = as.numeric(preamble$V2[preamble$V1 == "Elevation"]),
-                  climat_ID = preamble$V2[preamble$V1 == "Climate Identifier"],
-                  WMO_ID = preamble$V2[preamble$V1 == "WMO Identifier"],
-                  TC_ID = preamble$V2[preamble$V1 == "TC Identifier"]
-                  )
-  ## Average if requested
-
-  ## Trim to match date range
-  w <- w[w$date >= start & w$date <= end, ]
-
-  ## Arrange
-  w <- dplyr::select(w, station_name, station_ID, everything())
-
-  return(w)
-}

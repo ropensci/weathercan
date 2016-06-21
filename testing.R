@@ -3,8 +3,8 @@ library(tidyr)
 library(envirocan)
 
 
-stations[stations$station_ID == 1705,]
-w <- weather_dl(1705, date = as.Date("2013-01-01"))
+stations[stations$station_ID == 51423,]
+w <- weather_dl(51423, date = as.Date("2013-01-01"))
 
 # PG airport
 stations[stations$station_ID == 48248,]

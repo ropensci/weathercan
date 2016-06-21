@@ -4,12 +4,50 @@
 \alias{weather}
 \title{Download Environment Canada Weather data}
 \usage{
-weather(station_ID, start = NULL, end = NULL, by = "hour", avg = "none",
-  best = TRUE, format = TRUE, string_as_na = TRUE,
-  url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html")
+weather(station_ids, start = NULL, end = NULL, timeframe = "hour",
+  avg = "none", best = FALSE, format = TRUE, string_as = NA,
+  tz_disp = NULL, stn = NULL,
+  url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html",
+  verbose = FALSE)
 }
 \arguments{
-\item{url}{}
+\item{station_ids}{Numeric/Character. A vector containing the ID(s) of the
+station(s) you wish to download data from. See the \code{\link{stations}}
+data frame or the \code{\link{stations_search}} function to find IDs.}
+
+\item{start}{Date/Character. The start date of the data in YYYY-MM-DD format.}
+
+\item{end}{Date/Character. The start date of the data in YYYY-MM-DD format.}
+
+\item{timeframe}{Character. Timeframe of the data, one of "hour", "day",
+"month".}
+
+\item{avg}{Character. (NOT USEABLE) Whether and how to average the data}
+
+\item{best}{Logical. (NOT USEABLE) If TRUE, returns data at the best frame to
+maximize data according to the date range (this could result in less data
+from other weather measurements, see Details). If FALSE, returns data from
+exact timeframe specified.}
+
+\item{format}{Logical. If TRUE, formats data for immediate use. If FALSE,
+returns data exactly as downloaded from Environment Canda. Useful for
+dealing with changes by Environment Canada to the format of data downloads.}
+
+\item{string_as}{Character. What value to replace character strings in a
+numeric measurement with. See Details.}
+
+\item{tz_disp}{Character. What timezone to display times in (must be one of
+\code{OlsonNames()}).}
+
+\item{stn}{Data frame. The \code{stations} data frame to use. Will use the
+one included in the package unless otherwise specified.}
+
+\item{url}{Character. Url from which to grab the weather data}
+
+\item{verbose}{Logical. Include messages}
+}
+\value{
+Data frame with station ID, name and weather data.
 }
 \description{
 First check for interval and timeframe specified. Then if that doesn't match,
@@ -17,5 +55,21 @@ prioritorize according to the following: - Maximize the amount of time
 covered by the interval: Download by smaller time frames to allow averaging
 (override with '\code{best = FALSE}') - Move the start/end dates to the
 min/max ranges available
+}
+\details{
+best, string_as.
+}
+\examples{
+
+\dontrun{
+
+kam <- weather(station_id = 51423,
+               start = "2016-01-01", end = "2016-02-15",
+               format = FALSE)
+
+
+}
+
+
 }
 

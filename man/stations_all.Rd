@@ -4,26 +4,25 @@
 \alias{stations_all}
 \title{Get available stations}
 \usage{
-stations_all(province = "all",
-  url = "http://climate.weather.gc.ca/historical_data/search_historic_data_stations_e.html")
+
+  stations_all(url = "ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/Station Inventory EN.csv",
+  skip = NULL)
 }
 \arguments{
-\item{province}{Character. Single or multiple character vector defining
-provinces in two letter codes (\"ON\", \"BC\", etc.) or "all".}
-
 \item{url}{Character. Url from which to grab the station information}
+
+\item{skip}{Numeric. Number of lines to skip at the beginning of the csv. If
+NULL, automatically derived.}
 }
 \value{
-Data frame containing station names, station ID codes and dates of operation
+Data frame containing station names, station ID codes and dates of
+  operation
 }
 \description{
-This function can be used to download up-to-date station information from
-Environment Canada. Note that the 'stations' data set contains station data
-downloaded on June 2nd 2016, so it may not be necessary to call this
-function.
-}
-\examples{
-
-
+This function can be used to download a Station Inventory CSV file from
+Environment Canada. Note that the 'stations' data set included in this
+package contains station data downloaded when the package was last compiled,
+so it may not be necessary to call this function (and this function may take a few
+minutes to run).
 }
 
