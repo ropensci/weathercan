@@ -4,6 +4,10 @@ author: "Steffi LaZerte"
 output: html_document
 ---
 
+# envirocan 0.1.1.1 (2016-06-23)
+
+- quick fix to correct duplicated monthly data downloads
+
 # envirocan 0.1.1 (2016-06-23)
 
 ## Functionality
