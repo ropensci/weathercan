@@ -75,6 +75,7 @@
 weather <- function(station_ids,
                     start = NULL, end = NULL,
                     timeframe = "hour",
+                    trim = TRUE,
                     avg = "none",
                     best = FALSE,
                     format = TRUE,
@@ -207,6 +208,13 @@ weather <- function(station_ids,
 
   ## Trim to match date range
   w_all <- w_all[w_all$date >= start & w_all$date <= end, ]
+  ## Trim to available data
+  if(trim & nrow(w_all) > 0){
+    if(verbose) message("Trimming missing values before and after")
+    temp <-  w_all[, !(names(w_all) %in% c("date", "time", "prov", "station_name", "station_id", "lat", "lon", "year", "month", "day", "qual","elev", "climat_id", "WMO_id", "TC_id"))]
+    temp <- w_all$date[which(rowSums(is.na(temp) | temp == "") != ncol(temp))]
+    w_all <- w_all[w_all$date >= min(temp) & w_all$date <= max(temp), ]
+  }
 
 
     ## Average if requested
