@@ -10,7 +10,7 @@ Installation
 Use the `devtools` package to directly install R packages from github:
 
     install.packages("devtools") # If not already installed
-    devtools::install_github("steffilazerte/envirocan", ref = "v0.1.1") 
+    devtools::install_github("steffilazerte/envirocan", ref = "v0.1.1.1") 
     ## For most recent release; Otherwise omit "ref = " to download most recent version
 
 Basic usage:
