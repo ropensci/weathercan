@@ -103,8 +103,17 @@ weather <- function(station_ids,
   for(s in station_ids) {
     if(verbose) message("Getting station: ", s)
     stn <- envirocan::stations %>%
-      dplyr::filter_(lazyeval::interp("station_id %in% x & !is.na(start)", x = s)) %>%
+      dplyr::filter_(lazyeval::interp("station_id %in% x & !is.na(start)", x = s),
+                     lazyeval::interp("timeframe == x", x = timeframe)) %>%
       dplyr::arrange(timeframe)
+
+    if(nrow(stn) == 0) {
+      message("There are no data for station ", s, " for intervals by '", timeframe, "'.",
+           "\nAvailable Station Data:\n",
+           paste0(capture.output(print(envirocan::stations %>%
+                                         dplyr::filter_(lazyeval::interp("station_id %in% x & !is.na(start)", x = s)))), collapse = "\n"))
+      next
+    }
 
     if(class(try(as.Date(stn$start), silent = TRUE)) == "try-error") {
       stn <- dplyr::mutate(stn, start = floor_date(as_date(as.character(start), "%Y"), "year"))
@@ -215,15 +224,17 @@ weather <- function(station_ids,
     w_all <- w_all[w_all$date >= min(temp) & w_all$date <= max(temp), ]
   }
 
+  if(nrow(w_all) > 0){
 
     ## Average if requested
-  if(avg != "none"){
-   if(verbose) message("Averaging station data")
-    message("Averaging is currently unavailable")
-  }
+    if(avg != "none"){
+      if(verbose) message("Averaging station data")
+      message("Averaging is currently unavailable")
+    }
 
-  ## Arrange
-  w_all <- dplyr::select(w_all, station_name, station_id, everything())
+    ## Arrange
+    w_all <- dplyr::select(w_all, station_name, station_id, everything())
+  }
 
   return(w_all)
 }
