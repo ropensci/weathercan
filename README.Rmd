@@ -1,5 +1,5 @@
 ---
-title: "Readme"
+title: "README"
 author: "Steffi LaZerte"
 date: "June 21, 2016"
 output: md_document
@@ -19,8 +19,8 @@ Use the `devtools` package to directly install R packages from github:
 
 ```{r, eval = FALSE}
 install.packages("devtools") # If not already installed
-devtools::install_github("steffilazerte/envirocan", ref = "v0.1.0") 
-## For first release, omit "ref = " to download most recent version
+devtools::install_github("steffilazerte/envirocan", ref = "v0.1.1") 
+## For most recent release; Otherwise omit "ref = " to download most recent version
 ```
 
 ## Basic usage:

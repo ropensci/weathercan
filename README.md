@@ -10,8 +10,8 @@ Installation
 Use the `devtools` package to directly install R packages from github:
 
     install.packages("devtools") # If not already installed
-    devtools::install_github("steffilazerte/envirocan", ref = "v0.1.0") 
-    ## For first release, omit "ref = " to download most recent version
+    devtools::install_github("steffilazerte/envirocan", ref = "v0.1.1") 
+    ## For most recent release; Otherwise omit "ref = " to download most recent version
 
 Basic usage:
 ------------
@@ -71,34 +71,48 @@ Once you have your `station_id`(s) you can download weather data:
     ## 4   KAMLOOPS A      51423   BC 50.7 -120.45 2016-01-01 2016-01-01 03:00:00
     ## 5   KAMLOOPS A      51423   BC 50.7 -120.45 2016-01-01 2016-01-01 04:00:00
     ## 6   KAMLOOPS A      51423   BC 50.7 -120.45 2016-01-01 2016-01-01 05:00:00
-    ##   year month day  hour   qual       weather hmdx hmdx_flag pressure
-    ## 1 2016    01  01 00:00 \u0087          <NA>   NA              99.95
-    ## 2 2016    01  01 01:00 \u0087 Mostly Cloudy   NA              99.93
-    ## 3 2016    01  01 02:00 \u0087          <NA>   NA              99.92
-    ## 4 2016    01  01 03:00 \u0087          <NA>   NA              99.90
-    ## 5 2016    01  01 04:00 \u0087        Cloudy   NA              99.86
-    ## 6 2016    01  01 05:00 \u0087          <NA>   NA              99.82
-    ##   pressure_flag rel_hum rel_hum_flag temp temp_dew temp_dew_flag temp_flag
-    ## 1                    74              -9.1    -12.9                        
-    ## 2                    76              -9.6    -13.1                        
-    ## 3                    74              -9.9    -13.7                        
-    ## 4                    73              -9.5    -13.5                        
-    ## 5                    70              -9.4    -13.9                        
-    ## 6                    71              -9.8    -14.1                        
-    ##   visib visib_flag wind_chill wind_chill_flag wind_dir wind_dir_flag
-    ## 1  64.4                   -17                       13              
-    ## 2  64.4                   -17                       11              
-    ## 3  64.4                   -18                       11              
-    ## 4  64.4                   -17                       11              
-    ## 5  64.4                   -17                       11              
-    ## 6  64.4                   -17                       10              
-    ##   wind_spd wind_spd_flag  elev climat_id WMO_id TC_id
-    ## 1       19               345.3   1163781  71887   YKA
-    ## 2       20               345.3   1163781  71887   YKA
-    ## 3       20               345.3   1163781  71887   YKA
-    ## 4       18               345.3   1163781  71887   YKA
-    ## 5       18               345.3   1163781  71887   YKA
-    ## 6       16               345.3   1163781  71887   YKA
+    ##   year month day  hour
+    ## 1 2016    01  01 00:00
+    ## 2 2016    01  01 01:00
+    ## 3 2016    01  01 02:00
+    ## 4 2016    01  01 03:00
+    ## 5 2016    01  01 04:00
+    ## 6 2016    01  01 05:00
+    ##                                                                          qual
+    ## 1 Partner data that is not subject to review by the National Climate Archives
+    ## 2 Partner data that is not subject to review by the National Climate Archives
+    ## 3 Partner data that is not subject to review by the National Climate Archives
+    ## 4 Partner data that is not subject to review by the National Climate Archives
+    ## 5 Partner data that is not subject to review by the National Climate Archives
+    ## 6 Partner data that is not subject to review by the National Climate Archives
+    ##         weather hmdx hmdx_flag pressure pressure_flag rel_hum rel_hum_flag
+    ## 1          <NA>   NA              99.95                    74             
+    ## 2 Mostly Cloudy   NA              99.93                    76             
+    ## 3          <NA>   NA              99.92                    74             
+    ## 4          <NA>   NA              99.90                    73             
+    ## 5        Cloudy   NA              99.86                    70             
+    ## 6          <NA>   NA              99.82                    71             
+    ##   temp temp_dew temp_dew_flag temp_flag visib visib_flag wind_chill
+    ## 1 -9.1    -12.9                          64.4                   -17
+    ## 2 -9.6    -13.1                          64.4                   -17
+    ## 3 -9.9    -13.7                          64.4                   -18
+    ## 4 -9.5    -13.5                          64.4                   -17
+    ## 5 -9.4    -13.9                          64.4                   -17
+    ## 6 -9.8    -14.1                          64.4                   -17
+    ##   wind_chill_flag wind_dir wind_dir_flag wind_spd wind_spd_flag  elev
+    ## 1                       13                     19               345.3
+    ## 2                       11                     20               345.3
+    ## 3                       11                     20               345.3
+    ## 4                       11                     18               345.3
+    ## 5                       11                     18               345.3
+    ## 6                       10                     16               345.3
+    ##   climat_id WMO_id TC_id
+    ## 1   1163781  71887   YKA
+    ## 2   1163781  71887   YKA
+    ## 3   1163781  71887   YKA
+    ## 4   1163781  71887   YKA
+    ## 5   1163781  71887   YKA
+    ## 6   1163781  71887   YKA
 
 You can also download data from multiple stations at once:
 
@@ -151,4 +165,4 @@ And plot it:
       theme(legend.position = "top") +
       geom_line()
 
-![](Readme_files/figure-markdown_strict/unnamed-chunk-7-1.png)<!-- -->
+![](README_files/figure-markdown_strict/unnamed-chunk-7-1.png)<!-- -->
