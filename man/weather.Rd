@@ -5,8 +5,8 @@
 \title{Download Environment Canada Weather data}
 \usage{
 weather(station_ids, start = NULL, end = NULL, timeframe = "hour",
-  avg = "none", best = FALSE, format = TRUE, string_as = NA,
-  tz_disp = NULL, stn = NULL,
+  trim = TRUE, avg = "none", best = FALSE, format = TRUE,
+  string_as = NA, tz_disp = NULL, stn = NULL,
   url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html",
   verbose = FALSE)
 }
@@ -15,12 +15,17 @@ weather(station_ids, start = NULL, end = NULL, timeframe = "hour",
 station(s) you wish to download data from. See the \code{\link{stations}}
 data frame or the \code{\link{stations_search}} function to find IDs.}
 
-\item{start}{Date/Character. The start date of the data in YYYY-MM-DD format.}
+\item{start}{Date/Character. The start date of the data in YYYY-MM-DD format
+(applies to all stations_ids). Defaults to start of range.}
 
-\item{end}{Date/Character. The start date of the data in YYYY-MM-DD format.}
+\item{end}{Date/Character. The end date of the data in YYYY-MM-DD format
+(applies to all station_ids). Defaults to end of range.}
 
 \item{timeframe}{Character. Timeframe of the data, one of "hour", "day",
 "month".}
+
+\item{trim}{Logical. Trim missing values from the start and end of the weather
+dataframe.}
 
 \item{avg}{Character. (NOT USEABLE) Whether and how to average the data}
 
@@ -39,8 +44,8 @@ numeric measurement with. See Details.}
 \item{tz_disp}{Character. What timezone to display times in (must be one of
 \code{OlsonNames()}).}
 
-\item{stn}{Data frame. The \code{stations} data frame to use. Will use the
-one included in the package unless otherwise specified.}
+\item{stn}{Data frame. The \code{stations} data frame to use. Will use the one
+included in the package unless otherwise specified.}
 
 \item{url}{Character. Url from which to grab the weather data}
 
@@ -50,24 +55,43 @@ one included in the package unless otherwise specified.}
 Data frame with station ID, name and weather data.
 }
 \description{
-First check for interval and timeframe specified. Then if that doesn't match,
-prioritorize according to the following: - Maximize the amount of time
-covered by the interval: Download by smaller time frames to allow averaging
-(override with '\code{best = FALSE}') - Move the start/end dates to the
-min/max ranges available
+Downloads data from Environment Canada for one or more stations.
 }
 \details{
-best, string_as.
+Data can be returned 'raw' (format = FALSE) or can be formatted.
+Formatting transforms dates/times to date/time class, renames columns, and
+converts data to numeric where possible. If character strings are contained in
+traditionally numeric fields (e.g., weather speed may have values such as "<
+30"), they can be replaced with a character specified by `string_as`. The
+default is NA. Formating also replaces data associated with certain flags
+with NA (M = Missing).
+
+Start and end date can be specified, but if not, it will
+default to the start and end date of the range (this could result in
+downloading a lot of data!).
+
+Times are returned as the Etc/GMT offset timezone corresponding to the
+location. This doesn't include daylight savings. However, for compatibility
+with other data sets, timezones can be converted by specifying the desired
+timezone in `tz_disp`.
 }
 \examples{
 
 \dontrun{
+kam <- weather(station_ids = 51423,
+               start = "2016-01-01", end = "2016-02-15")
+}
 
-kam <- weather(station_id = 51423,
-               start = "2016-01-01", end = "2016-02-15",
-               format = FALSE)
+stations_search("Kamloops A$", timeframe = "hour")
+stations_search("Prince George Airport", timeframe = "hour")
+\dontrun{
+kam.pg <- weather(station_ids = c(48248, 51423),
+                  start = "2016-01-01", end = "2016-02-15")
 
+library(ggplot2)
 
+ggplot(data = kam.pg, aes(x = time, y = temp, group = station_name, colour = station_name)) +
+       geom_line()
 }
 
 
