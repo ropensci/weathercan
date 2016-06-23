@@ -1,37 +1,49 @@
 #' Download Environment Canada Weather data
 #'
+#' Downloads data from Environment Canada for one or more stations.
 #'
-#' First check for interval and timeframe specified. Then if that doesn't match,
-#' prioritorize according to the following: - Maximize the amount of time
-#' covered by the interval: Download by smaller time frames to allow averaging
-#' (override with '\code{best = FALSE}') - Move the start/end dates to the
-#' min/max ranges available
+#' @details Data can be returned 'raw' (format = FALSE) or can be formatted.
+#' Formatting transforms dates/times to date/time class, renames columns, and
+#' converts data to numeric where possible. If character strings are contained in
+#' traditionally numeric fields (e.g., weather speed may have values such as "<
+#' 30"), they can be replaced with a character specified by `string_as`. The
+#' default is NA. Formating also replaces data associated with certain flags
+#' with NA (M = Missing).
 #'
-#' @details best, string_as.
+#' Start and end date can be specified, but if not, it will
+#' default to the start and end date of the range (this could result in
+#' downloading a lot of data!).
+#'
+#' Times are returned as the Etc/GMT offset timezone corresponding to the
+#' location. This doesn't include daylight savings. However, for compatibility
+#' with other data sets, timezones can be converted by specifying the desired
+#' timezone in `tz_disp`.
 #'
 #' @param station_ids Numeric/Character. A vector containing the ID(s) of the
-#'   station(s) you wish to download data from. See the \code{\link{stations}}
-#'   data frame or the \code{\link{stations_search}} function to find IDs.
+#'  station(s) you wish to download data from. See the \code{\link{stations}}
+#'  data frame or the \code{\link{stations_search}} function to find IDs.
 #' @param start Date/Character. The start date of the data in YYYY-MM-DD format
-#'   (applies to all stations_ids).
-#' @param end Date/Character. The start date of the data in YYYY-MM-DD format
-#'   (applies to all station_ids).
+#'  (applies to all stations_ids). Defaults to start of range.
+#' @param end Date/Character. The end date of the data in YYYY-MM-DD format
+#'  (applies to all station_ids). Defaults to end of range.
 #' @param timeframe Character. Timeframe of the data, one of "hour", "day",
-#'   "month".
+#'  "month".
+#' @param trim Logical. Trim missing values from the start and end of the weather
+#'  dataframe.
 #' @param avg Character. (NOT USEABLE) Whether and how to average the data
 #' @param best Logical. (NOT USEABLE) If TRUE, returns data at the best frame to
-#'   maximize data according to the date range (this could result in less data
-#'   from other weather measurements, see Details). If FALSE, returns data from
-#'   exact timeframe specified.
+#'  maximize data according to the date range (this could result in less data
+#'  from other weather measurements, see Details). If FALSE, returns data from
+#'  exact timeframe specified.
 #' @param format Logical. If TRUE, formats data for immediate use. If FALSE,
-#'   returns data exactly as downloaded from Environment Canda. Useful for
-#'   dealing with changes by Environment Canada to the format of data downloads.
+#'  returns data exactly as downloaded from Environment Canda. Useful for
+#'  dealing with changes by Environment Canada to the format of data downloads.
 #' @param string_as Character. What value to replace character strings in a
-#'   numeric measurement with. See Details.
+#'  numeric measurement with. See Details.
 #' @param tz_disp Character. What timezone to display times in (must be one of
-#'   \code{OlsonNames()}).
-#' @param stn Data frame. The \code{stations} data frame to use. Will use the
-#'   one included in the package unless otherwise specified.
+#'  \code{OlsonNames()}).
+#' @param stn Data frame. The \code{stations} data frame to use. Will use the one
+#'  included in the package unless otherwise specified.
 #' @param url Character. Url from which to grab the weather data
 #' @param verbose Logical. Include messages
 #'
