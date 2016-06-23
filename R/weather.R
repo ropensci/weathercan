@@ -177,11 +177,14 @@ weather <- function(station_ids,
                           tz_disp = tz_disp,
                           string_as = string_as)
     }
+
+    ## Trim to match date range
+    w <- w[w$date >= s.start & w$date <= s.end, ]
+
+
     w_all <- rbind(w_all, w)
   }
 
-  ## Trim to match date range
-  w_all <- w_all[w_all$date >= start & w_all$date <= end, ]
   ## Trim to available data
   if(trim & nrow(w_all) > 0){
     if(verbose) message("Trimming missing values before and after")
