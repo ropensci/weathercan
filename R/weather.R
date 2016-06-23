@@ -241,16 +241,16 @@ weather_format <- function(w, timeframe = "hour", string_as = "NA", tz_disp = NU
   if(timeframe == "month") n <- c("date", "year", "month", "mean_max_temp", "mean_max_temp_flag", "mean_min_temp", "mean_min_temp_flag", "mean_temp", "mean_temp_flag", "extr_max_temp", "extr_max_temp_flag", "extr_min_temp", "extr_min_temp_flag", "total_rain", "total_rain_flag", "total_snow", "total_snow_flag", "total_precip", "total_precip_flag", "snow_grnd_last_day", "snow_grnd_last_day_flag", "dir_max_gust", "dir_max_gust_flag","spd_max_gust", "spd_max_gust_flag")
 
   # Omit preamble stuff for now
-  preamble <- w[, c("prov", "station_name", "station_id", "lat", "lon", "elev", "climat_id", "WMO_id", "TC_id")]
+  preamble <- w[, names(w) %in% c("prov", "station_name", "station_id", "lat", "lon", "elev", "climat_id", "WMO_id", "TC_id")]
   w <- w[, !(names(w) %in% names(preamble))]
 
   names(w) <- n
 
-  if(timeframe == "hour") w <- dplyr::mutate(w, time = as.POSIXct(time), date = as.Date(time))
-  if(timeframe != "hour") w <- dplyr::mutate(w, date = as.Date(date))
+  if(timeframe == "day") w <- dplyr::mutate(w, date = as.Date(date))
+  if(timeframe == "month") w <- dplyr::mutate(w, date = as.Date(paste0(date, "-01")))
 
   ## Get correct timezone
-  if("time" %in% names(w)){
+  if(timeframe == "hour"){
     tz <- get_tz(coords = unique(preamble[, c("lat", "lon")]), etc = TRUE)
     w$time <- as.POSIXct(w$time, tz = tz)
     w$date <- as.Date(w$time, tz = tz)
@@ -267,9 +267,14 @@ weather_format <- function(w, timeframe = "hour", string_as = "NA", tz_disp = NU
                   type = replace(type, is.na(type), "value")) %>%
     tidyr::spread(type, value) %>%
     dplyr::mutate(value = replace(value, value == "", NA),  ## No data
-                  value = replace(value, flag == "M", NA),  ## Missing
-                  value = replace(value, flag == "L", NA),   ## Precipitation may or may not have occurred
-                  qual = replace(qual, qual == "\u0086", "Only preliminary quality checking")) %>%
+                  value = replace(value, flag == "M", NA))  ## Missing
+
+  if("qual" %in% names(w)){
+    w <- dplyr::mutate(w,
+                       qual = replace(qual, qual == "\u0086", "Only preliminary quality checking"),
+                       qual = replace(qual, qual == "\u0087", "Partner data that is not subject to review by the National Climate Archives"))
+  }
+  w <- w %>%
     tidyr::gather(type, value, flag, value) %>%
     dplyr::mutate(variable = replace(variable, type == "flag", paste0(variable[type == "flag"], "_flag")))   %>%
     dplyr::select(date, everything(), -type) %>%
@@ -298,9 +303,9 @@ weather_format <- function(w, timeframe = "hour", string_as = "NA", tz_disp = NU
     w[, !(names(w) %in% c("date", "year", "month", "day", "hour", "time", "qual", "weather", grep("flag", names(w), value = TRUE)))] <- num
   }
 
-  w <- cbind(preamble[, c("prov", "station_name", "station_id", "lat", "lon")], w, preamble[, c("elev", "climat_id", "WMO_id", "TC_id")])
-
-
+  if(length(preamble) > 0){
+    w <- cbind(preamble[, c("prov", "station_name", "station_id", "lat", "lon")], w, preamble[, c("elev", "climat_id", "WMO_id", "TC_id")])
+  }
 
   return(w)
 }
