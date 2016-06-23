@@ -136,40 +136,6 @@ weather <- function(station_ids,
       message("The 'best' option is currently unavailable")
       best <- FALSE
     }
-    if(!(dates %within% stn$int[stn$timeframe == timeframe]) & best) {
-
-      ## Compare number of days in each interval, pick the most days if smaller time frame
-      stn$n_days <- int_length(intersect(dates, stn$int)) / 60 / 60 /24
-
-      if(nrow(stn[stn$timeframe <= timeframe & !is.na(stn$n_days),]) == 0) stop("Station doesn't have enough data to retrieve or calculate data at this interval")
-
-      max_stn <- stn[stn$timeframe <= timeframe & !is.na(stn$n_days) & stn$n_days == max(stn$n_days, na.rm = TRUE), ]
-
-      if(nrow(max_stn) == 0 | any(max_stn$timeframe == timeframe)) {
-        # If there's nothing smaller or better
-        timeframe <- timeframe
-      } else {
-        ## Get by a smaller time frame and average
-        message("Station doesn't have enough data by the ", timeframe, " for that interval. Downloading by ", max(max_stn$timeframe))
-        #, ", averaging by ", timeframe, ".")
-        #avg <- timeframe
-        timeframe <- max(max_stn$timeframe)
-      }
-
-      ## If dates overlap, but not nested, date range not available, change dates to match
-      if(!(dates %within% stn$int[stn$timeframe == timeframe])) {
-        message("Station doesn't have data for the whole interval (", stn$n_days[stn$timeframe == timeframe], "/", round(int_length(dates) / 60 / 60 /24, 2), " days).")
-
-        if(start < stn$start[stn$timeframe == timeframe]) {
-          message("Moving start date to: ", stn$start[stn$timeframe == timeframe])
-          start <- as.Date(stn$start[stn$timeframe == timeframe])
-        }
-        if(end > stn$end[stn$timeframe == timeframe]) {
-          message("Moving end date to: ", stn$end[stn$timeframe == timeframe])
-          end <- as.Date(stn$end[stn$timeframe == timeframe])
-        }
-      }
-    }
 
     date_range <- seq(floor_date(s.start, unit = "month"),
                       floor_date(s.end, unit = "month"),
