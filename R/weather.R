@@ -96,13 +96,15 @@ weather <- function(station_ids,
     stop("'start' and 'end' must be either a standard date format (YYYY-MM-DD) or NULL")
   }
 
+  if(is.null(stn)) stn <- envirocan::stations
+
   if(length(timeframe) > 1) stop("'timeframe' must be either 'hour', 'day', OR 'month'")
   if(!(timeframe %in% c("hour", "day", "month"))) stop("'timeframe' must be either 'hour', 'day', OR 'month'")
 
   w_all <- data.frame()
   for(s in station_ids) {
     if(verbose) message("Getting station: ", s)
-    stn <- envirocan::stations %>%
+    stn <- stn %>%
       dplyr::filter_(lazyeval::interp("station_id %in% x & !is.na(start)", x = s),
                      lazyeval::interp("timeframe == x", x = timeframe)) %>%
       dplyr::arrange(timeframe)
@@ -140,6 +142,9 @@ weather <- function(station_ids,
     date_range <- seq(floor_date(s.start, unit = "month"),
                       floor_date(s.end, unit = "month"),
                       by = ifelse(timeframe %in% c("hour"), "month", "year"))
+    date_range <- unique(date_range)
+
+    if(timeframe == "month") date_range <- date_range[1]
 
     preamble <- weather_dl(station_id = s, date = date_range[1], timeframe = timeframe, nrows = 25, header = FALSE)
     skip <- grep("Date/Time", preamble[, 1])
