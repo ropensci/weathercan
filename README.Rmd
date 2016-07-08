@@ -1,7 +1,6 @@
 ---
 title: "README"
 author: "Steffi LaZerte"
-date: "June 21, 2016"
 output: md_document
 ---
 
@@ -19,7 +18,7 @@ Use the `devtools` package to directly install R packages from github:
 
 ```{r, eval = FALSE}
 install.packages("devtools") # If not already installed
-devtools::install_github("steffilazerte/envirocan", ref = "v0.1.1.1") 
+devtools::install_github("steffilazerte/envirocan", ref = "v0.2.0") 
 ## For most recent release; Otherwise omit "ref = " to download most recent version
 ```
 
@@ -54,10 +53,10 @@ stations_search(coords = c(50.667492, -120.329049), dist = 20, timeframe = "hour
 Once you have your `station_id`(s) you can download weather data:
 
 ```{r}
-kamloops <- weather(station_ids = 51423,
+kam <- weather(station_ids = 51423,
                     start = "2016-01-01", end = "2016-02-15")
                     
-head(kamloops)
+head(kam)
 
 ```
 
@@ -79,3 +78,28 @@ ggplot(data = kam.pg, aes(x = time, y = temp, group = station_name, colour = sta
   theme(legend.position = "top") +
   geom_line()
 ```
+
+### Interpolate and add data
+You can merge weather data with other data frames by linearly interprolating between points.
+
+For example, using the included datasets:
+
+```{r}
+head(kamloops)
+head(finches)
+
+finches_temperature <- add_weather(data = finches, weather = kamloops, cols = "temp")
+summary(finches_temperature)
+head(finches_temperature)
+```
+
+By default, gaps of 2 hours (or two days, with a daily scale) will be interpolated over, but longer gaps will be filled with NAs. You can adjust this behaviour with `na_gap`. Note that as environment canada data is downloaded on an hourly scale, it makes no sense to apply `na_gap` values of less than 1.
+
+```{r}
+finches_temperature <- add_weather(data = finches, weather = kamloops, cols = "temp", na_gap = 1)
+summary(finches_temperature)
+
+finches_temperature[is.na(finches_temperature$temp),][1:10,]
+kamloops[is.na(kamloops$temp), c("time", "temp")]
+```
+

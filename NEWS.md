@@ -4,6 +4,14 @@ author: "Steffi LaZerte"
 output: html_document
 ---
 
+# envirocan 0.2.0 (2016-07-08)
+
+- Added new function, `add_weather()` which performs a linear interpolation and merges weather data into an existing data frame.
+- Added two new hourly datasets with weather data downloaded for Kamloops and Prince George, BC: kamloops, pg
+- Added a new monthly dataset for Kamloops: kamloops_month
+- Fixed a bug when downloading data from multiple stations at the same time
+- Minor internal adjustments
+
 # envirocan 0.1.1.1 (2016-06-23)
 
 - quick fix to correct duplicated monthly data downloads
