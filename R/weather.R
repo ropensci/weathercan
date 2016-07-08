@@ -42,7 +42,7 @@
 #'  numeric measurement with. See Details.
 #' @param tz_disp Character. What timezone to display times in (must be one of
 #'  \code{OlsonNames()}).
-#' @param stn Data frame. The \code{stations} data frame to use. Will use the one
+#' @param stations_data Data frame. The \code{stations} data frame to use. Will use the one
 #'  included in the package unless otherwise specified.
 #' @param url Character. Url from which to grab the weather data
 #' @param verbose Logical. Include messages
@@ -81,7 +81,7 @@ weather <- function(station_ids,
                     format = TRUE,
                     string_as = NA,
                     tz_disp = NULL,
-                    stn = NULL,
+                    stations_data = NULL,
                     url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html",
                     verbose = FALSE) {
 
@@ -96,21 +96,20 @@ weather <- function(station_ids,
     stop("'start' and 'end' must be either a standard date format (YYYY-MM-DD) or NULL")
   }
 
-  if(is.null(stn)) stn <- envirocan::stations
-
   if(length(timeframe) > 1) stop("'timeframe' must be either 'hour', 'day', OR 'month'")
   if(!(timeframe %in% c("hour", "day", "month"))) stop("'timeframe' must be either 'hour', 'day', OR 'month'")
 
   w_all <- data.frame()
   for(s in station_ids) {
     if(verbose) message("Getting station: ", s)
+    if(is.null(stations_data)) stn <- envirocan::stations else stn <- stations_data
     stn <- stn %>%
       dplyr::filter_(lazyeval::interp("station_id %in% x & !is.na(start)", x = s),
                      lazyeval::interp("timeframe == x", x = timeframe)) %>%
       dplyr::arrange(timeframe)
 
     if(nrow(stn) == 0) {
-      message("There are no data for station ", s, " for intervals by '", timeframe, "'.",
+      message("There are no data for station ", s, " for interval by '", timeframe, "'.",
            "\nAvailable Station Data:\n",
            paste0(capture.output(print(envirocan::stations %>%
                                          dplyr::filter_(lazyeval::interp("station_id %in% x & !is.na(start)", x = s)))), collapse = "\n"))
