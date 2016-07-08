@@ -1,4 +1,4 @@
-#' Download Environment Canada Weather data
+#' Download weather data from Environment Canada
 #'
 #' Downloads data from Environment Canada for one or more stations.
 #'

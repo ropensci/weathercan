@@ -2,7 +2,7 @@
 % Please edit documentation in R/weather.R
 \name{weather}
 \alias{weather}
-\title{Download Environment Canada Weather data}
+\title{Download weather data from Environment Canada}
 \usage{
 weather(station_ids, start = NULL, end = NULL, timeframe = "hour",
   trim = TRUE, avg = "none", best = FALSE, format = TRUE,
