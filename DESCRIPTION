@@ -1,7 +1,7 @@
 Package: envirocan
 Type: Package
 Title: Download weather data from the Environment Canada website
-Version: 0.1.1.1
+Version: 0.1.1.1.9999
 Author: Steffi LaZerte
 Maintainer: Steffi LaZerte <stefanie.lazerte@unbc.ca>
 Description: This package provides means of grabbing station information,
@@ -9,7 +9,8 @@ Description: This package provides means of grabbing station information,
     Environment Canada website.
 License: GPL-3
 LazyData: TRUE
-Depends: R (>= 3.2.2)
+Depends:
+    R (>= 3.2.2)
 Imports:
     httr (>= 1.1.0),
     dplyr (>= 0.4.3),
@@ -21,7 +22,8 @@ Imports:
     tidyr (>= 0.4.1),
     xml2 (>= 0.1.2)
 RoxygenNote: 5.0.1
-Suggests: knitr,
+Suggests:
+    knitr,
     rmarkdown,
     testthat
 VignetteBuilder: knitr
