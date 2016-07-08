@@ -8,7 +8,7 @@ output: html_document
 
 - Added new function, `add_weather()` which performs a linear interpolation and merges weather data into an existing data frame.
 - Added two new hourly datasets with weather data downloaded for Kamloops and Prince George, BC: kamloops, pg
-- Added a new monthly dataset for Kamloops: kamloops_month
+- Added a new daily dataset for Kamloops: kamloops_day
 - Fixed a bug when downloading data from multiple stations at the same time
 - Changed 'timeframe' arguments to 'interval'
 - Minor internal adjustments
