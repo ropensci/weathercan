@@ -2,7 +2,7 @@ library(envirocan)
 context("Weather data")
 
 test_that("weather_dl (hour) downloads a data frame", {
-  expect_silent(wd <- weather_dl(station_id = 51423, date = as.Date("2014-01-01"), skip = 15, timeframe = "hour"))
+  expect_silent(wd <- weather_dl(station_id = 51423, date = as.Date("2014-01-01"), skip = 15, interval = "hour"))
   ## Basics
   expect_is(wd, "data.frame")
   expect_length(wd, 25)
@@ -12,7 +12,7 @@ test_that("weather_dl (hour) downloads a data frame", {
 })
 
 test_that("weather_dl (day) downloads a data frame", {
-  expect_silent(wd <- weather_dl(station_id = 51423, date = as.Date("2014-01-01"), skip = 25, timeframe = "day"))
+  expect_silent(wd <- weather_dl(station_id = 51423, date = as.Date("2014-01-01"), skip = 25, interval = "day"))
 
   ## Basics
   expect_is(wd, "data.frame")
@@ -23,7 +23,7 @@ test_that("weather_dl (day) downloads a data frame", {
 })
 
 test_that("weather_dl (month) downloads a data frame", {
-  expect_silent(wd <- weather_dl(station_id = 43823, date = as.Date("2005-01-01"), skip = 17, timeframe = "month"))
+  expect_silent(wd <- weather_dl(station_id = 43823, date = as.Date("2005-01-01"), skip = 17, interval = "month"))
 
   ## Basics
   expect_is(wd, "data.frame")
@@ -68,7 +68,7 @@ test_that("weather(hourly) formats timezone display", {
 })
 
 test_that("weather(hourly) gets all", {
-  expect_silent(w <- weather(station_ids = 10816, timeframe = "hour", trim = FALSE))
+  expect_silent(w <- weather(station_ids = 10816, interval = "hour", trim = FALSE))
   expect_is(w, "data.frame")
   expect_length(w, 35)
   expect_equal(nrow(w), 8784)
@@ -91,8 +91,8 @@ test_that("weather(hour) mutliple stations", {
 #####################
 
 test_that("weather (day) returns a data frame", {
-  expect_message(expect_error({weather(station_ids = 51423, start = "2014-01-01", end = "2014-03-01", timeframe = "day")}, NA))
-  expect_message(expect_error({w <- weather(station_ids = 51423, start = "2014-01-01", end = "2014-03-01", timeframe = "day", verbose = TRUE)}, NA))
+  expect_message(expect_error({weather(station_ids = 51423, start = "2014-01-01", end = "2014-03-01", interval = "day")}, NA))
+  expect_message(expect_error({w <- weather(station_ids = 51423, start = "2014-01-01", end = "2014-03-01", interval = "day", verbose = TRUE)}, NA))
 
   ## Basics
   expect_is(w, "data.frame")
@@ -113,8 +113,8 @@ test_that("weather (day) returns a data frame", {
 })
 
 test_that("weather(daily) gets all", {
-  expect_silent(weather(station_ids = 54398, timeframe = "day", trim = FALSE))
-  expect_message(expect_error({w <- weather(station_ids = 54398, timeframe = "day", trim = FALSE, verbose = TRUE)}, NA))
+  expect_silent(weather(station_ids = 54398, interval = "day", trim = FALSE))
+  expect_message(expect_error({w <- weather(station_ids = 54398, interval = "day", trim = FALSE, verbose = TRUE)}, NA))
 
   expect_is(w, "data.frame")
   expect_length(w, 36)
@@ -122,11 +122,11 @@ test_that("weather(daily) gets all", {
   expect_equal(min(w$date), as.Date("2016-01-01"))
   expect_equal(max(w$date), Sys.Date())
 
-  expect_silent(w <- weather(station_ids = 54398, start = "2016-04-01", timeframe = "day", trim = FALSE))
+  expect_silent(w <- weather(station_ids = 54398, start = "2016-04-01", interval = "day", trim = FALSE))
   expect_equal(min(w$date), as.Date("2016-04-01"))
   expect_equal(max(w$date), Sys.Date())
 
-  expect_silent(w <- weather(station_ids = 54398, end = "2016-04-01", timeframe = "day", trim = FALSE))
+  expect_silent(w <- weather(station_ids = 54398, end = "2016-04-01", interval = "day", trim = FALSE))
   expect_equal(min(w$date), as.Date("2016-01-01"))
   expect_equal(max(w$date), as.Date("2016-04-01"))
 
@@ -136,15 +136,15 @@ test_that("weather(daily) gets all", {
 
 
 test_that("weather(daily) trims NAs", {
-  expect_silent(w1 <- weather(station_ids = 54398, timeframe = "day", trim = FALSE))
-  expect_silent(w2 <- weather(station_ids = 54398, timeframe = "day", trim = TRUE))
+  expect_silent(w1 <- weather(station_ids = 54398, interval = "day", trim = FALSE))
+  expect_silent(w2 <- weather(station_ids = 54398, interval = "day", trim = TRUE))
 
   expect_gte(nrow(w1), nrow(w2))
   expect_gte(length(w1[is.na(w1)]), length(w2[is.na(w2)]))
 })
 
 test_that("weather(day) no data fails nicely", {
-  expect_message(expect_error(w0 <- weather(station_ids = 51457, start = "2014-01-01", end = "2014-05-01", timeframe = "day"), NA))
+  expect_message(expect_error(w0 <- weather(station_ids = 51457, start = "2014-01-01", end = "2014-05-01", interval = "day"), NA))
 
   ## Basics
   expect_is(w0, "data.frame")
@@ -153,7 +153,7 @@ test_that("weather(day) no data fails nicely", {
 })
 
 test_that("weather(day) mutliple stations", {
-  expect_error(w <- weather(station_ids = c(54398, 51423), start = "2016-03-01", end = "2016-04-01", timeframe = "day"), NA)
+  expect_error(w <- weather(station_ids = c(54398, 51423), start = "2016-03-01", end = "2016-04-01", interval = "day"), NA)
 
   expect_equal(unique(w$station_name), c("MUSKOKA SNOW", "KAMLOOPS A"))
   expect_equal(nrow(w[w$station_id == 54398,]), nrow(w[w$station_id == 51423,]))
@@ -165,7 +165,7 @@ test_that("weather(day) mutliple stations", {
 #####################
 
 test_that("weather returns a data frame MONTHLY", {
-  expect_silent(w <- weather(station_ids = 5401, start = "2014-01-01", end = "2014-05-01", timeframe = "month"))
+  expect_silent(w <- weather(station_ids = 5401, start = "2014-01-01", end = "2014-05-01", interval = "month"))
 
   ## Basics
   expect_is(w, "data.frame")
@@ -190,7 +190,7 @@ test_that("weather(monthly) trims NAs", {
 })
 
 test_that("weather(monthly) no data fails nicely", {
-  expect_message(expect_error(w0 <- weather(station_ids = 51423, start = "2014-01-01", end = "2014-05-01", timeframe = "month"), NA))
+  expect_message(expect_error(w0 <- weather(station_ids = 51423, start = "2014-01-01", end = "2014-05-01", interval = "month"), NA))
 
   ## Basics
   expect_is(w0, "data.frame")
@@ -199,13 +199,13 @@ test_that("weather(monthly) no data fails nicely", {
 })
 
 test_that("weather(month) multiple stations", {
-  expect_silent(w <- weather(station_ids = c(5401, 5940), start = "2014-01-01", end = "2014-05-01", timeframe = "month"))
+  expect_silent(w <- weather(station_ids = c(5401, 5940), start = "2014-01-01", end = "2014-05-01", interval = "month"))
 
   expect_equal(unique(w$station_name), c("MAGOG", "ST PRIME"))
   expect_equal(nrow(w[w$station_id == 5401,]), nrow(w[w$station_id == 5940,]))
 })
 
 test_that("weather(month) multiple stations (one NA)", {
-  expect_message(expect_error(w <- weather(station_ids = c(5401, 51423), start = "2014-01-01", end = "2014-05-01", timeframe = "month"), NA))
+  expect_message(expect_error(w <- weather(station_ids = c(5401, 51423), start = "2014-01-01", end = "2014-05-01", interval = "month"), NA))
   expect_equal(unique(w$station_name), c("MAGOG"))
 })

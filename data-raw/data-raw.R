@@ -14,8 +14,8 @@ w_names <- list(
 )
 devtools::use_data(w_names, overwrite = TRUE, internal = TRUE)
 
-kamloops_month <- weather(51423, start = "2016-01-01", end = "2016-06-30", timeframe = "day")
-devtools::use_data(kamloops_month, overwrite = TRUE)
+kamloops_day <- weather(51423, start = "2016-01-01", end = "2016-06-30", interval = "day")
+devtools::use_data(kamloops_day, overwrite = TRUE)
 
 kamloops <- weather(51423, start = "2016-01-01", end = "2016-06-30")
 devtools::use_data(kamloops, overwrite = TRUE)

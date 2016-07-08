@@ -1,4 +1,4 @@
-"prov","station_name","station_id","climate_id","WMO_id","TC_id","lat","lon","elev","timeframe","start","end"
+"prov","station_name","station_id","climate_id","WMO_id","TC_id","lat","lon","elev","interval","start","end"
 "BC","ACTIVE PASS","14","1010066",NA,NA,48.87,-123.28,4,"hour",NA,NA
 "BC","ALBERT HEAD","15","1010235",NA,NA,48.4,-123.48,17,"hour",NA,NA
 "BC","BAMBERTON OCEAN CEMENT","16","1010595",NA,NA,48.58,-123.52,85.3,"hour",NA,NA

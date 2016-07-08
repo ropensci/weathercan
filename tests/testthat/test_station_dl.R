@@ -10,7 +10,7 @@ test_that("stations_all() runs and returns data", {
   expect_is(s$prov, "factor")
   expect_is(s$station_name, "character")
   expect_gt(nrow(s), 10)
-  expect_equal(unique(s$timeframe), c("hour", "day", "month"))
+  expect_equal(unique(s$interval), c("hour", "day", "month"))
 })
 
 test_that("stations_search 'name' returns correct format", {
@@ -34,8 +34,8 @@ test_that("stations_search 'name' returns correct data", {
   ## Check specific
   expect_equal(nrow(stations_search("Kamloops A$")), 5)
   expect_equal(unique(stations_search("Kamloops A$")$station_name), "KAMLOOPS A")
-  expect_equal(sum(stations_search("Kamloops A$")$timeframe == "month"), 1)
-  expect_equal(sum(stations_search("Kamloops A$")$timeframe == "hour"), 2)
+  expect_equal(sum(stations_search("Kamloops A$")$interval == "month"), 1)
+  expect_equal(sum(stations_search("Kamloops A$")$interval == "hour"), 2)
 })
 
 
@@ -66,6 +66,6 @@ test_that("stations_search 'coords' returns correct data", {
   expect_equal(nrow(stn <- stations_search(coords = k, dist = 30)), 58)
   expect_lt(max(stn$distance), 30)
 
-  ## Check timeframe
-  expect_equal(nrow(stations_search(coords = k, dist = 30, timeframe = "hour")), 3)
+  ## Check interval
+  expect_equal(nrow(stations_search(coords = k, dist = 30, interval = "hour")), 3)
 })

@@ -33,42 +33,42 @@ list of stations and their details (including `station_id`.
     ## 4   BC             BEAR CREEK         17    1010720   <NA>  <NA> 48.50
     ## 5   BC            BEAVER LAKE         18    1010774   <NA>  <NA> 48.50
     ## 6   BC             BECHER BAY         19    1010780   <NA>  <NA> 48.33
-    ##       lon  elev timeframe start end
-    ## 1 -123.28   4.0      hour    NA  NA
-    ## 2 -123.48  17.0      hour    NA  NA
-    ## 3 -123.52  85.3      hour    NA  NA
-    ## 4 -124.00 350.5      hour    NA  NA
-    ## 5 -123.35  61.0      hour    NA  NA
-    ## 6 -123.63  12.2      hour    NA  NA
+    ##       lon  elev interval start end
+    ## 1 -123.28   4.0     hour    NA  NA
+    ## 2 -123.48  17.0     hour    NA  NA
+    ## 3 -123.52  85.3     hour    NA  NA
+    ## 4 -124.00 350.5     hour    NA  NA
+    ## 5 -123.35  61.0     hour    NA  NA
+    ## 6 -123.63  12.2     hour    NA  NA
 
 You can look through this data frame directly, or you can use the
 `stations_search` function:
 
-    stations_search("Kamloops", timeframe = "hour")
+    stations_search("Kamloops", interval = "hour")
 
     ##   prov station_name station_id climate_id WMO_id TC_id  lat     lon  elev
     ## 1   BC   KAMLOOPS A       1275    1163780  71887   YKA 50.7 -120.44 345.3
     ## 2   BC   KAMLOOPS A      51423    1163781  71887   YKA 50.7 -120.45 345.3
     ## 3   BC KAMLOOPS AUT      42203    1163842  71741   ZKA 50.7 -120.44 345.0
-    ##   timeframe start  end
-    ## 1      hour  1953 2013
-    ## 2      hour  2013 2016
-    ## 3      hour  2006 2016
+    ##   interval start  end
+    ## 1     hour  1953 2013
+    ## 2     hour  2013 2016
+    ## 3     hour  2006 2016
 
 Time frame must be one of "hour", "day", or "month".
 
 You can also search by proximity:
 
-    stations_search(coords = c(50.667492, -120.329049), dist = 20, timeframe = "hour")
+    stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour")
 
     ##   prov station_name station_id climate_id WMO_id TC_id  lat     lon  elev
     ## 1   BC   KAMLOOPS A       1275    1163780  71887   YKA 50.7 -120.44 345.3
     ## 2   BC KAMLOOPS AUT      42203    1163842  71741   ZKA 50.7 -120.44 345.0
     ## 3   BC   KAMLOOPS A      51423    1163781  71887   YKA 50.7 -120.45 345.3
-    ##   timeframe start  end distance
-    ## 1      hour  1953 2013 8.634000
-    ## 2      hour  2006 2016 8.634000
-    ## 3      hour  2013 2016 9.280565
+    ##   interval start  end distance
+    ## 1     hour  1953 2013 8.634000
+    ## 2     hour  2006 2016 8.634000
+    ## 3     hour  2013 2016 9.280565
 
 ### Weather
 

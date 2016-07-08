@@ -4,7 +4,7 @@
 \alias{weather}
 \title{Download weather data from Environment Canada}
 \usage{
-weather(station_ids, start = NULL, end = NULL, timeframe = "hour",
+weather(station_ids, start = NULL, end = NULL, interval = "hour",
   trim = TRUE, avg = "none", best = FALSE, format = TRUE,
   string_as = NA, tz_disp = NULL, stations_data = NULL,
   url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html",
@@ -21,7 +21,7 @@ data frame or the \code{\link{stations_search}} function to find IDs.}
 \item{end}{Date/Character. The end date of the data in YYYY-MM-DD format
 (applies to all station_ids). Defaults to end of range.}
 
-\item{timeframe}{Character. Timeframe of the data, one of "hour", "day",
+\item{interval}{Character. Interval of the data, one of "hour", "day",
 "month".}
 
 \item{trim}{Logical. Trim missing values from the start and end of the weather
@@ -32,7 +32,7 @@ dataframe.}
 \item{best}{Logical. (NOT USEABLE) If TRUE, returns data at the best frame to
 maximize data according to the date range (this could result in less data
 from other weather measurements, see Details). If FALSE, returns data from
-exact timeframe specified.}
+exact interval specified.}
 
 \item{format}{Logical. If TRUE, formats data for immediate use. If FALSE,
 returns data exactly as downloaded from Environment Canda. Useful for
@@ -82,8 +82,8 @@ kam <- weather(station_ids = 51423,
                start = "2016-01-01", end = "2016-02-15")
 }
 
-stations_search("Kamloops A$", timeframe = "hour")
-stations_search("Prince George Airport", timeframe = "hour")
+stations_search("Kamloops A$", interval = "hour")
+stations_search("Prince George Airport", interval = "hour")
 \dontrun{
 kam.pg <- weather(station_ids = c(48248, 51423),
                   start = "2016-01-01", end = "2016-02-15")

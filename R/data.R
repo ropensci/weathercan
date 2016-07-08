@@ -24,3 +24,18 @@
 #' }
 #' @source \url{http://climate.weather.gc.ca/index_e.html}
 "stations"
+
+#' Hourly weather data for Kamloops downloaded with \code{weather()}
+#'
+#' An example dataset of hourly weather data for Kamloops
+"kamloops"
+
+#' Hourly weather data for Prince George downloaded with \code{weather()}
+#'
+#' An example dataset of hourly weather data for Prince George
+"pg"
+
+#' Daily weather data for Kamloops downloaded with \code{weather()}
+#'
+#' An example dataset of daily weather data for Kamloops
+"kamloops_day"

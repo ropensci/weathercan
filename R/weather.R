@@ -26,7 +26,7 @@
 #'  (applies to all stations_ids). Defaults to start of range.
 #' @param end Date/Character. The end date of the data in YYYY-MM-DD format
 #'  (applies to all station_ids). Defaults to end of range.
-#' @param timeframe Character. Timeframe of the data, one of "hour", "day",
+#' @param interval Character. Interval of the data, one of "hour", "day",
 #'  "month".
 #' @param trim Logical. Trim missing values from the start and end of the weather
 #'  dataframe.
@@ -34,7 +34,7 @@
 #' @param best Logical. (NOT USEABLE) If TRUE, returns data at the best frame to
 #'  maximize data according to the date range (this could result in less data
 #'  from other weather measurements, see Details). If FALSE, returns data from
-#'  exact timeframe specified.
+#'  exact interval specified.
 #' @param format Logical. If TRUE, formats data for immediate use. If FALSE,
 #'  returns data exactly as downloaded from Environment Canda. Useful for
 #'  dealing with changes by Environment Canada to the format of data downloads.
@@ -60,8 +60,8 @@
 #'                start = "2016-01-01", end = "2016-02-15")
 #' }
 #'
-#' stations_search("Kamloops A$", timeframe = "hour")
-#' stations_search("Prince George Airport", timeframe = "hour")
+#' stations_search("Kamloops A$", interval = "hour")
+#' stations_search("Prince George Airport", interval = "hour")
 #'\dontrun{
 #' kam.pg <- weather(station_ids = c(48248, 51423),
 #'                   start = "2016-01-01", end = "2016-02-15")
@@ -74,7 +74,7 @@
 #'
 weather <- function(station_ids,
                     start = NULL, end = NULL,
-                    timeframe = "hour",
+                    interval = "hour",
                     trim = TRUE,
                     avg = "none",
                     best = FALSE,
@@ -85,10 +85,10 @@ weather <- function(station_ids,
                     url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html",
                     verbose = FALSE) {
 
-  # station_id = 51423; start = "2016-01-01"; end = "2016-02-15"; format = FALSE; timeframe = "hour"; avg = "none"; string_as = NA; stn = NULL; url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html"
+  # station_id = 51423; start = "2016-01-01"; end = "2016-02-15"; format = FALSE; interval = "hour"; avg = "none"; string_as = NA; stn = NULL; url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html"
   #'
   ## AVERAGE CAN ONLY BE day, month, year
-  ## AVERAGE Has to be larger timeframe than timeframe
+  ## AVERAGE Has to be larger interval than interval
 
   ## Address as.POSIXct...
   if((!is.null(start) & class(try(as.Date(start), silent = TRUE)) == "try-error") |
@@ -96,8 +96,8 @@ weather <- function(station_ids,
     stop("'start' and 'end' must be either a standard date format (YYYY-MM-DD) or NULL")
   }
 
-  if(length(timeframe) > 1) stop("'timeframe' must be either 'hour', 'day', OR 'month'")
-  if(!(timeframe %in% c("hour", "day", "month"))) stop("'timeframe' must be either 'hour', 'day', OR 'month'")
+  if(length(interval) > 1) stop("'interval' must be either 'hour', 'day', OR 'month'")
+  if(!(interval %in% c("hour", "day", "month"))) stop("'interval' must be either 'hour', 'day', OR 'month'")
 
   w_all <- data.frame()
   for(s in station_ids) {
@@ -105,11 +105,11 @@ weather <- function(station_ids,
     if(is.null(stations_data)) stn <- envirocan::stations else stn <- stations_data
     stn <- stn %>%
       dplyr::filter_(lazyeval::interp("station_id %in% x & !is.na(start)", x = s),
-                     lazyeval::interp("timeframe == x", x = timeframe)) %>%
-      dplyr::arrange(timeframe)
+                     lazyeval::interp("interval == x", x = interval)) %>%
+      dplyr::arrange(interval)
 
     if(nrow(stn) == 0) {
-      message("There are no data for station ", s, " for interval by '", timeframe, "'.",
+      message("There are no data for station ", s, " for interval by '", interval, "'.",
            "\nAvailable Station Data:\n",
            paste0(capture.output(print(envirocan::stations %>%
                                          dplyr::filter_(lazyeval::interp("station_id %in% x & !is.na(start)", x = s)))), collapse = "\n"))
@@ -125,7 +125,7 @@ weather <- function(station_ids,
     stn <- stn %>%
       dplyr::mutate(end = replace(end, end > Sys.Date(), Sys.Date()),
                     int = interval(start, end),
-                    timeframe = factor(timeframe, levels = c("hour", "day", "month"), ordered = TRUE))
+                    interval = factor(interval, levels = c("hour", "day", "month"), ordered = TRUE))
 
     if(is.null(start)) s.start <- stn$start else s.start <- as.Date(start)
     if(is.null(end)) s.end <- stn$end else s.end <- as.Date(end)
@@ -140,12 +140,12 @@ weather <- function(station_ids,
 
     date_range <- seq(floor_date(s.start, unit = "month"),
                       floor_date(s.end, unit = "month"),
-                      by = ifelse(timeframe %in% c("hour"), "month", "year"))
+                      by = ifelse(interval %in% c("hour"), "month", "year"))
     date_range <- unique(date_range)
 
-    if(timeframe == "month") date_range <- date_range[1]
+    if(interval == "month") date_range <- date_range[1]
 
-    preamble <- weather_dl(station_id = s, date = date_range[1], timeframe = timeframe, nrows = 25, header = FALSE)
+    preamble <- weather_dl(station_id = s, date = date_range[1], interval = interval, nrows = 25, header = FALSE)
     skip <- grep("Date/Time", preamble[, 1])
 
     #test <- read.csv(text = httr::content(html, as = "text", type = "text/csv", encoding = "ISO-8859-1"), skip = skip)
@@ -155,7 +155,7 @@ weather <- function(station_ids,
     for(i in 1:length(date_range)){
       w <- rbind(w, weather_dl(station_id = s,
                                date = date_range[i],
-                               timeframe = timeframe,
+                               interval = interval,
                                skip = skip,
                                url = url))
     }
@@ -177,7 +177,7 @@ weather <- function(station_ids,
     if(format) {
       if(verbose) message("Formating station data")
       w <- weather_format(w = w,
-                          timeframe = timeframe,
+                          interval = interval,
                           tz_disp = tz_disp,
                           string_as = string_as)
     }
@@ -215,7 +215,7 @@ weather <- function(station_ids,
 
 weather_dl <- function(station_id,
                    date,
-                   timeframe = "hour",
+                   interval = "hour",
                    skip = 0,
                    nrows = -1,
                    header = TRUE,
@@ -224,7 +224,7 @@ weather_dl <- function(station_id,
 
   html <- httr::GET(url, query = list(format = 'csv',
                               stationID = station_id,
-                              timeframe = ifelse(timeframe == "hour", 1, ifelse(timeframe == "day", 2, 3)),
+                              timeframe = ifelse(interval == "hour", 1, ifelse(interval == "day", 2, 3)),
                               Year = format(date, "%Y"),
                               Month = format(date, "%m"),
                               submit = 'Download+Data'))
@@ -238,10 +238,10 @@ weather_dl <- function(station_id,
 
 #' @import magrittr
 
-weather_format <- function(w, timeframe = "hour", string_as = "NA", tz_disp = NULL) {
+weather_format <- function(w, interval = "hour", string_as = "NA", tz_disp = NULL) {
 
   ## Get names from stored name list
-  n <- envirocan:::w_names[[timeframe]]
+  n <- envirocan:::w_names[[interval]]
 
   # Omit preamble stuff for now
   preamble <- w[, names(w) %in% c("prov", "station_name", "station_id", "lat", "lon", "elev", "climat_id", "WMO_id", "TC_id")]
@@ -249,11 +249,11 @@ weather_format <- function(w, timeframe = "hour", string_as = "NA", tz_disp = NU
 
   names(w) <- n
 
-  if(timeframe == "day") w <- dplyr::mutate(w, date = as.Date(date))
-  if(timeframe == "month") w <- dplyr::mutate(w, date = as.Date(paste0(date, "-01")))
+  if(interval == "day") w <- dplyr::mutate(w, date = as.Date(date))
+  if(interval == "month") w <- dplyr::mutate(w, date = as.Date(paste0(date, "-01")))
 
   ## Get correct timezone
-  if(timeframe == "hour"){
+  if(interval == "hour"){
     tz <- get_tz(coords = unique(preamble[, c("lat", "lon")]), etc = TRUE)
     w$time <- as.POSIXct(w$time, tz = tz)
     w$date <- as.Date(w$time, tz = tz)
@@ -313,7 +313,7 @@ weather_format <- function(w, timeframe = "hour", string_as = "NA", tz_disp = NU
   return(w)
 }
 
-weather_avg <- function(w, timeframe = "hour", avg = "none") {
+weather_avg <- function(w, interval = "hour", avg = "none") {
   ## Average if requested
   if(avg != "none") {
 
@@ -349,7 +349,7 @@ weather_avg <- function(w, timeframe = "hour", avg = "none") {
         dplyr::left_join(w %>%
                            dplyr::group_by(year, month, day) %>%
                            dplyr::summarize_each(dplyr::funs(n = length(.[!is.na(.)])), everything()),
-                         timeframe = c("year", "month", "day"))
+                         interval = c("year", "month", "day"))
 
       # Add degree days
     }

@@ -10,6 +10,7 @@ output: html_document
 - Added two new hourly datasets with weather data downloaded for Kamloops and Prince George, BC: kamloops, pg
 - Added a new monthly dataset for Kamloops: kamloops_month
 - Fixed a bug when downloading data from multiple stations at the same time
+- Changed 'timeframe' arguments to 'interval'
 - Minor internal adjustments
 
 # envirocan 0.1.1.1 (2016-06-23)

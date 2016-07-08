@@ -172,7 +172,7 @@ test_that("add_weather (hour) fails on character columns", {
 #####################
 
 test_that("add_weather (day) fails with incorrect data types", {
-  k <- kamloops_month[kamloops_month$date < as.Date("2016-04-01"), ]
+  k <- kamloops_day[kamloops_day$date < as.Date("2016-04-01"), ]
   f <- finches[1:20, ] %>%
     dplyr::mutate(date = as.Date(time))
 
@@ -183,7 +183,7 @@ test_that("add_weather (day) fails with incorrect data types", {
 
 
 test_that("add_weather (day) interpolates particular columns", {
-  k <- kamloops_month[kamloops_month$date < as.Date("2016-04-01"), ]
+  k <- kamloops_day[kamloops_day$date < as.Date("2016-04-01"), ]
   f <- finches[1:20, ] %>%
     dplyr::mutate(date = as.Date(time)) %>%
     dplyr::arrange(bird_id)
@@ -206,7 +206,7 @@ test_that("add_weather (day) interpolates particular columns", {
 })
 
 test_that("add_weather (day) interpolates 'all'", {
-  k <- kamloops_month[kamloops_month$date < as.Date("2016-04-01"), ]
+  k <- kamloops_day[kamloops_day$date < as.Date("2016-04-01"), ]
   f <- finches[1:20, ] %>%
     dplyr::mutate(date = as.Date(time))
 
@@ -218,7 +218,7 @@ test_that("add_weather (day) interpolates 'all'", {
 
 
 test_that("add_weather (day) skips character columns", {
-  k <- kamloops_month[kamloops_month$date < as.Date("2016-04-01"), ]
+  k <- kamloops_day[kamloops_day$date < as.Date("2016-04-01"), ]
   f <- finches[1:20, ] %>%
     dplyr::mutate(date = as.Date(time))
 

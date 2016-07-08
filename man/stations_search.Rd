@@ -5,7 +5,7 @@
 \title{Search for stations by name or location}
 \usage{
 stations_search(name = NULL, coords = NULL, dist = 10,
-  timeframe = c("hour", "day", "month"), stn = NULL)
+  interval = c("hour", "day", "month"), stn = NULL)
 }
 \arguments{
 \item{name}{Character. A vector of length 1 or more with text against which
@@ -20,8 +20,8 @@ provided.}
 \item{dist}{Numeric. Match all stations within this many kilometers of the
 \code{coords}.}
 
-\item{timeframe}{Character. Return only stations with data at these
-timeframes. Must be any of "hour", "day", "month".}
+\item{interval}{Character. Return only stations with data at these
+intervals. Must be any of "hour", "day", "month".}
 
 \item{stn}{Data frame. The \code{stations} data frame to use. Will use the
 one included in the package unless otherwise specified.}
@@ -39,7 +39,7 @@ information with which to decide which station to then get weather data from.
 \examples{
 
 stations_search(name = "Kamloops")
-stations_search(name = "Kamloops", timeframe = "hour")
+stations_search(name = "Kamloops", interval = "hour")
 
 stations_search(coords = c(53.915495, -122.739379))
 

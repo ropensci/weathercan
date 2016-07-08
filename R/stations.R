@@ -47,8 +47,8 @@ stations_all <- function(url = "ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_Mo
                   "lat" = matches("Latitude..Decimal"),
                   "lon" = matches("Longitude..Decimal"),
                   "elev" = starts_with("Elev")) %>%
-    tidyr::gather(timeframe, date, matches("(start)|(end)")) %>%
-    tidyr::separate(timeframe, c("timeframe", "type"), sep = "_") %>%
+    tidyr::gather(interval, date, matches("(start)|(end)")) %>%
+    tidyr::separate(interval, c("interval", "type"), sep = "_") %>%
     dplyr::mutate(type = factor(type, levels = c("start", "end")),
                   station_name = as.character(station_name),
                   station_id = factor(station_id),
@@ -91,8 +91,8 @@ stations_all <- function(url = "ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_Mo
 #'   provided.
 #' @param dist Numeric. Match all stations within this many kilometers of the
 #'   \code{coords}.
-#' @param timeframe Character. Return only stations with data at these
-#'   timeframes. Must be any of "hour", "day", "month".
+#' @param interval Character. Return only stations with data at these
+#'   intervals. Must be any of "hour", "day", "month".
 #' @param stn Data frame. The \code{stations} data frame to use. Will use the
 #'   one included in the package unless otherwise specified.
 #'
@@ -103,7 +103,7 @@ stations_all <- function(url = "ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_Mo
 #' @examples
 #'
 #' stations_search(name = "Kamloops")
-#' stations_search(name = "Kamloops", timeframe = "hour")
+#' stations_search(name = "Kamloops", interval = "hour")
 #'
 #' stations_search(coords = c(53.915495, -122.739379))
 #'
@@ -117,7 +117,7 @@ stations_all <- function(url = "ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_Mo
 stations_search <- function(name = NULL,
                             coords = NULL,
                             dist = 10,
-                            timeframe = c("hour", "day", "month"),
+                            interval = c("hour", "day", "month"),
                             stn = NULL) {
   if(all(is.null(name), is.null(coords)) | all(!is.null(name), !is.null(coords))) stop("Need a search name OR search coordinate")
 
@@ -151,9 +151,9 @@ stations_search <- function(name = NULL,
     }
   }
   stn <- stn[i,] %>%
-      dplyr::filter_(lazyeval::interp(~ timeframe %in% tf & !is.na(start), tf = timeframe))
-  if(!is.null(name)) stn <- dplyr::arrange(stn, station_name, station_id, timeframe)
-  if(!is.null(coords)) stn <- dplyr::arrange(stn, distance, station_name, station_id, timeframe)
+      dplyr::filter_(lazyeval::interp(~ interval %in% tf & !is.na(start), tf = interval))
+  if(!is.null(name)) stn <- dplyr::arrange(stn, station_name, station_id, interval)
+  if(!is.null(coords)) stn <- dplyr::arrange(stn, distance, station_name, station_id, interval)
   return(stn)
 }
 
