@@ -10,7 +10,7 @@ Installation
 Use the `devtools` package to directly install R packages from github:
 
     install.packages("devtools") # If not already installed
-    devtools::install_github("steffilazerte/envirocan", ref = "v0.1.1.1") 
+    devtools::install_github("steffilazerte/envirocan", ref = "v0.2.0") 
     ## For most recent release; Otherwise omit "ref = " to download most recent version
 
 Basic usage:
@@ -74,10 +74,9 @@ You can also search by proximity:
 
 Once you have your `station_id`(s) you can download weather data:
 
-    kamloops <- weather(station_ids = 51423,
-                        start = "2016-01-01", end = "2016-02-15")
+    kam <- weather(station_ids = 51423, start = "2016-01-01", end = "2016-02-15")
                         
-    head(kamloops)
+    head(kam)
 
     ##   station_name station_id prov  lat     lon       date                time
     ## 1   KAMLOOPS A      51423   BC 50.7 -120.45 2016-01-01 2016-01-01 00:00:00
@@ -131,8 +130,7 @@ Once you have your `station_id`(s) you can download weather data:
 
 You can also download data from multiple stations at once:
 
-    kam.pg <- weather(station_ids = c(48248, 51423),
-                      start = "2016-01-01", end = "2016-02-15")
+    kam.pg <- weather(station_ids = c(48248, 51423), start = "2016-01-01", end = "2016-02-15")
                         
     head(kam.pg)
 
@@ -181,3 +179,174 @@ And plot it:
       geom_line()
 
 ![](README_files/figure-markdown_strict/unnamed-chunk-8-1.png)<!-- -->
+
+### Interpolate and add data
+
+You can merge weather data with other data frames by linearly
+interprolating between points.
+
+For example, using the included datasets:
+
+    head(kamloops)
+
+    ##   station_name station_id prov  lat     lon       date                time
+    ## 1   KAMLOOPS A      51423   BC 50.7 -120.45 2016-01-01 2016-01-01 00:00:00
+    ## 2   KAMLOOPS A      51423   BC 50.7 -120.45 2016-01-01 2016-01-01 01:00:00
+    ## 3   KAMLOOPS A      51423   BC 50.7 -120.45 2016-01-01 2016-01-01 02:00:00
+    ## 4   KAMLOOPS A      51423   BC 50.7 -120.45 2016-01-01 2016-01-01 03:00:00
+    ## 5   KAMLOOPS A      51423   BC 50.7 -120.45 2016-01-01 2016-01-01 04:00:00
+    ## 6   KAMLOOPS A      51423   BC 50.7 -120.45 2016-01-01 2016-01-01 05:00:00
+    ##   year month day  hour
+    ## 1 2016    01  01 00:00
+    ## 2 2016    01  01 01:00
+    ## 3 2016    01  01 02:00
+    ## 4 2016    01  01 03:00
+    ## 5 2016    01  01 04:00
+    ## 6 2016    01  01 05:00
+    ##                                                                          qual
+    ## 1 Partner data that is not subject to review by the National Climate Archives
+    ## 2 Partner data that is not subject to review by the National Climate Archives
+    ## 3 Partner data that is not subject to review by the National Climate Archives
+    ## 4 Partner data that is not subject to review by the National Climate Archives
+    ## 5 Partner data that is not subject to review by the National Climate Archives
+    ## 6 Partner data that is not subject to review by the National Climate Archives
+    ##         weather hmdx hmdx_flag pressure pressure_flag rel_hum rel_hum_flag
+    ## 1          <NA>   NA              99.95                    74             
+    ## 2 Mostly Cloudy   NA              99.93                    76             
+    ## 3          <NA>   NA              99.92                    74             
+    ## 4          <NA>   NA              99.90                    73             
+    ## 5        Cloudy   NA              99.86                    70             
+    ## 6          <NA>   NA              99.82                    71             
+    ##   temp temp_dew temp_dew_flag temp_flag visib visib_flag wind_chill
+    ## 1 -9.1    -12.9                          64.4                   -17
+    ## 2 -9.6    -13.1                          64.4                   -17
+    ## 3 -9.9    -13.7                          64.4                   -18
+    ## 4 -9.5    -13.5                          64.4                   -17
+    ## 5 -9.4    -13.9                          64.4                   -17
+    ## 6 -9.8    -14.1                          64.4                   -17
+    ##   wind_chill_flag wind_dir wind_dir_flag wind_spd wind_spd_flag  elev
+    ## 1                       13                     19               345.3
+    ## 2                       11                     20               345.3
+    ## 3                       11                     20               345.3
+    ## 4                       11                     18               345.3
+    ## 5                       11                     18               345.3
+    ## 6                       10                     16               345.3
+    ##   climat_id WMO_id TC_id
+    ## 1   1163781  71887   YKA
+    ## 2   1163781  71887   YKA
+    ## 3   1163781  71887   YKA
+    ## 4   1163781  71887   YKA
+    ## 5   1163781  71887   YKA
+    ## 6   1163781  71887   YKA
+
+    head(finches)
+
+    ##      bird_id                time feeder_id     species       lon      lat
+    ## 1 041868D861 2016-02-29 07:40:15      2200 House Finch -120.3612 50.66778
+    ## 2 041868D861 2016-02-29 07:40:19      2200 House Finch -120.3612 50.66778
+    ## 3 041868D861 2016-02-29 07:40:22      2200 House Finch -120.3612 50.66778
+    ## 4 041868D861 2016-02-29 07:40:31      2200 House Finch -120.3612 50.66778
+    ## 5 041868D861 2016-02-29 07:40:34      2200 House Finch -120.3612 50.66778
+    ## 6 041868D861 2016-02-29 07:40:51      2200 House Finch -120.3612 50.66778
+
+    finches_temperature <- add_weather(data = finches, weather = kamloops, cols = "temp")
+
+    ## temp is missing 4 out of 4368 data, interpolation may be less accurate as a result.
+
+    summary(finches_temperature)
+
+    ##        bird_id          time                     feeder_id  
+    ##  0620000513:7536   Min.   :2016-02-29 07:40:15   1500:6351  
+    ##  041868D861:2593   1st Qu.:2016-03-05 10:43:39   2100:1037  
+    ##  0620000514:1759   Median :2016-03-09 13:39:34   2200:2297  
+    ##  06200004F8:1400   Mean   :2016-03-08 22:31:28   2300:3448  
+    ##  041868BED6: 888   3rd Qu.:2016-03-12 14:57:16   2400:1434  
+    ##  06200003BB: 719   Max.   :2016-03-15 17:52:39   2700:2028  
+    ##  (Other)   :1700                                            
+    ##    species               lon              lat             temp       
+    ##  Length:16595       Min.   :-120.4   Min.   :50.67   Min.   :-1.763  
+    ##  Class :character   1st Qu.:-120.4   1st Qu.:50.67   1st Qu.: 5.353  
+    ##  Mode  :character   Median :-120.4   Median :50.67   Median : 9.076  
+    ##                     Mean   :-120.4   Mean   :50.67   Mean   : 8.688  
+    ##                     3rd Qu.:-120.4   3rd Qu.:50.67   3rd Qu.:11.963  
+    ##                     Max.   :-120.4   Max.   :50.67   Max.   :16.353  
+    ## 
+
+    head(finches_temperature)
+
+    ##      bird_id                time feeder_id     species       lon      lat
+    ## 1 041868D861 2016-02-29 07:40:15      2200 House Finch -120.3612 50.66778
+    ## 2 041868D861 2016-02-29 07:40:19      2200 House Finch -120.3612 50.66778
+    ## 3 041868D861 2016-02-29 07:40:22      2200 House Finch -120.3612 50.66778
+    ## 4 041868D861 2016-02-29 07:40:31      2200 House Finch -120.3612 50.66778
+    ## 5 041868D861 2016-02-29 07:40:34      2200 House Finch -120.3612 50.66778
+    ## 6 041868D861 2016-02-29 07:40:51      2200 House Finch -120.3612 50.66778
+    ##       temp
+    ## 1 1.726667
+    ## 2 1.724889
+    ## 3 1.723556
+    ## 4 1.719556
+    ## 5 1.718222
+    ## 6 1.710667
+
+By default, gaps of 2 hours (or two days, with a daily scale) will be
+interpolated over, but longer gaps will be filled with NAs. You can
+adjust this behaviour with `na_gap`. Note that as environment canada
+data is downloaded on an hourly scale, it makes no sense to apply
+`na_gap` values of less than 1.
+
+    finches_temperature <- add_weather(data = finches, weather = kamloops, cols = "temp", na_gap = 1)
+
+    ## temp is missing 4 out of 4368 data, interpolation may be less accurate as a result.
+
+    summary(finches_temperature)
+
+    ##        bird_id          time                     feeder_id  
+    ##  0620000513:7536   Min.   :2016-02-29 07:40:15   1500:6351  
+    ##  041868D861:2593   1st Qu.:2016-03-05 10:43:39   2100:1037  
+    ##  0620000514:1759   Median :2016-03-09 13:39:34   2200:2297  
+    ##  06200004F8:1400   Mean   :2016-03-08 22:31:28   2300:3448  
+    ##  041868BED6: 888   3rd Qu.:2016-03-12 14:57:16   2400:1434  
+    ##  06200003BB: 719   Max.   :2016-03-15 17:52:39   2700:2028  
+    ##  (Other)   :1700                                            
+    ##    species               lon              lat             temp       
+    ##  Length:16595       Min.   :-120.4   Min.   :50.67   Min.   :-1.763  
+    ##  Class :character   1st Qu.:-120.4   1st Qu.:50.67   1st Qu.: 5.288  
+    ##  Mode  :character   Median :-120.4   Median :50.67   Median : 9.078  
+    ##                     Mean   :-120.4   Mean   :50.67   Mean   : 8.682  
+    ##                     3rd Qu.:-120.4   3rd Qu.:50.67   3rd Qu.:11.972  
+    ##                     Max.   :-120.4   Max.   :50.67   Max.   :16.353  
+    ##                                                      NA's   :195
+
+    finches_temperature[is.na(finches_temperature$temp),][1:10,]
+
+    ##         bird_id                time feeder_id     species       lon
+    ## 7443 062000035D 2016-03-08 12:10:10      1500 House Finch -120.3658
+    ## 7444 062000035D 2016-03-08 12:10:11      1500 House Finch -120.3658
+    ## 7445 062000035D 2016-03-08 12:10:13      1500 House Finch -120.3658
+    ## 7446 062000035D 2016-03-08 12:10:14      1500 House Finch -120.3658
+    ## 7447 06200004F8 2016-03-08 12:12:26      1500 House Finch -120.3658
+    ## 7448 06200004F8 2016-03-08 12:12:28      1500 House Finch -120.3658
+    ## 7449 06200004F8 2016-03-08 12:12:29      1500 House Finch -120.3658
+    ## 7450 06200004F8 2016-03-08 12:12:30      1500 House Finch -120.3658
+    ## 7451 06200004F8 2016-03-08 12:12:32      1500 House Finch -120.3658
+    ## 7452 06200004F8 2016-03-08 12:12:33      1500 House Finch -120.3658
+    ##           lat temp
+    ## 7443 50.67057   NA
+    ## 7444 50.67057   NA
+    ## 7445 50.67057   NA
+    ## 7446 50.67057   NA
+    ## 7447 50.67057   NA
+    ## 7448 50.67057   NA
+    ## 7449 50.67057   NA
+    ## 7450 50.67057   NA
+    ## 7451 50.67057   NA
+    ## 7452 50.67057   NA
+
+    kamloops[is.na(kamloops$temp), c("time", "temp")]
+
+    ##                     time temp
+    ## 1004 2016-02-11 19:00:00   NA
+    ## 1622 2016-03-08 13:00:00   NA
+    ## 1682 2016-03-11 01:00:00   NA
+    ## 2377 2016-04-09 00:00:00   NA
