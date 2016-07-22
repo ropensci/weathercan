@@ -4,6 +4,10 @@ envirocan
 This package is makes it easier to search for and download multiple
 months/years of historical weather data from Environment Canada webiste.
 
+Bear in mind that these downloads can be fairly large and performing
+multiple, downloads may use up Environment Canada's bandwidth
+unecessarily. Try to stick to what you need.
+
 Installation
 ------------
 
