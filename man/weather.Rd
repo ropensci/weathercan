@@ -8,7 +8,7 @@ weather(station_ids, start = NULL, end = NULL, interval = "hour",
   trim = TRUE, avg = "none", best = FALSE, format = TRUE,
   string_as = NA, tz_disp = NULL, stations_data = NULL,
   url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html",
-  verbose = FALSE)
+  encoding = "UTF-8", verbose = FALSE)
 }
 \arguments{
 \item{station_ids}{Numeric/Character. A vector containing the ID(s) of the
@@ -48,6 +48,8 @@ numeric measurement with. See Details.}
 included in the package unless otherwise specified.}
 
 \item{url}{Character. Url from which to grab the weather data}
+
+\item{encoding}{Character. Text encoding for download.}
 
 \item{verbose}{Logical. Include messages}
 }
@@ -93,7 +95,6 @@ library(ggplot2)
 ggplot(data = kam.pg, aes(x = time, y = temp, group = station_name, colour = station_name)) +
        geom_line()
 }
-
 
 }
 

@@ -16,7 +16,7 @@
   \item{lat}{Latitude of station location}
   \item{lon}{Longitude of station location}
   \item{elev}{Elevation of station location}
-  \item{timeframe}{Timeframe of the data measurements ('hour', 'day', 'month')}
+  \item{interval}{Interval of the data measurements ('hour', 'day', 'month')}
   \item{start}{Starting year of station data}
   \item{end}{Ending year of station data}
 }}
