@@ -124,8 +124,8 @@ test_that("weather(daily) gets all", {
   expect_equal(min(w$date), as.Date("2016-01-01"))
   expect_equal(max(w$date), Sys.Date())
 
-  expect_silent(w <- weather(station_ids = 54398, start = "2016-04-01", interval = "day", trim = FALSE))
-  expect_equal(min(w$date), as.Date("2016-04-01"))
+  expect_silent(w <- weather(station_ids = 54398, start = "2017-01-01", interval = "day", trim = FALSE))
+  expect_equal(min(w$date), as.Date("2017-01-01"))
   expect_equal(max(w$date), Sys.Date())
 
   expect_silent(w <- weather(station_ids = 54398, end = "2016-04-01", interval = "day", trim = FALSE))
