@@ -11,17 +11,17 @@ add_weather(data, weather, cols = "all", interval = "hour", na_gap = 2)
 be added.}
 
 \item{weather}{Dataframe. Weather data downloaded with
-\link{\code{weather()}} which should be interpolated and added to
+\code{\link{weather}} which should be interpolated and added to
 \code{data}.}
 
 \item{cols}{Character. Vector containing the weather columns to add or 'all'
 for all relevant columns. Note that some measure are omitted because they
 cannot be linearly interpolated (e.g., wind direction).}
 
-\item{interval.}{What interval is the weather data recorded at? "hour" or
+\item{interval}{What interval is the weather data recorded at? "hour" or
 "day".}
 
-\item{na_gap.}{How many hours or days (depending on the interval) is it
+\item{na_gap}{How many hours or days (depending on the interval) is it
 acceptible to skip over when interpolating over NAs (see details).}
 }
 \description{
