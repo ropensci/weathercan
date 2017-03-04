@@ -39,3 +39,8 @@
 #'
 #' An example dataset of daily weather data for Kamloops
 "kamloops_day"
+
+#' RFID Data on finch visits to feeders
+#'
+#' An example dataset of finch RFID data for interpolation
+"finches"
