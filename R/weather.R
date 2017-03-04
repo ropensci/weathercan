@@ -132,7 +132,7 @@ weather <- function(station_ids,
                     interval = factor(interval, levels = c("hour", "day", "month"), ordered = TRUE))
 
     if(is.null(start)) s.start <- stn$start else s.start <- as.Date(start)
-    if(is.null(end)) s.end <- stn$end else s.end <- as.Date(end)
+    if(is.null(end)) s.end <- Sys.Date() else s.end <- as.Date(end)
     dates <- interval(s.start, s.end)
 
     ## If the selected time frame is not complely available change the parameters and warn
