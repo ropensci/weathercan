@@ -53,7 +53,7 @@ test_that("stations_search 'coords' returns correct data", {
   ## Check specific
   expect_equal(nrow(stn <- stations_search(coords = c(54, -122))), 12)
   expect_equal(stn$station_name[1], "UPPER FRASER")
-  expect_equal(round(stn$distance[1], 5), 13.74476)
+  expect_equal(round(stn$distance[1], 5), 13.75226)
   expect_lt(max(stn$distance) - min(stn$distance), 10)
 
   ## Check with Kamloops
