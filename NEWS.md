@@ -13,9 +13,11 @@ output: html_document
 - Changed 'timeframe' arguments to 'interval'
 - Minor internal adjustments
 
+
 # envirocan 0.1.1.1 (2016-06-23)
 
 - quick fix to correct duplicated monthly data downloads
+
 
 # envirocan 0.1.1 (2016-06-23)
 
@@ -26,6 +28,7 @@ output: html_document
 ## Bug fixes
 - Add messages so functions fail gracefully if timezone doesn't exist
 - Correct bugs that prevented downloading of monthly data
+
 
 # envirocan 0.1.0 (2016-06-21)
 
