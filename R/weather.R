@@ -45,13 +45,10 @@
 #' @param stations_data Data frame. The \code{stations} data frame to use. Will use the one
 #'  included in the package unless otherwise specified.
 #' @param url Character. Url from which to grab the weather data
+#' @param encoding Character. Text encoding for download.
 #' @param verbose Logical. Include messages
 #'
 #' @return Data frame with station ID, name and weather data.
-#'
-#' @export
-#' @import lubridate
-#' @import magrittr
 #'
 #' @examples
 #'
@@ -72,6 +69,9 @@
 #'        geom_line()
 #'}
 #'
+#' @export
+#' @import lubridate
+#' @import magrittr
 weather <- function(station_ids,
                     start = NULL, end = NULL,
                     interval = "hour",
@@ -83,9 +83,13 @@ weather <- function(station_ids,
                     tz_disp = NULL,
                     stations_data = NULL,
                     url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html",
+                    encoding = "UTF-8",
                     verbose = FALSE) {
 
   # station_id = 51423; start = "2016-01-01"; end = "2016-02-15"; format = FALSE; interval = "hour"; avg = "none"; string_as = NA; stn = NULL; url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html"
+
+   #station_ids = 54398; start = "2016-01-01"; end = NULL; format = FALSE; interval = "day"; avg = "none"; string_as = NA; stn = NULL; url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html"
+
   #'
   ## AVERAGE CAN ONLY BE day, month, year
   ## AVERAGE Has to be larger interval than interval
@@ -145,10 +149,8 @@ weather <- function(station_ids,
 
     if(interval == "month") date_range <- date_range[1]
 
-    preamble <- weather_dl(station_id = s, date = date_range[1], interval = interval, nrows = 25, header = FALSE)
+    preamble <- weather_dl(station_id = s, date = date_range[1], interval = interval, nrows = 25, header = FALSE, encoding = encoding)
     skip <- grep("Date/Time", preamble[, 1])
-
-    #test <- read.csv(text = httr::content(html, as = "text", type = "text/csv", encoding = "ISO-8859-1"), skip = skip)
 
     if(verbose) message("Downloading station data")
     w <- data.frame()
@@ -157,10 +159,12 @@ weather <- function(station_ids,
                                date = date_range[i],
                                interval = interval,
                                skip = skip,
-                               url = url))
+                               url = url,
+                               encoding = encoding))
     }
 
     ## Add header info
+    if(verbose) message("Adding header data")
     w <- w %>%
       dplyr::mutate(prov = unique(stn$prov),
                     station_name = preamble$V2[preamble$V1 %in% "Station Name"],
@@ -220,7 +224,7 @@ weather_dl <- function(station_id,
                    nrows = -1,
                    header = TRUE,
                    url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html",
-                   encoding = "ISO-8859-1") {
+                   encoding = "UTF-8") {
 
   html <- httr::GET(url, query = list(format = 'csv',
                               stationID = station_id,
