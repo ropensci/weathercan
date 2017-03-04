@@ -68,10 +68,12 @@ test_that("weather(hourly) formats timezone display", {
 })
 
 test_that("weather(hourly) gets all", {
-  expect_silent(w <- weather(station_ids = 10816, interval = "hour", trim = FALSE))
+  expect_silent(w <- weather(station_ids = 10816, start = Sys.Date() - lubridate::days(1), interval = "hour", trim = FALSE))
   expect_is(w, "data.frame")
   expect_length(w, 35)
-  expect_equal(nrow(w), 8784)
+  expect_equal(nrow(w), 48)
+  expect_equal(w$date[1], Sys.Date() - lubridate::days(1))
+  expect_equal(w$date[nrow(w)], Sys.Date())
 })
 
 test_that("weather(hourly) trims NAs", {
