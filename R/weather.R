@@ -210,7 +210,7 @@ weather <- function(station_ids,
     }
 
     ## Arrange
-    w_all <- dplyr::select(w_all, station_name, station_id, everything())
+    w_all <- dplyr::select(w_all, station_name, station_id, dplyr::everything())
   }
 
   return(w_all)
@@ -284,7 +284,7 @@ weather_format <- function(w, interval = "hour", string_as = "NA", tz_disp = NUL
   w <- w %>%
     tidyr::gather(type, value, flag, value) %>%
     dplyr::mutate(variable = replace(variable, type == "flag", paste0(variable[type == "flag"], "_flag")))   %>%
-    dplyr::select(date, everything(), -type) %>%
+    dplyr::select(date, dplyr::everything(), -type) %>%
     tidyr::spread(variable, value)
 
   ## Can we convert to numeric?
@@ -352,7 +352,7 @@ weather_avg <- function(w, interval = "hour", avg = "none") {
                          mean_wind_chill = mean(wind_chill, na.rm = TRUE)) %>%
         dplyr::left_join(w %>%
                            dplyr::group_by(year, month, day) %>%
-                           dplyr::summarize_each(dplyr::funs(n = length(.[!is.na(.)])), everything()),
+                           dplyr::summarize_each(dplyr::funs(n = length(.[!is.na(.)])), dplyr::everything()),
                          interval = c("year", "month", "day"))
 
       # Add degree days
