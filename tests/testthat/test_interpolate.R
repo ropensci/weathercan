@@ -48,7 +48,7 @@ test_that("approx_na_rm (time) without NAs for different measures", {
 })
 
 test_that("approx_na_rm (time) without NAs pads NAs at start/end", {
-  k <- kamloops[kamloops$time >= as.POSIXct("2016-02-29 08:00:00") & kamloops$time <= as.POSIXct("2016-02-29 9:00:00"), ]
+  k <- kamloops[kamloops$time >= as.POSIXct("2016-02-29 08:00:00", tz = "Etc/GMT+8") & kamloops$time <= as.POSIXct("2016-02-29 9:00:00", tz = "Etc/GMT+8"), ]
   f <- finches[1:100, ]
 
   expect_equal(sum(is.na((a <- approx_na_rm(x = k$time, y = k$temp, xout = f$time, na_gap = 2))$y)), 55)
