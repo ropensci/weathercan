@@ -120,7 +120,7 @@ approx_na_rm <- function(x, y, xout, na_gap = NULL) {
       ## Remove missing values from interpolated ones
       new[sapply(new[, 1], FUN = function(x, missing) any(x %within% missing), missing = missing), 2] <- NA
     } else if (is.numeric(x)) {
-      if(!is.numeric(na_gap)) stop("With numeric x, na_gap must also be numeric")
+      if(is.period(na_gap) || !is.numeric(na_gap)) stop("With numeric x, na_gap must also be numeric")
       diff_x <- diff(x[!is.na(y)])
       which_x <- x[!is.na(y)][c(diff_x > na_gap, FALSE)]
       missing <- data.frame(from = which_x, to = which_x + diff_x[diff_x > na_gap])
