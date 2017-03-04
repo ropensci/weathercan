@@ -3,6 +3,8 @@ title: "News"
 author: "Steffi LaZerte"
 output: html_document
 ---
+# envirocan 0.2.1 (2017-03-04)
+- Minor bug fixes: correcting encoding information for downloads, updating function calls to dplyr package, updating stations dataset
 
 # envirocan 0.2.0 (2016-07-08)
 
