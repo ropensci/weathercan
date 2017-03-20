@@ -1,9 +1,9 @@
 Package: envirocan
 Type: Package
 Title: Download weather data from the Environment Canada website
-Version: 0.2.1.9999
-Author: Steffi LaZerte
-Maintainer: Steffi LaZerte <stefanie.lazerte@unbc.ca>
+Version: 0.2.2
+Authors@R: person("LaZerte", "Stefanie E.", email = "steffi@steffi.ca", role = c("aut","cre"))
+Authors@R: person("Albers", "Sam", email = "", role = c("ctb"))
 Description: This package provides means of grabbing station information,
     searching for stations by name or proximity, and then weather data from the
     Environment Canada website.
