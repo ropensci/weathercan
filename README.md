@@ -1,39 +1,53 @@
-[![Build
-Status](https://travis-ci.org/steffilazerte/envirocan.svg?branch=master)](https://travis-ci.org/steffilazerte/envirocan)
-[![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/steffilazerte/envirocan?branch=master&svg=true)](https://ci.appveyor.com/project/steffilazerte/envirocan)
+README
+================
+Steffi LaZerte
+
+    ## Loading tidyverse: ggplot2
+    ## Loading tidyverse: tibble
+    ## Loading tidyverse: tidyr
+    ## Loading tidyverse: readr
+    ## Loading tidyverse: purrr
+    ## Loading tidyverse: dplyr
+
+    ## Conflicts with tidy packages ----------------------------------------------
+
+    ## filter(): dplyr, stats
+    ## lag():    dplyr, stats
+
+[![Build Status](https://travis-ci.org/steffilazerte/envirocan.svg?branch=master)](https://travis-ci.org/steffilazerte/envirocan) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/steffilazerte/envirocan?branch=master&svg=true)](https://ci.appveyor.com/project/steffilazerte/envirocan)
 
 envirocan
 =========
 
-This package is makes it easier to search for and download multiple
-months/years of historical weather data from Environment Canada webiste.
+This package is makes it easier to search for and download multiple months/years of historical weather data from Environment Canada website.
 
-Bear in mind that these downloads can be fairly large and performing
-multiple, downloads may use up Environment Canada's bandwidth
-unecessarily. Try to stick to what you need.
+Bear in mind that these downloads can be fairly large and performing multiple, downloads may use up Environment Canada's bandwidth unecessarily. Try to stick to what you need.
 
 Installation
 ------------
 
 Use the `devtools` package to directly install R packages from github:
 
-    install.packages("devtools") # If not already installed
-    devtools::install_github("steffilazerte/envirocan", ref = "v0.2.1") 
-    ## For most recent release; Otherwise omit "ref = " to download most recent version
+``` r
+install.packages("devtools") # If not already installed
+devtools::install_github("steffilazerte/envirocan", ref = "v0.2.2") 
+## For most recent release; Otherwise omit "ref = " to download most recent version
+## Also making use of the tidyverse for data manipulations
+library(tidyverse)
+```
 
 Basic usage:
 ------------
 
-To download data, you first need to know the `station_id` associated
-with the station you're interested in.
+To download data, you first need to know the `station_id` associated with the station you're interested in.
 
 ### Stations
 
-`envirocan` includes a data frame called `stations` which includes a
-list of stations and their details (including `station_id`.
+`envirocan` includes a data frame called `stations` which includes a list of stations and their details (including `station_id`.
 
-    head(stations)
+``` r
+head(stations)
+```
 
     ##   prov           station_name station_id climate_id WMO_id TC_id   lat
     ## 1   BC            ACTIVE PASS         14    1010066   <NA>  <NA> 48.87
@@ -50,10 +64,11 @@ list of stations and their details (including `station_id`.
     ## 5 -123.35  61.0     hour    NA  NA
     ## 6 -123.63  12.2     hour    NA  NA
 
-You can look through this data frame directly, or you can use the
-`stations_search` function:
+You can look through this data frame directly, or you can use the `stations_search` function:
 
-    stations_search("Kamloops", interval = "hour")
+``` r
+stations_search("Kamloops", interval = "hour")
+```
 
     ##   prov station_name station_id climate_id WMO_id TC_id  lat     lon  elev
     ## 1   BC   KAMLOOPS A       1275    1163780  71887   YKA 50.7 -120.44 345.3
@@ -68,7 +83,9 @@ Time frame must be one of "hour", "day", or "month".
 
 You can also search by proximity:
 
-    stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour")
+``` r
+stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour")
+```
 
     ##   prov station_name station_id climate_id WMO_id TC_id  lat     lon  elev
     ## 1   BC   KAMLOOPS A       1275    1163780  71887   YKA 50.7 -120.44 345.3
@@ -79,13 +96,30 @@ You can also search by proximity:
     ## 2     hour  2006 2017 8.635022
     ## 3     hour  2013 2017 9.281516
 
+We can also perform more complex searches using `tidyverse` tools and use the resulting vector:
+
+``` r
+BCstations <- stations %>%
+  filter(prov %in% c("BC")) %>%
+  filter(interval == "hour") %>%
+  filter(lat > 49 & lat < 49.5) %>%
+  filter(lon > -119 & lon < -116) %>%
+  filter(start<=2002) %>%
+  filter(end>=2016)
+
+## weather() accepts numbers so we can create a vector to input into weather:
+stn_vector <- BCstations$station_id 
+```
+
 ### Weather
 
 Once you have your `station_id`(s) you can download weather data:
 
-    kam <- weather(station_ids = 51423, start = "2016-01-01", end = "2016-02-15")
-                        
-    head(kam)
+``` r
+kam <- weather(station_ids = 51423, start = "2016-01-01", end = "2016-02-15")
+                    
+head(kam)
+```
 
     ##   station_name station_id prov  lat     lon       date                time
     ## 1   KAMLOOPS A      51423   BC 50.7 -120.45 2016-01-01 2016-01-01 00:00:00
@@ -95,12 +129,12 @@ Once you have your `station_id`(s) you can download weather data:
     ## 5   KAMLOOPS A      51423   BC 50.7 -120.45 2016-01-01 2016-01-01 04:00:00
     ## 6   KAMLOOPS A      51423   BC 50.7 -120.45 2016-01-01 2016-01-01 05:00:00
     ##   year month day  hour qual       weather hmdx hmdx_flag pressure
-    ## 1 2016    01  01 00:00    ‡          <NA>   NA              99.95
-    ## 2 2016    01  01 01:00    ‡ Mostly Cloudy   NA              99.93
-    ## 3 2016    01  01 02:00    ‡          <NA>   NA              99.92
-    ## 4 2016    01  01 03:00    ‡          <NA>   NA              99.90
-    ## 5 2016    01  01 04:00    ‡        Cloudy   NA              99.86
-    ## 6 2016    01  01 05:00    ‡          <NA>   NA              99.82
+    ## 1 2016    01  01 00:00              <NA>   NA              99.95
+    ## 2 2016    01  01 01:00     Mostly Cloudy   NA              99.93
+    ## 3 2016    01  01 02:00              <NA>   NA              99.92
+    ## 4 2016    01  01 03:00              <NA>   NA              99.90
+    ## 5 2016    01  01 04:00            Cloudy   NA              99.86
+    ## 6 2016    01  01 05:00              <NA>   NA              99.82
     ##   pressure_flag rel_hum rel_hum_flag temp temp_dew temp_dew_flag temp_flag
     ## 1                    74              -9.1    -12.9                        
     ## 2                    76              -9.6    -13.1                        
@@ -125,9 +159,11 @@ Once you have your `station_id`(s) you can download weather data:
 
 You can also download data from multiple stations at once:
 
-    kam.pg <- weather(station_ids = c(48248, 51423), start = "2016-01-01", end = "2016-02-15")
-                        
-    head(kam.pg)
+``` r
+kam.pg <- weather(station_ids = c(48248, 51423), start = "2016-01-01", end = "2016-02-15")
+                    
+head(kam.pg)
+```
 
     ##                 station_name station_id prov   lat     lon       date
     ## 1 PRINCE GEORGE AIRPORT AUTO      48248   BC 53.89 -122.67 2016-01-01
@@ -167,22 +203,69 @@ You can also download data from multiple stations at once:
 
 And plot it:
 
-    library(ggplot2)
+``` r
+library(ggplot2)
 
-    ggplot(data = kam.pg, aes(x = time, y = temp, group = station_name, colour = station_name)) +
-      theme(legend.position = "top") +
-      geom_line()
+ggplot(data = kam.pg, aes(x = time, y = temp, group = station_name, colour = station_name)) +
+  theme(legend.position = "top") +
+  geom_line()
+```
 
-![](README_files/figure-markdown_strict/unnamed-chunk-8-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-8-1.png)
+
+Or you can use the vector created above:
+
+``` r
+stn_vec_df <- weather(station_ids = stn_vector, start = "2016-01-01", end = "2016-02-15")
+
+head(stn_vec_df)
+```
+
+    ##   station_name station_id prov   lat     lon       date
+    ## 1    NELSON CS       6839   BC 49.49 -117.31 2016-01-01
+    ## 2    NELSON CS       6839   BC 49.49 -117.31 2016-01-01
+    ## 3    NELSON CS       6839   BC 49.49 -117.31 2016-01-01
+    ## 4    NELSON CS       6839   BC 49.49 -117.31 2016-01-01
+    ## 5    NELSON CS       6839   BC 49.49 -117.31 2016-01-01
+    ## 6    NELSON CS       6839   BC 49.49 -117.31 2016-01-01
+    ##                  time year month day  hour qual weather hmdx hmdx_flag
+    ## 1 2016-01-01 00:00:00 2016    01  01 00:00         <NA>   NA          
+    ## 2 2016-01-01 01:00:00 2016    01  01 01:00         <NA>   NA          
+    ## 3 2016-01-01 02:00:00 2016    01  01 02:00         <NA>   NA          
+    ## 4 2016-01-01 03:00:00 2016    01  01 03:00         <NA>   NA          
+    ## 5 2016-01-01 04:00:00 2016    01  01 04:00         <NA>   NA          
+    ## 6 2016-01-01 05:00:00 2016    01  01 05:00         <NA>   NA          
+    ##   pressure pressure_flag rel_hum rel_hum_flag temp temp_dew temp_dew_flag
+    ## 1    97.62                    69              -6.2    -10.9              
+    ## 2    97.60                    68              -6.2    -11.1              
+    ## 3    97.58                    71              -6.3    -10.7              
+    ## 4    97.58                    70              -6.0    -10.5              
+    ## 5    97.53                    73              -6.3    -10.4              
+    ## 6    97.48                    74              -6.4    -10.4              
+    ##   temp_flag visib visib_flag wind_chill wind_chill_flag wind_dir
+    ## 1              NA                    NA                       NA
+    ## 2              NA                    NA                       NA
+    ## 3              NA                    NA                       NA
+    ## 4              NA                    NA                       NA
+    ## 5              NA                    NA                       NA
+    ## 6              NA                    NA                       NA
+    ##   wind_dir_flag wind_spd wind_spd_flag  elev climat_id WMO_id TC_id
+    ## 1                     NA             M 534.9   1145M29  71776   WNM
+    ## 2                     NA             M 534.9   1145M29  71776   WNM
+    ## 3                     NA             M 534.9   1145M29  71776   WNM
+    ## 4                     NA             M 534.9   1145M29  71776   WNM
+    ## 5                     NA             M 534.9   1145M29  71776   WNM
+    ## 6                     NA             M 534.9   1145M29  71776   WNM
 
 ### Interpolate and add data
 
-You can merge weather data with other data frames by linearly
-interprolating between points.
+You can merge weather data with other data frames by linearly interprolating between points.
 
 For example, using the included datasets:
 
-    head(kamloops)
+``` r
+head(kamloops)
+```
 
     ##   station_name station_id prov  lat     lon       date                time
     ## 1   KAMLOOPS A      51423   BC 50.7 -120.45 2016-01-01 2016-01-01 00:00:00
@@ -234,7 +317,9 @@ For example, using the included datasets:
     ## 5   1163781  71887   YKA
     ## 6   1163781  71887   YKA
 
-    head(finches)
+``` r
+head(finches)
+```
 
     ##      bird_id                time feeder_id     species       lon      lat
     ## 1 041868D861 2016-02-29 07:40:15      2200 House Finch -120.3612 50.66778
@@ -244,11 +329,15 @@ For example, using the included datasets:
     ## 5 041868D861 2016-02-29 07:40:34      2200 House Finch -120.3612 50.66778
     ## 6 041868D861 2016-02-29 07:40:51      2200 House Finch -120.3612 50.66778
 
-    finches_temperature <- add_weather(data = finches, weather = kamloops, cols = "temp")
+``` r
+finches_temperature <- add_weather(data = finches, weather = kamloops, cols = "temp")
+```
 
     ## temp is missing 4 out of 4368 data, interpolation may be less accurate as a result.
 
-    summary(finches_temperature)
+``` r
+summary(finches_temperature)
+```
 
     ##        bird_id          time                     feeder_id  
     ##  0620000513:7536   Min.   :2016-02-29 07:40:15   1500:6351  
@@ -267,7 +356,9 @@ For example, using the included datasets:
     ##                     Max.   :-120.4   Max.   :50.67   Max.   :16.353  
     ## 
 
-    head(finches_temperature)
+``` r
+head(finches_temperature)
+```
 
     ##      bird_id                time feeder_id     species       lon      lat
     ## 1 041868D861 2016-02-29 07:40:15      2200 House Finch -120.3612 50.66778
@@ -284,17 +375,17 @@ For example, using the included datasets:
     ## 5 1.718222
     ## 6 1.710667
 
-By default, gaps of 2 hours (or two days, with a daily scale) will be
-interpolated over, but longer gaps will be filled with NAs. You can
-adjust this behaviour with `na_gap`. Note that as environment canada
-data is downloaded on an hourly scale, it makes no sense to apply
-`na_gap` values of less than 1.
+By default, gaps of 2 hours (or two days, with a daily scale) will be interpolated over, but longer gaps will be filled with NAs. You can adjust this behaviour with `na_gap`. Note that as environment canada data is downloaded on an hourly scale, it makes no sense to apply `na_gap` values of less than 1.
 
-    finches_temperature <- add_weather(data = finches, weather = kamloops, cols = "temp", na_gap = 1)
+``` r
+finches_temperature <- add_weather(data = finches, weather = kamloops, cols = "temp", na_gap = 1)
+```
 
     ## temp is missing 4 out of 4368 data, interpolation may be less accurate as a result.
 
-    summary(finches_temperature)
+``` r
+summary(finches_temperature)
+```
 
     ##        bird_id          time                     feeder_id  
     ##  0620000513:7536   Min.   :2016-02-29 07:40:15   1500:6351  
@@ -313,7 +404,9 @@ data is downloaded on an hourly scale, it makes no sense to apply
     ##                     Max.   :-120.4   Max.   :50.67   Max.   :16.353  
     ##                                                      NA's   :195
 
-    finches_temperature[is.na(finches_temperature$temp),][1:10,]
+``` r
+finches_temperature[is.na(finches_temperature$temp),][1:10,]
+```
 
     ##         bird_id                time feeder_id     species       lon
     ## 7443 062000035D 2016-03-08 12:10:10      1500 House Finch -120.3658
@@ -338,7 +431,9 @@ data is downloaded on an hourly scale, it makes no sense to apply
     ## 7451 50.67057   NA
     ## 7452 50.67057   NA
 
-    kamloops[is.na(kamloops$temp), c("time", "temp")]
+``` r
+kamloops[is.na(kamloops$temp), c("time", "temp")]
+```
 
     ##                     time temp
     ## 1004 2016-02-11 19:00:00   NA
