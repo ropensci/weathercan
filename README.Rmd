@@ -7,9 +7,7 @@ output: md_document
 ```{r, echo = FALSE}
 library(envirocan)
 ```
-[![Build Status](https://travis-ci.org/steffilazerte/envirocan.svg?branch=master)](https://travis-ci.org/steffilazerte/envirocan)
-
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/steffilazerte/envirocan?branch=master&svg=true)](https://ci.appveyor.com/project/steffilazerte/envirocan)
+[![Build Status](https://travis-ci.org/steffilazerte/envirocan.svg?branch=master)](https://travis-ci.org/steffilazerte/envirocan) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/steffilazerte/envirocan?branch=master&svg=true)](https://ci.appveyor.com/project/steffilazerte/envirocan)
 
 # envirocan
 
