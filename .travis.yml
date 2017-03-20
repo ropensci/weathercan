@@ -3,3 +3,16 @@
 language: R
 sudo: false
 cache: packages
+
+matrix:
+  include:
+    - os: linux
+      dist: precise
+    - os: linux
+      dist: trusty
+      env: R_CODECOV=true
+    - os: osx
+      osx_image: xcode8.1
+    - os: osx
+      osx_image: beta-xcode6.4
+    - os: osx

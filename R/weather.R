@@ -167,8 +167,7 @@ weather <- function(station_ids,
     if(verbose) message("Adding header data")
     w <- w %>%
       dplyr::mutate(prov = unique(stn$prov),
-                    #station_name = preamble$V2[preamble$V1 %in% "Station Name"],
-                    station_name = preamble[1,2], ##Deal BOM in collected metadata
+                    station_name = preamble[1, 2], ##Deal BOM in collected metadata
                     station_id = s,
                     lat = as.numeric(as.character(preamble$V2[preamble$V1 %in% "Latitude"])),
                     lon = as.numeric(as.character(preamble$V2[preamble$V1 %in% "Longitude"])),
