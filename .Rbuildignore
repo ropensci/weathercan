@@ -1,4 +1,4 @@
-^.*\.Rproj$
+^envirocan.Rproj$
 ^\.Rproj\.user$
 ^extra$
 ^data-raw$
@@ -6,3 +6,4 @@
 ^Readme
 ^old R$
 ^\.travis\.yml$
+^appveyor\.yml$
