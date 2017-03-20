@@ -71,7 +71,8 @@ stations_all <- function(url = "ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_Mo
                                                  "SASKATCHEWAN",
                                                  "YUKON TERRITORY"),
                                 labels = c("AB", "BC", "MB", "NB", "NL", "NT","NS", "NU", "ON", "PE", "QC", "SK", "YT"))) %>%
-    tidyr::spread(type, date)
+    tidyr::spread(type, date) %>%
+    tbl_df()
 
   return(stn)
 }

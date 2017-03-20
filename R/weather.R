@@ -213,7 +213,7 @@ weather <- function(station_ids,
     w_all <- dplyr::select(w_all, station_name, station_id, dplyr::everything())
   }
 
-  return(w_all)
+  return(tbl_df(w_all))
 }
 
 
