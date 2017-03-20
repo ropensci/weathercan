@@ -7,3 +7,4 @@
 ^old R$
 ^\.travis\.yml$
 ^appveyor\.yml$
+^.*\.Rproj$
