@@ -4,7 +4,7 @@ Title: Download weather data from the Environment Canada website
 Version: 0.2.1
 Authors@R: c(
      person("LaZerte", "Stefanie E.", email = "steffi@steffi.ca", role = c("aut","cre")),
-     person("Albers", "Sam", email = "", role = c("ctb")))
+     person("Albers", "Sam", email = "sam.albers@gmail.com", role = c("ctb")))
 Description: This package provides means of grabbing station information,
     searching for stations by name or proximity, and then weather data from the
     Environment and Climate Change Canada website.
