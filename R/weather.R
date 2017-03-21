@@ -48,7 +48,7 @@
 #' @param encoding Character. Text encoding for download.
 #' @param verbose Logical. Include messages
 #'
-#' @return Data frame with station ID, name and weather data.
+#' @return A tibble with station ID, name and weather data.
 #'
 #' @examples
 #'
@@ -213,7 +213,7 @@ weather <- function(station_ids,
     w_all <- dplyr::select(w_all, station_name, station_id, dplyr::everything())
   }
 
-  return(tbl_df(w_all))
+  return(dplyr::tbl_df(w_all))
 }
 
 

@@ -10,7 +10,7 @@
 #' @param skip Numeric. Number of lines to skip at the beginning of the csv. If
 #'   NULL, automatically derived.
 #'
-#' @return Data frame containing station names, station ID codes and dates of
+#' @return A tibble containing station names, station ID codes and dates of
 #'   operation
 #'
 #' @import magrittr
@@ -72,7 +72,7 @@ stations_all <- function(url = "ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_Mo
                                                  "YUKON TERRITORY"),
                                 labels = c("AB", "BC", "MB", "NB", "NL", "NT","NS", "NU", "ON", "PE", "QC", "SK", "YT"))) %>%
     tidyr::spread(type, date) %>%
-    tbl_df()
+    dplyr::tbl_df()
 
   return(stn)
 }

@@ -15,7 +15,7 @@
 NULL, automatically derived.}
 }
 \value{
-Data frame containing station names, station ID codes and dates of
+A tibble containing station names, station ID codes and dates of
   operation
 }
 \description{

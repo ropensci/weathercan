@@ -54,7 +54,7 @@ included in the package unless otherwise specified.}
 \item{verbose}{Logical. Include messages}
 }
 \value{
-Data frame with station ID, name and weather data.
+A tibble with station ID, name and weather data.
 }
 \description{
 Downloads data from Environment Canada for one or more stations.
