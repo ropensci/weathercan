@@ -6,7 +6,7 @@ test_that("stations_all() runs and returns data", {
   expect_warning(expect_error({stations_all(url = "test.csv")}))
   expect_is(s, "data.frame")
   expect_length(s, 12)
-  expect_lt(length(s[is.na(s)]), length(s[!is.na(s)]))
+  expect_lt(length(data.frame(s)[is.na(data.frame(s))]), length(data.frame(s)[!is.na(data.frame(s))]))
   expect_is(s$prov, "factor")
   expect_is(s$station_name, "character")
   expect_gt(nrow(s), 10)

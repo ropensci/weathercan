@@ -15,7 +15,7 @@
 NULL, automatically derived.}
 }
 \value{
-Data frame containing station names, station ID codes and dates of
+A tibble containing station names, station ID codes and dates of
   operation
 }
 \description{
@@ -25,4 +25,3 @@ package contains station data downloaded when the package was last compiled,
 so it may not be necessary to call this function (and this function may take a few
 minutes to run).
 }
-

@@ -49,4 +49,3 @@ stations_search(coords = loc[c("lat", "lon")])
 }
 
 }
-
