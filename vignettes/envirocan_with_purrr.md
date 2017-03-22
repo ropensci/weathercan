@@ -65,7 +65,7 @@ ggplot(pancan_df, aes(x = date, y = mean_temp, colour = station_name)) +
 
     ## Warning: Removed 6344 rows containing missing values (geom_path).
 
-![](C:\Users\tills\AppData\Local\Temp\RtmpIRlLq5\preview-273015c138a.dir\envirocan_with_purrr_files/figure-markdown_github/raw_plt-1.png) This is quite a large dataset.
+![](envirocan_with_purrr_files/figure-markdown_github/raw_plt-1.png) This is quite a large dataset.
 
 Creating list-columns
 ---------------------
@@ -164,7 +164,7 @@ resids %>%
 
     ## Warning: Removed 25011 rows containing missing values (geom_point).
 
-![](C:\Users\tills\AppData\Local\Temp\RtmpIRlLq5\preview-273015c138a.dir\envirocan_with_purrr_files/figure-markdown_github/resid-1.png)
+![](envirocan_with_purrr_files/figure-markdown_github/resid-1.png)
 
 ### Using broom
 
@@ -222,4 +222,4 @@ preds %>%
 
     ## Warning: Removed 25011 rows containing missing values (geom_point).
 
-![](C:\Users\tills\AppData\Local\Temp\RtmpIRlLq5\preview-273015c138a.dir\envirocan_with_purrr_files/figure-markdown_github/pred-1.png)
+![](envirocan_with_purrr_files/figure-markdown_github/pred-1.png)
