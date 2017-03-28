@@ -9,7 +9,7 @@ test_that("weather_dl (hour) downloads a data frame", {
   expect_equal(nrow(wd), 744)
   expect_is(wd$Date.Time, "character")
   expect_lt(length(data.frame(wd)[is.na(data.frame(wd))]), length(data.frame(wd)[!is.na(data.frame(wd))]))
-  expect_true(wd$Data.Quality[1] %in% c("‡", "\u0087"))
+  expect_true(stringi::stri_escape_unicode(wd$Data.Quality[1]) %in% c("\\u2021"))
 })
 
 test_that("weather_dl (day) downloads a data frame", {
@@ -21,7 +21,7 @@ test_that("weather_dl (day) downloads a data frame", {
   expect_equal(nrow(wd), 365)
   expect_is(wd$Date.Time, "character")
   expect_lt(length(wd[is.na(wd)]), length(wd[!is.na(wd)]))
-  expect_true(wd$Data.Quality[1] %in% c("‡", "\u0087"))
+  expect_true(stringi::stri_escape_unicode(wd$Data.Quality[1]) %in% c("\\u2021"))
 })
 
 test_that("weather_dl (month) downloads a data frame", {

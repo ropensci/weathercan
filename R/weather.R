@@ -278,8 +278,9 @@ weather_format <- function(w, interval = "hour", string_as = "NA", tz_disp = NUL
 
   if("qual" %in% names(w)){
     w <- dplyr::mutate(w,
-                       qual = replace(qual, qual %in% c("†", "\u0086"), "Only preliminary quality checking"),
-                       qual = replace(qual, qual %in% c("‡", "\u0087"), "Partner data that is not subject to review by the National Climate Archives"))
+                       qual = stringi::stri_escape_unicode(qual), # Convert to ascii
+                       qual = replace(qual, qual == "\\u2020", "Only preliminary quality checking"),
+                       qual = replace(qual, qual == "\\u2021", "Partner data that is not subject to review by the National Climate Archives"))
   }
   w <- w %>%
     tidyr::gather(type, value, flag, value) %>%
