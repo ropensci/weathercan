@@ -245,7 +245,7 @@ weather_dl <- function(station_id,
 weather_format <- function(w, interval = "hour", string_as = "NA", tz_disp = NULL) {
 
   ## Get names from stored name list
-  n <- envirocan:::w_names[[interval]]
+  n <- w_names[[interval]]
 
   # Omit preamble stuff for now
   preamble <- w[, names(w) %in% c("prov", "station_name", "station_id", "lat", "lon", "elev", "climat_id", "WMO_id", "TC_id")]
