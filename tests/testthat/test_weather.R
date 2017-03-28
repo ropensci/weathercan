@@ -8,7 +8,7 @@ test_that("weather_dl (hour) downloads a data frame", {
   expect_length(wd, 25)
   expect_equal(nrow(wd), 744)
   expect_is(wd$Date.Time, "character")
-  expect_lt(length(wd[is.na(wd)]), length(wd[!is.na(wd)]))
+  expect_lt(length(data.frame(wd)[is.na(data.frame(wd))]), length(data.frame(wd)[!is.na(data.frame(wd))]))
   expect_true(wd$Data.Quality[1] %in% c("‡", "\u0087"))
 })
 
@@ -32,7 +32,7 @@ test_that("weather_dl (month) downloads a data frame", {
   expect_length(wd, 25)
   expect_equal(nrow(wd), 4)
   expect_is(wd$Date.Time, "character")
-  expect_lt(length(wd[is.na(wd)]), length(wd[!is.na(wd)]))
+  expect_lt(length(data.frame(wd)[is.na(data.frame(wd))]), length(data.frame(wd)[!is.na(data.frame(wd))]))
 })
 
 
@@ -54,7 +54,7 @@ test_that("weather(hour) returns a data frame", {
   expect_is(w$temp_flag, "character")
   expect_is(w$date, "Date")
   expect_is(w$time, "POSIXct")
-  expect_lt(length(w[is.na(w)]), length(w[!is.na(w)]))
+  expect_lt(length(data.frame(w)[is.na(data.frame(w))]), length(data.frame(w)[!is.na(data.frame(w))]))
 
   ## Data
   expect_equal(w$station_id[1], 51423)
@@ -82,7 +82,7 @@ test_that("weather(hourly) trims NAs", {
 
 })
 
-test_that("weather(hour) mutliple stations", {
+test_that("weather(hour) multiple stations", {
   expect_silent({w <- weather(station_ids = c(51423, 10816), start = "2014-03-01", end = "2014-04-01")})
 
   expect_equal(unique(w$station_name), c("KAMLOOPS A", "SQUAMISH AIRPORT"))
@@ -107,7 +107,7 @@ test_that("weather (day) returns a data frame", {
   expect_is(w$mean_temp, "numeric")
   expect_is(w$mean_temp_flag, "character")
   expect_is(w$date, "Date")
-  expect_lt(length(w[is.na(w)]), length(w[!is.na(w)]))
+  expect_lt(length(data.frame(w)[is.na(data.frame(w))]), length(data.frame(w)[!is.na(data.frame(w))]))
 
   ## Data
   expect_equal(w$station_id[1], 51423)
@@ -144,7 +144,7 @@ test_that("weather(daily) trims NAs", {
   expect_silent(w2 <- weather(station_ids = 54398, interval = "day", trim = TRUE))
 
   expect_gte(nrow(w1), nrow(w2))
-  expect_gte(length(w1[is.na(w1)]), length(w2[is.na(w2)]))
+  expect_gte(length(data.frame(w1)[is.na(data.frame(w1))]), length(data.frame(w2)[is.na(data.frame(w2))]))
 })
 
 test_that("weather(day) no data fails nicely", {
@@ -180,7 +180,7 @@ test_that("weather returns a data frame MONTHLY", {
   expect_is(w$mean_temp, "numeric")
   expect_is(w$mean_temp_flag, "character")
   expect_is(w$date, "Date")
-  expect_lt(length(w[is.na(w)]), length(w[!is.na(w)]))
+  expect_lt(length(data.frame(w)[is.na(data.frame(w))]), length(data.frame(w)[!is.na(data.frame(w))]))
 
   ## Data
   expect_equal(w$station_id[1], 5401)
