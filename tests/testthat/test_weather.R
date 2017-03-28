@@ -61,6 +61,7 @@ test_that("weather(hour) returns a data frame", {
   expect_equal(w$station_name[1], "KAMLOOPS A")
   expect_equal(w$prov[1], factor("BC", levels = levels(stations$prov)))
   expect_equal(w$time[1], as.POSIXct("2014-01-01 00:00:00", tz = "Etc/GMT+8"))
+  expect_equal(w$qual[1], "Partner data that is not subject to review by the National Climate Archives")
 })
 
 test_that("weather(hourly) formats timezone display", {
@@ -113,7 +114,7 @@ test_that("weather (day) returns a data frame", {
   expect_equal(w$station_id[1], 51423)
   expect_equal(w$station_name[1], "KAMLOOPS A")
   expect_equal(w$prov[1], factor("BC", levels = levels(stations$prov)))
-
+  expect_equal(w$qual[1], "Partner data that is not subject to review by the National Climate Archives")
 })
 
 test_that("weather(daily) gets all", {
@@ -185,6 +186,9 @@ test_that("weather returns a data frame MONTHLY", {
   ## Data
   expect_equal(w$station_id[1], 5401)
   expect_equal(w$station_name[1], "MAGOG")
+  expect_equal(w$climat_id[1], "7024440")
+  expect_equal(w$WMO_id[1], "")
+  expect_equal(w$TC_id[1], "")
   expect_equal(w$prov[1], factor("QC", levels = levels(stations$prov)))
 
 })
