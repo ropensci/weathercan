@@ -4,7 +4,7 @@ Title: Download weather data from the Environment Canada website
 Version: 0.2.2
 Authors@R: c(
      person("LaZerte", "Stefanie E.", email = "steffi@steffi.ca", role = c("aut","cre")),
-     person("Albers", "Sam", email = "", role = c("ctb")))
+     person("Albers", "Sam", email = "sam.albers@gmail.com", role = c("ctb")))
 Description: This package provides means of grabbing station information,
     searching for stations by name or proximity, and then weather data from the
     Environment and Climate Change Canada website.
@@ -13,19 +13,18 @@ LazyData: TRUE
 Depends:
     R (>= 3.2.2)
 Imports:
-    httr (>= 1.1.0),
     dplyr (>= 0.4.3),
+    httr (>= 1.1.0),
     lazyeval (>= 0.1.10),
     lubridate (>= 1.5.6),
     magrittr (>= 1.5),
     rvest (>= 0.3.1),
     sp (>= 1.2-3),
-    tidyr (>= 0.4.1),
-    xml2 (>= 0.1.2),
+    stringi (>= 1.1.2),
     tibble (>= 1.2),
-    lazyeval (>= 0.1.10),
-    sp (>= 1.2-3)
-RoxygenNote: 6.0.1
+    tidyr (>= 0.4.1),
+    xml2 (>= 0.1.2)
+RoxygenNote: 5.0.1
 Suggests:
     knitr,
     rmarkdown,

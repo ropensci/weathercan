@@ -12,3 +12,4 @@ kamloops_day
 An example dataset of daily weather data for Kamloops
 }
 \keyword{datasets}
+
