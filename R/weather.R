@@ -245,7 +245,7 @@ weather_dl <- function(station_id,
 weather_format <- function(w, interval = "hour", string_as = "NA", tz_disp = NULL) {
 
   ## Get names from stored name list
-  n <- envirocan:::w_names[[interval]]
+  n <- w_names[[interval]]
 
   # Omit preamble stuff for now
   preamble <- w[, names(w) %in% c("prov", "station_name", "station_id", "lat", "lon", "elev", "climat_id", "WMO_id", "TC_id")]
@@ -278,8 +278,9 @@ weather_format <- function(w, interval = "hour", string_as = "NA", tz_disp = NUL
 
   if("qual" %in% names(w)){
     w <- dplyr::mutate(w,
-                       qual = replace(qual, qual == "\u0086", "Only preliminary quality checking"),
-                       qual = replace(qual, qual == "\u0087", "Partner data that is not subject to review by the National Climate Archives"))
+                       qual = stringi::stri_escape_unicode(qual), # Convert to ascii
+                       qual = replace(qual, qual == "\\u2020", "Only preliminary quality checking"),
+                       qual = replace(qual, qual == "\\u2021", "Partner data that is not subject to review by the National Climate Archives"))
   }
   w <- w %>%
     tidyr::gather(type, value, flag, value) %>%

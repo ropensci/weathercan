@@ -47,3 +47,4 @@ finch_weather <- add_weather(data = finches, weather = kamloops)
 
 
 }
+
