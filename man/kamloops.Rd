@@ -12,4 +12,3 @@ kamloops
 An example dataset of hourly weather data for Kamloops
 }
 \keyword{datasets}
-

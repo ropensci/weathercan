@@ -2,17 +2,16 @@ README
 ================
 Steffi LaZerte
 
-    ## Loading tidyverse: ggplot2
-    ## Loading tidyverse: tibble
-    ## Loading tidyverse: tidyr
-    ## Loading tidyverse: readr
-    ## Loading tidyverse: purrr
-    ## Loading tidyverse: dplyr
+    ## 
+    ## Attaching package: 'dplyr'
 
-    ## Conflicts with tidy packages ----------------------------------------------
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     filter, lag
 
-    ## filter(): dplyr, stats
-    ## lag():    dplyr, stats
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     intersect, setdiff, setequal, union
 
 [![Build Status](https://travis-ci.org/steffilazerte/envirocan.svg?branch=master)](https://travis-ci.org/steffilazerte/envirocan) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/steffilazerte/envirocan?branch=master&svg=true)](https://ci.appveyor.com/project/steffilazerte/envirocan)
 
@@ -33,7 +32,7 @@ install.packages("devtools") # If not already installed
 devtools::install_github("steffilazerte/envirocan", ref = "v0.2.2") 
 ## For most recent release; Otherwise omit "ref = " to download most recent version
 ## Also making use of the tidyverse for data manipulations
-library(tidyverse)
+library(dplyr)
 ```
 
 Basic usage:
