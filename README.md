@@ -2,17 +2,6 @@ README
 ================
 Steffi LaZerte
 
-    ## 
-    ## Attaching package: 'dplyr'
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
-
 [![Build Status](https://travis-ci.org/steffilazerte/envirocan.svg?branch=master)](https://travis-ci.org/steffilazerte/envirocan) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/steffilazerte/envirocan?branch=master&svg=true)](https://ci.appveyor.com/project/steffilazerte/envirocan)
 
 envirocan
@@ -120,41 +109,23 @@ kam <- weather(station_ids = 51423, start = "2016-01-01", end = "2016-02-15")
 head(kam)
 ```
 
-    ##   station_name station_id prov  lat     lon       date                time
-    ## 1   KAMLOOPS A      51423   BC 50.7 -120.45 2016-01-01 2016-01-01 00:00:00
-    ## 2   KAMLOOPS A      51423   BC 50.7 -120.45 2016-01-01 2016-01-01 01:00:00
-    ## 3   KAMLOOPS A      51423   BC 50.7 -120.45 2016-01-01 2016-01-01 02:00:00
-    ## 4   KAMLOOPS A      51423   BC 50.7 -120.45 2016-01-01 2016-01-01 03:00:00
-    ## 5   KAMLOOPS A      51423   BC 50.7 -120.45 2016-01-01 2016-01-01 04:00:00
-    ## 6   KAMLOOPS A      51423   BC 50.7 -120.45 2016-01-01 2016-01-01 05:00:00
-    ##   year month day  hour qual       weather hmdx hmdx_flag pressure
-    ## 1 2016    01  01 00:00              <NA>   NA              99.95
-    ## 2 2016    01  01 01:00     Mostly Cloudy   NA              99.93
-    ## 3 2016    01  01 02:00              <NA>   NA              99.92
-    ## 4 2016    01  01 03:00              <NA>   NA              99.90
-    ## 5 2016    01  01 04:00            Cloudy   NA              99.86
-    ## 6 2016    01  01 05:00              <NA>   NA              99.82
-    ##   pressure_flag rel_hum rel_hum_flag temp temp_dew temp_dew_flag temp_flag
-    ## 1                    74              -9.1    -12.9                        
-    ## 2                    76              -9.6    -13.1                        
-    ## 3                    74              -9.9    -13.7                        
-    ## 4                    73              -9.5    -13.5                        
-    ## 5                    70              -9.4    -13.9                        
-    ## 6                    71              -9.8    -14.1                        
-    ##   visib visib_flag wind_chill wind_chill_flag wind_dir wind_dir_flag
-    ## 1  64.4                   -17                       13              
-    ## 2  64.4                   -17                       11              
-    ## 3  64.4                   -18                       11              
-    ## 4  64.4                   -17                       11              
-    ## 5  64.4                   -17                       11              
-    ## 6  64.4                   -17                       10              
-    ##   wind_spd wind_spd_flag  elev climat_id WMO_id TC_id
-    ## 1       19               345.3   1163781  71887   YKA
-    ## 2       20               345.3   1163781  71887   YKA
-    ## 3       20               345.3   1163781  71887   YKA
-    ## 4       18               345.3   1163781  71887   YKA
-    ## 5       18               345.3   1163781  71887   YKA
-    ## 6       16               345.3   1163781  71887   YKA
+    ## # A tibble: 6 × 35
+    ##   station_name station_id   prov   lat     lon       date
+    ##          <chr>      <dbl> <fctr> <dbl>   <dbl>     <date>
+    ## 1   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01
+    ## 2   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01
+    ## 3   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01
+    ## 4   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01
+    ## 5   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01
+    ## 6   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01
+    ## # ... with 29 more variables: time <dttm>, year <chr>, month <chr>,
+    ## #   day <chr>, hour <chr>, qual <chr>, weather <chr>, hmdx <dbl>,
+    ## #   hmdx_flag <chr>, pressure <dbl>, pressure_flag <chr>, rel_hum <dbl>,
+    ## #   rel_hum_flag <chr>, temp <dbl>, temp_dew <dbl>, temp_dew_flag <chr>,
+    ## #   temp_flag <chr>, visib <dbl>, visib_flag <chr>, wind_chill <dbl>,
+    ## #   wind_chill_flag <chr>, wind_dir <dbl>, wind_dir_flag <chr>,
+    ## #   wind_spd <dbl>, wind_spd_flag <chr>, elev <dbl>, climat_id <chr>,
+    ## #   WMO_id <chr>, TC_id <chr>
 
 You can also download data from multiple stations at once:
 
@@ -164,41 +135,23 @@ kam.pg <- weather(station_ids = c(48248, 51423), start = "2016-01-01", end = "20
 head(kam.pg)
 ```
 
-    ##                 station_name station_id prov   lat     lon       date
-    ## 1 PRINCE GEORGE AIRPORT AUTO      48248   BC 53.89 -122.67 2016-01-01
-    ## 2 PRINCE GEORGE AIRPORT AUTO      48248   BC 53.89 -122.67 2016-01-01
-    ## 3 PRINCE GEORGE AIRPORT AUTO      48248   BC 53.89 -122.67 2016-01-01
-    ## 4 PRINCE GEORGE AIRPORT AUTO      48248   BC 53.89 -122.67 2016-01-01
-    ## 5 PRINCE GEORGE AIRPORT AUTO      48248   BC 53.89 -122.67 2016-01-01
-    ## 6 PRINCE GEORGE AIRPORT AUTO      48248   BC 53.89 -122.67 2016-01-01
-    ##                  time year month day  hour qual weather hmdx hmdx_flag
-    ## 1 2016-01-01 00:00:00 2016    01  01 00:00         <NA>   NA          
-    ## 2 2016-01-01 01:00:00 2016    01  01 01:00         <NA>   NA          
-    ## 3 2016-01-01 02:00:00 2016    01  01 02:00         <NA>   NA          
-    ## 4 2016-01-01 03:00:00 2016    01  01 03:00         <NA>   NA          
-    ## 5 2016-01-01 04:00:00 2016    01  01 04:00         <NA>   NA          
-    ## 6 2016-01-01 05:00:00 2016    01  01 05:00         <NA>   NA          
-    ##   pressure pressure_flag rel_hum rel_hum_flag  temp temp_dew temp_dew_flag
-    ## 1    95.26                    79              -21.2    -23.9              
-    ## 2    95.23                    81              -21.4    -23.8              
-    ## 3    95.22                    79              -22.8    -25.5              
-    ## 4    95.22                    79              -23.1    -25.8              
-    ## 5    95.17                    79              -22.9    -25.6              
-    ## 6    95.14                    78              -24.2    -26.9              
-    ##   temp_flag visib visib_flag wind_chill wind_chill_flag wind_dir
-    ## 1              NA                   -24                       35
-    ## 2              NA                   -23                        3
-    ## 3              NA                   -25                       33
-    ## 4              NA                   -24                        0
-    ## 5              NA                   -24                       32
-    ## 6              NA                   -27                       34
-    ##   wind_dir_flag wind_spd wind_spd_flag elev climat_id WMO_id TC_id
-    ## 1                      3                680   1096453  71302   VXS
-    ## 2                      2                680   1096453  71302   VXS
-    ## 3                      2                680   1096453  71302   VXS
-    ## 4                      1                680   1096453  71302   VXS
-    ## 5                      1                680   1096453  71302   VXS
-    ## 6                      3                680   1096453  71302   VXS
+    ## # A tibble: 6 × 35
+    ##                 station_name station_id   prov   lat     lon       date
+    ##                        <chr>      <dbl> <fctr> <dbl>   <dbl>     <date>
+    ## 1 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01
+    ## 2 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01
+    ## 3 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01
+    ## 4 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01
+    ## 5 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01
+    ## 6 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01
+    ## # ... with 29 more variables: time <dttm>, year <chr>, month <chr>,
+    ## #   day <chr>, hour <chr>, qual <chr>, weather <chr>, hmdx <dbl>,
+    ## #   hmdx_flag <chr>, pressure <dbl>, pressure_flag <chr>, rel_hum <dbl>,
+    ## #   rel_hum_flag <chr>, temp <dbl>, temp_dew <dbl>, temp_dew_flag <chr>,
+    ## #   temp_flag <chr>, visib <dbl>, visib_flag <chr>, wind_chill <dbl>,
+    ## #   wind_chill_flag <chr>, wind_dir <dbl>, wind_dir_flag <chr>,
+    ## #   wind_spd <dbl>, wind_spd_flag <chr>, elev <dbl>, climat_id <chr>,
+    ## #   WMO_id <chr>, TC_id <chr>
 
 And plot it:
 
@@ -220,41 +173,23 @@ stn_vec_df <- weather(station_ids = stn_vector, start = "2016-01-01", end = "201
 head(stn_vec_df)
 ```
 
-    ##   station_name station_id prov   lat     lon       date
-    ## 1    NELSON CS       6839   BC 49.49 -117.31 2016-01-01
-    ## 2    NELSON CS       6839   BC 49.49 -117.31 2016-01-01
-    ## 3    NELSON CS       6839   BC 49.49 -117.31 2016-01-01
-    ## 4    NELSON CS       6839   BC 49.49 -117.31 2016-01-01
-    ## 5    NELSON CS       6839   BC 49.49 -117.31 2016-01-01
-    ## 6    NELSON CS       6839   BC 49.49 -117.31 2016-01-01
-    ##                  time year month day  hour qual weather hmdx hmdx_flag
-    ## 1 2016-01-01 00:00:00 2016    01  01 00:00         <NA>   NA          
-    ## 2 2016-01-01 01:00:00 2016    01  01 01:00         <NA>   NA          
-    ## 3 2016-01-01 02:00:00 2016    01  01 02:00         <NA>   NA          
-    ## 4 2016-01-01 03:00:00 2016    01  01 03:00         <NA>   NA          
-    ## 5 2016-01-01 04:00:00 2016    01  01 04:00         <NA>   NA          
-    ## 6 2016-01-01 05:00:00 2016    01  01 05:00         <NA>   NA          
-    ##   pressure pressure_flag rel_hum rel_hum_flag temp temp_dew temp_dew_flag
-    ## 1    97.62                    69              -6.2    -10.9              
-    ## 2    97.60                    68              -6.2    -11.1              
-    ## 3    97.58                    71              -6.3    -10.7              
-    ## 4    97.58                    70              -6.0    -10.5              
-    ## 5    97.53                    73              -6.3    -10.4              
-    ## 6    97.48                    74              -6.4    -10.4              
-    ##   temp_flag visib visib_flag wind_chill wind_chill_flag wind_dir
-    ## 1              NA                    NA                       NA
-    ## 2              NA                    NA                       NA
-    ## 3              NA                    NA                       NA
-    ## 4              NA                    NA                       NA
-    ## 5              NA                    NA                       NA
-    ## 6              NA                    NA                       NA
-    ##   wind_dir_flag wind_spd wind_spd_flag  elev climat_id WMO_id TC_id
-    ## 1                     NA             M 534.9   1145M29  71776   WNM
-    ## 2                     NA             M 534.9   1145M29  71776   WNM
-    ## 3                     NA             M 534.9   1145M29  71776   WNM
-    ## 4                     NA             M 534.9   1145M29  71776   WNM
-    ## 5                     NA             M 534.9   1145M29  71776   WNM
-    ## 6                     NA             M 534.9   1145M29  71776   WNM
+    ## # A tibble: 6 × 35
+    ##   station_name station_id   prov   lat     lon       date
+    ##          <chr>      <dbl> <fctr> <dbl>   <dbl>     <date>
+    ## 1    NELSON CS       6839     BC 49.49 -117.31 2016-01-01
+    ## 2    NELSON CS       6839     BC 49.49 -117.31 2016-01-01
+    ## 3    NELSON CS       6839     BC 49.49 -117.31 2016-01-01
+    ## 4    NELSON CS       6839     BC 49.49 -117.31 2016-01-01
+    ## 5    NELSON CS       6839     BC 49.49 -117.31 2016-01-01
+    ## 6    NELSON CS       6839     BC 49.49 -117.31 2016-01-01
+    ## # ... with 29 more variables: time <dttm>, year <chr>, month <chr>,
+    ## #   day <chr>, hour <chr>, qual <chr>, weather <chr>, hmdx <dbl>,
+    ## #   hmdx_flag <chr>, pressure <dbl>, pressure_flag <chr>, rel_hum <dbl>,
+    ## #   rel_hum_flag <chr>, temp <dbl>, temp_dew <dbl>, temp_dew_flag <chr>,
+    ## #   temp_flag <chr>, visib <dbl>, visib_flag <chr>, wind_chill <dbl>,
+    ## #   wind_chill_flag <chr>, wind_dir <dbl>, wind_dir_flag <chr>,
+    ## #   wind_spd <dbl>, wind_spd_flag <chr>, elev <dbl>, climat_id <chr>,
+    ## #   WMO_id <chr>, TC_id <chr>
 
 ### Interpolate and add data
 
