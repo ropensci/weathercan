@@ -115,8 +115,8 @@ weather <- function(station_ids,
     if(nrow(stn) == 0) {
       message("There are no data for station ", s, " for interval by '", interval, "'.",
            "\nAvailable Station Data:\n",
-           paste0(capture.output(print(envirocan::stations %>%
-                                         dplyr::filter_(lazyeval::interp("station_id %in% x & !is.na(start)", x = s)))), collapse = "\n"))
+           paste0(utils::capture.output(print(envirocan::stations %>%
+                                                dplyr::filter_(lazyeval::interp("station_id %in% x & !is.na(start)", x = s)))), collapse = "\n"))
       next
     }
 
@@ -233,8 +233,8 @@ weather_dl <- function(station_id,
                               Month = format(date, "%m"),
                               submit = 'Download+Data'))
 
-  read.csv(text = httr::content(html, as = "text", type = "text/csv", encoding = encoding),
-                       nrows = nrows, strip.white = TRUE, skip = skip, header = header, colClasses = "character")
+  utils::read.csv(text = httr::content(html, as = "text", type = "text/csv", encoding = encoding),
+                  nrows = nrows, strip.white = TRUE, skip = skip, header = header, colClasses = "character")
 }
 
 
@@ -293,19 +293,19 @@ weather_format <- function(w, interval = "hour", string_as = "NA", tz_disp = NUL
 
   num <- apply(w[, !(names(w) %in% c("date", "year", "month", "day", "hour", "time", "qual", "weather", grep("flag", names(w), value = TRUE)))], 2, FUN = function(x) tryCatch(as.numeric(x), warning = function(w) w))
 
-  if(any(sapply(num, FUN = function(x) is(x, "warning")))) {
-    message("Some variables have non-numeric values (", paste0(names(num)[sapply(num, FUN = function(x) is(x, "warning"))], collapse = ", "), ")")
-    for(i in names(num)[sapply(num, FUN = function(x) is(x, "warning"))]) {
+  if(any(sapply(num, FUN = function(x) methods::is(x, "warning")))) {
+    message("Some variables have non-numeric values (", paste0(names(num)[sapply(num, FUN = function(x) methods::is(x, "warning"))], collapse = ", "), ")")
+    for(i in names(num)[sapply(num, FUN = function(x) methods::is(x, "warning"))]) {
       problems <- w[grep("<|>|\\)|\\(", w[,i]), names(w) %in% c("date", "year", "month", "day", "hour", "time", i)]
       if(nrow(problems) > 20) rows <- 20 else rows <- nrow(problems)
-      message(paste0(capture.output(problems[1:rows,]), collapse = "\n"), if (rows < nrow(problems)) "\n...")
+      message(paste0(utils::capture.output(problems[1:rows,]), collapse = "\n"), if (rows < nrow(problems)) "\n...")
     }
     if(!is.null(string_as)) {
       message("Replacing with ", string_as, ". Use 'string_as = NULL' to keep as characters (see ?weather).")
       suppressWarnings(w[, !(names(w) %in% c("date", "year", "month", "day", "hour", "time", "qual", "weather", grep("flag", names(w), value = TRUE)))] <- apply(w[, !(names(w) %in% c("date", "year", "month", "day", "hour", "time", "qual", "weather", grep("flag", names(w), value = TRUE)))], 2, as.numeric))
     } else {
-      message("Leaving as characters (", paste0(names(num)[sapply(num, FUN = function(x) is(x, "warning"))], collapse = ", "), "). Cannot summarize these values.")
-      w[, !(names(w) %in% c("date", "year", "month", "day", "hour", "time", "qual", "weather", grep("flag", names(w), value = TRUE), names(num)[sapply(num, FUN = function(x) is(x, "warning"))]))] <- num[!sapply(num, FUN = function(x) is(x, "warning"))]
+      message("Leaving as characters (", paste0(names(num)[sapply(num, FUN = function(x) methods::is(x, "warning"))], collapse = ", "), "). Cannot summarize these values.")
+      w[, !(names(w) %in% c("date", "year", "month", "day", "hour", "time", "qual", "weather", grep("flag", names(w), value = TRUE), names(num)[sapply(num, FUN = function(x) methods::is(x, "warning"))]))] <- num[!sapply(num, FUN = function(x) methods::is(x, "warning"))]
     }
   } else {
     w[, !(names(w) %in% c("date", "year", "month", "day", "hour", "time", "qual", "weather", grep("flag", names(w), value = TRUE)))] <- num
@@ -331,7 +331,7 @@ weather_avg <- function(w, interval = "hour", avg = "none") {
     if(nrow(flags) > 0) {
       if(nrow(flags) > 20) rows <- 20 else rows <- nrow(flags)
       message("To summarize, ignoring ", nrow(flags), " flags:")
-      message(paste0(capture.output(flags[1:rows,]), collapse = "\n"))
+      message(paste0(utils::capture.output(flags[1:rows,]), collapse = "\n"))
     }
 
     ## Check for character vectors

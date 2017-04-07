@@ -98,7 +98,7 @@ add_weather <- function(data, weather,
                           y = weather[, col],
                           xout = data[, t],
                           na_gap = na_gap) %>%
-        dplyr::rename_(.dots = setNames(c('x', 'y'), c(t, col)))
+        dplyr::rename_(.dots = stats::setNames(c('x', 'y'), c(t, col)))
 
       data <- dplyr::left_join(data, unique(new), by = t)
     }
@@ -109,7 +109,7 @@ add_weather <- function(data, weather,
 #' @import lubridate
 approx_na_rm <- function(x, y, xout, na_gap = NULL) {
   if(!all(class(x) == class(xout)) & !(is.numeric(xout) & is.numeric(x))) stop("'xout' must be the same class as 'x'")
-  new <- as.data.frame(approx(x = x, y = y, xout = xout))
+  new <- as.data.frame(stats::approx(x = x, y = y, xout = xout))
 
   if(any(is.na(y))) {
     if(is.Date(x) | is.POSIXct(x)) {
