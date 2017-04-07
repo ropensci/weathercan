@@ -34,4 +34,3 @@ information can be updated by stations <- running stations_all() and then by
 specifying stn = stations in most functions.
 }
 \keyword{datasets}
-
