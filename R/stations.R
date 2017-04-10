@@ -29,9 +29,9 @@ stations_all <- function(url = "ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_Mo
   message("Environment Canada Disclaimers:\n", paste0(grep("Disclaimer", headings, value = TRUE), collapse = "\n"))
 
 
-  stn <- read.csv(file = url,
-                  skip = skip,
-                  strip.white = TRUE) %>%
+  stn <- utils::read.csv(file = url,
+                         skip = skip,
+                         strip.white = TRUE) %>%
     dplyr::select(prov = Province,
                   station_name = Name,
                   station_id = Station.ID,
