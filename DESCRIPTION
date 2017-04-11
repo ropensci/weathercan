@@ -19,6 +19,7 @@ Imports:
     lazyeval (>= 0.1.10),
     lubridate (>= 1.5.6),
     magrittr (>= 1.5),
+    methods (>= 3.2.2),
     rvest (>= 0.3.1),
     sp (>= 1.2-3),
     stringi (>= 1.1.2),
