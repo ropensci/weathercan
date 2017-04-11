@@ -8,3 +8,5 @@
 ^\.travis\.yml$
 ^appveyor\.yml$
 ^.*\.Rproj$
+^cran-comments.md$
+^revdep$
