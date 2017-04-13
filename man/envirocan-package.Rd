@@ -2,8 +2,8 @@
 % Please edit documentation in R/help.R
 \docType{package}
 \name{envirocan-package}
-\alias{envirocan-package}
 \alias{envirocan}
+\alias{envirocan-package}
 \title{Easy downloading of weather data from Environment Canada}
 \description{
 Extended documentation coming soon... see index for details.
@@ -11,3 +11,4 @@ Extended documentation coming soon... see index for details.
 \references{
 Environment Canada \url{}.
 }
+

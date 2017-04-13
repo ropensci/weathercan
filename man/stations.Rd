@@ -4,21 +4,20 @@
 \name{stations}
 \alias{stations}
 \title{Station data downloaded from Environment Canada}
-\format{A data frame with 26199 rows and 12 variables:
+\format{A data frame with 26211 rows and 12 variables:
 \describe{
   \item{prov}{Province}
   \item{station_name}{Station name}
-  \item{station_id}{Environment Canada's station ID number. Required for
-  downloading station data.}
+  \item{station_id}{Environment Canada's station ID number. Required for downloading station data.}
   \item{climate_id}{Climate ID number}
   \item{WMO_id}{Climate ID number}
   \item{TC_id}{Climate ID number}
-  \item{lat}{Latitude of station location}
-  \item{lon}{Longitude of station location}
-  \item{elev}{Elevation of station location}
+  \item{lat}{Latitude of station location in degree decimal format}
+  \item{lon}{Longitude of station location in degree decimal format}
+  \item{elev}{Elevation of station location in metres}
   \item{interval}{Interval of the data measurements ('hour', 'day', 'month')}
-  \item{start}{Starting year of station data}
-  \item{end}{Ending year of station data}
+  \item{start}{Starting year of data record}
+  \item{end}{Ending year of data record}
 }}
 \source{
 \url{http://climate.weather.gc.ca/index_e.html}
@@ -28,9 +27,10 @@ stations
 }
 \description{
 A dataset containing station information downloaded from Environment Canada
-on June 17th 2016. Note that a station may have several station IDs,
+on April 13, 2017. Note that a station may have several station IDs,
 depending on how the data collection has changed over the years. Station
-information can be updated by stations <- running stations_all() and then by
+information can be updated by running \code{stations <-  stations_all()} and then by
 specifying stn = stations in most functions.
 }
 \keyword{datasets}
+

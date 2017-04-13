@@ -3,14 +3,14 @@
 \docType{data}
 \name{pg}
 \alias{pg}
-\title{Hourly weather data for Prince George downloaded with \code{weather()}}
+\title{Hourly weather data for Prince George downloaded with \code{weather()}. Terms are more thoroughly defined here \url{http://climate.weather.gc.ca/glossary_e.html}}
 \format{An example dataset of hourly weather data for Prince George:
 \describe{
   \item{station_name}{Station name}
   \item{station_id}{Environment Canada's station ID number. Required for downloading station data.}
   \item{prov}{Province}
-  \item{lat}{Latitude of station location}
-  \item{lon}{Longitude of station location}
+  \item{lat}{Latitude of station location in degree decimal format}
+  \item{lon}{Longitude of station location in degree decimal format}
   \item{date}{Date}
   \item{time}{Time}
   \item{year}{Year}
@@ -18,33 +18,28 @@
   \item{day}{Day}
   \item{hour}{Hour}
   \item{qual}{Data quality}
-  \item{weather}{Weather}
+  \item{weather}{The state of the atmosphere at a specific time.}
   \item{hmdx}{Humidex}
   \item{hmdx_flag}{Humidex data flag}
-  \item{pressure}{Pressure}
+  \item{pressure}{Pressure (kPa)}
   \item{pressure_flag}{Pressure data flag}
   \item{rel_hum}{Relative humidity}
   \item{rel_hum_flag}{Relative humidity data flag}
   \item{temp}{Temperature}
-  \item{temp_dew}{Temperature of Dew Point}
-  \item{temp_dew_flag}{Temperature of Dew Point data flag}
-  \item{visib}{Visibility}
+  \item{temp_dew}{Dew Point Temperature}
+  \item{temp_dew_flag}{Dew Point Temperatureflag}
+  \item{visib}{Visibility (km)}
   \item{visib_flag}{Visibility data flag}
   \item{wind_chill}{Wind Chill}
   \item{wind_chill_flag}{Wind Chill flag}
-  \item{wind_dir}{Wind Direction}
+  \item{wind_dir}{Wind Direction (10's of degrees)}
   \item{wind_dir_flag}{wind Direction Flag}
-  \item{elev}{Elevation}
+  \item{wind_spd}{Wind speed km/hr}
+  \item{wind_spd_flag}{Wind speed flag}
+  \item{elev}{Elevation (m)}
   \item{climat_id}{Climate identifier}
   \item{WMO_id}{World Meteorological Organization Identifier}
   \item{TC_id}{Transport Canada Identifier}
-  \item{climate_id}{Climate ID number}
-  \item{WMO_id}{Climate ID number}
-  \item{TC_id}{Climate ID number}
-  \item{elev}{Elevation of station location}
-  \item{interval}{Interval of the data measurements ('hour', 'day', 'month')}
-  \item{start}{Starting year of station data}
-  \item{end}{Ending year of station data}
 }}
 \source{
 \url{http://climate.weather.gc.ca/index_e.html}
@@ -53,6 +48,7 @@
 pg
 }
 \description{
-Hourly weather data for Prince George downloaded with \code{weather()}
+Hourly weather data for Prince George downloaded with \code{weather()}. Terms are more thoroughly defined here \url{http://climate.weather.gc.ca/glossary_e.html}
 }
 \keyword{datasets}
+

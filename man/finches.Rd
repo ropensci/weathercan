@@ -4,11 +4,20 @@
 \name{finches}
 \alias{finches}
 \title{RFID Data on finch visits to feeders}
-\format{An object of class \code{data.frame} with 16595 rows and 6 columns.}
+\format{An example dataset of finch RFID data for interpolation:
+\describe{
+  \item{bird_id}{Bird ID number}
+  \item{time}{Time}
+  \item{feeder_id}{feeder ID}
+  \item{species}{Species}
+  \item{lat}{Latitude of station location in degree decimal format}
+  \item{lon}{Longitude of station location in degree decimal format}
+}}
 \usage{
 finches
 }
 \description{
-An example dataset of finch RFID data for interpolation
+RFID Data on finch visits to feeders
 }
 \keyword{datasets}
+
