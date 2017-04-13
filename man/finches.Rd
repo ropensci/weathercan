@@ -20,4 +20,3 @@ finches
 RFID Data on finch visits to feeders
 }
 \keyword{datasets}
-

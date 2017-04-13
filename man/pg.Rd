@@ -51,4 +51,3 @@ pg
 Hourly weather data for Prince George downloaded with \code{weather()}. Terms are more thoroughly defined here \url{http://climate.weather.gc.ca/glossary_e.html}
 }
 \keyword{datasets}
-
