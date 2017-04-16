@@ -7,12 +7,13 @@ Authors@R: c(
      person("Albers", "Sam", email = "sam.albers@gmail.com", role = c("ctb")))
 Description: This package provides means of grabbing station information,
     searching for stations by name or proximity, and then weather data from the
-    Environment and Climate Change Canada website (<http://climate.weather.gc.ca/climate_data/bulk_data_e.html>).
+    Environment and Climate Change Canada website (<http://climate.weather.gc.ca/
+    climate_data/bulk_data_e.html>).
 License: GPL-3
 LazyData: TRUE
 URL: https://github.com/steffilazerte/envirocan
 Depends:
-    R (>= 3.2.2)
+    R (>= 3.3.3)
 Imports:
     dplyr (>= 0.4.3),
     httr (>= 1.1.0),

@@ -37,7 +37,7 @@ To download data, you first need to know the `station_id` associated with the st
 `envirocan` includes a data frame called `stations` which includes a list of stations and their details (including `station_id`.
 
 ```{r}
-head(stations)
+glimpse(stations)
 ```
 
 You can look through this data frame directly, or you can use the `stations_search` function:
@@ -76,7 +76,7 @@ Once you have your `station_id`(s) you can download weather data:
 ```{r}
 kam <- weather(station_ids = 51423, start = "2016-01-01", end = "2016-02-15")
                     
-head(kam)
+kam
 
 ```
 
@@ -85,18 +85,19 @@ You can also download data from multiple stations at once:
 ```{r}
 kam.pg <- weather(station_ids = c(48248, 51423), start = "2016-01-01", end = "2016-02-15")
                     
-head(kam.pg)
+kam.pg
 ```
 
 
 And plot it:
 
-```{r}
+```{r, fig.height=6, fig.width=12}
 library(ggplot2)
 
 ggplot(data = kam.pg, aes(x = time, y = temp, group = station_name, colour = station_name)) +
   theme(legend.position = "top") +
-  geom_line()
+  geom_line() +
+  theme_minimal()
 ```
 
 Or you can use the vector created above: 
@@ -104,7 +105,7 @@ Or you can use the vector created above:
 ```{r vector_input}
 stn_vec_df <- weather(station_ids = stn_vector, start = "2016-01-01", end = "2016-02-15")
 
-head(stn_vec_df)
+stn_vec_df
 ```
 
 ### Interpolate and add data
@@ -113,12 +114,12 @@ You can merge weather data with other data frames by linearly interprolating bet
 For example, using the included datasets:
 
 ```{r}
-head(kamloops)
-head(finches)
+glimpse(kamloops)
+glimpse(finches)
 
 finches_temperature <- add_weather(data = finches, weather = kamloops, cols = "temp")
 summary(finches_temperature)
-head(finches_temperature)
+glimpse(finches_temperature)
 ```
 
 By default, gaps of 2 hours (or two days, with a daily scale) will be interpolated over, but longer gaps will be filled with NAs. You can adjust this behaviour with `na_gap`. Note that as environment canada data is downloaded on an hourly scale, it makes no sense to apply `na_gap` values of less than 1.

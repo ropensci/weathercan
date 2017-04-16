@@ -217,3 +217,31 @@ test_that("weather(month) multiple stations (one NA)", {
   expect_message(expect_error(w <- weather(station_ids = c(5401, 51423), start = "2014-01-01", end = "2014-05-01", interval = "month"), NA))
   expect_equal(unique(w$station_name), c("MAGOG"))
 })
+
+
+##################
+### list_col
+##################
+context("Generating list_col")
+
+test_that("list_col=TRUE and interval=hour groups on the right level", {
+  expect_equal(ncol(weather(station_ids = c(27226), start = "2015-01-01", end = "2015-01-15", interval = "hour") %>%
+                 tidyr::nest(-station_name,-station_id,-lat,-lon, -date)),
+               ncol(weather(station_ids = c(27226), start = "2015-01-01", end = "2015-01-15", interval = "hour", list_col=TRUE)) )
+})
+
+test_that("list_col=TRUE and interval=day groups on the right level", {
+  expect_equal(ncol(weather(station_ids = c(27119), start = "2015-01-01", end = "2015-01-15", interval = "day") %>%
+                      tidyr::nest(-station_name,-station_id,-lat,-lon, -month)),
+               ncol(weather(station_ids = c(27119), start = "2015-01-01", end = "2015-01-15", interval = "day", list_col=TRUE))
+  )
+})
+
+test_that("list_col=TRUE and interval=month groups on the right level", {
+  expect_equal(ncol(weather(station_ids = c(5217), start = "2015-01-01", end = "2015-01-15", interval = "month") %>%
+                      tidyr::nest(-station_name,-station_id,-lat,-lon, -year)),
+               ncol(weather(station_ids = c(5217), start = "2015-01-01", end = "2015-01-15", interval = "month", list_col=TRUE))
+               )
+})
+
+

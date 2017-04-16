@@ -46,6 +46,7 @@
 #'  included in the package unless otherwise specified.
 #' @param url Character. Url from which to grab the weather data
 #' @param encoding Character. Text encoding for download.
+#' @param list_col Logical Defaults to FALSE
 #' @param verbose Logical. Include messages
 #'
 #' @return A tibble with station ID, name and weather data.
@@ -84,6 +85,7 @@ weather <- function(station_ids,
                     stations_data = NULL,
                     url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html",
                     encoding = "UTF-8",
+                    list_col = FALSE,
                     verbose = FALSE) {
 
   # station_id = 51423; start = "2016-01-01"; end = "2016-02-15"; format = FALSE; interval = "hour"; avg = "none"; string_as = NA; stn = NULL; url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html"
@@ -212,6 +214,24 @@ weather <- function(station_ids,
     ## Arrange
     w_all <- dplyr::select(w_all, station_name, station_id, dplyr::everything())
   }
+
+  ## If list_colis TRUE
+  if(list_col == TRUE){
+
+    ## Appropriate grouping levels
+    if(interval == "hour"){
+    w_all <- tidyr::nest(w_all, -station_name,-station_id,-lat,-lon, -date)
+    }
+
+    if(interval == "day"){
+      w_all <- tidyr::nest(w_all, -station_name,-station_id,-lat,-lon, -month)
+    }
+
+    if(interval == "month"){
+      w_all <- tidyr::nest(w_all, -station_name,-station_id,-lat,-lon, -year)
+    }
+
+    }
 
   return(dplyr::tbl_df(w_all))
 }

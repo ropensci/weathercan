@@ -8,7 +8,7 @@ weather(station_ids, start = NULL, end = NULL, interval = "hour",
   trim = TRUE, avg = "none", best = FALSE, format = TRUE,
   string_as = NA, tz_disp = NULL, stations_data = NULL,
   url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html",
-  encoding = "UTF-8", verbose = FALSE)
+  encoding = "UTF-8", list_col = FALSE, verbose = FALSE)
 }
 \arguments{
 \item{station_ids}{Numeric/Character. A vector containing the ID(s) of the
@@ -50,6 +50,8 @@ included in the package unless otherwise specified.}
 \item{url}{Character. Url from which to grab the weather data}
 
 \item{encoding}{Character. Text encoding for download.}
+
+\item{list_col}{Logical Defaults to FALSE}
 
 \item{verbose}{Logical. Include messages}
 }
