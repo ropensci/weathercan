@@ -2,7 +2,7 @@
 #'
 #' Extended documentation coming soon... see index for details.
 #'
-#' @references Environment Canada \url{}.
+#' @references Environment and Climate CHange Canada \url{https://www.ec.gc.ca/?lang=En}.
 #' @docType package
 #' @name envirocan-package
 #' @aliases envirocan envirocan-package

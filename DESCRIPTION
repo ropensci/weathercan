@@ -1,6 +1,6 @@
 Package: envirocan
 Type: Package
-Title: Download weather data from the Environment Canada website
+Title: Download Weather Data from the Environment Canada Website
 Version: 0.2.2
 Authors@R: c(
      person("LaZerte", "Stefanie E.", email = "steffi@steffi.ca", role = c("aut","cre")),
@@ -32,4 +32,3 @@ Suggests:
     knitr,
     rmarkdown,
     testthat
-VignetteBuilder: knitr

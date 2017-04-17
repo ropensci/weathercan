@@ -30,8 +30,10 @@
 #' head(finches)
 #'
 #' # Match weather to finches
+#' \dontrun{
+#' ## Not run
 #' finch_weather <- add_weather(data = finches, weather = kamloops)
-#'
+#' }
 #'
 #' @export
 add_weather <- function(data, weather,
