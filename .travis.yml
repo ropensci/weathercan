@@ -3,20 +3,36 @@
 language: r
 sudo: false
 cache: packages
-r:
-  - oldrel
-  - release
-  - devel
 
 matrix:
   include:
     - os: linux
       dist: precise
+      r:
+        - oldrel
+        - release
+        - devel
     - os: linux
       dist: trusty
       env: R_CODECOV=true
+      r:
+        - oldrel
+        - release
+        - devel
     - os: osx
       osx_image: xcode8.1
+      r:
+        - oldrel
+        - release
+        - devel
     - os: osx
       osx_image: beta-xcode6.4
+      r:
+        - oldrel
+        - release
+        - devel
     - os: osx
+      r:
+        - oldrel
+        - release
+        - devel
