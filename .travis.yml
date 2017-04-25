@@ -8,31 +8,50 @@ matrix:
   include:
     - os: linux
       dist: precise
-      r:
-        - oldrel
-        - release
-        - devel
+      r: oldrel
+    - os: linux
+      dist: precise
+      r: release
+    - os: linux
+      dist: precise
+      r: devel
+
     - os: linux
       dist: trusty
       env: R_CODECOV=true
-      r:
-        - oldrel
-        - release
-        - devel
+      r: oldrel
+    - os: linux
+      dist: trusty
+      env: R_CODECOV=true
+      r: release
+    - os: linux
+      dist: trusty
+      env: R_CODECOV=true
+      r: devel
+
     - os: osx
       osx_image: xcode8.1
-      r:
-        - oldrel
-        - release
-        - devel
+      r: oldrel
+    - os: osx
+      osx_image: xcode8.1
+      r: release
+    - os: osx
+      osx_image: xcode8.1
+      r: devel
+
     - os: osx
       osx_image: beta-xcode6.4
-      r:
-        - oldrel
-        - release
-        - devel
+      r: oldrel
     - os: osx
-      r:
-        - oldrel
-        - release
-        - devel
+      osx_image: beta-xcode6.4
+      r: release
+    - os: osx
+      osx_image: beta-xcode6.4
+      r: devel
+
+    - os: osx
+      r: oldrel
+    - os: osx
+      r: release
+    - os: osx
+      r: devel
