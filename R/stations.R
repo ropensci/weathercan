@@ -60,7 +60,7 @@ stations_all <- function(url = "ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_Mo
                   prov = factor(prov, levels = c("ALBERTA",
                                                  "BRITISH COLUMBIA",
                                                  "MANITOBA",
-                                                 "NEW BRUSNWICK",
+                                                 "NEW BRUNSWICK",
                                                  "NEWFOUNDLAND",
                                                  "NORTHWEST TERRITORIES",
                                                  "NOVA SCOTIA",

@@ -11,6 +11,12 @@ test_that("stations_all() runs and returns data", {
   expect_is(s$station_name, "character")
   expect_gt(nrow(s), 10)
   expect_equal(unique(s$interval), c("hour", "day", "month"))
+
+  # Check content
+  expect_equal(nrow(s[is.na(s$station_name),]), 0)
+  expect_equal(nrow(s[is.na(s$station_id),]), 0)
+  expect_equal(nrow(s[is.na(s$prov),]), 0)
+  expect_true(all(table(s$station_id) == 3)) # One row per time interval type
 })
 
 test_that("stations_search 'name' returns correct format", {
