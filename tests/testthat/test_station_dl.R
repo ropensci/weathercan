@@ -1,4 +1,3 @@
-library(envirocan)
 context("Station data")
 
 test_that("stations_all() runs and returns data", {

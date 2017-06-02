@@ -1,4 +1,3 @@
-library(envirocan)
 context("Weather data")
 
 test_that("weather_dl (hour) downloads a data frame", {
