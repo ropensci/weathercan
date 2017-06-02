@@ -1,4 +1,3 @@
-library(envirocan)
 context("Interpolate and merge")
 
 #####################
@@ -34,11 +33,12 @@ test_that("approx_na_rm (time) without NAs", {
 
 test_that("approx_na_rm (time) without NAs for different measures", {
   k <- kamloops[kamloops$time > as.POSIXct("2016-03-01") & kamloops$time < as.POSIXct("2016-03-03"), ]
+  k <- as.data.frame(k)
   f <- finches[1:20, ]
 
   ## Format
   for(m in c("temp", "pressure", "rel_hum", "temp_dew", "visib", "wind_spd")){
-    expect_silent(a <- approx_na_rm(x = k$time, y = k[, m][[1]], xout = f$time))
+    expect_silent(a <- approx_na_rm(x = k$time, y = k[, m], xout = f$time))
     expect_is(a, "data.frame")
     expect_is(a$x, "POSIXct")
     expect_is(a$y, "numeric")
