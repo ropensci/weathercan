@@ -31,8 +31,13 @@ into the provided dataset. Only applies to numerical weather columns (see
 \code{weather} for more details).
 }
 \details{
-\strong{Dealing with NA values}
-If there are NAs in the weather data, \code{na_gap} can be used to specify a tolerance. For example, a tolerance of 2 with an interval of "hour", means that a two hour gap in data can be interpolated over (i.e. if you have data for 9AM and 11AM, but not 10AM, the data between 9AM and 11AM will be interpolated. If, however, you have 9AM and 12PM, but not 10AM or 11AM, no interpolation will happen and data between 9AM and 12PM will be returned as NA.)
+\strong{Dealing with NA values} If there are NAs in the weather data,
+\code{na_gap} can be used to specify a tolerance. For example, a tolerance of
+2 with an interval of "hour", means that a two hour gap in data can be
+interpolated over (i.e. if you have data for 9AM and 11AM, but not 10AM, the
+data between 9AM and 11AM will be interpolated. If, however, you have 9AM and
+12PM, but not 10AM or 11AM, no interpolation will happen and data between 9AM
+and 12PM will be returned as NA.)
 }
 \examples{
 
