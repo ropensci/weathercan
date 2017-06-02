@@ -4,10 +4,10 @@
 \name{envirocan-package}
 \alias{envirocan-package}
 \alias{envirocan}
-\title{Easy downloading of weather data from Environment Canada}
+\title{Easy downloading of weather data from Environment and Climate Change Canada}
 \description{
 Extended documentation coming soon... see index for details.
 }
 \references{
-Environment and Climate CHange Canada \url{https://www.ec.gc.ca/?lang=En}.
+Environment and Climate Change Canada \url{https://www.ec.gc.ca/?lang=En}.
 }

@@ -1,8 +1,8 @@
-#' Easy downloading of weather data from Environment Canada
+#' Easy downloading of weather data from Environment and Climate Change Canada
 #'
 #' Extended documentation coming soon... see index for details.
 #'
-#' @references Environment and Climate CHange Canada \url{https://www.ec.gc.ca/?lang=En}.
+#' @references Environment and Climate Change Canada \url{https://www.ec.gc.ca/?lang=En}.
 #' @docType package
 #' @name envirocan-package
 #' @aliases envirocan envirocan-package
