@@ -1,8 +1,8 @@
 ## Get up-to-date stations data
 stations <- stations_all()
+devtools::use_data(stations, overwrite = TRUE)
 
 write.csv(stations, "./data-raw/stations.csv", row.names = FALSE)
-devtools::use_data(stations, overwrite = TRUE)
 
 ## Get names expected from stations data download
 w_names <- list(
