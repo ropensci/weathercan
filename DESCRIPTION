@@ -1,6 +1,6 @@
 Package: envirocan
 Type: Package
-Title: Download Weather Data from the Environment Canada Website
+Title: Download Weather Data from the Environment and Climate Change Canada Website
 Version: 0.2.2
 Authors@R: c(
      person("LaZerte", "Stefanie E.", email = "steffi@steffi.ca", role = c("aut","cre")),
