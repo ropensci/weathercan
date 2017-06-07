@@ -22,6 +22,7 @@ devtools::install_github("steffilazerte/envirocan", ref = "v0.2.2")
 ## For most recent release; Otherwise omit "ref = " to download most recent version
 ## Also making use of the tidyverse for data manipulations
 library(dplyr)
+library(tibble)
 ```
 
 Basic usage:
