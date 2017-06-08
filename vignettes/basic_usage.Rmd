@@ -1,0 +1,132 @@
+---
+title: "Basic Usage"
+author: "Steffi LaZerte"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, message = FALSE}
+library(tidyverse)
+library(envirocan)
+```
+
+`envirocan` is an R package for simplifying the downloading of Historical Climate Data from the [Environment and Climate Change Canada website](http://climate.weather.gc.ca/historical_data/search_historic_data_e.html)
+
+There are three main aspects of this package:
+
+1. Access **stations** lists 
+    - `stations` (a data frame listing stations)
+    - `stations_search()` identify stations by name or proximity to a location
+    - `stations_all()` - re-download stations data
+    
+2. Download **weather** data
+    - `weather()`
+    
+3. Merge weather data into other data sets through interpolation over time
+    - `add_weather()`
+    
+We also include several practice data sets:
+- `finches`
+- `kamloops`
+- `kamloops_day`
+- `pg`
+
+
+## Stations
+
+`envirocan` includes a data frame called `stations` which lists available stations and their details (including `station_id`.
+
+```{r}
+head(stations)
+```
+
+You can look through this data frame directly, or you can use the `stations_search` function:
+
+```{r}
+stations_search("Kamloops")
+```
+
+You can narrow down your search by specifying time intervals (options are "hour", "day", or "month"):
+
+```{r}
+stations_search("Kamloops", interval = "hour")
+```
+
+You can specify more than one interval:
+
+```{r}
+stations_search("Kamloops", interval = c("hour", "month"))
+```
+
+
+You can also search by proximity. These results include a new column `distance` specifying the distance in km from the coordinates:
+
+```{r}
+stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour")
+```
+
+We can also perform more complex searches using `tidyverse` tools and use the resulting vector:
+```{r search_crit}
+BCstations <- stations %>%
+  filter(prov %in% c("BC")) %>%
+  filter(interval == "hour") %>%
+  filter(lat > 49 & lat < 49.5) %>%
+  filter(lon > -119 & lon < -116) %>%
+  filter(start <= 2002) %>%
+  filter(end >= 2016)
+
+## weather() accepts numbers so we can create a vector to input into weather:
+stn_vector <- BCstations$station_id 
+stn_vector
+```
+
+Searching a bleeding edge updated list of stations:
+
+```{r, eval = FALSE}
+s <- stations_all() # Download complete stations list
+stations_search("Saskatoon", stn = s) # Specify the new stations list to search
+```
+
+
+## Weather
+
+Once you have your `station_id`(s) you can download weather data:
+
+```{r}
+kam <- weather(station_ids = 51423, start = "2016-01-01", end = "2016-02-15")
+                    
+kam
+```
+
+You can also download data from multiple stations at once:
+
+```{r}
+kam.pg <- weather(station_ids = c(48248, 51423), start = "2016-01-01", end = "2016-02-15")
+                    
+kam.pg
+```
+
+
+And plot it:
+
+```{r, fig.height=6, fig.width=12}
+ggplot(data = kam.pg, aes(x = time, y = temp, group = station_name, colour = station_name)) +
+  theme(legend.position = "top") +
+  geom_line() +
+  theme_minimal()
+```
+
+Or you can use the vector created above: 
+
+```{r vector_input}
+stn_vec_df <- weather(station_ids = stn_vector, start = "2016-01-01", end = "2016-02-15")
+
+stn_vec_df
+```
+
+## Interpolate
+

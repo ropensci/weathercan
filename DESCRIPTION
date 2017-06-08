@@ -29,6 +29,8 @@ Imports:
     xml2 (>= 0.1.2)
 RoxygenNote: 6.0.1
 Suggests:
+    tidyverse,
     knitr,
     rmarkdown,
     testthat
+VignetteBuilder: knitr
