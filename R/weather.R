@@ -106,6 +106,7 @@ weather <- function(station_ids,
   if(!(interval %in% c("hour", "day", "month"))) stop("'interval' must be either 'hour', 'day', OR 'month'")
 
   w_all <- data.frame()
+
   for(s in station_ids) {
     if(verbose) message("Getting station: ", s)
     if(is.null(stations_data)) stn <- stations else stn <- stations_data
@@ -119,7 +120,7 @@ weather <- function(station_ids,
            "\nAvailable Station Data:\n",
            paste0(utils::capture.output(print(stations %>%
                                                 dplyr::filter_(lazyeval::interp("station_id %in% x & !is.na(start)", x = s)))), collapse = "\n"))
-      next
+      if(length(station_ids) > 1) next else return(tibble::tibble())
     }
 
     if(class(try(as.Date(stn$start), silent = TRUE)) == "try-error") {
@@ -191,29 +192,48 @@ weather <- function(station_ids,
     ## Trim to match date range
     w <- w[w$date >= s.start & w$date <= s.end, ]
 
-
     w_all <- rbind(w_all, w)
   }
 
+  if(nrow(w_all) == 0) {
+    message("There are no data for these stations (", paste0(station_ids, collapse = ", "),
+            ") in this time range (",
+            as.character(lubridate::int_start(dates)), " to ",
+            as.character(lubridate::int_end(dates)), ").",
+            "\nAvailable Station Data:\n",
+            paste0(utils::capture.output(print(stations %>%
+                                                 dplyr::filter_(lazyeval::interp("station_id %in% x & !is.na(start)", x = station_ids)))), collapse = "\n"))
+    return(tibble::tibble())
+  }
+
   ## Trim to available data
-  if(trim & nrow(w_all) > 0){
+  if(trim){
     if(verbose) message("Trimming missing values before and after")
-    temp <-  w_all[, !(names(w_all) %in% c("date", "time", "prov", "station_name", "station_id", "lat", "lon", "year", "month", "day", "qual","elev", "climat_id", "WMO_id", "TC_id"))]
+    temp <-  w_all[, !(names(w_all) %in% c("date", "time", "prov", "station_name", "station_id", "lat", "lon", "year", "month", "day", "hour", "qual","elev", "climat_id", "WMO_id", "TC_id"))]
     temp <- w_all$date[which(rowSums(is.na(temp) | temp == "") != ncol(temp))]
+
+    if(length(temp) == 0) {
+      message("There are no data for these stations (", paste0(station_ids, collapse = ", "),
+              ") in this time range (",
+              as.character(lubridate::int_start(dates)), " to ",
+              as.character(lubridate::int_end(dates)), ").",
+              "\nAvailable Station Data:\n",
+              paste0(utils::capture.output(print(stations %>%
+                                                   dplyr::filter_(lazyeval::interp("station_id %in% x & !is.na(start)", x = station_ids)))), collapse = "\n"))
+      return(tibble::tibble())
+    }
+
     w_all <- w_all[w_all$date >= min(temp) & w_all$date <= max(temp), ]
   }
 
-  if(nrow(w_all) > 0){
-
-    ## Average if requested
-    if(avg != "none"){
-      if(verbose) message("Averaging station data")
-      message("Averaging is currently unavailable")
-    }
-
-    ## Arrange
-    w_all <- dplyr::select(w_all, station_name, station_id, dplyr::everything())
+  ## Average if requested
+  if(avg != "none"){
+    if(verbose) message("Averaging station data")
+    message("Averaging is currently unavailable")
   }
+
+  ## Arrange
+  w_all <- dplyr::select(w_all, station_name, station_id, dplyr::everything())
 
   ## If list_colis TRUE
   if(list_col == TRUE){

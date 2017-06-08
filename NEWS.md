@@ -18,6 +18,7 @@ output: html_document
 
 ## Bug fixes
 - Fixed inclusion of New Brunswick stations (closes #9)
+- Downloads with no data return empty tibble and an informative message (closes #21)
 
 
 # envirocan 0.2.1 (2017-03-04)
