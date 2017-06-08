@@ -1,4 +1,4 @@
-Package: envirocan
+Package: weathercan
 Type: Package
 Title: Download Weather Data from the Environment and Climate Change Canada Website
 Version: 0.2.2
@@ -11,7 +11,7 @@ Description: This package provides means of grabbing station information,
     climate_data/bulk_data_e.html>).
 License: GPL-3
 LazyData: TRUE
-URL: https://github.com/steffilazerte/envirocan
+URL: https://github.com/steffilazerte/weathercan
 Depends:
     R (>= 3.3.3)
 Imports:

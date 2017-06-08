@@ -1,6 +1,6 @@
 library(dplyr)
 library(tidyr)
-library(envirocan)
+library(weathercan)
 
 
 stations[stations$station_ID == 51423,]

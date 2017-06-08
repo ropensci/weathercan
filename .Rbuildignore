@@ -2,9 +2,7 @@
 ^\.Rproj\.user$
 ^extra$
 ^data-raw$
-^testing.R$
 ^Readme
-^old R$
 ^\.travis\.yml$
 ^appveyor\.yml$
 ^.*\.Rproj$
