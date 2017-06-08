@@ -11,10 +11,10 @@ vignette: >
 
 ```{r, message = FALSE}
 library(tidyverse)
-library(envirocan)
+library(weathercan)
 ```
 
-`envirocan` is an R package for simplifying the downloading of Historical Climate Data from the [Environment and Climate Change Canada website](http://climate.weather.gc.ca/historical_data/search_historic_data_e.html)
+`weathercan` is an R package for simplifying the downloading of Historical Climate Data from the [Environment and Climate Change Canada website](http://climate.weather.gc.ca/historical_data/search_historic_data_e.html)
 
 There are three main aspects of this package:
 
@@ -38,7 +38,7 @@ We also include several practice data sets:
 
 ## Stations
 
-`envirocan` includes a data frame called `stations` which lists available stations and their details (including `station_id`.
+`weathercan` includes a data frame called `stations` which lists available stations and their details (including `station_id`.
 
 ```{r}
 head(stations)

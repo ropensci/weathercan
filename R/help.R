@@ -4,13 +4,13 @@
 #'
 #' @references Environment and Climate Change Canada \url{https://www.ec.gc.ca/?lang=En}.
 #' @docType package
-#' @name envirocan-package
-#' @aliases envirocan envirocan-package
+#' @name weathercan-package
+#' @aliases weathercan weathercan-package
 NULL
 
 #' Dealing with CRAN Notes due to Non-standard evaluation
 #'
-.onLoad <- function(libname = find.package("envirocan"), pkgname = "envirocan"){
+.onLoad <- function(libname = find.package("weathercan"), pkgname = "weathercan"){
   # CRAN Note avoidance
   if(getRversion() >= "2.15.1")
     utils::globalVariables(

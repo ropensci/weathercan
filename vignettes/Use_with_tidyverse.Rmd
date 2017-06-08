@@ -17,10 +17,10 @@ knitr::opts_chunk$set(echo = TRUE, warnings = FALSE, message = FALSE, fig.width 
 ```
 
 ## Packages
-You'll need several packages from the *tidyverse* in addition to *envirocan* to complete the following analysis.
+You'll need several packages from the *tidyverse* in addition to *weathercan* to complete the following analysis.
 
 ```{R pck}
-library(envirocan)
+library(weathercan)
 library(dplyr)
 library(tibble)
 library(tidyr)
@@ -30,7 +30,7 @@ library(modelr)
 library(knitr)
 ```
 
-## Using envirocan to load in data
+## Using weathercan to load in data
 Your first decision that you need to make when analyzing data from weather stations across canada is to determine for which stations you'd like to query from Environment Canada. In this example, to keep processing time low, we will query two stations with very long records that happen to be far apart. To make that choice we can use *tidyverse* tools and the included \code{stations} tibble in this package:
 
 ```{R stn_pick, echo = TRUE}

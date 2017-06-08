@@ -10,9 +10,9 @@ vignette: >
 ---
 
 ## Packages
-You'll need several packages from the *tidyverse* in addition to *envirocan* to complete the following analysis.
+You'll need several packages from the *tidyverse* in addition to *weathercan* to complete the following analysis.
 ```{R pck}
-library(envirocan)
+library(weathercan)
 library(tibble)
 library(knitr)
 ```

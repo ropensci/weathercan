@@ -2,10 +2,10 @@ README
 ================
 Steffi LaZerte
 
-[![Build Status](https://travis-ci.org/steffilazerte/envirocan.svg?branch=master)](https://travis-ci.org/steffilazerte/envirocan) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/steffilazerte/envirocan?branch=master&svg=true)](https://ci.appveyor.com/project/steffilazerte/envirocan)
+[![Build Status](https://travis-ci.org/steffilazerte/weathercan.svg?branch=master)](https://travis-ci.org/steffilazerte/weathercan) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/steffilazerte/weathercan?branch=master&svg=true)](https://ci.appveyor.com/project/steffilazerte/weathercan)
 
-envirocan
-=========
+weathercan
+==========
 
 This package is makes it easier to search for and download multiple months/years of historical weather data from Environment Canada website.
 
@@ -18,7 +18,7 @@ Use the `devtools` package to directly install R packages from github:
 
 ``` r
 install.packages("devtools") # If not already installed
-devtools::install_github("steffilazerte/envirocan", ref = "v0.2.2") 
+devtools::install_github("steffilazerte/weathercan", ref = "v0.2.2") 
 ## For most recent release; Otherwise omit "ref = " to download most recent version
 ## Also making use of the tidyverse for data manipulations
 library(dplyr)
@@ -32,7 +32,7 @@ To download data, you first need to know the `station_id` associated with the st
 
 ### Stations
 
-`envirocan` includes a data frame called `stations` which includes a list of stations and their details (including `station_id`.
+`weathercan` includes a data frame called `stations` which includes a list of stations and their details (including `station_id`.
 
 ``` r
 glimpse(stations)

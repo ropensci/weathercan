@@ -13,6 +13,8 @@ output: html_document
 - Added internal tests for interpolation
 - Updated R version
 
+## Major changes
+- envirocan renamed to weathercan (closes #17)
 
 ## Bug fixes
 - Fixed inclusion of New Brunswick stations (closes #9)
