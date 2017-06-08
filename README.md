@@ -21,8 +21,8 @@ install.packages("devtools") # If not already installed
 devtools::install_github("steffilazerte/weathercan") 
 ```
 
-Basic usage
------------
+General usage
+-------------
 
 To download data, you first need to know the `station_id` associated with the station you're interested in.
 

@@ -25,7 +25,7 @@ install.packages("devtools") # If not already installed
 devtools::install_github("steffilazerte/weathercan") 
 ```
 
-## Basic usage
+## General usage
 
 To download data, you first need to know the `station_id` associated with the station you're interested in.
 
@@ -67,7 +67,6 @@ You can also download data from multiple stations at once:
 kam_pg <- weather(station_ids = c(48248, 51423), start = "2016-01-01", end = "2016-02-15")
 kam_pg
 ```
-
 
 And plot it:
 

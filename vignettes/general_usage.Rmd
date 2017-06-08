@@ -14,37 +14,6 @@ library(tidyverse)
 library(weathercan)
 ```
 
-`weathercan` is an R package for simplifying the downloading of Historical Climate Data from the [Environment and Climate Change Canada website](http://climate.weather.gc.ca/historical_data/search_historic_data_e.html)
-
-There are three main aspects of this package:
-
-1. Access **stations** lists 
-    - `stations` (a data frame listing stations)
-    - `stations_search()` identify stations by name or proximity to a location
-    - `stations_all()` - re-download stations data
-    
-2. Download **weather** data
-    - `weather()`
-    
-3. Merge weather data into other data sets through interpolation over time
-    - `add_weather()`
-    
-We also include several practice data sets:
-
-- `finches`
-- `kamloops`
-- `kamloops_day`
-- `pg`
-
-As well as several vignettes:
-
-- General Usage: `vignette("usage")`
-- Merging and Interpolating" `vignette("interpolation")`
-
-[Online](http://steffilazerte.github.io/weathercan) we also have an advanced article:
-
-- Using `weathercan` with [tidyverse](http://tidyverse.org/) [see it online, here](http://steffilazerte.github.io/weathercan/articles/use_with_tidyverse.html)
-
 
 ## Stations
 
@@ -138,6 +107,3 @@ stn_vec_df <- weather(station_ids = stn_vector, start = "2016-01-01", end = "201
 
 stn_vec_df
 ```
-
-## Interpolate
-
