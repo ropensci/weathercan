@@ -1,6 +1,8 @@
 #' Download weather data from Environment Canada
 #'
-#' Downloads data from Environment Canada for one or more stations.
+#' Downloads data from Environment Canada for one or more stations. For details
+#' and units, see the glossary online
+#' \url{http://climate.weather.gc.ca/glossary_e.html}.
 #'
 #' @details Data can be returned 'raw' (format = FALSE) or can be formatted.
 #' Formatting transforms dates/times to date/time class, renames columns, and
