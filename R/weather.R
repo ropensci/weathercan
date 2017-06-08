@@ -108,7 +108,7 @@ weather <- function(station_ids,
   w_all <- data.frame()
   for(s in station_ids) {
     if(verbose) message("Getting station: ", s)
-    if(is.null(stations_data)) stn <- envirocan::stations else stn <- stations_data
+    if(is.null(stations_data)) stn <- stations else stn <- stations_data
     stn <- stn %>%
       dplyr::filter_(lazyeval::interp("station_id %in% x & !is.na(start)", x = s),
                      lazyeval::interp("interval == x", x = interval)) %>%
@@ -117,7 +117,7 @@ weather <- function(station_ids,
     if(nrow(stn) == 0) {
       message("There are no data for station ", s, " for interval by '", interval, "'.",
            "\nAvailable Station Data:\n",
-           paste0(utils::capture.output(print(envirocan::stations %>%
+           paste0(utils::capture.output(print(stations %>%
                                                 dplyr::filter_(lazyeval::interp("station_id %in% x & !is.na(start)", x = s)))), collapse = "\n"))
       next
     }

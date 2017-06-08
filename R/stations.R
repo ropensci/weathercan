@@ -127,7 +127,7 @@ stations_search <- function(name = NULL,
     if(length(coords) != 2 | all(is.na(coords)) | class(coords) == "try-error") stop("'coord' takes one pair of lat and lon in a numeric vector")
   }
 
-  if(is.null(stn)) stn <- envirocan::stations
+  if(is.null(stn)) stn <- stations
 
   if(!is.null(name)) {
     if(class(try(as.character(name), silent = TRUE)) == "try-error") stop("'name' needs to be coercible into a character")
