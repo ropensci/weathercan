@@ -6,7 +6,10 @@
 #' so it may not be necessary to call this function (and this function may take a few
 #' minutes to run).
 #'
-#' @param url Character. Url from which to grab the station information. Defaults to \url{"ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/Station Inventory EN.csv"}
+#' @param url Character. Url from which to grab the station information.
+#'   Defaults to
+#'   \url{ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/Station
+#'   Inventory EN.csv} (shorted for the argument).
 #' @param skip Numeric. Number of lines to skip at the beginning of the csv. If
 #'   NULL, automatically derived.
 #'
@@ -16,12 +19,11 @@
 #' @import magrittr
 #' @export
 
-stations_all <- function(url = "ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/Station Inventory EN.csv",
-                        skip = NULL) {
+stations_all <- function(url = "http://bit.ly/2sIuCty",
+                         skip = NULL) {
 
-  if(!grep(".csv$", url)) stop("'url' must point to a csv file either local or online.")
-
-  headings <- readLines(url, n = 5)
+  headings <- try(readLines(url, n = 5), silent = TRUE)
+  if("try-error" %in% class(headings)) stop("'url' must point to a csv file either local or online.")
 
   if(is.null(skip)) skip <- grep("(.*?)(Name)(.*?)(Province)(.*?)(Climate ID)(.*?)(Station ID)(.*?)(WMO ID)(.*?)(TC ID)(.*?)", headings) - 1
 

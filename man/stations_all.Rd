@@ -4,12 +4,13 @@
 \alias{stations_all}
 \title{Get available stations}
 \usage{
-
-  stations_all(url = "ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/Station Inventory EN.csv",
-  skip = NULL)
+stations_all(url = "http://bit.ly/2sIuCty", skip = NULL)
 }
 \arguments{
-\item{url}{Character. Url from which to grab the station information. Defaults to \url{"ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/Station Inventory EN.csv"}}
+\item{url}{Character. Url from which to grab the station information.
+Defaults to
+\url{ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/Station
+Inventory EN.csv} (shorted for the argument).}
 
 \item{skip}{Numeric. Number of lines to skip at the beginning of the csv. If
 NULL, automatically derived.}
