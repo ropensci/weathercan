@@ -7,9 +7,9 @@ Steffi LaZerte
 weathercan
 ==========
 
-This package is makes it easier to search for and download multiple months/years of historical weather data from Environment Canada website.
+This package is makes it easier to search for and download multiple months/years of historical weather data from Environment and Climate Change Canada (ECCC) website.
 
-Bear in mind that these downloads can be fairly large and performing multiple, downloads may use up Environment Canada's bandwidth unecessarily. Try to stick to what you need.
+Bear in mind that these downloads can be fairly large and performing multiple, downloads may use up ECCC's bandwidth unecessarily. Try to stick to what you need.
 
 Installation
 ------------
@@ -18,21 +18,33 @@ Use the `devtools` package to directly install R packages from github:
 
 ``` r
 install.packages("devtools") # If not already installed
-devtools::install_github("steffilazerte/weathercan", ref = "v0.2.2") 
-## For most recent release; Otherwise omit "ref = " to download most recent version
-## Also making use of the tidyverse for data manipulations
-library(dplyr)
-library(tibble)
+devtools::install_github("steffilazerte/weathercan") 
 ```
 
-Basic usage:
-------------
+Basic usage
+-----------
 
 To download data, you first need to know the `station_id` associated with the station you're interested in.
 
 ### Stations
 
 `weathercan` includes a data frame called `stations` which includes a list of stations and their details (including `station_id`.
+
+``` r
+head(stations)
+```
+
+    ## # A tibble: 6 x 12
+    ##     prov           station_name station_id climate_id WMO_id  TC_id   lat
+    ##   <fctr>                  <chr>     <fctr>     <fctr> <fctr> <fctr> <dbl>
+    ## 1     BC            ACTIVE PASS         14    1010066     NA     NA 48.87
+    ## 2     BC            ALBERT HEAD         15    1010235     NA     NA 48.40
+    ## 3     BC BAMBERTON OCEAN CEMENT         16    1010595     NA     NA 48.58
+    ## 4     BC             BEAR CREEK         17    1010720     NA     NA 48.50
+    ## 5     BC            BEAVER LAKE         18    1010774     NA     NA 48.50
+    ## 6     BC             BECHER BAY         19    1010780     NA     NA 48.33
+    ## # ... with 5 more variables: lon <dbl>, elev <dbl>, interval <chr>,
+    ## #   start <int>, end <int>
 
 ``` r
 glimpse(stations)
@@ -85,28 +97,12 @@ stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour"
     ## # ... with 5 more variables: elev <dbl>, interval <chr>, start <int>,
     ## #   end <int>, distance <dbl>
 
-We can also perform more complex searches using `tidyverse` tools and use the resulting vector:
-
-``` r
-BCstations <- stations %>%
-  filter(prov %in% c("BC")) %>%
-  filter(interval == "hour") %>%
-  filter(lat > 49 & lat < 49.5) %>%
-  filter(lon > -119 & lon < -116) %>%
-  filter(start<=2002) %>%
-  filter(end>=2016)
-
-## weather() accepts numbers so we can create a vector to input into weather:
-stn_vector <- BCstations$station_id 
-```
-
 ### Weather
 
 Once you have your `station_id`(s) you can download weather data:
 
 ``` r
 kam <- weather(station_ids = 51423, start = "2016-01-01", end = "2016-02-15")
-                    
 kam
 ```
 
@@ -136,9 +132,8 @@ kam
 You can also download data from multiple stations at once:
 
 ``` r
-kam.pg <- weather(station_ids = c(48248, 51423), start = "2016-01-01", end = "2016-02-15")
-                    
-kam.pg
+kam_pg <- weather(station_ids = c(48248, 51423), start = "2016-01-01", end = "2016-02-15")
+kam_pg
 ```
 
     ## # A tibble: 2,208 x 35
@@ -169,41 +164,10 @@ And plot it:
 ``` r
 library(ggplot2)
 
-ggplot(data = kam.pg, aes(x = time, y = temp, group = station_name, colour = station_name)) +
+ggplot(data = kam_pg, aes(x = time, y = temp, group = station_name, colour = station_name)) +
   theme(legend.position = "top") +
   geom_line() +
   theme_minimal()
 ```
 
 ![](README_files/figure-markdown_github/unnamed-chunk-8-1.png)
-
-Or you can use the vector created above with the `tidyverse` tools:
-
-``` r
-stn_vec_df <- weather(station_ids = stn_vector, start = "2016-01-01", end = "2016-02-15")
-
-stn_vec_df
-```
-
-    ## # A tibble: 3,312 x 35
-    ##    station_name station_id   prov   lat     lon       date
-    ##  *        <chr>      <chr> <fctr> <dbl>   <dbl>     <date>
-    ##  1    NELSON CS       6839     BC 49.49 -117.31 2016-01-01
-    ##  2    NELSON CS       6839     BC 49.49 -117.31 2016-01-01
-    ##  3    NELSON CS       6839     BC 49.49 -117.31 2016-01-01
-    ##  4    NELSON CS       6839     BC 49.49 -117.31 2016-01-01
-    ##  5    NELSON CS       6839     BC 49.49 -117.31 2016-01-01
-    ##  6    NELSON CS       6839     BC 49.49 -117.31 2016-01-01
-    ##  7    NELSON CS       6839     BC 49.49 -117.31 2016-01-01
-    ##  8    NELSON CS       6839     BC 49.49 -117.31 2016-01-01
-    ##  9    NELSON CS       6839     BC 49.49 -117.31 2016-01-01
-    ## 10    NELSON CS       6839     BC 49.49 -117.31 2016-01-01
-    ## # ... with 3,302 more rows, and 29 more variables: time <dttm>,
-    ## #   year <chr>, month <chr>, day <chr>, hour <chr>, qual <chr>,
-    ## #   weather <chr>, hmdx <dbl>, hmdx_flag <chr>, pressure <dbl>,
-    ## #   pressure_flag <chr>, rel_hum <dbl>, rel_hum_flag <chr>, temp <dbl>,
-    ## #   temp_dew <dbl>, temp_dew_flag <chr>, temp_flag <chr>, visib <dbl>,
-    ## #   visib_flag <chr>, wind_chill <dbl>, wind_chill_flag <chr>,
-    ## #   wind_dir <dbl>, wind_dir_flag <chr>, wind_spd <dbl>,
-    ## #   wind_spd_flag <chr>, elev <dbl>, climat_id <chr>, WMO_id <chr>,
-    ## #   TC_id <chr>

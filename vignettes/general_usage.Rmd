@@ -1,10 +1,10 @@
 ---
-title: "Basic Usage"
+title: "General Usage"
 author: "Steffi LaZerte"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{usage}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -30,10 +30,20 @@ There are three main aspects of this package:
     - `add_weather()`
     
 We also include several practice data sets:
+
 - `finches`
 - `kamloops`
 - `kamloops_day`
 - `pg`
+
+As well as several vignettes:
+
+- General Usage: `vignette("usage")`
+- Merging and Interpolating" `vignette("interpolation")`
+
+[Online](http://steffilazerte.github.io/weathercan) we also have an advanced article:
+
+- Using `weathercan` with [tidyverse](http://tidyverse.org/) [see it online, here](http://steffilazerte.github.io/weathercan/articles/use_with_tidyverse.html)
 
 
 ## Stations
@@ -69,7 +79,7 @@ You can also search by proximity. These results include a new column `distance` 
 stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour")
 ```
 
-We can also perform more complex searches using `tidyverse` tools and use the resulting vector:
+We can also perform more complex searches using `filter()` function from the `dplyr` package:
 ```{r search_crit}
 BCstations <- stations %>%
   filter(prov %in% c("BC")) %>%
@@ -78,6 +88,7 @@ BCstations <- stations %>%
   filter(lon > -119 & lon < -116) %>%
   filter(start <= 2002) %>%
   filter(end >= 2016)
+BCstations
 
 ## weather() accepts numbers so we can create a vector to input into weather:
 stn_vector <- BCstations$station_id 
