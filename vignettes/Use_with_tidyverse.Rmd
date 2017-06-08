@@ -20,7 +20,10 @@ knitr::opts_chunk$set(echo = TRUE, warnings = FALSE, message = FALSE, fig.width 
 You'll need several packages from the *tidyverse* in addition to *envirocan* to complete the following analysis.
 ```{R pck}
 library(envirocan)
-library(tidyverse)
+library(dplyr)
+library(tibble)
+library(tidyr)
+library(ggplot2)
 library(broom)
 library(modelr)
 library(knitr)
