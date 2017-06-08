@@ -9,6 +9,16 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+## Packages
+You'll need several packages from the *tidyverse* in addition to *envirocan* to complete the following analysis.
+```{R pck}
+library(envirocan)
+library(tidyverse)
+library(broom)
+library(modelr)
+library(knitr)
+```
+
 ### Interpolate and add data
 You can merge weather data with other data frames by linearly interprolating between points.
 
