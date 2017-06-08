@@ -9,7 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-## Source material.
+## Source material
 This vignette is adapted very heavily from Hadley Wickham's incredible [*R for Data Science*](http://r4ds.had.co.nz/) book. You should support Hadley and the work he does by buying [it](https://www.amazon.com/Data-Science-Transform-Visualize-Model/dp/1491910399).
 
 ```{r setup, include=FALSE}
@@ -18,6 +18,7 @@ knitr::opts_chunk$set(echo = TRUE, warnings = FALSE, message = FALSE, fig.width 
 
 ## Packages
 You'll need several packages from the *tidyverse* in addition to *envirocan* to complete the following analysis.
+
 ```{R pck}
 library(envirocan)
 library(dplyr)
@@ -31,19 +32,22 @@ library(knitr)
 
 ## Using envirocan to load in data
 Your first decision that you need to make when analyzing data from weather stations across canada is to determine for which stations you'd like to query from Environment Canada. In this example, to keep processing time low, we will query two stations with very long records that happen to be far apart. To make that choice we can use *tidyverse* tools and the included \code{stations} tibble in this package:
+
 ```{R stn_pick, echo = TRUE}
 stations %>%
   #filter(start<=1910) %>%
   #filter(end==2017) %>%
   filter(station_id %in% c(707, 4859, 6693,5397, 2315)) %>%
-  filter(interval=="day") %>%
+  filter(interval == "day") %>%
   select(prov, station_name, station_id, start, end)
 ```
+
 These two weather stations will be our test data for this vignette. You can broaden or expand your analysis by choosing different or more station. Our next step is to use the weather() function to load in the data. The following will take quite some time to load but is neccessary to complete the analysis.
+
 ```{R load_in, echo = TRUE}
 pancan_df <- weather(station_ids = c(707, 4859, 6693,5397, 2315), 
                      interval = "day") %>%
-  filter(year>=1920) %>%
+  filter(year >= 1920) %>%
   select(station_name, station_id, prov, lat, lon, elev, climat_id, WMO_id, TC_id, mean_temp, date)
 #, start = "2016-01-01", end = "2016-02-15"
 ```
@@ -70,21 +74,27 @@ clim_model <- function(df) {
   lm(mean_temp ~ date, data = df)
 }
 ```
+
 Add the model to the existing tibble
+
 ```{r add_lm}
 pancan_df_nest <- pancan_df_nest %>% 
   mutate(model = map(data, clim_model))
 pancan_df_nest
 ```
+
 Then add the residuals to the model
+
 ```{r add_resid}
 pancan_df_nest <- pancan_df_nest %>% 
   mutate(model = map(data, clim_model)) %>%
   mutate(resids = map2(data, model, add_residuals)) 
 pancan_df_nest
 ```
+
 ## Working with list-columns
 We can unnest the results then plot them
+
 ### unnest()
 ```{r resid}
 resids <- unnest(pancan_df_nest, resids)
@@ -95,7 +105,7 @@ resids %>%
   geom_line(aes(group = station_name), alpha = 1 / 3) + 
   geom_point() +
   geom_hline(yintercept = 0) +
-  facet_wrap(~station_name, ncol = 1)
+  facet_wrap(~ station_name, ncol = 1)
 ```
 
 
@@ -122,5 +132,5 @@ preds %>%
   ggplot(aes(x = date, y = mean_temp, colour = station_name)) +
   geom_point() +
   geom_line(aes(y = pred)) +
-  facet_wrap(~station_name, scales = "free_y", ncol = 1)
+  facet_wrap(~ station_name, scales = "free_y", ncol = 1)
 ```
