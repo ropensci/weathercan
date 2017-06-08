@@ -3,6 +3,21 @@ title: "News"
 author: "Steffi LaZerte"
 output: html_document
 ---
+
+# weathercan 0.2.2
+
+## Changes
+- Update and expand vignettes (closes #15)
+- Data now returned as tibbles
+- Added listcol functionality (closes #8)
+- Added internal tests for interpolation
+- Updated R version
+
+
+## Bug fixes
+- Fixed inclusion of New Brunswick stations (closes #9)
+
+
 # envirocan 0.2.1 (2017-03-04)
 - Minor bug fixes: correcting encoding information for downloads, updating function calls to dplyr package, updating stations dataset
 
