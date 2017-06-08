@@ -26,6 +26,7 @@ devtools::install_github("steffilazerte/envirocan", ref = "v0.2.2")
 ## For most recent release; Otherwise omit "ref = " to download most recent version
 ## Also making use of the tidyverse for data manipulations
 library(dplyr)
+library(tibble)
 ```
 
 ## Basic usage:
@@ -100,7 +101,7 @@ ggplot(data = kam.pg, aes(x = time, y = temp, group = station_name, colour = sta
   theme_minimal()
 ```
 
-Or you can use the vector created above: 
+Or you can use the vector created above with the `tidyverse` tools: 
 
 ```{r vector_input}
 stn_vec_df <- weather(station_ids = stn_vector, start = "2016-01-01", end = "2016-02-15")
@@ -108,27 +109,5 @@ stn_vec_df <- weather(station_ids = stn_vector, start = "2016-01-01", end = "201
 stn_vec_df
 ```
 
-### Interpolate and add data
-You can merge weather data with other data frames by linearly interprolating between points.
 
-For example, using the included datasets:
-
-```{r}
-glimpse(kamloops)
-glimpse(finches)
-
-finches_temperature <- add_weather(data = finches, weather = kamloops, cols = "temp")
-summary(finches_temperature)
-glimpse(finches_temperature)
-```
-
-By default, gaps of 2 hours (or two days, with a daily scale) will be interpolated over, but longer gaps will be filled with NAs. You can adjust this behaviour with `na_gap`. Note that as environment canada data is downloaded on an hourly scale, it makes no sense to apply `na_gap` values of less than 1.
-
-```{r}
-finches_temperature <- add_weather(data = finches, weather = kamloops, cols = "temp", na_gap = 1)
-summary(finches_temperature)
-
-finches_temperature[is.na(finches_temperature$temp),][1:10,]
-kamloops[is.na(kamloops$temp), c("time", "temp")]
-```
 
