@@ -2,13 +2,11 @@
 #'
 #' \code{weathercan} is an R package for simplifying the downloading of
 #' Historical Climate Data from the Environment and Climate Change Canada (ECCC)
-#' \href{http://climate.weather.gc.ca/historical_data/search_historic_data_e.html}
-#' {website}
+#' \href{http://climate.weather.gc.ca/historical_data/search_historic_data_e.html}{website}
 #'
 #' Bear in mind that these downloads can be fairly large and performing
 #' multiple, downloads may use up Environment Canada's bandwidth unecessarily.
 #' Try to stick to what you need.
-#'
 #'
 #' There are three main aspects of this package:
 #'
