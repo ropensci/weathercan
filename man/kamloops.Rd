@@ -3,7 +3,7 @@
 \docType{data}
 \name{kamloops}
 \alias{kamloops}
-\title{Hourly weather data for Kamloops downloaded with \code{weather()}. Terms are more thoroughly defined here \url{http://climate.weather.gc.ca/glossary_e.html}}
+\title{Hourly weather data for Kamloops}
 \format{An example dataset of hourly weather data for Kamloops:
 \describe{
   \item{station_name}{Station name}
@@ -48,6 +48,7 @@
 kamloops
 }
 \description{
-Hourly weather data for Kamloops downloaded with \code{weather()}. Terms are more thoroughly defined here \url{http://climate.weather.gc.ca/glossary_e.html}
+Downloaded with \code{\link{weather}()}. Terms are more thoroughly defined here
+\url{http://climate.weather.gc.ca/glossary_e.html}
 }
 \keyword{datasets}
