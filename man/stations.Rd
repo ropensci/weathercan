@@ -3,7 +3,7 @@
 \docType{data}
 \name{stations}
 \alias{stations}
-\title{Station data downloaded from Environment Canada}
+\title{Station data downloaded from Environment and Climate Change Canada}
 \format{A data frame with 26211 rows and 12 variables:
 \describe{
   \item{prov}{Province}
@@ -26,10 +26,10 @@
 stations
 }
 \description{
-A dataset containing station information downloaded from Environment Canada
-on April 13, 2017. Note that a station may have several station IDs,
+A dataset containing station information downloaded from Environment and
+Climate Change Canada. Note that a station may have several station IDs,
 depending on how the data collection has changed over the years. Station
-information can be updated by running \code{stations <-  stations_all()} and then by
-specifying stn = stations in most functions.
+information can be updated by running \code{stations_new <-  stations_all()}
+and then by specifying stn = stations_new in most functions.
 }
 \keyword{datasets}
