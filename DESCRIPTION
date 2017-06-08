@@ -29,10 +29,8 @@ Imports:
     xml2 (>= 0.1.2)
 RoxygenNote: 6.0.1
 Suggests:
-    dplyr,
     ggplot2,
     knitr,
     rmarkdown,
-    testthat,
-    tibble,
+    testthat
 VignetteBuilder: knitr
