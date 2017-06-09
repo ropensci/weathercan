@@ -123,6 +123,17 @@ test_that("weather(hour) no data fails nicely", {
   expect_equal(nrow(w1), 0)
 })
 
+test_that("weather (hour) verbose and quiet", {
+  expect_message(weather(c(1275, 1001), interval = "hour",
+                         start = "2017-01-01", end = "2017-02-01"))
+
+  expect_silent(weather(c(1275, 1001), interval = "hour",
+                         start = "2017-01-01", end = "2017-02-01", quiet = TRUE))
+
+  expect_message(weather(c(1275, 1001), interval = "hour",
+                        start = "2017-01-01", end = "2017-02-01", verbose = TRUE),
+                 "(Getting station: 1275\\n)")
+})
 
 # weather by day ----------------------------------------------------------
 context("weather by day")
@@ -214,6 +225,17 @@ test_that("weather(day) no data fails nicely", {
   expect_equal(nrow(w1), 0)
 })
 
+test_that("weather (day) verbose and quiet", {
+  expect_message(weather(c(42013, 51423), interval = "day",
+                         start = "2017-01-01", end = "2017-02-01"))
+
+  expect_silent(weather(c(42013, 51423), interval = "day",
+                        start = "2017-01-01", end = "2017-02-01", quiet = TRUE))
+
+  expect_message(weather(c(42013, 51423), interval = "day",
+                         start = "2017-01-01", end = "2017-02-01", verbose = TRUE),
+                 "(Getting station: 42013\\n)")
+})
 
 # weather by month --------------------------------------------------------
 context("weather by month")
@@ -281,11 +303,22 @@ test_that("weather (month) multiple stations", {
   expect_equal(nrow(w[w$station_id == 5401,]), nrow(w[w$station_id == 5940,]))
 })
 
-test_that("weather(month) multiple stations (one NA)", {
+test_that("weather (month) multiple stations (one NA)", {
   expect_message(expect_error(w <- weather(station_ids = c(5401, 51423), start = "2014-01-01", end = "2014-05-01", interval = "month"), NA))
   expect_equal(unique(w$station_name), c("MAGOG"))
 })
 
+test_that("weather (month) verbose and quiet", {
+  expect_message(weather(c(51423, 1275), interval = "month",
+                         start = "2017-01-01", end = "2017-02-01"))
+
+  expect_silent(weather(c(51423, 1275), interval = "month",
+                        start = "2017-01-01", end = "2017-02-01", quiet = TRUE))
+
+  expect_message(weather(c(51423, 1275), interval = "month",
+                         start = "2017-01-01", end = "2017-02-01", verbose = TRUE),
+                 "(Getting station: 51423\\n)")
+})
 
 
 # list_cols ---------------------------------------------------------------

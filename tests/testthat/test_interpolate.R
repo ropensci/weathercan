@@ -181,6 +181,14 @@ test_that("add_weather (hour) fails on character columns", {
   expect_message(add_weather(f, k, cols = c("temp", "rel_hum")), "Some columns \\(temp\\)")
 })
 
+test_that("add_weather (hour) quiet", {
+  k <- kamloops[kamloops$time > as.POSIXct("2016-03-01") & kamloops$time < as.POSIXct("2016-03-03"), ]
+  k$temp[1:10] <- NA
+  f <- finches[1:20, ]
+  expect_message(add_weather(f, k, cols = "temp"))
+  expect_silent(add_weather(f, k, cols = "temp", quiet = TRUE))
+})
+
 # Add interpolation (day) -------------------------------------------------
 context("Add interpolation (day)")
 
@@ -243,3 +251,14 @@ test_that("add_weather (day) skips character columns", {
 
   expect_message(add_weather(f, k, cols = c("max_temp", "mean_temp"), interval = "day"), "Some columns \\(max\\_temp\\)")
 })
+
+test_that("add_weather (hour) quiet", {
+  k <- kamloops_day[kamloops_day$date < as.Date("2016-04-01"), ]
+  k$max_temp[1:10] <- NA
+  f <- finches[1:20, ] %>%
+    dplyr::mutate(date = as.Date(time))
+
+  expect_message(add_weather(f, k, interval = "day", cols = "max_temp"))
+  expect_silent(add_weather(f, k, interval = "day", cols = "max_temp", quiet = TRUE))
+})
+

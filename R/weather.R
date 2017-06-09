@@ -44,7 +44,9 @@
 #' @param url Character. Url from which to grab the weather data
 #' @param encoding Character. Text encoding for download.
 #' @param list_col Logical Defaults to FALSE
-#' @param verbose Logical. Include messages
+#' @param verbose Logical. Include progress messages
+#' @param quiet Logical. Suppress all messages (including messages regarding
+#'   missing data, etc.)
 #'
 #' @return A tibble with station ID, name and weather data.
 #'
@@ -81,7 +83,8 @@ weather <- function(station_ids,
                     url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html",
                     encoding = "UTF-8",
                     list_col = FALSE,
-                    verbose = FALSE) {
+                    verbose = FALSE,
+                    quiet = FALSE) {
 
   # Address as.POSIXct...
   if((!is.null(start) & class(try(as.Date(start), silent = TRUE)) == "try-error") |
@@ -103,7 +106,7 @@ weather <- function(station_ids,
       dplyr::arrange(interval)
 
     if(nrow(stn1) == 0) {
-      message("There are no data for station ", s, " for interval by '", interval, "'.",
+      if(!quiet) message("There are no data for station ", s, " for interval by '", interval, "'.",
            "\nAvailable Station Data:\n",
            paste0(utils::capture.output(print(
              dplyr::filter(stn, station_id %in% s, !is.na(start)))),
@@ -167,7 +170,8 @@ weather <- function(station_ids,
       w <- weather_format(w = w,
                           interval = interval,
                           tz_disp = tz_disp,
-                          string_as = string_as)
+                          string_as = string_as,
+                          quiet = quiet)
     }
 
     ## Trim to match date range
@@ -177,14 +181,14 @@ weather <- function(station_ids,
   }
 
   if(nrow(w_all) == 0) {
-    message("There are no data for these stations (", paste0(station_ids, collapse = ", "),
-            ") in this time range (",
-            as.character(lubridate::int_start(dates)), " to ",
-            as.character(lubridate::int_end(dates)), ").",
-            "\nAvailable Station Data:\n",
-            paste0(utils::capture.output(print(
-              dplyr::filter(stn, station_id %in% station_ids, !is.na(start)))),
-              collapse = "\n"))
+    if(!quiet) message("There are no data for these stations (", paste0(station_ids, collapse = ", "),
+                       ") in this time range (",
+                       as.character(lubridate::int_start(dates)), " to ",
+                       as.character(lubridate::int_end(dates)), ").",
+                       "\nAvailable Station Data:\n",
+                       paste0(utils::capture.output(print(
+                         dplyr::filter(stn, station_id %in% station_ids, !is.na(start)))),
+                         collapse = "\n"))
     return(tibble::tibble())
   }
 
@@ -195,14 +199,14 @@ weather <- function(station_ids,
     temp <- w_all$date[which(rowSums(is.na(temp) | temp == "") != ncol(temp))]
 
     if(length(temp) == 0) {
-      message("There are no data for these stations (", paste0(station_ids, collapse = ", "),
-              ") in this time range (",
-              as.character(lubridate::int_start(dates)), " to ",
-              as.character(lubridate::int_end(dates)), ").",
-              "\nAvailable Station Data:\n",
-              paste0(utils::capture.output(print(
-                dplyr::filter(stn, station_id %in% station_ids, !is.na(start)))),
-                collapse = "\n"))
+      if(!quiet) message("There are no data for these stations (", paste0(station_ids, collapse = ", "),
+                         ") in this time range (",
+                         as.character(lubridate::int_start(dates)), " to ",
+                         as.character(lubridate::int_end(dates)), ").",
+                         "\nAvailable Station Data:\n",
+                         paste0(utils::capture.output(print(
+                           dplyr::filter(stn, station_id %in% station_ids, !is.na(start)))),
+                           collapse = "\n"))
       return(tibble::tibble())
     }
 
@@ -259,7 +263,7 @@ weather_dl <- function(station_id,
 
 #' @import magrittr
 
-weather_format <- function(w, interval = "hour", string_as = "NA", tz_disp = NULL) {
+weather_format <- function(w, interval = "hour", string_as = "NA", tz_disp = NULL, quiet = FALSE) {
 
   ## Get names from stored name list
   n <- w_names[[interval]]
@@ -311,17 +315,17 @@ weather_format <- function(w, interval = "hour", string_as = "NA", tz_disp = NUL
   num <- apply(w[, !(names(w) %in% c("date", "year", "month", "day", "hour", "time", "qual", "weather", grep("flag", names(w), value = TRUE)))], 2, FUN = function(x) tryCatch(as.numeric(x), warning = function(w) w))
 
   if(any(sapply(num, FUN = function(x) methods::is(x, "warning")))) {
-    message("Some variables have non-numeric values (", paste0(names(num)[sapply(num, FUN = function(x) methods::is(x, "warning"))], collapse = ", "), ")")
+    if(!quiet) message("Some variables have non-numeric values (", paste0(names(num)[sapply(num, FUN = function(x) methods::is(x, "warning"))], collapse = ", "), ")")
     for(i in names(num)[sapply(num, FUN = function(x) methods::is(x, "warning"))]) {
       problems <- w[grep("<|>|\\)|\\(", w[,i]), names(w) %in% c("date", "year", "month", "day", "hour", "time", i)]
       if(nrow(problems) > 20) rows <- 20 else rows <- nrow(problems)
-      message(paste0(utils::capture.output(problems[1:rows,]), collapse = "\n"), if (rows < nrow(problems)) "\n...")
+      if(!quiet) message(paste0(utils::capture.output(problems[1:rows,]), collapse = "\n"), if (rows < nrow(problems)) "\n...")
     }
     if(!is.null(string_as)) {
-      message("Replacing with ", string_as, ". Use 'string_as = NULL' to keep as characters (see ?weather).")
+      if(!quiet) message("Replacing with ", string_as, ". Use 'string_as = NULL' to keep as characters (see ?weather).")
       suppressWarnings(w[, !(names(w) %in% c("date", "year", "month", "day", "hour", "time", "qual", "weather", grep("flag", names(w), value = TRUE)))] <- apply(w[, !(names(w) %in% c("date", "year", "month", "day", "hour", "time", "qual", "weather", grep("flag", names(w), value = TRUE)))], 2, as.numeric))
     } else {
-      message("Leaving as characters (", paste0(names(num)[sapply(num, FUN = function(x) methods::is(x, "warning"))], collapse = ", "), "). Cannot summarize these values.")
+      if(!quiet) message("Leaving as characters (", paste0(names(num)[sapply(num, FUN = function(x) methods::is(x, "warning"))], collapse = ", "), "). Cannot summarize these values.")
       w[, !(names(w) %in% c("date", "year", "month", "day", "hour", "time", "qual", "weather", grep("flag", names(w), value = TRUE), names(num)[sapply(num, FUN = function(x) methods::is(x, "warning"))]))] <- num[!sapply(num, FUN = function(x) methods::is(x, "warning"))]
     }
   } else {
@@ -335,7 +339,7 @@ weather_format <- function(w, interval = "hour", string_as = "NA", tz_disp = NUL
   return(w)
 }
 
-weather_avg <- function(w, interval = "hour", avg = "none") {
+weather_avg <- function(w, interval = "hour", avg = "none", quiet = FALSE) {
   ## Average if requested
   if(avg != "none") {
 
@@ -347,8 +351,8 @@ weather_avg <- function(w, interval = "hour", avg = "none") {
 
     if(nrow(flags) > 0) {
       if(nrow(flags) > 20) rows <- 20 else rows <- nrow(flags)
-      message("To summarize, ignoring ", nrow(flags), " flags:")
-      message(paste0(utils::capture.output(flags[1:rows,]), collapse = "\n"))
+      if(!quiet) message("To summarize, ignoring ", nrow(flags), " flags:")
+      if(!quiet) message(paste0(utils::capture.output(flags[1:rows,]), collapse = "\n"))
     }
 
     ## Check for character vectors

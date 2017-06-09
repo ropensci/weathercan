@@ -25,6 +25,8 @@
 #'   "day".
 #' @param na_gap How many hours or days (depending on the interval) is it
 #'   acceptible to skip over when interpolating over NAs (see details).
+#' @param quiet Logical. Suppress all messages (including messages regarding
+#'   missing data, etc.)
 #'
 #' @examples
 #'
@@ -44,7 +46,8 @@
 add_weather <- function(data, weather,
                         cols = "all",
                         interval = "hour",
-                        na_gap = 2) {
+                        na_gap = 2,
+                        quiet = FALSE) {
 
   ## Make sure data and weather properly matched
   msg <- c("'data' and 'weather' must be data frames with columns 'time' in POSIXct format",
@@ -88,9 +91,9 @@ add_weather <- function(data, weather,
   ## Check that weather vars are numeric (is linear interpolation relevant for each?)
   omit <- cols[!(sapply(weather[, cols], is.numeric))]
   cols <- cols[!(cols %in% omit)]
-  if(length(omit) > 0) message("Some columns (", paste0(omit, collapse = ", "), ") ",
-                               "are not numeric and will thus be omitted from the ",
-                               "interpolation.")
+  if(length(omit) > 0 & !quiet) message("Some columns (", paste0(omit, collapse = ", "), ") ",
+                                        "are not numeric and will thus be omitted from the ",
+                                        "interpolation.")
 
   ## Make sure there are still columns to work with
   if(length(cols) < 1) stop("No columns over which to interpolate.")
@@ -100,11 +103,11 @@ add_weather <- function(data, weather,
     if(interval == "hour") t <- "time" else if(interval == "day") t <- "date"
     w <- weather[!is.na(weather[, col]), ]
     if(nrow(w) < 2) {
-      message(col, " does not have at least 2 points of non-missing data, skipping...")
+      if(!quiet) message(col, " does not have at least 2 points of non-missing data, skipping...")
     } else {
-      if(nrow(w) < nrow(weather)) message(col, " is missing ", nrow(weather) - nrow(w), " ",
-                                          "out of ", nrow(weather), " data, interpolation ",
-                                          "may be less accurate as a result.")
+      if(nrow(w) < nrow(weather) & !quiet) message(col, " is missing ", nrow(weather) - nrow(w), " ",
+                                                   "out of ", nrow(weather), " data, interpolation ",
+                                                   "may be less accurate as a result.")
       new <- approx_na_rm(x = weather[, t][[1]],
                           y = weather[, col][[1]],
                           xout = data[, t][[1]],
