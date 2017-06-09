@@ -1,4 +1,6 @@
-context("Weather data")
+
+# weather_dl --------------------------------------------------------------
+context("weather_dl")
 
 test_that("weather_dl (hour) downloads a data frame", {
   expect_silent(wd <- weather_dl(station_id = 51423, date = as.Date("2014-01-01"), skip = 15, interval = "hour"))
@@ -35,9 +37,9 @@ test_that("weather_dl (month) downloads a data frame", {
 })
 
 
-#####################
-## HOURLY
-#####################
+
+# weather by hour ---------------------------------------------------------
+context("weather by hour")
 
 test_that("weather(hour) returns a data frame", {
   expect_silent({weather(station_ids = 51423, start = "2014-01-01", end = "2014-01-31")})
@@ -121,9 +123,9 @@ test_that("weather(hour) no data fails nicely", {
   expect_equal(nrow(w1), 0)
 })
 
-#####################
-## DAILY
-#####################
+
+# weather by day ----------------------------------------------------------
+context("weather by day")
 
 test_that("weather (day) returns a data frame", {
   expect_message(expect_error({weather(station_ids = 51423, start = "2014-01-01", end = "2014-03-01", interval = "day")}, NA))
@@ -212,11 +214,11 @@ test_that("weather(day) no data fails nicely", {
   expect_equal(nrow(w1), 0)
 })
 
-#####################
-## MONTHLY
-#####################
 
-test_that("weather returns a data frame MONTHLY", {
+# weather by month --------------------------------------------------------
+context("weather by month")
+
+test_that("weather (month) returns a data frame", {
   expect_silent(w <- weather(station_ids = 5401, start = "2014-01-01", end = "2014-05-01", interval = "month"))
 
   ## Basics
@@ -240,27 +242,11 @@ test_that("weather returns a data frame MONTHLY", {
 
 })
 
-test_that("weather(monthly) trims NAs", {
+test_that("weather (month) trims NAs", {
 
 })
 
-test_that("weather(day) no data fails nicely", {
-  expect_silent(expect_message(w0 <- weather(station_ids = 42013, interval = "day"),
-                               "There are no data for station 42013 for interval by 'day'."))
-
-  expect_silent(expect_message(w1 <- weather(1274, interval = "day", start = "2017-01-01", end = "2017-03-01"),
-                               "There are no data for these stations \\(1274\\) in this time range \\(2017-01-01 to 2017-03-01\\)."))
-
-  ## Basics
-  expect_is(w0, "data.frame")
-  expect_length(w0, 0)
-  expect_equal(nrow(w0), 0)
-  expect_is(w1, "data.frame")
-  expect_length(w1, 0)
-  expect_equal(nrow(w1), 0)
-})
-
-test_that("weather(monthly) no data fails nicely", {
+test_that("weather (month) no data fails nicely", {
   expect_silent(expect_message(w0 <- weather(station_ids = 51423, interval = "month",
                                              start = "2012-01-01", end = "2012-02-01"),
                                "There are no data for station 51423 for interval by 'month'."))
@@ -288,7 +274,7 @@ test_that("weather(monthly) no data fails nicely", {
   expect_equal(nrow(w1), 0)
 })
 
-test_that("weather(month) multiple stations", {
+test_that("weather (month) multiple stations", {
   expect_silent(w <- weather(station_ids = c(5401, 5940), start = "2014-01-01", end = "2014-05-01", interval = "month"))
 
   expect_equal(unique(w$station_name), c("MAGOG", "ST PRIME"))
@@ -301,9 +287,9 @@ test_that("weather(month) multiple stations (one NA)", {
 })
 
 
-##################
-### list_col
-##################
+
+# list_cols ---------------------------------------------------------------
+
 context("Generating list_col")
 
 test_that("list_col=TRUE and interval=hour groups on the right level", {

@@ -1,10 +1,6 @@
-context("Interpolate and merge")
-
-#####################
-## Raw interpolation (time)
-#####################
 
 # Raw interpolation (time) ------------------------------------------------
+context("Raw interpolation (time)")
 
 test_that("approx_na_rm (time) without NAs", {
   k <- kamloops[kamloops$time > as.POSIXct("2016-03-01") & kamloops$time < as.POSIXct("2016-03-03"), ]
@@ -73,11 +69,8 @@ test_that("approx_na_rm (time) replaces gaps with NAs", {
 
 })
 
-#####################
-## Raw interpolation (numeric)
-#####################
-
 # Raw interpolation (numeric) ---------------------------------------------
+context("Raw interpolation (numeric)")
 
 test_that("approx_na_rm (numeric) without NAs", {
   k <- data.frame(x = 1:100, y = sample(1:1000, 100))
@@ -134,11 +127,8 @@ test_that("approx_na_rm (numeric) with NAs", {
 
 })
 
-#####################
-## Add interpolation (hour)
-#####################
-
 # Add interpolation (hour) ------------------------------------------------
+context("Add interpolation (hour)")
 
 test_that("add_weather (hour) fails with incorrect data types", {
   k <- kamloops[kamloops$time > as.POSIXct("2016-03-01") & kamloops$time < as.POSIXct("2016-03-03"), ]
@@ -191,11 +181,8 @@ test_that("add_weather (hour) fails on character columns", {
   expect_message(add_weather(f, k, cols = c("temp", "rel_hum")), "Some columns \\(temp\\)")
 })
 
-#####################
-## Add interpolation (day)
-#####################
-
 # Add interpolation (day) -------------------------------------------------
+context("Add interpolation (day)")
 
 test_that("add_weather (day) fails with incorrect data types", {
   k <- kamloops_day[kamloops_day$date < as.Date("2016-04-01"), ]
