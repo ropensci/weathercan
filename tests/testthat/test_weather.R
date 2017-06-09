@@ -198,10 +198,10 @@ test_that("weather(day) no data fails nicely", {
   expect_length(w1, 36)
   expect_equal(nrow(w1), 32)
 
-  expect_silent(expect_message(w0 <- weather(1274, interval = "day", start = "2017-01-01"),
-                               "There are no data for these stations \\(1274\\) in this time range \\(2017-01-01 to 2017-06-08\\)."))
-  expect_silent(expect_message(w1 <- weather(c(1274, 1275), interval = "day", start = "2017-01-01"),
-                               "There are no data for these stations \\(1274, 1275\\) in this time range \\(2017-01-01 to 2017-06-08\\)."))
+  expect_silent(expect_message(w0 <- weather(1274, interval = "day", start = "2017-01-01", end = "2017-03-01"),
+                               "There are no data for these stations \\(1274\\) in this time range \\(2017-01-01 to 2017-03-01\\)."))
+  expect_silent(expect_message(w1 <- weather(c(1274, 1275), interval = "day", start = "2017-01-01", end = "2017-03-01"),
+                               "There are no data for these stations \\(1274, 1275\\) in this time range \\(2017-01-01 to 2017-03-01\\)."))
 
   ## Basics
   expect_is(w0, "data.frame")
@@ -248,8 +248,8 @@ test_that("weather(day) no data fails nicely", {
   expect_silent(expect_message(w0 <- weather(station_ids = 42013, interval = "day"),
                                "There are no data for station 42013 for interval by 'day'."))
 
-  expect_silent(expect_message(w1 <- weather(1274, interval = "day", start = "2017-01-01"),
-                               "There are no data for these stations \\(1274\\) in this time range \\(2017-01-01 to 2017-06-08\\)."))
+  expect_silent(expect_message(w1 <- weather(1274, interval = "day", start = "2017-01-01", end = "2017-03-01"),
+                               "There are no data for these stations \\(1274\\) in this time range \\(2017-01-01 to 2017-03-01\\)."))
 
   ## Basics
   expect_is(w0, "data.frame")
