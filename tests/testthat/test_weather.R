@@ -41,7 +41,7 @@ test_that("weather_dl (month) downloads a data frame", {
 # weather by hour ---------------------------------------------------------
 context("weather by hour")
 
-test_that("weather(hour) returns a data frame", {
+test_that("weather (hour) returns a data frame", {
   expect_silent({weather(station_ids = 51423, start = "2014-01-01", end = "2014-01-31")})
   expect_message({w <- weather(station_ids = 51423, start = "2014-01-01", end = "2014-01-31", verbose = TRUE)})
 
@@ -65,13 +65,13 @@ test_that("weather(hour) returns a data frame", {
   expect_equal(w$qual[1], "Partner data that is not subject to review by the National Climate Archives")
 })
 
-test_that("weather(hourly) formats timezone display", {
+test_that("weather (hour) formats timezone display", {
   expect_silent({w <- weather(station_ids = 51423, start = "2014-03-01", end = "2014-04-01", tz_disp = "America/Vancouver")})
   expect_equal(w$time[1], as.POSIXct("2014-03-01 00:00:00", tz = "America/Vancouver"))
   expect_equal(w$time[w$date == as.Date("2014-04-01")][1], as.POSIXct("2014-04-01 01:00:00", tz = "America/Vancouver"))
 })
 
-test_that("weather(hourly) gets all", {
+test_that("weather (hour) gets all", {
   expect_silent(w <- weather(station_ids = 10816, start = Sys.Date() - lubridate::days(1), interval = "hour", trim = FALSE))
   expect_is(w, "data.frame")
   expect_length(w, 35)
@@ -80,11 +80,11 @@ test_that("weather(hourly) gets all", {
   expect_equal(w$date[nrow(w)], Sys.Date())
 })
 
-test_that("weather(hourly) trims NAs", {
+test_that("weather (hour) trims NAs", {
 
 })
 
-test_that("weather(hour) multiple stations", {
+test_that("weather (hour) multiple stations", {
   expect_silent({w <- weather(station_ids = c(51423, 10816), start = "2014-03-01", end = "2014-04-01")})
 
   expect_equal(unique(w$station_name), c("KAMLOOPS A", "SQUAMISH AIRPORT"))
@@ -92,7 +92,7 @@ test_that("weather(hour) multiple stations", {
 })
 
 
-test_that("weather(hour) no data fails nicely", {
+test_that("weather (hour) no data fails nicely", {
   expect_silent(expect_message(w0 <- weather(1274, interval = "hour",
                                              start = "2012-11-01", end = "2012-12-01"),
                                "There are no data for station 1274 for interval by 'hour'."))
@@ -160,7 +160,7 @@ test_that("weather (day) returns a data frame", {
   expect_equal(w$qual[1], "Partner data that is not subject to review by the National Climate Archives")
 })
 
-test_that("weather(daily) gets all", {
+test_that("weather (day) gets all", {
   expect_silent(weather(station_ids = 54398, interval = "day", trim = FALSE))
   expect_message(expect_error({w <- weather(station_ids = 54398, interval = "day", trim = FALSE, verbose = TRUE)}, NA))
 
@@ -181,7 +181,7 @@ test_that("weather(daily) gets all", {
 })
 
 
-test_that("weather(daily) trims NAs", {
+test_that("weather (day) trims NAs", {
   expect_silent(w1 <- weather(station_ids = 54398, interval = "day", trim = FALSE))
   expect_silent(w2 <- weather(station_ids = 54398, interval = "day", trim = TRUE))
 
@@ -189,14 +189,14 @@ test_that("weather(daily) trims NAs", {
   expect_gte(length(data.frame(w1)[is.na(data.frame(w1))]), length(data.frame(w2)[is.na(data.frame(w2))]))
 })
 
-test_that("weather(day) mutliple stations", {
+test_that("weather (day) mutliple stations", {
   expect_error(w <- weather(station_ids = c(54398, 51423), start = "2016-03-01", end = "2016-04-01", interval = "day"), NA)
 
   expect_equal(unique(w$station_name), c("MUSKOKA SNOW", "KAMLOOPS A"))
   expect_equal(nrow(w[w$station_id == 54398,]), nrow(w[w$station_id == 51423,]))
 })
 
-test_that("weather(day) no data fails nicely", {
+test_that("weather (day) no data fails nicely", {
   expect_silent(expect_message(w0 <- weather(station_ids = 42013, interval = "day",
                                              start = "2017-01-01", end = "2017-02-01"),
                                "There are no data for station 42013 for interval by 'day'."))
@@ -281,7 +281,6 @@ test_that("weather (month) no data fails nicely", {
   expect_is(w1, "data.frame")
   expect_length(w1, 34)
   expect_equal(nrow(w1), 2)
-
 
   expect_silent(expect_message(w0 <- weather(1274, interval = "month", start = "2017-01-01", end = "2017-02-01"),
                                "There are no data for these stations \\(1274\\) in this time range \\(2017-01-01 to 2017-02-01\\)."))
