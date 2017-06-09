@@ -3,6 +3,7 @@
 context("stations_all")
 
 test_that("stations_all() runs and returns data", {
+  skip_on_cran()
   expect_error({s <- stations_all()}, regexp = NA)
   expect_warning(expect_error({stations_all(url = "test.csv")}))
   expect_is(s, "data.frame")
