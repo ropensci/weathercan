@@ -5,7 +5,7 @@
 \title{Search for stations by name or location}
 \usage{
 stations_search(name = NULL, coords = NULL, dist = 10,
-  interval = c("hour", "day", "month"), stn = NULL)
+  interval = c("hour", "day", "month"), stn = weathercan::stations)
 }
 \arguments{
 \item{name}{Character. A vector of length 1 or more with text against which

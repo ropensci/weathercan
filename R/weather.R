@@ -44,7 +44,7 @@
 #'  numeric measurement with. See Details.
 #' @param tz_disp Character. What timezone to display times in (must be one of
 #'  \code{OlsonNames()}).
-#' @param stations_data Data frame. The \code{stations} data frame to use. Will use the one
+#' @param stn Data frame. The \code{stations} data frame to use. Will use the one
 #'  included in the package unless otherwise specified.
 #' @param url Character. Url from which to grab the weather data
 #' @param encoding Character. Text encoding for download.
@@ -84,7 +84,7 @@ weather <- function(station_ids,
                     format = TRUE,
                     string_as = NA,
                     tz_disp = NULL,
-                    stations_data = NULL,
+                    stn = weathercan::stations,
                     url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html",
                     encoding = "UTF-8",
                     list_col = FALSE,
@@ -111,32 +111,33 @@ weather <- function(station_ids,
 
   for(s in station_ids) {
     if(verbose) message("Getting station: ", s)
-    if(is.null(stations_data)) stn <- stations else stn <- stations_data
-    stn <- stn %>%
-      dplyr::filter_(lazyeval::interp("station_id %in% x & !is.na(start)", x = s),
-                     lazyeval::interp("interval == x", x = interval)) %>%
+    stn1 <- stn %>%
+      dplyr::filter(station_id %in% s,
+                    !is.na(start)) %>%
+      dplyr::filter_(lazyeval::interp(~ interval == x, x = interval)) %>%
       dplyr::arrange(interval)
 
-    if(nrow(stn) == 0) {
+    if(nrow(stn1) == 0) {
       message("There are no data for station ", s, " for interval by '", interval, "'.",
            "\nAvailable Station Data:\n",
-           paste0(utils::capture.output(print(stations %>%
-                                                dplyr::filter_(lazyeval::interp("station_id %in% x & !is.na(start)", x = s)))), collapse = "\n"))
+           paste0(utils::capture.output(print(
+             dplyr::filter(stn, station_id %in% s, !is.na(start)))),
+             collapse = "\n"))
       if(length(station_ids) > 1) next else return(tibble::tibble())
     }
 
-    if(class(try(as.Date(stn$start), silent = TRUE)) == "try-error") {
-      stn <- dplyr::mutate(stn, start = floor_date(as_date(as.character(start), "%Y"), "year"))
+    if(class(try(as.Date(stn1$start), silent = TRUE)) == "try-error") {
+      stn1 <- dplyr::mutate(stn1, start = floor_date(as_date(as.character(start), "%Y"), "year"))
     }
-    if(class(try(as.Date(stn$end), silent = TRUE)) == "try-error") {
-      stn <- dplyr::mutate(stn, end = ceiling_date(as_date(as.character(end), "%Y"), "year"))
+    if(class(try(as.Date(stn1$end), silent = TRUE)) == "try-error") {
+      stn1 <- dplyr::mutate(stn1, end = ceiling_date(as_date(as.character(end), "%Y"), "year"))
     }
-    stn <- stn %>%
+    stn1 <- stn1 %>%
       dplyr::mutate(end = replace(end, end > Sys.Date(), Sys.Date()),
                     int = interval(start, end),
                     interval = factor(interval, levels = c("hour", "day", "month"), ordered = TRUE))
 
-    if(is.null(start)) s.start <- stn$start else s.start <- as.Date(start)
+    if(is.null(start)) s.start <- stn1$start else s.start <- as.Date(start)
     if(is.null(end)) s.end <- Sys.Date() else s.end <- as.Date(end)
     dates <- interval(s.start, s.end)
 
@@ -171,7 +172,7 @@ weather <- function(station_ids,
     ## Add header info
     if(verbose) message("Adding header data")
     w <- w %>%
-      dplyr::mutate(prov = unique(stn$prov),
+      dplyr::mutate(prov = unique(stn1$prov),
                     station_name = preamble[1, 2], ##Deal BOM in collected metadata
                     station_id = s,
                     lat = as.numeric(as.character(preamble$V2[preamble$V1 %in% "Latitude"])),
@@ -203,8 +204,9 @@ weather <- function(station_ids,
             as.character(lubridate::int_start(dates)), " to ",
             as.character(lubridate::int_end(dates)), ").",
             "\nAvailable Station Data:\n",
-            paste0(utils::capture.output(print(stations %>%
-                                                 dplyr::filter_(lazyeval::interp("station_id %in% x & !is.na(start)", x = station_ids)))), collapse = "\n"))
+            paste0(utils::capture.output(print(
+              dplyr::filter(stn, station_id %in% station_ids, !is.na(start)))),
+              collapse = "\n"))
     return(tibble::tibble())
   }
 
@@ -220,8 +222,9 @@ weather <- function(station_ids,
               as.character(lubridate::int_start(dates)), " to ",
               as.character(lubridate::int_end(dates)), ").",
               "\nAvailable Station Data:\n",
-              paste0(utils::capture.output(print(stations %>%
-                                                   dplyr::filter_(lazyeval::interp("station_id %in% x & !is.na(start)", x = station_ids)))), collapse = "\n"))
+              paste0(utils::capture.output(print(
+                dplyr::filter(stn, station_id %in% station_ids, !is.na(start)))),
+                collapse = "\n"))
       return(tibble::tibble())
     }
 

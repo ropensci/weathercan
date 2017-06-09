@@ -6,7 +6,7 @@
 \usage{
 weather(station_ids, start = NULL, end = NULL, interval = "hour",
   trim = TRUE, avg = "none", best = FALSE, format = TRUE,
-  string_as = NA, tz_disp = NULL, stations_data = NULL,
+  string_as = NA, tz_disp = NULL, stn = weathercan::stations,
   url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html",
   encoding = "UTF-8", list_col = FALSE, verbose = FALSE)
 }
@@ -44,7 +44,7 @@ numeric measurement with. See Details.}
 \item{tz_disp}{Character. What timezone to display times in (must be one of
 \code{OlsonNames()}).}
 
-\item{stations_data}{Data frame. The \code{stations} data frame to use. Will use the one
+\item{stn}{Data frame. The \code{stations} data frame to use. Will use the one
 included in the package unless otherwise specified.}
 
 \item{url}{Character. Url from which to grab the weather data}

@@ -12,6 +12,7 @@ output: html_document
 - Added listcol functionality (closes #8)
 - Added internal tests for interpolation
 - Updated R version
+- Standardized reference to stations dataset (`stn`) in all functions
 
 ## Major changes
 - envirocan renamed to weathercan (closes #17)

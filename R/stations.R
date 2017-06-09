@@ -121,15 +121,13 @@ stations_search <- function(name = NULL,
                             coords = NULL,
                             dist = 10,
                             interval = c("hour", "day", "month"),
-                            stn = NULL) {
+                            stn = weathercan::stations) {
   if(all(is.null(name), is.null(coords)) | all(!is.null(name), !is.null(coords))) stop("Need a search name OR search coordinate")
 
   if(!is.null(coords)) {
     suppressWarnings({coords <- try(as.numeric(as.character(coords)), silent = TRUE)})
     if(length(coords) != 2 | all(is.na(coords)) | class(coords) == "try-error") stop("'coord' takes one pair of lat and lon in a numeric vector")
   }
-
-  if(is.null(stn)) stn <- stations
 
   if(!is.null(name)) {
     if(class(try(as.character(name), silent = TRUE)) == "try-error") stop("'name' needs to be coercible into a character")
@@ -154,7 +152,7 @@ stations_search <- function(name = NULL,
     }
   }
   stn <- stn[i,] %>%
-      dplyr::filter_(lazyeval::interp(~ interval %in% tf & !is.na(start), tf = interval))
+      dplyr::filter_(lazyeval::interp(~ interval %in% x & !is.na(start), x = interval))
   if(!is.null(name)) stn <- dplyr::arrange(stn, station_name, station_id, interval)
   if(!is.null(coords)) stn <- dplyr::arrange(stn, distance, station_name, station_id, interval)
   return(stn)
