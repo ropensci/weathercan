@@ -6,10 +6,13 @@
 #' so it may not be necessary to call this function (and this function may take a few
 #' minutes to run).
 #'
-#' @param url Character. Url from which to grab the station information.
-#'   Defaults to
-#'   \url{ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/Station
-#'   Inventory EN.csv} (shorted for the argument).
+#' @details
+#' URL defaults to
+#' ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/Station
+#' Inventory EN.csv
+#'
+#' @param url Character. Url from which to grab the station information (see
+#'   details)
 #' @param skip Numeric. Number of lines to skip at the beginning of the csv. If
 #'   NULL, automatically derived.
 #' @param verbose Logical. Include progress messages
