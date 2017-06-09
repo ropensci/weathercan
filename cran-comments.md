@@ -7,7 +7,7 @@ Local
 
 Travis CI
 * ubuntu 12.04, 14.04 (R 3.3.0 and devel)
-* OSX 10.11.6, 10.12, 10.10 (R 3.3.0 and devel)
+* OSX 10.11.6, 10.12 (R 3.3.0 and devel)
 
 Appveyor
 * Windows (R 3.3.0 and devel, i386 and x64)

@@ -27,8 +27,4 @@ matrix:
       r: release
 
     - os: osx
-      osx_image: xcode6.4
-      r: release
-
-    - os: osx
       r: release
