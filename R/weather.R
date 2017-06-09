@@ -32,11 +32,6 @@
 #'  "month".
 #' @param trim Logical. Trim missing values from the start and end of the weather
 #'  dataframe.
-#' @param avg Character. (NOT USEABLE) Whether and how to average the data
-#' @param best Logical. (NOT USEABLE) If TRUE, returns data at the best frame to
-#'  maximize data according to the date range (this could result in less data
-#'  from other weather measurements, see Details). If FALSE, returns data from
-#'  exact interval specified.
 #' @param format Logical. If TRUE, formats data for immediate use. If FALSE,
 #'  returns data exactly as downloaded from Environment Canda. Useful for
 #'  dealing with changes by Environment Canada to the format of data downloads.
@@ -79,8 +74,6 @@ weather <- function(station_ids,
                     start = NULL, end = NULL,
                     interval = "hour",
                     trim = TRUE,
-                    avg = "none",
-                    best = FALSE,
                     format = TRUE,
                     string_as = NA,
                     tz_disp = NULL,
@@ -90,15 +83,7 @@ weather <- function(station_ids,
                     list_col = FALSE,
                     verbose = FALSE) {
 
-  # station_id = 51423; start = "2016-01-01"; end = "2016-02-15"; format = FALSE; interval = "hour"; avg = "none"; string_as = NA; stn = NULL; url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html"
-
-   #station_ids = 54398; start = "2016-01-01"; end = NULL; format = FALSE; interval = "day"; avg = "none"; string_as = NA; stn = NULL; url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html"
-
-  #'
-  ## AVERAGE CAN ONLY BE day, month, year
-  ## AVERAGE Has to be larger interval than interval
-
-  ## Address as.POSIXct...
+  # Address as.POSIXct...
   if((!is.null(start) & class(try(as.Date(start), silent = TRUE)) == "try-error") |
      (!is.null(end) & class(try(as.Date(end), silent = TRUE)) == "try-error")) {
     stop("'start' and 'end' must be either a standard date format (YYYY-MM-DD) or NULL")
@@ -140,13 +125,6 @@ weather <- function(station_ids,
     if(is.null(start)) s.start <- stn1$start else s.start <- as.Date(start)
     if(is.null(end)) s.end <- Sys.Date() else s.end <- as.Date(end)
     dates <- interval(s.start, s.end)
-
-    ## If the selected time frame is not complely available change the parameters and warn
-
-    if(best == TRUE){
-      message("The 'best' option is currently unavailable")
-      best <- FALSE
-    }
 
     date_range <- seq(floor_date(s.start, unit = "month"),
                       floor_date(s.end, unit = "month"),
@@ -231,12 +209,6 @@ weather <- function(station_ids,
     w_all <- w_all[w_all$date >= min(temp) & w_all$date <= max(temp), ]
   }
 
-  ## Average if requested
-  if(avg != "none"){
-    if(verbose) message("Averaging station data")
-    message("Averaging is currently unavailable")
-  }
-
   ## Arrange
   w_all <- dplyr::select(w_all, station_name, station_id, dplyr::everything())
 
@@ -245,7 +217,7 @@ weather <- function(station_ids,
 
     ## Appropriate grouping levels
     if(interval == "hour"){
-    w_all <- tidyr::nest(w_all, -station_name,-station_id,-lat,-lon, -date)
+      w_all <- tidyr::nest(w_all, -station_name,-station_id,-lat,-lon, -date)
     }
 
     if(interval == "day"){
@@ -256,7 +228,7 @@ weather <- function(station_ids,
       w_all <- tidyr::nest(w_all, -station_name,-station_id,-lat,-lon, -year)
     }
 
-    }
+  }
 
   return(dplyr::tbl_df(w_all))
 }
