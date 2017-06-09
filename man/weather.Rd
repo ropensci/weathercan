@@ -8,7 +8,7 @@ weather(station_ids, start = NULL, end = NULL, interval = "hour",
   trim = TRUE, format = TRUE, string_as = NA, tz_disp = NULL,
   stn = weathercan::stations,
   url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html",
-  encoding = "UTF-8", list_col = FALSE, verbose = FALSE)
+  encoding = "UTF-8", list_col = FALSE, verbose = FALSE, quiet = FALSE)
 }
 \arguments{
 \item{station_ids}{Numeric/Character. A vector containing the ID(s) of the
@@ -46,7 +46,10 @@ included in the package unless otherwise specified.}
 
 \item{list_col}{Logical Defaults to FALSE}
 
-\item{verbose}{Logical. Include messages}
+\item{verbose}{Logical. Include progress messages}
+
+\item{quiet}{Logical. Suppress all messages (including messages regarding
+missing data, etc.)}
 }
 \value{
 A tibble with station ID, name and weather data.

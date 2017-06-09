@@ -4,7 +4,8 @@
 \alias{stations_all}
 \title{Get available stations}
 \usage{
-stations_all(url = "http://bit.ly/2sIuCty", skip = NULL)
+stations_all(url = "http://bit.ly/2sIuCty", skip = NULL, verbose = FALSE,
+  quiet = FALSE)
 }
 \arguments{
 \item{url}{Character. Url from which to grab the station information.
@@ -14,6 +15,11 @@ Inventory EN.csv} (shorted for the argument).}
 
 \item{skip}{Numeric. Number of lines to skip at the beginning of the csv. If
 NULL, automatically derived.}
+
+\item{verbose}{Logical. Include progress messages}
+
+\item{quiet}{Logical. Suppress all messages (including messages regarding
+missing data, etc.)}
 }
 \value{
 A tibble containing station names, station ID codes and dates of

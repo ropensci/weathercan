@@ -4,7 +4,8 @@
 \alias{add_weather}
 \title{Interpolate and add weather data to a dataframe}
 \usage{
-add_weather(data, weather, cols = "all", interval = "hour", na_gap = 2)
+add_weather(data, weather, cols = "all", interval = "hour", na_gap = 2,
+  quiet = FALSE)
 }
 \arguments{
 \item{data}{Dataframe. Data with dates or times to which weather data should
@@ -23,6 +24,9 @@ cannot be linearly interpolated (e.g., wind direction).}
 
 \item{na_gap}{How many hours or days (depending on the interval) is it
 acceptible to skip over when interpolating over NAs (see details).}
+
+\item{quiet}{Logical. Suppress all messages (including messages regarding
+missing data, etc.)}
 }
 \description{
 When data and the weather measurements do not perfectly line up, perform a
