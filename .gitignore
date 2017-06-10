@@ -3,6 +3,6 @@
 .Rhistory
 .RData
 .Ruserdata
-.Rproj
+*.Rproj
 old R
 
