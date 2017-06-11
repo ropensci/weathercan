@@ -2,7 +2,7 @@ README
 ================
 Steffi LaZerte
 
-[![Build Status](https://travis-ci.org/steffilazerte/weathercan.svg?branch=master)](https://travis-ci.org/steffilazerte/weathercan) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/steffilazerte/weathercan?branch=master&svg=true)](https://ci.appveyor.com/project/steffilazerte/weathercan)
+[![Build Status](https://travis-ci.org/steffilazerte/weathercan.svg?branch=v0.2.2)](https://travis-ci.org/steffilazerte/weathercan) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/steffilazerte/weathercan?branch=v0.2.2&svg=true)](https://ci.appveyor.com/project/steffilazerte/weathercan)
 
 weathercan
 ==========
