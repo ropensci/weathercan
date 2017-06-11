@@ -1,10 +1,10 @@
-#' Station data downloaded from Environment Canada
+#' Station data downloaded from Environment and Climate Change Canada
 #'
-#' A dataset containing station information downloaded from Environment Canada
-#' on April 13, 2017. Note that a station may have several station IDs,
+#' A dataset containing station information downloaded from Environment and
+#' Climate Change Canada. Note that a station may have several station IDs,
 #' depending on how the data collection has changed over the years. Station
-#' information can be updated by running \code{stations <-  stations_all()} and then by
-#' specifying stn = stations in most functions.
+#' information can be updated by running \code{stations_new <-  stations_all()}
+#' and then by specifying stn = stations_new in most functions.
 #'
 #' @format A data frame with 26211 rows and 12 variables:
 #' \describe{
@@ -24,7 +24,10 @@
 #' @source \url{http://climate.weather.gc.ca/index_e.html}
 "stations"
 
-#' Hourly weather data for Kamloops downloaded with \code{weather()}. Terms are more thoroughly defined here \url{http://climate.weather.gc.ca/glossary_e.html}
+#' Hourly weather data for Kamloops
+#'
+#' Downloaded with \code{\link{weather}()}. Terms are more thoroughly defined here
+#' \url{http://climate.weather.gc.ca/glossary_e.html}
 #'
 #' @format An example dataset of hourly weather data for Kamloops:
 #' \describe{
@@ -66,7 +69,10 @@
 #' @source \url{http://climate.weather.gc.ca/index_e.html}
 "kamloops"
 
-#' Hourly weather data for Prince George downloaded with \code{weather()}. Terms are more thoroughly defined here \url{http://climate.weather.gc.ca/glossary_e.html}
+#' Hourly weather data for Prince George
+#'
+#' Downloaded with \code{\link{weather}()}. Terms are more thoroughly defined here
+#' \url{http://climate.weather.gc.ca/glossary_e.html}
 #'
 #' @format An example dataset of hourly weather data for Prince George:
 #' \describe{
@@ -108,7 +114,10 @@
 #' @source \url{http://climate.weather.gc.ca/index_e.html}
 "pg"
 
-#' Daily weather data for Kamloops downloaded with \code{weather()}. Terms are more thoroughly defined here \url{http://climate.weather.gc.ca/glossary_e.html}
+#' Daily weather data for Kamloops
+#'
+#' Downloaded with \code{\link{weather}()}. Terms are more thoroughly defined here
+#' \url{http://climate.weather.gc.ca/glossary_e.html}
 #'
 #' @format An example dataset of daily weather data for Kamloops:
 #' \describe{

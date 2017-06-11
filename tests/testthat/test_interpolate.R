@@ -1,12 +1,9 @@
-library(envirocan)
-context("Interpolate and merge")
 
-#####################
-## Raw interpolation (time)
-#####################
+# Raw interpolation (time) ------------------------------------------------
+context("Raw interpolation (time)")
 
 test_that("approx_na_rm (time) without NAs", {
-  k <- kamloops[kamloops$time > as.POSIXct("2016-02-28") & kamloops$time < as.POSIXct("2016-03-01"), ]
+  k <- kamloops[kamloops$time > as.POSIXct("2016-03-01") & kamloops$time < as.POSIXct("2016-03-03"), ]
   f <- finches[1:20, ]
 
   ## Format
@@ -31,12 +28,13 @@ test_that("approx_na_rm (time) without NAs", {
 
 
 test_that("approx_na_rm (time) without NAs for different measures", {
-  k <- kamloops[kamloops$time > as.POSIXct("2016-02-28") & kamloops$time < as.POSIXct("2016-03-01"), ]
+  k <- kamloops[kamloops$time > as.POSIXct("2016-03-01") & kamloops$time < as.POSIXct("2016-03-03"), ]
+  k <- as.data.frame(k)
   f <- finches[1:20, ]
 
   ## Format
   for(m in c("temp", "pressure", "rel_hum", "temp_dew", "visib", "wind_spd")){
-    expect_silent(a <- approx_na_rm(x = k$time, y = k[, m], xout = f$time, na_gap = i))
+    expect_silent(a <- approx_na_rm(x = k$time, y = k[, m], xout = f$time))
     expect_is(a, "data.frame")
     expect_is(a$x, "POSIXct")
     expect_is(a$y, "numeric")
@@ -48,17 +46,31 @@ test_that("approx_na_rm (time) without NAs for different measures", {
 })
 
 test_that("approx_na_rm (time) without NAs pads NAs at start/end", {
-  k <- kamloops[kamloops$time >= as.POSIXct("2016-02-29 08:00:00", tz = "Etc/GMT+8") & kamloops$time <= as.POSIXct("2016-02-29 9:00:00", tz = "Etc/GMT+8"), ]
-  f <- finches[1:100, ]
+  k <- kamloops[kamloops$time >= as.POSIXct("2016-03-08 12:00:00", tz = "Etc/GMT+8") & kamloops$time <= as.POSIXct("2016-03-08 14:00:00", tz = "Etc/GMT+8"), ]
+  f <- finches[finches$time >= as.POSIXct("2016-03-08 04:00:00"), ][1:500,]
 
-  expect_equal(sum(is.na((a <- approx_na_rm(x = k$time, y = k$temp, xout = f$time, na_gap = 2))$y)), 55)
-  expect_true(all(!is.na(a$y[a$x >= as.POSIXct("2016-02-29 08:00:00") & a$x <= as.POSIXct("2016-02-29 9:00:00")])))
+  expect_silent(a <- approx_na_rm(x = k$time, y = k$temp, xout = f$time, na_gap = lubridate::hours(2)))
+  expect_true(all(is.na(a$y[a$x < as.POSIXct("2016-03-08 12:00:00", tz = "Etc/GMT+8")])))
+  expect_true(all(is.na(a$y[a$x > as.POSIXct("2016-03-08 14:00:00", tz = "Etc/GMT+8")])))
+  expect_true(all(!is.na(a$y[a$x >= as.POSIXct("2016-03-08 12:00:00", tz = "Etc/GMT+8") &
+                               a$x <= as.POSIXct("2016-03-08 14:00:00", tz = "Etc/GMT+8")])))
 
 })
 
-#####################
-## Raw interpolation (numeric)
-#####################
+test_that("approx_na_rm (time) replaces gaps with NAs", {
+  k <- kamloops[kamloops$time >= as.POSIXct("2016-02-29 08:00:00", tz = "Etc/GMT+8") & kamloops$time <= as.POSIXct("2016-03-30 9:00:00", tz = "Etc/GMT+8"), ]
+  f <- finches[finches$time >= as.POSIXct("2016-03-08 06:00:00"), ][1:500,]
+
+  expect_silent(a <- approx_na_rm(x = k$time, y = k$temp, xout = f$time, na_gap = lubridate::hours(2)))
+  expect_equal(sum(is.na(a$y)), 0)
+
+  expect_silent(a <- approx_na_rm(x = k$time, y = k$temp, xout = f$time, na_gap = lubridate::hours(1)))
+  expect_equal(sum(is.na(a$y)), 195)
+
+})
+
+# Raw interpolation (numeric) ---------------------------------------------
+context("Raw interpolation (numeric)")
 
 test_that("approx_na_rm (numeric) without NAs", {
   k <- data.frame(x = 1:100, y = sample(1:1000, 100))
@@ -90,8 +102,8 @@ test_that("approx_na_rm (numeric) without NAs", {
 
 test_that("approx_na_rm (numeric) with NAs", {
   k <- data.frame(x = 1:100, y = sample(1:1000, 100))
-  k$y[33:35] <- NA
-  f <- data.frame(x = sample(seq(1.1, 99.5, length.out = 10)))
+  k$y[30:33] <- NA
+  f <- data.frame(x = sort(sample(seq(1.1, 99.5, length.out = 10))))
 
   ## Format
   expect_error(approx_na_rm(x = k$x, y = k$y, xout = f$x, na_gap = NULL))
@@ -104,7 +116,7 @@ test_that("approx_na_rm (numeric) with NAs", {
   expect_true(any(is.na(a)))
 
   ## Skip enough, get no NAs
-  expect_silent(a <- approx_na_rm(x = k$x, y = k$y, xout = f$x, na_gap = 4))
+  expect_silent(a <- approx_na_rm(x = k$x, y = k$y, xout = f$x, na_gap = 5))
   expect_true(all(!is.na(a)))
   expect_is(a, "data.frame")
   expect_is(a$x, "numeric")
@@ -115,12 +127,11 @@ test_that("approx_na_rm (numeric) with NAs", {
 
 })
 
-#####################
-## Add interpolation (hour)
-#####################
+# Add interpolation (hour) ------------------------------------------------
+context("Add interpolation (hour)")
 
 test_that("add_weather (hour) fails with incorrect data types", {
-  k <- kamloops[kamloops$time > as.POSIXct("2016-02-28") & kamloops$time < as.POSIXct("2016-03-01"), ]
+  k <- kamloops[kamloops$time > as.POSIXct("2016-03-01") & kamloops$time < as.POSIXct("2016-03-03"), ]
   f <- finches[1:20, ]
 
   ## Expect failure
@@ -129,34 +140,37 @@ test_that("add_weather (hour) fails with incorrect data types", {
 })
 
 test_that("add_weather (hour) interpolates particular columns", {
-  k <- kamloops[kamloops$time > as.POSIXct("2016-02-28") & kamloops$time < as.POSIXct("2016-03-01"), ]
+  k <- kamloops[kamloops$time > as.POSIXct("2016-03-01") & kamloops$time < as.POSIXct("2016-03-03"), ]
   f <- finches[1:20, ]
 
   ## Expect success
   for(m in c("temp", "temp_dew", "rel_hum", "wind_spd", "visib", "pressure")) {
     expect_silent(a <- add_weather(f, k, cols = m))
     expect_named(a, c(names(f), m))
-    expect_equal(a[, 1:6], f)
+    expect_gt(nrow(a), sum(is.na(a[, m]))) # Not all NA
+    expect_equal(a[, 1:ncol(f)], f)
   }
 
   ## Multiple columns
   expect_silent(a <- add_weather(f, k, cols = c("temp", "temp_dew")))
   expect_named(a, c(names(f), c("temp", "temp_dew")))
-  expect_equal(a[, 1:6], f)
+  expect_gt(nrow(a), sum(is.na(a$temp))) # Not all NA
+  expect_gt(nrow(a), sum(is.na(a$temp_dew))) # Not all NA
+  expect_equal(a[, 1:ncol(f)], f)
 })
 
 test_that("add_weather (hour) interpolates 'all'", {
-  k <- kamloops[kamloops$time > as.POSIXct("2016-02-28") & kamloops$time < as.POSIXct("2016-03-01"), ]
+  k <- kamloops[kamloops$time > as.POSIXct("2016-03-01") & kamloops$time < as.POSIXct("2016-03-03"), ]
   f <- finches[1:20, ]
 
   ## Expect success
   expect_message(a <- add_weather(f, k))
   expect_named(a, c(names(f), c("temp", "temp_dew", "rel_hum", "wind_spd", "visib", "pressure")))
-  expect_equal(a[, 1:6], f)
+  expect_equal(a[, 1:ncol(f)], f)
 })
 
 test_that("add_weather (hour) fails on character columns", {
-  k <- kamloops[kamloops$time > as.POSIXct("2016-02-28") & kamloops$time < as.POSIXct("2016-03-01"), ]
+  k <- kamloops[kamloops$time > as.POSIXct("2016-03-01") & kamloops$time < as.POSIXct("2016-03-03"), ]
   f <- finches[1:20, ]
 
   k$temp <- as.character(k$temp)
@@ -167,9 +181,16 @@ test_that("add_weather (hour) fails on character columns", {
   expect_message(add_weather(f, k, cols = c("temp", "rel_hum")), "Some columns \\(temp\\)")
 })
 
-#####################
-## Add interpolation (day)
-#####################
+test_that("add_weather (hour) quiet", {
+  k <- kamloops[kamloops$time > as.POSIXct("2016-03-01") & kamloops$time < as.POSIXct("2016-03-03"), ]
+  k$temp[1:10] <- NA
+  f <- finches[1:20, ]
+  expect_message(add_weather(f, k, cols = "temp"))
+  expect_silent(add_weather(f, k, cols = "temp", quiet = TRUE))
+})
+
+# Add interpolation (day) -------------------------------------------------
+context("Add interpolation (day)")
 
 test_that("add_weather (day) fails with incorrect data types", {
   k <- kamloops_day[kamloops_day$date < as.Date("2016-04-01"), ]
@@ -186,23 +207,23 @@ test_that("add_weather (day) interpolates particular columns", {
   k <- kamloops_day[kamloops_day$date < as.Date("2016-04-01"), ]
   f <- finches[1:20, ] %>%
     dplyr::mutate(date = as.Date(time)) %>%
-    dplyr::arrange(bird_id)
+    dplyr::arrange(animal_id)
 
   ## Expect success
-  for(m in c("max_temp", "min_temp", "mean_temp", "heat_deg_days", "cool_deg_days", "snow_grnd", "spd_max_gust", "total_precip", "total_rain", "total_snow")) {
+  for(m in c("max_temp", "min_temp", "mean_temp", "heat_deg_days", "cool_deg_days", "snow_grnd", "spd_max_gust", "total_precip", "total_rain", "total_snow")[7]) {
     if(any(is.na(k[, m]))) {
       expect_message(expect_error(a <- add_weather(f, k, cols = m, interval = "day"), NA))
     } else {
       expect_silent(a <- add_weather(f, k, cols = m, interval = "day"))
     }
     expect_named(a, c(names(f), m))
-    expect_equal(a[, 1:7], f)
+    expect_equal(a[, 1:ncol(f)], f)
   }
 
   ## Multiple columns
   expect_silent(a <- add_weather(f, k, cols = c("max_temp", "min_temp", "mean_temp"), interval = "day"))
   expect_named(a, c(names(f), c("max_temp", "min_temp", "mean_temp")))
-  expect_equal(a[, 1:7], f)
+  expect_equal(a[, 1:ncol(f)], f)
 })
 
 test_that("add_weather (day) interpolates 'all'", {
@@ -213,7 +234,7 @@ test_that("add_weather (day) interpolates 'all'", {
   ## Expect success
   expect_message(a <- add_weather(f, k, interval = "day"))
   expect_named(a, c(names(f), c("max_temp", "min_temp", "mean_temp", "heat_deg_days", "cool_deg_days", "total_rain", "total_snow", "total_precip", "snow_grnd", "spd_max_gust")))
-  expect_equal(a[, 1:7], f)
+  expect_equal(a[, 1:ncol(f)], f)
 })
 
 
@@ -230,3 +251,14 @@ test_that("add_weather (day) skips character columns", {
 
   expect_message(add_weather(f, k, cols = c("max_temp", "mean_temp"), interval = "day"), "Some columns \\(max\\_temp\\)")
 })
+
+test_that("add_weather (hour) quiet", {
+  k <- kamloops_day[kamloops_day$date < as.Date("2016-04-01"), ]
+  k$max_temp[1:10] <- NA
+  f <- finches[1:20, ] %>%
+    dplyr::mutate(date = as.Date(time))
+
+  expect_message(add_weather(f, k, interval = "day", cols = "max_temp"))
+  expect_silent(add_weather(f, k, interval = "day", cols = "max_temp", quiet = TRUE))
+})
+

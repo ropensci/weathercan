@@ -6,9 +6,18 @@
 #' so it may not be necessary to call this function (and this function may take a few
 #' minutes to run).
 #'
-#' @param url Character. Url from which to grab the station information. Defaults to \url{"ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/Station Inventory EN.csv"}
+#' @details
+#' URL defaults to
+#' ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/Station
+#' Inventory EN.csv
+#'
+#' @param url Character. Url from which to grab the station information (see
+#'   details)
 #' @param skip Numeric. Number of lines to skip at the beginning of the csv. If
 #'   NULL, automatically derived.
+#' @param verbose Logical. Include progress messages
+#' @param quiet Logical. Suppress all messages (including messages regarding
+#'   missing data, etc.)
 #'
 #' @return A tibble containing station names, station ID codes and dates of
 #'   operation
@@ -16,19 +25,19 @@
 #' @import magrittr
 #' @export
 
-stations_all <- function(url = "ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/Station Inventory EN.csv",
-                        skip = NULL) {
+stations_all <- function(url = "ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/Station%20Inventory%20EN.csv",
+                         skip = NULL, verbose = FALSE, quiet = FALSE) {
 
-  if(!grep(".csv$", url)) stop("'url' must point to a csv file either local or online.")
-
-  headings <- readLines(url, n = 5)
+  if(verbose) message("Trying to access stations data frame")
+  headings <- try(readLines(url, n = 5), silent = TRUE)
+  if("try-error" %in% class(headings)) stop("'url' must point to a csv file either local or online.")
 
   if(is.null(skip)) skip <- grep("(.*?)(Name)(.*?)(Province)(.*?)(Climate ID)(.*?)(Station ID)(.*?)(WMO ID)(.*?)(TC ID)(.*?)", headings) - 1
 
-  message("According to Environment Canada, ", grep("Modified Date", headings, value = TRUE))
-  message("Environment Canada Disclaimers:\n", paste0(grep("Disclaimer", headings, value = TRUE), collapse = "\n"))
+  if(!quiet) message("According to Environment Canada, ", grep("Modified Date", headings, value = TRUE))
+  if(!quiet) message("Environment Canada Disclaimers:\n", paste0(grep("Disclaimer", headings, value = TRUE), collapse = "\n"))
 
-
+  if(verbose) message("Downloading stations data frame")
   stn <- utils::read.csv(file = url,
                          skip = skip,
                          strip.white = TRUE) %>%
@@ -60,7 +69,7 @@ stations_all <- function(url = "ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_Mo
                   prov = factor(prov, levels = c("ALBERTA",
                                                  "BRITISH COLUMBIA",
                                                  "MANITOBA",
-                                                 "NEW BRUSNWICK",
+                                                 "NEW BRUNSWICK",
                                                  "NEWFOUNDLAND",
                                                  "NORTHWEST TERRITORIES",
                                                  "NOVA SCOTIA",
@@ -96,6 +105,9 @@ stations_all <- function(url = "ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_Mo
 #'   intervals. Must be any of "hour", "day", "month".
 #' @param stn Data frame. The \code{stations} data frame to use. Will use the
 #'   one included in the package unless otherwise specified.
+#' @param verbose Logical. Include progress messages
+#' @param quiet Logical. Suppress all messages (including messages regarding
+#'   missing data, etc.)
 #'
 #' @return Returns a subset of the stations data frame which match the search
 #'   parameters. If the search was by location, an extra column 'distance' shows
@@ -119,7 +131,9 @@ stations_search <- function(name = NULL,
                             coords = NULL,
                             dist = 10,
                             interval = c("hour", "day", "month"),
-                            stn = NULL) {
+                            stn = weathercan::stations,
+                            verbose = FALSE,
+                            quiet = FALSE) {
   if(all(is.null(name), is.null(coords)) | all(!is.null(name), !is.null(coords))) stop("Need a search name OR search coordinate")
 
   if(!is.null(coords)) {
@@ -127,9 +141,8 @@ stations_search <- function(name = NULL,
     if(length(coords) != 2 | all(is.na(coords)) | class(coords) == "try-error") stop("'coord' takes one pair of lat and lon in a numeric vector")
   }
 
-  if(is.null(stn)) stn <- envirocan::stations
-
   if(!is.null(name)) {
+    if(verbose) message("Searching by name")
     if(class(try(as.character(name), silent = TRUE)) == "try-error") stop("'name' needs to be coercible into a character")
     name <- gsub("([A-Z]*)", "\\L\\1", name, perl = TRUE)
     temp <- gsub("([A-Z]*)", "\\L\\1", stn$station_name, perl=TRUE)
@@ -140,6 +153,7 @@ stations_search <- function(name = NULL,
   }
 
   if(!is.null(coords)){
+    if(verbose) message("Calculating station distances")
     coords <- as.numeric(as.character(coords))
     stn$distance <- NA
     stn$distance[!is.na(stn$lat)] <- sp::spDistsN1(pts = as.matrix(stn[!is.na(stn$lat), c("lon", "lat")]), pt = c(coords[2], coords[1]), longlat = TRUE)
@@ -148,11 +162,11 @@ stations_search <- function(name = NULL,
     i <- which(stn$distance <= dist)
     if(length(i) == 0) {
      i <- which(stn$distance <= min(stn$distance, na.rm = TRUE) + dist)
-     message("No stations within ", dist, "km. Returning closest stations within ", dist, " km of each other.")
+     if(!quiet) message("No stations within ", dist, "km. Returning closest stations within ", dist, " km of each other.")
     }
   }
   stn <- stn[i,] %>%
-      dplyr::filter_(lazyeval::interp(~ interval %in% tf & !is.na(start), tf = interval))
+      dplyr::filter_(lazyeval::interp(~ interval %in% x & !is.na(start), x = interval))
   if(!is.null(name)) stn <- dplyr::arrange(stn, station_name, station_id, interval)
   if(!is.null(coords)) stn <- dplyr::arrange(stn, distance, station_name, station_id, interval)
   return(stn)

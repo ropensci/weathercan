@@ -3,7 +3,7 @@
 \docType{data}
 \name{pg}
 \alias{pg}
-\title{Hourly weather data for Prince George downloaded with \code{weather()}. Terms are more thoroughly defined here \url{http://climate.weather.gc.ca/glossary_e.html}}
+\title{Hourly weather data for Prince George}
 \format{An example dataset of hourly weather data for Prince George:
 \describe{
   \item{station_name}{Station name}
@@ -48,6 +48,7 @@
 pg
 }
 \description{
-Hourly weather data for Prince George downloaded with \code{weather()}. Terms are more thoroughly defined here \url{http://climate.weather.gc.ca/glossary_e.html}
+Downloaded with \code{\link{weather}()}. Terms are more thoroughly defined here
+\url{http://climate.weather.gc.ca/glossary_e.html}
 }
 \keyword{datasets}

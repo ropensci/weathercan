@@ -1,4 +1,4 @@
 library(testthat)
-library(envirocan)
+library(weathercan)
 
-test_check("envirocan")
+test_check("weathercan")

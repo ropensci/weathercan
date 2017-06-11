@@ -1,7 +1,9 @@
-library(envirocan)
-context("Station data")
+
+# stations_all ------------------------------------------------------------
+context("stations_all")
 
 test_that("stations_all() runs and returns data", {
+  skip_on_cran()
   expect_error({s <- stations_all()}, regexp = NA)
   expect_warning(expect_error({stations_all(url = "test.csv")}))
   expect_is(s, "data.frame")
@@ -11,7 +13,17 @@ test_that("stations_all() runs and returns data", {
   expect_is(s$station_name, "character")
   expect_gt(nrow(s), 10)
   expect_equal(unique(s$interval), c("hour", "day", "month"))
+
+  # Check content
+  expect_equal(nrow(s[is.na(s$station_name),]), 0)
+  expect_equal(nrow(s[is.na(s$station_id),]), 0)
+  expect_equal(nrow(s[is.na(s$prov),]), 0)
+  expect_true(all(table(s$station_id) == 3)) # One row per time interval type
 })
+
+
+# stations_search ---------------------------------------------------------
+context("stations_search")
 
 test_that("stations_search 'name' returns correct format", {
   expect_error(stations_search())

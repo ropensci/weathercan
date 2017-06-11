@@ -1,8 +1,8 @@
 ## Get up-to-date stations data
 stations <- stations_all()
+devtools::use_data(stations, overwrite = TRUE)
 
 write.csv(stations, "./data-raw/stations.csv", row.names = FALSE)
-devtools::use_data(stations, overwrite = TRUE)
 
 ## Get names expected from stations data download
 w_names <- list(
@@ -25,4 +25,6 @@ devtools::use_data(pg, overwrite = TRUE)
 
 # with Daylight savings on March 13th (AM)
 finches <- feedr::dl_data(start = "2016-03", end = "2016-03-16")
+finches <- tibble::as_tibble(finches)
+
 devtools::use_data(finches, overwrite = TRUE)

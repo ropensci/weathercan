@@ -5,16 +5,16 @@ output: github_document
 ---
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-library(envirocan)
+library(weathercan)
 library(dplyr)
 ```
-[![Build Status](https://travis-ci.org/steffilazerte/envirocan.svg?branch=master)](https://travis-ci.org/steffilazerte/envirocan) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/steffilazerte/envirocan?branch=master&svg=true)](https://ci.appveyor.com/project/steffilazerte/envirocan)
+[![Build Status](https://travis-ci.org/steffilazerte/weathercan.svg?branch=master)](https://travis-ci.org/steffilazerte/weathercan) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/steffilazerte/weathercan?branch=master&svg=true)](https://ci.appveyor.com/project/steffilazerte/weathercan)
 
-# envirocan
+# weathercan
 
-This package is makes it easier to search for and download multiple months/years of historical weather data from Environment Canada website.
+This package is makes it easier to search for and download multiple months/years of historical weather data from Environment and Climate Change Canada (ECCC) website.
 
-Bear in mind that these downloads can be fairly large and performing multiple, downloads may use up Environment Canada's bandwidth unecessarily. Try to stick to what you need.
+Bear in mind that these downloads can be fairly large and performing multiple, downloads may use up ECCC's bandwidth unecessarily. Try to stick to what you need.
 
 ## Installation
 
@@ -22,22 +22,19 @@ Use the `devtools` package to directly install R packages from github:
 
 ```{r, eval = FALSE}
 install.packages("devtools") # If not already installed
-devtools::install_github("steffilazerte/envirocan", ref = "v0.2.2") 
-## For most recent release; Otherwise omit "ref = " to download most recent version
-## Also making use of the tidyverse for data manipulations
-library(dplyr)
-library(tibble)
+devtools::install_github("steffilazerte/weathercan") 
 ```
 
-## Basic usage:
+## General usage
 
 To download data, you first need to know the `station_id` associated with the station you're interested in.
 
 ### Stations
 
-`envirocan` includes a data frame called `stations` which includes a list of stations and their details (including `station_id`.
+`weathercan` includes a data frame called `stations` which includes a list of stations and their details (including `station_id`.
 
 ```{r}
+head(stations)
 glimpse(stations)
 ```
 
@@ -55,59 +52,29 @@ You can also search by proximity:
 stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour")
 ```
 
-We can also perform more complex searches using `tidyverse` tools and use the resulting vector:
-```{r search_crit}
-BCstations <- stations %>%
-  filter(prov %in% c("BC")) %>%
-  filter(interval == "hour") %>%
-  filter(lat > 49 & lat < 49.5) %>%
-  filter(lon > -119 & lon < -116) %>%
-  filter(start<=2002) %>%
-  filter(end>=2016)
-
-## weather() accepts numbers so we can create a vector to input into weather:
-stn_vector <- BCstations$station_id 
-
-```
-
 ### Weather
 
 Once you have your `station_id`(s) you can download weather data:
 
 ```{r}
 kam <- weather(station_ids = 51423, start = "2016-01-01", end = "2016-02-15")
-                    
 kam
-
 ```
 
 You can also download data from multiple stations at once:
 
 ```{r}
-kam.pg <- weather(station_ids = c(48248, 51423), start = "2016-01-01", end = "2016-02-15")
-                    
-kam.pg
+kam_pg <- weather(station_ids = c(48248, 51423), start = "2016-01-01", end = "2016-02-15")
+kam_pg
 ```
-
 
 And plot it:
 
 ```{r, fig.height=6, fig.width=12}
 library(ggplot2)
 
-ggplot(data = kam.pg, aes(x = time, y = temp, group = station_name, colour = station_name)) +
+ggplot(data = kam_pg, aes(x = time, y = temp, group = station_name, colour = station_name)) +
   theme(legend.position = "top") +
   geom_line() +
   theme_minimal()
 ```
-
-Or you can use the vector created above with the `tidyverse` tools: 
-
-```{r vector_input}
-stn_vec_df <- weather(station_ids = stn_vector, start = "2016-01-01", end = "2016-02-15")
-
-stn_vec_df
-```
-
-
-

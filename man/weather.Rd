@@ -5,10 +5,10 @@
 \title{Download weather data from Environment Canada}
 \usage{
 weather(station_ids, start = NULL, end = NULL, interval = "hour",
-  trim = TRUE, avg = "none", best = FALSE, format = TRUE,
-  string_as = NA, tz_disp = NULL, stations_data = NULL,
+  trim = TRUE, format = TRUE, string_as = NA, tz_disp = NULL,
+  stn = weathercan::stations,
   url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html",
-  encoding = "UTF-8", list_col = FALSE, verbose = FALSE)
+  encoding = "UTF-8", list_col = FALSE, verbose = FALSE, quiet = FALSE)
 }
 \arguments{
 \item{station_ids}{Numeric/Character. A vector containing the ID(s) of the
@@ -27,13 +27,6 @@ data frame or the \code{\link{stations_search}} function to find IDs.}
 \item{trim}{Logical. Trim missing values from the start and end of the weather
 dataframe.}
 
-\item{avg}{Character. (NOT USEABLE) Whether and how to average the data}
-
-\item{best}{Logical. (NOT USEABLE) If TRUE, returns data at the best frame to
-maximize data according to the date range (this could result in less data
-from other weather measurements, see Details). If FALSE, returns data from
-exact interval specified.}
-
 \item{format}{Logical. If TRUE, formats data for immediate use. If FALSE,
 returns data exactly as downloaded from Environment Canda. Useful for
 dealing with changes by Environment Canada to the format of data downloads.}
@@ -44,7 +37,7 @@ numeric measurement with. See Details.}
 \item{tz_disp}{Character. What timezone to display times in (must be one of
 \code{OlsonNames()}).}
 
-\item{stations_data}{Data frame. The \code{stations} data frame to use. Will use the one
+\item{stn}{Data frame. The \code{stations} data frame to use. Will use the one
 included in the package unless otherwise specified.}
 
 \item{url}{Character. Url from which to grab the weather data}
@@ -53,13 +46,18 @@ included in the package unless otherwise specified.}
 
 \item{list_col}{Logical Defaults to FALSE}
 
-\item{verbose}{Logical. Include messages}
+\item{verbose}{Logical. Include progress messages}
+
+\item{quiet}{Logical. Suppress all messages (including messages regarding
+missing data, etc.)}
 }
 \value{
 A tibble with station ID, name and weather data.
 }
 \description{
-Downloads data from Environment Canada for one or more stations.
+Downloads data from Environment Canada for one or more stations. For details
+and units, see the glossary online
+\url{http://climate.weather.gc.ca/glossary_e.html}.
 }
 \details{
 Data can be returned 'raw' (format = FALSE) or can be formatted.
