@@ -8,8 +8,8 @@
 #'
 #' @details
 #' URL defaults to
-#' ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/Station
-#' Inventory EN.csv
+#' ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/
+#' Station%20Inventory%20EN.csv
 #'
 #' @param url Character. Url from which to grab the station information (see
 #'   details)
@@ -25,7 +25,7 @@
 #' @import magrittr
 #' @export
 
-stations_all <- function(url = "ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/Station%20Inventory%20EN.csv",
+stations_all <- function(url = "http://bit.ly/2sIuCty",
                          skip = NULL, verbose = FALSE, quiet = FALSE) {
 
   if(verbose) message("Trying to access stations data frame")

@@ -4,9 +4,8 @@
 \alias{stations_all}
 \title{Get available stations}
 \usage{
-
-  stations_all(url = "ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/Station\%20Inventory\%20EN.csv",
-  skip = NULL, verbose = FALSE, quiet = FALSE)
+stations_all(url = "http://bit.ly/2sIuCty", skip = NULL, verbose = FALSE,
+  quiet = FALSE)
 }
 \arguments{
 \item{url}{Character. Url from which to grab the station information (see
@@ -33,6 +32,6 @@ minutes to run).
 }
 \details{
 URL defaults to
-ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/Station
-Inventory EN.csv
+ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/
+Station%20Inventory%20EN.csv
 }
