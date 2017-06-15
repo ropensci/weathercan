@@ -25,7 +25,7 @@
 #' @import magrittr
 #' @export
 
-stations_all <- function(url = "http://bit.ly/2sIuCty",
+stations_all <- function(url = "ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/Station%20Inventory%20EN.csv",
                          skip = NULL, verbose = FALSE, quiet = FALSE) {
 
   if(verbose) message("Trying to access stations data frame")
