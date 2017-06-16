@@ -3,6 +3,8 @@
 language: r
 sudo: false
 cache: packages
+git:
+  depth: 150
 
 matrix:
   include:
