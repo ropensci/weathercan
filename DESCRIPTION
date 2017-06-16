@@ -1,29 +1,34 @@
-Package: envirocan
+Package: weathercan
 Type: Package
-Title: Download weather data from the Environment Canada website
-Version: 0.2.1
+Title: Download Weather Data from the Environment and Climate Change Canada Website
+Version: 0.2.2
 Authors@R: c(
-     person("LaZerte", "Stefanie E.", email = "steffi@steffi.ca", role = c("aut","cre")),
-     person("Albers", "Sam", email = "sam.albers@gmail.com", role = c("ctb")))
-Description: This package provides means of grabbing station information,
+     person("Steffi", "LaZerte", email = "steffi@steffi.ca", role = c("aut","cre")),
+     person("Sam", "Albers", email = "sam.albers@gmail.com", role = c("ctb")))
+Description: Provides means of grabbing station information,
     searching for stations by name or proximity, and then weather data from the
     Environment and Climate Change Canada website.
 License: GPL-3
 LazyData: TRUE
+URL: https://github.com/steffilazerte/weathercan
 Depends:
-    R (>= 3.2.2)
+    R (>= 3.3.3)
 Imports:
-    httr (>= 1.1.0),
     dplyr (>= 0.4.3),
+    httr (>= 1.1.0),
     lazyeval (>= 0.1.10),
     lubridate (>= 1.5.6),
     magrittr (>= 1.5),
+    methods (>= 3.2.2),
     rvest (>= 0.3.1),
     sp (>= 1.2-3),
+    stringi (>= 1.1.2),
+    tibble (>= 1.2),
     tidyr (>= 0.4.1),
     xml2 (>= 0.1.2)
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 Suggests:
+    ggplot2,
     knitr,
     rmarkdown,
     testthat

@@ -1,46 +1,174 @@
-#' Station data downloaded from Environment Canada
+#' Station data downloaded from Environment and Climate Change Canada
 #'
-#' A dataset containing station information downloaded from Environment Canada
-#' on June 17th 2016. Note that a station may have several station IDs,
+#' A dataset containing station information downloaded from Environment and
+#' Climate Change Canada. Note that a station may have several station IDs,
 #' depending on how the data collection has changed over the years. Station
-#' information can be updated by stations <- running stations_all() and then by
-#' specifying stn = stations in most functions.
+#' information can be updated by running \code{stations_new <-  stations_all()}
+#' and then by specifying stn = stations_new in most functions.
 #'
-#' @format A data frame with 26199 rows and 12 variables:
+#' @format A data frame with 26211 rows and 12 variables:
 #' \describe{
 #'   \item{prov}{Province}
 #'   \item{station_name}{Station name}
-#'   \item{station_id}{Environment Canada's station ID number. Required for
-#'   downloading station data.}
+#'   \item{station_id}{Environment Canada's station ID number. Required for downloading station data.}
 #'   \item{climate_id}{Climate ID number}
 #'   \item{WMO_id}{Climate ID number}
 #'   \item{TC_id}{Climate ID number}
-#'   \item{lat}{Latitude of station location}
-#'   \item{lon}{Longitude of station location}
-#'   \item{elev}{Elevation of station location}
+#'   \item{lat}{Latitude of station location in degree decimal format}
+#'   \item{lon}{Longitude of station location in degree decimal format}
+#'   \item{elev}{Elevation of station location in metres}
 #'   \item{interval}{Interval of the data measurements ('hour', 'day', 'month')}
-#'   \item{start}{Starting year of station data}
-#'   \item{end}{Ending year of station data}
+#'   \item{start}{Starting year of data record}
+#'   \item{end}{Ending year of data record}
 #' }
 #' @source \url{http://climate.weather.gc.ca/index_e.html}
 "stations"
 
-#' Hourly weather data for Kamloops downloaded with \code{weather()}
+#' Hourly weather data for Kamloops
 #'
-#' An example dataset of hourly weather data for Kamloops
+#' Downloaded with \code{\link{weather}()}. Terms are more thoroughly defined here
+#' \url{http://climate.weather.gc.ca/glossary_e.html}
+#'
+#' @format An example dataset of hourly weather data for Kamloops:
+#' \describe{
+#'   \item{station_name}{Station name}
+#'   \item{station_id}{Environment Canada's station ID number. Required for downloading station data.}
+#'   \item{prov}{Province}
+#'   \item{lat}{Latitude of station location in degree decimal format}
+#'   \item{lon}{Longitude of station location in degree decimal format}
+#'   \item{date}{Date}
+#'   \item{time}{Time}
+#'   \item{year}{Year}
+#'   \item{month}{Month}
+#'   \item{day}{Day}
+#'   \item{hour}{Hour}
+#'   \item{qual}{Data quality}
+#'   \item{weather}{The state of the atmosphere at a specific time.}
+#'   \item{hmdx}{Humidex}
+#'   \item{hmdx_flag}{Humidex data flag}
+#'   \item{pressure}{Pressure (kPa)}
+#'   \item{pressure_flag}{Pressure data flag}
+#'   \item{rel_hum}{Relative humidity}
+#'   \item{rel_hum_flag}{Relative humidity data flag}
+#'   \item{temp}{Temperature}
+#'   \item{temp_dew}{Dew Point Temperature}
+#'   \item{temp_dew_flag}{Dew Point Temperatureflag}
+#'   \item{visib}{Visibility (km)}
+#'   \item{visib_flag}{Visibility data flag}
+#'   \item{wind_chill}{Wind Chill}
+#'   \item{wind_chill_flag}{Wind Chill flag}
+#'   \item{wind_dir}{Wind Direction (10's of degrees)}
+#'   \item{wind_dir_flag}{wind Direction Flag}
+#'   \item{wind_spd}{Wind speed km/hr}
+#'   \item{wind_spd_flag}{Wind speed flag}
+#'   \item{elev}{Elevation (m)}
+#'   \item{climat_id}{Climate identifier}
+#'   \item{WMO_id}{World Meteorological Organization Identifier}
+#'   \item{TC_id}{Transport Canada Identifier}
+#' }
+#' @source \url{http://climate.weather.gc.ca/index_e.html}
 "kamloops"
 
-#' Hourly weather data for Prince George downloaded with \code{weather()}
+#' Hourly weather data for Prince George
 #'
-#' An example dataset of hourly weather data for Prince George
+#' Downloaded with \code{\link{weather}()}. Terms are more thoroughly defined here
+#' \url{http://climate.weather.gc.ca/glossary_e.html}
+#'
+#' @format An example dataset of hourly weather data for Prince George:
+#' \describe{
+#'   \item{station_name}{Station name}
+#'   \item{station_id}{Environment Canada's station ID number. Required for downloading station data.}
+#'   \item{prov}{Province}
+#'   \item{lat}{Latitude of station location in degree decimal format}
+#'   \item{lon}{Longitude of station location in degree decimal format}
+#'   \item{date}{Date}
+#'   \item{time}{Time}
+#'   \item{year}{Year}
+#'   \item{month}{Month}
+#'   \item{day}{Day}
+#'   \item{hour}{Hour}
+#'   \item{qual}{Data quality}
+#'   \item{weather}{The state of the atmosphere at a specific time.}
+#'   \item{hmdx}{Humidex}
+#'   \item{hmdx_flag}{Humidex data flag}
+#'   \item{pressure}{Pressure (kPa)}
+#'   \item{pressure_flag}{Pressure data flag}
+#'   \item{rel_hum}{Relative humidity}
+#'   \item{rel_hum_flag}{Relative humidity data flag}
+#'   \item{temp}{Temperature}
+#'   \item{temp_dew}{Dew Point Temperature}
+#'   \item{temp_dew_flag}{Dew Point Temperatureflag}
+#'   \item{visib}{Visibility (km)}
+#'   \item{visib_flag}{Visibility data flag}
+#'   \item{wind_chill}{Wind Chill}
+#'   \item{wind_chill_flag}{Wind Chill flag}
+#'   \item{wind_dir}{Wind Direction (10's of degrees)}
+#'   \item{wind_dir_flag}{wind Direction Flag}
+#'   \item{wind_spd}{Wind speed km/hr}
+#'   \item{wind_spd_flag}{Wind speed flag}
+#'   \item{elev}{Elevation (m)}
+#'   \item{climat_id}{Climate identifier}
+#'   \item{WMO_id}{World Meteorological Organization Identifier}
+#'   \item{TC_id}{Transport Canada Identifier}
+#' }
+#' @source \url{http://climate.weather.gc.ca/index_e.html}
 "pg"
 
-#' Daily weather data for Kamloops downloaded with \code{weather()}
+#' Daily weather data for Kamloops
 #'
-#' An example dataset of daily weather data for Kamloops
+#' Downloaded with \code{\link{weather}()}. Terms are more thoroughly defined here
+#' \url{http://climate.weather.gc.ca/glossary_e.html}
+#'
+#' @format An example dataset of daily weather data for Kamloops:
+#' \describe{
+#'   \item{station_name}{Station name}
+#'   \item{station_id}{Environment Canada's station ID number. Required for downloading station data.}
+#'   \item{prov}{Province}
+#'   \item{lat}{Latitude of station location in degree decimal format}
+#'   \item{lon}{Longitude of station location in degree decimal format}
+#'   \item{date}{Date}
+#'   \item{year}{Year}
+#'   \item{month}{Month}
+#'   \item{day}{Day}
+#'   \item{cool_deg_days}{Cool degree days}
+#'   \item{cool_deg_days_flag}{Cool degree days flag}
+#'   \item{dir_max_gust}{Direction of max wind gust}
+#'   \item{dir_max_gust_flag}{Direction of max wind gust flag}
+#'   \item{heat_deg_days}{Heat degree days}
+#'   \item{heat_deg_days_flag}{Heat degree days flag}
+#'   \item{max_temp}{Maxixum temperature}
+#'   \item{max_temp_flag}{Maxixum temperature flag}
+#'   \item{mean_temp}{Mean temperature}
+#'   \item{mean_temp_flag}{Mean temperature flag}
+#'   \item{min_temp}{Minimum temperature}
+#'   \item{min_temp_flag}{Minimum temperature flag}
+#'   \item{snow_grnd}{Snow on the ground (cm)}
+#'   \item{snow_grnd_flag}{Snow on the ground flag}
+#'   \item{spd_max_gust}{Speed of the max gust km/h}
+#'   \item{spd_max_gust_flag}{Speed of the max gust flag}
+#'   \item{total_precip}{Total precipitation (any form)}
+#'   \item{total_precip_flag}{Total precipitation flag}
+#'   \item{total_rain}{Total rain (any form)}
+#'   \item{total_rain_flag}{Total rain flag}
+#'   \item{total_snow}{Total snow (any form)}
+#'   \item{total_snow_flag}{Total snow flag}
+#'   \item{elev}{Elevation (m)}
+#'   \item{climat_id}{Climate identifier}
+#'   \item{WMO_id}{World Meteorological Organization Identifier}
+#'   \item{TC_id}{Transport Canada Identifier}
+#' }
+#' @source \url{http://climate.weather.gc.ca/index_e.html}
 "kamloops_day"
 
 #' RFID Data on finch visits to feeders
 #'
-#' An example dataset of finch RFID data for interpolation
+#' @format An example dataset of finch RFID data for interpolation:
+#' \describe{
+#'   \item{bird_id}{Bird ID number}
+#'   \item{time}{Time}
+#'   \item{feeder_id}{feeder ID}
+#'   \item{species}{Species}
+#'   \item{lat}{Latitude of station location in degree decimal format}
+#'   \item{lon}{Longitude of station location in degree decimal format}
+#' }
 "finches"

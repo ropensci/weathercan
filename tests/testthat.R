@@ -1,4 +1,6 @@
 library(testthat)
-library(envirocan)
+library(weathercan)
 
-test_check("envirocan")
+Sys.setenv("R_TESTS" = "")
+
+test_check("weathercan")

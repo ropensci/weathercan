@@ -5,17 +5,23 @@
 \title{Get available stations}
 \usage{
 
-  stations_all(url = "ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/Station Inventory EN.csv",
-  skip = NULL)
+  stations_all(url = "ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/Station\%20Inventory\%20EN.csv",
+  skip = NULL, verbose = FALSE, quiet = FALSE)
 }
 \arguments{
-\item{url}{Character. Url from which to grab the station information}
+\item{url}{Character. Url from which to grab the station information (see
+details)}
 
 \item{skip}{Numeric. Number of lines to skip at the beginning of the csv. If
 NULL, automatically derived.}
+
+\item{verbose}{Logical. Include progress messages}
+
+\item{quiet}{Logical. Suppress all messages (including messages regarding
+missing data, etc.)}
 }
 \value{
-Data frame containing station names, station ID codes and dates of
+A tibble containing station names, station ID codes and dates of
   operation
 }
 \description{
@@ -25,4 +31,8 @@ package contains station data downloaded when the package was last compiled,
 so it may not be necessary to call this function (and this function may take a few
 minutes to run).
 }
-
+\details{
+URL defaults to
+ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/Station
+Inventory EN.csv
+}

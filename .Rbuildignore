@@ -1,10 +1,11 @@
-^envirocan.Rproj$
+^weathercan.Rproj$
 ^\.Rproj\.user$
 ^extra$
 ^data-raw$
-^testing.R$
 ^Readme
-^old R$
 ^\.travis\.yml$
 ^appveyor\.yml$
 ^.*\.Rproj$
+^cran-comments.md$
+^revdep$
+^docs$

@@ -1,19 +1,20 @@
 ---
 title: "README"
 author: "Steffi LaZerte"
-output: md_document
+output: github_document
 ---
 
-```{r, echo = FALSE}
-library(envirocan)
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(weathercan)
+library(dplyr)
 ```
-[![Build Status](https://travis-ci.org/steffilazerte/envirocan.svg?branch=master)](https://travis-ci.org/steffilazerte/envirocan) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/steffilazerte/envirocan?branch=master&svg=true)](https://ci.appveyor.com/project/steffilazerte/envirocan)
+[![Build Status](https://travis-ci.org/steffilazerte/weathercan.svg?branch=v0.2.2)](https://travis-ci.org/steffilazerte/weathercan) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/steffilazerte/weathercan?branch=v0.2.2&svg=true)](https://ci.appveyor.com/project/steffilazerte/weathercan)
 
-# envirocan
+# weathercan
 
-This package is makes it easier to search for and download multiple months/years of historical weather data from Environment Canada webiste.
+This package is makes it easier to search for and download multiple months/years of historical weather data from Environment and Climate Change Canada (ECCC) website.
 
-Bear in mind that these downloads can be fairly large and performing multiple, downloads may use up Environment Canada's bandwidth unecessarily. Try to stick to what you need.
+Bear in mind that these downloads can be fairly large and performing multiple, downloads may use up ECCC's bandwidth unecessarily. Try to stick to what you need.
 
 ## Installation
 
@@ -21,20 +22,20 @@ Use the `devtools` package to directly install R packages from github:
 
 ```{r, eval = FALSE}
 install.packages("devtools") # If not already installed
-devtools::install_github("steffilazerte/envirocan", ref = "v0.2.1") 
-## For most recent release; Otherwise omit "ref = " to download most recent version
+devtools::install_github("steffilazerte/weathercan") 
 ```
 
-## Basic usage:
+## General usage
 
 To download data, you first need to know the `station_id` associated with the station you're interested in.
 
 ### Stations
 
-`envirocan` includes a data frame called `stations` which includes a list of stations and their details (including `station_id`.
+`weathercan` includes a data frame called `stations` which includes a list of stations and their details (including `station_id`.
 
 ```{r}
 head(stations)
+glimpse(stations)
 ```
 
 You can look through this data frame directly, or you can use the `stations_search` function:
@@ -57,50 +58,23 @@ Once you have your `station_id`(s) you can download weather data:
 
 ```{r}
 kam <- weather(station_ids = 51423, start = "2016-01-01", end = "2016-02-15")
-                    
-head(kam)
-
+kam
 ```
 
 You can also download data from multiple stations at once:
 
 ```{r}
-kam.pg <- weather(station_ids = c(48248, 51423), start = "2016-01-01", end = "2016-02-15")
-                    
-head(kam.pg)
+kam_pg <- weather(station_ids = c(48248, 51423), start = "2016-01-01", end = "2016-02-15")
+kam_pg
 ```
 
 And plot it:
 
-```{r}
+```{r, fig.height=6, fig.width=12}
 library(ggplot2)
 
-ggplot(data = kam.pg, aes(x = time, y = temp, group = station_name, colour = station_name)) +
+ggplot(data = kam_pg, aes(x = time, y = temp, group = station_name, colour = station_name)) +
   theme(legend.position = "top") +
-  geom_line()
+  geom_line() +
+  theme_minimal()
 ```
-
-### Interpolate and add data
-You can merge weather data with other data frames by linearly interprolating between points.
-
-For example, using the included datasets:
-
-```{r}
-head(kamloops)
-head(finches)
-
-finches_temperature <- add_weather(data = finches, weather = kamloops, cols = "temp")
-summary(finches_temperature)
-head(finches_temperature)
-```
-
-By default, gaps of 2 hours (or two days, with a daily scale) will be interpolated over, but longer gaps will be filled with NAs. You can adjust this behaviour with `na_gap`. Note that as environment canada data is downloaded on an hourly scale, it makes no sense to apply `na_gap` values of less than 1.
-
-```{r}
-finches_temperature <- add_weather(data = finches, weather = kamloops, cols = "temp", na_gap = 1)
-summary(finches_temperature)
-
-finches_temperature[is.na(finches_temperature$temp),][1:10,]
-kamloops[is.na(kamloops$temp), c("time", "temp")]
-```
-

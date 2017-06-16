@@ -5,7 +5,8 @@
 \title{Search for stations by name or location}
 \usage{
 stations_search(name = NULL, coords = NULL, dist = 10,
-  interval = c("hour", "day", "month"), stn = NULL)
+  interval = c("hour", "day", "month"), stn = weathercan::stations,
+  verbose = FALSE, quiet = FALSE)
 }
 \arguments{
 \item{name}{Character. A vector of length 1 or more with text against which
@@ -25,6 +26,11 @@ intervals. Must be any of "hour", "day", "month".}
 
 \item{stn}{Data frame. The \code{stations} data frame to use. Will use the
 one included in the package unless otherwise specified.}
+
+\item{verbose}{Logical. Include progress messages}
+
+\item{quiet}{Logical. Suppress all messages (including messages regarding
+missing data, etc.)}
 }
 \value{
 Returns a subset of the stations data frame which match the search
@@ -49,4 +55,3 @@ stations_search(coords = loc[c("lat", "lon")])
 }
 
 }
-
