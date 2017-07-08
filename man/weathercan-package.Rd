@@ -12,7 +12,7 @@ Historical Climate Data from the Environment and Climate Change Canada (ECCC)
 }
 \details{
 Bear in mind that these downloads can be fairly large and performing
-multiple, downloads may use up Environment Canada's bandwidth unecessarily.
+multiple, downloads may use up Environment Canada's bandwidth unnecessarily.
 Try to stick to what you need.
 
 There are three main aspects of this package:
