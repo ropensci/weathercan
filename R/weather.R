@@ -17,7 +17,7 @@
 #' downloading a lot of data!).
 #'
 #' Times are returned as the Etc/GMT offset timezone corresponding to the
-#' location. This doesn't include daylight savings. However, for compatibility
+#' location. This does not include daylight savings. However, for compatibility
 #' with other data sets, timezones can be converted by specifying the desired
 #' timezone in `tz_disp`.
 #'
@@ -33,7 +33,7 @@
 #' @param trim Logical. Trim missing values from the start and end of the weather
 #'  dataframe.
 #' @param format Logical. If TRUE, formats data for immediate use. If FALSE,
-#'  returns data exactly as downloaded from Environment Canda. Useful for
+#'  returns data exactly as downloaded from Environment and Climate Change Canada. Useful for
 #'  dealing with changes by Environment Canada to the format of data downloads.
 #' @param string_as Character. What value to replace character strings in a
 #'  numeric measurement with. See Details.
