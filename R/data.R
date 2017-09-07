@@ -136,7 +136,7 @@
 #'   \item{dir_max_gust_flag}{Direction of max wind gust flag}
 #'   \item{heat_deg_days}{Heat degree days}
 #'   \item{heat_deg_days_flag}{Heat degree days flag}
-#'   \item{max_temp}{Maxixum temperature}
+#'   \item{max_temp}{Maximum temperature}
 #'   \item{max_temp_flag}{Maxixum temperature flag}
 #'   \item{mean_temp}{Mean temperature}
 #'   \item{mean_temp_flag}{Mean temperature flag}

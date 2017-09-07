@@ -28,7 +28,7 @@ data frame or the \code{\link{stations_search}} function to find IDs.}
 dataframe.}
 
 \item{format}{Logical. If TRUE, formats data for immediate use. If FALSE,
-returns data exactly as downloaded from Environment Canda. Useful for
+returns data exactly as downloaded from Environment and Climate Change Canada. Useful for
 dealing with changes by Environment Canada to the format of data downloads.}
 
 \item{string_as}{Character. What value to replace character strings in a
@@ -73,7 +73,7 @@ default to the start and end date of the range (this could result in
 downloading a lot of data!).
 
 Times are returned as the Etc/GMT offset timezone corresponding to the
-location. This doesn't include daylight savings. However, for compatibility
+location. This does not include daylight savings. However, for compatibility
 with other data sets, timezones can be converted by specifying the desired
 timezone in `tz_disp`.
 }

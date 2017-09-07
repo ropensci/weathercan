@@ -173,3 +173,8 @@ ggplot(data = kam_pg, aes(x = time, y = temp, group = station_name, colour = sta
 ```
 
 ![](README_files/figure-markdown_github/unnamed-chunk-8-1.png)
+
+License
+=======
+
+The data and the code in this repository are licensed under multiple licences. All code is licensed [GPL-3](https://www.gnu.org/licenses/gpl-3.0.en.html). All data is licensed under the ([Open Government License - Canada](http://open.canada.ca/en/open-government-licence-canada)).
