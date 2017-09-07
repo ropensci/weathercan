@@ -2,14 +2,16 @@ README
 ================
 Steffi LaZerte
 
-[![Build Status](https://travis-ci.org/steffilazerte/weathercan.svg?branch=v0.2.2)](https://travis-ci.org/steffilazerte/weathercan) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/steffilazerte/weathercan?branch=v0.2.2&svg=true)](https://ci.appveyor.com/project/steffilazerte/weathercan)
-
 weathercan
 ==========
 
+[![Build Status](https://travis-ci.org/steffilazerte/weathercan.svg?branch=master)](https://travis-ci.org/steffilazerte/weathercan) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/steffilazerte/weathercan?branch=master&svg=true)](https://ci.appveyor.com/project/steffilazerte/weathercan)
+
 This package is makes it easier to search for and download multiple months/years of historical weather data from Environment and Climate Change Canada (ECCC) website.
 
-Bear in mind that these downloads can be fairly large and performing multiple, downloads may use up ECCC's bandwidth unecessarily. Try to stick to what you need.
+Bear in mind that these downloads can be fairly large and performing multiple downloads may use up ECCC's bandwidth unecessarily. Try to stick to what you need.
+
+For more details and tutorials checkout the [weathercan website](http://steffilazerte.github.io/weathercan)
 
 Installation
 ------------
