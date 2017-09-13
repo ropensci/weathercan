@@ -1,7 +1,7 @@
 README
 ================
 
-weathercan <img src="extra/weathercan_logo.png" align="right" width = 100/>
+weathercan <img src="extra/weathercan_logo.png" align="right" width = 110/>
 ===========================================================================
 
 [![Build Status](https://travis-ci.org/steffilazerte/weathercan.svg?branch=master)](https://travis-ci.org/steffilazerte/weathercan) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/steffilazerte/weathercan?branch=master&svg=true)](https://ci.appveyor.com/project/steffilazerte/weathercan)
