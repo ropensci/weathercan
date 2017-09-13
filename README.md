@@ -1,9 +1,8 @@
 README
 ================
-Steffi LaZerte
 
-weathercan
-==========
+weathercan <img src="extra/weathercan_logo.png" align="right" />
+================================================================
 
 [![Build Status](https://travis-ci.org/steffilazerte/weathercan.svg?branch=master)](https://travis-ci.org/steffilazerte/weathercan) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/steffilazerte/weathercan?branch=master&svg=true)](https://ci.appveyor.com/project/steffilazerte/weathercan)
 
@@ -39,12 +38,12 @@ head(stations)
     ## # A tibble: 6 x 12
     ##     prov           station_name station_id climate_id WMO_id  TC_id   lat
     ##   <fctr>                  <chr>     <fctr>     <fctr> <fctr> <fctr> <dbl>
-    ## 1     BC            ACTIVE PASS         14    1010066     NA     NA 48.87
-    ## 2     BC            ALBERT HEAD         15    1010235     NA     NA 48.40
-    ## 3     BC BAMBERTON OCEAN CEMENT         16    1010595     NA     NA 48.58
-    ## 4     BC             BEAR CREEK         17    1010720     NA     NA 48.50
-    ## 5     BC            BEAVER LAKE         18    1010774     NA     NA 48.50
-    ## 6     BC             BECHER BAY         19    1010780     NA     NA 48.33
+    ## 1     BC            ACTIVE PASS         14    1010066   <NA>   <NA> 48.87
+    ## 2     BC            ALBERT HEAD         15    1010235   <NA>   <NA> 48.40
+    ## 3     BC BAMBERTON OCEAN CEMENT         16    1010595   <NA>   <NA> 48.58
+    ## 4     BC             BEAR CREEK         17    1010720   <NA>   <NA> 48.50
+    ## 5     BC            BEAVER LAKE         18    1010774   <NA>   <NA> 48.50
+    ## 6     BC             BECHER BAY         19    1010780   <NA>   <NA> 48.33
     ## # ... with 5 more variables: lon <dbl>, elev <dbl>, interval <chr>,
     ## #   start <int>, end <int>
 
