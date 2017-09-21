@@ -23,7 +23,7 @@ cannot be linearly interpolated (e.g., wind direction).}
 "day".}
 
 \item{na_gap}{How many hours or days (depending on the interval) is it
-acceptible to skip over when interpolating over NAs (see details).}
+acceptable to skip over when interpolating over NAs (see details).}
 
 \item{quiet}{Logical. Suppress all messages (including messages regarding
 missing data, etc.)}
