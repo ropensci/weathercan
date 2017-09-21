@@ -31,7 +31,7 @@
 #' @param interval Character. Interval of the data, one of "hour", "day",
 #'   "month".
 #' @param trim Logical. Trim missing values from the start and end of the
-#'   weather dataframe.
+#'   weather dataframe. Only applies if `format = TRUE`
 #' @param format Logical. If TRUE, formats data for immediate use. If FALSE,
 #'   returns data exactly as downloaded from Environment and Climate Change
 #'   Canada. Useful for dealing with changes by Environment Canada to the format
@@ -44,7 +44,8 @@
 #'   one included in the package unless otherwise specified.
 #' @param url Character. Url from which to grab the weather data
 #' @param encoding Character. Text encoding for download.
-#' @param list_col Logical Defaults to FALSE
+#' @param list_col Logical. Return data as nested data set? Defaults to FALSE.
+#'   Only applies if `format = TRUE`
 #' @param verbose Logical. Include progress messages
 #' @param quiet Logical. Suppress all messages (including messages regarding
 #'   missing data, etc.)
@@ -173,10 +174,10 @@ weather <- function(station_ids,
                           tz_disp = tz_disp,
                           string_as = string_as,
                           quiet = quiet)
-    }
 
-    ## Trim to match date range
-    w <- w[w$date >= s.start & w$date <= s.end, ]
+      ## Trim to match date range
+      w <- w[w$date >= s.start & w$date <= s.end, ]
+    }
 
     w_all <- rbind(w_all, w)
   }
@@ -193,8 +194,8 @@ weather <- function(station_ids,
     return(tibble::tibble())
   }
 
-  ## Trim to available data
-  if(trim){
+  ## Trim to available data provided it is formatted
+  if(trim && format){
     if(verbose) message("Trimming missing values before and after")
     temp <-  w_all[, !(names(w_all) %in% c("date", "time", "prov", "station_name", "station_id", "lat", "lon", "year", "month", "day", "hour", "qual","elev", "climat_id", "WMO_id", "TC_id"))]
     temp <- w_all$date[which(rowSums(is.na(temp) | temp == "") != ncol(temp))]
@@ -217,8 +218,8 @@ weather <- function(station_ids,
   ## Arrange
   w_all <- dplyr::select(w_all, station_name, station_id, dplyr::everything())
 
-  ## If list_colis TRUE
-  if(list_col == TRUE){
+  ## If list_col is TRUE and data is formatted
+  if(list_col && format){
 
     ## Appropriate grouping levels
     if(interval == "hour"){

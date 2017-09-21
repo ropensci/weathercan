@@ -24,12 +24,13 @@ data frame or the \code{\link{stations_search}} function to find IDs.}
 \item{interval}{Character. Interval of the data, one of "hour", "day",
 "month".}
 
-\item{trim}{Logical. Trim missing values from the start and end of the weather
-dataframe.}
+\item{trim}{Logical. Trim missing values from the start and end of the
+weather dataframe. Only applies if `format = TRUE`}
 
 \item{format}{Logical. If TRUE, formats data for immediate use. If FALSE,
-returns data exactly as downloaded from Environment and Climate Change Canada. Useful for
-dealing with changes by Environment Canada to the format of data downloads.}
+returns data exactly as downloaded from Environment and Climate Change
+Canada. Useful for dealing with changes by Environment Canada to the format
+of data downloads.}
 
 \item{string_as}{Character. What value to replace character strings in a
 numeric measurement with. See Details.}
@@ -37,14 +38,15 @@ numeric measurement with. See Details.}
 \item{tz_disp}{Character. What timezone to display times in (must be one of
 \code{OlsonNames()}).}
 
-\item{stn}{Data frame. The \code{stations} data frame to use. Will use the one
-included in the package unless otherwise specified.}
+\item{stn}{Data frame. The \code{stations} data frame to use. Will use the
+one included in the package unless otherwise specified.}
 
 \item{url}{Character. Url from which to grab the weather data}
 
 \item{encoding}{Character. Text encoding for download.}
 
-\item{list_col}{Logical Defaults to FALSE}
+\item{list_col}{Logical. Return data as nested data set? Defaults to FALSE.
+Only applies if `format = TRUE`}
 
 \item{verbose}{Logical. Include progress messages}
 
