@@ -15,9 +15,8 @@
 #'
 #' @param data Dataframe. Data with dates or times to which weather data should
 #'   be added.
-#' @param weather Dataframe. Weather data downloaded with
-#'   \code{\link{weather}} which should be interpolated and added to
-#'   \code{data}.
+#' @param weather Dataframe. Weather data downloaded with \code{\link{weather}}
+#'   which should be interpolated and added to \code{data}.
 #' @param cols Character. Vector containing the weather columns to add or 'all'
 #'   for all relevant columns. Note that some measure are omitted because they
 #'   cannot be linearly interpolated (e.g., wind direction).

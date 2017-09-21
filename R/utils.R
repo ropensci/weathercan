@@ -1,7 +1,8 @@
 #' Get timezone from lat/lon
 #'
 #' @param coords Vector or Data frame. Lat, lon coordinates. Can be a vector for
-#'   a set of two, or a data frame or matrix for multiple. Provide either coords OR lat and lon
+#'   a set of two, or a data frame or matrix for multiple. Provide either coords
+#'   OR lat and lon
 #' @param lat Vector. One or more latitudes, must also provide longitude
 #' @param lon Vector. One or more longitudes, must also provide latitude
 #' @param etc Logical. Return Etc timezone? Non-daylight savings offset only.
