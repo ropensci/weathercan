@@ -27,8 +27,8 @@ A tibble containing station names, station ID codes and dates of
 This function can be used to download a Station Inventory CSV file from
 Environment Canada. Note that the 'stations' data set included in this
 package contains station data downloaded when the package was last compiled,
-so it may not be necessary to call this function (and this function may take a few
-minutes to run).
+so it may not be necessary to call this function (and this function may take
+a few minutes to run).
 }
 \details{
 URL defaults to

@@ -11,9 +11,8 @@ add_weather(data, weather, cols = "all", interval = "hour", na_gap = 2,
 \item{data}{Dataframe. Data with dates or times to which weather data should
 be added.}
 
-\item{weather}{Dataframe. Weather data downloaded with
-\code{\link{weather}} which should be interpolated and added to
-\code{data}.}
+\item{weather}{Dataframe. Weather data downloaded with \code{\link{weather}}
+which should be interpolated and added to \code{data}.}
 
 \item{cols}{Character. Vector containing the weather columns to add or 'all'
 for all relevant columns. Note that some measure are omitted because they

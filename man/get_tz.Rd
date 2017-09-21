@@ -8,7 +8,8 @@ get_tz(coords = NULL, lat = NULL, lon = NULL, etc = FALSE)
 }
 \arguments{
 \item{coords}{Vector or Data frame. Lat, lon coordinates. Can be a vector for
-a set of two, or a data frame or matrix for multiple. Provide either coords OR lat and lon}
+a set of two, or a data frame or matrix for multiple. Provide either coords
+OR lat and lon}
 
 \item{lat}{Vector. One or more latitudes, must also provide longitude}
 

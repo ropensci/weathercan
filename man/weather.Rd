@@ -63,21 +63,21 @@ and units, see the glossary online
 }
 \details{
 Data can be returned 'raw' (format = FALSE) or can be formatted.
-Formatting transforms dates/times to date/time class, renames columns, and
-converts data to numeric where possible. If character strings are contained in
-traditionally numeric fields (e.g., weather speed may have values such as "<
-30"), they can be replaced with a character specified by `string_as`. The
-default is NA. Formating also replaces data associated with certain flags
-with NA (M = Missing).
+  Formatting transforms dates/times to date/time class, renames columns, and
+  converts data to numeric where possible. If character strings are contained
+  in traditionally numeric fields (e.g., weather speed may have values such
+  as "< 30"), they can be replaced with a character specified by `string_as`.
+  The default is NA. Formating also replaces data associated with certain
+  flags with NA (M = Missing).
 
-Start and end date can be specified, but if not, it will
-default to the start and end date of the range (this could result in
-downloading a lot of data!).
+  Start and end date can be specified, but if not, it will default to the
+  start and end date of the range (this could result in downloading a lot of
+  data!).
 
-Times are returned as the Etc/GMT offset timezone corresponding to the
-location. This does not include daylight savings. However, for compatibility
-with other data sets, timezones can be converted by specifying the desired
-timezone in `tz_disp`.
+  Times are returned as the Etc/GMT offset timezone corresponding to the
+  location. This does not include daylight savings. However, for
+  compatibility with other data sets, timezones can be converted by
+  specifying the desired timezone in `tz_disp`.
 }
 \examples{
 

@@ -21,8 +21,8 @@ provided.}
 \item{dist}{Numeric. Match all stations within this many kilometers of the
 \code{coords}.}
 
-\item{interval}{Character. Return only stations with data at these
-intervals. Must be any of "hour", "day", "month".}
+\item{interval}{Character. Return only stations with data at these intervals.
+Must be any of "hour", "day", "month".}
 
 \item{stn}{Data frame. The \code{stations} data frame to use. Will use the
 one included in the package unless otherwise specified.}
