@@ -257,7 +257,8 @@ weather_dl <- function(station_id,
                               submit = 'Download+Data'))
 
   utils::read.csv(text = httr::content(html, as = "text", type = "text/csv", encoding = encoding),
-                  nrows = nrows, strip.white = TRUE, skip = skip, header = header, colClasses = "character")
+                  nrows = nrows, strip.white = TRUE, skip = skip, header = header,
+                  colClasses = "character", check.names = FALSE)
 }
 
 
