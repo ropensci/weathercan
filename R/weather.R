@@ -95,7 +95,7 @@ weather <- function(station_ids,
   }
 
   if(length(interval) > 1) stop("'interval' must be either 'hour', 'day', OR 'month'")
-  if(!(interval %in% c("hour", "day", "month"))) stop("'interval' must be either 'hour', 'day', OR 'month'")
+  check_int(interval)
 
   w_all <- data.frame()
 

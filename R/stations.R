@@ -111,7 +111,8 @@ stations_all <- function(url = "http://bit.ly/2sIuCty",
 #'
 #' @return Returns a subset of the stations data frame which match the search
 #'   parameters. If the search was by location, an extra column 'distance' shows
-#'   the distance in kilometres from the location to the station
+#'   the distance in kilometres from the location to the station. If no stations
+#'   are found withing `dist`, the closest 10 stations are returned.
 #'
 #' @examples
 #'
@@ -141,7 +142,15 @@ stations_search <- function(name = NULL,
     if(length(coords) != 2 | all(is.na(coords)) | class(coords) == "try-error") stop("'coord' takes one pair of lat and lon in a numeric vector")
   }
 
+  check_int(interval)
+
+  stn <- dplyr::filter_(stn, lazyeval::interp(~ interval %in% x & !is.na(start), x = interval))
+
   if(!is.null(name)) {
+
+    if(!quiet) if(length(name) == 2 & is.numeric(name)) message("The `name` argument looks like a pair of coordinates. Did you mean `coords = c(", name[1], ", ", name[2], ")`?")
+
+
     if(verbose) message("Searching by name")
     if(class(try(as.character(name), silent = TRUE)) == "try-error") stop("'name' needs to be coercible into a character")
     name <- gsub("([A-Z]*)", "\\L\\1", name, perl = TRUE)
@@ -157,16 +166,16 @@ stations_search <- function(name = NULL,
     coords <- as.numeric(as.character(coords))
     stn$distance <- NA
     stn$distance[!is.na(stn$lat)] <- sp::spDistsN1(pts = as.matrix(stn[!is.na(stn$lat), c("lon", "lat")]), pt = c(coords[2], coords[1]), longlat = TRUE)
-    #distance <- sp::spDistsN1(pts = as.matrix(locs[, c("lon", "lat")]), pt = c(coords[2], coords[1]), longlat = TRUE)
+    stn <- dplyr::arrange(stn, distance)
 
     i <- which(stn$distance <= dist)
     if(length(i) == 0) {
-     i <- which(stn$distance <= min(stn$distance, na.rm = TRUE) + dist)
-     if(!quiet) message("No stations within ", dist, "km. Returning closest stations within ", dist, " km of each other.")
+     i <- 1:10
+     if(!quiet) message("No stations within ", dist, "km. Returning closest 10 stations.")
     }
   }
-  stn <- stn[i,] %>%
-      dplyr::filter_(lazyeval::interp(~ interval %in% x & !is.na(start), x = interval))
+
+  stn <- stn[i, ]
   if(!is.null(name)) stn <- dplyr::arrange(stn, station_name, station_id, interval)
   if(!is.null(coords)) stn <- dplyr::arrange(stn, distance, station_name, station_id, interval)
   return(stn)

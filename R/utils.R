@@ -51,3 +51,5 @@ get_tz <- function(coords = NULL, lat = NULL, lon = NULL, etc = FALSE){
 }
 
 
+check_int <- function(interval) if(!all(interval %in% c("hour", "day", "month"))) stop("'interval' can only be 'hour', 'day', or 'month'")
+
