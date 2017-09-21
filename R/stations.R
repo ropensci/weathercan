@@ -3,8 +3,8 @@
 #' This function can be used to download a Station Inventory CSV file from
 #' Environment Canada. Note that the 'stations' data set included in this
 #' package contains station data downloaded when the package was last compiled,
-#' so it may not be necessary to call this function (and this function may take a few
-#' minutes to run).
+#' so it may not be necessary to call this function (and this function may take
+#' a few minutes to run).
 #'
 #' @details
 #' URL defaults to
@@ -101,8 +101,8 @@ stations_all <- function(url = "http://bit.ly/2sIuCty",
 #'   provided.
 #' @param dist Numeric. Match all stations within this many kilometers of the
 #'   \code{coords}.
-#' @param interval Character. Return only stations with data at these
-#'   intervals. Must be any of "hour", "day", "month".
+#' @param interval Character. Return only stations with data at these intervals.
+#'   Must be any of "hour", "day", "month".
 #' @param stn Data frame. The \code{stations} data frame to use. Will use the
 #'   one included in the package unless otherwise specified.
 #' @param verbose Logical. Include progress messages
