@@ -35,7 +35,8 @@ missing data, etc.)}
 \value{
 Returns a subset of the stations data frame which match the search
   parameters. If the search was by location, an extra column 'distance' shows
-  the distance in kilometres from the location to the station
+  the distance in kilometres from the location to the station. If no stations
+  are found withing `dist`, the closest 10 stations are returned.
 }
 \description{
 Returns stations that match the name provided OR which are within \code{dist}
