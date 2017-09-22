@@ -60,7 +60,7 @@
       <h1>Using with the tidyverse</h1>
                         <h4 class="author">Sam Albers</h4>
             
-            <h4 class="date">2017-06-09</h4>
+            <h4 class="date">2017-09-21</h4>
           </div>
 
     
@@ -113,8 +113,8 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(pancan_df, <span class="kw">aes</span>(<span class="dt">x =</span> date, <span class="dt">y =</span> mean_temp, <span class="dt">colour =</span> station_name)) +
 <span class="st">  </span><span class="kw">geom_point</span>() +
 <span class="st">  </span><span class="kw">geom_line</span>()</code></pre></div>
-<pre><code>## Warning: Removed 25074 rows containing missing values (geom_point).</code></pre>
-<pre><code>## Warning: Removed 6325 rows containing missing values (geom_path).</code></pre>
+<pre><code>## Warning: Removed 25161 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: Removed 6335 rows containing missing values (geom_path).</code></pre>
 <p><img src="use_with_tidyverse_files/figure-html/raw_plt-1.png" width="960"></p>
 <p>This is quite a large dataset.</p>
 </div>
@@ -181,7 +181,7 @@ pancan_df_nest</code></pre></div>
 </h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">resids &lt;-<span class="st"> </span><span class="kw">unnest</span>(pancan_df_nest, resids)
 resids</code></pre></div>
-<pre><code>## # A tibble: 177,945 x 12
+<pre><code>## # A tibble: 178,465 x 12
 ##    station_name station_id   prov   lat     lon  elev climat_id WMO_id
 ##           &lt;chr&gt;      &lt;dbl&gt; &lt;fctr&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;     &lt;chr&gt;  &lt;chr&gt;
 ##  1  AGASSIZ CDA        707     BC 49.24 -121.76    15   1100120       
@@ -194,15 +194,15 @@ resids</code></pre></div>
 ##  8  AGASSIZ CDA        707     BC 49.24 -121.76    15   1100120       
 ##  9  AGASSIZ CDA        707     BC 49.24 -121.76    15   1100120       
 ## 10  AGASSIZ CDA        707     BC 49.24 -121.76    15   1100120       
-## # ... with 177,935 more rows, and 4 more variables: TC_id &lt;chr&gt;,
+## # ... with 178,455 more rows, and 4 more variables: TC_id &lt;chr&gt;,
 ## #   mean_temp &lt;dbl&gt;, date &lt;date&gt;, resid &lt;dbl&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> resids, <span class="kw">aes</span>(date, resid)) +
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">group =</span> station_name), <span class="dt">alpha =</span> <span class="dv">1</span> /<span class="st"> </span><span class="dv">3</span>) +<span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>() +
 <span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) +
 <span class="st">  </span><span class="kw">facet_wrap</span>(~<span class="st"> </span>station_name, <span class="dt">ncol =</span> <span class="dv">1</span>)</code></pre></div>
-<pre><code>## Warning: Removed 6325 rows containing missing values (geom_path).</code></pre>
-<pre><code>## Warning: Removed 25074 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: Removed 6335 rows containing missing values (geom_path).</code></pre>
+<pre><code>## Warning: Removed 25161 rows containing missing values (geom_point).</code></pre>
 <p><img src="use_with_tidyverse_files/figure-html/resid-1.png" width="960"></p>
 </div>
 <div id="using-broom" class="section level3">
@@ -224,37 +224,37 @@ resids</code></pre></div>
 <tr class="odd">
 <td align="left">AGASSIZ CDA</td>
 <td align="left">BC</td>
-<td align="right">0.0022561</td>
+<td align="right">0.0028030</td>
 <td align="right">0.0000000</td>
-<td align="right">231433.5</td>
+<td align="right">232094.0</td>
 </tr>
 <tr class="even">
 <td align="left">BELLEVILLE</td>
 <td align="left">ON</td>
-<td align="right">0.0022103</td>
+<td align="right">0.0027825</td>
 <td align="right">0.0000000</td>
-<td align="right">259457.1</td>
+<td align="right">260267.0</td>
 </tr>
 <tr class="odd">
 <td align="left">PORT AUX BASQUES</td>
 <td align="left">NL</td>
-<td align="right">0.0033303</td>
+<td align="right">0.0041296</td>
 <td align="right">0.0000000</td>
-<td align="right">177849.2</td>
+<td align="right">178541.2</td>
 </tr>
 <tr class="even">
 <td align="left">LENNOXVILLE</td>
 <td align="left">QC</td>
-<td align="right">0.0009461</td>
+<td align="right">0.0012932</td>
 <td align="right">0.0000000</td>
-<td align="right">272731.9</td>
+<td align="right">273539.0</td>
 </tr>
 <tr class="odd">
 <td align="left">TABER</td>
 <td align="left">AB</td>
-<td align="right">0.0003139</td>
-<td align="right">0.0071463</td>
-<td align="right">178252.6</td>
+<td align="right">0.0004749</td>
+<td align="right">0.0009278</td>
+<td align="right">178588.8</td>
 </tr>
 </tbody>
 </table>
@@ -268,7 +268,7 @@ resids</code></pre></div>
          <span class="dt">preds =</span> <span class="kw">map2</span>(data, model, add_predictions)) %&gt;%
 <span class="st">  </span><span class="kw">unnest</span>(preds)
 preds</code></pre></div>
-<pre><code>## # A tibble: 177,945 x 12
+<pre><code>## # A tibble: 178,465 x 12
 ##    station_name station_id   prov   lat     lon  elev climat_id WMO_id
 ##           &lt;chr&gt;      &lt;dbl&gt; &lt;fctr&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;     &lt;chr&gt;  &lt;chr&gt;
 ##  1  AGASSIZ CDA        707     BC 49.24 -121.76    15   1100120       
@@ -281,13 +281,13 @@ preds</code></pre></div>
 ##  8  AGASSIZ CDA        707     BC 49.24 -121.76    15   1100120       
 ##  9  AGASSIZ CDA        707     BC 49.24 -121.76    15   1100120       
 ## 10  AGASSIZ CDA        707     BC 49.24 -121.76    15   1100120       
-## # ... with 177,935 more rows, and 4 more variables: TC_id &lt;chr&gt;,
+## # ... with 178,455 more rows, and 4 more variables: TC_id &lt;chr&gt;,
 ## #   mean_temp &lt;dbl&gt;, date &lt;date&gt;, pred &lt;dbl&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> preds, <span class="kw">aes</span>(<span class="dt">x =</span> date, <span class="dt">y =</span> mean_temp, <span class="dt">colour =</span> station_name)) +
 <span class="st">  </span><span class="kw">geom_point</span>() +
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> pred)) +
 <span class="st">  </span><span class="kw">facet_wrap</span>(~<span class="st"> </span>station_name, <span class="dt">scales =</span> <span class="st">"free_y"</span>, <span class="dt">ncol =</span> <span class="dv">1</span>)</code></pre></div>
-<pre><code>## Warning: Removed 25074 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: Removed 25161 rows containing missing values (geom_point).</code></pre>
 <p><img src="use_with_tidyverse_files/figure-html/pred-1.png" width="960"></p>
 </div>
 </div>
@@ -313,7 +313,7 @@ preds</code></pre></div>
 
 
       <footer><div class="copyright">
-  <p>Developed by LaZerte Stefanie E..</p>
+  <p>Developed by Steffi LaZerte.</p>
 </div>
 
 <div class="pkgdown">
