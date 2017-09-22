@@ -1,0 +1,49 @@
+---
+title: "The meanings of flags"
+author: "Steffi LaZerte"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{flags}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, message = FALSE}
+library(weathercan)
+library(dplyr)
+```
+
+
+## What are flags
+
+The data output of the `weather()` function include a corresponding `_flag` column for each data column. These columns are used by ECCC to add notes regarding measurements. 
+
+In the `weather()` function if `format = TRUE` (the default), data corresponding to flags `M`, `NA`, `[empty]` and `L` are all replaced with `NA`.
+
+For example, a sample of unformated data from Magog station in Quebec looks like:
+
+```{r, echo = FALSE}
+weather(station_id = 5401, start =  "2017-01-01", interval = "month", format = FALSE) %>%
+  select(station_name, station_id, `Date/Time`, `Total Precip (mm)`, `Total Precip Flag`, `Snow Grnd Last Day (cm)`, `Snow Grnd Last Day Flag`) %>% 
+  tail()
+```
+
+This same sample, formated looks like:
+
+```{r, echo = FALSE}
+weather(station_id = 5401, start =  "2017-01-01", interval = "month") %>%
+  select(station_name, station_id, date, total_precip, total_precip_flag, snow_grnd_last_day, snow_grnd_last_day_flag) %>%
+  tail()
+```
+
+As you can see, the missing data flag (`M`) is now replaced with NA. The other flag `^` is not, as it indicates that "The value displayed is based on incomplete data" (see below).
+
+## Flags
+
+```{r}
+knitr::kable(flags)
+```
+
+
+

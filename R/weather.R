@@ -241,13 +241,13 @@ weather <- function(station_ids,
 
 
 weather_dl <- function(station_id,
-                   date,
-                   interval = "hour",
-                   skip = 0,
-                   nrows = -1,
-                   header = TRUE,
-                   url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html",
-                   encoding = "UTF-8") {
+                       date,
+                       interval = "hour",
+                       skip = 0,
+                       nrows = -1,
+                       header = TRUE,
+                       url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html",
+                       encoding = "UTF-8") {
 
   html <- httr::GET(url, query = list(format = 'csv',
                               stationID = station_id,
@@ -256,9 +256,13 @@ weather_dl <- function(station_id,
                               Month = format(date, "%m"),
                               submit = 'Download+Data'))
 
-  utils::read.csv(text = httr::content(html, as = "text", type = "text/csv", encoding = encoding),
-                  nrows = nrows, strip.white = TRUE, skip = skip, header = header,
-                  colClasses = "character", check.names = FALSE)
+  w <- utils::read.csv(text = httr::content(html, as = "text", type = "text/csv", encoding = encoding),
+                       nrows = nrows, strip.white = TRUE, skip = skip, header = header,
+                       colClasses = "character", check.names = FALSE) %>%
+    # For some reason the flags "^" are replaced with "I", change back to match flags on ECCC website
+    dplyr::mutate_at(.vars = dplyr::vars(dplyr::ends_with("Flag")), dplyr::funs(gsub("^I$", "^", .)))
+
+  return(w)
 }
 
 

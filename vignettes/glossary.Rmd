@@ -1,0 +1,29 @@
+---
+title: "Terms and Units"
+author: "Steffi LaZerte"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{glossary}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+library(weathercan)
+library(dplyr)
+```
+
+
+## Units
+
+
+```{r, asis = TRUE, echo = FALSE}
+temp <- weather_index %>%
+  mutate(http = stringr::str_detect(ECCC_ref, "http"),
+         ECCC_ref = replace(ECCC_ref, http & !is.na(http), paste0("[ECCC glossary page](", ECCC_ref[http & !is.na(http)], ")")),
+         ECCC_ref = replace(ECCC_ref, !http & !is.na(http), "[See the 'flags' vignette](flags.html)")) %>%
+  select(Interval = interval, `ECCC Name` = ECCC_name, `Formated weathercan name` = weathercan_name, units, Reference = ECCC_ref)
+  
+knitr::kable(temp)
+```

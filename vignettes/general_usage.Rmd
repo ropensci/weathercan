@@ -108,3 +108,5 @@ stn_vec_df <- weather(station_ids = stn_vector, start = "2016-01-01", end = "201
 
 stn_vec_df
 ```
+
+For more information on the data flags, see the [Flags vignette](flags.html), for more information on units and terms, see the [Terms and Units vignette](glossary.html).
