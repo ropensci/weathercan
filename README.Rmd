@@ -78,9 +78,8 @@ And plot it:
 library(ggplot2)
 
 ggplot(data = kam_pg, aes(x = time, y = temp, group = station_name, colour = station_name)) +
-  theme(legend.position = "top") +
-  geom_line() +
-  theme_minimal()
+  theme_minimal() + 
+  geom_line()
 ```
 
 # License
