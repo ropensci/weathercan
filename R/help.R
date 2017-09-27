@@ -44,6 +44,8 @@
 #'  \itemize{
 #'    \item General Usage: \code{vignette("usage")}
 #'    \item Merging and Interpolating: \code{vignette("interpolation")}
+#'    \item Data Flags: \code{vignette("flags")}
+#'    \item Data Glossary: \code{vignette("glossary")}
 #'    }
 #'
 #' \href{http://steffilazerte.github.io/weathercan}{Online} we also have an advanced article:
