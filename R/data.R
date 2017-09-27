@@ -186,7 +186,7 @@
 #' }
 "flags"
 
-#' Index of units and terms
+#' Glossary of units and terms
 #'
 #' A reference dataset matching information on columns in data downloaded using
 #' the \code{weather()} function. Indicates the units of the data, and contains
@@ -200,4 +200,4 @@
 #'   \item{units}{Units of the measurement.}
 #'   \item{ECCC_ref}{Link to the glossary or reference page on the ECCC website.}
 #' }
-"weather_index"
+"glossary"

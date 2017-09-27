@@ -38,7 +38,7 @@ wd3 <- weather_dl(station_id = 43823, date = as.Date("2005-01-01"), skip = 17, i
 
 n <- c(names(wd1), names(wd2), names(wd3))
 
-weather_index <- tibble::tibble(interval = c(rep("hour", length(names(wd1))),
+glossary <- tibble::tibble(interval = c(rep("hour", length(names(wd1))),
                                              rep("day", length(names(wd2))),
                                              rep("month", length(names(wd3)))),
                                 ECCC_name = n,
@@ -59,7 +59,7 @@ weather_index <- tibble::tibble(interval = c(rep("hour", length(names(wd1))),
                 units = replace(units, weathercan_name == "date", "ISO date"),
                 units = replace(units, weathercan_name %in% c("hmdx", "wind_chill"), "index"),
                 units = replace(units, stringr::str_detect(weathercan_name, c("(qual)|(_flag)|(weather)")), "note"))
-devtools::use_data(weather_index, overwrite = TRUE)
+devtools::use_data(glossary, overwrite = TRUE)
 
 
 # Technical documentation: ftp://ftp.tor.ec.gc.ca/Pub/Documentation_Technical/Technical_Documentation.pdf

@@ -14,12 +14,10 @@ library(weathercan)
 library(dplyr)
 ```
 
-
-## Units
-
+This table shows details regarding original column (measurement) names and units of all measurements. It further provides links back to the ECCC glossary for more details.
 
 ```{r, asis = TRUE, echo = FALSE}
-temp <- weather_index %>%
+temp <- glossary %>%
   mutate(http = stringr::str_detect(ECCC_ref, "http"),
          ECCC_ref = replace(ECCC_ref, http & !is.na(http), paste0("[ECCC glossary page](", ECCC_ref[http & !is.na(http)], ")")),
          ECCC_ref = replace(ECCC_ref, !http & !is.na(http), "[See the 'flags' vignette](flags.html)")) %>%
