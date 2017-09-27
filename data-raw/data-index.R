@@ -1,3 +1,4 @@
+library(magrittr)
 ## Get names expected from stations data download
 w_names <- list(
   "hour" = c("time", "year", "month", "day", "hour", "qual", "temp", "temp_flag", "temp_dew", "temp_dew_flag", "rel_hum", "rel_hum_flag", "wind_dir", "wind_dir_flag", "wind_spd", "wind_spd_flag", "visib", "visib_flag", "pressure", "pressure_flag", "hmdx", "hmdx_flag", "wind_chill", "wind_chill_flag", "weather"),
@@ -26,7 +27,8 @@ flags <- dplyr::bind_rows(weather_dl(station_id = 51423,  date = as.Date("2014-0
                           weather_dl(station_id = 43823,  date = as.Date("2014-01-01"),
                                      interval = "month", nrows = 25, header = FALSE)[10:16,]) %>%
   dplyr::rename(code = V1, meaning = V2) %>%
-  dplyr::distinct()
+  dplyr::distinct() %>%
+  tibble::as_tibble()
 devtools::use_data(flags, overwrite = TRUE)
 
 
