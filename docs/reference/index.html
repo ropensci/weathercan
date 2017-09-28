@@ -11,8 +11,8 @@
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  <link href="../extra.css" rel="stylesheet">
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,37 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../articles/weathercan.html">Get Started</a>
+</li>
+<li>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/articles/use_with_tidyverse.html">Using with the tidyverse</a>
+    </li>
+    <li>
+      <a href="../articles/flags.html">The meanings of flags</a>
+    </li>
+    <li>
+      <a href="../articles/glossary.html">Terms and Units</a>
+    </li>
+    <li>
+      <a href="../articles/interpolate_data.html">Interpolating</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">News</a>
@@ -81,7 +109,7 @@
     <div class="page-header">
       <h1>
         Reference
-        <small>version&nbsp;0.2.2</small>
+        <small>version&nbsp;0.2.3</small>
       </h1>
     </div>
 
@@ -96,46 +124,16 @@
       <tbody>
         <tr>
           <th colspan="2">
-            <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
+            <h2 id="section-using-weathercan" class="hasAnchor"><a href="#section-using-weathercan" class="anchor"></a>Using weathercan</h2>
             <p class="section-desc"></p>
           </th>
         </tr>
         <tr>
           <!--  -->
           <td>
-            <p><code><a href="add_weather.html">add_weather</a></code> </p>
+            <p><code><a href="stations_search.html">stations_search</a></code> </p>
           </td>
-          <td><p>Interpolate and add weather data to a dataframe</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="finches.html">finches</a></code> </p>
-          </td>
-          <td><p>RFID Data on finch visits to feeders</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="get_tz.html">get_tz</a></code> </p>
-          </td>
-          <td><p>Get timezone from lat/lon</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="kamloops_day.html">kamloops_day</a></code> </p>
-          </td>
-          <td><p>Daily weather data for Kamloops</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="kamloops.html">kamloops</a></code> </p>
-          </td>
-          <td><p>Hourly weather data for Kamloops</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="pg.html">pg</a></code> </p>
-          </td>
-          <td><p>Hourly weather data for Prince George</p></td>
+          <td><p>Search for stations by name or location</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -145,27 +143,87 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="weather.html">weather</a></code> </p>
+          </td>
+          <td><p>Download weather data from Environment Canada</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="add_weather.html">add_weather</a></code> </p>
+          </td>
+          <td><p>Interpolate and add weather data to a dataframe</p></td>
+        </tr>
+      </tbody><tbody>
+        <tr>
+          <th colspan="2">
+            <h2 id="section-utility-functions" class="hasAnchor"><a href="#section-utility-functions" class="anchor"></a>Utility functions</h2>
+            <p class="section-desc"></p>
+          </th>
+        </tr>
+        <tr>
+          <!--  -->
+          <td>
+            <p><code><a href="get_tz.html">get_tz</a></code> </p>
+          </td>
+          <td><p>Get timezone from lat/lon</p></td>
+        </tr>
+      </tbody><tbody>
+        <tr>
+          <th colspan="2">
+            <h2 id="section-reference-data" class="hasAnchor"><a href="#section-reference-data" class="anchor"></a>Reference Data</h2>
+            <p class="section-desc"></p>
+          </th>
+        </tr>
+        <tr>
+          <!--  -->
+          <td>
             <p><code><a href="stations.html">stations</a></code> </p>
           </td>
           <td><p>Station data downloaded from Environment and Climate Change Canada</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="stations_search.html">stations_search</a></code> </p>
+            <p><code><a href="flags.html">flags</a></code> </p>
           </td>
-          <td><p>Search for stations by name or location</p></td>
+          <td><p>Meaning of coded 'flags'</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="weathercan-package.html">weathercan-package</a></code> </p>
+            <p><code><a href="glossary.html">glossary</a></code> </p>
           </td>
-          <td><p>Easy downloading of weather data from Environment and Climate Change Canada</p></td>
+          <td><p>Glossary of units and terms</p></td>
+        </tr>
+      </tbody><tbody>
+        <tr>
+          <th colspan="2">
+            <h2 id="section-example-data" class="hasAnchor"><a href="#section-example-data" class="anchor"></a>Example Data</h2>
+            <p class="section-desc"></p>
+          </th>
+        </tr>
+        <tr>
+          <!--  -->
+          <td>
+            <p><code><a href="kamloops.html">kamloops</a></code> </p>
+          </td>
+          <td><p>Hourly weather data for Kamloops</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="weather.html">weather</a></code> </p>
+            <p><code><a href="kamloops_day.html">kamloops_day</a></code> </p>
           </td>
-          <td><p>Download weather data from Environment Canada</p></td>
+          <td><p>Daily weather data for Kamloops</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="pg.html">pg</a></code> </p>
+          </td>
+          <td><p>Hourly weather data for Prince George</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="finches.html">finches</a></code> </p>
+          </td>
+          <td><p>RFID Data on finch visits to feeders</p></td>
         </tr>
       </tbody>
       </table>
@@ -175,14 +233,17 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#section-using-weathercan">Using weathercan</a></li>
+      <li><a href="#section-utility-functions">Utility functions</a></li>
+      <li><a href="#section-reference-data">Reference Data</a></li>
+      <li><a href="#section-example-data">Example Data</a></li>
     </ul>
   </div>
 </div>
 
       <footer>
       <div class="copyright">
-  <p>Developed by LaZerte Stefanie E..</p>
+  <p>Developed by Steffi LaZerte.</p>
 </div>
 
 <div class="pkgdown">

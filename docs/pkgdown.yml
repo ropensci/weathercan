@@ -1,0 +1,10 @@
+urls:
+  reference: http://steffilazerte.github.io/weathercan/reference
+  article: http://steffilazerte.github.io/weathercan/articles
+articles:
+  use_with_tidyverse: articles/use_with_tidyverse.html
+  flags: flags.html
+  glossary: glossary.html
+  interpolate_data: interpolate_data.html
+  weathercan: weathercan.html
+

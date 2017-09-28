@@ -11,8 +11,8 @@
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  <link href="../extra.css" rel="stylesheet">
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,37 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../articles/weathercan.html">Get Started</a>
+</li>
+<li>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/articles/use_with_tidyverse.html">Using with the tidyverse</a>
+    </li>
+    <li>
+      <a href="../articles/flags.html">The meanings of flags</a>
+    </li>
+    <li>
+      <a href="../articles/glossary.html">Terms and Units</a>
+    </li>
+    <li>
+      <a href="../articles/interpolate_data.html">Interpolating</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">News</a>
@@ -84,12 +112,38 @@
     </div>
 
     <div class="contents">
-    <div id="weathercan-0-2-2" class="section level1">
+    <div id="weathercan-0-2-3" class="section level1">
 <h1 class="hasAnchor">
-<a href="#weathercan-0-2-2" class="anchor"></a>weathercan 0.2.2</h1>
+<a href="#weathercan-0-2-3" class="anchor"></a>weathercan 0.2.3</h1>
 <div id="changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#changes" class="anchor"></a>Changes</h2>
+<ul>
+<li>Updated <code>stations</code> data</li>
+<li>Added <code>flags</code> and <code>glossary</code> datasets as well as vignettes</li>
+<li>
+<code><a href="../reference/stations_search.html">stations_search()</a></code> warns user if name looks like coords</li>
+<li>
+<code><a href="../reference/stations_search.html">stations_search()</a></code> with <code>coord</code> now returns closest 10 stations</li>
+<li>
+<code><a href="../reference/add_weather.html">add_weather()</a></code> warns user if trying to interpolate weather from &gt;1 station</li>
+</ul>
+</div>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li>
+<code><a href="../reference/weather.html">weather(format = FALSE)</a></code> properly returns data</li>
+</ul>
+</div>
+</div>
+    <div id="weathercan-0-2-2" class="section level1">
+<h1 class="hasAnchor">
+<a href="#weathercan-0-2-2" class="anchor"></a>weathercan 0.2.2</h1>
+<div id="changes-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#changes-1" class="anchor"></a>Changes</h2>
 <ul>
 <li>Update and expand vignettes (closes #15)</li>
 <li>Data now returned as tibbles</li>
@@ -106,9 +160,9 @@
 <li>envirocan renamed to weathercan (closes #17)</li>
 </ul>
 </div>
-<div id="bug-fixes" class="section level2">
+<div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed inclusion of New Brunswick stations (closes #9)</li>
 <li>Downloads with no data return empty tibble and an informative message (closes #21)</li>
@@ -152,9 +206,9 @@
 <li>Add option to trim missing data from start and end of the range</li>
 </ul>
 </div>
-<div id="bug-fixes-1" class="section level2">
+<div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Add messages so functions fail gracefully if timezone doesn’t exist</li>
 <li>Correct bugs that prevented downloading of monthly data</li>
@@ -191,6 +245,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#weathercan-0-2-3">0.2.3</a></li>
         <li><a href="#weathercan-0-2-2">0.2.2</a></li>
         <li><a href="#envirocan-0-2-1-2017-03-04">0.2.1</a></li>
         <li><a href="#envirocan-0-2-0-2016-07-08">0.2.0</a></li>

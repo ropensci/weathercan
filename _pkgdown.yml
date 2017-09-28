@@ -1,7 +1,8 @@
 url: http://steffilazerte.github.io/weathercan
 
 template:
-  templates_path: "./inst/template/"
+  params:
+    bootswatch: paper
 
 reference:
   - title: "Using weathercan"
@@ -17,7 +18,7 @@ reference:
     contents:
       - stations
       - flags
-      - weather_index
+      - glossary
   - title: "Example Data"
     contents:
       - kamloops
