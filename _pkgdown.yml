@@ -1,0 +1,39 @@
+url: http://steffilazerte.github.io/weathercan
+
+template:
+  templates_path: "./inst/template/"
+
+reference:
+  - title: "Using weathercan"
+    contents:
+      - stations_search
+      - stations_all
+      - weather
+      - add_weather
+  - title: "Utility functions"
+    contents:
+      - get_tz
+  - title: "Reference Data"
+    contents:
+      - stations
+      - flags
+      - weather_index
+  - title: "Example Data"
+    contents:
+      - kamloops
+      - kamloops_day
+      - pg
+      - finches
+
+articles:
+  - title: Tutorials
+    desc: Using weathercan
+    contents:
+    - weathercan
+    - interpolate_data
+    - use_with_tidyverse
+  - title: References
+    desc: Information on weather data measurements
+    contents:
+    - flags
+    - glossary

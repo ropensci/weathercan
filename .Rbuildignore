@@ -1,6 +1,7 @@
 ^weathercan.Rproj$
 ^\.Rproj\.user$
-^extra$
+^inst/assets$
+^inst/template$
 ^data-raw$
 ^Readme
 ^\.travis\.yml$
