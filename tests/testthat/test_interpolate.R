@@ -1,3 +1,4 @@
+library(magrittr)
 
 # Raw interpolation (time) ------------------------------------------------
 context("Raw interpolation (time)")
@@ -252,13 +253,18 @@ test_that("add_weather (day) skips character columns", {
   expect_message(add_weather(f, k, cols = c("max_temp", "mean_temp"), interval = "day"), "Some columns \\(max\\_temp\\)")
 })
 
-test_that("add_weather (hour) quiet", {
+test_that("add_weather messages", {
   k <- kamloops_day[kamloops_day$date < as.Date("2016-04-01"), ]
   k$max_temp[1:10] <- NA
   f <- finches[1:20, ] %>%
     dplyr::mutate(date = as.Date(time))
 
-  expect_message(add_weather(f, k, interval = "day", cols = "max_temp"))
-  expect_silent(add_weather(f, k, interval = "day", cols = "max_temp", quiet = TRUE))
-})
+  k2 <- rbind(k, dplyr::mutate(k, station_id = 234))
 
+  expect_message(add_weather(f, k, interval = "day", cols = "max_temp"),
+                 "max_temp is missing 10 out of 91 data")
+  expect_silent(add_weather(f, k, interval = "day", cols = "max_temp", quiet = TRUE))
+
+  expect_error(add_weather(f, k2, interval = "day", cols = "max_temp"),
+               "Can only interpolate weather from one station at a time")
+})
