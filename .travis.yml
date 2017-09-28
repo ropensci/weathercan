@@ -9,20 +9,13 @@ git:
 matrix:
   include:
     - os: linux
-      dist: precise
+      dist: trusty
       r: release
-    - os: linux
-      dist: precise
-      r: devel
+    #- os: linux
+    #  dist: trusty
+    #  r: devel
+    # Memory faults?
 
-    - os: linux
-      dist: trusty
-      env: R_CODECOV=true
-      r: release
-    - os: linux
-      dist: trusty
-      env: R_CODECOV=true
-      r: devel
 
     - os: osx
       osx_image: xcode8.1
