@@ -9,7 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, message = FALSE}
+```{r, include = FALSE, message = FALSE}
 library(weathercan)
 library(dplyr)
 ```
@@ -24,24 +24,31 @@ In the `weather()` function if `format = TRUE` (the default), data corresponding
 For example, a sample of unformated data from Magog station in Quebec looks like:
 
 ```{r, echo = FALSE}
-weather(station_id = 5401, start =  "2017-01-01", interval = "month", format = FALSE) %>%
-  select(station_name, station_id, `Date/Time`, `Total Precip (mm)`, `Total Precip Flag`, `Snow Grnd Last Day (cm)`, `Snow Grnd Last Day Flag`) %>% 
-  tail()
+options(width = 100)
+w <- weather(station_id = 5401, start =  "2017-01-01", interval = "month", format = FALSE)
+
+dplyr::select(w, station_name, `Date/Time`, `Total Precip (mm)`, `Total Precip Flag`) %>% tail()
+dplyr::select(w, station_name, `Date/Time`, `Snow Grnd Last Day (cm)`, `Snow Grnd Last Day Flag`) %>% tail()
 ```
+
+In this output, you can see two flags: `^` in `Total Precip` and `M` in `Snow Grnd Last Day`
 
 This same sample, formated looks like:
 
 ```{r, echo = FALSE}
+
 weather(station_id = 5401, start =  "2017-01-01", interval = "month") %>%
-  select(station_name, station_id, date, total_precip, total_precip_flag, snow_grnd_last_day, snow_grnd_last_day_flag) %>%
+  dplyr::select(date, total_precip, total_precip_flag, snow_grnd_last_day, snow_grnd_last_day_flag) %>%
   tail()
 ```
 
-As you can see, the missing data flag (`M`) is now replaced with NA. The other flag `^` is not, as it indicates that "The value displayed is based on incomplete data" (see below).
+As you can see, we still have the two flags, but the missing data flag (`M`) is now replaced with NA. The other flag `^` is not, as it indicates that "The value displayed is based on incomplete data" (see below).
 
 ## Flags
 
-```{r}
+The flags index can be accessed through the built in data frame: `flags`
+
+```{r, echo = FALSE}
 knitr::kable(flags)
 ```
 

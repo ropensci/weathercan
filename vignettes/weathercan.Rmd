@@ -9,6 +9,12 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r, include = FALSE}
+knitr::opts_chunk$set(cache = TRUE)
+options(tibble.max_extra_cols = 0, width = 90)
+```
+
+
 ```{r, message = FALSE}
 library(dplyr)
 library(ggplot2)

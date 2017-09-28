@@ -9,6 +9,12 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(cache = TRUE)
+options(tibble.max_extra_cols = 0)
+```
+
 ## Packages
 
 You'll need several packages from the **tidyverse** in addition to **`weathercan`** to complete the following analysis.
@@ -20,7 +26,7 @@ library(tibble)
 library(dplyr)
 ```
 
-### General usage
+## General usage
 You can merge weather data with other data frames by linearly interprolating between points.
 
 For example, here we have a dataset of weather data from Kamloops
@@ -67,7 +73,7 @@ ggplot(data = finches_temperature, aes(x = date, y = n)) +
   scale_y_continuous(name = "Activity", sec.axis = sec_axis(~. / 100, name = "Temperature (C)"))
 ```
 
-### Data gaps
+## Data gaps
 
 By default, gaps of 2 hours (or 2 days, with a daily scale) will be interpolated over (i.e. they will be filled with values interpolated from either side of the gap), but longer gaps will be skipped and filled with `NA`s. You can adjust this behaviour with `na_gap`. Note that as Environment and Climate Change Canada data is downloaded on an hourly scale, it makes no sense to apply `na_gap` values of less than 1.
 
@@ -87,7 +93,7 @@ kamloops %>%
   filter(is.na(temp))
 ```
 
-### Multiple weather columns
+## Multiple weather columns
 
 We could also add in more than one column at a time:
 
