@@ -10,7 +10,7 @@ knitr::opts_chunk$set(cache = TRUE)
 options(width = 100)
 ```
 
-# weathercan <img src="https://github.com/steffilazerte/weathercan/raw/master/inst/weathercan_logo.png" align = "right" width = 110/>
+# weathercan <img src="https://github.com/steffilazerte/weathercan/raw/master/inst/assets/weathercan_logo.png" align = "right" width = 110/>
 
 
 

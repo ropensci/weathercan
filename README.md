@@ -1,6 +1,6 @@
 
-weathercan <img src="https://github.com/steffilazerte/weathercan/raw/master/inst/weathercan_logo.png" align = "right" width = 110/>
-===================================================================================================================================
+weathercan <img src="https://github.com/steffilazerte/weathercan/raw/master/inst/assets/weathercan_logo.png" align = "right" width = 110/>
+==========================================================================================================================================
 
 [![Build Status](https://travis-ci.org/steffilazerte/weathercan.svg?branch=master)](https://travis-ci.org/steffilazerte/weathercan) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/steffilazerte/weathercan?branch=master&svg=true)](https://ci.appveyor.com/project/steffilazerte/weathercan)
 
