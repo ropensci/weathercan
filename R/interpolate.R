@@ -48,6 +48,9 @@ add_weather <- function(data, weather,
                         na_gap = 2,
                         quiet = FALSE) {
 
+  ## Check for multiple stations
+  if("station_id" %in% names(weather)) if(length(unique(weather$station_id)) > 1) stop("Can only interpolate weather from one station at a time")
+
   ## Make sure data and weather properly matched
   msg <- c("'data' and 'weather' must be data frames with columns 'time' in POSIXct format",
            " or 'date' in Date format.")
@@ -107,6 +110,7 @@ add_weather <- function(data, weather,
       if(nrow(w) < nrow(weather) & !quiet) message(col, " is missing ", nrow(weather) - nrow(w), " ",
                                                    "out of ", nrow(weather), " data, interpolation ",
                                                    "may be less accurate as a result.")
+
       new <- approx_na_rm(x = weather[, t][[1]],
                           y = weather[, col][[1]],
                           xout = data[, t][[1]],
@@ -122,6 +126,7 @@ add_weather <- function(data, weather,
 #' @import lubridate
 approx_na_rm <- function(x, y, xout, na_gap = NULL) {
   if(!all(class(x) == class(xout)) & !(is.numeric(xout) & is.numeric(x))) stop("'xout' must be the same class as 'x'")
+
   new <- as.data.frame(stats::approx(x = x, y = y, xout = xout))
 
   if(any(is.na(y)) & !is.null(na_gap)) {
