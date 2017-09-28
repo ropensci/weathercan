@@ -4,6 +4,18 @@ author: "Steffi LaZerte"
 output: html_document
 ---
 
+# weathercan 0.2.3
+
+## Changes
+- Updated `stations` data
+- Added `flags` and `glossary` datasets as well as vignettes
+- `stations_search()` warns user if name looks like coords
+- `stations_search()` with `coord` now returns closest 10 stations
+- `add_weather()` warns user if trying to interpolate weather from >1 station
+
+## Bug fixes
+- `weather(format = FALSE)` properly returns data
+
 # weathercan 0.2.2
 
 ## Changes
