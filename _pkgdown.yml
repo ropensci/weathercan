@@ -38,3 +38,31 @@ articles:
     contents:
     - flags
     - glossary
+
+navbar:
+  type: inverse
+  left:
+    - icon: fa-home
+      href: index.html
+    - text: "Getting Started"
+      href: articles/weathercan.html
+    - text: "Presentations"
+      href: "http://steffilazerte.github.io/Presentations/#weathercan"
+    - text: "Reference"
+      href: reference/index.html
+    - text: "Articles"
+      menu:
+        - text: "Tutorials"
+        - text: "Interpolating"
+          href: articles/interpolate_data.html
+        - text: "Using weathercan with the tidyverse"
+          href: articles/articles/use_with_tidyverse.html
+        - text: "---------"
+        - text: "Reference vignetts"
+        - text: "Data flags"
+          href: articles/flags.html
+        - text: "Glossary of units and measurements"
+          href: articles/glossary.html
+  right:
+    - icon: fa-github fa-lg
+      href: https://github.com/steffilazerte/weathercan
