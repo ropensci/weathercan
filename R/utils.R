@@ -30,7 +30,7 @@ get_tz <- function(coords = NULL, lat = NULL, lon = NULL, etc = FALSE){
   if(!all(apply(x, 2, is.numeric))) stop("Coordinates must be numeric")
 
   tz <- vector()
-  for(i in 1:nrow(x)) {
+  for(i in seq_len(nrow(x))) {
     time1 <- Sys.time()
     # https://developers.google.com/maps/documentation/timezone/
     apiurl <- paste0("https://maps.googleapis.com/maps/api/timezone/xml?",

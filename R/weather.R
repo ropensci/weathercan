@@ -143,7 +143,7 @@ weather <- function(station_ids,
 
     if(verbose) message("Downloading station data")
     w <- data.frame()
-    for(i in 1:length(date_range)){
+    for(i in seq_along(date_range)){
       w <- rbind(w, weather_dl(station_id = s,
                                date = date_range[i],
                                interval = interval,
@@ -325,7 +325,7 @@ weather_format <- function(w, interval = "hour", string_as = "NA", tz_disp = NUL
     for(i in names(num)[sapply(num, FUN = function(x) methods::is(x, "warning"))]) {
       problems <- w[grep("<|>|\\)|\\(", w[,i]), names(w) %in% c("date", "year", "month", "day", "hour", "time", i)]
       if(nrow(problems) > 20) rows <- 20 else rows <- nrow(problems)
-      if(!quiet) message(paste0(utils::capture.output(problems[1:rows,]), collapse = "\n"), if (rows < nrow(problems)) "\n...")
+      if(!quiet) message(paste0(utils::capture.output(problems[seq_along(rows),]), collapse = "\n"), if (rows < nrow(problems)) "\n...")
     }
     if(!is.null(string_as)) {
       if(!quiet) message("Replacing with ", string_as, ". Use 'string_as = NULL' to keep as characters (see ?weather).")

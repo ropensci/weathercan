@@ -19,7 +19,7 @@ test_that("approx_na_rm (time) without NAs", {
   }
 
   ## Values
-  for(i in sample(1:nrow(a), size = 10)) {
+  for(i in sample(seq_len(nrow(a)), size = 10)) {
     expect_equal(a$y[i],
                  approx(x = c(lubridate::floor_date(a$x[i], "hour"), lubridate::ceiling_date(a$x[i], "hour")),
                         y = k$temp[k$time %in% c(lubridate::floor_date(a$x[i], "hour"), lubridate::ceiling_date(a$x[i], "hour"))],
@@ -89,7 +89,7 @@ test_that("approx_na_rm (numeric) without NAs", {
   }
 
   ## Values
-  for(i in sample(1:nrow(a), size = 10)) {
+  for(i in sample(seq_len(nrow(a)), size = 10)) {
     expect_equal(a$y[i],
                  approx(x = c(floor(a$x[i]), ceiling(a$x[i])),
                         y = k$y[k$x %in% c(floor(a$x[i]), ceiling(a$x[i]))],
@@ -149,7 +149,7 @@ test_that("add_weather (hour) interpolates particular columns", {
     expect_silent(a <- add_weather(f, k, cols = m))
     expect_named(a, c(names(f), m))
     expect_gt(nrow(a), sum(is.na(a[, m]))) # Not all NA
-    expect_equal(a[, 1:ncol(f)], f)
+    expect_equal(a[, seq_len(ncol(f))], f)
   }
 
   ## Multiple columns
@@ -157,7 +157,7 @@ test_that("add_weather (hour) interpolates particular columns", {
   expect_named(a, c(names(f), c("temp", "temp_dew")))
   expect_gt(nrow(a), sum(is.na(a$temp))) # Not all NA
   expect_gt(nrow(a), sum(is.na(a$temp_dew))) # Not all NA
-  expect_equal(a[, 1:ncol(f)], f)
+  expect_equal(a[, seq_len(ncol(f))], f)
 })
 
 test_that("add_weather (hour) interpolates 'all'", {
@@ -167,7 +167,7 @@ test_that("add_weather (hour) interpolates 'all'", {
   ## Expect success
   expect_message(a <- add_weather(f, k))
   expect_named(a, c(names(f), c("temp", "temp_dew", "rel_hum", "wind_spd", "visib", "pressure")))
-  expect_equal(a[, 1:ncol(f)], f)
+  expect_equal(a[, seq_len(ncol(f))], f)
 })
 
 test_that("add_weather (hour) fails on character columns", {
@@ -218,13 +218,13 @@ test_that("add_weather (day) interpolates particular columns", {
       expect_silent(a <- add_weather(f, k, cols = m, interval = "day"))
     }
     expect_named(a, c(names(f), m))
-    expect_equal(a[, 1:ncol(f)], f)
+    expect_equal(a[, seq_len(ncol(f))], f)
   }
 
   ## Multiple columns
   expect_silent(a <- add_weather(f, k, cols = c("max_temp", "min_temp", "mean_temp"), interval = "day"))
   expect_named(a, c(names(f), c("max_temp", "min_temp", "mean_temp")))
-  expect_equal(a[, 1:ncol(f)], f)
+  expect_equal(a[, seq_len(ncol(f))], f)
 })
 
 test_that("add_weather (day) interpolates 'all'", {
@@ -235,7 +235,7 @@ test_that("add_weather (day) interpolates 'all'", {
   ## Expect success
   expect_message(a <- add_weather(f, k, interval = "day"))
   expect_named(a, c(names(f), c("max_temp", "min_temp", "mean_temp", "heat_deg_days", "cool_deg_days", "total_rain", "total_snow", "total_precip", "snow_grnd", "spd_max_gust")))
-  expect_equal(a[, 1:ncol(f)], f)
+  expect_equal(a[, seq_len(ncol(f))], f)
 })
 
 
