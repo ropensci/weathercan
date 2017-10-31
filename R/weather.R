@@ -73,8 +73,6 @@
 #'}
 #'
 #' @export
-#' @import lubridate
-#' @import magrittr
 weather <- function(station_ids,
                     start = NULL, end = NULL,
                     interval = "hour",
@@ -119,22 +117,22 @@ weather <- function(station_ids,
     }
 
     if(class(try(as.Date(stn1$start), silent = TRUE)) == "try-error") {
-      stn1 <- dplyr::mutate(stn1, start = floor_date(ymd(as.character(start), truncated = 2), "year"))
+      stn1 <- dplyr::mutate(stn1, start = lubridate::floor_date(lubridate::ymd(as.character(start), truncated = 2), "year"))
     }
     if(class(try(as.Date(stn1$end), silent = TRUE)) == "try-error") {
-      stn1 <- dplyr::mutate(stn1, end = ceiling_date(ymd(as.character(end), truncated = 2), "year"))
+      stn1 <- dplyr::mutate(stn1, end = lubridate::ceiling_date(lubridate::ymd(as.character(end), truncated = 2), "year"))
     }
     stn1 <- stn1 %>%
       dplyr::mutate(end = replace(end, end > Sys.Date(), Sys.Date()),
-                    int = interval(start, end),
+                    int = lubridate::interval(start, end),
                     interval = factor(interval, levels = c("hour", "day", "month"), ordered = TRUE))
 
     if(is.null(start)) s.start <- stn1$start else s.start <- as.Date(start)
     if(is.null(end)) s.end <- Sys.Date() else s.end <- as.Date(end)
-    dates <- interval(s.start, s.end)
+    dates <- lubridate::interval(s.start, s.end)
 
-    date_range <- seq(floor_date(s.start, unit = "month"),
-                      floor_date(s.end, unit = "month"),
+    date_range <- seq(lubridate::floor_date(s.start, unit = "month"),
+                      lubridate::floor_date(s.end, unit = "month"),
                       by = ifelse(interval %in% c("hour"), "month", "year"))
     date_range <- unique(date_range)
 
@@ -181,12 +179,12 @@ weather <- function(station_ids,
       w <- w[w$date >= s.start & w$date <= s.end, ]
     }
 
-    if(interval == "hour") tz_list <- c(tz_list, tz(w$time[1]))
+    if(interval == "hour") tz_list <- c(tz_list, lubridate::tz(w$time[1]))
     w_all <- rbind(w_all, w)
   }
 
   # Convert to UTC if multiple timezones
-  if(interval == "hour" && is.null(tz_disp) && length(unique(tz_list)) > 1) w_all$time <- with_tz(w_all$time, "UTC")
+  if(interval == "hour" && is.null(tz_disp) && length(unique(tz_list)) > 1) w_all$time <- lubridate::with_tz(w_all$time, "UTC")
 
   if(nrow(w_all) == 0) {
     if(!quiet) message("There are no data for these stations (", paste0(station_ids, collapse = ", "),
@@ -229,15 +227,15 @@ weather <- function(station_ids,
 
     ## Appropriate grouping levels
     if(interval == "hour"){
-      w_all <- tidyr::nest(w_all, -station_name,-station_id,-lat,-lon, -date)
+      w_all <- tidyr::nest(w_all, -station_name, -station_id, -lat, -lon, -date)
     }
 
     if(interval == "day"){
-      w_all <- tidyr::nest(w_all, -station_name,-station_id,-lat,-lon, -month)
+      w_all <- tidyr::nest(w_all, -station_name, -station_id, -lat, -lon, -month)
     }
 
     if(interval == "month"){
-      w_all <- tidyr::nest(w_all, -station_name,-station_id,-lat,-lon, -year)
+      w_all <- tidyr::nest(w_all, -station_name, -station_id, -lat, -lon, -year)
     }
 
   }
@@ -270,11 +268,6 @@ weather_dl <- function(station_id,
 
   return(w)
 }
-
-
-
-
-#' @import magrittr
 
 weather_format <- function(w, interval = "hour", string_as = "NA", tz_disp = NULL, quiet = FALSE) {
 

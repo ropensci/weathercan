@@ -12,7 +12,6 @@
 #' lat = 53.881857
 #' lon = -122.786271
 #'
-#' @import magrittr
 #' @export
 
 get_tz <- function(coords = NULL, lat = NULL, lon = NULL, etc = FALSE){

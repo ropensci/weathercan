@@ -22,7 +22,6 @@
 #' @return A tibble containing station names, station ID codes and dates of
 #'   operation
 #'
-#' @import magrittr
 #' @export
 
 stations_all <- function(url = "http://bit.ly/2sIuCty",

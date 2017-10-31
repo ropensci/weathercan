@@ -123,7 +123,7 @@ add_weather <- function(data, weather,
   return(data)
 }
 
-#' @import lubridate
+
 approx_na_rm <- function(x, y, xout, na_gap = NULL) {
   if(!all(class(x) == class(xout)) & !(is.numeric(xout) & is.numeric(x))) stop("'xout' must be the same class as 'x'")
 
@@ -145,12 +145,12 @@ approx_na_rm <- function(x, y, xout, na_gap = NULL) {
       missing <- lubridate::interval(which_x + 1, which_x + diff_x[diff_x > na_gap] - 1)
 
       ## Remove missing values from interpolated ones
-      missing <- sapply(new$x, FUN = function(x, missing) any(x %within% missing),
+      missing <- sapply(new$x, FUN = function(x, missing) any(lubridate::`%within%`(x, missing)),
                         missing = missing)
       new$y[missing] <- NA
 
     } else if (is.numeric(x)) {
-      if(is.period(na_gap) || !is.numeric(na_gap)) stop("With numeric x, na_gap must also be numeric")
+      if(lubridate::is.period(na_gap) || !is.numeric(na_gap)) stop("With numeric x, na_gap must also be numeric")
 
       x <- x[!is.na(y)]
 

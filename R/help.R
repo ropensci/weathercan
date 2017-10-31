@@ -65,6 +65,7 @@
 #' @docType package
 #' @name weathercan-package
 #' @aliases weathercan weathercan-package
+#' @importFrom magrittr "%>%"
 NULL
 
 #' Dealing with CRAN Notes due to Non-standard evaluation
