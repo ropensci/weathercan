@@ -58,7 +58,8 @@ A tibble with station ID, name and weather data.
 }
 \description{
 Downloads data from Environment Canada for one or more stations. For details
-and units, see the glossary online
+and units, see the glossary vignette (\code{vignette("glossary", package =
+"weathercan")}) or the glossary online
 \url{http://climate.weather.gc.ca/glossary_e.html}.
 }
 \details{
