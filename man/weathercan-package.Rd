@@ -58,7 +58,9 @@ As well as several vignettes:
 \href{http://steffilazerte.github.io/weathercan}{Online} we also have an advanced article:
 
 \itemize{
-    \item Using \code{weathercan} with \href{http://tidyverse.org/}{tidyverse} (\href{http://steffilazerte.github.io/weathercan/articles/use_with_tidyverse.html}{here})
+    \item Using \code{weathercan} with
+    \href{http://tidyverse.org/}{tidyverse}
+    (\href{http://steffilazerte.github.io/weathercan/articles/use_with_tidyverse.html}{here})
     }
 }
 \references{
