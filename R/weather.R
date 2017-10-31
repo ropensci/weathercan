@@ -117,10 +117,10 @@ weather <- function(station_ids,
     }
 
     if(class(try(as.Date(stn1$start), silent = TRUE)) == "try-error") {
-      stn1 <- dplyr::mutate(stn1, start = floor_date(as_date(as.character(start), "%Y"), "year"))
+      stn1 <- dplyr::mutate(stn1, start = floor_date(ymd(as.character(start), truncated = 2), "year"))
     }
     if(class(try(as.Date(stn1$end), silent = TRUE)) == "try-error") {
-      stn1 <- dplyr::mutate(stn1, end = ceiling_date(as_date(as.character(end), "%Y"), "year"))
+      stn1 <- dplyr::mutate(stn1, end = ceiling_date(ymd(as.character(end), truncated = 2), "year"))
     }
     stn1 <- stn1 %>%
       dplyr::mutate(end = replace(end, end > Sys.Date(), Sys.Date()),
