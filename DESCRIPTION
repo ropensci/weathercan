@@ -19,11 +19,9 @@ Depends:
 Imports:
     dplyr (>= 0.7.0),
     httr (>= 1.1.0),
-    lazyeval (>= 0.1.10),
     lubridate (>= 1.5.6),
     magrittr (>= 1.5),
     methods (>= 3.2.2),
-    rvest (>= 0.3.1),
     sp (>= 1.2-3),
     stringi (>= 1.1.2),
     tibble (>= 1.2),
