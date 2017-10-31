@@ -180,21 +180,3 @@ stations_search <- function(name = NULL,
   return(stn)
 }
 
-#' Update stations data
-#'
-#' Runs stations_all() and saves data to the internal \code{weathercan} data
-#' frame: stations. You only need to use this if you need access to new station
-#' information.
-#'
-#' The package \code{devtools} is required for this.
-#'
-#' @examples
-#'
-#' \dontrun{
-#' stations_update()
-#' }
-#'
-#' @export
-stations_update <- function() {
-  devtools::use_data(stations_all(), overwrite = TRUE, package = "weathercan")
-}
