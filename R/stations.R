@@ -144,7 +144,7 @@ stations_search <- function(name = NULL,
 
   check_int(interval)
 
-  stn <- dplyr::filter_(stn, lazyeval::interp(~ interval %in% x & !is.na(start), x = interval))
+  stn <- dplyr::filter(stn, interval %in% !! interval, !is.na(start))
 
   if(!is.null(name)) {
 

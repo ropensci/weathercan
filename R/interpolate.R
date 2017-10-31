@@ -115,7 +115,7 @@ add_weather <- function(data, weather,
                           y = weather[, col][[1]],
                           xout = data[, t][[1]],
                           na_gap = na_gap) %>%
-        dplyr::rename_(.dots = stats::setNames(c('x', 'y'), c(t, col)))
+        dplyr::rename(!!! stats::setNames(c('x', 'y'), c(t, col)))
 
       data <- dplyr::left_join(data, unique(new), by = t)
     }

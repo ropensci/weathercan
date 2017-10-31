@@ -105,8 +105,8 @@ weather <- function(station_ids,
     if(verbose) message("Getting station: ", s)
     stn1 <- stn %>%
       dplyr::filter(station_id %in% s,
-                    !is.na(start)) %>%
-      dplyr::filter_(lazyeval::interp(~ interval == x, x = interval)) %>%
+                    !is.na(start),
+                    interval == !! interval) %>%
       dplyr::arrange(interval)
 
     if(nrow(stn1) == 0) {
@@ -302,7 +302,7 @@ weather_format <- function(w, interval = "hour", string_as = "NA", tz_disp = NUL
 
   ## Replace some flagged values with NA
   w <- w %>%
-    tidyr::gather_("variable", "value", names(w)[!(names(w) %in% c("date", "year", "month", "day", "hour", "time", "qual", "weather"))]) %>%
+    tidyr::gather("variable", "value", names(w)[!(names(w) %in% c("date", "year", "month", "day", "hour", "time", "qual", "weather"))]) %>%
     tidyr::separate(variable, into = c("variable", "type"), sep = "_flag", fill = "right") %>%
     dplyr::mutate(type = replace(type, type == "", "flag"),
                   type = replace(type, is.na(type), "value")) %>%
