@@ -71,6 +71,19 @@ test_that("weather (hour) formats timezone display", {
   expect_equal(w$time[w$date == as.Date("2014-04-01")][1], as.POSIXct("2014-04-01 01:00:00", tz = "America/Vancouver"))
 })
 
+test_that("weather (hour) formats timezone to UTC with multiple zones", {
+  expect_silent({w <- weather(c(42203, 49909), start = "2017-09-01", end = "2017-09-30")})
+  expect_equal(lubridate::tz(w$time[1]), "UTC")
+  expect_equal(w$time[1], as.POSIXct("2017-09-01 08:00:00", tz = "UTC"))
+  expect_equal(w$time[w$station_id == 49909][1], as.POSIXct("2017-09-01 06:00:00", tz = "UTC"))
+
+  expect_silent({w <- weather(c(42203), start = "2017-09-01", end = "2017-09-30")})
+  expect_equal(lubridate::tz(w$time[1]), "Etc/GMT+8")
+
+  expect_silent({w <- weather(c(49909), start = "2017-09-01", end = "2017-09-30")})
+  expect_equal(lubridate::tz(w$time[1]), "Etc/GMT+6")
+})
+
 test_that("weather (hour) gets all", {
   expect_silent(w <- weather(station_ids = 10816, start = Sys.Date() - lubridate::days(1), interval = "hour", trim = FALSE))
   expect_is(w, "data.frame")

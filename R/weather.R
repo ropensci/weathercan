@@ -98,6 +98,7 @@ weather <- function(station_ids,
   if(length(interval) > 1) stop("'interval' must be either 'hour', 'day', OR 'month'")
   check_int(interval)
 
+  tz_list <- c()
   w_all <- data.frame()
 
   for(s in station_ids) {
@@ -180,8 +181,12 @@ weather <- function(station_ids,
       w <- w[w$date >= s.start & w$date <= s.end, ]
     }
 
+    if(interval == "hour") tz_list <- c(tz_list, tz(w$time[1]))
     w_all <- rbind(w_all, w)
   }
+
+  # Convert to UTC if multiple timezones
+  if(interval == "hour" && is.null(tz_disp) && length(unique(tz_list)) > 1) w_all$time <- with_tz(w_all$time, "UTC")
 
   if(nrow(w_all) == 0) {
     if(!quiet) message("There are no data for these stations (", paste0(station_ids, collapse = ", "),
