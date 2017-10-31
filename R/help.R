@@ -68,8 +68,7 @@
 #' @importFrom magrittr "%>%"
 NULL
 
-#' Dealing with CRAN Notes due to Non-standard evaluation
-#'
+# Dealing with CRAN Notes due to Non-standard evaluation
 .onLoad <- function(libname = find.package("weathercan"), pkgname = "weathercan"){
   # CRAN Note avoidance
   if(getRversion() >= "2.15.1")
@@ -78,7 +77,7 @@ NULL
       c("Province", "Name", "Station.ID", "Climate.ID", "WMO.ID", "TC.ID",
         "type", "station_name", "station_id", "lat", "lon", "WMO_id", "TC_id", "prov", "distance",
         "flag", "hmdx", "pressure", "rel_hum", "temp_dew", "visib", "wind_chill",
-        "variable", "value", "qual",
+        "variable", "value", "qual", "interval", "month", "start", "year",
         "." # piping requires '.' at times
       )
     )
