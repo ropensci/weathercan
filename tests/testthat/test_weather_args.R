@@ -56,7 +56,7 @@ test_that("weather() month format = FALSE", {
   ## Basics
   expect_is(w, "data.frame")
   expect_length(w, 34)
-  expect_equal(nrow(w), 835)
+  expect_equal(nrow(w), 836)
   expect_is(w$station_name, "character")
   expect_is(w$prov, "factor")
   expect_is(w$`Mean Max Temp (°C)`, "character")
