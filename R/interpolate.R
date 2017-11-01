@@ -49,11 +49,15 @@ add_weather <- function(data, weather,
                         quiet = FALSE) {
 
   ## Check for multiple stations
-  if("station_id" %in% names(weather)) if(length(unique(weather$station_id)) > 1) stop("Can only interpolate weather from one station at a time")
+  if("station_id" %in% names(weather)) {
+    if(length(unique(weather$station_id)) > 1) {
+      stop("Can only interpolate weather from one station at a time")
+    }
+  }
 
   ## Make sure data and weather properly matched
-  msg <- c("'data' and 'weather' must be data frames with columns 'time' in POSIXct format",
-           " or 'date' in Date format.")
+  msg <- c("'data' and 'weather' must be data frames with columns 'time'",
+           " in POSIXct format or 'date' in Date format.")
   if(!is.data.frame(data) | !is.data.frame(weather)) stop(msg)
   if((interval == "hour" & !("time" %in% names(data) & "time" %in% names(weather))) |
      (interval == "day" & !("date" %in% names(data) & "date" %in% names(weather)))) {
@@ -65,8 +69,10 @@ add_weather <- function(data, weather,
   data <- tibble::as_tibble(data)
   weather <- tibble::as_tibble(weather)
 
-  if(interval == "hour") if(!lubridate::is.POSIXct(data$time) | !lubridate::is.POSIXct(weather$time)) stop(msg)
-  if(interval == "day") if(!lubridate::is.Date(data$date) | !lubridate::is.Date(weather$date)) stop(msg)
+  if(interval == "hour") if(!lubridate::is.POSIXct(data$time) |
+                            !lubridate::is.POSIXct(weather$time)) stop(msg)
+  if(interval == "day") if(!lubridate::is.Date(data$date) |
+                           !lubridate::is.Date(weather$date)) stop(msg)
 
   ## Make sure 'cols' is do-able
   if(!any((cols %in% c("all", names(weather))))) stop("'cols' should either be 'all', or should ",
@@ -87,15 +93,20 @@ add_weather <- function(data, weather,
   ## Get columns in 'cols'
   if(any(cols == "all")) {
     cols <- w_names[[interval]]
-    cols <- cols[-grep("(flag)|(qual)|(weather)|(time)|(date)|(hour)|(^day$)|(month)|(year)|(^wind_dir$)|(^dir_max_gust$)", cols)]
+    cols <- cols[-grep(paste0("(flag)|(qual)|(weather)|(time)|(date)|(hour)|",
+                              "(^day$)|(month)|(year)|(^wind_dir$)|(^dir_max_gust$)"),
+                       cols)]
   }
 
-  ## Check that weather vars are numeric (is linear interpolation relevant for each?)
+  ## Check that weather vars are numeric
+  ## (is linear interpolation relevant for each?)
   omit <- cols[!(sapply(weather[, cols], is.numeric))]
   cols <- cols[!(cols %in% omit)]
-  if(length(omit) > 0 & !quiet) message("Some columns (", paste0(omit, collapse = ", "), ") ",
-                                        "are not numeric and will thus be omitted from the ",
-                                        "interpolation.")
+  if(length(omit) > 0 & !quiet) {
+    message("Some columns (", paste0(omit, collapse = ", "), ") ",
+            "are not numeric and will thus be omitted from the ",
+            "interpolation.")
+  }
 
   ## Make sure there are still columns to work with
   if(length(cols) < 1) stop("No columns over which to interpolate.")
@@ -107,9 +118,11 @@ add_weather <- function(data, weather,
     if(nrow(w) < 2) {
       if(!quiet) message(col, " does not have at least 2 points of non-missing data, skipping...")
     } else {
-      if(nrow(w) < nrow(weather) & !quiet) message(col, " is missing ", nrow(weather) - nrow(w), " ",
-                                                   "out of ", nrow(weather), " data, interpolation ",
-                                                   "may be less accurate as a result.")
+      if(nrow(w) < nrow(weather) & !quiet) {
+        message(col, " is missing ", nrow(weather) - nrow(w), " ",
+                "out of ", nrow(weather), " data, interpolation ",
+                "may be less accurate as a result.")
+      }
 
       new <- approx_na_rm(x = weather[, t][[1]],
                           y = weather[, col][[1]],
@@ -125,14 +138,18 @@ add_weather <- function(data, weather,
 
 
 approx_na_rm <- function(x, y, xout, na_gap = NULL) {
-  if(!all(class(x) == class(xout)) & !(is.numeric(xout) & is.numeric(x))) stop("'xout' must be the same class as 'x'")
+  if(!all(class(x) == class(xout)) & !(is.numeric(xout) & is.numeric(x))) {
+    stop("'xout' must be the same class as 'x'")
+  }
 
   new <- as.data.frame(stats::approx(x = x, y = y, xout = xout))
 
   if(any(is.na(y)) & !is.null(na_gap)) {
     if(lubridate::is.Date(x) | lubridate::is.POSIXct(x)) {
 
-      if(!lubridate::is.period(na_gap)) stop("With date/time data in x, na_gap must be a lubridate period object")
+      if(!lubridate::is.period(na_gap)) {
+        stop("With date/time data in x, na_gap must be a lubridate period object")
+      }
 
       x <- x[!is.na(y)]
 
@@ -145,12 +162,15 @@ approx_na_rm <- function(x, y, xout, na_gap = NULL) {
       missing <- lubridate::interval(which_x + 1, which_x + diff_x[diff_x > na_gap] - 1)
 
       ## Remove missing values from interpolated ones
-      missing <- sapply(new$x, FUN = function(x, missing) any(lubridate::`%within%`(x, missing)),
+      missing <- sapply(new$x,
+                        FUN = function(x, missing) any(lubridate::`%within%`(x, missing)),
                         missing = missing)
       new$y[missing] <- NA
 
     } else if (is.numeric(x)) {
-      if(lubridate::is.period(na_gap) || !is.numeric(na_gap)) stop("With numeric x, na_gap must also be numeric")
+      if(lubridate::is.period(na_gap) || !is.numeric(na_gap)) {
+        stop("With numeric x, na_gap must also be numeric")
+      }
 
       x <- x[!is.na(y)]
 
@@ -159,7 +179,8 @@ approx_na_rm <- function(x, y, xout, na_gap = NULL) {
       missing <- data.frame(from = which_x, to = which_x + diff_x[diff_x > na_gap])
 
       ## Remove missing values from interpolated ones
-      missing <- sapply(new$x, FUN = function(x, missing) any(x > missing$from & x < missing$to),
+      missing <- sapply(new$x,
+                        FUN = function(x, missing) any(x > missing$from & x < missing$to),
                         missing = missing)
       new$y[missing] <- NA
     }

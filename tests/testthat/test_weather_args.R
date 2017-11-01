@@ -50,7 +50,8 @@ test_that("weather() day format = FALSE", {
 
 test_that("weather() month format = FALSE", {
 
-  expect_silent(w <- weather(station_ids = 5401, start = "2014-01-01", end = "2014-05-01",
+  expect_silent(w <- weather(station_ids = 5401,
+                             start = "2014-01-01", end = "2014-05-01",
                              interval = "month", format = FALSE))
 
   ## Basics

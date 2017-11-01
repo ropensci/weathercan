@@ -95,7 +95,9 @@ kam.pg <- weather(station_ids = c(48248, 51423),
 
 library(ggplot2)
 
-ggplot(data = kam.pg, aes(x = time, y = temp, group = station_name, colour = station_name)) +
+ggplot(data = kam.pg, aes(x = time, y = temp,
+                          group = station_name,
+                          colour = station_name)) +
        geom_line()
 }
 

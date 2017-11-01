@@ -25,7 +25,8 @@ get_tz <- function(coords = NULL, lat = NULL, lon = NULL, etc = FALSE){
     } else if(is.data.frame(coords)) x <- coords
   } else if(all(!is.null(lat), !is.null(lon))) {
     x <- data.frame(lat = lat, lon = lon)
-  } else stop("Must provide lat and lon either as vector to 'coords' or individual in both 'lat' and 'lon'")
+  } else stop("Must provide lat and lon either as vector to 'coords'",
+              "or individual in both 'lat' and 'lon'")
 
   if(!all(apply(x, 2, is.numeric))) stop("Coordinates must be numeric")
 
@@ -37,8 +38,12 @@ get_tz <- function(coords = NULL, lat = NULL, lon = NULL, etc = FALSE){
                      "location=", x[i,1], ",", x[i,2], "&",
                      "timestamp=", as.numeric(time1), "&",
                      "sensor=false")
-    if(!etc) tz <- c(tz, xml2::read_xml(apiurl) %>% xml2::xml_find_all("//time_zone_id") %>% xml2::xml_text())
-    if(etc) tz <- c(tz, xml2::read_xml(apiurl) %>% xml2::xml_find_all("//raw_offset") %>% xml2::xml_text())
+    if(!etc) tz <- c(tz, xml2::read_xml(apiurl) %>%
+                       xml2::xml_find_all("//time_zone_id") %>%
+                       xml2::xml_text())
+    if(etc) tz <- c(tz, xml2::read_xml(apiurl) %>%
+                      xml2::xml_find_all("//raw_offset") %>%
+                      xml2::xml_text())
   }
 
   if(etc) {
@@ -50,5 +55,9 @@ get_tz <- function(coords = NULL, lat = NULL, lon = NULL, etc = FALSE){
 }
 
 
-check_int <- function(interval) if(!all(interval %in% c("hour", "day", "month"))) stop("'interval' can only be 'hour', 'day', or 'month'")
+check_int <- function(interval) {
+  if(!all(interval %in% c("hour", "day", "month"))) {
+    stop("'interval' can only be 'hour', 'day', or 'month'")
+  }
+}
 
