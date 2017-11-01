@@ -60,7 +60,7 @@ As well as several vignettes:
 \itemize{
     \item Using \code{weathercan} with
     \href{http://tidyverse.org/}{tidyverse}
-    (\href{http://steffilazerte.github.io/weathercan/articles/use_with_tidyverse.html}{here})
+    (\href{http://steffilazerte.github.io/weathercan/articles/articles/use_with_tidyverse.html}{here})
     }
 }
 \references{
