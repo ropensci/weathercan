@@ -9,8 +9,14 @@
 #'
 #' @examples
 #'
-#' lat = 53.881857
-#' lon = -122.786271
+#' # Daylight savings
+#' get_tz(lat = 53.881857, lon = -122.786271)
+#' get_tz(coords = c(53.881857, -122.786271))
+#'
+#' # No daylight savings
+#' get_tz(lat = 53.881857, lon = -122.786271, etc = TRUE)
+#' get_tz(coords = c(53.881857, -122.786271), etc = TRUE)
+#'
 #'
 #' @export
 
