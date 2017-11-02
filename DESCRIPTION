@@ -36,5 +36,3 @@ Suggests:
     stringr,
     testthat
 VignetteBuilder: knitr
-Remotes:
-  tidyverse/lubridate
