@@ -13,3 +13,10 @@
 ^_pkgdown\.yml$
 ^pkgdown$
 ^EXTRA$
+^paper.Rmd$
+^paper.md$
+^paper.bib$
+^paper.html$
+^ropensci_onboarding.md$
+^sediment.csv$
+^yaml.md$
