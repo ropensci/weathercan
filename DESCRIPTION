@@ -2,6 +2,7 @@ Package: weathercan
 Type: Package
 Title: Download Weather Data from the Environment and Climate Change Canada Website
 Version: 0.2.3
+Date: 2017-11-16
 Authors@R: c(
      person("Steffi", "LaZerte", email = "steffi@steffi.ca", role = c("aut","cre")),
      person("Sam", "Albers", email = "sam.albers@gmail.com", role = c("ctb")))
