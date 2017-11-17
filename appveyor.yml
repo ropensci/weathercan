@@ -32,6 +32,11 @@ environment:
     - R_VERSION: release
       R_ARCH: x64
 
+    allow_failures:
+      - R_VERSION: devel
+      - R_VERSION: devel
+        R_ARCH: x64
+
 build_script:
   - travis-tool.sh install_deps
 

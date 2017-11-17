@@ -10,12 +10,11 @@ matrix:
   include:
     - os: linux
       dist: trusty
-      r: release
-    #- os: linux
-    #  dist: trusty
-    #  r: devel
-    # Memory faults?
+      r: devel
 
+    - os: linux
+      dist: trusty
+      r: release
 
     - os: osx
       osx_image: xcode8.1
@@ -23,6 +22,11 @@ matrix:
 
     - os: osx
       r: release
+
+  allow_failures:
+    - os: linux
+      dist: trusty
+      r: devel
 
 r_packages:
   - covr
