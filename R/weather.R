@@ -281,6 +281,8 @@ weather_dl <- function(station_id,
                               Month = format(date, "%m"),
                               submit = 'Download+Data'))
 
+  httr::stop_for_status(html)
+
   w <- utils::read.csv(text = httr::content(html, as = "text",
                                             type = "text/csv",
                                             encoding = encoding),
