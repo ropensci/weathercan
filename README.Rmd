@@ -6,12 +6,12 @@ output: github_document
 library(weathercan)
 library(dplyr)
 library(tibble)
-knitr::opts_chunk$set(cache = FALSE)
+knitr::opts_chunk$set(cache = FALSE,
+                      fig.path = "tools/readme/")
 options(width = 100)
 ```
 
 # weathercan <img src="https://github.com/steffilazerte/weathercan/raw/master/inst/assets/weathercan_logo.png" align = "right" width = 110/>
-
 
 
 [![Build Status](https://travis-ci.org/steffilazerte/weathercan.svg?branch=master)](https://travis-ci.org/steffilazerte/weathercan) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/steffilazerte/weathercan?branch=master&svg=true)](https://ci.appveyor.com/project/steffilazerte/weathercan) [![codecov](https://codecov.io/gh/steffilazerte/weathercan/branch/master/graphs/badge.svg)](https://codecov.io/gh/steffilazerte/weathercan) 
@@ -82,7 +82,7 @@ kam_pg
 
 And plot it:
 
-```{r, fig.height=6, fig.width=12}
+```{r kam_plt, fig.height=6, fig.width=12}
 library(ggplot2)
 
 ggplot(data = kam_pg, aes(x = time, y = temp, group = station_name, colour = station_name)) +
