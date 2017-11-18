@@ -12,12 +12,6 @@
 ^docs$
 ^_pkgdown\.yml$
 ^pkgdown$
-^EXTRA$
-^paper.Rmd$
-^paper.md$
-^paper.bib$
-^paper.html$
+^inst/JOSS$
 ^ropensci_onboarding.md$
-^sediment.csv$
-^yaml.md$
 ^CONDUCT\.md$

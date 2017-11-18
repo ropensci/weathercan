@@ -9,7 +9,7 @@ authors:
   orcid: '0000-0002-7690-8360'
 - affiliation: 2
   name: Sam Albers
-date: '2017-11-16'
+date: '2017-11-18'
 header-includes: |
     ---
     title: 'weathercan: Download and format weather data from Environment and Climate Change Canada'
@@ -102,6 +102,14 @@ w <- weather(station_ids = c(50821, 51097),
              interval = "hour")
 ```
 
+    ## Warning: All formats failed to parse. No formats found.
+
+    ## Warning: All formats failed to parse. No formats found.
+
+    ## Warning: All formats failed to parse. No formats found.
+
+    ## Warning: All formats failed to parse. No formats found.
+
     ## # A tibble: 11,712 x 35
     ##    station_name station_id   prov   lat    lon       date                time  year month
     ##  *        <chr>      <dbl> <fctr> <dbl>  <dbl>     <date>              <dttm> <chr> <chr>
@@ -127,6 +135,10 @@ winnipeg <- weather(station_ids = 51097,
                     start = "2017-01-01", end = "2017-09-30",
                     interval = "hour")
 ```
+
+    ## Warning: All formats failed to parse. No formats found.
+
+    ## Warning: All formats failed to parse. No formats found.
 
     ## # A tibble: 10 x 2
     ##                   time  temp
