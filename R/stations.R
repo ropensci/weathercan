@@ -9,7 +9,7 @@
 #' @details
 #' URL defaults to
 #' ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/
-#' Station%20Inventory%20EN.csv
+#' Station%20Inventory%20EN.csv unless otherwise specified
 #'
 #' @param url Character. Url from which to grab the station information (see
 #'   details)
@@ -24,8 +24,12 @@
 #'
 #' @export
 
-stations_all <- function(url = "http://bit.ly/2sIuCty",
+stations_all <- function(url = NULL,
                          skip = NULL, verbose = FALSE, quiet = FALSE) {
+
+  if(is.null(url)) url <- paste0("ftp://client_climate@ftp.tor.ec.gc.ca/",
+                                 "Pub/Get_More_Data_Plus_de_donnees/",
+                                 "Station%20Inventory%20EN.csv")
 
   if(verbose) message("Trying to access stations data frame")
   headings <- try(readLines(url, n = 5), silent = TRUE)
