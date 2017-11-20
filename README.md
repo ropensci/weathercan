@@ -98,13 +98,6 @@ Once you have your `station_id`(s) you can download weather data:
 
 ``` r
 kam <- weather(station_ids = 51423, start = "2016-01-01", end = "2016-02-15")
-```
-
-    ## Warning: All formats failed to parse. No formats found.
-
-    ## Warning: All formats failed to parse. No formats found.
-
-``` r
 kam
 ```
 
@@ -148,17 +141,6 @@ You can also download data from multiple stations at once:
 
 ``` r
 kam_pg <- weather(station_ids = c(48248, 51423), start = "2016-01-01", end = "2016-02-15")
-```
-
-    ## Warning: All formats failed to parse. No formats found.
-
-    ## Warning: All formats failed to parse. No formats found.
-
-    ## Warning: All formats failed to parse. No formats found.
-
-    ## Warning: All formats failed to parse. No formats found.
-
-``` r
 kam_pg
 ```
 
