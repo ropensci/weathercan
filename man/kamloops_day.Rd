@@ -22,7 +22,7 @@
   \item{heat_deg_days}{Heat degree days}
   \item{heat_deg_days_flag}{Heat degree days flag}
   \item{max_temp}{Maximum temperature}
-  \item{max_temp_flag}{Maxixum temperature flag}
+  \item{max_temp_flag}{Maximum temperature flag}
   \item{mean_temp}{Mean temperature}
   \item{mean_temp_flag}{Mean temperature flag}
   \item{min_temp}{Minimum temperature}

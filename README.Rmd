@@ -6,17 +6,17 @@ output: github_document
 library(weathercan)
 library(dplyr)
 library(tibble)
-knitr::opts_chunk$set(cache = TRUE)
+knitr::opts_chunk$set(cache = FALSE,
+                      fig.path = "tools/readme/")
 options(width = 100)
 ```
 
 # weathercan <img src="https://github.com/steffilazerte/weathercan/raw/master/inst/assets/weathercan_logo.png" align = "right" width = 110/>
 
 
+[![Build Status](https://travis-ci.org/steffilazerte/weathercan.svg?branch=master)](https://travis-ci.org/steffilazerte/weathercan) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/steffilazerte/weathercan?branch=master&svg=true)](https://ci.appveyor.com/project/steffilazerte/weathercan) [![codecov](https://codecov.io/gh/steffilazerte/weathercan/branch/master/graphs/badge.svg)](https://codecov.io/gh/steffilazerte/weathercan) 
 
-[![Build Status](https://travis-ci.org/steffilazerte/weathercan.svg?branch=master)](https://travis-ci.org/steffilazerte/weathercan) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/steffilazerte/weathercan?branch=master&svg=true)](https://ci.appveyor.com/project/steffilazerte/weathercan)
-
-This package is makes it easier to search for and download multiple months/years of historical weather data from Environment and Climate Change Canada (ECCC) website.
+This package is makes it easier to search for and download multiple months/years of historical weather data from [Environment and Climate Change Canada (ECCC) website](http://climate.weather.gc.ca/historical_data/search_historic_data_e.html).
 
 Bear in mind that these downloads can be fairly large and performing multiple downloads may use up ECCC's bandwidth unecessarily. Try to stick to what you need.
 
@@ -82,7 +82,7 @@ kam_pg
 
 And plot it:
 
-```{r, fig.height=6, fig.width=12}
+```{r kam_plt, fig.height=6, fig.width=12}
 library(ggplot2)
 
 ggplot(data = kam_pg, aes(x = time, y = temp, group = station_name, colour = station_name)) +
@@ -92,4 +92,8 @@ ggplot(data = kam_pg, aes(x = time, y = temp, group = station_name, colour = sta
 
 # License
 
-The data and the code in this repository are licensed under multiple licences. All code is licensed [GPL-3](https://www.gnu.org/licenses/gpl-3.0.en.html). All data is licensed under the ([Open Government License - Canada](http://open.canada.ca/en/open-government-licence-canada)). 
+The data and the code in this repository are licensed under multiple licences. All code is licensed [GPL-3](https://www.gnu.org/licenses/gpl-3.0.en.html). All weather data is licensed under the ([Open Government License - Canada](http://open.canada.ca/en/open-government-licence-canada)). 
+
+# Code of Conduct
+
+Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.

@@ -27,7 +27,7 @@
   \item{rel_hum_flag}{Relative humidity data flag}
   \item{temp}{Temperature}
   \item{temp_dew}{Dew Point Temperature}
-  \item{temp_dew_flag}{Dew Point Temperatureflag}
+  \item{temp_dew_flag}{Dew Point Temperature flag}
   \item{visib}{Visibility (km)}
   \item{visib_flag}{Visibility data flag}
   \item{wind_chill}{Wind Chill}

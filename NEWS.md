@@ -12,9 +12,12 @@ output: html_document
 - `stations_search()` warns user if name looks like coords
 - `stations_search()` with `coord` now returns closest 10 stations
 - `add_weather()` warns user if trying to interpolate weather from >1 station
+- Updated code to conform with rOpenSci requirements
+- Data downloaded from multiple timezones defaults to UTC
 
 ## Bug fixes
 - `weather(format = FALSE)` properly returns data
+- updated `weather()` to work with `lubridate` 1.7.1
 
 # weathercan 0.2.2
 
