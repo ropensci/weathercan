@@ -1,15 +1,16 @@
 Package: weathercan
 Type: Package
 Title: Download Weather Data from the Environment and Climate Change Canada Website
-Version: 0.2.3
+Version: 0.2.2.9000
 Authors@R: c(
      person("Steffi", "LaZerte", email = "steffi@steffi.ca", role = c("aut","cre")),
      person("Sam", "Albers", email = "sam.albers@gmail.com", role = c("ctb")))
 Description: Provides means for downloading historical weather data from 
-    the Environment and Climate Change Canada website. Data can be dowloaded
-    from multiple stations and over large date ranges and automatically
-    processed into a single dataset. Tools are also provided to identify
-    stations either by name or proximity to a location.
+    the Environment and Climate Change Canada website 
+    (<http://climate.weather.gc.ca/historical_data/search_historic_data_e.html>). 
+    Data can be downloaded from multiple stations and over large date ranges 
+    and automatically processed into a single dataset. Tools are also provided 
+    to identify stations either by name or proximity to a location.
 License: GPL-3
 BugReports: https://github.com/steffilazerte/weathercan/issues
 LazyData: TRUE
@@ -19,11 +20,9 @@ Depends:
 Imports:
     dplyr (>= 0.7.0),
     httr (>= 1.1.0),
-    lazyeval (>= 0.1.10),
-    lubridate (>= 1.5.6),
+    lubridate (>= 1.7.1),
     magrittr (>= 1.5),
     methods (>= 3.2.2),
-    rvest (>= 0.3.1),
     sp (>= 1.2-3),
     stringi (>= 1.1.2),
     tibble (>= 1.2),
@@ -31,6 +30,7 @@ Imports:
     xml2 (>= 0.1.2)
 RoxygenNote: 6.0.1
 Suggests:
+    devtools,
     ggplot2,
     knitr,
     rmarkdown,

@@ -9,7 +9,7 @@
 #' @details
 #' URL defaults to
 #' ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/
-#' Station%20Inventory%20EN.csv
+#' Station%20Inventory%20EN.csv unless otherwise specified
 #'
 #' @param url Character. Url from which to grab the station information (see
 #'   details)
@@ -22,20 +22,32 @@
 #' @return A tibble containing station names, station ID codes and dates of
 #'   operation
 #'
-#' @import magrittr
 #' @export
 
-stations_all <- function(url = "http://bit.ly/2sIuCty",
+stations_all <- function(url = NULL,
                          skip = NULL, verbose = FALSE, quiet = FALSE) {
+
+  if(is.null(url)) url <- paste0("ftp://client_climate@ftp.tor.ec.gc.ca/",
+                                 "Pub/Get_More_Data_Plus_de_donnees/",
+                                 "Station%20Inventory%20EN.csv")
 
   if(verbose) message("Trying to access stations data frame")
   headings <- try(readLines(url, n = 5), silent = TRUE)
-  if("try-error" %in% class(headings)) stop("'url' must point to a csv file either local or online.")
+  if("try-error" %in% class(headings)) {
+    stop("'url' must point to a csv file either local or online.")
+  }
 
-  if(is.null(skip)) skip <- grep("(.*?)(Name)(.*?)(Province)(.*?)(Climate ID)(.*?)(Station ID)(.*?)(WMO ID)(.*?)(TC ID)(.*?)", headings) - 1
+  if(is.null(skip)) {
+    skip <- grep(paste0("(.*?)(Name)(.*?)(Province)(.*?)(Climate ID)(.*?)",
+                        "(Station ID)(.*?)(WMO ID)(.*?)(TC ID)(.*?)"),
+                 headings) - 1
+  }
 
-  if(!quiet) message("According to Environment Canada, ", grep("Modified Date", headings, value = TRUE))
-  if(!quiet) message("Environment Canada Disclaimers:\n", paste0(grep("Disclaimer", headings, value = TRUE), collapse = "\n"))
+  if(!quiet) message("According to Environment Canada, ",
+                     grep("Modified Date", headings, value = TRUE))
+  if(!quiet) message("Environment Canada Disclaimers:\n",
+                     paste0(grep("Disclaimer", headings, value = TRUE),
+                            collapse = "\n"))
 
   if(verbose) message("Downloading stations data frame")
   stn <- utils::read.csv(file = url,
@@ -79,7 +91,8 @@ stations_all <- function(url = "http://bit.ly/2sIuCty",
                                                  "QUEBEC",
                                                  "SASKATCHEWAN",
                                                  "YUKON TERRITORY"),
-                                labels = c("AB", "BC", "MB", "NB", "NL", "NT","NS", "NU", "ON", "PE", "QC", "SK", "YT"))) %>%
+                                labels = c("AB", "BC", "MB", "NB", "NL", "NT",
+                                           "NS", "NU", "ON", "PE", "QC", "SK", "YT"))) %>%
     tidyr::spread(type, date) %>%
     dplyr::tbl_df()
 
@@ -135,24 +148,33 @@ stations_search <- function(name = NULL,
                             stn = weathercan::stations,
                             verbose = FALSE,
                             quiet = FALSE) {
-  if(all(is.null(name), is.null(coords)) | all(!is.null(name), !is.null(coords))) stop("Need a search name OR search coordinate")
+  if(all(is.null(name), is.null(coords)) | all(!is.null(name), !is.null(coords))) {
+    stop("Need a search name OR search coordinate")
+  }
 
   if(!is.null(coords)) {
     suppressWarnings({coords <- try(as.numeric(as.character(coords)), silent = TRUE)})
-    if(length(coords) != 2 | all(is.na(coords)) | class(coords) == "try-error") stop("'coord' takes one pair of lat and lon in a numeric vector")
+    if(length(coords) != 2 | all(is.na(coords)) | class(coords) == "try-error") {
+      stop("'coord' takes one pair of lat and lon in a numeric vector")
+    }
   }
 
   check_int(interval)
 
-  stn <- dplyr::filter_(stn, lazyeval::interp(~ interval %in% x & !is.na(start), x = interval))
+  stn <- dplyr::filter(stn, interval %in% !! interval, !is.na(start))
 
   if(!is.null(name)) {
 
-    if(!quiet) if(length(name) == 2 & is.numeric(name)) message("The `name` argument looks like a pair of coordinates. Did you mean `coords = c(", name[1], ", ", name[2], ")`?")
-
+    if(!quiet) if(length(name) == 2 & is.numeric(name)) {
+      message("The `name` argument looks like a pair of coordinates. ",
+              "Did you mean `coords = c(", name[1], ", ", name[2], ")`?")
+    }
 
     if(verbose) message("Searching by name")
-    if(class(try(as.character(name), silent = TRUE)) == "try-error") stop("'name' needs to be coercible into a character")
+    if(class(try(as.character(name), silent = TRUE)) == "try-error") {
+      stop("'name' needs to be coercible into a character")
+    }
+
     name <- gsub("([A-Z]*)", "\\L\\1", name, perl = TRUE)
     temp <- gsub("([A-Z]*)", "\\L\\1", stn$station_name, perl=TRUE)
 
@@ -165,7 +187,8 @@ stations_search <- function(name = NULL,
     if(verbose) message("Calculating station distances")
     coords <- as.numeric(as.character(coords))
     stn$distance <- NA
-    stn$distance[!is.na(stn$lat)] <- sp::spDistsN1(pts = as.matrix(stn[!is.na(stn$lat), c("lon", "lat")]), pt = c(coords[2], coords[1]), longlat = TRUE)
+    stn$distance[!is.na(stn$lat)] <- sp::spDistsN1(pts = as.matrix(stn[!is.na(stn$lat), c("lon", "lat")]),
+                                                   pt = c(coords[2], coords[1]), longlat = TRUE)
     stn <- dplyr::arrange(stn, distance)
 
     i <- which(stn$distance <= dist)

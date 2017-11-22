@@ -58,7 +58,8 @@ A tibble with station ID, name and weather data.
 }
 \description{
 Downloads data from Environment Canada for one or more stations. For details
-and units, see the glossary online
+and units, see the glossary vignette (\code{vignette("glossary", package =
+"weathercan")}) or the glossary online
 \url{http://climate.weather.gc.ca/glossary_e.html}.
 }
 \details{
@@ -94,7 +95,9 @@ kam.pg <- weather(station_ids = c(48248, 51423),
 
 library(ggplot2)
 
-ggplot(data = kam.pg, aes(x = time, y = temp, group = station_name, colour = station_name)) +
+ggplot(data = kam.pg, aes(x = time, y = temp,
+                          group = station_name,
+                          colour = station_name)) +
        geom_line()
 }
 

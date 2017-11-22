@@ -12,3 +12,6 @@
 ^docs$
 ^_pkgdown\.yml$
 ^pkgdown$
+^inst/JOSS$
+^ropensci_onboarding.md$
+^CONDUCT\.md$

@@ -8,7 +8,8 @@ test_that("stations_all() runs and returns data", {
   expect_warning(expect_error({stations_all(url = "test.csv")}))
   expect_is(s, "data.frame")
   expect_length(s, 12)
-  expect_lt(length(data.frame(s)[is.na(data.frame(s))]), length(data.frame(s)[!is.na(data.frame(s))]))
+  expect_lt(length(data.frame(s)[is.na(data.frame(s))]),
+            length(data.frame(s)[!is.na(data.frame(s))]))
   expect_is(s$prov, "factor")
   expect_is(s$station_name, "character")
   expect_gt(nrow(s), 10)
@@ -38,13 +39,17 @@ test_that("stations_search 'name' returns correct data", {
   expect_equal(nrow(stations_search("XXX")), 0)
 
   ## Check basic regex
-  expect_gt(nrow(stations_search("Kamloops A")), nrow(stations_search("Kamloops A$")))
+  expect_gt(nrow(stations_search("Kamloops A")),
+            nrow(stations_search("Kamloops A$")))
 
   ## Check multinames
-  expect_equal(unique(stations_search(c("Kamloops", "Terrace"))$station_name), "KAMLOOPS RIDGEVIEW TERRACE")
+  expect_equal(unique(stations_search(c("Kamloops", "Terrace"))$station_name),
+               "KAMLOOPS RIDGEVIEW TERRACE")
 
   ## Check numbers
-  expect_message(stations_search(c(54, -122)), "The `name` argument looks like a pair of coordinates. Did you mean `coords = c\\(54, -122\\)`?")
+  expect_message(stations_search(c(54, -122)),
+                 paste0("The `name` argument looks like a pair of coordinates. ",
+                        "Did you mean `coords = c\\(54, -122\\)`?"))
 
   ## Check specific
   expect_equal(nrow(stations_search("Kamloops A$")), 5)
@@ -78,7 +83,8 @@ test_that("stations_search 'coords' returns correct data", {
   expect_lt(max(stn$distance), 10)
 
   ## Check messages
-  expect_message(stations_search(coords = c(54, -122)), "No stations within 10km. Returning closest 10 stations.")
+  expect_message(stations_search(coords = c(54, -122)),
+                 "No stations within 10km. Returning closest 10 stations.")
 
   ## Check distance
   expect_equal(nrow(stn <- stations_search(coords = k, dist = 30)), 58)
@@ -95,6 +101,7 @@ test_that("stations_search quiet/verbose", {
 
   expect_message(stations_search(c(54, -122), verbose = TRUE), "Searching by name")
   expect_message(stations_search("Kamloops", verbose = TRUE), "Searching by name")
-  expect_message(stations_search(coords = c(54, -122), verbose = TRUE), "Calculating station distances")
+  expect_message(stations_search(coords = c(54, -122), verbose = TRUE),
+                 "Calculating station distances")
 
 })

@@ -9,10 +9,15 @@
 #'
 #' @examples
 #'
-#' lat = 53.881857
-#' lon = -122.786271
+#' # Daylight savings
+#' get_tz(lat = 53.881857, lon = -122.786271)
+#' get_tz(coords = c(53.881857, -122.786271))
 #'
-#' @import magrittr
+#' # No daylight savings
+#' get_tz(lat = 53.881857, lon = -122.786271, etc = TRUE)
+#' get_tz(coords = c(53.881857, -122.786271), etc = TRUE)
+#'
+#'
 #' @export
 
 get_tz <- function(coords = NULL, lat = NULL, lon = NULL, etc = FALSE){
@@ -26,20 +31,25 @@ get_tz <- function(coords = NULL, lat = NULL, lon = NULL, etc = FALSE){
     } else if(is.data.frame(coords)) x <- coords
   } else if(all(!is.null(lat), !is.null(lon))) {
     x <- data.frame(lat = lat, lon = lon)
-  } else stop("Must provide lat and lon either as vector to 'coords' or individual in both 'lat' and 'lon'")
+  } else stop("Must provide lat and lon either as vector to 'coords'",
+              "or individual in both 'lat' and 'lon'")
 
   if(!all(apply(x, 2, is.numeric))) stop("Coordinates must be numeric")
 
   tz <- vector()
-  for(i in 1:nrow(x)) {
+  for(i in seq_len(nrow(x))) {
     time1 <- Sys.time()
     # https://developers.google.com/maps/documentation/timezone/
     apiurl <- paste0("https://maps.googleapis.com/maps/api/timezone/xml?",
                      "location=", x[i,1], ",", x[i,2], "&",
                      "timestamp=", as.numeric(time1), "&",
                      "sensor=false")
-    if(!etc) tz <- c(tz, xml2::read_xml(apiurl) %>% xml2::xml_find_all("//time_zone_id") %>% xml2::xml_text())
-    if(etc) tz <- c(tz, xml2::read_xml(apiurl) %>% xml2::xml_find_all("//raw_offset") %>% xml2::xml_text())
+    if(!etc) tz <- c(tz, xml2::read_xml(apiurl) %>%
+                       xml2::xml_find_all("//time_zone_id") %>%
+                       xml2::xml_text())
+    if(etc) tz <- c(tz, xml2::read_xml(apiurl) %>%
+                      xml2::xml_find_all("//raw_offset") %>%
+                      xml2::xml_text())
   }
 
   if(etc) {
@@ -51,5 +61,9 @@ get_tz <- function(coords = NULL, lat = NULL, lon = NULL, etc = FALSE){
 }
 
 
-check_int <- function(interval) if(!all(interval %in% c("hour", "day", "month"))) stop("'interval' can only be 'hour', 'day', or 'month'")
+check_int <- function(interval) {
+  if(!all(interval %in% c("hour", "day", "month"))) {
+    stop("'interval' can only be 'hour', 'day', or 'month'")
+  }
+}
 

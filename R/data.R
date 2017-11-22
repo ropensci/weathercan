@@ -52,7 +52,7 @@
 #'   \item{rel_hum_flag}{Relative humidity data flag}
 #'   \item{temp}{Temperature}
 #'   \item{temp_dew}{Dew Point Temperature}
-#'   \item{temp_dew_flag}{Dew Point Temperatureflag}
+#'   \item{temp_dew_flag}{Dew Point Temperature flag}
 #'   \item{visib}{Visibility (km)}
 #'   \item{visib_flag}{Visibility data flag}
 #'   \item{wind_chill}{Wind Chill}
@@ -137,7 +137,7 @@
 #'   \item{heat_deg_days}{Heat degree days}
 #'   \item{heat_deg_days_flag}{Heat degree days flag}
 #'   \item{max_temp}{Maximum temperature}
-#'   \item{max_temp_flag}{Maxixum temperature flag}
+#'   \item{max_temp_flag}{Maximum temperature flag}
 #'   \item{mean_temp}{Mean temperature}
 #'   \item{mean_temp_flag}{Mean temperature flag}
 #'   \item{min_temp}{Minimum temperature}
