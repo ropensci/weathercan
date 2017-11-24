@@ -14,11 +14,11 @@ authors:
     orcid: 
     affiliation: 2
 affiliations:
-  - name: 
+  - name: steffilazerte.ca
     index: 1
   - name: University of Northern British Columbia
     index: 2
-date: 2017-11-15
+date: 2017-11-24
 bibliography: paper.bib
 ---
 
@@ -47,15 +47,22 @@ Next, weather data can be downloaded for the specified stations (`station_ids`),
 w <- weather(station_ids = c(50821, 51097), 
              start = "2017-01-01", end = "2017-09-01",
              interval = "hour")
+names(w)
 ```
 
-    ## Warning: All formats failed to parse. No formats found.
+    ##  [1] "station_name"    "station_id"      "prov"            "lat"            
+    ##  [5] "lon"             "date"            "time"            "year"           
+    ##  [9] "month"           "day"             "hour"            "qual"           
+    ## [13] "weather"         "hmdx"            "hmdx_flag"       "pressure"       
+    ## [17] "pressure_flag"   "rel_hum"         "rel_hum_flag"    "temp"           
+    ## [21] "temp_dew"        "temp_dew_flag"   "temp_flag"       "visib"          
+    ## [25] "visib_flag"      "wind_chill"      "wind_chill_flag" "wind_dir"       
+    ## [29] "wind_dir_flag"   "wind_spd"        "wind_spd_flag"   "elev"           
+    ## [33] "climat_id"       "WMO_id"          "TC_id"
 
-    ## Warning: All formats failed to parse. No formats found.
-
-    ## Warning: All formats failed to parse. No formats found.
-
-    ## Warning: All formats failed to parse. No formats found.
+``` {.r}
+w
+```
 
     ## # A tibble: 11,712 x 35
     ##    station_name station_id   prov   lat    lon       date                time  year month
@@ -72,7 +79,7 @@ w <- weather(station_ids = c(50821, 51097),
     ## 10    BRANDON A      50821     MB 49.91 -99.95 2017-01-01 2017-01-01 09:00:00  2017    01
     ## # ... with 11,702 more rows, and 26 more variables
 
-![](paper_files/figure-markdown/unnamed-chunk-5-1.png)
+![](paper_files/figure-markdown/unnamed-chunk-4-1.png)
 Figure 1. Data downloaded with `weathercan` is formated and ready for ploting.
 
 Finally, weather data from a single station can be aligned and merged with existing datasets through linear interpolation. For example, we first download weather data from a single station in Winnipeg, Canada:
@@ -83,13 +90,16 @@ winnipeg <- weather(station_ids = 51097,
                     interval = "hour")
 ```
 
-    ## Warning: All formats failed to parse. No formats found.
+The temperature data is recorded on the hour:
 
-    ## Warning: All formats failed to parse. No formats found.
+``` {.r}
+winnipeg %>%
+  select(time, temp)
+```
 
-    ## # A tibble: 10 x 2
+    ## # A tibble: 6,552 x 2
     ##                   time  temp
-    ##                 <dttm> <dbl>
+    ##  *              <dttm> <dbl>
     ##  1 2017-01-01 00:00:00  -7.8
     ##  2 2017-01-01 01:00:00 -10.0
     ##  3 2017-01-01 02:00:00 -10.8
@@ -100,12 +110,19 @@ winnipeg <- weather(station_ids = 51097,
     ##  8 2017-01-01 07:00:00 -11.0
     ##  9 2017-01-01 08:00:00 -11.4
     ## 10 2017-01-01 09:00:00 -11.1
+    ## # ... with 6,542 more rows
 
 Then we open a dummy dataset containing mock sediment data:
 
 ``` {.r}
 sediment <- read.csv("sediment.csv") %>%
   mutate(time = as.POSIXct(time, tz = "America/Winnipeg"))
+```
+
+This data is recorded every half hour, but at 5 min 34 seconds after:
+
+``` {.r}
+head(sediment)
 ```
 
     ##                  time   amount
@@ -125,6 +142,10 @@ sediment <- add_weather(data = sediment,
 ```
 
     ## temp is missing 2 out of 6552 data, interpolation may be less accurate as a result.
+
+``` {.r}
+head(sediment)
+```
 
     ## # A tibble: 6 x 3
     ##                  time   amount       temp

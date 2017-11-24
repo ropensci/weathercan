@@ -14,10 +14,10 @@ authors:
     orcid: 
     affiliation: 2
 affiliations:
-  - name: 
+  - name: steffilazerte.ca
     index: 1
   - name: University of Northern British Columbia
     index: 2
-date: 2017-11-15
+date: 2017-11-24
 bibliography: paper.bib
 ---

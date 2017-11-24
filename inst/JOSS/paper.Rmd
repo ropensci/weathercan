@@ -1,24 +1,4 @@
 ---
-title: 'weathercan: Download and format weather data from Environment and Climate Change Canada'
-tags:
-  - R
-  - data
-  - weather
-  - Canada
-  - meteorology
-authors:
-  - name: Stefanie E. LaZerte
-    orcid: 0000-0002-7690-8360
-    affiliation: 1
-  - name: Sam Albers
-    orcid: 
-    affiliation: 2
-affiliations:
-  - name: 
-    index: 1
-  - name: University of Northern British Columbia
-    index: 2
-date: "`r Sys.Date()`"
 output: 
   md_document:
     pandoc_args: ["--atx-headers","--wrap=preserve"]
@@ -54,12 +34,9 @@ Next, weather data can be downloaded for the specified stations (`station_ids`),
 w <- weather(station_ids = c(50821, 51097), 
              start = "2017-01-01", end = "2017-09-01",
              interval = "hour")
-```
-
-```{r, echo = FALSE}
+names(w)
 w
 ```
-
 
 ```{r, echo = FALSE}
 ggplot(data = w, aes(x = time, y = temp, colour = station_name)) +
@@ -79,10 +56,11 @@ winnipeg <- weather(station_ids = 51097,
                     interval = "hour")
 ```
 
-```{r, echo = FALSE}
+The temperature data is recorded on the hour:
+
+```{r}
 winnipeg %>%
-  select(time, temp) %>%
-  slice(1:10)
+  select(time, temp)
 ```
 
 Then we open a dummy dataset containing mock sediment data:
@@ -100,7 +78,8 @@ sediment <- read.csv("sediment.csv") %>%
   mutate(time = as.POSIXct(time, tz = "America/Winnipeg"))
 ```
 
-```{r, echo = FALSE}
+This data is recorded every half hour, but at 5 min 34 seconds after:
+```{r}
 head(sediment)
 ```
 
@@ -112,7 +91,7 @@ sediment <- add_weather(data = sediment,
                         cols = "temp")
 ```
 
-```{r, echo = FALSE}
+```{r}
 head(sediment)
 ```
 
