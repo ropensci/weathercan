@@ -57,7 +57,8 @@ get_tz <- function(coords = NULL, lat = NULL, lon = NULL, etc = FALSE){
     if(tz <= 0) tz <- paste0("+", abs(tz)) else tz <- paste0("-", abs(tz))
     tz <- paste0("Etc/GMT", tz)
   }
-  return(tz)
+
+  tz
 }
 
 
