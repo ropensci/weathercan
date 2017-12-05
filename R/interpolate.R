@@ -133,7 +133,8 @@ add_weather <- function(data, weather,
       data <- dplyr::left_join(data, unique(new), by = t)
     }
   }
-  return(data)
+
+  data
 }
 
 
@@ -187,5 +188,6 @@ approx_na_rm <- function(x, y, xout, na_gap = NULL) {
   } else if (any(is.na(y)) & is.null(na_gap)) {
     stop("Missing values in y but no na_gap set")
   }
-  return(new)
+
+  new
 }

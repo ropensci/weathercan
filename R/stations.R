@@ -60,7 +60,8 @@ stations_all <- function(url = NULL,
                             collapse = "\n"))
 
   if(verbose) message("Downloading stations data frame")
-  stn <- utils::read.csv(file = url,
+
+  utils::read.csv(file = url,
                          skip = skip,
                          strip.white = TRUE) %>%
     dplyr::select(prov = Province,
@@ -105,8 +106,6 @@ stations_all <- function(url = NULL,
                                            "NS", "NU", "ON", "PE", "QC", "SK", "YT"))) %>%
     tidyr::spread(type, date) %>%
     dplyr::tbl_df()
-
-  return(stn)
 }
 
 #' Search for stations by name or location
@@ -211,6 +210,7 @@ stations_search <- function(name = NULL,
   stn <- stn[i, ]
   if(!is.null(name)) stn <- dplyr::arrange(stn, station_name, station_id, interval)
   if(!is.null(coords)) stn <- dplyr::arrange(stn, distance, station_name, station_id, interval)
-  return(stn)
+
+  stn
 }
 

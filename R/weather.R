@@ -260,7 +260,7 @@ weather <- function(station_ids,
 
   }
 
-  return(dplyr::tbl_df(w_all))
+  dplyr::tbl_df(w_all)
 }
 
 
@@ -283,7 +283,7 @@ weather_dl <- function(station_id,
 
   httr::stop_for_status(html)
 
-  w <- utils::read.csv(text = httr::content(html, as = "text",
+  utils::read.csv(text = httr::content(html, as = "text",
                                             type = "text/csv",
                                             encoding = encoding),
                        nrows = nrows, strip.white = TRUE,
@@ -293,8 +293,6 @@ weather_dl <- function(station_id,
     # change back to match flags on ECCC website
     dplyr::mutate_at(.vars = dplyr::vars(dplyr::ends_with("Flag")),
                      dplyr::funs(gsub("^I$", "^", .)))
-
-  return(w)
 }
 
 weather_format <- function(w, interval = "hour", string_as = "NA",
@@ -423,5 +421,5 @@ weather_format <- function(w, interval = "hour", string_as = "NA",
                preamble[, c("elev", "climat_id", "WMO_id", "TC_id")])
   }
 
-  return(w)
+  w
 }
