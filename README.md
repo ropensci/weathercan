@@ -168,6 +168,30 @@ ggplot(data = kam_pg, aes(x = time, y = temp, group = station_name, colour = sta
 
 ![](tools/readme/kam_plt-1.png)
 
+Citation
+========
+
+``` r
+citation("weathercan")
+```
+
+    ## 
+    ## To cite package 'weathercan' in publications use:
+    ## 
+    ##   Steffi LaZerte (2017). weathercan: Download Weather Data from the Environment and
+    ##   Climate Change Canada Website. R package version 0.2.2.9000.
+    ##   https://github.com/steffilazerte/weathercan
+    ## 
+    ## A BibTeX entry for LaTeX users is
+    ## 
+    ##   @Manual{,
+    ##     title = {weathercan: Download Weather Data from the Environment and Climate Change Canada Website},
+    ##     author = {Steffi LaZerte},
+    ##     year = {2017},
+    ##     note = {R package version 0.2.2.9000},
+    ##     url = {https://github.com/steffilazerte/weathercan},
+    ##   }
+
 License
 =======
 
