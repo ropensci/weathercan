@@ -1,10 +1,10 @@
 #' Get available stations
 #'
 #' This function can be used to download a Station Inventory CSV file from
-#' Environment Canada. Note that the 'stations' data set included in this
-#' package contains station data downloaded when the package was last compiled,
-#' so it may not be necessary to call this function (and this function may take
-#' a few minutes to run).
+#' Environment and Climate Change Canada. This is only necessary if the station
+#' you're interested was only recently added. The 'stations' data set included
+#' in this package contains station data downloaded when the package was last
+#' compiled. This function may take a few minutes to run.
 #'
 #' @details
 #' URL defaults to
@@ -21,6 +21,16 @@
 #'
 #' @return A tibble containing station names, station ID codes and dates of
 #'   operation
+#'
+#' @examples
+#'
+#' \dontrun{
+#'  # Update stations data frame
+#'  s <- stations_all()
+#'
+#'  # Use new data frame to search for stations
+#'  stations_search("Winnipeg", stn = s)
+#' }
 #'
 #' @export
 
