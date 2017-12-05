@@ -67,12 +67,6 @@ kam <- weather(station_ids = 51423, start = "2016-01-01", end = "2016-02-15")
 kam
 ```
 
-Look specifically at weather columns:
-```{r}
-kam %>% select(time, temp, pressure, hmdx)
-```
-
-
 You can also download data from multiple stations at once:
 
 ```{r, R.options = list(tibble.max_extra_cols = 0)}

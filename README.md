@@ -116,27 +116,6 @@ kam
     ## 10   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 09:00:00  2016    01    01
     ## # ... with 1,094 more rows, and 25 more variables
 
-Look specifically at weather columns:
-
-``` r
-kam %>% select(time, temp, pressure, hmdx)
-```
-
-    ## # A tibble: 1,104 x 4
-    ##                   time  temp pressure  hmdx
-    ##  *              <dttm> <dbl>    <dbl> <dbl>
-    ##  1 2016-01-01 00:00:00  -9.1    99.95    NA
-    ##  2 2016-01-01 01:00:00  -9.6    99.93    NA
-    ##  3 2016-01-01 02:00:00  -9.9    99.92    NA
-    ##  4 2016-01-01 03:00:00  -9.5    99.90    NA
-    ##  5 2016-01-01 04:00:00  -9.4    99.86    NA
-    ##  6 2016-01-01 05:00:00  -9.8    99.82    NA
-    ##  7 2016-01-01 06:00:00 -10.0    99.80    NA
-    ##  8 2016-01-01 07:00:00 -10.2    99.78    NA
-    ##  9 2016-01-01 08:00:00 -10.1    99.77    NA
-    ## 10 2016-01-01 09:00:00  -9.7    99.78    NA
-    ## # ... with 1,094 more rows
-
 You can also download data from multiple stations at once:
 
 ``` r
