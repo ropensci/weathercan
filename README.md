@@ -2,7 +2,7 @@
 weathercan <img src="https://github.com/steffilazerte/weathercan/raw/master/inst/assets/weathercan_logo.png" align = "right" width = 110/>
 ==========================================================================================================================================
 
-[![Build Status](https://travis-ci.org/steffilazerte/weathercan.svg?branch=master)](https://travis-ci.org/steffilazerte/weathercan) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/steffilazerte/weathercan?branch=master&svg=true)](https://ci.appveyor.com/project/steffilazerte/weathercan) [![codecov](https://codecov.io/gh/steffilazerte/weathercan/branch/master/graph/badge.svg)](https://codecov.io/gh/steffilazerte/weathercan)
+[![Build Status](https://travis-ci.org/steffilazerte/weathercan.svg?branch=master)](https://travis-ci.org/steffilazerte/weathercan) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/steffilazerte/weathercan?branch=master&svg=true)](https://ci.appveyor.com/project/steffilazerte/weathercan) [![codecov](https://codecov.io/gh/steffilazerte/weathercan/branch/master/graph/badge.svg)](https://codecov.io/gh/steffilazerte/weathercan) [![](https://badges.ropensci.org/160_status.svg)](https://github.com/ropensci/onboarding/issues/160)
 
 This package is makes it easier to search for and download multiple months/years of historical weather data from [Environment and Climate Change Canada (ECCC) website](http://climate.weather.gc.ca/historical_data/search_historic_data_e.html).
 
@@ -98,6 +98,13 @@ Once you have your `station_id`(s) you can download weather data:
 
 ``` r
 kam <- weather(station_ids = 51423, start = "2016-01-01", end = "2016-02-15")
+```
+
+    ## Warning: All formats failed to parse. No formats found.
+
+    ## Warning: All formats failed to parse. No formats found.
+
+``` r
 kam
 ```
 
@@ -141,6 +148,17 @@ You can also download data from multiple stations at once:
 
 ``` r
 kam_pg <- weather(station_ids = c(48248, 51423), start = "2016-01-01", end = "2016-02-15")
+```
+
+    ## Warning: All formats failed to parse. No formats found.
+
+    ## Warning: All formats failed to parse. No formats found.
+
+    ## Warning: All formats failed to parse. No formats found.
+
+    ## Warning: All formats failed to parse. No formats found.
+
+``` r
 kam_pg
 ```
 
