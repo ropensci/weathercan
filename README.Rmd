@@ -52,12 +52,6 @@ stations_search("Kamloops", interval = "hour")
 
 Time frame must be one of "hour", "day", or "month".
 
-You can also search by proximity:
-
-```{r}
-stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour")
-```
-
 ### Weather
 
 Once you have your `station_id`(s) you can download weather data:

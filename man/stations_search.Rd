@@ -2,24 +2,16 @@
 % Please edit documentation in R/stations.R
 \name{stations_search}
 \alias{stations_search}
-\title{Search for stations by name or location}
+\title{Search for stations by name}
 \usage{
-stations_search(name = NULL, coords = NULL, dist = 10,
-  interval = c("hour", "day", "month"), stn = weathercan::stations,
-  verbose = FALSE, quiet = FALSE)
+stations_search(name = NULL, interval = c("hour", "day", "month"),
+  stn = weathercan::stations, verbose = FALSE, quiet = FALSE)
 }
 \arguments{
 \item{name}{Character. A vector of length 1 or more with text against which
 to match. Will match station names that contain all components of
 \code{name}, but they can be in different orders and separated by other
 text.}
-
-\item{coords}{Numeric. A vector of length 2 with latitude and longitude of a
-place to match against. Overrides \code{lat} and \code{lon} if also
-provided.}
-
-\item{dist}{Numeric. Match all stations within this many kilometers of the
-\code{coords}.}
 
 \item{interval}{Character. Return only stations with data at these intervals.
 Must be any of "hour", "day", "month".}
@@ -34,13 +26,10 @@ missing data, etc.)}
 }
 \value{
 Returns a subset of the stations data frame which match the search
-  parameters. If the search was by location, an extra column 'distance' shows
-  the distance in kilometres from the location to the station. If no stations
-  are found withing `dist`, the closest 10 stations are returned.
+  parameters.
 }
 \description{
-Returns stations that match the name provided OR which are within \code{dist}
-km of the location provided. This is designed to provide the user with
+Returns stations that match the name provided. This is designed to provide the user with
 information with which to decide which station to then get weather data from.
 }
 \examples{
@@ -48,11 +37,6 @@ information with which to decide which station to then get weather data from.
 stations_search(name = "Kamloops")
 stations_search(name = "Kamloops", interval = "hour")
 
-stations_search(coords = c(53.915495, -122.739379))
 
-\dontrun{
-loc <- ggmap::geocode("Prince George, BC")
-stations_search(coords = loc[c("lat", "lon")])
-}
 
 }
