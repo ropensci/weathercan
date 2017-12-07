@@ -108,21 +108,15 @@ stations_all <- function(url = NULL,
     dplyr::tbl_df()
 }
 
-#' Search for stations by name or location
+#' Search for stations by name
 #'
-#' Returns stations that match the name provided OR which are within \code{dist}
-#' km of the location provided. This is designed to provide the user with
+#' Returns stations that match the name provided. This is designed to provide the user with
 #' information with which to decide which station to then get weather data from.
 #'
 #' @param name Character. A vector of length 1 or more with text against which
 #'   to match. Will match station names that contain all components of
 #'   \code{name}, but they can be in different orders and separated by other
 #'   text.
-#' @param coords Numeric. A vector of length 2 with latitude and longitude of a
-#'   place to match against. Overrides \code{lat} and \code{lon} if also
-#'   provided.
-#' @param dist Numeric. Match all stations within this many kilometers of the
-#'   \code{coords}.
 #' @param interval Character. Return only stations with data at these intervals.
 #'   Must be any of "hour", "day", "month".
 #' @param stn Data frame. The \code{stations} data frame to use. Will use the
@@ -132,40 +126,24 @@ stations_all <- function(url = NULL,
 #'   missing data, etc.)
 #'
 #' @return Returns a subset of the stations data frame which match the search
-#'   parameters. If the search was by location, an extra column 'distance' shows
-#'   the distance in kilometres from the location to the station. If no stations
-#'   are found withing `dist`, the closest 10 stations are returned.
+#'   parameters.
 #'
 #' @examples
 #'
 #' stations_search(name = "Kamloops")
 #' stations_search(name = "Kamloops", interval = "hour")
 #'
-#' stations_search(coords = c(53.915495, -122.739379))
 #'
-#' \dontrun{
-#' loc <- ggmap::geocode("Prince George, BC")
-#' stations_search(coords = loc[c("lat", "lon")])
-#' }
 #'
 #' @export
 
 stations_search <- function(name = NULL,
-                            coords = NULL,
-                            dist = 10,
                             interval = c("hour", "day", "month"),
                             stn = weathercan::stations,
                             verbose = FALSE,
                             quiet = FALSE) {
-  if(all(is.null(name), is.null(coords)) | all(!is.null(name), !is.null(coords))) {
-    stop("Need a search name OR search coordinate")
-  }
-
-  if(!is.null(coords)) {
-    suppressWarnings({coords <- try(as.numeric(as.character(coords)), silent = TRUE)})
-    if(length(coords) != 2 | all(is.na(coords)) | class(coords) == "try-error") {
-      stop("'coord' takes one pair of lat and lon in a numeric vector")
-    }
+  if(is.null(name)) {
+    stop("Need a search name")
   }
 
   check_int(interval)
@@ -192,24 +170,9 @@ stations_search <- function(name = NULL,
     i <- Reduce(intersect, i)
   }
 
-  if(!is.null(coords)){
-    if(verbose) message("Calculating station distances")
-    coords <- as.numeric(as.character(coords))
-    stn$distance <- NA
-    stn$distance[!is.na(stn$lat)] <- sp::spDistsN1(pts = as.matrix(stn[!is.na(stn$lat), c("lon", "lat")]),
-                                                   pt = c(coords[2], coords[1]), longlat = TRUE)
-    stn <- dplyr::arrange(stn, distance)
-
-    i <- which(stn$distance <= dist)
-    if(length(i) == 0) {
-     i <- 1:10
-     if(!quiet) message("No stations within ", dist, "km. Returning closest 10 stations.")
-    }
-  }
 
   stn <- stn[i, ]
   if(!is.null(name)) stn <- dplyr::arrange(stn, station_name, station_id, interval)
-  if(!is.null(coords)) stn <- dplyr::arrange(stn, distance, station_name, station_id, interval)
 
   stn
 }

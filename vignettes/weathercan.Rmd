@@ -49,12 +49,6 @@ stations_search("Kamloops", interval = c("hour", "month"))
 ```
 
 
-You can also search by proximity. These results include a new column `distance` specifying the distance in km from the coordinates:
-
-```{r}
-stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour")
-```
-
 We can also perform more complex searches using `filter()` function from the `dplyr` package:
 ```{r search_crit}
 BCstations <- stations %>%
