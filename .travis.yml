@@ -13,7 +13,6 @@ before_install:
   - sudo apt-get install --yes libudunits2-dev libproj-dev libgeos-dev libgdal-dev
 
 r:
-- oldrel
 - release
 - devel
 
