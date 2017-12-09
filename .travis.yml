@@ -1,8 +1,9 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
-language: r
-sudo: false
+language: R
 cache: packages
+sudo: true
+dist: trusty
 git:
   depth: 150
 
@@ -11,27 +12,10 @@ before_install:
   - sudo apt-get --yes --force-yes update -qq
   - sudo apt-get install --yes libudunits2-dev libproj-dev libgeos-dev libgdal-dev
 
-matrix:
-  include:
-    - os: linux
-      dist: trusty
-      r: devel
-
-    - os: linux
-      dist: trusty
-      r: release
-
-    - os: osx
-      osx_image: xcode8.1
-      r: release
-
-    - os: osx
-      r: release
-
-  allow_failures:
-    - os: linux
-      dist: trusty
-      r: devel
+r:
+- oldrel
+- release
+- devel
 
 r_packages:
   - covr

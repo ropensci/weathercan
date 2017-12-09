@@ -51,7 +51,7 @@ stations_search("Kamloops", interval = c("hour", "month"))
 
 You can also search by proximity. These results include a new column `distance` specifying the distance in km from the coordinates:
 
-```{r, eval = FALSE}
+```{r}
 stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour")
 ```
 
