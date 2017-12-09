@@ -54,7 +54,7 @@ Time frame must be one of "hour", "day", or "month".
 
 You can also search by proximity:
 
-```{r}
+```{r, eval=FALSE}
 stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour")
 ```
 
