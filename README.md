@@ -157,11 +157,16 @@ Citation
 citation("weathercan")
 ```
 
+    ## Warning in citation("weathercan"): no date field in DESCRIPTION file of package 'weathercan'
+
+    ## Warning in citation("weathercan"): could not determine year for 'weathercan' from package
+    ## DESCRIPTION file
+
     ## 
     ## To cite package 'weathercan' in publications use:
     ## 
-    ##   Steffi LaZerte (2017). weathercan: Download Weather Data from the Environment and
-    ##   Climate Change Canada Website. R package version 0.2.2.9000.
+    ##   Steffi LaZerte (NA). weathercan: Download Weather Data from the Environment and Climate
+    ##   Change Canada Website. R package version 0.2.3.
     ##   https://github.com/steffilazerte/weathercan
     ## 
     ## A BibTeX entry for LaTeX users is
@@ -169,8 +174,7 @@ citation("weathercan")
     ##   @Manual{,
     ##     title = {weathercan: Download Weather Data from the Environment and Climate Change Canada Website},
     ##     author = {Steffi LaZerte},
-    ##     year = {2017},
-    ##     note = {R package version 0.2.2.9000},
+    ##     note = {R package version 0.2.3},
     ##     url = {https://github.com/steffilazerte/weathercan},
     ##   }
 

@@ -193,11 +193,19 @@ stations_search <- function(name = NULL,
   }
 
   if(!is.null(coords)){
+    if(!requireNamespace("sf", quietly = TRUE)) stop("The sf package needs to be installed to search by coordinates.")
+    if(!requireNamespace("geosphere", quietly = TRUE)) stop("The geosphere package needs to be installed to search by coordinates.")
     if(verbose) message("Calculating station distances")
     coords <- as.numeric(as.character(coords))
     stn$distance <- NA
-    stn$distance[!is.na(stn$lat)] <- sp::spDistsN1(pts = as.matrix(stn[!is.na(stn$lat), c("lon", "lat")]),
-                                                   pt = c(coords[2], coords[1]), longlat = TRUE)
+
+    stn_sf <- sf::st_as_sf(stn[!is.na(stn$lat),], coords = c("lon", "lat"), crs = 4326)
+    coords_sf <- sf::st_as_sf(data.frame(lon = coords[2], lat = coords[1]),
+                              coords = c("lon", "lat"), crs = 4326)
+
+    ## Find distance and convert from m to km
+    stn$distance[!is.na(stn$lat)] <- as.numeric(sf::st_distance(stn_sf, coords_sf))/1000
+
     stn <- dplyr::arrange(stn, distance)
 
     i <- which(stn$distance <= dist)

@@ -1,32 +1,20 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
-language: r
-sudo: false
+language: R
 cache: packages
+sudo: true
+dist: trusty
 git:
   depth: 150
 
-matrix:
-  include:
-    - os: linux
-      dist: trusty
-      r: devel
+before_install:
+  - sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable --yes
+  - sudo apt-get --yes --force-yes update -qq
+  - sudo apt-get install --yes libudunits2-dev libproj-dev libgeos-dev libgdal-dev
 
-    - os: linux
-      dist: trusty
-      r: release
-
-    - os: osx
-      osx_image: xcode8.1
-      r: release
-
-    - os: osx
-      r: release
-
-  allow_failures:
-    - os: linux
-      dist: trusty
-      r: devel
+r:
+- release
+- devel
 
 r_packages:
   - covr
