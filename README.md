@@ -169,7 +169,7 @@ ggplot(data = kam_pg, aes(x = time, y = temp, group = station_name, colour = sta
 ![](tools/readme/kam_plt-1.png)
 
 Citation
-========
+--------
 
 ``` r
 citation("weathercan")
@@ -193,11 +193,27 @@ citation("weathercan")
     ##   }
 
 License
-=======
+-------
 
 The data and the code in this repository are licensed under multiple licences. All code is licensed [GPL-3](https://www.gnu.org/licenses/gpl-3.0.en.html). All weather data is licensed under the ([Open Government License - Canada](http://open.canada.ca/en/open-government-licence-canada)).
 
+Similar packages
+----------------
+
+1.  [`rclimateca`](https://cran.rstudio.com/web/packages/rclimateca/index.html)
+
+`weathercan` and `rclimateca` were developed at roughly the same time and as a result, both present up-to-date methods for accessing and downloading data from ECCC. The largest differences between the two packages are: a) `weathercan` includes functions for interpolating weather data and directly integrating it into other data sources. b) `weathercan` actively seeks to apply tidy data principles in R and integrates well with the tidyverse including using tibbles and nested listcols. c) `rclimateca` contains arguments for specifying short vs. long data formats. d) `rclimateca` has the option of formatting data in the MUData format using the [`mudata2`](https://cran.r-project.org/web/packages/mudata2/index.html) package by the same author.
+
+1.  [`CHCN`](https://cran.rstudio.com/web/packages/CHCN/index.html)
+
+`CHCN` is an older package last updated in 2012. Unfortunately, ECCC updated their services within the last couple of years which caused a great many of the previous web scrapers to fail. `CHCN` relies on one of these (older web-scrapers)\[<https://classic.scraperwiki.com/scrapers/can-weather-stations/>\] and so is currently broken.
+
+Contributions
+-------------
+
+We welcome any and all contributions! To make the process as painless as possible for all involved, please see our [guide to contributing](http://github.com/steffilazerte/weathercan/tree/master/.github/contributing.md)
+
 Code of Conduct
-===============
+---------------
 
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
