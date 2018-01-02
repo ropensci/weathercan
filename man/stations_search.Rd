@@ -43,6 +43,10 @@ Returns stations that match the name provided OR which are within \code{dist}
 km of the location provided. This is designed to provide the user with
 information with which to decide which station to then get weather data from.
 }
+\details{
+To search by coordinates, users must make sure they have the
+ \code{\link[sp]{sp}} package installed.
+}
 \examples{
 
 stations_search(name = "Kamloops")

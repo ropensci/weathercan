@@ -131,6 +131,9 @@ stations_all <- function(url = NULL,
 #' @param quiet Logical. Suppress all messages (including messages regarding
 #'   missing data, etc.)
 #'
+#' @details To search by coordinates, users must make sure they have the
+#'  \code{\link[sp]{sp}} package installed.
+#'
 #' @return Returns a subset of the stations data frame which match the search
 #'   parameters. If the search was by location, an extra column 'distance' shows
 #'   the distance in kilometres from the location to the station. If no stations
@@ -166,6 +169,11 @@ stations_search <- function(name = NULL,
     if(length(coords) != 2 | all(is.na(coords)) | class(coords) == "try-error") {
       stop("'coord' takes one pair of lat and lon in a numeric vector")
     }
+
+    if(!requireNamespace("sp", quietly = TRUE)) {
+     stop("Package 'sp' required to search for stations using coordinates. Use the code \"install.packages('sp')\" to install.", call. = FALSE)
+    }
+
   }
 
   check_int(interval)

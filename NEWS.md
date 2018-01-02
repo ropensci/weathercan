@@ -4,6 +4,12 @@ author: "Steffi LaZerte"
 output: html_document
 ---
 
+# weathercan 0.2.3.9000
+
+## Changes
+- `sp` moved to suggests, users are now prompted to install sp if they want to search stations by coordinates
+
+
 # weathercan 0.2.3 (2017-11-22)
 
 ## Changes
