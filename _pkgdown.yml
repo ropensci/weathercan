@@ -8,12 +8,12 @@ reference:
   - title: "Using weathercan"
     contents:
       - stations_search
-      - stations_all
-      - weather
-      - add_weather
+      - stations_dl
+      - weather_dl
+      - weather_interp
   - title: "Utility functions"
     contents:
-      - get_tz
+      - tz_calc
   - title: "Reference Data"
     contents:
       - stations

@@ -26,15 +26,17 @@
 #'
 #' \dontrun{
 #'  # Update stations data frame
-#'  s <- stations_all()
+#'  s <- stations_dl()
 #'
 #'  # Use new data frame to search for stations
 #'  stations_search("Winnipeg", stn = s)
 #' }
 #'
+#' @aliases stations_all
+#'
 #' @export
 
-stations_all <- function(url = NULL,
+stations_dl <- function(url = NULL,
                          skip = NULL, verbose = FALSE, quiet = FALSE) {
 
   if(is.null(url)) url <- paste0("ftp://client_climate@ftp.tor.ec.gc.ca/",
@@ -222,3 +224,8 @@ stations_search <- function(name = NULL,
   stn
 }
 
+#' @export
+stations_all <- function(url = NULL,
+                         skip = NULL, verbose = FALSE, quiet = FALSE) {
+  .Deprecated("stations_dl")
+}

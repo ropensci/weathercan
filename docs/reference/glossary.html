@@ -115,8 +115,8 @@
 
     
     <p>A reference dataset matching information on columns in data downloaded using
-the <code><a href='weather.html'>weather()</a></code> function. Indicates the units of the data, and contains
-a link to the ECCC glossary page explaining the measurement.</p>
+the <code><a href='weather_dl.html'>weather_dl()</a></code> function. Indicates the units of the data, and
+contains a link to the ECCC glossary page explaining the measurement.</p>
     
 
     <pre class="usage"><span class='no'>glossary</span></pre>
@@ -126,7 +126,9 @@ a link to the ECCC glossary page explaining the measurement.</p>
     <p>A data frame with 77 rows and 5 variables:</p><dl class='dl-horizontal'>
   <dt>interval</dt><dd><p>Data interval type, 'hour', 'day', or 'month'.</p></dd>
   <dt>ECCC_name</dt><dd><p>Original column name when downloaded directly from ECCC</p></dd>
-  <dt>weathercan_name</dt><dd><p>R-compatible name given when downloaded with the <code><a href='weather.html'>weather()</a></code> function using the default argument <code>format = TRUE</code>.</p></dd>
+  <dt>weathercan_name</dt><dd><p>R-compatible name given when downloaded with the
+  <code><a href='weather_dl.html'>weather_dl()</a></code> function using the default argument <code>format =
+  TRUE</code>.</p></dd>
   <dt>units</dt><dd><p>Units of the measurement.</p></dd>
   <dt>ECCC_ref</dt><dd><p>Link to the glossary or reference page on the ECCC website.</p></dd>
 </dl>

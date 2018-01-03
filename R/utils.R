@@ -10,17 +10,18 @@
 #' @examples
 #'
 #' # Daylight savings
-#' get_tz(lat = 53.881857, lon = -122.786271)
-#' get_tz(coords = c(53.881857, -122.786271))
+#' tz_calc(lat = 53.881857, lon = -122.786271)
+#' tz_calc(coords = c(53.881857, -122.786271))
 #'
 #' # No daylight savings
-#' get_tz(lat = 53.881857, lon = -122.786271, etc = TRUE)
-#' get_tz(coords = c(53.881857, -122.786271), etc = TRUE)
+#' tz_calc(lat = 53.881857, lon = -122.786271, etc = TRUE)
+#' tz_calc(coords = c(53.881857, -122.786271), etc = TRUE)
 #'
+#' @aliases get_tz
 #'
 #' @export
 
-get_tz <- function(coords = NULL, lat = NULL, lon = NULL, etc = FALSE){
+tz_calc <- function(coords = NULL, lat = NULL, lon = NULL, etc = FALSE){
   # Based on http://stackoverflow.com/a/23414695
 
   if(!is.null(coords)) {
@@ -68,3 +69,7 @@ check_int <- function(interval) {
   }
 }
 
+#' @export
+get_tz <- function(coords = NULL, lat = NULL, lon = NULL, etc = FALSE){
+  .Deprecated("tz_calc")
+}

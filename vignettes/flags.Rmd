@@ -17,15 +17,15 @@ library(dplyr)
 
 ## What are flags
 
-The data output of the `weather()` function include a corresponding `_flag` column for each data column. These columns are used by ECCC to add notes regarding measurements. 
+The data output of the `weather_dl()` function include a corresponding `_flag` column for each data column. These columns are used by ECCC to add notes regarding measurements. 
 
-In the `weather()` function if `format = TRUE` (the default), data corresponding to flags `M`, `NA`, `[empty]` and `L` are all replaced with `NA`.
+In the `weather_dl()` function if `format = TRUE` (the default), data corresponding to flags `M`, `NA`, `[empty]` and `L` are all replaced with `NA`.
 
 For example, a sample of unformated data from Magog station in Quebec looks like:
 
 ```{r, echo = FALSE}
 options(width = 100)
-w <- weather(station_id = 5401, start =  "2017-01-01", interval = "month", format = FALSE)
+w <- weather_dl(station_id = 5401, start =  "2017-01-01", interval = "month", format = FALSE)
 
 dplyr::select(w, station_name, `Date/Time`, `Total Precip (mm)`, `Total Precip Flag`) %>% tail()
 dplyr::select(w, station_name, `Date/Time`, `Snow Grnd Last Day (cm)`, `Snow Grnd Last Day Flag`) %>% tail()
@@ -37,7 +37,7 @@ This same sample, formated looks like:
 
 ```{r, echo = FALSE}
 
-weather(station_id = 5401, start =  "2017-01-01", interval = "month") %>%
+weather_dl(station_id = 5401, start =  "2017-01-01", interval = "month") %>%
   dplyr::select(date, total_precip, total_precip_flag, snow_grnd_last_day, snow_grnd_last_day_flag) %>%
   tail()
 ```

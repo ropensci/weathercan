@@ -23,17 +23,17 @@ There are three main aspects of this package:
     \item \code{\link{stations}} (a data frame listing stations)
     \item \code{\link{stations_search}()} identify stations by name or
     proximity to a location
-    \item \code{\link{stations_all}()} re-download stations data
+    \item \code{\link{stations_dl}()} re-download stations data
     }
 
 \item Download \strong{weather} data
  \itemize{
-   \item \code{\link{weather}()}
+   \item \code{\link{weather_dl}()}
    }
 
-\item Merge weather data into other data sets through interpolation over time
+\item Merge\strong{weather} data into other data sets through interpolation over time
  \itemize{
-   \item \code{\link{add_weather}()}
+   \item \code{\link{weather_interp}()}
    }
 }
 

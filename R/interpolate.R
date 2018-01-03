@@ -38,11 +38,13 @@
 #' # Match weather to finches
 #' \dontrun{
 #' ## Not run
-#' finch_weather <- add_weather(data = finches, weather = kamloops)
+#' finch_weather <- weather_interp(data = finches, weather = kamloops)
 #' }
 #'
+#' @aliases add_weather
+#'
 #' @export
-add_weather <- function(data, weather,
+weather_interp <- function(data, weather,
                         cols = "all",
                         interval = "hour",
                         na_gap = 2,
@@ -190,4 +192,13 @@ approx_na_rm <- function(x, y, xout, na_gap = NULL) {
   }
 
   new
+}
+
+#' @export
+add_weather <- function(data, weather,
+                           cols = "all",
+                           interval = "hour",
+                           na_gap = 2,
+                           quiet = FALSE) {
+  .Deprecated("weather_interp")
 }

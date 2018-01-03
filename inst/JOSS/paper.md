@@ -44,9 +44,9 @@ stations_search("Brandon", interval = "hour")
 Next, weather data can be downloaded for the specified stations (`station_ids`), time range (`start` through to `end`) and time interval (`interval`). Data downloaded from multiple stations and over several months are automatically combined into one data frame ready for analysis or plotting (Figure 1).
 
 ``` {.r}
-w <- weather(station_ids = c(50821, 51097), 
-             start = "2017-01-01", end = "2017-09-01",
-             interval = "hour")
+w <- weather_dl(station_ids = c(50821, 51097), 
+                start = "2017-01-01", end = "2017-09-01",
+                interval = "hour")
 names(w)
 ```
 
@@ -85,9 +85,9 @@ Figure 1. Data downloaded with `weathercan` is formated and ready for ploting.
 Finally, weather data from a single station can be aligned and merged with existing datasets through linear interpolation. For example, we first download weather data from a single station in Winnipeg, Canada:
 
 ``` {.r}
-winnipeg <- weather(station_ids = 51097, 
-                    start = "2017-01-01", end = "2017-09-30",
-                    interval = "hour")
+winnipeg <- weather_dl(station_ids = 51097, 
+                       start = "2017-01-01", end = "2017-09-30",
+                       interval = "hour")
 ```
 
 The temperature data is recorded on the hour:
@@ -133,12 +133,12 @@ head(sediment)
     ## 5 2017-01-01 02:05:34 163.2017
     ## 6 2017-01-01 02:35:34 169.2177
 
-Finally, we use the `add_weather()` function to interpolate the temperature data and add it to the sediment data set:
+Finally, we use the `weather_interp()` function to interpolate the temperature data and add it to the sediment data set:
 
 ``` {.r}
-sediment <- add_weather(data = sediment, 
-                        weather = winnipeg, 
-                        cols = "temp")
+sediment <- weather_interp(data = sediment, 
+                           weather = winnipeg, 
+                           cols = "temp")
 ```
 
     ## temp is missing 2 out of 6552 data, interpolation may be less accurate as a result.

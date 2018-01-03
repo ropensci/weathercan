@@ -1,11 +1,11 @@
 
-# stations_all ------------------------------------------------------------
-context("stations_all")
+# stations_dl ------------------------------------------------------------
+context("stations_dl")
 
-test_that("stations_all() runs and returns data", {
+test_that("stations_dl() runs and returns data", {
   skip_on_cran()
-  expect_error({s <- stations_all()}, regexp = NA)
-  expect_warning(expect_error({stations_all(url = "test.csv")}))
+  expect_error({s <- stations_dl()}, regexp = NA)
+  expect_warning(expect_error({stations_dl(url = "test.csv")}))
   expect_is(s, "data.frame")
   expect_length(s, 12)
   expect_lt(length(data.frame(s)[is.na(data.frame(s))]),

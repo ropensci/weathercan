@@ -91,7 +91,7 @@
       <h1>Interpolating</h1>
                         <h4 class="author">Steffi LaZerte</h4>
             
-            <h4 class="date">2017-09-29</h4>
+            <h4 class="date">2018-01-02</h4>
           </div>
 
     
@@ -165,7 +165,7 @@
 ## $ lat       &lt;dbl&gt; 50.66967, 50.66967, 50.66967, 50.66938, 50.66938, 50...</code></pre>
 <p>Although the times in the weather data do not exactly match those in the finch data, we can merge them together through linear <a href="https://en.wikipedia.org/wiki/Linear_interpolation">interpolation</a>. This function uses the <code>approx</code> function from the <code>stats</code> package under the hood.</p>
 <p>Here we specify that we only want the temperature (<code>temp</code>) column:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">finches_temperature &lt;-<span class="st"> </span><span class="kw"><a href="../reference/add_weather.html">add_weather</a></span>(<span class="dt">data =</span> finches, <span class="dt">weather =</span> kamloops, <span class="dt">cols =</span> <span class="st">"temp"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">finches_temperature &lt;-<span class="st"> </span><span class="kw"><a href="../reference/weather_interp.html">weather_interp</a></span>(<span class="dt">data =</span> finches, <span class="dt">weather =</span> kamloops, <span class="dt">cols =</span> <span class="st">"temp"</span>)</code></pre></div>
 <pre><code>## temp is missing 4 out of 4368 data, interpolation may be less accurate as a result.</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(finches_temperature)</code></pre></div>
 <pre><code>##       animal_id         time                     logger_id  
@@ -241,8 +241,8 @@
 <a href="#data-gaps" class="anchor"></a>Data gaps</h2>
 <p>By default, gaps of 2 hours (or 2 days, with a daily scale) will be interpolated over (i.e. they will be filled with values interpolated from either side of the gap), but longer gaps will be skipped and filled with <code>NA</code>s. You can adjust this behaviour with <code>na_gap</code>. Note that as Environment and Climate Change Canada data is downloaded on an hourly scale, it makes no sense to apply <code>na_gap</code> values of less than 1.</p>
 <p>In this example, note the larger number of <code>NA</code>s in <code>temp</code> and how it corresponds to the missing variables in the weather dataset:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">finches_temperature &lt;-<span class="st"> </span><span class="kw"><a href="../reference/add_weather.html">add_weather</a></span>(<span class="dt">data =</span> finches, <span class="dt">weather =</span> kamloops, 
-                                   <span class="dt">cols =</span> <span class="st">"temp"</span>, <span class="dt">na_gap =</span> <span class="dv">1</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">finches_temperature &lt;-<span class="st"> </span><span class="kw"><a href="../reference/weather_interp.html">weather_interp</a></span>(<span class="dt">data =</span> finches, <span class="dt">weather =</span> kamloops, 
+                                      <span class="dt">cols =</span> <span class="st">"temp"</span>, <span class="dt">na_gap =</span> <span class="dv">1</span>)</code></pre></div>
 <pre><code>## temp is missing 4 out of 4368 data, interpolation may be less accurate as a result.</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(finches_temperature)</code></pre></div>
 <pre><code>##       animal_id         time                     logger_id  
@@ -309,8 +309,8 @@
 <h2 class="hasAnchor">
 <a href="#multiple-weather-columns" class="anchor"></a>Multiple weather columns</h2>
 <p>We could also add in more than one column at a time:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">finches_weather &lt;-<span class="st"> </span><span class="kw"><a href="../reference/add_weather.html">add_weather</a></span>(<span class="dt">data =</span> finches, <span class="dt">weather =</span> kamloops,
-                               <span class="dt">cols =</span> <span class="kw">c</span>(<span class="st">"temp"</span>, <span class="st">"wind_spd"</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">finches_weather &lt;-<span class="st"> </span><span class="kw"><a href="../reference/weather_interp.html">weather_interp</a></span>(<span class="dt">data =</span> finches, <span class="dt">weather =</span> kamloops,
+                                  <span class="dt">cols =</span> <span class="kw">c</span>(<span class="st">"temp"</span>, <span class="st">"wind_spd"</span>))</code></pre></div>
 <pre><code>## temp is missing 4 out of 4368 data, interpolation may be less accurate as a result.</code></pre>
 <pre><code>## wind_spd is missing 4 out of 4368 data, interpolation may be less accurate as a result.</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(finches_weather)</code></pre></div>
@@ -366,7 +366,7 @@
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span>(<span class="dt">n =</span> <span class="kw">length</span>(time),
             <span class="dt">temp =</span> <span class="kw">mean</span>(temp),
             <span class="dt">wind_spd =</span> <span class="kw">mean</span>(wind_spd))
-  
+
 <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(<span class="dt">data =</span> finches_weather, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> date, <span class="dt">y =</span> n)) +
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_bw</a></span>() +
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position =</span> <span class="st">"top"</span>) +

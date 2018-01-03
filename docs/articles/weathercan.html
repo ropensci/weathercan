@@ -91,7 +91,7 @@
       <h1>General Usage</h1>
                         <h4 class="author">Steffi LaZerte</h4>
             
-            <h4 class="date">2017-09-29</h4>
+            <h4 class="date">2018-01-02</h4>
           </div>
 
     
@@ -181,20 +181,20 @@ BCstations</code></pre></div>
 ## 2     BC                WARFIELD RCS      31067    1148705  71401    XWF 49.11 -117.74
 ## 3     BC CRESTON CAMPBELL SCIENTIFIC       6838    114B1F0  71770    WJR 49.08 -116.50
 ## # ... with 4 more variables</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## weather() accepts numbers so we can create a vector to input into weather:
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## weather_dl() accepts numbers so we can create a vector to input into weather:
 stn_vector &lt;-<span class="st"> </span>BCstations$station_id 
 stn_vector</code></pre></div>
 <pre><code>## [1] 6839  31067 6838 
-## 8738 Levels: 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 ... 54578</code></pre>
+## 8739 Levels: 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 ... 54640</code></pre>
 <p>Searching a bleeding edge updated list of stations:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s &lt;-<span class="st"> </span><span class="kw"><a href="../reference/stations_all.html">stations_all</a></span>() <span class="co"># Download complete stations list</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s &lt;-<span class="st"> </span><span class="kw"><a href="../reference/stations_dl.html">stations_dl</a></span>() <span class="co"># Download complete stations list</span>
 <span class="kw"><a href="../reference/stations_search.html">stations_search</a></span>(<span class="st">"Saskatoon"</span>, <span class="dt">stn =</span> s) <span class="co"># Specify the new stations list to search</span></code></pre></div>
 </div>
 <div id="weather" class="section level2">
 <h2 class="hasAnchor">
 <a href="#weather" class="anchor"></a>Weather</h2>
 <p>Once you have your <code>station_id</code>(s) you can download weather data:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kam &lt;-<span class="st"> </span><span class="kw"><a href="../reference/weather.html">weather</a></span>(<span class="dt">station_ids =</span> <span class="dv">51423</span>, <span class="dt">start =</span> <span class="st">"2016-01-01"</span>, <span class="dt">end =</span> <span class="st">"2016-02-15"</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kam &lt;-<span class="st"> </span><span class="kw"><a href="../reference/weather_dl.html">weather_dl</a></span>(<span class="dt">station_ids =</span> <span class="dv">51423</span>, <span class="dt">start =</span> <span class="st">"2016-01-01"</span>, <span class="dt">end =</span> <span class="st">"2016-02-15"</span>)
                     
 kam</code></pre></div>
 <pre><code>## # A tibble: 1,104 x 35
@@ -212,7 +212,7 @@ kam</code></pre></div>
 ## 10   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 09:00:00  2016
 ## # ... with 1,094 more rows, and 27 more variables</code></pre>
 <p>You can also download data from multiple stations at once:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kam.pg &lt;-<span class="st"> </span><span class="kw"><a href="../reference/weather.html">weather</a></span>(<span class="dt">station_ids =</span> <span class="kw">c</span>(<span class="dv">48248</span>, <span class="dv">51423</span>), <span class="dt">start =</span> <span class="st">"2016-01-01"</span>, <span class="dt">end =</span> <span class="st">"2016-02-15"</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kam.pg &lt;-<span class="st"> </span><span class="kw"><a href="../reference/weather_dl.html">weather_dl</a></span>(<span class="dt">station_ids =</span> <span class="kw">c</span>(<span class="dv">48248</span>, <span class="dv">51423</span>), <span class="dt">start =</span> <span class="st">"2016-01-01"</span>, <span class="dt">end =</span> <span class="st">"2016-02-15"</span>)
                     
 kam.pg</code></pre></div>
 <pre><code>## # A tibble: 2,208 x 35
@@ -236,22 +236,22 @@ kam.pg</code></pre></div>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_minimal</a></span>()</code></pre></div>
 <p><img src="weathercan_files/figure-html/unnamed-chunk-11-1.png" width="1152"></p>
 <p>Or you can use the vector created above:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stn_vec_df &lt;-<span class="st"> </span><span class="kw"><a href="../reference/weather.html">weather</a></span>(<span class="dt">station_ids =</span> stn_vector, <span class="dt">start =</span> <span class="st">"2016-01-01"</span>, <span class="dt">end =</span> <span class="st">"2016-02-15"</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stn_vec_df &lt;-<span class="st"> </span><span class="kw"><a href="../reference/weather_dl.html">weather_dl</a></span>(<span class="dt">station_ids =</span> stn_vector, <span class="dt">start =</span> <span class="st">"2016-01-01"</span>, <span class="dt">end =</span> <span class="st">"2016-02-15"</span>)
 
 stn_vec_df</code></pre></div>
 <pre><code>## # A tibble: 3,312 x 35
 ##    station_name station_id   prov   lat     lon       date                time  year
 ##  *        &lt;chr&gt;      &lt;chr&gt; &lt;fctr&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;date&gt;              &lt;dttm&gt; &lt;chr&gt;
-##  1    NELSON CS       6839     BC 49.49 -117.31 2016-01-01 2016-01-01 00:00:00  2016
-##  2    NELSON CS       6839     BC 49.49 -117.31 2016-01-01 2016-01-01 01:00:00  2016
-##  3    NELSON CS       6839     BC 49.49 -117.31 2016-01-01 2016-01-01 02:00:00  2016
-##  4    NELSON CS       6839     BC 49.49 -117.31 2016-01-01 2016-01-01 03:00:00  2016
-##  5    NELSON CS       6839     BC 49.49 -117.31 2016-01-01 2016-01-01 04:00:00  2016
-##  6    NELSON CS       6839     BC 49.49 -117.31 2016-01-01 2016-01-01 05:00:00  2016
-##  7    NELSON CS       6839     BC 49.49 -117.31 2016-01-01 2016-01-01 06:00:00  2016
-##  8    NELSON CS       6839     BC 49.49 -117.31 2016-01-01 2016-01-01 07:00:00  2016
-##  9    NELSON CS       6839     BC 49.49 -117.31 2016-01-01 2016-01-01 08:00:00  2016
-## 10    NELSON CS       6839     BC 49.49 -117.31 2016-01-01 2016-01-01 09:00:00  2016
+##  1    NELSON CS       6839     BC 49.49 -117.31 2016-01-01 2016-01-01 08:00:00  2016
+##  2    NELSON CS       6839     BC 49.49 -117.31 2016-01-01 2016-01-01 09:00:00  2016
+##  3    NELSON CS       6839     BC 49.49 -117.31 2016-01-01 2016-01-01 10:00:00  2016
+##  4    NELSON CS       6839     BC 49.49 -117.31 2016-01-01 2016-01-01 11:00:00  2016
+##  5    NELSON CS       6839     BC 49.49 -117.31 2016-01-01 2016-01-01 12:00:00  2016
+##  6    NELSON CS       6839     BC 49.49 -117.31 2016-01-01 2016-01-01 13:00:00  2016
+##  7    NELSON CS       6839     BC 49.49 -117.31 2016-01-01 2016-01-01 14:00:00  2016
+##  8    NELSON CS       6839     BC 49.49 -117.31 2016-01-01 2016-01-01 15:00:00  2016
+##  9    NELSON CS       6839     BC 49.49 -117.31 2016-01-01 2016-01-01 16:00:00  2016
+## 10    NELSON CS       6839     BC 49.49 -117.31 2016-01-01 2016-01-01 17:00:00  2016
 ## # ... with 3,302 more rows, and 27 more variables</code></pre>
 <p>For more information on the data flags, see the <a href="flags.html">Flags vignette</a>, for more information on units and terms, see the <a href="glossary.html">Terms and Units vignette</a>.</p>
 </div>

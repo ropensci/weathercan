@@ -37,13 +37,13 @@ stations %>%
   select(prov, station_name, station_id, start, end)
 ```
 
-These two weather stations will be our test data for this vignette. You can broaden or expand your analysis by choosing different or more station. Our next step is to use the `weather()` function to load in the data. 
+These two weather stations will be our test data for this vignette. You can broaden or expand your analysis by choosing different or more station. Our next step is to use the `weather_dl()` function to load in the data. 
 
 The following will take quite some time to download as it is downloading over 100 years of daily data for 5 stations.
 
 ```{R load_in, echo = TRUE}
-pancan_df <- weather(station_ids = c(707, 4859, 6693,5397, 2315), 
-                     interval = "day") %>%
+pancan_df <- weather_dl(station_ids = c(707, 4859, 6693,5397, 2315), 
+                        interval = "day") %>%
   filter(year >= 1920) %>%
   select(station_name, station_id, prov, lat, lon, elev, climat_id, WMO_id, TC_id, mean_temp, date)
 ```
