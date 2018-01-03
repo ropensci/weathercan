@@ -4,7 +4,16 @@ author: "Steffi LaZerte"
 output: html_document
 ---
 
-# weathercan 0.2.3
+# weathercan 0.2.3.9000
+
+## Changes
+- `sp` moved to suggests, users are now prompted to install sp if they want to search stations by coordinates
+- `weather_dl()` replaces `weather()`
+- `weather_interp()` replaces `add_weather()`
+- `stations_dl()` replaces `stations_all()`
+- `tz_calc()` replaces `get_tz()`
+
+# weathercan 0.2.3 (2017-11-22)
 
 ## Changes
 - Updated `stations` data
@@ -19,7 +28,7 @@ output: html_document
 - `weather(format = FALSE)` properly returns data
 - updated `weather()` to work with `lubridate` 1.7.1
 
-# weathercan 0.2.2
+# weathercan 0.2.2 (2017-06-16)
 
 ## Changes
 - Update and expand vignettes (closes #15)

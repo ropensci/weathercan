@@ -29,7 +29,7 @@ stations
 A dataset containing station information downloaded from Environment and
 Climate Change Canada. Note that a station may have several station IDs,
 depending on how the data collection has changed over the years. Station
-information can be updated by running \code{stations_new <-  stations_all()}
+information can be updated by running \code{stations_new <-  stations_dl()}
 and then by specifying stn = stations_new in most functions.
 }
 \keyword{datasets}

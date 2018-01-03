@@ -141,56 +141,56 @@ test_that("approx_na_rm (numeric) with NAs", {
 # Add interpolation (hour) ------------------------------------------------
 context("Add interpolation (hour)")
 
-test_that("add_weather (hour) fails with incorrect data types", {
+test_that("weather_interp (hour) fails with incorrect data types", {
   k <- kamloops[kamloops$time > as.POSIXct("2016-03-01") &
                   kamloops$time < as.POSIXct("2016-03-03"), ]
   f <- finches[1:20, ]
 
   ## Expect failure
-  expect_error(add_weather(f, dplyr::mutate(k, time = as.numeric(time))),
+  expect_error(weather_interp(f, dplyr::mutate(k, time = as.numeric(time))),
                regexp = paste0("'data' and 'weather' must be data frames with ",
                                "columns 'time' in POSIXct format or 'date' in ",
                                "Date format."))
-  expect_error(add_weather(dplyr::mutate(f, time = as.numeric(time)), k),
+  expect_error(weather_interp(dplyr::mutate(f, time = as.numeric(time)), k),
                regexp = paste0("'data' and 'weather' must be data frames with ",
                                "columns 'time' in POSIXct format or 'date' in ",
                                "Date format."))
 })
 
-test_that("add_weather (hour) interpolates particular columns", {
+test_that("weather_interp (hour) interpolates particular columns", {
   k <- kamloops[kamloops$time > as.POSIXct("2016-03-01") &
                   kamloops$time < as.POSIXct("2016-03-03"), ]
   f <- finches[1:20, ]
 
   ## Expect success
   for(m in c("temp", "temp_dew", "rel_hum", "wind_spd", "visib", "pressure")) {
-    expect_silent(a <- add_weather(f, k, cols = m))
+    expect_silent(a <- weather_interp(f, k, cols = m))
     expect_named(a, c(names(f), m))
     expect_gt(nrow(a), sum(is.na(a[, m]))) # Not all NA
     expect_equal(a[, seq_len(ncol(f))], f)
   }
 
   ## Multiple columns
-  expect_silent(a <- add_weather(f, k, cols = c("temp", "temp_dew")))
+  expect_silent(a <- weather_interp(f, k, cols = c("temp", "temp_dew")))
   expect_named(a, c(names(f), c("temp", "temp_dew")))
   expect_gt(nrow(a), sum(is.na(a$temp))) # Not all NA
   expect_gt(nrow(a), sum(is.na(a$temp_dew))) # Not all NA
   expect_equal(a[, seq_len(ncol(f))], f)
 })
 
-test_that("add_weather (hour) interpolates 'all'", {
+test_that("weather_interp (hour) interpolates 'all'", {
   k <- kamloops[kamloops$time > as.POSIXct("2016-03-01") &
                   kamloops$time < as.POSIXct("2016-03-03"), ]
   f <- finches[1:20, ]
 
   ## Expect success
-  expect_message(a <- add_weather(f, k))
+  expect_message(a <- weather_interp(f, k))
   expect_named(a, c(names(f), c("temp", "temp_dew", "rel_hum",
                                 "wind_spd", "visib", "pressure")))
   expect_equal(a[, seq_len(ncol(f))], f)
 })
 
-test_that("add_weather (hour) fails on character columns", {
+test_that("weather_interp (hour) fails on character columns", {
   k <- kamloops[kamloops$time > as.POSIXct("2016-03-01") &
                   kamloops$time < as.POSIXct("2016-03-03"), ]
   f <- finches[1:20, ]
@@ -198,37 +198,37 @@ test_that("add_weather (hour) fails on character columns", {
   k$temp <- as.character(k$temp)
 
   ## Expect failure
-  expect_error(expect_message(add_weather(f, k, cols = "temp")),
+  expect_error(expect_message(weather_interp(f, k, cols = "temp")),
                "No columns over which to interpolate.")
 
-  expect_message(add_weather(f, k, cols = c("temp", "rel_hum")),
+  expect_message(weather_interp(f, k, cols = c("temp", "rel_hum")),
                  "Some columns \\(temp\\)")
 })
 
-test_that("add_weather (hour) quiet", {
+test_that("weather_interp (hour) quiet", {
   k <- kamloops[kamloops$time > as.POSIXct("2016-03-01") &
                   kamloops$time < as.POSIXct("2016-03-03"), ]
   k$temp[1:10] <- NA
   f <- finches[1:20, ]
-  expect_message(add_weather(f, k, cols = "temp"))
-  expect_silent(add_weather(f, k, cols = "temp", quiet = TRUE))
+  expect_message(weather_interp(f, k, cols = "temp"))
+  expect_silent(weather_interp(f, k, cols = "temp", quiet = TRUE))
 })
 
 # Add interpolation (day) -------------------------------------------------
 context("Add interpolation (day)")
 
-test_that("add_weather (day) fails with incorrect data types", {
+test_that("weather_interp (day) fails with incorrect data types", {
   k <- kamloops_day[kamloops_day$date < as.Date("2016-04-01"), ]
   f <- finches[1:20, ] %>%
     dplyr::mutate(date = as.Date(time))
 
   ## Expect failure
-  expect_error(add_weather(f, dplyr::mutate(k, date = as.numeric(date)),
+  expect_error(weather_interp(f, dplyr::mutate(k, date = as.numeric(date)),
                            interval = "day"),
                regexp = paste0("'data' and 'weather' must be data frames ",
                                "with columns 'time' in POSIXct format or ",
                                "'date' in Date format."))
-  expect_error(add_weather(dplyr::mutate(f, date = as.numeric(date)), k,
+  expect_error(weather_interp(dplyr::mutate(f, date = as.numeric(date)), k,
                            interval = "day"),
                regexp = paste0("'data' and 'weather' must be data frames ",
                                "with columns 'time' in POSIXct format or ",
@@ -236,7 +236,7 @@ test_that("add_weather (day) fails with incorrect data types", {
 })
 
 
-test_that("add_weather (day) interpolates particular columns", {
+test_that("weather_interp (day) interpolates particular columns", {
   k <- kamloops_day[kamloops_day$date < as.Date("2016-04-01"), ]
   f <- finches[1:20, ] %>%
     dplyr::mutate(date = as.Date(time)) %>%
@@ -247,29 +247,29 @@ test_that("add_weather (day) interpolates particular columns", {
              "cool_deg_days", "snow_grnd", "spd_max_gust", "total_precip",
              "total_rain", "total_snow")[7]) {
     if(any(is.na(k[, m]))) {
-      expect_message(expect_error(a <- add_weather(f, k, cols = m,
+      expect_message(expect_error(a <- weather_interp(f, k, cols = m,
                                                    interval = "day"), NA))
     } else {
-      expect_silent(a <- add_weather(f, k, cols = m, interval = "day"))
+      expect_silent(a <- weather_interp(f, k, cols = m, interval = "day"))
     }
     expect_named(a, c(names(f), m))
     expect_equal(a[, seq_len(ncol(f))], f)
   }
 
   ## Multiple columns
-  expect_silent(a <- add_weather(f, k, cols = c("max_temp", "min_temp", "mean_temp"),
+  expect_silent(a <- weather_interp(f, k, cols = c("max_temp", "min_temp", "mean_temp"),
                                  interval = "day"))
   expect_named(a, c(names(f), c("max_temp", "min_temp", "mean_temp")))
   expect_equal(a[, seq_len(ncol(f))], f)
 })
 
-test_that("add_weather (day) interpolates 'all'", {
+test_that("weather_interp (day) interpolates 'all'", {
   k <- kamloops_day[kamloops_day$date < as.Date("2016-04-01"), ]
   f <- finches[1:20, ] %>%
     dplyr::mutate(date = as.Date(time))
 
   ## Expect success
-  expect_message(a <- add_weather(f, k, interval = "day"))
+  expect_message(a <- weather_interp(f, k, interval = "day"))
   expect_named(a, c(names(f), c("max_temp", "min_temp", "mean_temp",
                                 "heat_deg_days", "cool_deg_days", "total_rain",
                                 "total_snow", "total_precip", "snow_grnd",
@@ -278,7 +278,7 @@ test_that("add_weather (day) interpolates 'all'", {
 })
 
 
-test_that("add_weather (day) skips character columns", {
+test_that("weather_interp (day) skips character columns", {
   k <- kamloops_day[kamloops_day$date < as.Date("2016-04-01"), ]
   f <- finches[1:20, ] %>%
     dplyr::mutate(date = as.Date(time))
@@ -286,19 +286,19 @@ test_that("add_weather (day) skips character columns", {
   k$max_temp <- as.character(k$max_temp)
 
   ## Expect failure
-  expect_error(expect_message(add_weather(f, k, cols = "max_temp",
+  expect_error(expect_message(weather_interp(f, k, cols = "max_temp",
                                           interval = "day"),
                               paste0("Some columns \\(max\\_temp\\) are not ",
                                      "numeric and will thus be omitted from ",
                                      "the interpolation.\n")),
                "No columns over which to interpolate.")
 
-  expect_message(add_weather(f, k, cols = c("max_temp", "mean_temp"),
+  expect_message(weather_interp(f, k, cols = c("max_temp", "mean_temp"),
                              interval = "day"),
                  "Some columns \\(max\\_temp\\)")
 })
 
-test_that("add_weather messages", {
+test_that("weather_interp messages", {
   k <- kamloops_day[kamloops_day$date < as.Date("2016-04-01"), ]
   k$max_temp[1:10] <- NA
   f <- finches[1:20, ] %>%
@@ -306,11 +306,11 @@ test_that("add_weather messages", {
 
   k2 <- rbind(k, dplyr::mutate(k, station_id = 234))
 
-  expect_message(add_weather(f, k, interval = "day", cols = "max_temp"),
+  expect_message(weather_interp(f, k, interval = "day", cols = "max_temp"),
                  "max_temp is missing 10 out of 91 data")
-  expect_silent(add_weather(f, k, interval = "day", cols = "max_temp",
-                            quiet = TRUE))
+  expect_silent(weather_interp(f, k, interval = "day", cols = "max_temp",
+                               quiet = TRUE))
 
-  expect_error(add_weather(f, k2, interval = "day", cols = "max_temp"),
+  expect_error(weather_interp(f, k2, interval = "day", cols = "max_temp"),
                "Can only interpolate weather from one station at a time")
 })

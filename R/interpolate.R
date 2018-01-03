@@ -38,11 +38,13 @@
 #' # Match weather to finches
 #' \dontrun{
 #' ## Not run
-#' finch_weather <- add_weather(data = finches, weather = kamloops)
+#' finch_weather <- weather_interp(data = finches, weather = kamloops)
 #' }
 #'
+#' @aliases add_weather
+#'
 #' @export
-add_weather <- function(data, weather,
+weather_interp <- function(data, weather,
                         cols = "all",
                         interval = "hour",
                         na_gap = 2,
@@ -133,7 +135,8 @@ add_weather <- function(data, weather,
       data <- dplyr::left_join(data, unique(new), by = t)
     }
   }
-  return(data)
+
+  data
 }
 
 
@@ -187,5 +190,15 @@ approx_na_rm <- function(x, y, xout, na_gap = NULL) {
   } else if (any(is.na(y)) & is.null(na_gap)) {
     stop("Missing values in y but no na_gap set")
   }
-  return(new)
+
+  new
+}
+
+#' @export
+add_weather <- function(data, weather,
+                           cols = "all",
+                           interval = "hour",
+                           na_gap = 2,
+                           quiet = FALSE) {
+  .Deprecated("weather_interp")
 }

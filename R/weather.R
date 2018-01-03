@@ -56,15 +56,15 @@
 #' @examples
 #'
 #' \dontrun{
-#' kam <- weather(station_ids = 51423,
-#'                start = "2016-01-01", end = "2016-02-15")
+#' kam <- weather_dl(station_ids = 51423,
+#'                   start = "2016-01-01", end = "2016-02-15")
 #' }
 #'
 #' stations_search("Kamloops A$", interval = "hour")
 #' stations_search("Prince George Airport", interval = "hour")
 #'\dontrun{
-#' kam.pg <- weather(station_ids = c(48248, 51423),
-#'                   start = "2016-01-01", end = "2016-02-15")
+#' kam.pg <- weather_dl(station_ids = c(48248, 51423),
+#'                      start = "2016-01-01", end = "2016-02-15")
 #'
 #' library(ggplot2)
 #'
@@ -74,8 +74,10 @@
 #'        geom_line()
 #'}
 #'
+#' @aliases weather
+#'
 #' @export
-weather <- function(station_ids,
+weather_dl <- function(station_ids,
                     start = NULL, end = NULL,
                     interval = "hour",
                     trim = TRUE,
@@ -148,7 +150,7 @@ weather <- function(station_ids,
 
     if(interval == "month") date_range <- date_range[1]
 
-    preamble <- weather_dl(station_id = s, date = date_range[1],
+    preamble <- weather_raw(station_id = s, date = date_range[1],
                            interval = interval, nrows = 25,
                            header = FALSE, encoding = encoding)
     skip <- grep("Date/Time", preamble[, 1])
@@ -156,7 +158,7 @@ weather <- function(station_ids,
     if(verbose) message("Downloading station data")
     w <- data.frame()
     for(i in seq_along(date_range)){
-      w <- rbind(w, weather_dl(station_id = s,
+      w <- rbind(w, weather_raw(station_id = s,
                                date = date_range[i],
                                interval = interval,
                                skip = skip,
@@ -260,11 +262,11 @@ weather <- function(station_ids,
 
   }
 
-  return(dplyr::tbl_df(w_all))
+  dplyr::tbl_df(w_all)
 }
 
 
-weather_dl <- function(station_id,
+weather_raw <- function(station_id,
                        date,
                        interval = "hour",
                        skip = 0,
@@ -283,7 +285,7 @@ weather_dl <- function(station_id,
 
   httr::stop_for_status(html)
 
-  w <- utils::read.csv(text = httr::content(html, as = "text",
+  utils::read.csv(text = httr::content(html, as = "text",
                                             type = "text/csv",
                                             encoding = encoding),
                        nrows = nrows, strip.white = TRUE,
@@ -293,8 +295,6 @@ weather_dl <- function(station_id,
     # change back to match flags on ECCC website
     dplyr::mutate_at(.vars = dplyr::vars(dplyr::ends_with("Flag")),
                      dplyr::funs(gsub("^I$", "^", .)))
-
-  return(w)
 }
 
 weather_format <- function(w, interval = "hour", string_as = "NA",
@@ -316,7 +316,7 @@ weather_format <- function(w, interval = "hour", string_as = "NA",
 
   ## Get correct timezone
   if(interval == "hour"){
-    tz <- get_tz(coords = unique(preamble[, c("lat", "lon")]), etc = TRUE)
+    tz <- tz_calc(coords = unique(preamble[, c("lat", "lon")]), etc = TRUE)
     w$time <- as.POSIXct(w$time, tz = tz)
     w$date <- as.Date(w$time, tz = tz)
     if(!is.null(tz_disp)){
@@ -423,5 +423,22 @@ weather_format <- function(w, interval = "hour", string_as = "NA",
                preamble[, c("elev", "climat_id", "WMO_id", "TC_id")])
   }
 
-  return(w)
+  w
+}
+
+#' @export
+weather <- function(station_ids,
+                       start = NULL, end = NULL,
+                       interval = "hour",
+                       trim = TRUE,
+                       format = TRUE,
+                       string_as = NA,
+                       tz_disp = NULL,
+                       stn = weathercan::stations,
+                       url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html",
+                       encoding = "UTF-8",
+                       list_col = FALSE,
+                       verbose = FALSE,
+                       quiet = FALSE) {
+  .Deprecated("weather_dl")
 }

@@ -20,6 +20,16 @@ install.packages("devtools") # If not already installed
 devtools::install_github("steffilazerte/weathercan") 
 ```
 
+To build the vignettes (tutorials) locally, use:
+
+``` r
+devtools::install_github("steffilazerte/weathercan", build_vignettes = TRUE) 
+```
+
+View the available vignettes with `vignette(package = "weathercan")`
+
+View a particular vignette with, for example, `vignette("weathercan", package = "weathercan")`
+
 General usage
 -------------
 
@@ -34,15 +44,14 @@ head(stations)
 ```
 
     ## # A tibble: 6 x 12
-    ##     prov           station_name station_id climate_id WMO_id  TC_id   lat     lon  elev interval
-    ##   <fctr>                  <chr>     <fctr>     <fctr> <fctr> <fctr> <dbl>   <dbl> <dbl>    <chr>
-    ## 1     BC            ACTIVE PASS         14    1010066   <NA>   <NA> 48.87 -123.28   4.0     hour
-    ## 2     BC            ALBERT HEAD         15    1010235   <NA>   <NA> 48.40 -123.48  17.0     hour
-    ## 3     BC BAMBERTON OCEAN CEMENT         16    1010595   <NA>   <NA> 48.58 -123.52  85.3     hour
-    ## 4     BC             BEAR CREEK         17    1010720   <NA>   <NA> 48.50 -124.00 350.5     hour
-    ## 5     BC            BEAVER LAKE         18    1010774   <NA>   <NA> 48.50 -123.35  61.0     hour
-    ## 6     BC             BECHER BAY         19    1010780   <NA>   <NA> 48.33 -123.63  12.2     hour
-    ## # ... with 2 more variables: start <int>, end <int>
+    ##   prov   station_name           station_id clima… WMO_id TC_id   lat   lon   elev inte… start   end
+    ##   <fctr> <chr>                  <fctr>     <fctr> <fctr> <fct> <dbl> <dbl>  <dbl> <chr> <int> <int>
+    ## 1 BC     ACTIVE PASS            14         10100… <NA>   <NA>   48.9  -123   4.00 hour     NA    NA
+    ## 2 BC     ALBERT HEAD            15         10102… <NA>   <NA>   48.4  -123  17.0  hour     NA    NA
+    ## 3 BC     BAMBERTON OCEAN CEMENT 16         10105… <NA>   <NA>   48.6  -124  85.3  hour     NA    NA
+    ## 4 BC     BEAR CREEK             17         10107… <NA>   <NA>   48.5  -124 350    hour     NA    NA
+    ## 5 BC     BEAVER LAKE            18         10107… <NA>   <NA>   48.5  -123  61.0  hour     NA    NA
+    ## 6 BC     BECHER BAY             19         10107… <NA>   <NA>   48.3  -124  12.2  hour     NA    NA
 
 ``` r
 glimpse(stations)
@@ -70,11 +79,11 @@ stations_search("Kamloops", interval = "hour")
 ```
 
     ## # A tibble: 3 x 12
-    ##     prov station_name station_id climate_id WMO_id  TC_id   lat     lon  elev interval start   end
-    ##   <fctr>        <chr>     <fctr>     <fctr> <fctr> <fctr> <dbl>   <dbl> <dbl>    <chr> <int> <int>
-    ## 1     BC   KAMLOOPS A       1275    1163780  71887    YKA  50.7 -120.44 345.3     hour  1953  2013
-    ## 2     BC   KAMLOOPS A      51423    1163781  71887    YKA  50.7 -120.45 345.3     hour  2013  2017
-    ## 3     BC KAMLOOPS AUT      42203    1163842  71741    ZKA  50.7 -120.44 345.0     hour  2006  2017
+    ##   prov   station_name station_id climate_id WMO_id TC_id    lat   lon  elev interval start   end
+    ##   <fctr> <chr>        <fctr>     <fctr>     <fctr> <fctr> <dbl> <dbl> <dbl> <chr>    <int> <int>
+    ## 1 BC     KAMLOOPS A   1275       1163780    71887  YKA     50.7  -120   345 hour      1953  2013
+    ## 2 BC     KAMLOOPS A   51423      1163781    71887  YKA     50.7  -120   345 hour      2013  2017
+    ## 3 BC     KAMLOOPS AUT 42203      1163842    71741  ZKA     50.7  -120   345 hour      2006  2017
 
 Time frame must be one of "hour", "day", or "month".
 
@@ -85,97 +94,57 @@ stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour"
 ```
 
     ## # A tibble: 3 x 13
-    ##     prov station_name station_id climate_id WMO_id  TC_id   lat     lon  elev interval start   end
-    ##   <fctr>        <chr>     <fctr>     <fctr> <fctr> <fctr> <dbl>   <dbl> <dbl>    <chr> <int> <int>
-    ## 1     BC   KAMLOOPS A       1275    1163780  71887    YKA  50.7 -120.44 345.3     hour  1953  2013
-    ## 2     BC KAMLOOPS AUT      42203    1163842  71741    ZKA  50.7 -120.44 345.0     hour  2006  2017
-    ## 3     BC   KAMLOOPS A      51423    1163781  71887    YKA  50.7 -120.45 345.3     hour  2013  2017
-    ## # ... with 1 more variables: distance <dbl>
+    ##   prov   station_name station_id climate_id WMO_id TC_id    lat   lon  elev inte… start   end dist…
+    ##   <fctr> <chr>        <fctr>     <fctr>     <fctr> <fctr> <dbl> <dbl> <dbl> <chr> <int> <int> <dbl>
+    ## 1 BC     KAMLOOPS A   1275       1163780    71887  YKA     50.7  -120   345 hour   1953  2013  8.64
+    ## 2 BC     KAMLOOPS AUT 42203      1163842    71741  ZKA     50.7  -120   345 hour   2006  2017  8.64
+    ## 3 BC     KAMLOOPS A   51423      1163781    71887  YKA     50.7  -120   345 hour   2013  2017  9.28
 
 ### Weather
 
 Once you have your `station_id`(s) you can download weather data:
 
 ``` r
-kam <- weather(station_ids = 51423, start = "2016-01-01", end = "2016-02-15")
-```
-
-    ## Warning: All formats failed to parse. No formats found.
-
-    ## Warning: All formats failed to parse. No formats found.
-
-``` r
+kam <- weather_dl(station_ids = 51423, start = "2016-01-01", end = "2016-02-15")
 kam
 ```
 
     ## # A tibble: 1,104 x 35
-    ##    station_name station_id   prov   lat     lon       date                time  year month   day
-    ##  *        <chr>      <dbl> <fctr> <dbl>   <dbl>     <date>              <dttm> <chr> <chr> <chr>
-    ##  1   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 00:00:00  2016    01    01
-    ##  2   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 01:00:00  2016    01    01
-    ##  3   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 02:00:00  2016    01    01
-    ##  4   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 03:00:00  2016    01    01
-    ##  5   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 04:00:00  2016    01    01
-    ##  6   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 05:00:00  2016    01    01
-    ##  7   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 06:00:00  2016    01    01
-    ##  8   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 07:00:00  2016    01    01
-    ##  9   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 08:00:00  2016    01    01
-    ## 10   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 09:00:00  2016    01    01
-    ## # ... with 1,094 more rows, and 25 more variables
-
-Look specifically at weather columns:
-
-``` r
-kam %>% select(time, temp, pressure, hmdx)
-```
-
-    ## # A tibble: 1,104 x 4
-    ##                   time  temp pressure  hmdx
-    ##  *              <dttm> <dbl>    <dbl> <dbl>
-    ##  1 2016-01-01 00:00:00  -9.1    99.95    NA
-    ##  2 2016-01-01 01:00:00  -9.6    99.93    NA
-    ##  3 2016-01-01 02:00:00  -9.9    99.92    NA
-    ##  4 2016-01-01 03:00:00  -9.5    99.90    NA
-    ##  5 2016-01-01 04:00:00  -9.4    99.86    NA
-    ##  6 2016-01-01 05:00:00  -9.8    99.82    NA
-    ##  7 2016-01-01 06:00:00 -10.0    99.80    NA
-    ##  8 2016-01-01 07:00:00 -10.2    99.78    NA
-    ##  9 2016-01-01 08:00:00 -10.1    99.77    NA
-    ## 10 2016-01-01 09:00:00  -9.7    99.78    NA
-    ## # ... with 1,094 more rows
+    ##    stat… stat… prov    lat   lon date       time                year  month day   hour  qual  weat…
+    ##  * <chr> <dbl> <fct> <dbl> <dbl> <date>     <dttm>              <chr> <chr> <chr> <chr> <chr> <chr>
+    ##  1 KAML… 51423 BC     50.7  -120 2016-01-01 2016-01-01 00:00:00 2016  01    01    00:00 Part… <NA> 
+    ##  2 KAML… 51423 BC     50.7  -120 2016-01-01 2016-01-01 01:00:00 2016  01    01    01:00 Part… Most…
+    ##  3 KAML… 51423 BC     50.7  -120 2016-01-01 2016-01-01 02:00:00 2016  01    01    02:00 Part… <NA> 
+    ##  4 KAML… 51423 BC     50.7  -120 2016-01-01 2016-01-01 03:00:00 2016  01    01    03:00 Part… <NA> 
+    ##  5 KAML… 51423 BC     50.7  -120 2016-01-01 2016-01-01 04:00:00 2016  01    01    04:00 Part… Clou…
+    ##  6 KAML… 51423 BC     50.7  -120 2016-01-01 2016-01-01 05:00:00 2016  01    01    05:00 Part… <NA> 
+    ##  7 KAML… 51423 BC     50.7  -120 2016-01-01 2016-01-01 06:00:00 2016  01    01    06:00 Part… <NA> 
+    ##  8 KAML… 51423 BC     50.7  -120 2016-01-01 2016-01-01 07:00:00 2016  01    01    07:00 Part… Clou…
+    ##  9 KAML… 51423 BC     50.7  -120 2016-01-01 2016-01-01 08:00:00 2016  01    01    08:00 Part… <NA> 
+    ## 10 KAML… 51423 BC     50.7  -120 2016-01-01 2016-01-01 09:00:00 2016  01    01    09:00 Part… Snow 
+    ## # ... with 1,094 more rows, and 22 more variables
 
 You can also download data from multiple stations at once:
 
 ``` r
-kam_pg <- weather(station_ids = c(48248, 51423), start = "2016-01-01", end = "2016-02-15")
-```
-
-    ## Warning: All formats failed to parse. No formats found.
-
-    ## Warning: All formats failed to parse. No formats found.
-
-    ## Warning: All formats failed to parse. No formats found.
-
-    ## Warning: All formats failed to parse. No formats found.
-
-``` r
+kam_pg <- weather_dl(station_ids = c(48248, 51423), start = "2016-01-01", end = "2016-02-15")
 kam_pg
 ```
 
     ## # A tibble: 2,208 x 35
-    ##                  station_name station_id   prov   lat     lon       date                time  year
-    ##  *                      <chr>      <dbl> <fctr> <dbl>   <dbl>     <date>              <dttm> <chr>
-    ##  1 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 00:00:00  2016
-    ##  2 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 01:00:00  2016
-    ##  3 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 02:00:00  2016
-    ##  4 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 03:00:00  2016
-    ##  5 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 04:00:00  2016
-    ##  6 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 05:00:00  2016
-    ##  7 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 06:00:00  2016
-    ##  8 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 07:00:00  2016
-    ##  9 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 08:00:00  2016
-    ## 10 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 09:00:00  2016
-    ## # ... with 2,198 more rows, and 27 more variables
+    ##    stat… stat… prov    lat   lon date       time                year  month day   hour  qual  weat…
+    ##  * <chr> <dbl> <fct> <dbl> <dbl> <date>     <dttm>              <chr> <chr> <chr> <chr> <chr> <chr>
+    ##  1 PRIN… 48248 BC     53.9  -123 2016-01-01 2016-01-01 00:00:00 2016  01    01    00:00 " "   <NA> 
+    ##  2 PRIN… 48248 BC     53.9  -123 2016-01-01 2016-01-01 01:00:00 2016  01    01    01:00 " "   <NA> 
+    ##  3 PRIN… 48248 BC     53.9  -123 2016-01-01 2016-01-01 02:00:00 2016  01    01    02:00 " "   <NA> 
+    ##  4 PRIN… 48248 BC     53.9  -123 2016-01-01 2016-01-01 03:00:00 2016  01    01    03:00 " "   <NA> 
+    ##  5 PRIN… 48248 BC     53.9  -123 2016-01-01 2016-01-01 04:00:00 2016  01    01    04:00 " "   <NA> 
+    ##  6 PRIN… 48248 BC     53.9  -123 2016-01-01 2016-01-01 05:00:00 2016  01    01    05:00 " "   <NA> 
+    ##  7 PRIN… 48248 BC     53.9  -123 2016-01-01 2016-01-01 06:00:00 2016  01    01    06:00 " "   <NA> 
+    ##  8 PRIN… 48248 BC     53.9  -123 2016-01-01 2016-01-01 07:00:00 2016  01    01    07:00 " "   <NA> 
+    ##  9 PRIN… 48248 BC     53.9  -123 2016-01-01 2016-01-01 08:00:00 2016  01    01    08:00 " "   <NA> 
+    ## 10 PRIN… 48248 BC     53.9  -123 2016-01-01 2016-01-01 09:00:00 2016  01    01    09:00 " "   <NA> 
+    ## # ... with 2,198 more rows, and 22 more variables
 
 And plot it:
 
@@ -189,12 +158,52 @@ ggplot(data = kam_pg, aes(x = time, y = temp, group = station_name, colour = sta
 
 ![](tools/readme/kam_plt-1.png)
 
+Citation
+--------
+
+``` r
+citation("weathercan")
+```
+
+    ## 
+    ## To cite package 'weathercan' in publications use:
+    ## 
+    ##   Steffi LaZerte (2017). weathercan: Download Weather Data from the Environment and
+    ##   Climate Change Canada Website. R package version 0.2.2.9000.
+    ##   https://github.com/steffilazerte/weathercan
+    ## 
+    ## A BibTeX entry for LaTeX users is
+    ## 
+    ##   @Manual{,
+    ##     title = {weathercan: Download Weather Data from the Environment and Climate Change Canada Website},
+    ##     author = {Steffi LaZerte},
+    ##     year = {2017},
+    ##     note = {R package version 0.2.2.9000},
+    ##     url = {https://github.com/steffilazerte/weathercan},
+    ##   }
+
 License
-=======
+-------
 
 The data and the code in this repository are licensed under multiple licences. All code is licensed [GPL-3](https://www.gnu.org/licenses/gpl-3.0.en.html). All weather data is licensed under the ([Open Government License - Canada](http://open.canada.ca/en/open-government-licence-canada)).
 
+Similar packages
+----------------
+
+1.  [`rclimateca`](https://cran.rstudio.com/web/packages/rclimateca/index.html)
+
+`weathercan` and `rclimateca` were developed at roughly the same time and as a result, both present up-to-date methods for accessing and downloading data from ECCC. The largest differences between the two packages are: a) `weathercan` includes functions for interpolating weather data and directly integrating it into other data sources. b) `weathercan` actively seeks to apply tidy data principles in R and integrates well with the tidyverse including using tibbles and nested listcols. c) `rclimateca` contains arguments for specifying short vs. long data formats. d) `rclimateca` has the option of formatting data in the MUData format using the [`mudata2`](https://cran.r-project.org/web/packages/mudata2/index.html) package by the same author.
+
+1.  [`CHCN`](https://cran.rstudio.com/web/packages/CHCN/index.html)
+
+`CHCN` is an older package last updated in 2012. Unfortunately, ECCC updated their services within the last couple of years which caused a great many of the previous web scrapers to fail. `CHCN` relies on one of these (older web-scrapers)\[<https://classic.scraperwiki.com/scrapers/can-weather-stations/>\] and so is currently broken.
+
+Contributions
+-------------
+
+We welcome any and all contributions! To make the process as painless as possible for all involved, please see our [guide to contributing](http://github.com/steffilazerte/weathercan/tree/master/.github/contributing.md)
+
 Code of Conduct
-===============
+---------------
 
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.

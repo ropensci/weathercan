@@ -3,7 +3,7 @@
 #' A dataset containing station information downloaded from Environment and
 #' Climate Change Canada. Note that a station may have several station IDs,
 #' depending on how the data collection has changed over the years. Station
-#' information can be updated by running \code{stations_new <-  stations_all()}
+#' information can be updated by running \code{stations_new <-  stations_dl()}
 #' and then by specifying stn = stations_new in most functions.
 #'
 #' @format A data frame with 26211 rows and 12 variables:
@@ -176,7 +176,7 @@
 #' Meaning of coded 'flags'
 #'
 #' A reference dataset containing 'flags' matched to their meaning. Data
-#' downloaded using the \code{weather()} function contains columns indicating
+#' downloaded using the \code{weather_dl()} function contains columns indicating
 #' 'flags' these codes are presented here for interpretation.
 #'
 #' @format A data frame with 16 rows and 2 variables:
@@ -189,14 +189,16 @@
 #' Glossary of units and terms
 #'
 #' A reference dataset matching information on columns in data downloaded using
-#' the \code{weather()} function. Indicates the units of the data, and contains
-#' a link to the ECCC glossary page explaining the measurement.
+#' the \code{weather_dl()} function. Indicates the units of the data, and
+#' contains a link to the ECCC glossary page explaining the measurement.
 #'
 #' @format A data frame with 77 rows and 5 variables:
 #' \describe{
 #'   \item{interval}{Data interval type, 'hour', 'day', or 'month'.}
 #'   \item{ECCC_name}{Original column name when downloaded directly from ECCC}
-#'   \item{weathercan_name}{R-compatible name given when downloaded with the \code{weather()} function using the default argument \code{format = TRUE}.}
+#'   \item{weathercan_name}{R-compatible name given when downloaded with the
+#'   \code{weather_dl()} function using the default argument \code{format =
+#'   TRUE}.}
 #'   \item{units}{Units of the measurement.}
 #'   \item{ECCC_ref}{Link to the glossary or reference page on the ECCC website.}
 #' }

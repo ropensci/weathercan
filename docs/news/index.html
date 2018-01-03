@@ -115,12 +115,36 @@
     </div>
 
     <div class="contents">
-    <div id="weathercan-0-2-3" class="section level1">
+    <div id="weathercan-0-2-3-9000" class="section level1">
 <h1 class="hasAnchor">
-<a href="#weathercan-0-2-3" class="anchor"></a>weathercan 0.2.3</h1>
+<a href="#weathercan-0-2-3-9000" class="anchor"></a>weathercan 0.2.3.9000</h1>
 <div id="changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#changes" class="anchor"></a>Changes</h2>
+<ul>
+<li>
+<code>sp</code> moved to suggests, users are now prompted to install sp if they want to search stations by coordinates</li>
+<li>
+<code><a href="../reference/weather_dl.html">weather_dl()</a></code> replaces <code><a href="../reference/weather_dl.html">weather()</a></code>
+</li>
+<li>
+<code><a href="../reference/weather_interp.html">weather_interp()</a></code> replaces <code><a href="../reference/weather_interp.html">add_weather()</a></code>
+</li>
+<li>
+<code><a href="../reference/stations_dl.html">stations_dl()</a></code> replaces <code><a href="../reference/stations_dl.html">stations_all()</a></code>
+</li>
+<li>
+<code><a href="../reference/tz_calc.html">tz_calc()</a></code> replaces <code><a href="../reference/tz_calc.html">get_tz()</a></code>
+</li>
+</ul>
+</div>
+</div>
+    <div id="weathercan-0-2-3-2017-11-22" class="section level1">
+<h1 class="hasAnchor">
+<a href="#weathercan-0-2-3-2017-11-22" class="anchor"></a>weathercan 0.2.3 (2017-11-22)</h1>
+<div id="changes-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#changes-1" class="anchor"></a>Changes</h2>
 <ul>
 <li>Updated <code>stations</code> data</li>
 <li>Added <code>flags</code> and <code>glossary</code> datasets as well as vignettes</li>
@@ -129,7 +153,9 @@
 <li>
 <code><a href="../reference/stations_search.html">stations_search()</a></code> with <code>coord</code> now returns closest 10 stations</li>
 <li>
-<code><a href="../reference/add_weather.html">add_weather()</a></code> warns user if trying to interpolate weather from &gt;1 station</li>
+<code><a href="../reference/weather_interp.html">add_weather()</a></code> warns user if trying to interpolate weather from &gt;1 station</li>
+<li>Updated code to conform with rOpenSci requirements</li>
+<li>Data downloaded from multiple timezones defaults to UTC</li>
 </ul>
 </div>
 <div id="bug-fixes" class="section level2">
@@ -137,16 +163,17 @@
 <a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
-<code><a href="../reference/weather.html">weather(format = FALSE)</a></code> properly returns data</li>
+<code><a href="../reference/weather_dl.html">weather(format = FALSE)</a></code> properly returns data</li>
+<li>updated <code><a href="../reference/weather_dl.html">weather()</a></code> to work with <code>lubridate</code> 1.7.1</li>
 </ul>
 </div>
 </div>
-    <div id="weathercan-0-2-2" class="section level1">
+    <div id="weathercan-0-2-2-2017-06-16" class="section level1">
 <h1 class="hasAnchor">
-<a href="#weathercan-0-2-2" class="anchor"></a>weathercan 0.2.2</h1>
-<div id="changes-1" class="section level2">
+<a href="#weathercan-0-2-2-2017-06-16" class="anchor"></a>weathercan 0.2.2 (2017-06-16)</h1>
+<div id="changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-1" class="anchor"></a>Changes</h2>
+<a href="#changes-2" class="anchor"></a>Changes</h2>
 <ul>
 <li>Update and expand vignettes (closes #15)</li>
 <li>Data now returned as tibbles</li>
@@ -183,7 +210,7 @@
 <h1 class="hasAnchor">
 <a href="#envirocan-0-2-0-2016-07-08" class="anchor"></a>envirocan 0.2.0 (2016-07-08)</h1>
 <ul>
-<li>Added new function, <code><a href="../reference/add_weather.html">add_weather()</a></code> which performs a linear interpolation and merges weather data into an existing data frame.</li>
+<li>Added new function, <code><a href="../reference/weather_interp.html">add_weather()</a></code> which performs a linear interpolation and merges weather data into an existing data frame.</li>
 <li>Added two new hourly datasets with weather data downloaded for Kamloops and Prince George, BC: kamloops, pg</li>
 <li>Added a new daily dataset for Kamloops: kamloops_day</li>
 <li>Fixed a bug when downloading data from multiple stations at the same time</li>
@@ -232,12 +259,12 @@
 <li>
 <code><a href="../reference/stations_search.html">stations_search()</a></code> function to search for a station by name or proximity</li>
 <li>
-<code><a href="../reference/stations_all.html">stations_all()</a></code> to download a new stations data set from Environment Canada</li>
+<code><a href="../reference/stations_dl.html">stations_all()</a></code> to download a new stations data set from Environment Canada</li>
 </ul>
 <p>Downloading weather:</p>
 <ul>
 <li>
-<code><a href="../reference/weather.html">weather()</a></code> function to specify station_id(s) start and end dates for downloading data.</li>
+<code><a href="../reference/weather_dl.html">weather()</a></code> function to specify station_id(s) start and end dates for downloading data.</li>
 </ul>
 </div>
 </div>
@@ -248,8 +275,9 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#weathercan-0-2-3">0.2.3</a></li>
-        <li><a href="#weathercan-0-2-2">0.2.2</a></li>
+        <li><a href="#weathercan-0-2-3-9000">0.2.3.9000</a></li>
+        <li><a href="#weathercan-0-2-3-2017-11-22">0.2.3</a></li>
+        <li><a href="#weathercan-0-2-2-2017-06-16">0.2.2</a></li>
         <li><a href="#envirocan-0-2-1-2017-03-04">0.2.1</a></li>
         <li><a href="#envirocan-0-2-0-2016-07-08">0.2.0</a></li>
         <li><a href="#envirocan-0-1-1-1-2016-06-23">0.1.1.1</a></li>

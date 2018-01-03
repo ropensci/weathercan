@@ -20,21 +20,21 @@ gloss <- list(
 
 # Add flags data set to package data
 # Get legend of flags (same for all intervals where duplicated)
-flags <- dplyr::bind_rows(weather_dl(station_id = 51423,  date = as.Date("2014-01-01"),
-                                     interval = "hour", nrows = 25, header = FALSE)[11:14,],
-                          weather_dl(station_id = 51423,  date = as.Date("2014-01-01"),
-                                     interval = "day", nrows = 25, header = FALSE)[10:23,],
-                          weather_dl(station_id = 43823,  date = as.Date("2014-01-01"),
-                                     interval = "month", nrows = 25, header = FALSE)[10:16,]) %>%
+flags <- dplyr::bind_rows(weather_raw(station_id = 51423,  date = as.Date("2014-01-01"),
+                                      interval = "hour", nrows = 25, header = FALSE)[11:14,],
+                          weather_raw(station_id = 51423,  date = as.Date("2014-01-01"),
+                                      interval = "day", nrows = 25, header = FALSE)[10:23,],
+                          weather_raw(station_id = 43823,  date = as.Date("2014-01-01"),
+                                      interval = "month", nrows = 25, header = FALSE)[10:16,]) %>%
   dplyr::rename(code = V1, meaning = V2) %>%
   dplyr::distinct() %>%
   tibble::as_tibble()
 devtools::use_data(flags, overwrite = TRUE)
 
 
-wd1 <- weather_dl(station_id = 51423, date = as.Date("2014-01-01"), skip = 15, interval = "hour")
-wd2 <- weather_dl(station_id = 51423, date = as.Date("2014-01-01"), skip = 25, interval = "day")
-wd3 <- weather_dl(station_id = 43823, date = as.Date("2005-01-01"), skip = 17, interval = "month")
+wd1 <- weather_raw(station_id = 51423, date = as.Date("2014-01-01"), skip = 15, interval = "hour")
+wd2 <- weather_raw(station_id = 51423, date = as.Date("2014-01-01"), skip = 25, interval = "day")
+wd3 <- weather_raw(station_id = 43823, date = as.Date("2005-01-01"), skip = 17, interval = "month")
 
 n <- c(names(wd1), names(wd2), names(wd3))
 

@@ -1,10 +1,10 @@
 #' Get available stations
 #'
 #' This function can be used to download a Station Inventory CSV file from
-#' Environment Canada. Note that the 'stations' data set included in this
-#' package contains station data downloaded when the package was last compiled,
-#' so it may not be necessary to call this function (and this function may take
-#' a few minutes to run).
+#' Environment and Climate Change Canada. This is only necessary if the station
+#' you're interested was only recently added. The 'stations' data set included
+#' in this package contains station data downloaded when the package was last
+#' compiled. This function may take a few minutes to run.
 #'
 #' @details
 #' URL defaults to
@@ -22,9 +22,21 @@
 #' @return A tibble containing station names, station ID codes and dates of
 #'   operation
 #'
+#' @examples
+#'
+#' \dontrun{
+#'  # Update stations data frame
+#'  s <- stations_dl()
+#'
+#'  # Use new data frame to search for stations
+#'  stations_search("Winnipeg", stn = s)
+#' }
+#'
+#' @aliases stations_all
+#'
 #' @export
 
-stations_all <- function(url = NULL,
+stations_dl <- function(url = NULL,
                          skip = NULL, verbose = FALSE, quiet = FALSE) {
 
   if(is.null(url)) url <- paste0("ftp://client_climate@ftp.tor.ec.gc.ca/",
@@ -50,7 +62,8 @@ stations_all <- function(url = NULL,
                             collapse = "\n"))
 
   if(verbose) message("Downloading stations data frame")
-  stn <- utils::read.csv(file = url,
+
+  utils::read.csv(file = url,
                          skip = skip,
                          strip.white = TRUE) %>%
     dplyr::select(prov = Province,
@@ -95,8 +108,6 @@ stations_all <- function(url = NULL,
                                            "NS", "NU", "ON", "PE", "QC", "SK", "YT"))) %>%
     tidyr::spread(type, date) %>%
     dplyr::tbl_df()
-
-  return(stn)
 }
 
 #' Search for stations by name or location
@@ -121,6 +132,9 @@ stations_all <- function(url = NULL,
 #' @param verbose Logical. Include progress messages
 #' @param quiet Logical. Suppress all messages (including messages regarding
 #'   missing data, etc.)
+#'
+#' @details To search by coordinates, users must make sure they have the
+#'  \code{\link[sp]{sp}} package installed.
 #'
 #' @return Returns a subset of the stations data frame which match the search
 #'   parameters. If the search was by location, an extra column 'distance' shows
@@ -157,6 +171,11 @@ stations_search <- function(name = NULL,
     if(length(coords) != 2 | all(is.na(coords)) | class(coords) == "try-error") {
       stop("'coord' takes one pair of lat and lon in a numeric vector")
     }
+
+    if(!requireNamespace("sp", quietly = TRUE)) {
+     stop("Package 'sp' required to search for stations using coordinates. Use the code \"install.packages('sp')\" to install.", call. = FALSE)
+    }
+
   }
 
   check_int(interval)
@@ -201,6 +220,12 @@ stations_search <- function(name = NULL,
   stn <- stn[i, ]
   if(!is.null(name)) stn <- dplyr::arrange(stn, station_name, station_id, interval)
   if(!is.null(coords)) stn <- dplyr::arrange(stn, distance, station_name, station_id, interval)
-  return(stn)
+
+  stn
 }
 
+#' @export
+stations_all <- function(url = NULL,
+                         skip = NULL, verbose = FALSE, quiet = FALSE) {
+  .Deprecated("stations_dl")
+}

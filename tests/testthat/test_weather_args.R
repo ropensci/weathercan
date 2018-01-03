@@ -1,10 +1,10 @@
 # weather by hour ---------------------------------------------------------
-context("weather() arguments")
+context("weather_dl() arguments")
 
-test_that("weather() hour format = FALSE", {
+test_that("weather_dl() hour format = FALSE", {
 
-  w <- weather(station_ids = 51423, start = "2014-01-01", end = "2014-01-31",
-               format = FALSE)
+  w <- weather_dl(station_ids = 51423, start = "2014-01-01", end = "2014-01-31",
+                  format = FALSE)
 
   ## Basics
   expect_is(w, "data.frame")
@@ -24,10 +24,10 @@ test_that("weather() hour format = FALSE", {
   expect_equal(w$`Data Quality`[1], "\u2021")
 })
 
-test_that("weather() day format = FALSE", {
+test_that("weather_dl() day format = FALSE", {
 
-  w <- weather(station_ids = 51423, start = "2014-01-01", end = "2014-03-01",
-               interval = "day", format = FALSE)
+  w <- weather_dl(station_ids = 51423, start = "2014-01-01", end = "2014-03-01",
+                  interval = "day", format = FALSE)
 
   ## Basics
   expect_is(w, "data.frame")
@@ -48,11 +48,11 @@ test_that("weather() day format = FALSE", {
 
 })
 
-test_that("weather() month format = FALSE", {
+test_that("weather_dl() month format = FALSE", {
 
-  expect_silent(w <- weather(station_ids = 5401,
-                             start = "2014-01-01", end = "2014-05-01",
-                             interval = "month", format = FALSE))
+  expect_silent(w <- weather_dl(station_ids = 5401,
+                                start = "2014-01-01", end = "2014-05-01",
+                                interval = "month", format = FALSE))
 
   ## Basics
   expect_is(w, "data.frame")
