@@ -14,5 +14,6 @@
 ^pkgdown$
 ^inst/JOSS$
 ^ropensci_onboarding.md$
-^CONDUCT\.md$
-^.github$
+^CODE_OF_CONDUCT\.md$
+^CONTRIBUTING\.md$
+^\.github$
