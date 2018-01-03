@@ -15,4 +15,4 @@
 ^inst/JOSS$
 ^ropensci_onboarding.md$
 ^CONDUCT\.md$
-^.github/$
+^.github$
