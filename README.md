@@ -201,7 +201,7 @@ Similar packages
 Contributions
 -------------
 
-We welcome any and all contributions! To make the process as painless as possible for all involved, please see our [guide to contributing](http://github.com/steffilazerte/weathercan/tree/master/.github/contributing.md)
+We welcome any and all contributions! To make the process as painless as possible for all involved, please see our [guide to contributing](CONTRIBUTING.md)
 
 Code of Conduct
 ---------------
