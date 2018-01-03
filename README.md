@@ -196,7 +196,7 @@ Similar packages
 
 1.  [`CHCN`](https://cran.rstudio.com/web/packages/CHCN/index.html)
 
-`CHCN` is an older package last updated in 2012. Unfortunately, ECCC updated their services within the last couple of years which caused a great many of the previous web scrapers to fail. `CHCN` relies on one of these (older web-scrapers)\[<https://classic.scraperwiki.com/scrapers/can-weather-stations/>\] and so is currently broken.
+`CHCN` is an older package last updated in 2012. Unfortunately, ECCC updated their services within the last couple of years which caused a great many of the previous web scrapers to fail. `CHCN` relies on one of these [older web-scrapers](https://classic.scraperwiki.com/scrapers/can-weather-stations/) and so is currently broken.
 
 Contributions
 -------------
