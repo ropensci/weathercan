@@ -168,7 +168,7 @@ citation("weathercan")
     ## 
     ## To cite package 'weathercan' in publications use:
     ## 
-    ##   Steffi LaZerte (2017). weathercan: Download Weather Data from the Environment and
+    ##   Steffi LaZerte (2018). weathercan: Download Weather Data from the Environment and
     ##   Climate Change Canada Website. R package version 0.2.2.9000.
     ##   https://github.com/steffilazerte/weathercan
     ## 
@@ -177,7 +177,7 @@ citation("weathercan")
     ##   @Manual{,
     ##     title = {weathercan: Download Weather Data from the Environment and Climate Change Canada Website},
     ##     author = {Steffi LaZerte},
-    ##     year = {2017},
+    ##     year = {2018},
     ##     note = {R package version 0.2.2.9000},
     ##     url = {https://github.com/steffilazerte/weathercan},
     ##   }
