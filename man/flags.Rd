@@ -14,7 +14,7 @@ flags
 }
 \description{
 A reference dataset containing 'flags' matched to their meaning. Data
-downloaded using the \code{weather()} function contains columns indicating
+downloaded using the \code{weather_dl()} function contains columns indicating
 'flags' these codes are presented here for interpretation.
 }
 \keyword{datasets}

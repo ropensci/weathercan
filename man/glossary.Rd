@@ -8,7 +8,9 @@
 \describe{
   \item{interval}{Data interval type, 'hour', 'day', or 'month'.}
   \item{ECCC_name}{Original column name when downloaded directly from ECCC}
-  \item{weathercan_name}{R-compatible name given when downloaded with the \code{weather()} function using the default argument \code{format = TRUE}.}
+  \item{weathercan_name}{R-compatible name given when downloaded with the
+  \code{weather_dl()} function using the default argument \code{format =
+  TRUE}.}
   \item{units}{Units of the measurement.}
   \item{ECCC_ref}{Link to the glossary or reference page on the ECCC website.}
 }}
@@ -17,7 +19,7 @@ glossary
 }
 \description{
 A reference dataset matching information on columns in data downloaded using
-the \code{weather()} function. Indicates the units of the data, and contains
-a link to the ECCC glossary page explaining the measurement.
+the \code{weather_dl()} function. Indicates the units of the data, and
+contains a link to the ECCC glossary page explaining the measurement.
 }
 \keyword{datasets}
