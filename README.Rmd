@@ -31,6 +31,16 @@ install.packages("devtools") # If not already installed
 devtools::install_github("steffilazerte/weathercan") 
 ```
 
+To build the vignettes (tutorials) locally, use:
+
+```{r, eval = FALSE}
+devtools::install_github("steffilazerte/weathercan", build_vignettes = TRUE) 
+```
+
+View the available vignettes with `vignette(package = "weathercan")`  
+
+View a particular vignette with, for example, `vignette("weathercan", package = "weathercan")`
+
 ## General usage
 
 To download data, you first need to know the `station_id` associated with the station you're interested in.

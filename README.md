@@ -20,6 +20,16 @@ install.packages("devtools") # If not already installed
 devtools::install_github("steffilazerte/weathercan") 
 ```
 
+To build the vignettes (tutorials) locally, use:
+
+``` r
+devtools::install_github("steffilazerte/weathercan", build_vignettes = TRUE) 
+```
+
+View the available vignettes with `vignette(package = "weathercan")`
+
+View a particular vignette with, for example, `vignette("weathercan", package = "weathercan")`
+
 General usage
 -------------
 
@@ -34,15 +44,14 @@ head(stations)
 ```
 
     ## # A tibble: 6 x 12
-    ##     prov           station_name station_id climate_id WMO_id  TC_id   lat     lon  elev interval
-    ##   <fctr>                  <chr>     <fctr>     <fctr> <fctr> <fctr> <dbl>   <dbl> <dbl>    <chr>
-    ## 1     BC            ACTIVE PASS         14    1010066   <NA>   <NA> 48.87 -123.28   4.0     hour
-    ## 2     BC            ALBERT HEAD         15    1010235   <NA>   <NA> 48.40 -123.48  17.0     hour
-    ## 3     BC BAMBERTON OCEAN CEMENT         16    1010595   <NA>   <NA> 48.58 -123.52  85.3     hour
-    ## 4     BC             BEAR CREEK         17    1010720   <NA>   <NA> 48.50 -124.00 350.5     hour
-    ## 5     BC            BEAVER LAKE         18    1010774   <NA>   <NA> 48.50 -123.35  61.0     hour
-    ## 6     BC             BECHER BAY         19    1010780   <NA>   <NA> 48.33 -123.63  12.2     hour
-    ## # ... with 2 more variables: start <int>, end <int>
+    ##   prov   station_name           station_id clima… WMO_id TC_id   lat   lon   elev inte… start   end
+    ##   <fctr> <chr>                  <fctr>     <fctr> <fctr> <fct> <dbl> <dbl>  <dbl> <chr> <int> <int>
+    ## 1 BC     ACTIVE PASS            14         10100… <NA>   <NA>   48.9  -123   4.00 hour     NA    NA
+    ## 2 BC     ALBERT HEAD            15         10102… <NA>   <NA>   48.4  -123  17.0  hour     NA    NA
+    ## 3 BC     BAMBERTON OCEAN CEMENT 16         10105… <NA>   <NA>   48.6  -124  85.3  hour     NA    NA
+    ## 4 BC     BEAR CREEK             17         10107… <NA>   <NA>   48.5  -124 350    hour     NA    NA
+    ## 5 BC     BEAVER LAKE            18         10107… <NA>   <NA>   48.5  -123  61.0  hour     NA    NA
+    ## 6 BC     BECHER BAY             19         10107… <NA>   <NA>   48.3  -124  12.2  hour     NA    NA
 
 ``` r
 glimpse(stations)
@@ -70,11 +79,11 @@ stations_search("Kamloops", interval = "hour")
 ```
 
     ## # A tibble: 3 x 12
-    ##     prov station_name station_id climate_id WMO_id  TC_id   lat     lon  elev interval start   end
-    ##   <fctr>        <chr>     <fctr>     <fctr> <fctr> <fctr> <dbl>   <dbl> <dbl>    <chr> <int> <int>
-    ## 1     BC   KAMLOOPS A       1275    1163780  71887    YKA  50.7 -120.44 345.3     hour  1953  2013
-    ## 2     BC   KAMLOOPS A      51423    1163781  71887    YKA  50.7 -120.45 345.3     hour  2013  2017
-    ## 3     BC KAMLOOPS AUT      42203    1163842  71741    ZKA  50.7 -120.44 345.0     hour  2006  2017
+    ##   prov   station_name station_id climate_id WMO_id TC_id    lat   lon  elev interval start   end
+    ##   <fctr> <chr>        <fctr>     <fctr>     <fctr> <fctr> <dbl> <dbl> <dbl> <chr>    <int> <int>
+    ## 1 BC     KAMLOOPS A   1275       1163780    71887  YKA     50.7  -120   345 hour      1953  2013
+    ## 2 BC     KAMLOOPS A   51423      1163781    71887  YKA     50.7  -120   345 hour      2013  2017
+    ## 3 BC     KAMLOOPS AUT 42203      1163842    71741  ZKA     50.7  -120   345 hour      2006  2017
 
 Time frame must be one of "hour", "day", or "month".
 
@@ -85,12 +94,11 @@ stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour"
 ```
 
     ## # A tibble: 3 x 13
-    ##     prov station_name station_id climate_id WMO_id  TC_id   lat     lon  elev interval start   end
-    ##   <fctr>        <chr>     <fctr>     <fctr> <fctr> <fctr> <dbl>   <dbl> <dbl>    <chr> <int> <int>
-    ## 1     BC   KAMLOOPS A       1275    1163780  71887    YKA  50.7 -120.44 345.3     hour  1953  2013
-    ## 2     BC KAMLOOPS AUT      42203    1163842  71741    ZKA  50.7 -120.44 345.0     hour  2006  2017
-    ## 3     BC   KAMLOOPS A      51423    1163781  71887    YKA  50.7 -120.45 345.3     hour  2013  2017
-    ## # ... with 1 more variables: distance <dbl>
+    ##   prov   station_name station_id climate_id WMO_id TC_id    lat   lon  elev inte… start   end dist…
+    ##   <fctr> <chr>        <fctr>     <fctr>     <fctr> <fctr> <dbl> <dbl> <dbl> <chr> <int> <int> <dbl>
+    ## 1 BC     KAMLOOPS A   1275       1163780    71887  YKA     50.7  -120   345 hour   1953  2013  8.64
+    ## 2 BC     KAMLOOPS AUT 42203      1163842    71741  ZKA     50.7  -120   345 hour   2006  2017  8.64
+    ## 3 BC     KAMLOOPS A   51423      1163781    71887  YKA     50.7  -120   345 hour   2013  2017  9.28
 
 ### Weather
 
@@ -102,19 +110,19 @@ kam
 ```
 
     ## # A tibble: 1,104 x 35
-    ##    station_name station_id   prov   lat     lon       date                time  year month   day
-    ##  *        <chr>      <dbl> <fctr> <dbl>   <dbl>     <date>              <dttm> <chr> <chr> <chr>
-    ##  1   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 00:00:00  2016    01    01
-    ##  2   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 01:00:00  2016    01    01
-    ##  3   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 02:00:00  2016    01    01
-    ##  4   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 03:00:00  2016    01    01
-    ##  5   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 04:00:00  2016    01    01
-    ##  6   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 05:00:00  2016    01    01
-    ##  7   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 06:00:00  2016    01    01
-    ##  8   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 07:00:00  2016    01    01
-    ##  9   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 08:00:00  2016    01    01
-    ## 10   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 09:00:00  2016    01    01
-    ## # ... with 1,094 more rows, and 25 more variables
+    ##    stat… stat… prov    lat   lon date       time                year  month day   hour  qual  weat…
+    ##  * <chr> <dbl> <fct> <dbl> <dbl> <date>     <dttm>              <chr> <chr> <chr> <chr> <chr> <chr>
+    ##  1 KAML… 51423 BC     50.7  -120 2016-01-01 2016-01-01 00:00:00 2016  01    01    00:00 Part… <NA> 
+    ##  2 KAML… 51423 BC     50.7  -120 2016-01-01 2016-01-01 01:00:00 2016  01    01    01:00 Part… Most…
+    ##  3 KAML… 51423 BC     50.7  -120 2016-01-01 2016-01-01 02:00:00 2016  01    01    02:00 Part… <NA> 
+    ##  4 KAML… 51423 BC     50.7  -120 2016-01-01 2016-01-01 03:00:00 2016  01    01    03:00 Part… <NA> 
+    ##  5 KAML… 51423 BC     50.7  -120 2016-01-01 2016-01-01 04:00:00 2016  01    01    04:00 Part… Clou…
+    ##  6 KAML… 51423 BC     50.7  -120 2016-01-01 2016-01-01 05:00:00 2016  01    01    05:00 Part… <NA> 
+    ##  7 KAML… 51423 BC     50.7  -120 2016-01-01 2016-01-01 06:00:00 2016  01    01    06:00 Part… <NA> 
+    ##  8 KAML… 51423 BC     50.7  -120 2016-01-01 2016-01-01 07:00:00 2016  01    01    07:00 Part… Clou…
+    ##  9 KAML… 51423 BC     50.7  -120 2016-01-01 2016-01-01 08:00:00 2016  01    01    08:00 Part… <NA> 
+    ## 10 KAML… 51423 BC     50.7  -120 2016-01-01 2016-01-01 09:00:00 2016  01    01    09:00 Part… Snow 
+    ## # ... with 1,094 more rows, and 22 more variables
 
 You can also download data from multiple stations at once:
 
@@ -124,19 +132,19 @@ kam_pg
 ```
 
     ## # A tibble: 2,208 x 35
-    ##                  station_name station_id   prov   lat     lon       date                time  year
-    ##  *                      <chr>      <dbl> <fctr> <dbl>   <dbl>     <date>              <dttm> <chr>
-    ##  1 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 00:00:00  2016
-    ##  2 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 01:00:00  2016
-    ##  3 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 02:00:00  2016
-    ##  4 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 03:00:00  2016
-    ##  5 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 04:00:00  2016
-    ##  6 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 05:00:00  2016
-    ##  7 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 06:00:00  2016
-    ##  8 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 07:00:00  2016
-    ##  9 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 08:00:00  2016
-    ## 10 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 09:00:00  2016
-    ## # ... with 2,198 more rows, and 27 more variables
+    ##    stat… stat… prov    lat   lon date       time                year  month day   hour  qual  weat…
+    ##  * <chr> <dbl> <fct> <dbl> <dbl> <date>     <dttm>              <chr> <chr> <chr> <chr> <chr> <chr>
+    ##  1 PRIN… 48248 BC     53.9  -123 2016-01-01 2016-01-01 00:00:00 2016  01    01    00:00 " "   <NA> 
+    ##  2 PRIN… 48248 BC     53.9  -123 2016-01-01 2016-01-01 01:00:00 2016  01    01    01:00 " "   <NA> 
+    ##  3 PRIN… 48248 BC     53.9  -123 2016-01-01 2016-01-01 02:00:00 2016  01    01    02:00 " "   <NA> 
+    ##  4 PRIN… 48248 BC     53.9  -123 2016-01-01 2016-01-01 03:00:00 2016  01    01    03:00 " "   <NA> 
+    ##  5 PRIN… 48248 BC     53.9  -123 2016-01-01 2016-01-01 04:00:00 2016  01    01    04:00 " "   <NA> 
+    ##  6 PRIN… 48248 BC     53.9  -123 2016-01-01 2016-01-01 05:00:00 2016  01    01    05:00 " "   <NA> 
+    ##  7 PRIN… 48248 BC     53.9  -123 2016-01-01 2016-01-01 06:00:00 2016  01    01    06:00 " "   <NA> 
+    ##  8 PRIN… 48248 BC     53.9  -123 2016-01-01 2016-01-01 07:00:00 2016  01    01    07:00 " "   <NA> 
+    ##  9 PRIN… 48248 BC     53.9  -123 2016-01-01 2016-01-01 08:00:00 2016  01    01    08:00 " "   <NA> 
+    ## 10 PRIN… 48248 BC     53.9  -123 2016-01-01 2016-01-01 09:00:00 2016  01    01    09:00 " "   <NA> 
+    ## # ... with 2,198 more rows, and 22 more variables
 
 And plot it:
 
