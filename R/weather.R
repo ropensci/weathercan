@@ -158,8 +158,9 @@ weather_dl <- function(station_ids,
     if(interval == "month") date_range <- date_range[1]
 
     preamble <- weather_raw(station_id = s, date = date_range[1],
-                           interval = interval, nrows = 25,
-                           header = FALSE, encoding = encoding)
+                           interval = interval, nrows = 25, url = url,
+                           header = FALSE, encoding = encoding,)
+
     skip <- grep("Date/Time", preamble[, 1])
 
     if(verbose) message("Downloading station data")
