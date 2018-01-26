@@ -163,6 +163,18 @@ weather_dl <- function(station_ids,
 
     skip <- grep("Date/Time", preamble[, 1])
 
+    preamble <- preamble[1:skip,] %>%
+      tidyr::spread(V1, V2) %>%
+      dplyr::select(station_name = `Station Name`,
+                    lat = Latitude, lon = Longitude, elev = Elevation,
+                    climate_id = `Climate Identifier`,
+                    WMO_id = `WMO Identifier`, TC_id = `TC Identifier`) %>%
+      dplyr::mutate(station_id = s,
+                    prov = unique(stn1$prov),
+                    lat = as.numeric(as.character(lat)),
+                    lon = as.numeric(as.character(lon)),
+                    elev = as.numeric(as.character(elev)))
+
     if(verbose) message("Downloading station data")
     w <- data.frame()
     for(i in seq_along(date_range)){
@@ -174,20 +186,6 @@ weather_dl <- function(station_ids,
                                encoding = encoding))
     }
 
-    ## Add header info
-    if(verbose) message("Adding header data")
-    w <- w %>%
-      dplyr::mutate(prov = unique(stn1$prov),
-                    station_name = preamble[1, 2], ##Deal BOM in collected metadata
-                    station_id = s,
-                    lat = as.numeric(as.character(preamble$V2[preamble$V1 %in% "Latitude"])),
-                    lon = as.numeric(as.character(preamble$V2[preamble$V1 %in% "Longitude"])),
-                    elev = as.numeric(as.character(preamble$V2[preamble$V1 %in% "Elevation"])),
-                    climat_id = preamble$V2[preamble$V1 %in% "Climate Identifier"],
-                    WMO_id = preamble$V2[preamble$V1 %in% "WMO Identifier"],
-                    TC_id = preamble$V2[preamble$V1 %in% "TC Identifier"]
-      )
-
     ## Format data if requested
     if(format) {
       if(verbose) message("Formating station data")
@@ -195,11 +193,16 @@ weather_dl <- function(station_ids,
                           interval = interval,
                           tz_disp = tz_disp,
                           string_as = string_as,
-                          quiet = quiet)
+                          quiet = quiet,
+                          preamble = preamble)
 
       ## Trim to match date range
       w <- w[w$date >= s.start & w$date <= s.end, ]
     }
+
+    ## Add header info
+    if(verbose) message("Adding header data")
+    if(nrow(w) > 0) w <- cbind(preamble, w)
 
     if(interval == "hour") tz_list <- c(tz_list, lubridate::tz(w$time[1]))
     w_all <- rbind(w_all, w)
@@ -310,17 +313,11 @@ weather_raw <- function(station_id,
                      dplyr::funs(gsub("^I$", "^", .)))
 }
 
-weather_format <- function(w, interval = "hour", string_as = "NA",
+weather_format <- function(w, interval = "hour", string_as = "NA", preamble,
                            tz_disp = NULL, quiet = FALSE) {
 
   ## Get names from stored name list
   n <- w_names[[interval]]
-
-  # Omit preamble stuff for now
-  preamble <- w[, names(w) %in% c("prov", "station_name", "station_id",
-                                  "lat", "lon", "elev", "climat_id", "WMO_id",
-                                  "TC_id")]
-  w <- w[, !(names(w) %in% names(preamble))]
 
   names(w) <- n
 
@@ -428,12 +425,6 @@ weather_format <- function(w, interval = "hour", string_as = "NA",
     w[, !(names(w) %in% c("date", "year", "month", "day",
                           "hour", "time", "qual", "weather",
                           grep("flag", names(w), value = TRUE)))] <- num
-  }
-
-  if(length(preamble) > 0){
-    w <- cbind(preamble[, c("prov", "station_name", "station_id",
-                            "lat", "lon")], w,
-               preamble[, c("elev", "climat_id", "WMO_id", "TC_id")])
   }
 
   w
