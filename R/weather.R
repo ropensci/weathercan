@@ -364,14 +364,15 @@ weather_format <- function(w, interval = "hour", string_as = "NA",
                MARGIN = 2,
                FUN = function(x) tryCatch(as.numeric(x), warning = function(w) w))
 
-  if(any(sapply(num, FUN = function(x) methods::is(x, "warning")))) {
+  warn <- vapply(num,
+                 FUN = function(x) methods::is(x, "warning"),
+                 FUN.VALUE = TRUE)
+  if(any(warn)) {
     if(!quiet) {
-      m <- paste0(names(num)[sapply(num,
-                                    FUN = function(x) methods::is(x, "warning"))],
-                  collapse = ", ")
+      m <- paste0(names(num)[warn], collapse = ", ")
       message("Some variables have non-numeric values (", m, ")")
     }
-    for(i in names(num)[sapply(num, FUN = function(x) methods::is(x, "warning"))]) {
+    for(i in names(num)[warn]) {
       problems <- w[grep("<|>|\\)|\\(", w[,i]),
                     names(w) %in% c("date", "year", "month",
                                     "day", "hour", "time", i)]
@@ -397,8 +398,7 @@ weather_format <- function(w, interval = "hour", string_as = "NA",
       })
     } else {
       if(!quiet) {
-        m <- paste0(names(num)[sapply(num,
-                                      FUN = function(x) methods::is(x, "warning"))],
+        m <- paste0(names(num)[warn],
                     collapse = ", ")
         message("Leaving as characters (", m, "). Cannot summarize these values.")
       }
@@ -406,10 +406,10 @@ weather_format <- function(w, interval = "hour", string_as = "NA",
       replace <- c("date", "year", "month", "day",
                    "hour", "time", "qual", "weather",
                    grep("flag", names(w), value = TRUE),
-                   names(num)[sapply(num, FUN = function(x) methods::is(x, "warning"))])
+                   names(num)[warn])
 
       w[, !(names(w) %in% replace)] <-
-        num[!sapply(num, FUN = function(x) methods::is(x, "warning"))]
+        num[!warn]
     }
   } else {
     w[, !(names(w) %in% c("date", "year", "month", "day",

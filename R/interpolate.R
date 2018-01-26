@@ -102,7 +102,7 @@ weather_interp <- function(data, weather,
 
   ## Check that weather vars are numeric
   ## (is linear interpolation relevant for each?)
-  omit <- cols[!(sapply(weather[, cols], is.numeric))]
+  omit <- cols[!(vapply(weather[, cols], is.numeric, FUN.VALUE = TRUE))]
   cols <- cols[!(cols %in% omit)]
   if(length(omit) > 0 & !quiet) {
     message("Some columns (", paste0(omit, collapse = ", "), ") ",
@@ -165,7 +165,7 @@ approx_na_rm <- function(x, y, xout, na_gap = NULL) {
       missing <- lubridate::interval(which_x + 1, which_x + diff_x[diff_x > na_gap] - 1)
 
       ## Remove missing values from interpolated ones
-      missing <- sapply(new$x,
+      missing <- vapply(new$x, FUN.VALUE = TRUE,
                         FUN = function(x, missing) any(lubridate::`%within%`(x, missing)),
                         missing = missing)
       new$y[missing] <- NA
@@ -182,7 +182,7 @@ approx_na_rm <- function(x, y, xout, na_gap = NULL) {
       missing <- data.frame(from = which_x, to = which_x + diff_x[diff_x > na_gap])
 
       ## Remove missing values from interpolated ones
-      missing <- sapply(new$x,
+      missing <- vapply(new$x, FUN.VALUE = TRUE,
                         FUN = function(x, missing) any(x > missing$from & x < missing$to),
                         missing = missing)
       new$y[missing] <- NA
