@@ -22,6 +22,9 @@
 #'   compatibility with other data sets, timezones can be converted by
 #'   specifying the desired timezone in `tz_disp`.
 #'
+#'   By default, downloads from
+#'   "http://climate.weather.gc.ca/climate_data/bulk_data_e.html"
+#'
 #' @param station_ids Numeric/Character. A vector containing the ID(s) of the
 #'   station(s) you wish to download data from. See the \code{\link{stations}}
 #'   data frame or the \code{\link{stations_search}} function to find IDs.
@@ -43,7 +46,8 @@
 #'   \code{OlsonNames()}).
 #' @param stn Data frame. The \code{stations} data frame to use. Will use the
 #'   one included in the package unless otherwise specified.
-#' @param url Character. Url from which to grab the weather data
+#' @param url Character. Url from which to grab the weather data. If NULL uses
+#'   default url (see details)
 #' @param encoding Character. Text encoding for download.
 #' @param list_col Logical. Return data as nested data set? Defaults to FALSE.
 #'   Only applies if `format = TRUE`
@@ -85,11 +89,14 @@ weather_dl <- function(station_ids,
                     string_as = NA,
                     tz_disp = NULL,
                     stn = weathercan::stations,
-                    url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html",
+                    url = NULL,
                     encoding = "UTF-8",
                     list_col = FALSE,
                     verbose = FALSE,
                     quiet = FALSE) {
+
+  if(is.null(url)) url <- paste0("http://climate.weather.gc.ca/",
+                                 "climate_data/bulk_data_e.html")
 
   # Address as.POSIXct...
   if((!is.null(start) & class(try(as.Date(start), silent = TRUE)) == "try-error") |
@@ -272,16 +279,21 @@ weather_raw <- function(station_id,
                        skip = 0,
                        nrows = -1,
                        header = TRUE,
-                       url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html",
+                       url = NULL,
                        encoding = "UTF-8") {
 
-  html <- httr::GET(url, query = list(format = 'csv',
-                              stationID = station_id,
-                              timeframe = ifelse(interval == "hour", 1,
-                                                 ifelse(interval == "day", 2, 3)),
-                              Year = format(date, "%Y"),
-                              Month = format(date, "%m"),
-                              submit = 'Download+Data'))
+  if(is.null(url)) url <- paste0("http://climate.weather.gc.ca/",
+                                 "climate_data/bulk_data_e.html")
+
+  html <- httr::GET(url,
+                    query = list(format = 'csv',
+                                 stationID = station_id,
+                                 timeframe = ifelse(interval == "hour", 1,
+                                                    ifelse(interval == "day", 2,
+                                                           3)),
+                                 Year = format(date, "%Y"),
+                                 Month = format(date, "%m"),
+                                 submit = 'Download+Data'))
 
   httr::stop_for_status(html)
 

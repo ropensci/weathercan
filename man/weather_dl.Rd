@@ -7,9 +7,8 @@
 \usage{
 weather_dl(station_ids, start = NULL, end = NULL, interval = "hour",
   trim = TRUE, format = TRUE, string_as = NA, tz_disp = NULL,
-  stn = weathercan::stations,
-  url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html",
-  encoding = "UTF-8", list_col = FALSE, verbose = FALSE, quiet = FALSE)
+  stn = weathercan::stations, url = NULL, encoding = "UTF-8",
+  list_col = FALSE, verbose = FALSE, quiet = FALSE)
 }
 \arguments{
 \item{station_ids}{Numeric/Character. A vector containing the ID(s) of the
@@ -42,7 +41,8 @@ numeric measurement with. See Details.}
 \item{stn}{Data frame. The \code{stations} data frame to use. Will use the
 one included in the package unless otherwise specified.}
 
-\item{url}{Character. Url from which to grab the weather data}
+\item{url}{Character. Url from which to grab the weather data. If NULL uses
+default url (see details)}
 
 \item{encoding}{Character. Text encoding for download.}
 
@@ -80,6 +80,9 @@ Data can be returned 'raw' (format = FALSE) or can be formatted.
   location. This does not include daylight savings. However, for
   compatibility with other data sets, timezones can be converted by
   specifying the desired timezone in `tz_disp`.
+
+  By default, downloads from
+  "http://climate.weather.gc.ca/climate_data/bulk_data_e.html"
 }
 \examples{
 
