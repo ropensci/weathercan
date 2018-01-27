@@ -68,7 +68,7 @@ test_that("weather_dl() month format = FALSE", {
   expect_equal(w$station_name[1], "MAGOG")
   expect_equal(w$prov[1], factor("QC", levels = levels(stations$prov)))
   expect_equal(w$`Date/Time`[1], "1948-01")
-  expect_equal(w$climat_id[1], "7024440")
+  expect_equal(w$climate_id[1], "7024440")
   expect_equal(w$WMO_id[1], "")
   expect_equal(w$TC_id[1], "")
 })

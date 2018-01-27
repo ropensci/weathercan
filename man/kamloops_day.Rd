@@ -38,7 +38,7 @@
   \item{total_snow}{Total snow (any form)}
   \item{total_snow_flag}{Total snow flag}
   \item{elev}{Elevation (m)}
-  \item{climat_id}{Climate identifier}
+  \item{climate_id}{Climate identifier}
   \item{WMO_id}{World Meteorological Organization Identifier}
   \item{TC_id}{Transport Canada Identifier}
 }}

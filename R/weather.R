@@ -233,7 +233,7 @@ weather_dl <- function(station_ids,
                                            "station_name", "station_id",
                                            "lat", "lon", "year", "month",
                                            "day", "hour", "qual","elev",
-                                           "climat_id", "WMO_id", "TC_id"))]
+                                           "climate_id", "WMO_id", "TC_id"))]
     temp <- w_all$date[which(rowSums(is.na(temp) | temp == "") != ncol(temp))]
 
     if(length(temp) == 0) {

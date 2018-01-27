@@ -45,7 +45,7 @@ The following will take quite some time to download as it is downloading over 10
 pancan_df <- weather_dl(station_ids = c(707, 4859, 6693,5397, 2315), 
                         interval = "day") %>%
   filter(year >= 1920) %>%
-  select(station_name, station_id, prov, lat, lon, elev, climat_id, WMO_id, TC_id, mean_temp, date)
+  select(station_name, station_id, prov, lat, lon, elev, climate_id, WMO_id, TC_id, mean_temp, date)
 ```
 
 ## Plot the data
@@ -60,7 +60,7 @@ This is quite a large dataset.
 ## Creating list-columns
 ```{r nesting}
 pancan_df_nest <- pancan_df %>%
-  group_by(station_name, station_id, prov, lat, lon, elev, climat_id, WMO_id, TC_id) %>%
+  group_by(station_name, station_id, prov, lat, lon, elev, climate_id, WMO_id, TC_id) %>%
   nest()
 pancan_df_nest
 ```
