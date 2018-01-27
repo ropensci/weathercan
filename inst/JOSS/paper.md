@@ -58,7 +58,7 @@ names(w)
     ## [21] "temp_dew"        "temp_dew_flag"   "temp_flag"       "visib"          
     ## [25] "visib_flag"      "wind_chill"      "wind_chill_flag" "wind_dir"       
     ## [29] "wind_dir_flag"   "wind_spd"        "wind_spd_flag"   "elev"           
-    ## [33] "climat_id"       "WMO_id"          "TC_id"
+    ## [33] "climate_id"     "WMO_id"          "TC_id"
 
 ``` {.r}
 w
