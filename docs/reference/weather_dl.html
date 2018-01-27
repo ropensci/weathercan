@@ -122,9 +122,8 @@ and units, see the glossary vignette (<code><a href='https://cran.rstudio.com/we
 
     <pre class="usage"><span class='fu'>weather_dl</span>(<span class='no'>station_ids</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>interval</span> <span class='kw'>=</span> <span class='st'>"hour"</span>,
   <span class='kw'>trim</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>string_as</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>tz_disp</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>stn</span> <span class='kw'>=</span> <span class='kw pkg'>weathercan</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/weathercan/topics/stations'>stations</a></span>,
-  <span class='kw'>url</span> <span class='kw'>=</span> <span class='st'>"http://climate.weather.gc.ca/climate_data/bulk_data_e.html"</span>,
-  <span class='kw'>encoding</span> <span class='kw'>=</span> <span class='st'>"UTF-8"</span>, <span class='kw'>list_col</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>stn</span> <span class='kw'>=</span> <span class='kw pkg'>weathercan</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/weathercan/topics/stations'>stations</a></span>, <span class='kw'>url</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>encoding</span> <span class='kw'>=</span> <span class='st'>"UTF-8"</span>,
+  <span class='kw'>list_col</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -179,7 +178,8 @@ one included in the package unless otherwise specified.</p></td>
     </tr>
     <tr>
       <th>url</th>
-      <td><p>Character. Url from which to grab the weather data</p></td>
+      <td><p>Character. Url from which to grab the weather data. If NULL uses
+default url (see details)</p></td>
     </tr>
     <tr>
       <th>encoding</th>
@@ -221,6 +221,8 @@ missing data, etc.)</p></td>
   location. This does not include daylight savings. However, for
   compatibility with other data sets, timezones can be converted by
   specifying the desired timezone in `tz_disp`.</p>
+<p>By default, downloads from
+  "http://climate.weather.gc.ca/climate_data/bulk_data_e.html"</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -230,16 +232,13 @@ missing data, etc.)</p></td>
                   <span class='kw'>start</span> <span class='kw'>=</span> <span class='st'>"2016-01-01"</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='st'>"2016-02-15"</span>)
 <span class='co'># }</span><div class='input'>
 <span class='fu'><a href='stations_search.html'>stations_search</a></span>(<span class='st'>"Kamloops A$"</span>, <span class='kw'>interval</span> <span class='kw'>=</span> <span class='st'>"hour"</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 12
-#&gt;     prov station_name station_id climate_id WMO_id  TC_id   lat     lon  elev
-#&gt;   &lt;fctr&gt;        &lt;chr&gt;     &lt;fctr&gt;     &lt;fctr&gt; &lt;fctr&gt; &lt;fctr&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
-#&gt; 1     BC   KAMLOOPS A       1275    1163780  71887    YKA  50.7 -120.44 345.3
-#&gt; 2     BC   KAMLOOPS A      51423    1163781  71887    YKA  50.7 -120.45 345.3
-#&gt; # ... with 3 more variables: interval &lt;chr&gt;, start &lt;int&gt;, end &lt;int&gt;</div><div class='input'><span class='fu'><a href='stations_search.html'>stations_search</a></span>(<span class='st'>"Prince George Airport"</span>, <span class='kw'>interval</span> <span class='kw'>=</span> <span class='st'>"hour"</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 12
-#&gt;     prov               station_name station_id climate_id WMO_id  TC_id   lat
-#&gt;   &lt;fctr&gt;                      &lt;chr&gt;     &lt;fctr&gt;     &lt;fctr&gt; &lt;fctr&gt; &lt;fctr&gt; &lt;dbl&gt;
-#&gt; 1     BC PRINCE GEORGE AIRPORT AUTO      48248    1096453  71302    VXS 53.89
-#&gt; # ... with 5 more variables: lon &lt;dbl&gt;, elev &lt;dbl&gt;, interval &lt;chr&gt;,
-#&gt; #   start &lt;int&gt;, end &lt;int&gt;</div><span class='co'># NOT RUN {</span>
+#&gt;   prov   statio… statio… clima… WMO_… TC_id   lat   lon  elev inte… start   end
+#&gt;   &lt;fctr&gt; &lt;chr&gt;   &lt;fctr&gt;  &lt;fctr&gt; &lt;fct&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt;
+#&gt; 1 BC     KAMLOO… 1275    11637… 71887 YKA    50.7  -120   345 hour   1953  2013
+#&gt; 2 BC     KAMLOO… 51423   11637… 71887 YKA    50.7  -120   345 hour   2013  2018</div><div class='input'><span class='fu'><a href='stations_search.html'>stations_search</a></span>(<span class='st'>"Prince George Airport"</span>, <span class='kw'>interval</span> <span class='kw'>=</span> <span class='st'>"hour"</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 12
+#&gt;   prov   station… stati… clima… WMO_… TC_id   lat   lon  elev inte… start   end
+#&gt;   &lt;fctr&gt; &lt;chr&gt;    &lt;fctr&gt; &lt;fctr&gt; &lt;fct&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt;
+#&gt; 1 BC     PRINCE … 48248  10964… 71302 VXS    53.9  -123   680 hour   2009  2018</div><span class='co'># NOT RUN {</span>
 <span class='no'>kam.pg</span> <span class='kw'>&lt;-</span> <span class='fu'>weather_dl</span>(<span class='kw'>station_ids</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>48248</span>, <span class='fl'>51423</span>),
                      <span class='kw'>start</span> <span class='kw'>=</span> <span class='st'>"2016-01-01"</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='st'>"2016-02-15"</span>)
 

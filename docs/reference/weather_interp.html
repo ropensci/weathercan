@@ -174,32 +174,31 @@ and 12PM will be returned as NA.)</p>
     <pre class="examples"><div class='input'>
 <span class='co'># Weather data only</span>
 <span class='fu'>head</span>(<span class='no'>kamloops</span>)</div><div class='output co'>#&gt; # A tibble: 6 x 35
-#&gt;   station_name station_id   prov   lat     lon       date                time
-#&gt;          &lt;chr&gt;      &lt;dbl&gt; &lt;fctr&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;date&gt;              &lt;dttm&gt;
-#&gt; 1   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 00:00:00
-#&gt; 2   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 01:00:00
-#&gt; 3   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 02:00:00
-#&gt; 4   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 03:00:00
-#&gt; 5   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 04:00:00
-#&gt; 6   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 05:00:00
-#&gt; # ... with 28 more variables: year &lt;chr&gt;, month &lt;chr&gt;, day &lt;chr&gt;, hour &lt;chr&gt;,
-#&gt; #   qual &lt;chr&gt;, weather &lt;chr&gt;, hmdx &lt;dbl&gt;, hmdx_flag &lt;chr&gt;, pressure &lt;dbl&gt;,
-#&gt; #   pressure_flag &lt;chr&gt;, rel_hum &lt;dbl&gt;, rel_hum_flag &lt;chr&gt;, temp &lt;dbl&gt;,
-#&gt; #   temp_dew &lt;dbl&gt;, temp_dew_flag &lt;chr&gt;, temp_flag &lt;chr&gt;, visib &lt;dbl&gt;,
-#&gt; #   visib_flag &lt;chr&gt;, wind_chill &lt;dbl&gt;, wind_chill_flag &lt;chr&gt;, wind_dir &lt;dbl&gt;,
-#&gt; #   wind_dir_flag &lt;chr&gt;, wind_spd &lt;dbl&gt;, wind_spd_flag &lt;chr&gt;, elev &lt;dbl&gt;,
-#&gt; #   climat_id &lt;chr&gt;, WMO_id &lt;chr&gt;, TC_id &lt;chr&gt;</div><div class='input'>
+#&gt;   station_n… station_…   lat   lon  elev climate_… WMO_… TC_id prov  date      
+#&gt;   &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt; &lt;fct&gt; &lt;date&gt;    
+#&gt; 1 KAMLOOPS A     51423  50.7  -120   345 1163781   71887 YKA   BC    2016-01-01
+#&gt; 2 KAMLOOPS A     51423  50.7  -120   345 1163781   71887 YKA   BC    2016-01-01
+#&gt; 3 KAMLOOPS A     51423  50.7  -120   345 1163781   71887 YKA   BC    2016-01-01
+#&gt; 4 KAMLOOPS A     51423  50.7  -120   345 1163781   71887 YKA   BC    2016-01-01
+#&gt; 5 KAMLOOPS A     51423  50.7  -120   345 1163781   71887 YKA   BC    2016-01-01
+#&gt; 6 KAMLOOPS A     51423  50.7  -120   345 1163781   71887 YKA   BC    2016-01-01
+#&gt; # ... with 25 more variables: time &lt;dttm&gt;, year &lt;chr&gt;, month &lt;chr&gt;, day &lt;chr&gt;,
+#&gt; #   hour &lt;chr&gt;, qual &lt;chr&gt;, weather &lt;chr&gt;, hmdx &lt;dbl&gt;, hmdx_flag &lt;chr&gt;,
+#&gt; #   pressure &lt;dbl&gt;, pressure_flag &lt;chr&gt;, rel_hum &lt;dbl&gt;, rel_hum_flag &lt;chr&gt;,
+#&gt; #   temp &lt;dbl&gt;, temp_dew &lt;dbl&gt;, temp_dew_flag &lt;chr&gt;, temp_flag &lt;chr&gt;,
+#&gt; #   visib &lt;dbl&gt;, visib_flag &lt;chr&gt;, wind_chill &lt;dbl&gt;, wind_chill_flag &lt;chr&gt;,
+#&gt; #   wind_dir &lt;dbl&gt;, wind_dir_flag &lt;chr&gt;, wind_spd &lt;dbl&gt;, wind_spd_flag &lt;chr&gt;</div><div class='input'>
 <span class='co'># Data about finch observations at RFID feeders in Kamloops, BC</span>
 <span class='fu'>head</span>(<span class='no'>finches</span>)</div><div class='output co'>#&gt; # A tibble: 6 x 10
-#&gt;    animal_id                time logger_id            species   age   sex
-#&gt;       &lt;fctr&gt;              &lt;dttm&gt;    &lt;fctr&gt;              &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
-#&gt; 1 041868FF93 2016-03-01 06:57:42      2300 Mountain Chickadee   AHY     U
-#&gt; 2 041868FF93 2016-03-01 06:58:41      2300 Mountain Chickadee   AHY     U
-#&gt; 3 041868FF93 2016-03-01 07:07:21      2300 Mountain Chickadee   AHY     U
-#&gt; 4 06200003BB 2016-03-01 07:32:34      2400        House Finch    SY     M
-#&gt; 5 06200003BB 2016-03-01 07:32:35      2400        House Finch    SY     M
-#&gt; 6 06200003BB 2016-03-01 07:32:36      2400        House Finch    SY     M
-#&gt; # ... with 4 more variables: site_name &lt;chr&gt;, date &lt;date&gt;, lon &lt;dbl&gt;, lat &lt;dbl&gt;</div><div class='input'>
+#&gt;   anima… time                logge… species age   sex   site_… date         lon
+#&gt;   &lt;fctr&gt; &lt;dttm&gt;              &lt;fctr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt;
+#&gt; 1 04186… 2016-03-01 06:57:42 2300   Mounta… AHY   U     Kamlo… 2016-03-01  -120
+#&gt; 2 04186… 2016-03-01 06:58:41 2300   Mounta… AHY   U     Kamlo… 2016-03-01  -120
+#&gt; 3 04186… 2016-03-01 07:07:21 2300   Mounta… AHY   U     Kamlo… 2016-03-01  -120
+#&gt; 4 06200… 2016-03-01 07:32:34 2400   House … SY    M     Kamlo… 2016-03-01  -120
+#&gt; 5 06200… 2016-03-01 07:32:35 2400   House … SY    M     Kamlo… 2016-03-01  -120
+#&gt; 6 06200… 2016-03-01 07:32:36 2400   House … SY    M     Kamlo… 2016-03-01  -120
+#&gt; # ... with 1 more variable: lat &lt;dbl&gt;</div><div class='input'>
 # Match weather to finches
 </div><span class='co'># NOT RUN {</span>
 <span class='co'>## Not run</span>
