@@ -86,9 +86,8 @@ NULL
         "prov", "distance", "flag", "hmdx", "pressure", "rel_hum", "temp_dew",
         "visib", "wind_chill", "variable", "value", "qual", "interval", "month",
         "start", "year", "elev",
-        "V1", "V2", "Station Name", "Latitude", "Longitude", "Elevation",
-        "Climate Identifier", "WMO Identifier", "TC Identifier",
-        "." # piping requires '.' at times
+        "V1", "V2", "Latitude", "Longitude", "Elevation",
+        ".data", "." # piping requires '.' at times
       )
     )
   invisible()
