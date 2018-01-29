@@ -173,11 +173,13 @@ weather_dl <- function(station_ids,
 
     preamble <- preamble[1:skip,] %>%
       tidyr::spread(V1, V2) %>%
-      dplyr::select(station_name = .data$`Station Name`,
-                    lat = Latitude, lon = Longitude, elev = Elevation,
-                    climate_id = .data$`Climate Identifier`,
-                    WMO_id = .data$`WMO Identifier`,
-                    TC_id = .data$`TC Identifier`) %>%
+      dplyr::select(station_name = dplyr::contains("Station Name"),
+                    lat = dplyr::contains("Latitude"),
+                    lon = dplyr::contains("Longitude"),
+                    elev = dplyr::contains("Elevation"),
+                    climate_id = dplyr::contains("Climate Identifier"),
+                    WMO_id = dplyr::contains("WMO Identifier"),
+                    TC_id = dplyr::contains("TC Identifier")) %>%
       dplyr::mutate(station_id = s,
                     prov = unique(stn1$prov),
                     lat = as.numeric(as.character(lat)),
