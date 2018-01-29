@@ -12,6 +12,7 @@ output: html_document
 - `weather_interp()` replaces `add_weather()`
 - `stations_dl()` replaces `stations_all()`
 - `tz_calc()` replaces `get_tz()`
+- Internal code modifications to match best practices
 
 # weathercan 0.2.3 (2017-11-22)
 
