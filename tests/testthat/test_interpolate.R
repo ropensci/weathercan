@@ -10,7 +10,8 @@ test_that("approx_na_rm (time) without NAs", {
 
   ## Format
   for(i in c(0, 2, lubridate::hours(2), lubridate::days(14))) {
-    expect_silent(a <- approx_na_rm(x = k$time, y = k$temp, xout = f$time, na_gap = i))
+    expect_silent(a <- approx_na_rm(x = k$time, y = k$temp,
+                                    xout = f$time, na_gap = i))
     expect_is(a, "data.frame")
     expect_is(a$x, "POSIXct")
     expect_is(a$y, "numeric")
@@ -21,11 +22,12 @@ test_that("approx_na_rm (time) without NAs", {
 
   ## Values
   for(i in sample(seq_len(nrow(a)), size = 10)) {
+    k_temp <- k$temp[k$time %in% c(lubridate::floor_date(a$x[i], "hour"),
+                                   lubridate::ceiling_date(a$x[i], "hour"))]
     expect_equal(a$y[i],
                  approx(x = c(lubridate::floor_date(a$x[i], "hour"),
                               lubridate::ceiling_date(a$x[i], "hour")),
-                        y = k$temp[k$time %in% c(lubridate::floor_date(a$x[i], "hour"),
-                                                 lubridate::ceiling_date(a$x[i], "hour"))],
+                        y = k_temp,
                         xout = a$x[i])$y)
   }
 })
@@ -51,22 +53,30 @@ test_that("approx_na_rm (time) without NAs for different measures", {
 })
 
 test_that("approx_na_rm (time) without NAs pads NAs at start/end", {
-  k <- kamloops[kamloops$time >= as.POSIXct("2016-03-08 12:00:00", tz = "Etc/GMT+8") &
-                  kamloops$time <= as.POSIXct("2016-03-08 14:00:00", tz = "Etc/GMT+8"), ]
+  k <- kamloops[kamloops$time >= as.POSIXct("2016-03-08 12:00:00",
+                                            tz = "Etc/GMT+8") &
+                  kamloops$time <= as.POSIXct("2016-03-08 14:00:00",
+                                              tz = "Etc/GMT+8"), ]
   f <- finches[finches$time >= as.POSIXct("2016-03-08 04:00:00"), ][1:500,]
 
   expect_silent(a <- approx_na_rm(x = k$time, y = k$temp,
                                   xout = f$time, na_gap = lubridate::hours(2)))
-  expect_true(all(is.na(a$y[a$x < as.POSIXct("2016-03-08 12:00:00", tz = "Etc/GMT+8")])))
-  expect_true(all(is.na(a$y[a$x > as.POSIXct("2016-03-08 14:00:00", tz = "Etc/GMT+8")])))
-  expect_true(all(!is.na(a$y[a$x >= as.POSIXct("2016-03-08 12:00:00", tz = "Etc/GMT+8") &
-                               a$x <= as.POSIXct("2016-03-08 14:00:00", tz = "Etc/GMT+8")])))
+  expect_true(all(is.na(a$y[a$x < as.POSIXct("2016-03-08 12:00:00",
+                                             tz = "Etc/GMT+8")])))
+  expect_true(all(is.na(a$y[a$x > as.POSIXct("2016-03-08 14:00:00",
+                                             tz = "Etc/GMT+8")])))
+  expect_true(all(!is.na(a$y[a$x >= as.POSIXct("2016-03-08 12:00:00",
+                                               tz = "Etc/GMT+8") &
+                               a$x <= as.POSIXct("2016-03-08 14:00:00",
+                                                 tz = "Etc/GMT+8")])))
 
 })
 
 test_that("approx_na_rm (time) replaces gaps with NAs", {
-  k <- kamloops[kamloops$time >= as.POSIXct("2016-02-29 08:00:00", tz = "Etc/GMT+8") &
-                  kamloops$time <= as.POSIXct("2016-03-30 9:00:00", tz = "Etc/GMT+8"), ]
+  k <- kamloops[kamloops$time >= as.POSIXct("2016-02-29 08:00:00",
+                                            tz = "Etc/GMT+8") &
+                  kamloops$time <= as.POSIXct("2016-03-30 9:00:00",
+                                              tz = "Etc/GMT+8"), ]
   f <- finches[finches$time >= as.POSIXct("2016-03-08 06:00:00"), ][1:500,]
 
   expect_silent(a <- approx_na_rm(x = k$time, y = k$temp, xout = f$time,
@@ -107,7 +117,8 @@ test_that("approx_na_rm (numeric) without NAs", {
 
   ## Make sure what's expected
   expect_equal(c(22, 21.25), approx(x = c(11, 12, 13),
-                                    y = c(21, 25, 20), xout = c(11.25, 12.75))$y)
+                                    y = c(21, 25, 20),
+                                    xout = c(11.25, 12.75))$y)
 })
 
 
@@ -118,7 +129,8 @@ test_that("approx_na_rm (numeric) with NAs", {
 
   ## Format
   expect_error(approx_na_rm(x = k$x, y = k$y, xout = f$x, na_gap = NULL))
-  expect_error(approx_na_rm(x = k$x, y = k$y, xout = f$x, na_gap = lubridate::hours(1)))
+  expect_error(approx_na_rm(x = k$x, y = k$y, xout = f$x,
+                            na_gap = lubridate::hours(1)))
 
   ## Get NAs returned
   expect_silent(a <- approx_na_rm(x = k$x, y = k$y, xout = f$x, na_gap = 1))
@@ -257,8 +269,10 @@ test_that("weather_interp (day) interpolates particular columns", {
   }
 
   ## Multiple columns
-  expect_silent(a <- weather_interp(f, k, cols = c("max_temp", "min_temp", "mean_temp"),
-                                 interval = "day"))
+  expect_silent(a <- weather_interp(f, k,
+                                    cols = c("max_temp", "min_temp",
+                                             "mean_temp"),
+                                    interval = "day"))
   expect_named(a, c(names(f), c("max_temp", "min_temp", "mean_temp")))
   expect_equal(a[, seq_len(ncol(f))], f)
 })

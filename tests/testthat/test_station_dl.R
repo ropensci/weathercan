@@ -48,12 +48,13 @@ test_that("stations_search 'name' returns correct data", {
 
   ## Check numbers
   expect_message(stations_search(c(54, -122)),
-                 paste0("The `name` argument looks like a pair of coordinates. ",
-                        "Did you mean `coords = c\\(54, -122\\)`?"))
+                 paste0("The `name` argument looks like a pair of coordinates.",
+                        " Did you mean `coords = c\\(54, -122\\)`?"))
 
   ## Check specific
   expect_equal(nrow(stations_search("Kamloops A$")), 5)
-  expect_equal(unique(stations_search("Kamloops A$")$station_name), "KAMLOOPS A")
+  expect_equal(unique(stations_search("Kamloops A$")$station_name),
+               "KAMLOOPS A")
   expect_equal(sum(stations_search("Kamloops A$")$interval == "month"), 1)
   expect_equal(sum(stations_search("Kamloops A$")$interval == "hour"), 2)
 })
@@ -91,7 +92,8 @@ test_that("stations_search 'coords' returns correct data", {
   expect_lt(max(stn$distance), 30)
 
   ## Check interval
-  expect_equal(nrow(stations_search(coords = k, dist = 30, interval = "hour")), 3)
+  expect_equal(nrow(stations_search(coords = k,
+                                    dist = 30, interval = "hour")), 3)
 })
 
 test_that("stations_search quiet/verbose", {
@@ -99,8 +101,10 @@ test_that("stations_search quiet/verbose", {
   expect_silent(stations_search(c(54, -122), quiet = TRUE))
   expect_silent(stations_search(coords = c(54, -122), quiet = TRUE))
 
-  expect_message(stations_search(c(54, -122), verbose = TRUE), "Searching by name")
-  expect_message(stations_search("Kamloops", verbose = TRUE), "Searching by name")
+  expect_message(stations_search(c(54, -122), verbose = TRUE),
+                 "Searching by name")
+  expect_message(stations_search("Kamloops", verbose = TRUE),
+                 "Searching by name")
   expect_message(stations_search(coords = c(54, -122), verbose = TRUE),
                  "Calculating station distances")
 

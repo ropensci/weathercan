@@ -99,12 +99,18 @@ weather_dl <- function(station_ids,
                                  "climate_data/bulk_data_e.html")
 
   # Address as.POSIXct...
-  if((!is.null(start) & class(try(as.Date(start), silent = TRUE)) == "try-error") |
-     (!is.null(end) & class(try(as.Date(end), silent = TRUE)) == "try-error")) {
-    stop("'start' and 'end' must be either a standard date format (YYYY-MM-DD) or NULL")
+  if((!is.null(start) &
+      class(try(as.Date(start), silent = TRUE)) == "try-error") |
+     (!is.null(end) &
+      class(try(as.Date(end), silent = TRUE)) == "try-error")) {
+    stop("'start' and 'end' must be either a standard date format ",
+         "(YYYY-MM-DD) or NULL")
   }
 
-  if(length(interval) > 1) stop("'interval' must be either 'hour', 'day', OR 'month'")
+  if(length(interval) > 1) {
+    stop("'interval' must be either 'hour', 'day', OR 'month'")
+  }
+
   check_int(interval)
 
   tz_list <- c()
@@ -131,13 +137,15 @@ weather_dl <- function(station_ids,
 
     if(class(try(as.Date(stn1$start), silent = TRUE)) == "try-error") {
       stn1 <- dplyr::mutate(stn1,
-                            start = lubridate::floor_date(lubridate::ymd(as.character(start),
-                                                                         truncated = 2), "year"))
+                            start = lubridate::ymd(as.character(start),
+                                                   truncated = 2),
+                            start = lubridate::floor_date(start, "year"))
     }
     if(class(try(as.Date(stn1$end), silent = TRUE)) == "try-error") {
       stn1 <- dplyr::mutate(stn1,
-                            end = lubridate::ceiling_date(lubridate::ymd(as.character(end),
-                                                                         truncated = 2), "year"))
+                            end = lubridate::ymd(as.character(end),
+                                                 truncated = 2),
+                            end = lubridate::ceiling_date(end, "year"))
     }
     stn1 <- stn1 %>%
       dplyr::mutate(end = replace(end, end > Sys.Date(), Sys.Date()),
@@ -221,7 +229,9 @@ weather_dl <- function(station_ids,
                        as.character(lubridate::int_end(dates)), ").",
                        "\nAvailable Station Data:\n",
                        paste0(utils::capture.output(print(
-                         dplyr::filter(stn, station_id %in% station_ids, !is.na(start)))),
+                         dplyr::filter(stn,
+                                       station_id %in% station_ids,
+                                       !is.na(start)))),
                          collapse = "\n"))
     return(tibble::tibble())
   }
@@ -244,7 +254,9 @@ weather_dl <- function(station_ids,
                          as.character(lubridate::int_end(dates)), ").",
                          "\nAvailable Station Data:\n",
                          paste0(utils::capture.output(print(
-                           dplyr::filter(stn, station_id %in% station_ids, !is.na(start)))),
+                           dplyr::filter(stn,
+                                         station_id %in% station_ids,
+                                         !is.na(start)))),
                            collapse = "\n"))
       return(tibble::tibble())
     }
@@ -260,15 +272,18 @@ weather_dl <- function(station_ids,
 
     ## Appropriate grouping levels
     if(interval == "hour"){
-      w_all <- tidyr::nest(w_all, -station_name, -station_id, -lat, -lon, -date)
+      w_all <- tidyr::nest(w_all,
+                           -station_name, -station_id, -lat, -lon, -date)
     }
 
     if(interval == "day"){
-      w_all <- tidyr::nest(w_all, -station_name, -station_id, -lat, -lon, -month)
+      w_all <- tidyr::nest(w_all,
+                           -station_name, -station_id, -lat, -lon, -month)
     }
 
     if(interval == "month"){
-      w_all <- tidyr::nest(w_all, -station_name, -station_id, -lat, -lon, -year)
+      w_all <- tidyr::nest(w_all,
+                           -station_name, -station_id, -lat, -lon, -year)
     }
 
   }
@@ -322,7 +337,9 @@ weather_format <- function(w, interval = "hour", string_as = "NA", preamble,
   names(w) <- n
 
   if(interval == "day") w <- dplyr::mutate(w, date = as.Date(date))
-  if(interval == "month") w <- dplyr::mutate(w, date = as.Date(paste0(date, "-01")))
+  if(interval == "month") {
+    w <- dplyr::mutate(w, date = as.Date(paste0(date, "-01")))
+  }
 
   ## Get correct timezone
   if(interval == "hour"){
@@ -350,17 +367,20 @@ weather_format <- function(w, interval = "hour", string_as = "NA", preamble,
 
   if("qual" %in% names(w)){
     w <- dplyr::mutate(w,
-                       qual = stringi::stri_escape_unicode(qual), # Convert to ascii
+                       # Convert to ascii
+                       qual = stringi::stri_escape_unicode(qual),
                        qual = replace(qual, qual == "\\u2020",
                                       "Only preliminary quality checking"),
                        qual = replace(qual, qual == "\\u2021",
-                                      paste0("Partner data that is not subject ",
-                                             "to review by the National Climate Archives")))
+                                      paste0("Partner data that is not subject",
+                                             " to review by the National ",
+                                             "Climate Archives")))
   }
   w <- w %>%
     tidyr::gather(type, value, flag, value) %>%
     dplyr::mutate(variable = replace(variable, type == "flag",
-                                     paste0(variable[type == "flag"], "_flag"))) %>%
+                                     paste0(variable[type == "flag"],
+                                            "_flag"))) %>%
     dplyr::select(date, dplyr::everything(), -type) %>%
     tidyr::spread(variable, value)
 
@@ -372,7 +392,8 @@ weather_format <- function(w, interval = "hour", string_as = "NA", preamble,
                                      "weather",
                                      grep("flag", names(w), value = TRUE)))],
                MARGIN = 2,
-               FUN = function(x) tryCatch(as.numeric(x), warning = function(w) w))
+               FUN = function(x) tryCatch(as.numeric(x),
+                                          warning = function(w) w))
 
   warn <- vapply(num,
                  FUN = function(x) methods::is(x, "warning"),
@@ -387,30 +408,33 @@ weather_format <- function(w, interval = "hour", string_as = "NA", preamble,
                     names(w) %in% c("date", "year", "month",
                                     "day", "hour", "time", i)]
       if(nrow(problems) > 20) rows <- 20 else rows <- nrow(problems)
-      if(!quiet) message(paste0(utils::capture.output(problems[seq_along(rows),]),
-                                collapse = "\n"), if (rows < nrow(problems)) "\n...")
+      if(!quiet) {
+        message(paste0(utils::capture.output(problems[seq_along(rows),]),
+                       collapse = "\n"), if (rows < nrow(problems)) "\n...")
+      }
     }
     if(!is.null(string_as)) {
       if(!quiet) message("Replacing with ", string_as,
-                         ". Use 'string_as = NULL' to keep as characters (see ?weather).")
+                         ". Use 'string_as = NULL' to keep ",
+                         "as characters (see ?weather).")
 
       suppressWarnings({
+        valid_cols <- c("date", "year", "month", "day",
+                        "hour", "time", "qual", "weather",
+                        grep("flag", names(w), value = TRUE))
 
-        replacement <- apply(w[, !(names(w) %in% c("date", "year", "month", "day",
-                                                   "hour", "time", "qual", "weather",
-                                                   grep("flag", names(w), value = TRUE)))],
+        replacement <- apply(w[, !(names(w) %in% valid_cols)],
                              MARGIN = 2,
                              FUN = as.numeric)
 
-        w[, !(names(w) %in% c("date", "year", "month", "day",
-                              "hour", "time", "qual", "weather",
-                              grep("flag", names(w), value = TRUE)))] <- replacement
+        w[, !(names(w) %in% valid_cols)] <- replacement
       })
     } else {
       if(!quiet) {
         m <- paste0(names(num)[warn],
                     collapse = ", ")
-        message("Leaving as characters (", m, "). Cannot summarize these values.")
+        message("Leaving as characters (", m,
+                "). Cannot summarize these values.")
       }
 
       replace <- c("date", "year", "month", "day",
@@ -439,7 +463,7 @@ weather <- function(station_ids,
                        string_as = NA,
                        tz_disp = NULL,
                        stn = weathercan::stations,
-                       url = "http://climate.weather.gc.ca/climate_data/bulk_data_e.html",
+                       url = NULL,
                        encoding = "UTF-8",
                        list_col = FALSE,
                        verbose = FALSE,

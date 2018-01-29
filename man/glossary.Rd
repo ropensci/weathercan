@@ -12,7 +12,8 @@
   \code{weather_dl()} function using the default argument \code{format =
   TRUE}.}
   \item{units}{Units of the measurement.}
-  \item{ECCC_ref}{Link to the glossary or reference page on the ECCC website.}
+  \item{ECCC_ref}{Link to the glossary or reference page on the ECCC
+  website.}
 }}
 \usage{
 glossary

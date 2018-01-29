@@ -2,7 +2,8 @@
 #'
 #' \code{weathercan} is an R package for simplifying the downloading of
 #' Historical Climate Data from the Environment and Climate Change Canada (ECCC)
-#' \href{http://climate.weather.gc.ca/historical_data/search_historic_data_e.html}{website}
+#' website
+#' (http://climate.weather.gc.ca/historical_data/search_historic_data_e.html)
 #'
 #' Bear in mind that these downloads can be fairly large and performing
 #' multiple, downloads may use up Environment Canada's bandwidth unnecessarily.
@@ -24,7 +25,8 @@
 #'    \item \code{\link{weather_dl}()}
 #'    }
 #'
-#'  \item Merge\strong{weather} data into other data sets through interpolation over time
+#'  \item Merge\strong{weather} data into other data sets through interpolation
+#'  over time
 #'  \itemize{
 #'    \item \code{\link{weather_interp}()}
 #'    }
@@ -48,7 +50,8 @@
 #'    \item Data Glossary: \code{vignette("glossary")}
 #'    }
 #'
-#' \href{http://steffilazerte.github.io/weathercan}{Online} we also have an advanced article:
+#' \href{http://steffilazerte.github.io/weathercan}{Online} we also have an
+#' advanced article:
 #'
 #'   \itemize{
 #'     \item Using \code{weathercan} with
@@ -71,15 +74,20 @@
 NULL
 
 # Dealing with CRAN Notes due to Non-standard evaluation
-.onLoad <- function(libname = find.package("weathercan"), pkgname = "weathercan"){
+.onLoad <- function(libname = find.package("weathercan"),
+                    pkgname = "weathercan"){
   # CRAN Note avoidance
   if(getRversion() >= "2.15.1")
     utils::globalVariables(
-      # Vars used in Non-Standard Evaluations, declare here to avoid CRAN warnings
+      # Vars used in Non-Standard Evaluations, declare here to
+      # avoid CRAN warnings
       c("Province", "Name", "Station.ID", "Climate.ID", "WMO.ID", "TC.ID",
-        "type", "station_name", "station_id", "lat", "lon", "WMO_id", "TC_id", "prov", "distance",
-        "flag", "hmdx", "pressure", "rel_hum", "temp_dew", "visib", "wind_chill",
-        "variable", "value", "qual", "interval", "month", "start", "year",
+        "type", "station_name", "station_id", "lat", "lon", "WMO_id", "TC_id",
+        "prov", "distance", "flag", "hmdx", "pressure", "rel_hum", "temp_dew",
+        "visib", "wind_chill", "variable", "value", "qual", "interval", "month",
+        "start", "year", "elev",
+        "V1", "V2", "Station Name", "Latitude", "Longitude", "Elevation",
+        "Climate Identifier", "WMO Identifier", "TC Identifier",
         "." # piping requires '.' at times
       )
     )

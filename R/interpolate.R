@@ -61,8 +61,10 @@ weather_interp <- function(data, weather,
   msg <- c("'data' and 'weather' must be data frames with columns 'time'",
            " in POSIXct format or 'date' in Date format.")
   if(!is.data.frame(data) | !is.data.frame(weather)) stop(msg)
-  if((interval == "hour" & !("time" %in% names(data) & "time" %in% names(weather))) |
-     (interval == "day" & !("date" %in% names(data) & "date" %in% names(weather)))) {
+  if((interval == "hour" &
+      !("time" %in% names(data) & "time" %in% names(weather))) |
+     (interval == "day" &
+      !("date" %in% names(data) & "date" %in% names(weather)))) {
     stop("'interval' must be either 'hour' or 'day' and must correspond to a ",
          "column 'time' or 'date' in both the 'data' and 'weather' dataframes.")
   }
@@ -77,8 +79,10 @@ weather_interp <- function(data, weather,
                            !lubridate::is.Date(weather$date)) stop(msg)
 
   ## Make sure 'cols' is do-able
-  if(!any((cols %in% c("all", names(weather))))) stop("'cols' should either be 'all', or should ",
-                                        "match specific columns in 'weather'")
+  if(!any((cols %in% c("all", names(weather))))) {
+    stop("'cols' should either be 'all', or should ",
+         "match specific columns in 'weather'")
+  }
 
   ## If 'time', convert to same timezone
   if(interval == "hour") {
@@ -96,7 +100,8 @@ weather_interp <- function(data, weather,
   if(any(cols == "all")) {
     cols <- w_names[[interval]]
     cols <- cols[-grep(paste0("(flag)|(qual)|(weather)|(time)|(date)|(hour)|",
-                              "(^day$)|(month)|(year)|(^wind_dir$)|(^dir_max_gust$)"),
+                              "(^day$)|(month)|(year)|(^wind_dir$)|",
+                              "(^dir_max_gust$)"),
                        cols)]
   }
 
@@ -118,7 +123,8 @@ weather_interp <- function(data, weather,
     if(interval == "hour") t <- "time" else if(interval == "day") t <- "date"
     w <- weather[!is.na(weather[, col]), ]
     if(nrow(w) < 2) {
-      if(!quiet) message(col, " does not have at least 2 points of non-missing data, skipping...")
+      if(!quiet) message(col, " does not have at least 2 points of ",
+                         "non-missing data, skipping...")
     } else {
       if(nrow(w) < nrow(weather) & !quiet) {
         message(col, " is missing ", nrow(weather) - nrow(w), " ",
@@ -151,7 +157,8 @@ approx_na_rm <- function(x, y, xout, na_gap = NULL) {
     if(lubridate::is.Date(x) | lubridate::is.POSIXct(x)) {
 
       if(!lubridate::is.period(na_gap)) {
-        stop("With date/time data in x, na_gap must be a lubridate period object")
+        stop("With date/time data in x, na_gap must be a lubridate ",
+             "period object")
       }
 
       x <- x[!is.na(y)]
@@ -162,11 +169,14 @@ approx_na_rm <- function(x, y, xout, na_gap = NULL) {
 
 
       which_x <- x[c(diff_x > na_gap, FALSE)]
-      missing <- lubridate::interval(which_x + 1, which_x + diff_x[diff_x > na_gap] - 1)
+      missing <- lubridate::interval(which_x + 1,
+                                     which_x + diff_x[diff_x > na_gap] - 1)
 
       ## Remove missing values from interpolated ones
       missing <- vapply(new$x, FUN.VALUE = TRUE,
-                        FUN = function(x, missing) any(lubridate::`%within%`(x, missing)),
+                        FUN = function(x, missing) {
+                          any(lubridate::`%within%`(x, missing))
+                        },
                         missing = missing)
       new$y[missing] <- NA
 
@@ -179,11 +189,14 @@ approx_na_rm <- function(x, y, xout, na_gap = NULL) {
 
       diff_x <- diff(x)
       which_x <- x[c(diff_x > na_gap, FALSE)]
-      missing <- data.frame(from = which_x, to = which_x + diff_x[diff_x > na_gap])
+      missing <- data.frame(from = which_x,
+                            to = which_x + diff_x[diff_x > na_gap])
 
       ## Remove missing values from interpolated ones
       missing <- vapply(new$x, FUN.VALUE = TRUE,
-                        FUN = function(x, missing) any(x > missing$from & x < missing$to),
+                        FUN = function(x, missing) {
+                          any(x > missing$from & x < missing$to)
+                        },
                         missing = missing)
       new$y[missing] <- NA
     }

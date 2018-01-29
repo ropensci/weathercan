@@ -10,7 +10,8 @@
 #' \describe{
 #'   \item{prov}{Province}
 #'   \item{station_name}{Station name}
-#'   \item{station_id}{Environment Canada's station ID number. Required for downloading station data.}
+#'   \item{station_id}{Environment Canada's station ID number. Required for
+#'   downloading station data.}
 #'   \item{climate_id}{Climate ID number}
 #'   \item{WMO_id}{Climate ID number}
 #'   \item{TC_id}{Climate ID number}
@@ -26,13 +27,14 @@
 
 #' Hourly weather data for Kamloops
 #'
-#' Downloaded with \code{\link{weather}()}. Terms are more thoroughly defined here
-#' \url{http://climate.weather.gc.ca/glossary_e.html}
+#' Downloaded with \code{\link{weather}()}. Terms are more thoroughly defined
+#' here \url{http://climate.weather.gc.ca/glossary_e.html}
 #'
 #' @format An example dataset of hourly weather data for Kamloops:
 #' \describe{
 #'   \item{station_name}{Station name}
-#'   \item{station_id}{Environment Canada's station ID number. Required for downloading station data.}
+#'   \item{station_id}{Environment Canada's station ID number. Required for
+#'   downloading station data.}
 #'   \item{prov}{Province}
 #'   \item{lat}{Latitude of station location in degree decimal format}
 #'   \item{lon}{Longitude of station location in degree decimal format}
@@ -71,13 +73,14 @@
 
 #' Hourly weather data for Prince George
 #'
-#' Downloaded with \code{\link{weather}()}. Terms are more thoroughly defined here
-#' \url{http://climate.weather.gc.ca/glossary_e.html}
+#' Downloaded with \code{\link{weather}()}. Terms are more thoroughly defined
+#' here \url{http://climate.weather.gc.ca/glossary_e.html}
 #'
 #' @format An example dataset of hourly weather data for Prince George:
 #' \describe{
 #'   \item{station_name}{Station name}
-#'   \item{station_id}{Environment Canada's station ID number. Required for downloading station data.}
+#'   \item{station_id}{Environment Canada's station ID number. Required for
+#'   downloading station data.}
 #'   \item{prov}{Province}
 #'   \item{lat}{Latitude of station location in degree decimal format}
 #'   \item{lon}{Longitude of station location in degree decimal format}
@@ -116,13 +119,14 @@
 
 #' Daily weather data for Kamloops
 #'
-#' Downloaded with \code{\link{weather}()}. Terms are more thoroughly defined here
-#' \url{http://climate.weather.gc.ca/glossary_e.html}
+#' Downloaded with \code{\link{weather}()}. Terms are more thoroughly defined
+#' here \url{http://climate.weather.gc.ca/glossary_e.html}
 #'
 #' @format An example dataset of daily weather data for Kamloops:
 #' \describe{
 #'   \item{station_name}{Station name}
-#'   \item{station_id}{Environment Canada's station ID number. Required for downloading station data.}
+#'   \item{station_id}{Environment Canada's station ID number. Required for
+#'   downloading station data.}
 #'   \item{prov}{Province}
 #'   \item{lat}{Latitude of station location in degree decimal format}
 #'   \item{lon}{Longitude of station location in degree decimal format}
@@ -200,6 +204,7 @@
 #'   \code{weather_dl()} function using the default argument \code{format =
 #'   TRUE}.}
 #'   \item{units}{Units of the measurement.}
-#'   \item{ECCC_ref}{Link to the glossary or reference page on the ECCC website.}
+#'   \item{ECCC_ref}{Link to the glossary or reference page on the ECCC
+#'   website.}
 #' }
 "glossary"

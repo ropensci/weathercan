@@ -8,7 +8,8 @@
 \describe{
   \item{prov}{Province}
   \item{station_name}{Station name}
-  \item{station_id}{Environment Canada's station ID number. Required for downloading station data.}
+  \item{station_id}{Environment Canada's station ID number. Required for
+  downloading station data.}
   \item{climate_id}{Climate ID number}
   \item{WMO_id}{Climate ID number}
   \item{TC_id}{Climate ID number}

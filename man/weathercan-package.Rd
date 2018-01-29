@@ -8,7 +8,8 @@
 \description{
 \code{weathercan} is an R package for simplifying the downloading of
 Historical Climate Data from the Environment and Climate Change Canada (ECCC)
-\href{http://climate.weather.gc.ca/historical_data/search_historic_data_e.html}{website}
+website
+(http://climate.weather.gc.ca/historical_data/search_historic_data_e.html)
 }
 \details{
 Bear in mind that these downloads can be fairly large and performing
@@ -31,7 +32,8 @@ There are three main aspects of this package:
    \item \code{\link{weather_dl}()}
    }
 
-\item Merge\strong{weather} data into other data sets through interpolation over time
+\item Merge\strong{weather} data into other data sets through interpolation
+ over time
  \itemize{
    \item \code{\link{weather_interp}()}
    }
@@ -55,7 +57,8 @@ As well as several vignettes:
    \item Data Glossary: \code{vignette("glossary")}
    }
 
-\href{http://steffilazerte.github.io/weathercan}{Online} we also have an advanced article:
+\href{http://steffilazerte.github.io/weathercan}{Online} we also have an
+advanced article:
 
 \itemize{
     \item Using \code{weathercan} with

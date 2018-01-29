@@ -37,7 +37,7 @@
 #' @export
 
 stations_dl <- function(url = NULL,
-                         skip = NULL, verbose = FALSE, quiet = FALSE) {
+                        skip = NULL, verbose = FALSE, quiet = FALSE) {
 
   if(is.null(url)) url <- paste0("ftp://client_climate@ftp.tor.ec.gc.ca/",
                                  "Pub/Get_More_Data_Plus_de_donnees/",
@@ -105,7 +105,8 @@ stations_dl <- function(url = NULL,
                                                  "SASKATCHEWAN",
                                                  "YUKON TERRITORY"),
                                 labels = c("AB", "BC", "MB", "NB", "NL", "NT",
-                                           "NS", "NU", "ON", "PE", "QC", "SK", "YT"))) %>%
+                                           "NS", "NU", "ON", "PE", "QC", "SK",
+                                           "YT"))) %>%
     tidyr::spread(type, date) %>%
     dplyr::tbl_df()
 }
@@ -162,18 +163,23 @@ stations_search <- function(name = NULL,
                             stn = weathercan::stations,
                             verbose = FALSE,
                             quiet = FALSE) {
-  if(all(is.null(name), is.null(coords)) | all(!is.null(name), !is.null(coords))) {
+  if(all(is.null(name), is.null(coords)) |
+     all(!is.null(name), !is.null(coords))) {
     stop("Need a search name OR search coordinate")
   }
 
   if(!is.null(coords)) {
-    suppressWarnings({coords <- try(as.numeric(as.character(coords)), silent = TRUE)})
-    if(length(coords) != 2 | all(is.na(coords)) | class(coords) == "try-error") {
+    suppressWarnings({
+      coords <- try(as.numeric(as.character(coords)), silent = TRUE)
+      })
+    if(length(coords) != 2 | all(is.na(coords)) |
+       class(coords) == "try-error") {
       stop("'coord' takes one pair of lat and lon in a numeric vector")
     }
 
     if(!requireNamespace("sp", quietly = TRUE)) {
-     stop("Package 'sp' required to search for stations using coordinates. Use the code \"install.packages('sp')\" to install.", call. = FALSE)
+     stop("Package 'sp' required to search for stations using coordinates. ",
+          "Use the code \"install.packages('sp')\" to install.", call. = FALSE)
     }
 
   }
@@ -204,22 +210,26 @@ stations_search <- function(name = NULL,
 
   if(!is.null(coords)){
     if(verbose) message("Calculating station distances")
-    coords <- as.numeric(as.character(coords))
+    coords <- as.numeric(as.character(coords[c(2,1)]))
+    locs <- as.matrix(stn[!is.na(stn$lat), c("lon", "lat")])
     stn$distance <- NA
-    stn$distance[!is.na(stn$lat)] <- sp::spDistsN1(pts = as.matrix(stn[!is.na(stn$lat), c("lon", "lat")]),
-                                                   pt = c(coords[2], coords[1]), longlat = TRUE)
+    stn$distance[!is.na(stn$lat)] <- sp::spDistsN1(pts = locs,
+                                                   pt = coords, longlat = TRUE)
     stn <- dplyr::arrange(stn, distance)
 
     i <- which(stn$distance <= dist)
     if(length(i) == 0) {
      i <- 1:10
-     if(!quiet) message("No stations within ", dist, "km. Returning closest 10 stations.")
+     if(!quiet) message("No stations within ", dist,
+                        "km. Returning closest 10 stations.")
     }
   }
 
   stn <- stn[i, ]
-  if(!is.null(name)) stn <- dplyr::arrange(stn, station_name, station_id, interval)
-  if(!is.null(coords)) stn <- dplyr::arrange(stn, distance, station_name, station_id, interval)
+  if(!is.null(name)) stn <- dplyr::arrange(stn, station_name,
+                                           station_id, interval)
+  if(!is.null(coords)) stn <- dplyr::arrange(stn, distance, station_name,
+                                             station_id, interval)
 
   stn
 }

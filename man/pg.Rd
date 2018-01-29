@@ -7,7 +7,8 @@
 \format{An example dataset of hourly weather data for Prince George:
 \describe{
   \item{station_name}{Station name}
-  \item{station_id}{Environment Canada's station ID number. Required for downloading station data.}
+  \item{station_id}{Environment Canada's station ID number. Required for
+  downloading station data.}
   \item{prov}{Province}
   \item{lat}{Latitude of station location in degree decimal format}
   \item{lon}{Longitude of station location in degree decimal format}
@@ -48,7 +49,7 @@
 pg
 }
 \description{
-Downloaded with \code{\link{weather}()}. Terms are more thoroughly defined here
-\url{http://climate.weather.gc.ca/glossary_e.html}
+Downloaded with \code{\link{weather}()}. Terms are more thoroughly defined
+here \url{http://climate.weather.gc.ca/glossary_e.html}
 }
 \keyword{datasets}
