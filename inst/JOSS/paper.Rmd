@@ -19,7 +19,7 @@ options(width = 90, tibble.max_extra_cols = 0)
 
 # Summary
 
-Environment and Climate Change Canada maintains an online source of historical Canadian weather data in hourly, daily and monthly formats for various stations across Canada [@canada_historical_2011]. This data is freely available and can be accessed directly from their website. However, downloading data from multiple stations and across larger time periods can take significant time and effort. Further, these downloads require processing before they can be used for analysis. `weathercan` [@lazerte_weathercan:_2017] is an R package that automates and simplifies the downloading and formating of this data. 
+Environment and Climate Change Canada maintains an online source of historical Canadian weather data in hourly, daily and monthly formats for various stations across Canada [@canada_historical_2011]. This data is freely available and can be accessed directly from their website. However, downloading data from multiple stations and across larger time periods can take significant time and effort. Further, these downloads require processing before they can be used for analysis. `weathercan` [@lazerte_weathercan_2018] is an R [@r_stats] package that automates and simplifies the downloading and formating of this data. 
 
 The first step in using `weathercan` is to identify the `station_id`(s) of the weather station(s) of interest. Stations can be searched for either by name (e.g., `stations_search("Brandon")`) or proximity to a given location (e.g., `stations_search(coords = c(49.84847, -99.95009))`). Searches can be conducted on all possible stations, or filtered to include only those recording weather at the desired time interval:
 
@@ -96,7 +96,14 @@ head(sediment)
 ```
 
 
-`weathercan` is available from [GitHub](https://github.com/steffilazerte/weathercan)
+# Installation
+
+`weathercan` is available from [GitHub](https://github.com/ropensci/weathercan) and can be installed in R using the `devtools` package:
+
+```{r, eval = FALSE}
+devtools::install_github("ropensci/weathercan")
+```
+
 
 
 # References
