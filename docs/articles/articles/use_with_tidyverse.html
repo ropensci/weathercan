@@ -39,7 +39,7 @@
   <a href="../../articles/weathercan.html">Getting Started</a>
 </li>
 <li>
-  <a href="http://steffilazerte.github.io/Presentations/#weathercan">Presentations</a>
+  <a href="http://ropensci.github.io/Presentations/#weathercan">Presentations</a>
 </li>
 <li>
   <a href="../../reference/index.html">Reference</a>
@@ -71,7 +71,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/steffilazerte/weathercan">
+  <a href="https://github.com/ropensci/weathercan">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -91,7 +91,7 @@
       <h1>Using with the tidyverse</h1>
                         <h4 class="author">Sam Albers</h4>
             
-            <h4 class="date">2018-01-26</h4>
+            <h4 class="date">2018-02-01</h4>
           </div>
 
     
@@ -144,8 +144,8 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(pancan_df, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> date, <span class="dt">y =</span> mean_temp, <span class="dt">colour =</span> station_name)) +
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>() +
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>()</code></pre></div>
-<pre><code>## Warning: Removed 25410 rows containing missing values (geom_point).</code></pre>
-<pre><code>## Warning: Removed 6497 rows containing missing values (geom_path).</code></pre>
+<pre><code>## Warning: Removed 25425 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: Removed 6509 rows containing missing values (geom_path).</code></pre>
 <p><img src="use_with_tidyverse_files/figure-html/raw_plt-1.png" width="960"></p>
 <p>This is quite a large dataset.</p>
 </div>
@@ -208,7 +208,7 @@ pancan_df_nest</code></pre></div>
 </h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">resids &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/unnest">unnest</a></span>(pancan_df_nest, resids)
 resids</code></pre></div>
-<pre><code>## # A tibble: 179,100 x 12
+<pre><code>## # A tibble: 179,130 x 12
 ##    stat… stat… prov    lat   lon  elev clim… WMO_… TC_id mean_… date      
 ##    &lt;chr&gt; &lt;dbl&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;date&gt;    
 ##  1 AGAS…   707 BC     49.2  -122  15.0 1100… ""    ""     3.40  1920-01-01
@@ -221,14 +221,14 @@ resids</code></pre></div>
 ##  8 AGAS…   707 BC     49.2  -122  15.0 1100… ""    ""    -0.600 1920-01-08
 ##  9 AGAS…   707 BC     49.2  -122  15.0 1100… ""    ""     0.900 1920-01-09
 ## 10 AGAS…   707 BC     49.2  -122  15.0 1100… ""    ""     1.40  1920-01-10
-## # ... with 179,090 more rows, and 1 more variable: resid &lt;dbl&gt;</code></pre>
+## # ... with 179,120 more rows, and 1 more variable: resid &lt;dbl&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(<span class="dt">data =</span> resids, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(date, resid)) +
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">group =</span> station_name), <span class="dt">alpha =</span> <span class="dv">1</span> /<span class="st"> </span><span class="dv">3</span>) +<span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>() +
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_abline">geom_hline</a></span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) +
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>(~<span class="st"> </span>station_name, <span class="dt">ncol =</span> <span class="dv">1</span>)</code></pre></div>
-<pre><code>## Warning: Removed 6497 rows containing missing values (geom_path).</code></pre>
-<pre><code>## Warning: Removed 25410 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: Removed 6509 rows containing missing values (geom_path).</code></pre>
+<pre><code>## Warning: Removed 25425 rows containing missing values (geom_point).</code></pre>
 <p><img src="use_with_tidyverse_files/figure-html/resid-1.png" width="960"></p>
 </div>
 <div id="using-broom" class="section level3">
@@ -257,9 +257,9 @@ resids</code></pre></div>
 <tr class="even">
 <td align="left">BELLEVILLE</td>
 <td align="left">ON</td>
-<td align="right">0.0024626</td>
+<td align="right">0.0024359</td>
 <td align="right">0.0000000</td>
-<td align="right">261252.6</td>
+<td align="right">261292.2</td>
 </tr>
 <tr class="odd">
 <td align="left">PORT AUX BASQUES</td>
@@ -271,16 +271,16 @@ resids</code></pre></div>
 <tr class="even">
 <td align="left">LENNOXVILLE</td>
 <td align="left">QC</td>
-<td align="right">0.0010849</td>
+<td align="right">0.0010621</td>
 <td align="right">0.0000000</td>
-<td align="right">274554.0</td>
+<td align="right">274604.0</td>
 </tr>
 <tr class="odd">
 <td align="left">TABER</td>
 <td align="left">AB</td>
-<td align="right">0.0004209</td>
-<td align="right">0.0017996</td>
-<td align="right">178987.9</td>
+<td align="right">0.0004144</td>
+<td align="right">0.0019517</td>
+<td align="right">179016.0</td>
 </tr>
 </tbody>
 </table>
@@ -294,7 +294,7 @@ resids</code></pre></div>
          <span class="dt">preds =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map2">map2</a></span>(data, model, add_predictions)) %&gt;%
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/unnest">unnest</a></span>(preds)
 preds</code></pre></div>
-<pre><code>## # A tibble: 179,100 x 12
+<pre><code>## # A tibble: 179,130 x 12
 ##    stat… stat… prov    lat   lon  elev clim… WMO_… TC_id mean_… date      
 ##    &lt;chr&gt; &lt;dbl&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;date&gt;    
 ##  1 AGAS…   707 BC     49.2  -122  15.0 1100… ""    ""     3.40  1920-01-01
@@ -307,12 +307,12 @@ preds</code></pre></div>
 ##  8 AGAS…   707 BC     49.2  -122  15.0 1100… ""    ""    -0.600 1920-01-08
 ##  9 AGAS…   707 BC     49.2  -122  15.0 1100… ""    ""     0.900 1920-01-09
 ## 10 AGAS…   707 BC     49.2  -122  15.0 1100… ""    ""     1.40  1920-01-10
-## # ... with 179,090 more rows, and 1 more variable: pred &lt;dbl&gt;</code></pre>
+## # ... with 179,120 more rows, and 1 more variable: pred &lt;dbl&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(<span class="dt">data =</span> preds, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> date, <span class="dt">y =</span> mean_temp, <span class="dt">colour =</span> station_name)) +
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>() +
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">y =</span> pred)) +
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>(~<span class="st"> </span>station_name, <span class="dt">scales =</span> <span class="st">"free_y"</span>, <span class="dt">ncol =</span> <span class="dv">1</span>)</code></pre></div>
-<pre><code>## Warning: Removed 25410 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: Removed 25425 rows containing missing values (geom_point).</code></pre>
 <p><img src="use_with_tidyverse_files/figure-html/pred-1.png" width="960"></p>
 </div>
 </div>

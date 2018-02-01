@@ -1,6 +1,6 @@
 urls:
-  reference: http://steffilazerte.github.io/weathercan/reference
-  article: http://steffilazerte.github.io/weathercan/articles
+  reference: http://ropensci.github.io/weathercan/reference
+  article: http://ropensci.github.io/weathercan/articles
 articles:
   use_with_tidyverse: articles/use_with_tidyverse.html
   flags: flags.html

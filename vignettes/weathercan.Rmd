@@ -10,7 +10,7 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
-knitr::opts_chunk$set(cache = TRUE)
+knitr::opts_chunk$set(cache = FALSE)
 options(tibble.max_extra_cols = 0, width = 90)
 ```
 

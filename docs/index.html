@@ -39,7 +39,7 @@
   <a href="articles/weathercan.html">Getting Started</a>
 </li>
 <li>
-  <a href="http://steffilazerte.github.io/Presentations/#weathercan">Presentations</a>
+  <a href="http://ropensci.github.io/Presentations/#weathercan">Presentations</a>
 </li>
 <li>
   <a href="reference/index.html">Reference</a>
@@ -72,7 +72,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/steffilazerte/weathercan">
+  <a href="https://github.com/ropensci/weathercan">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -98,7 +98,7 @@
 <a href="#weathercan" class="anchor"></a>weathercan <img src="https://github.com/steffilazerte/weathercan/raw/master/inst/assets/weathercan_logo.png" align="right" width="110/">
 </h1></div>
 
-<p>This package is makes it easier to search for and download multiple months/years of historical weather data from Environment and Climate Change Canada (ECCC) website.</p>
+<p>This package is makes it easier to search for and download multiple months/years of historical weather data from <a href="http://climate.weather.gc.ca/historical_data/search_historic_data_e.html">Environment and Climate Change Canada (ECCC) website</a>.</p>
 <p>Bear in mind that these downloads can be fairly large and performing multiple downloads may use up ECCC’s bandwidth unecessarily. Try to stick to what you need.</p>
 <p>For more details and tutorials checkout the <a href="http://steffilazerte.github.io/weathercan">weathercan website</a></p>
 <div id="installation" class="section level2">
@@ -107,6 +107,10 @@
 <p>Use the <code>devtools</code> package to directly install R packages from github:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"devtools"</span>) <span class="co"># If not already installed</span>
 devtools::<span class="kw">install_github</span>(<span class="st">"steffilazerte/weathercan"</span>) </code></pre></div>
+<p>To build the vignettes (tutorials) locally, use:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">"steffilazerte/weathercan"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>) </code></pre></div>
+<p>View the available vignettes with <code>vignette(package = "weathercan")</code></p>
+<p>View a particular vignette with, for example, <code>vignette("weathercan", package = "weathercan")</code></p>
 </div>
 <div id="general-usage" class="section level2">
 <h2 class="hasAnchor">
@@ -118,17 +122,16 @@ devtools::<span class="kw">install_github</span>(<span class="st">"steffilazerte
 <p><code>weathercan</code> includes a data frame called <code>stations</code> which includes a list of stations and their details (including <code>station_id</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(stations)</code></pre></div>
 <pre><code>## # A tibble: 6 x 12
-##     prov           station_name station_id climate_id WMO_id  TC_id   lat     lon  elev interval
-##   &lt;fctr&gt;                  &lt;chr&gt;     &lt;fctr&gt;     &lt;fctr&gt; &lt;fctr&gt; &lt;fctr&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;chr&gt;
-## 1     BC            ACTIVE PASS         14    1010066   &lt;NA&gt;   &lt;NA&gt; 48.87 -123.28   4.0     hour
-## 2     BC            ALBERT HEAD         15    1010235   &lt;NA&gt;   &lt;NA&gt; 48.40 -123.48  17.0     hour
-## 3     BC BAMBERTON OCEAN CEMENT         16    1010595   &lt;NA&gt;   &lt;NA&gt; 48.58 -123.52  85.3     hour
-## 4     BC             BEAR CREEK         17    1010720   &lt;NA&gt;   &lt;NA&gt; 48.50 -124.00 350.5     hour
-## 5     BC            BEAVER LAKE         18    1010774   &lt;NA&gt;   &lt;NA&gt; 48.50 -123.35  61.0     hour
-## 6     BC             BECHER BAY         19    1010780   &lt;NA&gt;   &lt;NA&gt; 48.33 -123.63  12.2     hour
-## # ... with 2 more variables: start &lt;int&gt;, end &lt;int&gt;</code></pre>
+##   prov   station_name           station_id clima… WMO_id TC_id   lat   lon   elev inte… start   end
+##   &lt;fctr&gt; &lt;chr&gt;                  &lt;fctr&gt;     &lt;fctr&gt; &lt;fctr&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt;
+## 1 BC     ACTIVE PASS            14         10100… &lt;NA&gt;   &lt;NA&gt;   48.9  -123   4.00 hour     NA    NA
+## 2 BC     ALBERT HEAD            15         10102… &lt;NA&gt;   &lt;NA&gt;   48.4  -123  17.0  hour     NA    NA
+## 3 BC     BAMBERTON OCEAN CEMENT 16         10105… &lt;NA&gt;   &lt;NA&gt;   48.6  -124  85.3  hour     NA    NA
+## 4 BC     BEAR CREEK             17         10107… &lt;NA&gt;   &lt;NA&gt;   48.5  -124 350    hour     NA    NA
+## 5 BC     BEAVER LAKE            18         10107… &lt;NA&gt;   &lt;NA&gt;   48.5  -123  61.0  hour     NA    NA
+## 6 BC     BECHER BAY             19         10107… &lt;NA&gt;   &lt;NA&gt;   48.3  -124  12.2  hour     NA    NA</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">glimpse</span>(stations)</code></pre></div>
-<pre><code>## Observations: 26,217
+<pre><code>## Observations: 26,232
 ## Variables: 12
 ## $ prov         &lt;fctr&gt; BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, B...
 ## $ station_name &lt;chr&gt; "ACTIVE PASS", "ALBERT HEAD", "BAMBERTON OCEAN CEMENT", "BEAR CREEK", "BEA...
@@ -145,21 +148,20 @@ devtools::<span class="kw">install_github</span>(<span class="st">"steffilazerte
 <p>You can look through this data frame directly, or you can use the <code>stations_search</code> function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/stations_search.html">stations_search</a></span>(<span class="st">"Kamloops"</span>, <span class="dt">interval =</span> <span class="st">"hour"</span>)</code></pre></div>
 <pre><code>## # A tibble: 3 x 12
-##     prov station_name station_id climate_id WMO_id  TC_id   lat     lon  elev interval start   end
-##   &lt;fctr&gt;        &lt;chr&gt;     &lt;fctr&gt;     &lt;fctr&gt; &lt;fctr&gt; &lt;fctr&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;chr&gt; &lt;int&gt; &lt;int&gt;
-## 1     BC   KAMLOOPS A       1275    1163780  71887    YKA  50.7 -120.44 345.3     hour  1953  2013
-## 2     BC   KAMLOOPS A      51423    1163781  71887    YKA  50.7 -120.45 345.3     hour  2013  2017
-## 3     BC KAMLOOPS AUT      42203    1163842  71741    ZKA  50.7 -120.44 345.0     hour  2006  2017</code></pre>
+##   prov   station_name station_id climate_id WMO_id TC_id    lat   lon  elev interval start   end
+##   &lt;fctr&gt; &lt;chr&gt;        &lt;fctr&gt;     &lt;fctr&gt;     &lt;fctr&gt; &lt;fctr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;int&gt; &lt;int&gt;
+## 1 BC     KAMLOOPS A   1275       1163780    71887  YKA     50.7  -120   345 hour      1953  2013
+## 2 BC     KAMLOOPS A   51423      1163781    71887  YKA     50.7  -120   345 hour      2013  2018
+## 3 BC     KAMLOOPS AUT 42203      1163842    71741  ZKA     50.7  -120   345 hour      2006  2018</code></pre>
 <p>Time frame must be one of “hour”, “day”, or “month”.</p>
 <p>You can also search by proximity:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/stations_search.html">stations_search</a></span>(<span class="dt">coords =</span> <span class="kw">c</span>(<span class="fl">50.667492</span>, -<span class="fl">120.329049</span>), <span class="dt">dist =</span> <span class="dv">20</span>, <span class="dt">interval =</span> <span class="st">"hour"</span>)</code></pre></div>
 <pre><code>## # A tibble: 3 x 13
-##     prov station_name station_id climate_id WMO_id  TC_id   lat     lon  elev interval start   end
-##   &lt;fctr&gt;        &lt;chr&gt;     &lt;fctr&gt;     &lt;fctr&gt; &lt;fctr&gt; &lt;fctr&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;chr&gt; &lt;int&gt; &lt;int&gt;
-## 1     BC   KAMLOOPS A       1275    1163780  71887    YKA  50.7 -120.44 345.3     hour  1953  2013
-## 2     BC KAMLOOPS AUT      42203    1163842  71741    ZKA  50.7 -120.44 345.0     hour  2006  2017
-## 3     BC   KAMLOOPS A      51423    1163781  71887    YKA  50.7 -120.45 345.3     hour  2013  2017
-## # ... with 1 more variables: distance &lt;dbl&gt;</code></pre>
+##   prov   station_name station_id climate_id WMO_id TC_id    lat   lon  elev inte… start   end dist…
+##   &lt;fctr&gt; &lt;chr&gt;        &lt;fctr&gt;     &lt;fctr&gt;     &lt;fctr&gt; &lt;fctr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
+## 1 BC     KAMLOOPS A   1275       1163780    71887  YKA     50.7  -120   345 hour   1953  2013  8.64
+## 2 BC     KAMLOOPS AUT 42203      1163842    71741  ZKA     50.7  -120   345 hour   2006  2018  8.64
+## 3 BC     KAMLOOPS A   51423      1163781    71887  YKA     50.7  -120   345 hour   2013  2018  9.28</code></pre>
 </div>
 <div id="weather" class="section level3">
 <h3 class="hasAnchor">
@@ -168,36 +170,36 @@ devtools::<span class="kw">install_github</span>(<span class="st">"steffilazerte
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kam &lt;-<span class="st"> </span><span class="kw"><a href="reference/weather_dl.html">weather_dl</a></span>(<span class="dt">station_ids =</span> <span class="dv">51423</span>, <span class="dt">start =</span> <span class="st">"2016-01-01"</span>, <span class="dt">end =</span> <span class="st">"2016-02-15"</span>)
 kam</code></pre></div>
 <pre><code>## # A tibble: 1,104 x 35
-##    station_name station_id   prov   lat     lon       date                time  year month   day
-##  *        &lt;chr&gt;      &lt;dbl&gt; &lt;fctr&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;date&gt;              &lt;dttm&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
-##  1   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 00:00:00  2016    01    01
-##  2   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 01:00:00  2016    01    01
-##  3   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 02:00:00  2016    01    01
-##  4   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 03:00:00  2016    01    01
-##  5   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 04:00:00  2016    01    01
-##  6   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 05:00:00  2016    01    01
-##  7   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 06:00:00  2016    01    01
-##  8   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 07:00:00  2016    01    01
-##  9   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 08:00:00  2016    01    01
-## 10   KAMLOOPS A      51423     BC  50.7 -120.45 2016-01-01 2016-01-01 09:00:00  2016    01    01
-## # ... with 1,094 more rows, and 25 more variables</code></pre>
+##    stat… stat…   lat   lon  elev clim… WMO_… TC_id prov  date       time                year  month
+##  * &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;fct&gt; &lt;date&gt;     &lt;dttm&gt;              &lt;chr&gt; &lt;chr&gt;
+##  1 KAML… 51423  50.7  -120   345 1163… 71887 YKA   BC    2016-01-01 2016-01-01 00:00:00 2016  01   
+##  2 KAML… 51423  50.7  -120   345 1163… 71887 YKA   BC    2016-01-01 2016-01-01 01:00:00 2016  01   
+##  3 KAML… 51423  50.7  -120   345 1163… 71887 YKA   BC    2016-01-01 2016-01-01 02:00:00 2016  01   
+##  4 KAML… 51423  50.7  -120   345 1163… 71887 YKA   BC    2016-01-01 2016-01-01 03:00:00 2016  01   
+##  5 KAML… 51423  50.7  -120   345 1163… 71887 YKA   BC    2016-01-01 2016-01-01 04:00:00 2016  01   
+##  6 KAML… 51423  50.7  -120   345 1163… 71887 YKA   BC    2016-01-01 2016-01-01 05:00:00 2016  01   
+##  7 KAML… 51423  50.7  -120   345 1163… 71887 YKA   BC    2016-01-01 2016-01-01 06:00:00 2016  01   
+##  8 KAML… 51423  50.7  -120   345 1163… 71887 YKA   BC    2016-01-01 2016-01-01 07:00:00 2016  01   
+##  9 KAML… 51423  50.7  -120   345 1163… 71887 YKA   BC    2016-01-01 2016-01-01 08:00:00 2016  01   
+## 10 KAML… 51423  50.7  -120   345 1163… 71887 YKA   BC    2016-01-01 2016-01-01 09:00:00 2016  01   
+## # ... with 1,094 more rows, and 22 more variables</code></pre>
 <p>You can also download data from multiple stations at once:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kam_pg &lt;-<span class="st"> </span><span class="kw"><a href="reference/weather_dl.html">weather_dl</a></span>(<span class="dt">station_ids =</span> <span class="kw">c</span>(<span class="dv">48248</span>, <span class="dv">51423</span>), <span class="dt">start =</span> <span class="st">"2016-01-01"</span>, <span class="dt">end =</span> <span class="st">"2016-02-15"</span>)
 kam_pg</code></pre></div>
 <pre><code>## # A tibble: 2,208 x 35
-##                  station_name station_id   prov   lat     lon       date                time  year
-##  *                      &lt;chr&gt;      &lt;dbl&gt; &lt;fctr&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;date&gt;              &lt;dttm&gt; &lt;chr&gt;
-##  1 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 00:00:00  2016
-##  2 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 01:00:00  2016
-##  3 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 02:00:00  2016
-##  4 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 03:00:00  2016
-##  5 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 04:00:00  2016
-##  6 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 05:00:00  2016
-##  7 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 06:00:00  2016
-##  8 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 07:00:00  2016
-##  9 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 08:00:00  2016
-## 10 PRINCE GEORGE AIRPORT AUTO      48248     BC 53.89 -122.67 2016-01-01 2016-01-01 09:00:00  2016
-## # ... with 2,198 more rows, and 27 more variables</code></pre>
+##    stat… stat…   lat   lon  elev clim… WMO_… TC_id prov  date       time                year  month
+##  * &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;fct&gt; &lt;date&gt;     &lt;dttm&gt;              &lt;chr&gt; &lt;chr&gt;
+##  1 PRIN… 48248  53.9  -123   680 1096… 71302 VXS   BC    2016-01-01 2016-01-01 00:00:00 2016  01   
+##  2 PRIN… 48248  53.9  -123   680 1096… 71302 VXS   BC    2016-01-01 2016-01-01 01:00:00 2016  01   
+##  3 PRIN… 48248  53.9  -123   680 1096… 71302 VXS   BC    2016-01-01 2016-01-01 02:00:00 2016  01   
+##  4 PRIN… 48248  53.9  -123   680 1096… 71302 VXS   BC    2016-01-01 2016-01-01 03:00:00 2016  01   
+##  5 PRIN… 48248  53.9  -123   680 1096… 71302 VXS   BC    2016-01-01 2016-01-01 04:00:00 2016  01   
+##  6 PRIN… 48248  53.9  -123   680 1096… 71302 VXS   BC    2016-01-01 2016-01-01 05:00:00 2016  01   
+##  7 PRIN… 48248  53.9  -123   680 1096… 71302 VXS   BC    2016-01-01 2016-01-01 06:00:00 2016  01   
+##  8 PRIN… 48248  53.9  -123   680 1096… 71302 VXS   BC    2016-01-01 2016-01-01 07:00:00 2016  01   
+##  9 PRIN… 48248  53.9  -123   680 1096… 71302 VXS   BC    2016-01-01 2016-01-01 08:00:00 2016  01   
+## 10 PRIN… 48248  53.9  -123   680 1096… 71302 VXS   BC    2016-01-01 2016-01-01 09:00:00 2016  01   
+## # ... with 2,198 more rows, and 22 more variables</code></pre>
 <p>And plot it:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
 
@@ -211,11 +213,14 @@ kam_pg</code></pre></div>
 <h2 class="hasAnchor">
 <a href="#citation" class="anchor"></a>Citation</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">citation</span>(<span class="st">"weathercan"</span>)</code></pre></div>
+<pre><code>## Warning in citation("weathercan"): no date field in DESCRIPTION file of package 'weathercan'</code></pre>
+<pre><code>## Warning in citation("weathercan"): could not determine year for 'weathercan' from package
+## DESCRIPTION file</code></pre>
 <pre><code>## 
 ## To cite package 'weathercan' in publications use:
 ## 
-##   Steffi LaZerte (2017). weathercan: Download Weather Data from the Environment and
-##   Climate Change Canada Website. R package version 0.2.2.9000.
+##   Steffi LaZerte (NA). weathercan: Download Weather Data from the Environment and Climate
+##   Change Canada Website. R package version 0.2.2.9000.
 ##   https://github.com/steffilazerte/weathercan
 ## 
 ## A BibTeX entry for LaTeX users is
@@ -223,7 +228,6 @@ kam_pg</code></pre></div>
 ##   @Manual{,
 ##     title = {weathercan: Download Weather Data from the Environment and Climate Change Canada Website},
 ##     author = {Steffi LaZerte},
-##     year = {2017},
 ##     note = {R package version 0.2.2.9000},
 ##     url = {https://github.com/steffilazerte/weathercan},
 ##   }</code></pre>
@@ -243,17 +247,18 @@ kam_pg</code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li><a href="https://cran.rstudio.com/web/packages/CHCN/index.html"><code>CHCN</code></a></li>
 </ol>
-<p><code>CHCN</code> is an older package last updated in 2012. Unfortunately, ECCC updated their services within the last couple of years which caused a great many of the previous web scrapers to fail. <code>CHCN</code> relies on one of these (older web-scrapers)[<a href="https://classic.scraperwiki.com/scrapers/can-weather-stations/" class="uri">https://classic.scraperwiki.com/scrapers/can-weather-stations/</a>] and so is currently broken.</p>
+<p><code>CHCN</code> is an older package last updated in 2012. Unfortunately, ECCC updated their services within the last couple of years which caused a great many of the previous web scrapers to fail. <code>CHCN</code> relies on one of these <a href="https://classic.scraperwiki.com/scrapers/can-weather-stations/">older web-scrapers</a> and so is currently broken.</p>
 </div>
 <div id="contributions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#contributions" class="anchor"></a>Contributions</h2>
-<p>We welcome any and all contributions! To make the process as painless as possible for all involved, please see our <a href="http://github.com/steffilazerte/weathercan/tree/master/.github/contributing.md">guide to contributing</a></p>
+<p>We welcome any and all contributions! To make the process as painless as possible for all involved, please see our <a href="CONTRIBUTING.md">guide to contributing</a></p>
 </div>
 <div id="code-of-conduct" class="section level2">
 <h2 class="hasAnchor">
 <a href="#code-of-conduct" class="anchor"></a>Code of Conduct</h2>
-<p>Please note that this project is released with a <a href="CONDUCT.md">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</p>
+<p>Please note that this project is released with a <a href="CODE_OF_CONDUCT.md">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</p>
+<p><a href="https://ropensci.org"><img src="http://ropensci.org/public_images/ropensci_footer.png" alt="ropensci_footer"></a></p>
 </div>
 </div>
 </div>
@@ -263,23 +268,24 @@ kam_pg</code></pre></div>
     <h2 class="hasAnchor">
 <a href="#sidebar" class="anchor"></a>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/steffilazerte/weathercan">https://​github.com/​steffilazerte/​weathercan</a>
+<li>Browse source code at <br><a href="https://github.com/ropensci/weathercan">https://​github.com/​ropensci/​weathercan</a>
 </li>
-<li>Report a bug at <br><a href="https://github.com/steffilazerte/weathercan/issues">https://​github.com/​steffilazerte/​weathercan/​issues</a>
+<li>Report a bug at <br><a href="https://github.com/ropensci/weathercan/issues">https://​github.com/​ropensci/​weathercan/​issues</a>
 </li>
 </ul>
 <h2>License</h2>
 <p><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></p>
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Steffi LaZerte <br><small class="roles"> Author, maintainer </small> </li>
+<li>Steffi LaZerte <br><small class="roles"> Author, maintainer </small> <br><small>(https://orcid.org/0000-0002-7690-8360)</small>
+</li>
 <li><a href="authors.html">All authors...</a></li>
 </ul>
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.org/steffilazerte/weathercan"><img src="https://travis-ci.org/steffilazerte/weathercan.svg?branch=master" alt="Build Status"></a></li>
-<li><a href="https://ci.appveyor.com/project/steffilazerte/weathercan"><img src="https://ci.appveyor.com/api/projects/status/github/steffilazerte/weathercan?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
-<li><a href="https://codecov.io/gh/steffilazerte/weathercan"><img src="https://codecov.io/gh/steffilazerte/weathercan/branch/master/graph/badge.svg" alt="codecov"></a></li>
+<li><a href="https://travis-ci.org/ropensci/weathercan"><img src="https://travis-ci.org/ropensci/weathercan.svg?branch=master" alt="Build Status"></a></li>
+<li><a href="https://ci.appveyor.com/project/steffilazerte/weathercan"><img src="https://ci.appveyor.com/api/projects/status/github/ropensci/weathercan?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
+<li><a href="https://codecov.io/gh/ropensci/weathercan"><img src="https://codecov.io/gh/ropensci/weathercan/branch/master/graph/badge.svg" alt="codecov"></a></li>
 <li><a href="https://github.com/ropensci/onboarding/issues/160"><img src="https://badges.ropensci.org/160_status.svg"></a></li>
 </ul>
 </div>
