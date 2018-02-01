@@ -1,14 +1,14 @@
 
-weathercan <img src="https://github.com/steffilazerte/weathercan/raw/master/inst/assets/weathercan_logo.png" align = "right" width = 110/>
-==========================================================================================================================================
+weathercan <img src="https://github.com/ropensci/weathercan/raw/master/inst/assets/weathercan_logo.png" align = "right" width = 110/>
+=====================================================================================================================================
 
-[![Build Status](https://travis-ci.org/ropensci/weathercan.svg?branch=master)](https://travis-ci.org/ropensci/weathercan) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ropensci/weathercan?branch=master&svg=true)](https://ci.appveyor.com/project/steffilazerte/weathercan) [![codecov](https://codecov.io/gh/ropensci/weathercan/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/weathercan) [![](https://badges.ropensci.org/160_status.svg)](https://github.com/ropensci/onboarding/issues/160)
+[![Build Status](https://travis-ci.org/ropensci/weathercan.svg?branch=master)](https://travis-ci.org/ropensci/weathercan) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ropensci/weathercan?branch=master&svg=true)](https://ci.appveyor.com/project/ropensci/weathercan) [![codecov](https://codecov.io/gh/ropensci/weathercan/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/weathercan) [![](https://badges.ropensci.org/160_status.svg)](https://github.com/ropensci/onboarding/issues/160) [![DOI](https://zenodo.org/badge/60650396.svg)](https://zenodo.org/badge/latestdoi/60650396)
 
 This package is makes it easier to search for and download multiple months/years of historical weather data from [Environment and Climate Change Canada (ECCC) website](http://climate.weather.gc.ca/historical_data/search_historic_data_e.html).
 
 Bear in mind that these downloads can be fairly large and performing multiple downloads may use up ECCC's bandwidth unecessarily. Try to stick to what you need.
 
-For more details and tutorials checkout the [weathercan website](http://steffilazerte.github.io/weathercan)
+For more details and tutorials checkout the [weathercan website](http://ropensci.github.io/weathercan)
 
 Installation
 ------------
@@ -17,13 +17,13 @@ Use the `devtools` package to directly install R packages from github:
 
 ``` r
 install.packages("devtools") # If not already installed
-devtools::install_github("steffilazerte/weathercan") 
+devtools::install_github("ropensci/weathercan") 
 ```
 
 To build the vignettes (tutorials) locally, use:
 
 ``` r
-devtools::install_github("steffilazerte/weathercan", build_vignettes = TRUE) 
+devtools::install_github("ropensci/weathercan", build_vignettes = TRUE) 
 ```
 
 View the available vignettes with `vignette(package = "weathercan")`
@@ -110,18 +110,18 @@ kam
 ```
 
     ## # A tibble: 1,104 x 35
-    ##    stat… stat…   lat   lon  elev clim… WMO_… TC_id prov  date       time                year  month
-    ##  * <chr> <dbl> <dbl> <dbl> <dbl> <chr> <chr> <chr> <fct> <date>     <dttm>              <chr> <chr>
-    ##  1 KAML… 51423  50.7  -120   345 1163… 71887 YKA   BC    2016-01-01 2016-01-01 00:00:00 2016  01   
-    ##  2 KAML… 51423  50.7  -120   345 1163… 71887 YKA   BC    2016-01-01 2016-01-01 01:00:00 2016  01   
-    ##  3 KAML… 51423  50.7  -120   345 1163… 71887 YKA   BC    2016-01-01 2016-01-01 02:00:00 2016  01   
-    ##  4 KAML… 51423  50.7  -120   345 1163… 71887 YKA   BC    2016-01-01 2016-01-01 03:00:00 2016  01   
-    ##  5 KAML… 51423  50.7  -120   345 1163… 71887 YKA   BC    2016-01-01 2016-01-01 04:00:00 2016  01   
-    ##  6 KAML… 51423  50.7  -120   345 1163… 71887 YKA   BC    2016-01-01 2016-01-01 05:00:00 2016  01   
-    ##  7 KAML… 51423  50.7  -120   345 1163… 71887 YKA   BC    2016-01-01 2016-01-01 06:00:00 2016  01   
-    ##  8 KAML… 51423  50.7  -120   345 1163… 71887 YKA   BC    2016-01-01 2016-01-01 07:00:00 2016  01   
-    ##  9 KAML… 51423  50.7  -120   345 1163… 71887 YKA   BC    2016-01-01 2016-01-01 08:00:00 2016  01   
-    ## 10 KAML… 51423  50.7  -120   345 1163… 71887 YKA   BC    2016-01-01 2016-01-01 09:00:00 2016  01   
+    ##    stat… stat… prov    lat   lon  elev clim… WMO_… TC_id date       time                year  month
+    ##  * <chr> <dbl> <fct> <dbl> <dbl> <dbl> <chr> <chr> <chr> <date>     <dttm>              <chr> <chr>
+    ##  1 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 00:00:00 2016  01   
+    ##  2 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 01:00:00 2016  01   
+    ##  3 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 02:00:00 2016  01   
+    ##  4 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 03:00:00 2016  01   
+    ##  5 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 04:00:00 2016  01   
+    ##  6 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 05:00:00 2016  01   
+    ##  7 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 06:00:00 2016  01   
+    ##  8 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 07:00:00 2016  01   
+    ##  9 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 08:00:00 2016  01   
+    ## 10 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 09:00:00 2016  01   
     ## # ... with 1,094 more rows, and 22 more variables
 
 You can also download data from multiple stations at once:
@@ -132,18 +132,18 @@ kam_pg
 ```
 
     ## # A tibble: 2,208 x 35
-    ##    stat… stat…   lat   lon  elev clim… WMO_… TC_id prov  date       time                year  month
-    ##  * <chr> <dbl> <dbl> <dbl> <dbl> <chr> <chr> <chr> <fct> <date>     <dttm>              <chr> <chr>
-    ##  1 PRIN… 48248  53.9  -123   680 1096… 71302 VXS   BC    2016-01-01 2016-01-01 00:00:00 2016  01   
-    ##  2 PRIN… 48248  53.9  -123   680 1096… 71302 VXS   BC    2016-01-01 2016-01-01 01:00:00 2016  01   
-    ##  3 PRIN… 48248  53.9  -123   680 1096… 71302 VXS   BC    2016-01-01 2016-01-01 02:00:00 2016  01   
-    ##  4 PRIN… 48248  53.9  -123   680 1096… 71302 VXS   BC    2016-01-01 2016-01-01 03:00:00 2016  01   
-    ##  5 PRIN… 48248  53.9  -123   680 1096… 71302 VXS   BC    2016-01-01 2016-01-01 04:00:00 2016  01   
-    ##  6 PRIN… 48248  53.9  -123   680 1096… 71302 VXS   BC    2016-01-01 2016-01-01 05:00:00 2016  01   
-    ##  7 PRIN… 48248  53.9  -123   680 1096… 71302 VXS   BC    2016-01-01 2016-01-01 06:00:00 2016  01   
-    ##  8 PRIN… 48248  53.9  -123   680 1096… 71302 VXS   BC    2016-01-01 2016-01-01 07:00:00 2016  01   
-    ##  9 PRIN… 48248  53.9  -123   680 1096… 71302 VXS   BC    2016-01-01 2016-01-01 08:00:00 2016  01   
-    ## 10 PRIN… 48248  53.9  -123   680 1096… 71302 VXS   BC    2016-01-01 2016-01-01 09:00:00 2016  01   
+    ##    stat… stat… prov    lat   lon  elev clim… WMO_… TC_id date       time                year  month
+    ##  * <chr> <dbl> <fct> <dbl> <dbl> <dbl> <chr> <chr> <chr> <date>     <dttm>              <chr> <chr>
+    ##  1 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 00:00:00 2016  01   
+    ##  2 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 01:00:00 2016  01   
+    ##  3 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 02:00:00 2016  01   
+    ##  4 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 03:00:00 2016  01   
+    ##  5 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 04:00:00 2016  01   
+    ##  6 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 05:00:00 2016  01   
+    ##  7 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 06:00:00 2016  01   
+    ##  8 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 07:00:00 2016  01   
+    ##  9 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 08:00:00 2016  01   
+    ## 10 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 09:00:00 2016  01   
     ## # ... with 2,198 more rows, and 22 more variables
 
 And plot it:
@@ -165,25 +165,19 @@ Citation
 citation("weathercan")
 ```
 
-    ## Warning in citation("weathercan"): no date field in DESCRIPTION file of package 'weathercan'
-
-    ## Warning in citation("weathercan"): could not determine year for 'weathercan' from package
-    ## DESCRIPTION file
-
     ## 
     ## To cite package 'weathercan' in publications use:
     ## 
     ##   Steffi LaZerte (NA). weathercan: Download Weather Data from the Environment and Climate
-    ##   Change Canada Website. R package version 0.2.2.9000.
-    ##   https://github.com/steffilazerte/weathercan
+    ##   Change Canada Website. R package version 0.2.4. https://github.com/ropensci/weathercan
     ## 
     ## A BibTeX entry for LaTeX users is
     ## 
     ##   @Manual{,
     ##     title = {weathercan: Download Weather Data from the Environment and Climate Change Canada Website},
     ##     author = {Steffi LaZerte},
-    ##     note = {R package version 0.2.2.9000},
-    ##     url = {https://github.com/steffilazerte/weathercan},
+    ##     note = {R package version 0.2.4},
+    ##     url = {https://github.com/ropensci/weathercan},
     ##   }
 
 License

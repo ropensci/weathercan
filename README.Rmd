@@ -11,16 +11,18 @@ knitr::opts_chunk$set(cache = FALSE,
 options(width = 100)
 ```
 
-# weathercan <img src="https://github.com/steffilazerte/weathercan/raw/master/inst/assets/weathercan_logo.png" align = "right" width = 110/>
+# weathercan <img src="https://github.com/ropensci/weathercan/raw/master/inst/assets/weathercan_logo.png" align = "right" width = 110/>
 
 
-[![Build Status](https://travis-ci.org/ropensci/weathercan.svg?branch=master)](https://travis-ci.org/ropensci/weathercan) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ropensci/weathercan?branch=master&svg=true)](https://ci.appveyor.com/project/steffilazerte/weathercan) [![codecov](https://codecov.io/gh/ropensci/weathercan/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/weathercan) [![](https://badges.ropensci.org/160_status.svg)](https://github.com/ropensci/onboarding/issues/160)
+[![Build Status](https://travis-ci.org/ropensci/weathercan.svg?branch=master)](https://travis-ci.org/ropensci/weathercan) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ropensci/weathercan?branch=master&svg=true)](https://ci.appveyor.com/project/ropensci/weathercan) [![codecov](https://codecov.io/gh/ropensci/weathercan/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/weathercan) [![](https://badges.ropensci.org/160_status.svg)](https://github.com/ropensci/onboarding/issues/160)
+[![DOI](https://zenodo.org/badge/60650396.svg)](https://zenodo.org/badge/latestdoi/60650396)
+
 
 This package is makes it easier to search for and download multiple months/years of historical weather data from [Environment and Climate Change Canada (ECCC) website](http://climate.weather.gc.ca/historical_data/search_historic_data_e.html).
 
 Bear in mind that these downloads can be fairly large and performing multiple downloads may use up ECCC's bandwidth unecessarily. Try to stick to what you need.
 
-For more details and tutorials checkout the [weathercan website](http://steffilazerte.github.io/weathercan)
+For more details and tutorials checkout the [weathercan website](http://ropensci.github.io/weathercan)
 
 ## Installation
 
@@ -28,13 +30,13 @@ Use the `devtools` package to directly install R packages from github:
 
 ```{r, eval = FALSE}
 install.packages("devtools") # If not already installed
-devtools::install_github("steffilazerte/weathercan") 
+devtools::install_github("ropensci/weathercan") 
 ```
 
 To build the vignettes (tutorials) locally, use:
 
 ```{r, eval = FALSE}
-devtools::install_github("steffilazerte/weathercan", build_vignettes = TRUE) 
+devtools::install_github("ropensci/weathercan", build_vignettes = TRUE) 
 ```
 
 View the available vignettes with `vignette(package = "weathercan")`  
@@ -96,7 +98,7 @@ ggplot(data = kam_pg, aes(x = time, y = temp, group = station_name, colour = sta
 
 ## Citation
 
-```{r}
+```{r, warning = FALSE}
 citation("weathercan")
 ```
 

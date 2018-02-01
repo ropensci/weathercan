@@ -7,10 +7,10 @@
   "identifier": "weathercan",
   "description": "Provides means for downloading historical weather data from \n    the Environment and Climate Change Canada website \n    (<http://climate.weather.gc.ca/historical_data/search_historic_data_e.html>). \n    Data can be downloaded from multiple stations and over large date ranges \n    and automatically processed into a single dataset. Tools are also provided \n    to identify stations either by name or proximity to a location.",
   "name": "weathercan: Download Weather Data from the Environment and Climate Change Canada Website",
-  "codeRepository": "https://github.com/steffilazerte/weathercan",
+  "codeRepository": "https://github.com/ropensci/weathercan",
   "issueTracker": "https://github.com/ropensci/weathercan/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -231,8 +231,7 @@
       "version": "3.3.3"
     }
   ],
-  "contIntegration": "https://travis-ci.org/ropensci/weathercan",
-  "releaseNotes": "https://github.com/steffilazerte/weathercan/blob/master/NEWS.md",
-  "readme": "https://github.com/steffilazerte/weathercan/blob/master/README.md",
-  "fileSize": "499.613KB"
+  "releaseNotes": "https://github.com/ropensci/weathercan/blob/master/NEWS.md",
+  "readme": "https://github.com/ropensci/weathercan/blob/master/README.md",
+  "fileSize": "499.644KB"
 }
