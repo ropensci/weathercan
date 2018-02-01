@@ -1,4 +1,4 @@
-url: http://steffilazerte.github.io/weathercan
+url: http://ropensci.github.io/weathercan
 
 template:
   params:
@@ -47,7 +47,7 @@ navbar:
     - text: "Getting Started"
       href: articles/weathercan.html
     - text: "Presentations"
-      href: "http://steffilazerte.github.io/Presentations/#weathercan"
+      href: "http://ropensci.github.io/Presentations/#weathercan"
     - text: "Reference"
       href: reference/index.html
     - text: "Articles"
@@ -65,4 +65,4 @@ navbar:
           href: articles/glossary.html
   right:
     - icon: fa-github fa-lg
-      href: https://github.com/steffilazerte/weathercan
+      href: https://github.com/ropensci/weathercan

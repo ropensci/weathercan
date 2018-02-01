@@ -14,7 +14,7 @@ options(width = 100)
 # weathercan <img src="https://github.com/steffilazerte/weathercan/raw/master/inst/assets/weathercan_logo.png" align = "right" width = 110/>
 
 
-[![Build Status](https://travis-ci.org/steffilazerte/weathercan.svg?branch=master)](https://travis-ci.org/steffilazerte/weathercan) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/steffilazerte/weathercan?branch=master&svg=true)](https://ci.appveyor.com/project/steffilazerte/weathercan) [![codecov](https://codecov.io/gh/steffilazerte/weathercan/branch/master/graph/badge.svg)](https://codecov.io/gh/steffilazerte/weathercan) [![](https://badges.ropensci.org/160_status.svg)](https://github.com/ropensci/onboarding/issues/160)
+[![Build Status](https://travis-ci.org/ropensci/weathercan.svg?branch=master)](https://travis-ci.org/ropensci/weathercan) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ropensci/weathercan?branch=master&svg=true)](https://ci.appveyor.com/project/steffilazerte/weathercan) [![codecov](https://codecov.io/gh/ropensci/weathercan/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/weathercan) [![](https://badges.ropensci.org/160_status.svg)](https://github.com/ropensci/onboarding/issues/160)
 
 This package is makes it easier to search for and download multiple months/years of historical weather data from [Environment and Climate Change Canada (ECCC) website](http://climate.weather.gc.ca/historical_data/search_historic_data_e.html).
 
@@ -121,3 +121,5 @@ We welcome any and all contributions! To make the process as painless as possibl
 ## Code of Conduct
 
 Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
+
+[![ropensci_footer](http://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)
