@@ -268,25 +268,22 @@ weather_dl <- function(station_ids,
   }
 
   ## Arrange
-  w_all <- dplyr::select(w_all, station_name, station_id, dplyr::everything())
+  w_all <- dplyr::select(w_all, dplyr::one_of(p_names), dplyr::everything())
 
   ## If list_col is TRUE and data is formatted
   if(list_col && format){
 
     ## Appropriate grouping levels
     if(interval == "hour"){
-      w_all <- tidyr::nest(w_all,
-                           -station_name, -station_id, -lat, -lon, -date)
+      w_all <- tidyr::nest(w_all, -dplyr::one_of(p_names), -date)
     }
 
     if(interval == "day"){
-      w_all <- tidyr::nest(w_all,
-                           -station_name, -station_id, -lat, -lon, -month)
+      w_all <- tidyr::nest(w_all, -dplyr::one_of(p_names), -month)
     }
 
     if(interval == "month"){
-      w_all <- tidyr::nest(w_all,
-                           -station_name, -station_id, -lat, -lon, -year)
+      w_all <- tidyr::nest(w_all, -dplyr::one_of(p_names), -year)
     }
 
   }
