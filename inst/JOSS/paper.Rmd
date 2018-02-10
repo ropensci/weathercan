@@ -21,24 +21,13 @@ options(width = 90, tibble.max_extra_cols = 0)
 
 Environment and Climate Change Canada maintains an online source of historical Canadian weather data in hourly, daily and monthly formats for various stations across Canada [@canada_historical_2011]. This data is freely available and can be accessed directly from their website. However, downloading data from multiple stations and across larger time periods can take significant time and effort. Further, these downloads require processing before they can be used for analysis. `weathercan` [@lazerte_weathercan_2018] is an R [@r_stats] package that automates and simplifies the downloading and formating of this data. 
 
-The first step in using `weathercan` is to identify the `station_id`(s) of the weather station(s) of interest. Stations can be searched for either by name (e.g., `stations_search("Brandon")`) or proximity to a given location (e.g., `stations_search(coords = c(49.84847, -99.95009))`). Searches can be conducted on all possible stations, or filtered to include only those recording weather at the desired time interval:
+The first step in using `weathercan` is to identify the station ID(s) of the weather station(s) of interest. Stations can be searched for either by name or proximity to a given location. Searches can be conducted on all possible stations, or filtered to include only those recording weather at the desired time interval. Next, weather data can be downloaded for the specified stations, time range and time interval (i.e. hours, days, months). Data downloaded from multiple stations and over several months are automatically combined into one data frame ready for analysis or plotting (Figure 1). Finally, weather data from a single station can be aligned and merged with existing datasets through linear interpolation. 
 
-```{r}
-library(weathercan)
-stations_search("Brandon", interval = "hour")
-```
-
-Next, weather data can be downloaded for the specified stations (`station_ids`), time range (`start` through to `end`) and time interval (`interval`). Data downloaded from multiple stations and over several months are automatically combined into one data frame ready for analysis or plotting (Figure 1).
-
-```{r}
+```{r, echo = FALSE, fig.width = 5, fig.asp = 0.8, dpi = 600}
 w <- weather_dl(station_ids = c(50821, 51097), 
                 start = "2017-01-01", end = "2017-09-01",
                 interval = "hour")
-names(w)
-w
-```
 
-```{r, echo = FALSE}
 ggplot(data = w, aes(x = time, y = temp, colour = station_name)) +
   theme_bw() +
   theme(legend.position = "top") +
@@ -48,61 +37,8 @@ ggplot(data = w, aes(x = time, y = temp, colour = station_name)) +
 ```
 Figure 1. Data downloaded with `weathercan` is formated and ready for ploting.
 
-Finally, weather data from a single station can be aligned and merged with existing datasets through linear interpolation. For example, we first download weather data from a single station in Winnipeg, Canada:
 
-```{r}
-winnipeg <- weather_dl(station_ids = 51097, 
-                       start = "2017-01-01", end = "2017-09-30",
-                       interval = "hour")
-```
-
-The temperature data is recorded on the hour:
-
-```{r}
-winnipeg %>%
-  select(time, temp)
-```
-
-Then we open a dummy dataset containing mock sediment data:
-
-```{r, include = FALSE}
-set.seed(1000)
-tibble::tibble(time = seq(as.POSIXct("2017-01-01 00:05:34"), as.POSIXct("2017-09-30"), by = "30 min")) %>%
-  mutate(time = lubridate::force_tz(time, "Etc/GMT+6"),
-         amount = rnorm(n(), mean = 175, sd = 15)) %>%
-  write.csv(., "sediment.csv", row.names = FALSE)
-```
-
-```{r}
-sediment <- read.csv("sediment.csv") %>%
-  mutate(time = as.POSIXct(time, tz = "America/Winnipeg"))
-```
-
-This data is recorded every half hour, but at 5 min 34 seconds after:
-```{r}
-head(sediment)
-```
-
-Finally, we use the `weather_interp()` function to interpolate the temperature data and add it to the sediment data set:
-
-```{r}
-sediment <- weather_interp(data = sediment, 
-                           weather = winnipeg, 
-                           cols = "temp")
-```
-
-```{r}
-head(sediment)
-```
-
-
-# Installation
-
-`weathercan` is available from [GitHub](https://github.com/ropensci/weathercan) and can be installed in R using the `devtools` package:
-
-```{r, eval = FALSE}
-devtools::install_github("ropensci/weathercan")
-```
+`weathercan` is available on GitHub at <https://github.com/ropensci/weathercan>
 
 
 
