@@ -168,18 +168,23 @@ citation("weathercan")
 ```
 
     ## 
-    ## To cite package 'weathercan' in publications use:
+    ## To cite 'weathercan' in publications, please use:
     ## 
-    ##   Steffi LaZerte (NA). weathercan: Download Weather Data from the Environment and Climate
-    ##   Change Canada Website. R package version 0.2.4. https://github.com/ropensci/weathercan
+    ##   LaZerte, Stefanie E and Sam Albers (2018). weathercan: Download and format weather data
+    ##   from Environment and Climate Change Canada. The Journal of Open Source Software
+    ##   3(22):571. doi:10.21105/joss.00571.
     ## 
     ## A BibTeX entry for LaTeX users is
     ## 
-    ##   @Manual{,
-    ##     title = {weathercan: Download Weather Data from the Environment and Climate Change Canada Website},
-    ##     author = {Steffi LaZerte},
-    ##     note = {R package version 0.2.4},
-    ##     url = {https://github.com/ropensci/weathercan},
+    ##   @Article{,
+    ##     title = {{weathercan}: {D}ownload and format weather data from Environment and Climate Change Canada},
+    ##     author = {Stefanie E LaZerte and Sam Albers},
+    ##     journal = {The Journal of Open Source Software},
+    ##     volume = {3},
+    ##     number = {22},
+    ##     pages = {571},
+    ##     year = {2018},
+    ##     url = {http://joss.theoj.org/papers/10.21105/joss.00571},
     ##   }
 
 License
