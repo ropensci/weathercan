@@ -18,6 +18,7 @@ environment:
 
   matrix:
     #- R_VERSION: devel
+    - R_VERSION: oldrel
 
     - R_VERSION: patched
 
@@ -25,6 +26,8 @@ environment:
 
     #- R_VERSION: devel
     #  R_ARCH: x64
+    - R_VERSION: oldrel
+      R_ARCH: x64
 
     - R_VERSION: patched
       R_ARCH: x64
