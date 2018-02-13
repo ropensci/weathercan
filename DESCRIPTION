@@ -16,7 +16,7 @@ BugReports: https://github.com/ropensci/weathercan/issues
 LazyData: TRUE
 URL: https://github.com/ropensci/weathercan
 Depends:
-    R (>= 3.3.3)
+    R (>= 3.2.5)
 Imports:
     dplyr (>= 0.7.0),
     httr (>= 1.1.0),
