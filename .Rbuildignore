@@ -2,6 +2,7 @@
 ^\.Rproj\.user$
 ^inst/assets$
 ^inst/template$
+^inst/blog_draft$
 ^data-raw$
 ^Readme
 ^\.travis\.yml$

@@ -1,0 +1,24 @@
+---
+title: "blog_draft"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r pkgs}
+library(tidyverse)
+library(sf)
+library(mapview)
+```
+
+```{r}
+stations %>%
+  filter(prov == "NL") %>%
+  st_as_sf(coords = c("lon","lat"),
+           crs = 4326,
+           agr = "constant") %>%
+  mapview()
+```
+
