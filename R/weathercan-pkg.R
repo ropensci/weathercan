@@ -85,7 +85,7 @@ NULL
         "type", "station_name", "station_id", "lat", "lon", "WMO_id", "TC_id",
         "prov", "distance", "flag", "hmdx", "pressure", "rel_hum", "temp_dew",
         "visib", "wind_chill", "variable", "value", "qual", "interval", "month",
-        "start", "year", "elev",
+        "start", "year", "elev", "problems",
         "V1", "V2",
         "." # piping requires '.' at times
       )

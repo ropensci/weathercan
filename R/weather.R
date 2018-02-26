@@ -116,6 +116,7 @@ weather_dl <- function(station_ids,
   tz_list <- c()
   w_all <- data.frame()
   missing <- c()
+  msg_fmt <- tibble::tibble()
 
   for(s in station_ids) {
     if(verbose) message("Getting station: ", s)
@@ -218,6 +219,15 @@ weather_dl <- function(station_ids,
                             string_as = string_as,
                             quiet = quiet,
                             preamble = preamble)
+        # Catch messages
+        if(nrow(w$msg) > 0) {
+          msg_fmt <- dplyr::bind_rows(dplyr::bind_cols(station_id = s,
+                                                       w$msg),
+                                      msg_fmt)
+        }
+
+        # Get formatted data
+        w <- w$data
 
         ## Trim to match date range
         w <- w[w$date >= s.start & w$date <= s.end, ]
@@ -300,7 +310,7 @@ weather_dl <- function(station_ids,
     }
   }
 
-  # Return missing messages
+  # Return messages
   if(length(missing) > 0 & !quiet) {
     if(all(station_ids %in% missing)) type <- "all" else type <- "some"
 
@@ -316,6 +326,31 @@ weather_dl <- function(station_ids,
                                    station_id %in% missing,
                                    !is.na(start)))),
                      collapse = "\n")))
+  }
+
+  ## Return Format messages
+
+  msg_fmt <- dplyr::filter(msg_fmt, !is.na(col))
+  if(!quiet && nrow(msg_fmt) > 0) {
+    cols <- paste0(unique(msg_fmt$col), collapse = ", ")
+    stations <- paste0(unique(msg_fmt$station_id), collapse = ", ")
+    message("Some variables have non-numeric values (", cols,
+            "), for stations: ", stations)
+    if(all(!is.null(msg_fmt$replace))) {
+      message("  Replaced all non-numeric entries with ",
+              msg_fmt$replace[1], ". ",
+              "Use 'string_as = NULL' to keep as characters (see ?weather_dl).")
+    } else {
+      message("  Left all non-numeric entries as characters. Couldn't summarize these columns.")
+    }
+
+    if(verbose) {
+      show <- msg_fmt %>%
+        dplyr::select(station_id, problems) %>%
+        tidyr::unnest()
+      message("  Examples:  ")
+      message(paste0("  ", utils::capture.output(show), collapse = "\n"))
+    }
   }
 
   dplyr::tbl_df(w_all)
@@ -429,25 +464,17 @@ weather_format <- function(w, interval = "hour", string_as = "NA", preamble,
                  FUN = function(x) methods::is(x, "warning"),
                  FUN.VALUE = TRUE)
   if(any(warn)) {
-    if(!quiet) {
-      m <- paste0(names(num)[warn], collapse = ", ")
-      message("Some variables have non-numeric values (", m, ")")
-    }
+    m <- paste0(names(num)[warn], collapse = ", ")
+    non_num <- tibble::tibble(col = names(num)[warn])
     for(i in names(num)[warn]) {
       problems <- w[grep("<|>|\\)|\\(", w[,i]),
                     names(w) %in% c("date", "year", "month",
                                     "day", "hour", "time", i)]
       if(nrow(problems) > 20) rows <- 20 else rows <- nrow(problems)
-      if(!quiet) {
-        message(paste0(utils::capture.output(problems[seq_along(rows),]),
-                       collapse = "\n"), if (rows < nrow(problems)) "\n...")
-      }
+      non_num$problems <- list(problems[1:rows,])
     }
     if(!is.null(string_as)) {
-      if(!quiet) message("Replacing with ", string_as,
-                         ". Use 'string_as = NULL' to keep ",
-                         "as characters (see ?weather).")
-
+      non_num$replace <- string_as
       suppressWarnings({
         valid_cols <- c("date", "year", "month", "day",
                         "hour", "time", "qual", "weather",
@@ -460,28 +487,25 @@ weather_format <- function(w, interval = "hour", string_as = "NA", preamble,
         w[, !(names(w) %in% valid_cols)] <- replacement
       })
     } else {
-      if(!quiet) {
-        m <- paste0(names(num)[warn],
-                    collapse = ", ")
-        message("Leaving as characters (", m,
-                "). Cannot summarize these values.")
-      }
+      m <- paste0(names(num)[warn],
+                  collapse = ", ")
+      non_num$replace <- NULL
 
       replace <- c("date", "year", "month", "day",
                    "hour", "time", "qual", "weather",
                    grep("flag", names(w), value = TRUE),
                    names(num)[warn])
 
-      w[, !(names(w) %in% replace)] <-
-        num[!warn]
+      w[, !(names(w) %in% replace)] <- num[!warn]
     }
   } else {
+    non_num <- data.frame()
     w[, !(names(w) %in% c("date", "year", "month", "day",
                           "hour", "time", "qual", "weather",
                           grep("flag", names(w), value = TRUE)))] <- num
   }
 
-  w
+  list(data = w, msg = non_num)
 }
 
 #' @export

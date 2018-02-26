@@ -8,6 +8,7 @@ output: html_document
 
 ## Changes
 - More sensible messages when missing station data
+- Streamline messages from multiple stations
 
 ## Bug fixes
 - Fix error when missing station data from one of several stations
