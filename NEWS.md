@@ -4,6 +4,14 @@ author: "Steffi LaZerte"
 output: html_document
 ---
 
+# weathercan 0.2.4.9000 (2018-02-25)
+
+## Changes
+- More sensible messages when missing station data
+
+## Bug fixes
+- Fix error when missing station data from one of several stations
+
 # weathercan 0.2.4 (2018-02-01)
 
 Now part of [ropensci.org](http://ropensci.org)!
