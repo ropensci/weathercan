@@ -183,7 +183,7 @@ weather_dl <- function(station_ids,
     skip <- grep("Date/Time", preamble[, 1])
 
     # If Station Name present, have data, otherwise skip
-    if("Station Name" %in% preamble$V1) {
+    if(any(grepl("Station Name", preamble$V1))) {
       preamble <- preamble[1:skip,] %>%
         tidyr::spread(V1, V2) %>%
         dplyr::select(station_name = dplyr::contains("Station Name"),
