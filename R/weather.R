@@ -178,7 +178,7 @@ weather_dl <- function(station_ids,
 
     preamble <- weather_raw(station_id = s, date = date_range[1],
                            interval = interval, nrows = 25, url = url,
-                           header = FALSE, encoding = encoding,)
+                           header = FALSE, encoding = encoding)
 
     skip <- grep("Date/Time", preamble[, 1])
 
