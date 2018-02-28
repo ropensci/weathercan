@@ -39,6 +39,11 @@
 stations_dl <- function(url = NULL,
                         skip = NULL, verbose = FALSE, quiet = FALSE) {
 
+  if(getRversion() <= "3.3.3") {
+    message("Need R version 3.3.4 or greater to update the stations data")
+    return()
+  }
+
   if(is.null(url)) url <- paste0("ftp://client_climate@ftp.tor.ec.gc.ca/",
                                  "Pub/Get_More_Data_Plus_de_donnees/",
                                  "Station%20Inventory%20EN.csv")
