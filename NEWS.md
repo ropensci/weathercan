@@ -4,7 +4,7 @@ author: "Steffi LaZerte"
 output: html_document
 ---
 
-# weathercan 0.2.4.9000 (2018-02-28)
+# weathercan 0.2.5 (2018-03-02)
 
 ## Changes
 - More sensible messages when missing station data
