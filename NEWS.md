@@ -11,6 +11,7 @@ output: html_document
 - Streamline messages from multiple stations
 - Accepts older R version
 - `stations_dl` fails gracefully on R versions < 3.3.4
+- Update `stations` dataframe
 
 ## Bug fixes
 - Fix error when missing station data from one of several stations
