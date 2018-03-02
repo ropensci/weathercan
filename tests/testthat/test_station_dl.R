@@ -4,22 +4,29 @@ context("stations_dl")
 
 test_that("stations_dl() runs and returns data", {
   skip_on_cran()
-  expect_error({s <- stations_dl()}, regexp = NA)
-  expect_warning(expect_error({stations_dl(url = "test.csv")}))
-  expect_is(s, "data.frame")
-  expect_length(s, 12)
-  expect_lt(length(data.frame(s)[is.na(data.frame(s))]),
-            length(data.frame(s)[!is.na(data.frame(s))]))
-  expect_is(s$prov, "factor")
-  expect_is(s$station_name, "character")
-  expect_gt(nrow(s), 10)
-  expect_equal(unique(s$interval), c("hour", "day", "month"))
 
-  # Check content
-  expect_equal(nrow(s[is.na(s$station_name),]), 0)
-  expect_equal(nrow(s[is.na(s$station_id),]), 0)
-  expect_equal(nrow(s[is.na(s$prov),]), 0)
-  expect_true(all(table(s$station_id) == 3)) # One row per time interval type
+  if(getRversion() < "3.3.4") {
+    expect_message(s <- stations_dl(),
+                   paste0("Need R version 3.3.4 or greater to update the ",
+                          "stations data"))
+  } else if(getRversion() >= "3.3.4") {
+    expect_error({s <- stations_dl()}, regexp = NA)
+    expect_warning(expect_error({stations_dl(url = "test.csv")}))
+    expect_is(s, "data.frame")
+    expect_length(s, 12)
+    expect_lt(length(data.frame(s)[is.na(data.frame(s))]),
+              length(data.frame(s)[!is.na(data.frame(s))]))
+    expect_is(s$prov, "factor")
+    expect_is(s$station_name, "character")
+    expect_gt(nrow(s), 10)
+    expect_equal(unique(s$interval), c("hour", "day", "month"))
+
+    # Check content
+    expect_equal(nrow(s[is.na(s$station_name),]), 0)
+    expect_equal(nrow(s[is.na(s$station_id),]), 0)
+    expect_equal(nrow(s[is.na(s$prov),]), 0)
+    expect_true(all(table(s$station_id) == 3)) # One row per time interval type
+  }
 })
 
 

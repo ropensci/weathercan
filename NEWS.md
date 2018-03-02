@@ -4,6 +4,17 @@ author: "Steffi LaZerte"
 output: html_document
 ---
 
+# weathercan 0.2.4.9000 (2018-02-28)
+
+## Changes
+- More sensible messages when missing station data
+- Streamline messages from multiple stations
+- Accepts older R version
+- `stations_dl` fails gracefully on R versions < 3.3.4
+
+## Bug fixes
+- Fix error when missing station data from one of several stations
+
 # weathercan 0.2.4 (2018-02-01)
 
 Now part of [ropensci.org](http://ropensci.org)!

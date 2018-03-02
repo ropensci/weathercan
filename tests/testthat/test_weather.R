@@ -107,7 +107,7 @@ test_that("weather (hour) formats timezone to UTC with multiple zones", {
 })
 
 test_that("weather (hour) gets all", {
-  expect_silent(w <- weather_dl(station_ids = 10816,
+  expect_silent(w <- weather_dl(station_ids = 50821,
                                 start = Sys.Date() - lubridate::days(1),
                                 interval = "hour", trim = FALSE))
   expect_is(w, "data.frame")
@@ -122,11 +122,11 @@ test_that("weather (hour) trims NAs", {
 })
 
 test_that("weather (hour) multiple stations", {
-  expect_silent({w <- weather_dl(station_ids = c(51423, 10816),
-                                 start = "2014-03-01", end = "2014-04-01")})
+  expect_silent({w <- weather_dl(station_ids = c(51423, 50821),
+                                 start = "2014-03-01", end = "2014-03-15")})
 
-  expect_equal(unique(w$station_name), c("KAMLOOPS A", "SQUAMISH AIRPORT"))
-  expect_equal(nrow(w[w$station_id == 51423,]), nrow(w[w$station_id == 10816,]))
+  expect_equal(unique(w$station_name), c("KAMLOOPS A", "BRANDON A"))
+  expect_equal(nrow(w[w$station_id == 51423,]), nrow(w[w$station_id == 50821,]))
 })
 
 
@@ -135,15 +135,14 @@ test_that("weather (hour) no data fails nicely", {
     expect_message(w0 <- weather_dl(1274, interval = "hour",
                                     start = "2012-11-01",
                                     end = "2012-12-01"),
-                   paste0("There are no data for station 1274 for interval",
-                          " by 'hour'.")))
+                   paste0("There are no data for station 1274 for this ",
+                          "interval \\(hour\\)")))
   expect_silent(
     expect_message(w1 <- weather_dl(c(1274, 1275),
                                     interval = "hour",
                                     start = "2012-11-01",
                                     end = "2012-12-01"),
-                   paste0("There are no data for station 1274 for interval",
-                          " by 'hour'.")))
+                   paste0("There are no data for some stations \\(1274\\)")))
 
   expect_is(w0, "data.frame")
   expect_length(w0, 0)
@@ -156,15 +155,17 @@ test_that("weather (hour) no data fails nicely", {
     expect_message(
       w0 <- weather_dl(1275, interval = "hour",
                        start = "2017-01-01", end = "2017-02-01"),
-      paste0("There are no data for these stations \\(1275\\) ",
-             "in this time range \\(2017-01-01 to 2017-02-01\\).")))
+      paste0("There are no data for station 1275, ",
+             "in this time range \\(2017-01-01 to 2017-02-01\\), ",
+             "for this interval \\(hour\\)")))
 
   expect_silent(
     expect_message(
       w1 <- weather_dl(c(1275, 1001), interval = "hour",
                        start = "2017-01-01", end = "2017-02-01"),
-      paste0("There are no data for these stations \\(1275, 1001\\) ",
-             "in this time range \\(2017-01-01 to 2017-02-01\\).")))
+      paste0("There are no data for all stations \\(1275, 1001\\), ",
+             "in this time range \\(2017-01-01 to 2017-02-01\\), ",
+             "for this interval \\(hour\\)")))
 
   expect_is(w0, "data.frame")
   expect_length(w0, 0)
@@ -280,15 +281,15 @@ test_that("weather (day) no data fails nicely", {
                                     interval = "day",
                                     start = "2017-01-01",
                                     end = "2017-02-01"),
-                   paste0("There are no data for station 42013 for interval",
-                          " by 'day'.")))
+                   paste0("There are no data for station 42013 for ",
+                          "this interval \\(day\\)")))
   expect_silent(
     expect_message(w1 <- weather_dl(station_ids = c(42013, 51423),
                                     interval = "day",
                                     start = "2017-01-01",
                                     end = "2017-02-01"),
-                   paste0("There are no data for station 42013 for interval",
-                          " by 'day'.")))
+                   paste0("There are no data for some stations \\(42013\\), ",
+                          "in this time range \\(")))
 
   expect_is(w0, "data.frame")
   expect_length(w0, 0)
@@ -301,15 +302,15 @@ test_that("weather (day) no data fails nicely", {
     expect_message(w0 <- weather_dl(1274, interval = "day",
                                     start = "2017-01-01",
                                     end = "2017-03-01"),
-                   paste0("There are no data for these stations \\(1274\\) in ",
+                   paste0("There are no data for station 1274, in ",
                           "this time range \\(2017-01-01 to 2017-03-01\\).")))
   expect_silent(
     expect_message(w1 <- weather_dl(c(1274, 1275), interval = "day",
                                     start = "2017-01-01",
                                     end = "2017-03-01"),
-                   paste0("There are no data for these stations ",
-                          "\\(1274, 1275\\) in this time range ",
-                          "\\(2017-01-01 to 2017-03-01\\).")))
+                   paste0("There are no data for all stations ",
+                          "\\(1274, 1275\\), in this time range ",
+                          "\\(2017-01-01 to 2017-03-01\\)")))
 
   ## Basics
   expect_is(w0, "data.frame")
@@ -373,15 +374,16 @@ test_that("weather (month) no data fails nicely", {
                                     interval = "month",
                                     start = "2012-01-01",
                                     end = "2012-02-01"),
-                   paste0("There are no data for station 51423 for interval ",
-                          "by 'month'.")))
+                   paste0("There are no data for station 51423 for this ",
+                          "interval \\(month\\)")))
   expect_silent(
     expect_message(w1 <- weather_dl(station_ids = c(51423, 1275),
                                     interval = "month",
                                     start = "2012-01-01",
                                     end = "2012-02-01"),
-                   paste0("There are no data for station 51423 for interval ",
-                          "by 'month'.")))
+                   paste0("There are no data for some stations \\(51423\\), ",
+                          "in this time range \\(2012-01-01 to 2012-02-01\\), ",
+                          "for this interval \\(month\\)")))
   expect_is(w0, "data.frame")
   expect_length(w0, 0)
   expect_equal(nrow(w0), 0)
@@ -393,15 +395,15 @@ test_that("weather (month) no data fails nicely", {
     expect_message(w0 <- weather_dl(1274, interval = "month",
                                     start = "2017-01-01",
                                     end = "2017-02-01"),
-                   paste0("There are no data for these stations \\(1274\\) in ",
+                   paste0("There are no data for station 1274, in ",
                           "this time range \\(2017-01-01 to 2017-02-01\\).")))
   expect_silent(
     expect_message(w1 <- weather_dl(c(1274, 1275), interval = "month",
                                     start = "2017-01-01",
                                     end = "2017-02-01"),
-                   paste0("There are no data for these stations ",
-                          "\\(1274, 1275\\) in this time range ",
-                          "\\(2017-01-01 to 2017-02-01\\).")))
+                   paste0("There are no data for all stations ",
+                          "\\(1274, 1275\\), in this time range ",
+                          "\\(2017-01-01 to 2017-02-01\\)")))
 
   expect_is(w0, "data.frame")
   expect_length(w0, 0)
