@@ -4,6 +4,13 @@ author: "Steffi LaZerte"
 output: html_document
 ---
 
+# weathercan 0.2.6 (2018-05-25)
+
+## Bug fixes
+- Fix bug created when ECCC removed Data Quality Column
+- Adjust code flexibility to handle future changes
+- Add tests to catch future changes
+
 # weathercan 0.2.5 (2018-03-02)
 
 ## Changes
