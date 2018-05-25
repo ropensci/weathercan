@@ -98,7 +98,7 @@ weather_interp <- function(data, weather,
 
   ## Get columns in 'cols'
   if(any(cols == "all")) {
-    cols <- w_names[[interval]]
+    cols <- names(w_names[[interval]])
     cols <- cols[-grep(paste0("(flag)|(qual)|(weather)|(time)|(date)|(hour)|",
                               "(^day$)|(month)|(year)|(^wind_dir$)|",
                               "(^dir_max_gust$)"),

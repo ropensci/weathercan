@@ -399,7 +399,10 @@ weather_format <- function(w, interval = "hour", string_as = "NA", preamble,
   ## Get names from stored name list
   n <- w_names[[interval]]
 
-  names(w) <- n
+  ## Trim to match names in data
+  n <- n[n %in% names(w)]
+
+  w <- dplyr::rename(w, !!!n)
 
   if(interval == "day") w <- dplyr::mutate(w, date = as.Date(date))
   if(interval == "month") {
