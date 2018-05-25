@@ -1,53 +1,4 @@
 
-# weather_raw --------------------------------------------------------------
-context("weather_raw")
-
-test_that("weather_raw (hour) downloads a data frame", {
-  expect_silent(wd <- weather_raw(station_id = 51423,
-                                  date = as.Date("2014-01-01"),
-                                  skip = 15, interval = "hour"))
-  ## Basics
-  expect_is(wd, "data.frame")
-  expect_length(wd, 25)
-  expect_equal(nrow(wd), 744)
-  expect_is(wd[, "Date/Time"], "character")
-  expect_lt(length(data.frame(wd)[is.na(data.frame(wd))]),
-            length(data.frame(wd)[!is.na(data.frame(wd))]))
-  expect_true(stringi::stri_escape_unicode(wd[, "Data Quality"][1]) %in%
-                c("\\u2021"))
-})
-
-test_that("weather_raw (day) downloads a data frame", {
-  expect_silent(wd <- weather_raw(station_id = 51423,
-                                  date = as.Date("2014-01-01"),
-                                  skip = 25, interval = "day"))
-
-  ## Basics
-  expect_is(wd, "data.frame")
-  expect_length(wd, 27)
-  expect_equal(nrow(wd), 365)
-  expect_is(wd[, "Date/Time"], "character")
-  expect_lt(length(wd[is.na(wd)]), length(wd[!is.na(wd)]))
-  expect_true(stringi::stri_escape_unicode(wd[, "Data Quality"][1]) %in%
-                c("\\u2021"))
-})
-
-test_that("weather_raw (month) downloads a data frame", {
-  expect_silent(wd <- weather_raw(station_id = 43823,
-                                  date = as.Date("2005-01-01"),
-                                  skip = 17, interval = "month"))
-
-  ## Basics
-  expect_is(wd, "data.frame")
-  expect_length(wd, 25)
-  expect_equal(nrow(wd), 4)
-  expect_is(wd[, "Date/Time"], "character")
-  expect_lt(length(data.frame(wd)[is.na(data.frame(wd))]),
-            length(data.frame(wd)[!is.na(data.frame(wd))]))
-})
-
-
-
 # weather by hour ---------------------------------------------------------
 context("weather by hour")
 
@@ -59,7 +10,7 @@ test_that("weather (hour) returns a data frame", {
 
   ## Basics
   expect_is(w, "data.frame")
-  expect_length(w, 35)
+  expect_length(w, 34)
   expect_equal(nrow(w), 744)
   expect_is(w$station_name, "character")
   expect_is(w$prov, "factor")
@@ -75,8 +26,8 @@ test_that("weather (hour) returns a data frame", {
   expect_equal(w$station_name[1], "KAMLOOPS A")
   expect_equal(w$prov[1], factor("BC", levels = levels(stations$prov)))
   expect_equal(w$time[1], as.POSIXct("2014-01-01 00:00:00", tz = "Etc/GMT+8"))
-  expect_equal(w$qual[1], paste0("Partner data that is not subject to review ",
-                                 "by the National Climate Archives"))
+  #expect_equal(w$qual[1], paste0("Partner data that is not subject to review ",
+  #                               "by the National Climate Archives"))
 })
 
 test_that("weather (hour) formats timezone display", {
@@ -111,7 +62,7 @@ test_that("weather (hour) gets all", {
                                 start = Sys.Date() - lubridate::days(1),
                                 interval = "hour", trim = FALSE))
   expect_is(w, "data.frame")
-  expect_length(w, 35)
+  expect_length(w, 34)
   expect_equal(nrow(w), 48)
   expect_equal(w$date[1], Sys.Date() - lubridate::days(1))
   expect_equal(w$date[nrow(w)], Sys.Date())
@@ -148,7 +99,7 @@ test_that("weather (hour) no data fails nicely", {
   expect_length(w0, 0)
   expect_equal(nrow(w0), 0)
   expect_is(w1, "data.frame")
-  expect_length(w1, 35)
+  expect_length(w1, 34)
   expect_equal(nrow(w1), 744)
 
   expect_silent(
@@ -223,9 +174,9 @@ test_that("weather (day) returns a data frame", {
   expect_equal(w$station_id[1], 51423)
   expect_equal(w$station_name[1], "KAMLOOPS A")
   expect_equal(w$prov[1], factor("BC", levels = levels(stations$prov)))
-  expect_equal(w$qual[1],
-               paste0("Partner data that is not subject to review by the ",
-                      "National Climate Archives"))
+  #expect_equal(w$qual[1],
+  #             paste0("Partner data that is not subject to review by the ",
+  #                    "National Climate Archives"))
 })
 
 test_that("weather (day) gets all", {
@@ -281,8 +232,8 @@ test_that("weather (day) no data fails nicely", {
                                     interval = "day",
                                     start = "2017-01-01",
                                     end = "2017-02-01"),
-                   paste0("There are no data for station 42013 for ",
-                          "this interval \\(day\\)")))
+                   paste0("There are no data for station 42013, ",
+                          "in this time range")))
   expect_silent(
     expect_message(w1 <- weather_dl(station_ids = c(42013, 51423),
                                     interval = "day",
