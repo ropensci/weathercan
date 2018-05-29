@@ -2,10 +2,12 @@
 # weather_raw --------------------------------------------------------------
 context("weather_raw")
 
-test_that("weather_raw (hour) downloads a data frame", {
-  expect_silent(wd <- weather_raw(station_id = 51423,
-                                  date = as.Date("2014-01-01"),
-                                  skip = 15, interval = "hour"))
+test_that("weather_html/raw (hour) download a data frame", {
+  expect_silent(wd <- weather_html(station_id = 51423,
+                                   date = as.Date("2014-01-01"),
+                                   interval = "hour"))
+  expect_silent(wd <- weather_raw(wd, skip = 15))
+
   ## Basics
   expect_is(wd, "data.frame")
   expect_length(wd, 24)
@@ -17,10 +19,11 @@ test_that("weather_raw (hour) downloads a data frame", {
   #              c("\\u2021"))
 })
 
-test_that("weather_raw (day) downloads a data frame", {
-  expect_silent(wd <- weather_raw(station_id = 51423,
+test_that("weather_html/raw (day) download a data frame", {
+  expect_silent(wd <- weather_html(station_id = 51423,
                                   date = as.Date("2014-01-01"),
-                                  skip = 24, interval = "day"))
+                                  interval = "day"))
+  expect_silent(wd <- weather_raw(wd, skip = 24))
 
   ## Basics
   expect_is(wd, "data.frame")
@@ -32,10 +35,11 @@ test_that("weather_raw (day) downloads a data frame", {
   #              c("\\u2021"))
 })
 
-test_that("weather_raw (month) downloads a data frame", {
-  expect_silent(wd <- weather_raw(station_id = 43823,
-                                  date = as.Date("2005-01-01"),
-                                  skip = 17, interval = "month"))
+test_that("weather_html/raw (month) download a data frame", {
+  expect_silent(wd <- weather_html(station_id = 43823,
+                                   date = as.Date("2005-01-01"),
+                                   interval = "month"))
+  expect_silent(wd <- weather_raw(wd, skip = 17))
 
   ## Basics
   expect_is(wd, "data.frame")

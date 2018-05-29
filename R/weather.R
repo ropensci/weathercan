@@ -25,6 +25,16 @@
 #'   By default, downloads from
 #'   "http://climate.weather.gc.ca/climate_data/bulk_data_e.html"
 #'
+#'   Data is downloaded from ECCC as a series of files which are then bound
+#'   together. Each file corresponds to a different month, or year, depending on
+#'   the interval. Metadata (station name, lat, lon, elevation, etc.) is
+#'   extracted from the start of the most recent file (i.e. most recent dates)
+#'   for a given station. Note that important data (i.e. station name, lat, lon)
+#'   is unlikely to change between files (i.e. dates), but some data may or may
+#'   not be available depending on the date of the file (e.g., station operator
+#'   was added as of April 1st 2018, so will be in all data which includes dates
+#'   on or after April 2018).
+#'
 #' @param station_ids Numeric/Character. A vector containing the ID(s) of the
 #'   station(s) you wish to download data from. See the \code{\link{stations}}
 #'   data frame or the \code{\link{stations_search}} function to find IDs.
@@ -82,18 +92,18 @@
 #'
 #' @export
 weather_dl <- function(station_ids,
-                    start = NULL, end = NULL,
-                    interval = "hour",
-                    trim = TRUE,
-                    format = TRUE,
-                    string_as = NA,
-                    tz_disp = NULL,
-                    stn = weathercan::stations,
-                    url = NULL,
-                    encoding = "UTF-8",
-                    list_col = FALSE,
-                    verbose = FALSE,
-                    quiet = FALSE) {
+                       start = NULL, end = NULL,
+                       interval = "hour",
+                       trim = TRUE,
+                       format = TRUE,
+                       string_as = NA,
+                       tz_disp = NULL,
+                       stn = weathercan::stations,
+                       url = NULL,
+                       encoding = "UTF-8",
+                       list_col = FALSE,
+                       verbose = FALSE,
+                       quiet = FALSE) {
 
   if(is.null(url)) url <- paste0("http://climate.weather.gc.ca/",
                                  "climate_data/bulk_data_e.html")
@@ -172,43 +182,33 @@ weather_dl <- function(station_ids,
     date_range <- seq(lubridate::floor_date(s.start, unit = "month"),
                       lubridate::floor_date(s.end, unit = "month"),
                       by = ifelse(interval %in% c("hour"), "month", "year"))
-    date_range <- unique(date_range)
+    #date_range <- tibble::tibble(date_range = unique(date_range))
 
     if(interval == "month") date_range <- date_range[1]
 
-    preamble <- weather_raw(station_id = s, date = date_range[1],
-                           interval = interval, nrows = 25, url = url,
-                           header = FALSE, encoding = encoding)
+    w <- tibble::tibble(date_range = date_range) %>%
+      dplyr::mutate(html = purrr::map(date_range,
+                                      ~ weather_html(station_id = s,
+                                                     date = .x,
+                                                     interval = interval,
+                                                     url = url)),
+                    preamble = purrr::map(html, ~ preamble_raw(.x,
+                                                               encoding =
+                                                                 encoding)),
+                    skip = purrr::map_dbl(preamble, ~ nrow(.x))) %>%
+      dplyr::filter(skip > 3) # No data, if no preamble
 
-    skip <- grep("Date/Time", preamble[, 1])
+    if(nrow(w) > 0) {
+      w <- dplyr::mutate(w, data = purrr::map2(html, skip,
+                                               ~ weather_raw(.x, .y,
+                                                             encoding =
+                                                               encoding)))
 
-    # If Station Name present, have data, otherwise skip
-    if(any(grepl("Station Name", preamble$V1))) {
-      preamble <- preamble[1:skip,] %>%
-        tidyr::spread(V1, V2) %>%
-        dplyr::select(station_name = dplyr::contains("Station Name"),
-                      lat = dplyr::contains("Latitude"),
-                      lon = dplyr::contains("Longitude"),
-                      elev = dplyr::contains("Elevation"),
-                      climate_id = dplyr::contains("Climate Identifier"),
-                      WMO_id = dplyr::contains("WMO Identifier"),
-                      TC_id = dplyr::contains("TC Identifier")) %>%
-        dplyr::mutate(station_id = s,
-                      prov = unique(stn1$prov),
-                      lat = as.numeric(as.character(lat)),
-                      lon = as.numeric(as.character(lon)),
-                      elev = as.numeric(as.character(elev)))
+      # Extract only most recent preamble
+      preamble <- preamble_format(w$preamble[nrow(w)][[1]], s = s)
 
-      if(verbose) message("Downloading station data: ", s)
-      w <- data.frame()
-      for(i in seq_along(date_range)){
-        w <- rbind(w, weather_raw(station_id = s,
-                                  date = date_range[i],
-                                  interval = interval,
-                                  skip = skip,
-                                  url = url,
-                                  encoding = encoding))
-      }
+      w <- dplyr::select(w, -date_range, -skip) %>%
+        tidyr::unnest(data)
 
       ## Format data if requested
       if(format) {
@@ -289,23 +289,27 @@ weather_dl <- function(station_ids,
       w_all <- w_all[w_all$date >= min(temp) & w_all$date <= max(temp), ]
     }
 
+    p <- names(p_names)[names(p_names) %in% names(w_all)]
+
     ## Arrange
-    w_all <- dplyr::select(w_all, dplyr::one_of(p_names), dplyr::everything())
+    w_all <- dplyr::select(w_all,
+                           dplyr::one_of(p),
+                           dplyr::everything())
 
     ## If list_col is TRUE and data is formatted
     if(list_col && format){
-
+      w_all <- tibble::as.tibble(w_all)
       ## Appropriate grouping levels
       if(interval == "hour"){
-        w_all <- tidyr::nest(w_all, -dplyr::one_of(p_names), -date)
+        w_all <- tidyr::nest(w_all, -dplyr::one_of(p), -date)
       }
 
       if(interval == "day"){
-        w_all <- tidyr::nest(w_all, -dplyr::one_of(p_names), -month)
+        w_all <- tidyr::nest(w_all, -dplyr::one_of(p), -month)
       }
 
       if(interval == "month"){
-        w_all <- tidyr::nest(w_all, -dplyr::one_of(p_names), -year)
+        w_all <- tidyr::nest(w_all, -dplyr::one_of(p), -year)
       }
     }
   }
@@ -341,7 +345,8 @@ weather_dl <- function(station_ids,
               msg_fmt$replace[1], ". ",
               "Use 'string_as = NULL' to keep as characters (see ?weather_dl).")
     } else {
-      message("  Left all non-numeric entries as characters. Couldn't summarize these columns.")
+      message("  Left all non-numeric entries as characters. ",
+              "Couldn't summarize these columns.")
     }
 
     if(verbose) {
@@ -357,14 +362,10 @@ weather_dl <- function(station_ids,
 }
 
 
-weather_raw <- function(station_id,
-                       date,
-                       interval = "hour",
-                       skip = 0,
-                       nrows = -1,
-                       header = TRUE,
-                       url = NULL,
-                       encoding = "UTF-8") {
+weather_html <- function(station_id,
+                         date,
+                         interval = "hour",
+                         url = NULL) {
 
   if(is.null(url)) url <- paste0("http://climate.weather.gc.ca/",
                                  "climate_data/bulk_data_e.html")
@@ -378,15 +379,20 @@ weather_raw <- function(station_id,
                                  Year = format(date, "%Y"),
                                  Month = format(date, "%m"),
                                  submit = 'Download+Data'))
-
   httr::stop_for_status(html)
+  return(html)
+}
 
+weather_raw <- function(html, skip = 0,
+                        nrows = -1,
+                        header = TRUE,
+                        encoding = "UTF-8") {
   utils::read.csv(text = httr::content(html, as = "text",
-                                            type = "text/csv",
-                                            encoding = encoding),
-                       nrows = nrows, strip.white = TRUE,
-                       skip = skip, header = header,
-                       colClasses = "character", check.names = FALSE) %>%
+                                       type = "text/csv",
+                                       encoding = encoding),
+                  nrows = nrows, strip.white = TRUE,
+                  skip = skip, header = header,
+                  colClasses = "character", check.names = FALSE) %>%
     # For some reason the flags "^" are replaced with "I",
     # change back to match flags on ECCC website
     dplyr::mutate_at(.vars = dplyr::vars(dplyr::ends_with("Flag")),
@@ -466,6 +472,7 @@ weather_format <- function(w, interval = "hour", string_as = "NA", preamble,
   warn <- vapply(num,
                  FUN = function(x) methods::is(x, "warning"),
                  FUN.VALUE = TRUE)
+
   if(any(warn)) {
     m <- paste0(names(num)[warn], collapse = ", ")
     non_num <- tibble::tibble(col = names(num)[warn])
@@ -511,19 +518,46 @@ weather_format <- function(w, interval = "hour", string_as = "NA", preamble,
   list(data = w, msg = non_num)
 }
 
+preamble_raw <- function(html, nrows = 30, search_key = "Date/Time", encoding) {
+  preamble <- weather_raw(html, nrows = nrows,
+                          header = FALSE, encoding = encoding)
+  preamble[1:grep("Date/Time", preamble$V1), ]
+}
+
+preamble_format <- function(preamble, s) {
+
+  p <- paste0("(", paste0(p_names, collapse = ")|("), ")")
+
+  preamble <- preamble %>%
+    dplyr::mutate(V1 = stringr::str_extract(V1, pattern = p)) %>%
+    dplyr::filter(!is.na(V1)) %>%
+    tidyr::spread(V1, V2)
+
+  p <- p_names[p_names %in% names(preamble)]
+
+  preamble %>%
+    dplyr::select(p) %>%
+    dplyr::mutate(station_id = s,
+                  prov = factor(province[prov], levels = province),
+                  lat = as.numeric(as.character(lat)),
+                  lon = as.numeric(as.character(lon)),
+                  elev = as.numeric(as.character(elev)))
+}
+
+
 #' @export
 weather <- function(station_ids,
-                       start = NULL, end = NULL,
-                       interval = "hour",
-                       trim = TRUE,
-                       format = TRUE,
-                       string_as = NA,
-                       tz_disp = NULL,
-                       stn = weathercan::stations,
-                       url = NULL,
-                       encoding = "UTF-8",
-                       list_col = FALSE,
-                       verbose = FALSE,
-                       quiet = FALSE) {
+                    start = NULL, end = NULL,
+                    interval = "hour",
+                    trim = TRUE,
+                    format = TRUE,
+                    string_as = NA,
+                    tz_disp = NULL,
+                    stn = weathercan::stations,
+                    url = NULL,
+                    encoding = "UTF-8",
+                    list_col = FALSE,
+                    verbose = FALSE,
+                    quiet = FALSE) {
   .Deprecated("weather_dl")
 }

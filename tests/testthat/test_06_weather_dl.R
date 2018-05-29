@@ -62,7 +62,7 @@ test_that("weather (hour) gets all", {
                                 start = Sys.Date() - lubridate::days(1),
                                 interval = "hour", trim = FALSE))
   expect_is(w, "data.frame")
-  expect_length(w, 34)
+  expect_length(w, 35)
   expect_equal(nrow(w), 48)
   expect_equal(w$date[1], Sys.Date() - lubridate::days(1))
   expect_equal(w$date[nrow(w)], Sys.Date())
@@ -138,6 +138,14 @@ test_that("weather (hour) verbose and quiet", {
                             start = "2017-01-01", end = "2017-02-01",
                             verbose = TRUE),
                  "(Getting station: 1275\\n)")
+})
+
+test_that("weather (hour) handles data with different numbers of columns", {
+
+  expect_silent(d <- weather_dl(station_ids = 51423,
+                                start = "2018-03-20", end = "2018-04-10"))
+
+
 })
 
 # weather by day ----------------------------------------------------------
@@ -402,34 +410,34 @@ test_that("weather (month) verbose and quiet", {
 context("Generating list_col")
 
 test_that("list_col=TRUE and interval=hour groups on the right level", {
-  expect_equal(ncol(weather_dl(station_ids = c(27226), start = "2015-01-01",
-                               end = "2015-01-15", interval = "hour") %>%
-                      tidyr::nest(-dplyr::one_of(p_names), -date)),
-               ncol(weather_dl(station_ids = c(27226), start = "2015-01-01",
-                               end = "2015-01-15", interval = "hour",
-                               list_col=TRUE)) )
+  expect_equal(ncol(weather_dl(station_ids = c(51423), start = "2018-04-01",
+                               end = "2018-04-15", interval = "hour") %>%
+                      tidyr::nest(-dplyr::one_of(names(p_names)), -date)),
+               ncol(weather_dl(station_ids = c(51423), start = "2018-04-01",
+                               end = "2018-04-15", interval = "hour",
+                               list_col = TRUE)))
 })
 
 test_that("list_col=TRUE and interval=day groups on the right level", {
+  p <- names(p_names)[names(p_names) != "station_operator"]
   expect_equal(ncol(weather_dl(station_ids = c(27119), start = "2015-01-01",
                                end = "2015-01-15", interval = "day") %>%
-                      tidyr::nest(-dplyr::one_of(p_names), -month)),
+                      tidyr::nest(-dplyr::one_of(p), -month)),
                ncol(weather_dl(station_ids = c(27119),
                                start = "2015-01-01",
                                end = "2015-01-15",
                                interval = "day",
-                               list_col=TRUE))
-  )
+                               list_col = TRUE)))
 })
 
 test_that("list_col=TRUE and interval=month groups on the right level", {
+  p <- names(p_names)[names(p_names) != "station_operator"]
   expect_equal(ncol(weather_dl(station_ids = c(5217), start = "2015-01-01",
                                end = "2015-01-15", interval = "month") %>%
-                      tidyr::nest(-dplyr::one_of(p_names), -year)),
+                      tidyr::nest(-dplyr::one_of(p), -year)),
                ncol(weather_dl(station_ids = c(5217), start = "2015-01-01",
                                end = "2015-01-15", interval = "month",
-                               list_col=TRUE))
-  )
+                               list_col = TRUE)))
 })
 
 

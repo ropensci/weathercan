@@ -4,6 +4,12 @@ author: "Steffi LaZerte"
 output: html_document
 ---
 
+# weathercan 0.2.7 (2018-05-29)
+
+## Bug fixes
+- Fix bug created when ECCC changed file metadata for dates after April 1st 2018 (only affected downloads which included dates both before AND after April 1st, 2018)
+- Adjust code flexibility to handle future changes
+
 # weathercan 0.2.6 (2018-05-25)
 
 ## Bug fixes

@@ -83,6 +83,16 @@ Data can be returned 'raw' (format = FALSE) or can be formatted.
 
   By default, downloads from
   "http://climate.weather.gc.ca/climate_data/bulk_data_e.html"
+
+  Data is downloaded from ECCC as a series of files which are then bound
+  together. Each file corresponds to a different month, or year, depending on
+  the interval. Metadata (station name, lat, lon, elevation, etc.) is
+  extracted from the start of the most recent file (i.e. most recent dates)
+  for a given station. Note that important data (i.e. station name, lat, lon)
+  is unlikely to change between files (i.e. dates), but some data may or may
+  not be available depending on the date of the file (e.g., station operator
+  was added as of April 1st 2018, so will be in all data which includes dates
+  on or after April 2018).
 }
 \examples{
 
