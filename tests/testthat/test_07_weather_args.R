@@ -8,7 +8,7 @@ test_that("weather_dl() hour format = FALSE", {
 
   ## Basics
   expect_is(w, "data.frame")
-  expect_length(w, 33)
+  expect_length(w, 34)
   expect_equal(nrow(w), 744)
   expect_is(w$prov, "factor")
 
@@ -31,7 +31,7 @@ test_that("weather_dl() day format = FALSE", {
 
   ## Basics
   expect_is(w, "data.frame")
-  expect_length(w, 36)
+  expect_length(w, 37)
   expect_equal(nrow(w), 365)
   expect_is(w$prov, "factor")
 
@@ -57,7 +57,7 @@ test_that("weather_dl() month format = FALSE", {
 
   ## Basics
   expect_is(w, "data.frame")
-  expect_length(w, 34)
+  expect_length(w, 35)
   expect_equal(nrow(w), 842)
   expect_is(w$prov, "factor")
 

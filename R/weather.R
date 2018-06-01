@@ -263,6 +263,10 @@ weather_dl <- function(station_ids,
       if(verbose) message("Adding header data: ", s)
       if(nrow(w) > 0) w <- cbind(preamble, w)
 
+      ## Fill missing headers with NA
+      w[names(p_names)[!names(p_names) %in% names(w)]] <- NA
+
+
       if(interval == "hour") tz_list <- c(tz_list, lubridate::tz(w$time[1]))
       w_all <- rbind(w_all, w)
     }

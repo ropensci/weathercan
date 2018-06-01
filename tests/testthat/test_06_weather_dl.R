@@ -10,7 +10,7 @@ test_that("weather (hour) returns a data frame", {
 
   ## Basics
   expect_is(w, "data.frame")
-  expect_length(w, 34)
+  expect_length(w, 35)
   expect_equal(nrow(w), 744)
   expect_is(w$station_name, "character")
   expect_is(w$prov, "factor")
@@ -99,7 +99,7 @@ test_that("weather (hour) no data fails nicely", {
   expect_length(w0, 0)
   expect_equal(nrow(w0), 0)
   expect_is(w1, "data.frame")
-  expect_length(w1, 34)
+  expect_length(w1, 35)
   expect_equal(nrow(w1), 744)
 
   expect_silent(
@@ -144,8 +144,12 @@ test_that("weather (hour) handles data with different numbers of columns", {
 
   expect_silent(d <- weather_dl(station_ids = 51423,
                                 start = "2018-03-20", end = "2018-04-10"))
+  expect_gt(nrow(d), 0)
 
-
+  expect_silent(d <- weather_dl(c(6819, 51423),
+                                start = "2017-08-01",
+                                end = "2018-05-01", interval = "hour"))
+  expect_gt(nrow(d), 0)
 })
 
 # weather by day ----------------------------------------------------------
@@ -164,7 +168,7 @@ test_that("weather (day) returns a data frame", {
 
   ## Basics
   expect_is(w, "data.frame")
-  expect_length(w, 36)
+  expect_length(w, 37)
 
   i <- lubridate::int_length(lubridate::interval(min(w$date),
                                                  max(w$date)))/60/60/24 + 1
@@ -195,7 +199,7 @@ test_that("weather (day) gets all", {
                                                verbose = TRUE)}, NA))
 
   expect_is(w, "data.frame")
-  expect_length(w, 36)
+  expect_length(w, 37)
   expect_gte(nrow(w), 20)
   expect_equal(min(w$date), as.Date("2016-01-01"))
   expect_equal(max(w$date), Sys.Date())
@@ -254,7 +258,7 @@ test_that("weather (day) no data fails nicely", {
   expect_length(w0, 0)
   expect_equal(nrow(w0), 0)
   expect_is(w1, "data.frame")
-  expect_length(w1, 36)
+  expect_length(w1, 37)
   expect_equal(nrow(w1), 32)
 
   expect_silent(
@@ -294,6 +298,33 @@ test_that("weather (day) verbose and quiet", {
                  "(Getting station: 42013\\n)")
 })
 
+test_that("weather (day) handles data with different numbers of columns", {
+
+  expect_error(expect_message(d <- weather_dl(station_ids = 51423,
+                                              start = "2018-03-20",
+                                              end = "2018-04-10",
+                                              interval = "day")), NA)
+  expect_gt(nrow(d), 0)
+  expect_length(d, 37)
+
+  expect_error(expect_message(d <- weather_dl(c(6819, 51423),
+                                              start = "2017-08-01",
+                                              end = "2018-05-01",
+                                              interval = "day")), NA)
+  expect_gt(nrow(d), 0)
+  expect_length(d, 37)
+
+
+  skip_on_cran()
+  expect_error(expect_message(d <- weather_dl(c(4291, 27534),
+                                              start = "1997-01-01",
+                                              interval = 'day')), NA)
+  expect_gt(nrow(d), 0)
+  expect_length(d, 37)
+  expect_gt(nrow(d[d$station_id == 4291,]), 0)
+  expect_gt(nrow(d[d$station_id == 27534,]), 0)
+})
+
 # weather by month --------------------------------------------------------
 context("weather by month")
 
@@ -303,7 +334,7 @@ test_that("weather (month) returns a data frame", {
 
   ## Basics
   expect_is(w, "data.frame")
-  expect_length(w, 34)
+  expect_length(w, 35)
   expect_equal(nrow(w), 5)
   expect_is(w$station_name, "character")
   expect_is(w$prov, "factor")
@@ -320,10 +351,6 @@ test_that("weather (month) returns a data frame", {
   expect_equal(w$WMO_id[1], "")
   expect_equal(w$TC_id[1], "")
   expect_equal(w$prov[1], factor("QC", levels = levels(stations$prov)))
-
-})
-
-test_that("weather (month) trims NAs", {
 
 })
 
@@ -347,7 +374,7 @@ test_that("weather (month) no data fails nicely", {
   expect_length(w0, 0)
   expect_equal(nrow(w0), 0)
   expect_is(w1, "data.frame")
-  expect_length(w1, 34)
+  expect_length(w1, 35)
   expect_equal(nrow(w1), 2)
 
   expect_silent(
@@ -404,6 +431,24 @@ test_that("weather (month) verbose and quiet", {
                  "(Getting station: 51423\\n)")
 })
 
+test_that("weather (month) handles data with different numbers of columns", {
+
+  expect_silent(d <- weather_dl(station_ids = 5217,
+                                start = "2016-01-01",
+                                end = "2018-12-01",
+                                interval = "month"))
+  expect_gt(nrow(d), 0)
+  expect_length(d, 35)
+
+  expect_silent(d <- weather_dl(c(4291, 27534),
+                                start = "1997-01-01",
+                                end = "2018-12-01",
+                                interval = 'month'))
+  expect_gt(nrow(d), 0)
+  expect_length(d, 35)
+  expect_gt(nrow(d[d$station_id == 4291,]), 0)
+  expect_gt(nrow(d[d$station_id == 27534,]), 0)
+})
 
 # list_cols ---------------------------------------------------------------
 
@@ -419,10 +464,9 @@ test_that("list_col=TRUE and interval=hour groups on the right level", {
 })
 
 test_that("list_col=TRUE and interval=day groups on the right level", {
-  p <- names(p_names)[names(p_names) != "station_operator"]
   expect_equal(ncol(weather_dl(station_ids = c(27119), start = "2015-01-01",
                                end = "2015-01-15", interval = "day") %>%
-                      tidyr::nest(-dplyr::one_of(p), -month)),
+                      tidyr::nest(-dplyr::one_of(names(p_names)), -month)),
                ncol(weather_dl(station_ids = c(27119),
                                start = "2015-01-01",
                                end = "2015-01-15",
@@ -431,10 +475,9 @@ test_that("list_col=TRUE and interval=day groups on the right level", {
 })
 
 test_that("list_col=TRUE and interval=month groups on the right level", {
-  p <- names(p_names)[names(p_names) != "station_operator"]
   expect_equal(ncol(weather_dl(station_ids = c(5217), start = "2015-01-01",
                                end = "2015-01-15", interval = "month") %>%
-                      tidyr::nest(-dplyr::one_of(p), -year)),
+                      tidyr::nest(-dplyr::one_of(names(p_names)), -year)),
                ncol(weather_dl(station_ids = c(5217), start = "2015-01-01",
                                end = "2015-01-15", interval = "month",
                                list_col = TRUE)))
