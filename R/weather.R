@@ -283,11 +283,9 @@ weather_dl <- function(station_ids,
     ## Trim to available data provided it is formatted
     if(trim && format && nrow(w_all) > 0){
       if(verbose) message("Trimming missing values before and after")
-      temp <-  w_all[, !(names(w_all) %in% c("date", "time", "prov",
-                                             "station_name", "station_id",
-                                             "lat", "lon", "year", "month",
-                                             "day", "hour", "qual","elev",
-                                             "climate_id", "WMO_id", "TC_id"))]
+      temp <-  w_all[, !(names(w_all) %in% c(names(p_names), "date", "time",
+                                             "year", "month",
+                                             "day", "hour", "qual"))]
       temp <- w_all$date[which(rowSums(is.na(temp) | temp == "") != ncol(temp))]
 
       w_all <- w_all[w_all$date >= min(temp) & w_all$date <= max(temp), ]

@@ -69,7 +69,10 @@ test_that("weather (hour) gets all", {
 })
 
 test_that("weather (hour) trims NAs", {
-
+  expect_equal(nrow(weather_dl(6819, start = "2017-08-20", end = "2017-10-01",
+                               interval = "hour", trim = TRUE)), 96)
+  expect_equal(nrow(weather_dl(6819, start = "2017-08-20", end = "2017-10-01",
+                               interval = "hour", trim = FALSE)), 1032)
 })
 
 test_that("weather (hour) multiple stations", {
