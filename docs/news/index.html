@@ -115,15 +115,23 @@
     </div>
 
     <div class="contents">
-    <div id="weathercan-0-2-7-2018-05-29" class="section level1">
+    <div id="weathercan-0-2-7-2018-06-04" class="section level1">
 <h1 class="hasAnchor">
-<a href="#weathercan-0-2-7-2018-05-29" class="anchor"></a>weathercan 0.2.7 (2018-05-29)</h1>
+<a href="#weathercan-0-2-7-2018-06-04" class="anchor"></a>weathercan 0.2.7 (2018-06-04)</h1>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Fix bug created when ECCC changed file metadata for dates after April 1st 2018 (only affected downloads which included dates both before AND after April 1st, 2018)</li>
+<li>Fix bug created when ECCC changed file metadata for dates after April 1st 2018 (only affected downloads which included dates both before AND after April 1st, 2018) - Results in a new column <code>station_operator</code> for all data (NA where unavailable for older stations).</li>
 <li>Adjust code flexibility to handle future changes</li>
+</ul>
+</div>
+<div id="changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#changes" class="anchor"></a>Changes</h2>
+<ul>
+<li>Update readme/vignettes/internal data sets to include new columns</li>
+<li>Update interal <code>stations</code> data frame</li>
 </ul>
 </div>
 </div>
@@ -143,9 +151,9 @@
     <div id="weathercan-0-2-5-2018-03-02" class="section level1">
 <h1 class="hasAnchor">
 <a href="#weathercan-0-2-5-2018-03-02" class="anchor"></a>weathercan 0.2.5 (2018-03-02)</h1>
-<div id="changes" class="section level2">
+<div id="changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes" class="anchor"></a>Changes</h2>
+<a href="#changes-1" class="anchor"></a>Changes</h2>
 <ul>
 <li>More sensible messages when missing station data</li>
 <li>Streamline messages from multiple stations</li>
@@ -166,9 +174,9 @@
 <h1 class="hasAnchor">
 <a href="#weathercan-0-2-4-2018-02-01" class="anchor"></a>weathercan 0.2.4 (2018-02-01)</h1>
 <p>Now part of <a href="http://ropensci.org">ropensci.org</a>!</p>
-<div id="changes-1" class="section level2">
+<div id="changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-1" class="anchor"></a>Changes</h2>
+<a href="#changes-2" class="anchor"></a>Changes</h2>
 <ul>
 <li>
 <code>sp</code> moved to suggests, users are now prompted to install sp if they want to search stations by coordinates</li>
@@ -191,9 +199,9 @@
     <div id="weathercan-0-2-3-2017-11-22" class="section level1">
 <h1 class="hasAnchor">
 <a href="#weathercan-0-2-3-2017-11-22" class="anchor"></a>weathercan 0.2.3 (2017-11-22)</h1>
-<div id="changes-2" class="section level2">
+<div id="changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-2" class="anchor"></a>Changes</h2>
+<a href="#changes-3" class="anchor"></a>Changes</h2>
 <ul>
 <li>Updated <code>stations</code> data</li>
 <li>Added <code>flags</code> and <code>glossary</code> datasets as well as vignettes</li>
@@ -220,9 +228,9 @@
     <div id="weathercan-0-2-2-2017-06-16" class="section level1">
 <h1 class="hasAnchor">
 <a href="#weathercan-0-2-2-2017-06-16" class="anchor"></a>weathercan 0.2.2 (2017-06-16)</h1>
-<div id="changes-3" class="section level2">
+<div id="changes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-3" class="anchor"></a>Changes</h2>
+<a href="#changes-4" class="anchor"></a>Changes</h2>
 <ul>
 <li>Update and expand vignettes (closes #15)</li>
 <li>Data now returned as tibbles</li>
@@ -324,7 +332,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#weathercan-0-2-7-2018-05-29">0.2.7</a></li>
+        <li><a href="#weathercan-0-2-7-2018-06-04">0.2.7</a></li>
         <li><a href="#weathercan-0-2-6-2018-05-25">0.2.6</a></li>
         <li><a href="#weathercan-0-2-5-2018-03-02">0.2.5</a></li>
         <li><a href="#weathercan-0-2-4-2018-02-01">0.2.4</a></li>

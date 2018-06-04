@@ -169,43 +169,29 @@ devtools::<span class="kw">install_github</span>(<span class="st">"ropensci/weat
 <h3 class="hasAnchor">
 <a href="#weather" class="anchor"></a>Weather</h3>
 <p>Once you have your <code>station_id</code>(s) you can download weather data:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kam &lt;-<span class="st"> </span><span class="kw"><a href="reference/weather_dl.html">weather_dl</a></span>(<span class="dt">station_ids =</span> <span class="dv">51423</span>, <span class="dt">start =</span> <span class="st">"2016-01-01"</span>, <span class="dt">end =</span> <span class="st">"2016-02-15"</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kam &lt;-<span class="st"> </span><span class="kw"><a href="reference/weather_dl.html">weather_dl</a></span>(<span class="dt">station_ids =</span> <span class="dv">51423</span>, <span class="dt">start =</span> <span class="st">"2018-02-01"</span>, <span class="dt">end =</span> <span class="st">"2018-04-15"</span>)
 kam</code></pre></div>
-<pre><code>## # A tibble: 1,104 x 34
-##    station_name station_id prov    lat   lon  elev climate_id WMO_id TC_id date      
-##  * &lt;chr&gt;             &lt;dbl&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt; &lt;date&gt;    
-##  1 KAMLOOPS A        51423 BC     50.7  -120   345 1163781    71887  YKA   2016-01-01
-##  2 KAMLOOPS A        51423 BC     50.7  -120   345 1163781    71887  YKA   2016-01-01
-##  3 KAMLOOPS A        51423 BC     50.7  -120   345 1163781    71887  YKA   2016-01-01
-##  4 KAMLOOPS A        51423 BC     50.7  -120   345 1163781    71887  YKA   2016-01-01
-##  5 KAMLOOPS A        51423 BC     50.7  -120   345 1163781    71887  YKA   2016-01-01
-##  6 KAMLOOPS A        51423 BC     50.7  -120   345 1163781    71887  YKA   2016-01-01
-##  7 KAMLOOPS A        51423 BC     50.7  -120   345 1163781    71887  YKA   2016-01-01
-##  8 KAMLOOPS A        51423 BC     50.7  -120   345 1163781    71887  YKA   2016-01-01
-##  9 KAMLOOPS A        51423 BC     50.7  -120   345 1163781    71887  YKA   2016-01-01
-## 10 KAMLOOPS A        51423 BC     50.7  -120   345 1163781    71887  YKA   2016-01-01
-## # ... with 1,094 more rows, and 24 more variables</code></pre>
+<pre><code>## # A tibble: 1,776 x 35
+##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id
+##  * &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;            &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;
+##  1 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+##  2 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+##  3 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+##  4 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+##  5 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+##  6 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+##  7 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+##  8 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+##  9 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+## 10 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+## # ... with 1,766 more rows, and 25 more variables</code></pre>
 <p>You can also download data from multiple stations at once:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kam_pg &lt;-<span class="st"> </span><span class="kw"><a href="reference/weather_dl.html">weather_dl</a></span>(<span class="dt">station_ids =</span> <span class="kw">c</span>(<span class="dv">48248</span>, <span class="dv">51423</span>), <span class="dt">start =</span> <span class="st">"2016-01-01"</span>, <span class="dt">end =</span> <span class="st">"2016-02-15"</span>)
-kam_pg</code></pre></div>
-<pre><code>## # A tibble: 2,208 x 34
-##    station_name               station_id prov    lat   lon  elev climate_id WMO_id TC_id date      
-##  * &lt;chr&gt;                           &lt;dbl&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt; &lt;date&gt;    
-##  1 PRINCE GEORGE AIRPORT AUTO      48248 BC     53.9  -123   680 1096453    71302  VXS   2016-01-01
-##  2 PRINCE GEORGE AIRPORT AUTO      48248 BC     53.9  -123   680 1096453    71302  VXS   2016-01-01
-##  3 PRINCE GEORGE AIRPORT AUTO      48248 BC     53.9  -123   680 1096453    71302  VXS   2016-01-01
-##  4 PRINCE GEORGE AIRPORT AUTO      48248 BC     53.9  -123   680 1096453    71302  VXS   2016-01-01
-##  5 PRINCE GEORGE AIRPORT AUTO      48248 BC     53.9  -123   680 1096453    71302  VXS   2016-01-01
-##  6 PRINCE GEORGE AIRPORT AUTO      48248 BC     53.9  -123   680 1096453    71302  VXS   2016-01-01
-##  7 PRINCE GEORGE AIRPORT AUTO      48248 BC     53.9  -123   680 1096453    71302  VXS   2016-01-01
-##  8 PRINCE GEORGE AIRPORT AUTO      48248 BC     53.9  -123   680 1096453    71302  VXS   2016-01-01
-##  9 PRINCE GEORGE AIRPORT AUTO      48248 BC     53.9  -123   680 1096453    71302  VXS   2016-01-01
-## 10 PRINCE GEORGE AIRPORT AUTO      48248 BC     53.9  -123   680 1096453    71302  VXS   2016-01-01
-## # ... with 2,198 more rows, and 24 more variables</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kam_pg &lt;-<span class="st"> </span><span class="kw"><a href="reference/weather_dl.html">weather_dl</a></span>(<span class="dt">station_ids =</span> <span class="kw">c</span>(<span class="dv">48248</span>, <span class="dv">51423</span>), <span class="dt">start =</span> <span class="st">"2018-02-01"</span>, <span class="dt">end =</span> <span class="st">"2018-04-15"</span>)</code></pre></div>
 <p>And plot it:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
 
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(<span class="dt">data =</span> kam_pg, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> time, <span class="dt">y =</span> temp, <span class="dt">group =</span> station_name, <span class="dt">colour =</span> station_name)) +
+<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(<span class="dt">data =</span> kam_pg, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> time, <span class="dt">y =</span> temp, 
+                          <span class="dt">group =</span> station_name, <span class="dt">colour =</span> station_name)) +
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_minimal</a></span>() +<span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>()</code></pre></div>
 <p><img src="tools/readme/kam_plt-1.png" width="1152"></p>

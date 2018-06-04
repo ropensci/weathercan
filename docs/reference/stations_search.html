@@ -181,44 +181,48 @@ missing data, etc.)</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='fu'>stations_search</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"Kamloops"</span>)</div><div class='output co'>#&gt; # A tibble: 40 x 12
-#&gt;    prov   statio… stati… clima… WMO_… TC_id   lat   lon  elev inte… start   end
-#&gt;    &lt;fctr&gt; &lt;chr&gt;   &lt;fctr&gt; &lt;fctr&gt; &lt;fct&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt;
-#&gt;  1 BC     KAMLOO… 1274   11637… &lt;NA&gt;  &lt;NA&gt;   50.7  -120   379 day    1878  1982
-#&gt;  2 BC     KAMLOO… 1274   11637… &lt;NA&gt;  &lt;NA&gt;   50.7  -120   379 month  1878  1982
-#&gt;  3 BC     KAMLOO… 1275   11637… 71887 YKA    50.7  -120   345 day    1951  2013
-#&gt;  4 BC     KAMLOO… 1275   11637… 71887 YKA    50.7  -120   345 hour   1953  2013
-#&gt;  5 BC     KAMLOO… 1275   11637… 71887 YKA    50.7  -120   345 month  1951  2013
-#&gt;  6 BC     KAMLOO… 51423  11637… 71887 YKA    50.7  -120   345 day    2013  2018
-#&gt;  7 BC     KAMLOO… 51423  11637… 71887 YKA    50.7  -120   345 hour   2013  2018
-#&gt;  8 BC     KAMLOO… 1276   11637… &lt;NA&gt;  &lt;NA&gt;   50.7  -120   701 day    1977  1993
-#&gt;  9 BC     KAMLOO… 1276   11637… &lt;NA&gt;  &lt;NA&gt;   50.7  -120   701 month  1977  1993
-#&gt; 10 BC     KAMLOO… 42203  11638… 71741 ZKA    50.7  -120   345 day    2006  2018
-#&gt; # ... with 30 more rows</div><div class='input'><span class='fu'>stations_search</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"Kamloops"</span>, <span class='kw'>interval</span> <span class='kw'>=</span> <span class='st'>"hour"</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 12
-#&gt;   prov   statio… statio… clima… WMO_… TC_id   lat   lon  elev inte… start   end
-#&gt;   &lt;fctr&gt; &lt;chr&gt;   &lt;fctr&gt;  &lt;fctr&gt; &lt;fct&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt;
-#&gt; 1 BC     KAMLOO… 1275    11637… 71887 YKA    50.7  -120   345 hour   1953  2013
-#&gt; 2 BC     KAMLOO… 51423   11637… 71887 YKA    50.7  -120   345 hour   2013  2018
-#&gt; 3 BC     KAMLOO… 42203   11638… 71741 ZKA    50.7  -120   345 hour   2006  2018</div><div class='input'>
-<span class='fu'>stations_search</span>(<span class='kw'>coords</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>53.915495</span>, -<span class='fl'>122.739379</span>))</div><div class='output co'>#&gt; # A tibble: 16 x 13
-#&gt;    prov   station… stati… clim… WMO_… TC_id   lat   lon  elev inte… start   end
-#&gt;    &lt;fctr&gt; &lt;chr&gt;    &lt;fctr&gt; &lt;fct&gt; &lt;fct&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt;
-#&gt;  1 BC     PRINCE … 629    1096… &lt;NA&gt;  &lt;NA&gt;   53.9  -123   569 day    1956  1957
-#&gt;  2 BC     PRINCE … 629    1096… &lt;NA&gt;  &lt;NA&gt;   53.9  -123   569 month  1956  1957
-#&gt;  3 BC     PRINCE … 637    1096… &lt;NA&gt;  &lt;NA&gt;   53.9  -123   591 day    1974  1976
-#&gt;  4 BC     PRINCE … 637    1096… &lt;NA&gt;  &lt;NA&gt;   53.9  -123   591 month  1974  1976
-#&gt;  5 BC     PRINCE … 50169  1096… &lt;NA&gt;  VPX    53.9  -123   601 hour   2012  2018
-#&gt;  6 BC     PR GEOR… 634    1096… &lt;NA&gt;  &lt;NA&gt;   53.9  -123   579 day    1962  1966
-#&gt;  7 BC     PR GEOR… 634    1096… &lt;NA&gt;  &lt;NA&gt;   53.9  -123   579 month  1962  1966
-#&gt;  8 BC     PRINCE … 636    1096… &lt;NA&gt;  &lt;NA&gt;   53.9  -123   579 day    1975  2018
-#&gt;  9 BC     PRINCE … 636    1096… &lt;NA&gt;  &lt;NA&gt;   53.9  -123   579 month  1975  2007
-#&gt; 10 BC     PRINCE … 631    1096… 71896 YXS    53.9  -123   691 day    1942  2009
-#&gt; 11 BC     PRINCE … 631    1096… 71896 YXS    53.9  -123   691 hour   1953  2009
-#&gt; 12 BC     PRINCE … 631    1096… 71896 YXS    53.9  -123   691 month  1942  2009
-#&gt; 13 BC     PRINCE … 48248  1096… 71302 VXS    53.9  -123   680 day    2009  2018
-#&gt; 14 BC     PRINCE … 48248  1096… 71302 VXS    53.9  -123   680 hour   2009  2018
-#&gt; 15 BC     PRINCE … 48370  1096… 71896 YXS    53.9  -123   691 day    2009  2018
-#&gt; 16 BC     PRINCE … 48370  1096… 71896 YXS    53.9  -123   691 hour   2009  2018
-#&gt; # ... with 1 more variable: distance &lt;dbl&gt;</div><div class='input'>
+#&gt;    prov  station_name      station_id climate_id WMO_id TC_id   lat   lon  elev
+#&gt;    &lt;fct&gt; &lt;chr&gt;             &lt;fct&gt;      &lt;fct&gt;      &lt;fct&gt;  &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+#&gt;  1 BC    KAMLOOPS          1274       1163779    &lt;NA&gt;   &lt;NA&gt;   50.7  -120   379
+#&gt;  2 BC    KAMLOOPS          1274       1163779    &lt;NA&gt;   &lt;NA&gt;   50.7  -120   379
+#&gt;  3 BC    KAMLOOPS A        1275       1163780    71887  YKA    50.7  -120   345
+#&gt;  4 BC    KAMLOOPS A        1275       1163780    71887  YKA    50.7  -120   345
+#&gt;  5 BC    KAMLOOPS A        1275       1163780    71887  YKA    50.7  -120   345
+#&gt;  6 BC    KAMLOOPS A        51423      1163781    71887  YKA    50.7  -120   345
+#&gt;  7 BC    KAMLOOPS A        51423      1163781    71887  YKA    50.7  -120   345
+#&gt;  8 BC    KAMLOOPS AFTON M… 1276       1163790    &lt;NA&gt;   &lt;NA&gt;   50.7  -120   701
+#&gt;  9 BC    KAMLOOPS AFTON M… 1276       1163790    &lt;NA&gt;   &lt;NA&gt;   50.7  -120   701
+#&gt; 10 BC    KAMLOOPS AUT      42203      1163842    71741  ZKA    50.7  -120   345
+#&gt; # ... with 30 more rows, and 3 more variables: interval &lt;chr&gt;, start &lt;int&gt;,
+#&gt; #   end &lt;int&gt;</div><div class='input'><span class='fu'>stations_search</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"Kamloops"</span>, <span class='kw'>interval</span> <span class='kw'>=</span> <span class='st'>"hour"</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 12
+#&gt;   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev
+#&gt;   &lt;fct&gt; &lt;chr&gt;        &lt;fct&gt;      &lt;fct&gt;      &lt;fct&gt;  &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1 BC    KAMLOOPS A   1275       1163780    71887  YKA    50.7  -120   345
+#&gt; 2 BC    KAMLOOPS A   51423      1163781    71887  YKA    50.7  -120   345
+#&gt; 3 BC    KAMLOOPS AUT 42203      1163842    71741  ZKA    50.7  -120   345
+#&gt; # ... with 3 more variables: interval &lt;chr&gt;, start &lt;int&gt;, end &lt;int&gt;</div><div class='input'>
+<span class='fu'>stations_search</span>(<span class='kw'>coords</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>53.915495</span>, -<span class='fl'>122.739379</span>))</div><div class='output co'>#&gt; # A tibble: 17 x 13
+#&gt;    prov  station_name      station_id climate_id WMO_id TC_id   lat   lon  elev
+#&gt;    &lt;fct&gt; &lt;chr&gt;             &lt;fct&gt;      &lt;fct&gt;      &lt;fct&gt;  &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+#&gt;  1 BC    PRINCE GEORGE     629        1096435    &lt;NA&gt;   &lt;NA&gt;   53.9  -123   569
+#&gt;  2 BC    PRINCE GEORGE     629        1096435    &lt;NA&gt;   &lt;NA&gt;   53.9  -123   569
+#&gt;  3 BC    PRINCE GEORGE WE… 637        1096470    &lt;NA&gt;   &lt;NA&gt;   53.9  -123   591
+#&gt;  4 BC    PRINCE GEORGE WE… 637        1096470    &lt;NA&gt;   &lt;NA&gt;   53.9  -123   591
+#&gt;  5 BC    PRINCE GEORGE MA… 50169      1096454    &lt;NA&gt;   VPX    53.9  -123   601
+#&gt;  6 BC    PRINCE GEORGE MA… 50169      1096454    &lt;NA&gt;   VPX    53.9  -123   601
+#&gt;  7 BC    PR GEORGE FOREMA… 634        1096460    &lt;NA&gt;   &lt;NA&gt;   53.9  -123   579
+#&gt;  8 BC    PR GEORGE FOREMA… 634        1096460    &lt;NA&gt;   &lt;NA&gt;   53.9  -123   579
+#&gt;  9 BC    PRINCE GEORGE STP 636        1096468    &lt;NA&gt;   &lt;NA&gt;   53.9  -123   579
+#&gt; 10 BC    PRINCE GEORGE STP 636        1096468    &lt;NA&gt;   &lt;NA&gt;   53.9  -123   579
+#&gt; 11 BC    PRINCE GEORGE A   631        1096450    71896  YXS    53.9  -123   691
+#&gt; 12 BC    PRINCE GEORGE A   631        1096450    71896  YXS    53.9  -123   691
+#&gt; 13 BC    PRINCE GEORGE A   631        1096450    71896  YXS    53.9  -123   691
+#&gt; 14 BC    PRINCE GEORGE AI… 48248      1096453    71302  VXS    53.9  -123   680
+#&gt; 15 BC    PRINCE GEORGE AI… 48248      1096453    71302  VXS    53.9  -123   680
+#&gt; 16 BC    PRINCE GEORGE     48370      1096439    71896  YXS    53.9  -123   691
+#&gt; 17 BC    PRINCE GEORGE     48370      1096439    71896  YXS    53.9  -123   691
+#&gt; # ... with 4 more variables: interval &lt;chr&gt;, start &lt;int&gt;, end &lt;int&gt;,
+#&gt; #   distance &lt;dbl&gt;</div><div class='input'>
 </div><span class='co'># NOT RUN {</span>
 <span class='no'>loc</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ggmap</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/ggmap/topics/geocode'>geocode</a></span>(<span class='st'>"Prince George, BC"</span>)
 <span class='fu'>stations_search</span>(<span class='kw'>coords</span> <span class='kw'>=</span> <span class='no'>loc</span>[<span class='fu'>c</span>(<span class='st'>"lat"</span>, <span class='st'>"lon"</span>)])

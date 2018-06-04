@@ -91,7 +91,7 @@
       <h1>Using with the tidyverse</h1>
                         <h4 class="author">Sam Albers</h4>
             
-            <h4 class="date">2018-02-01</h4>
+            <h4 class="date">2018-06-04</h4>
           </div>
 
     
@@ -124,13 +124,13 @@
          interval ==<span class="st"> "day"</span>) %&gt;%
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(prov, station_name, station_id, start, end)</code></pre></div>
 <pre><code>## # A tibble: 5 x 5
-##   prov   station_name     station_id start   end
-##   &lt;fctr&gt; &lt;chr&gt;            &lt;fctr&gt;     &lt;int&gt; &lt;int&gt;
-## 1 BC     AGASSIZ CDA      707         1889  2017
-## 2 AB     TABER            2315        1907  2018
-## 3 ON     BELLEVILLE       4859        1866  2018
-## 4 QC     LENNOXVILLE      5397        1888  2018
-## 5 NL     PORT AUX BASQUES 6693        1909  2017</code></pre>
+##   prov  station_name     station_id start   end
+##   &lt;fct&gt; &lt;chr&gt;            &lt;fct&gt;      &lt;int&gt; &lt;int&gt;
+## 1 BC    AGASSIZ CDA      707         1889  2018
+## 2 AB    TABER            2315        1907  2018
+## 3 ON    BELLEVILLE       4859        1866  2018
+## 4 QC    LENNOXVILLE      5397        1888  2018
+## 5 NL    PORT AUX BASQUES 6693        1909  2017</code></pre>
 <p>These two weather stations will be our test data for this vignette. You can broaden or expand your analysis by choosing different or more station. Our next step is to use the <code><a href="../../reference/weather_dl.html">weather_dl()</a></code> function to load in the data.</p>
 <p>The following will take quite some time to download as it is downloading over 100 years of daily data for 5 stations.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pancan_df &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/weather_dl.html">weather_dl</a></span>(<span class="dt">station_ids =</span> <span class="kw">c</span>(<span class="dv">707</span>, <span class="dv">4859</span>, <span class="dv">6693</span>,<span class="dv">5397</span>, <span class="dv">2315</span>), 
@@ -144,8 +144,8 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(pancan_df, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> date, <span class="dt">y =</span> mean_temp, <span class="dt">colour =</span> station_name)) +
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>() +
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>()</code></pre></div>
-<pre><code>## Warning: Removed 25425 rows containing missing values (geom_point).</code></pre>
-<pre><code>## Warning: Removed 6509 rows containing missing values (geom_path).</code></pre>
+<pre><code>## Warning: Removed 25654 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: Removed 6639 rows containing missing values (geom_path).</code></pre>
 <p><img src="use_with_tidyverse_files/figure-html/raw_plt-1.png" width="960"></p>
 <p>This is quite a large dataset.</p>
 </div>
@@ -157,13 +157,14 @@
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/nest">nest</a></span>()
 pancan_df_nest</code></pre></div>
 <pre><code>## # A tibble: 5 x 10
-##   station_name     stati… prov    lat    lon  elev clim… WMO_… TC_id data 
-##   &lt;chr&gt;             &lt;dbl&gt; &lt;fct&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;lis&gt;
-## 1 AGASSIZ CDA         707 BC     49.2 -122    15.0 1100… ""    ""    &lt;tib…
-## 2 BELLEVILLE         4859 ON     44.2 - 77.4  76.2 6150… ""    ""    &lt;tib…
-## 3 PORT AUX BASQUES   6693 NL     47.6 - 59.2  39.7 8402… 71197 WZB   &lt;tib…
-## 4 LENNOXVILLE        5397 QC     45.4 - 71.8 181   7024… 71611 WQH   &lt;tib…
-## 5 TABER              2315 AB     49.8 -112   811   3036… ""    ""    &lt;tib…</code></pre>
+##   station_name station_id prov    lat    lon  elev climate_id WMO_id TC_id
+##   &lt;chr&gt;             &lt;dbl&gt; &lt;fct&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;
+## 1 AGASSIZ CDA         707 BC     49.2 -122    15.0 1100120    ""     ""   
+## 2 BELLEVILLE         4859 ON     44.2 - 77.4  76.2 6150689    ""     ""   
+## 3 PORT AUX BA…       6693 NL     47.6 - 59.2  39.7 8402975    71197  WZB  
+## 4 LENNOXVILLE        5397 QC     45.4 - 71.8 181   7024280    71611  WQH  
+## 5 TABER              2315 AB     49.8 -112   811   3036360    ""     ""   
+## # ... with 1 more variable: data &lt;list&gt;</code></pre>
 </div>
 <div id="fit-some-models" class="section level2">
 <h2 class="hasAnchor">
@@ -177,26 +178,28 @@ pancan_df_nest</code></pre></div>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">model =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map">map</a></span>(data, clim_model))
 pancan_df_nest</code></pre></div>
 <pre><code>## # A tibble: 5 x 11
-##   statio… stati… prov     lat    lon  elev clim… WMO_… TC_id data    model
-##   &lt;chr&gt;    &lt;dbl&gt; &lt;fctr&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;list&gt;  &lt;lis&gt;
-## 1 AGASSI…    707 BC      49.2 -122    15.0 1100… ""    ""    &lt;tibbl… &lt;S3:…
-## 2 BELLEV…   4859 ON      44.2 - 77.4  76.2 6150… ""    ""    &lt;tibbl… &lt;S3:…
-## 3 PORT A…   6693 NL      47.6 - 59.2  39.7 8402… 71197 WZB   &lt;tibbl… &lt;S3:…
-## 4 LENNOX…   5397 QC      45.4 - 71.8 181   7024… 71611 WQH   &lt;tibbl… &lt;S3:…
-## 5 TABER     2315 AB      49.8 -112   811   3036… ""    ""    &lt;tibbl… &lt;S3:…</code></pre>
+##   station_name station_id prov    lat    lon  elev climate_id WMO_id TC_id
+##   &lt;chr&gt;             &lt;dbl&gt; &lt;fct&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;
+## 1 AGASSIZ CDA         707 BC     49.2 -122    15.0 1100120    ""     ""   
+## 2 BELLEVILLE         4859 ON     44.2 - 77.4  76.2 6150689    ""     ""   
+## 3 PORT AUX BA…       6693 NL     47.6 - 59.2  39.7 8402975    71197  WZB  
+## 4 LENNOXVILLE        5397 QC     45.4 - 71.8 181   7024280    71611  WQH  
+## 5 TABER              2315 AB     49.8 -112   811   3036360    ""     ""   
+## # ... with 2 more variables: data &lt;list&gt;, model &lt;list&gt;</code></pre>
 <p>Then add the residuals to the model</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pancan_df_nest &lt;-<span class="st"> </span>pancan_df_nest %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">model =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map">map</a></span>(data, clim_model),
          <span class="dt">resids =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map2">map2</a></span>(data, model, add_residuals)) 
 pancan_df_nest</code></pre></div>
 <pre><code>## # A tibble: 5 x 12
-##   stat… stat… prov    lat    lon  elev clim… WMO_… TC_id data  model resi…
-##   &lt;chr&gt; &lt;dbl&gt; &lt;fct&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;lis&gt; &lt;lis&gt; &lt;lis&gt;
-## 1 AGAS…   707 BC     49.2 -122    15.0 1100… ""    ""    &lt;tib… &lt;S3:… &lt;tib…
-## 2 BELL…  4859 ON     44.2 - 77.4  76.2 6150… ""    ""    &lt;tib… &lt;S3:… &lt;tib…
-## 3 PORT…  6693 NL     47.6 - 59.2  39.7 8402… 71197 WZB   &lt;tib… &lt;S3:… &lt;tib…
-## 4 LENN…  5397 QC     45.4 - 71.8 181   7024… 71611 WQH   &lt;tib… &lt;S3:… &lt;tib…
-## 5 TABER  2315 AB     49.8 -112   811   3036… ""    ""    &lt;tib… &lt;S3:… &lt;tib…</code></pre>
+##   station_name station_id prov    lat    lon  elev climate_id WMO_id TC_id
+##   &lt;chr&gt;             &lt;dbl&gt; &lt;fct&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;
+## 1 AGASSIZ CDA         707 BC     49.2 -122    15.0 1100120    ""     ""   
+## 2 BELLEVILLE         4859 ON     44.2 - 77.4  76.2 6150689    ""     ""   
+## 3 PORT AUX BA…       6693 NL     47.6 - 59.2  39.7 8402975    71197  WZB  
+## 4 LENNOXVILLE        5397 QC     45.4 - 71.8 181   7024280    71611  WQH  
+## 5 TABER              2315 AB     49.8 -112   811   3036360    ""     ""   
+## # ... with 3 more variables: data &lt;list&gt;, model &lt;list&gt;, resids &lt;list&gt;</code></pre>
 </div>
 <div id="working-with-list-columns" class="section level2">
 <h2 class="hasAnchor">
@@ -208,27 +211,28 @@ pancan_df_nest</code></pre></div>
 </h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">resids &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/unnest">unnest</a></span>(pancan_df_nest, resids)
 resids</code></pre></div>
-<pre><code>## # A tibble: 179,130 x 12
-##    stat… stat… prov    lat   lon  elev clim… WMO_… TC_id mean_… date      
-##    &lt;chr&gt; &lt;dbl&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;date&gt;    
-##  1 AGAS…   707 BC     49.2  -122  15.0 1100… ""    ""     3.40  1920-01-01
-##  2 AGAS…   707 BC     49.2  -122  15.0 1100… ""    ""     4.20  1920-01-02
-##  3 AGAS…   707 BC     49.2  -122  15.0 1100… ""    ""     3.10  1920-01-03
-##  4 AGAS…   707 BC     49.2  -122  15.0 1100… ""    ""     1.40  1920-01-04
-##  5 AGAS…   707 BC     49.2  -122  15.0 1100… ""    ""     1.40  1920-01-05
-##  6 AGAS…   707 BC     49.2  -122  15.0 1100… ""    ""     1.40  1920-01-06
-##  7 AGAS…   707 BC     49.2  -122  15.0 1100… ""    ""    -0.300 1920-01-07
-##  8 AGAS…   707 BC     49.2  -122  15.0 1100… ""    ""    -0.600 1920-01-08
-##  9 AGAS…   707 BC     49.2  -122  15.0 1100… ""    ""     0.900 1920-01-09
-## 10 AGAS…   707 BC     49.2  -122  15.0 1100… ""    ""     1.40  1920-01-10
-## # ... with 179,120 more rows, and 1 more variable: resid &lt;dbl&gt;</code></pre>
+<pre><code>## # A tibble: 179,745 x 12
+##    station_name station_id prov    lat   lon  elev climate_id WMO_id TC_id
+##    &lt;chr&gt;             &lt;dbl&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;
+##  1 AGASSIZ CDA         707 BC     49.2  -122  15.0 1100120    ""     ""   
+##  2 AGASSIZ CDA         707 BC     49.2  -122  15.0 1100120    ""     ""   
+##  3 AGASSIZ CDA         707 BC     49.2  -122  15.0 1100120    ""     ""   
+##  4 AGASSIZ CDA         707 BC     49.2  -122  15.0 1100120    ""     ""   
+##  5 AGASSIZ CDA         707 BC     49.2  -122  15.0 1100120    ""     ""   
+##  6 AGASSIZ CDA         707 BC     49.2  -122  15.0 1100120    ""     ""   
+##  7 AGASSIZ CDA         707 BC     49.2  -122  15.0 1100120    ""     ""   
+##  8 AGASSIZ CDA         707 BC     49.2  -122  15.0 1100120    ""     ""   
+##  9 AGASSIZ CDA         707 BC     49.2  -122  15.0 1100120    ""     ""   
+## 10 AGASSIZ CDA         707 BC     49.2  -122  15.0 1100120    ""     ""   
+## # ... with 179,735 more rows, and 3 more variables: mean_temp &lt;dbl&gt;,
+## #   date &lt;date&gt;, resid &lt;dbl&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(<span class="dt">data =</span> resids, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(date, resid)) +
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">group =</span> station_name), <span class="dt">alpha =</span> <span class="dv">1</span> /<span class="st"> </span><span class="dv">3</span>) +<span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>() +
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_abline">geom_hline</a></span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) +
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>(~<span class="st"> </span>station_name, <span class="dt">ncol =</span> <span class="dv">1</span>)</code></pre></div>
-<pre><code>## Warning: Removed 6509 rows containing missing values (geom_path).</code></pre>
-<pre><code>## Warning: Removed 25425 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: Removed 6639 rows containing missing values (geom_path).</code></pre>
+<pre><code>## Warning: Removed 25654 rows containing missing values (geom_point).</code></pre>
 <p><img src="use_with_tidyverse_files/figure-html/resid-1.png" width="960"></p>
 </div>
 <div id="using-broom" class="section level3">
@@ -250,16 +254,16 @@ resids</code></pre></div>
 <tr class="odd">
 <td align="left">AGASSIZ CDA</td>
 <td align="left">BC</td>
-<td align="right">0.0026398</td>
+<td align="right">0.0022787</td>
 <td align="right">0.0000000</td>
-<td align="right">232607.0</td>
+<td align="right">233172.3</td>
 </tr>
 <tr class="even">
 <td align="left">BELLEVILLE</td>
 <td align="left">ON</td>
-<td align="right">0.0024359</td>
+<td align="right">0.0022095</td>
 <td align="right">0.0000000</td>
-<td align="right">261292.2</td>
+<td align="right">262208.6</td>
 </tr>
 <tr class="odd">
 <td align="left">PORT AUX BASQUES</td>
@@ -271,16 +275,16 @@ resids</code></pre></div>
 <tr class="even">
 <td align="left">LENNOXVILLE</td>
 <td align="left">QC</td>
-<td align="right">0.0010621</td>
+<td align="right">0.0009764</td>
 <td align="right">0.0000000</td>
-<td align="right">274604.0</td>
+<td align="right">275490.7</td>
 </tr>
 <tr class="odd">
 <td align="left">TABER</td>
 <td align="left">AB</td>
-<td align="right">0.0004144</td>
-<td align="right">0.0019517</td>
-<td align="right">179016.0</td>
+<td align="right">0.0003118</td>
+<td align="right">0.0071418</td>
+<td align="right">179488.2</td>
 </tr>
 </tbody>
 </table>
@@ -294,25 +298,26 @@ resids</code></pre></div>
          <span class="dt">preds =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map2">map2</a></span>(data, model, add_predictions)) %&gt;%
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/unnest">unnest</a></span>(preds)
 preds</code></pre></div>
-<pre><code>## # A tibble: 179,130 x 12
-##    stat… stat… prov    lat   lon  elev clim… WMO_… TC_id mean_… date      
-##    &lt;chr&gt; &lt;dbl&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;date&gt;    
-##  1 AGAS…   707 BC     49.2  -122  15.0 1100… ""    ""     3.40  1920-01-01
-##  2 AGAS…   707 BC     49.2  -122  15.0 1100… ""    ""     4.20  1920-01-02
-##  3 AGAS…   707 BC     49.2  -122  15.0 1100… ""    ""     3.10  1920-01-03
-##  4 AGAS…   707 BC     49.2  -122  15.0 1100… ""    ""     1.40  1920-01-04
-##  5 AGAS…   707 BC     49.2  -122  15.0 1100… ""    ""     1.40  1920-01-05
-##  6 AGAS…   707 BC     49.2  -122  15.0 1100… ""    ""     1.40  1920-01-06
-##  7 AGAS…   707 BC     49.2  -122  15.0 1100… ""    ""    -0.300 1920-01-07
-##  8 AGAS…   707 BC     49.2  -122  15.0 1100… ""    ""    -0.600 1920-01-08
-##  9 AGAS…   707 BC     49.2  -122  15.0 1100… ""    ""     0.900 1920-01-09
-## 10 AGAS…   707 BC     49.2  -122  15.0 1100… ""    ""     1.40  1920-01-10
-## # ... with 179,120 more rows, and 1 more variable: pred &lt;dbl&gt;</code></pre>
+<pre><code>## # A tibble: 179,745 x 12
+##    station_name station_id prov    lat   lon  elev climate_id WMO_id TC_id
+##    &lt;chr&gt;             &lt;dbl&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;
+##  1 AGASSIZ CDA         707 BC     49.2  -122  15.0 1100120    ""     ""   
+##  2 AGASSIZ CDA         707 BC     49.2  -122  15.0 1100120    ""     ""   
+##  3 AGASSIZ CDA         707 BC     49.2  -122  15.0 1100120    ""     ""   
+##  4 AGASSIZ CDA         707 BC     49.2  -122  15.0 1100120    ""     ""   
+##  5 AGASSIZ CDA         707 BC     49.2  -122  15.0 1100120    ""     ""   
+##  6 AGASSIZ CDA         707 BC     49.2  -122  15.0 1100120    ""     ""   
+##  7 AGASSIZ CDA         707 BC     49.2  -122  15.0 1100120    ""     ""   
+##  8 AGASSIZ CDA         707 BC     49.2  -122  15.0 1100120    ""     ""   
+##  9 AGASSIZ CDA         707 BC     49.2  -122  15.0 1100120    ""     ""   
+## 10 AGASSIZ CDA         707 BC     49.2  -122  15.0 1100120    ""     ""   
+## # ... with 179,735 more rows, and 3 more variables: mean_temp &lt;dbl&gt;,
+## #   date &lt;date&gt;, pred &lt;dbl&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(<span class="dt">data =</span> preds, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> date, <span class="dt">y =</span> mean_temp, <span class="dt">colour =</span> station_name)) +
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>() +
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">y =</span> pred)) +
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>(~<span class="st"> </span>station_name, <span class="dt">scales =</span> <span class="st">"free_y"</span>, <span class="dt">ncol =</span> <span class="dv">1</span>)</code></pre></div>
-<pre><code>## Warning: Removed 25425 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: Removed 25654 rows containing missing values (geom_point).</code></pre>
 <p><img src="use_with_tidyverse_files/figure-html/pred-1.png" width="960"></p>
 </div>
 </div>
