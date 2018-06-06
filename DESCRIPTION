@@ -21,7 +21,6 @@ Imports:
     dplyr (>= 0.7.0),
     httr (>= 1.1.0),
     lubridate (>= 1.7.1),
-    magrittr (>= 1.5),
     methods (>= 3.2.2),
     stringi (>= 1.1.2),
     tidyr (>= 0.4.1),
