@@ -24,7 +24,6 @@ Imports:
     magrittr (>= 1.5),
     methods (>= 3.2.2),
     stringi (>= 1.1.2),
-    tibble (>= 1.2),
     tidyr (>= 0.4.1),
     xml2 (>= 0.1.2)
 RoxygenNote: 6.0.1

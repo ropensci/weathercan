@@ -88,7 +88,7 @@ flags <- dplyr::bind_rows(weather_raw(station_id = 51423,  date = as.Date("2014-
                                       interval = "month", nrows = 25, header = FALSE)[10:16,]) %>%
   dplyr::rename(code = V1, meaning = V2) %>%
   dplyr::distinct() %>%
-  tibble::as_tibble()
+  dplyr::as_tibble()
 devtools::use_data(flags, overwrite = TRUE)
 
 
@@ -112,7 +112,7 @@ gloss_url <- list(
 ) %>%
   lapply(., utils::stack) %>%
   lapply(., FUN = function(x) dplyr::mutate(x, ind = as.character(ind))) %>%
-  tibble::tibble(interval = names(.), data = .) %>%
+  dplyr::tibble(interval = names(.), data = .) %>%
   tidyr::unnest() %>%
   dplyr::mutate(value = paste0("http://climate.weather.gc.ca/glossary_e.html#",
                                values)) %>%
@@ -132,7 +132,7 @@ gloss_url <- list(
 
 #n <- c(names(wd1), names(wd2), names(wd3))
 
-glossary <- tibble::tibble(interval = c(rep("hour", length(w_names$hour)),
+glossary <- dplyr::tibble(interval = c(rep("hour", length(w_names$hour)),
                                          rep("day", length(w_names$day)),
                                          rep("month", length(w_names$month))),
                             ECCC_name = unlist(w_names, use.names = FALSE),

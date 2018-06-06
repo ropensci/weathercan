@@ -116,7 +116,7 @@ weather_dl <- function(station_ids,
   tz_list <- c()
   w_all <- data.frame()
   missing <- c()
-  msg_fmt <- tibble::tibble()
+  msg_fmt <- dplyr::tibble()
 
   for(s in station_ids) {
     if(verbose) message("Getting station: ", s)
@@ -142,7 +142,7 @@ weather_dl <- function(station_ids,
                                                   station_id %in% s,
                                                   !is.na(start)))),
                                     collapse = "\n")))
-        return(tibble::tibble())
+        return(dplyr::tibble())
       }
     }
 
@@ -255,7 +255,7 @@ weather_dl <- function(station_ids,
                                                     station_id %in% s,
                                                     !is.na(start)))),
                                       collapse = "\n")))
-          return(tibble::tibble())
+          return(dplyr::tibble())
         }
       }
 
@@ -468,7 +468,7 @@ weather_format <- function(w, interval = "hour", string_as = "NA", preamble,
                  FUN.VALUE = TRUE)
   if(any(warn)) {
     m <- paste0(names(num)[warn], collapse = ", ")
-    non_num <- tibble::tibble(col = names(num)[warn])
+    non_num <- dplyr::tibble(col = names(num)[warn])
     for(i in names(num)[warn]) {
       problems <- w[grep("<|>|\\)|\\(", w[,i]),
                     names(w) %in% c("date", "year", "month",
