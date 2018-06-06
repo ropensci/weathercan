@@ -68,9 +68,9 @@ test_that("weather (hour) gets all", {
   expect_equal(w$date[nrow(w)], Sys.Date())
 })
 
-test_that("weather (hour) trims NAs", {
-
-})
+# test_that("weather (hour) trims NAs", {
+#
+# })
 
 test_that("weather (hour) multiple stations", {
   expect_silent({w <- weather_dl(station_ids = c(51423, 50821),
@@ -315,9 +315,9 @@ test_that("weather (month) returns a data frame", {
 
 })
 
-test_that("weather (month) trims NAs", {
-
-})
+# test_that("weather (month) trims NAs", {
+#
+# })
 
 test_that("weather (month) no data fails nicely", {
   expect_silent(
