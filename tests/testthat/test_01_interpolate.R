@@ -1,4 +1,4 @@
-library(magrittr)
+library(dplyr)
 
 # Raw interpolation (time) ------------------------------------------------
 context("Raw interpolation (time)")

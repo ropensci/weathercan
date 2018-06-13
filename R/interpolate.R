@@ -70,8 +70,8 @@ weather_interp <- function(data, weather,
   }
 
   ## Convert to tibbles for consistency
-  data <- tibble::as_tibble(data)
-  weather <- tibble::as_tibble(weather)
+  data <- dplyr::as_tibble(data)
+  weather <- dplyr::as_tibble(weather)
 
   if(interval == "hour") if(!lubridate::is.POSIXct(data$time) |
                             !lubridate::is.POSIXct(weather$time)) stop(msg)

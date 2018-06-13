@@ -1,4 +1,4 @@
-library(magrittr)
+library(dplyr)
 
 ## Get names expected from stations data download
 
