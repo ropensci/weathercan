@@ -70,7 +70,7 @@
 #' @docType package
 #' @name weathercan-package
 #' @aliases weathercan weathercan-package
-#' @importFrom magrittr "%>%"
+#' @importFrom dplyr "%>%"
 NULL
 
 # Dealing with CRAN Notes due to Non-standard evaluation

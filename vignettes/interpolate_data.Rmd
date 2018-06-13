@@ -22,7 +22,6 @@ You'll need several packages from the **tidyverse** in addition to **`weathercan
 ```{R pck, message = FALSE}
 library(weathercan)
 library(ggplot2)
-library(tibble)
 library(dplyr)
 ```
 
