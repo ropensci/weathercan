@@ -182,11 +182,11 @@ weather_dl <- function(station_ids,
     date_range <- seq(lubridate::floor_date(s.start, unit = "month"),
                       lubridate::floor_date(s.end, unit = "month"),
                       by = ifelse(interval %in% c("hour"), "month", "year"))
-    #date_range <- tibble::tibble(date_range = unique(date_range))
+    #date_range <- dplyr::tibble(date_range = unique(date_range))
 
     if(interval == "month") date_range <- date_range[1]
 
-    w <- tibble::tibble(date_range = date_range) %>%
+    w <- dplyr::tibble(date_range = date_range) %>%
       dplyr::mutate(html = purrr::map(date_range,
                                       ~ weather_html(station_id = s,
                                                      date = .x,
@@ -300,7 +300,7 @@ weather_dl <- function(station_ids,
 
     ## If list_col is TRUE and data is formatted
     if(list_col && format){
-      w_all <- tibble::as.tibble(w_all)
+      w_all <- dplyr::as_tibble(w_all)
       ## Appropriate grouping levels
       if(interval == "hour"){
         w_all <- tidyr::nest(w_all, -dplyr::one_of(p), -date)
