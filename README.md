@@ -46,27 +46,27 @@ head(stations)
 ```
 
     ## # A tibble: 6 x 12
-    ##   prov   station_name           station_id clima… WMO_id TC_id   lat   lon   elev inte… start   end
-    ##   <fctr> <chr>                  <fctr>     <fctr> <fctr> <fct> <dbl> <dbl>  <dbl> <chr> <int> <int>
-    ## 1 BC     ACTIVE PASS            14         10100… <NA>   <NA>   48.9  -123   4.00 hour     NA    NA
-    ## 2 BC     ALBERT HEAD            15         10102… <NA>   <NA>   48.4  -123  17.0  hour     NA    NA
-    ## 3 BC     BAMBERTON OCEAN CEMENT 16         10105… <NA>   <NA>   48.6  -124  85.3  hour     NA    NA
-    ## 4 BC     BEAR CREEK             17         10107… <NA>   <NA>   48.5  -124 350    hour     NA    NA
-    ## 5 BC     BEAVER LAKE            18         10107… <NA>   <NA>   48.5  -123  61.0  hour     NA    NA
-    ## 6 BC     BECHER BAY             19         10107… <NA>   <NA>   48.3  -124  12.2  hour     NA    NA
+    ##   prov  station_name     station_id climate_id WMO_id TC_id   lat   lon   elev interval start   end
+    ##   <fct> <chr>            <fct>      <fct>      <fct>  <fct> <dbl> <dbl>  <dbl> <chr>    <int> <int>
+    ## 1 BC    ACTIVE PASS      14         1010066    <NA>   <NA>   48.9  -123   4.00 hour        NA    NA
+    ## 2 BC    ALBERT HEAD      15         1010235    <NA>   <NA>   48.4  -123  17.0  hour        NA    NA
+    ## 3 BC    BAMBERTON OCEAN… 16         1010595    <NA>   <NA>   48.6  -124  85.3  hour        NA    NA
+    ## 4 BC    BEAR CREEK       17         1010720    <NA>   <NA>   48.5  -124 350    hour        NA    NA
+    ## 5 BC    BEAVER LAKE      18         1010774    <NA>   <NA>   48.5  -123  61.0  hour        NA    NA
+    ## 6 BC    BECHER BAY       19         1010780    <NA>   <NA>   48.3  -124  12.2  hour        NA    NA
 
 ``` r
 glimpse(stations)
 ```
 
-    ## Observations: 26,232
+    ## Observations: 26,208
     ## Variables: 12
-    ## $ prov         <fctr> BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, B...
+    ## $ prov         <fct> BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC...
     ## $ station_name <chr> "ACTIVE PASS", "ALBERT HEAD", "BAMBERTON OCEAN CEMENT", "BEAR CREEK", "BEA...
-    ## $ station_id   <fctr> 14, 15, 16, 17, 18, 19, 20, 21, 22, 25, 24, 23, 26, 27, 28, 29, 30, 31, 3...
-    ## $ climate_id   <fctr> 1010066, 1010235, 1010595, 1010720, 1010774, 1010780, 1010960, 1010961, 1...
-    ## $ WMO_id       <fctr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N...
-    ## $ TC_id        <fctr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N...
+    ## $ station_id   <fct> 14, 15, 16, 17, 18, 19, 20, 21, 22, 25, 24, 23, 26, 27, 28, 29, 30, 31, 32...
+    ## $ climate_id   <fct> 1010066, 1010235, 1010595, 1010720, 1010774, 1010780, 1010960, 1010961, 10...
+    ## $ WMO_id       <fct> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+    ## $ TC_id        <fct> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
     ## $ lat          <dbl> 48.87, 48.40, 48.58, 48.50, 48.50, 48.33, 48.60, 48.57, 48.57, 48.58, 48.5...
     ## $ lon          <dbl> -123.28, -123.48, -123.52, -124.00, -123.35, -123.63, -123.47, -123.45, -1...
     ## $ elev         <dbl> 4.00, 17.00, 85.30, 350.50, 61.00, 12.20, 38.00, 30.50, 91.40, 53.30, 38.0...
@@ -81,11 +81,11 @@ stations_search("Kamloops", interval = "hour")
 ```
 
     ## # A tibble: 3 x 12
-    ##   prov   station_name station_id climate_id WMO_id TC_id    lat   lon  elev interval start   end
-    ##   <fctr> <chr>        <fctr>     <fctr>     <fctr> <fctr> <dbl> <dbl> <dbl> <chr>    <int> <int>
-    ## 1 BC     KAMLOOPS A   1275       1163780    71887  YKA     50.7  -120   345 hour      1953  2013
-    ## 2 BC     KAMLOOPS A   51423      1163781    71887  YKA     50.7  -120   345 hour      2013  2018
-    ## 3 BC     KAMLOOPS AUT 42203      1163842    71741  ZKA     50.7  -120   345 hour      2006  2018
+    ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev interval start   end
+    ##   <fct> <chr>        <fct>      <fct>      <fct>  <fct> <dbl> <dbl> <dbl> <chr>    <int> <int>
+    ## 1 BC    KAMLOOPS A   1275       1163780    71887  YKA    50.7  -120   345 hour      1953  2013
+    ## 2 BC    KAMLOOPS A   51423      1163781    71887  YKA    50.7  -120   345 hour      2013  2018
+    ## 3 BC    KAMLOOPS AUT 42203      1163842    71741  ZKA    50.7  -120   345 hour      2006  2018
 
 Time frame must be one of "hour", "day", or "month".
 
@@ -96,57 +96,42 @@ stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour"
 ```
 
     ## # A tibble: 3 x 13
-    ##   prov   station_name station_id climate_id WMO_id TC_id    lat   lon  elev inte… start   end dist…
-    ##   <fctr> <chr>        <fctr>     <fctr>     <fctr> <fctr> <dbl> <dbl> <dbl> <chr> <int> <int> <dbl>
-    ## 1 BC     KAMLOOPS A   1275       1163780    71887  YKA     50.7  -120   345 hour   1953  2013  8.64
-    ## 2 BC     KAMLOOPS AUT 42203      1163842    71741  ZKA     50.7  -120   345 hour   2006  2018  8.64
-    ## 3 BC     KAMLOOPS A   51423      1163781    71887  YKA     50.7  -120   345 hour   2013  2018  9.28
+    ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev interval start   end
+    ##   <fct> <chr>        <fct>      <fct>      <fct>  <fct> <dbl> <dbl> <dbl> <chr>    <int> <int>
+    ## 1 BC    KAMLOOPS A   1275       1163780    71887  YKA    50.7  -120   345 hour      1953  2013
+    ## 2 BC    KAMLOOPS AUT 42203      1163842    71741  ZKA    50.7  -120   345 hour      2006  2018
+    ## 3 BC    KAMLOOPS A   51423      1163781    71887  YKA    50.7  -120   345 hour      2013  2018
+    ## # ... with 1 more variable: distance <dbl>
 
 ### Weather
 
 Once you have your `station_id`(s) you can download weather data:
 
 ``` r
-kam <- weather_dl(station_ids = 51423, start = "2016-01-01", end = "2016-02-15")
+kam <- weather_dl(station_ids = 51423, start = "2018-02-01", end = "2018-04-15")
 kam
 ```
 
-    ## # A tibble: 1,104 x 35
-    ##    stat… stat… prov    lat   lon  elev clim… WMO_… TC_id date       time                year  month
-    ##  * <chr> <dbl> <fct> <dbl> <dbl> <dbl> <chr> <chr> <chr> <date>     <dttm>              <chr> <chr>
-    ##  1 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 00:00:00 2016  01   
-    ##  2 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 01:00:00 2016  01   
-    ##  3 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 02:00:00 2016  01   
-    ##  4 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 03:00:00 2016  01   
-    ##  5 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 04:00:00 2016  01   
-    ##  6 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 05:00:00 2016  01   
-    ##  7 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 06:00:00 2016  01   
-    ##  8 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 07:00:00 2016  01   
-    ##  9 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 08:00:00 2016  01   
-    ## 10 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 09:00:00 2016  01   
-    ## # ... with 1,094 more rows, and 22 more variables
+    ## # A tibble: 1,776 x 35
+    ##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id
+    ##  * <chr>             <dbl> <chr>            <fct> <dbl> <dbl> <dbl> <chr>      <chr>  <chr>
+    ##  1 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+    ##  2 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+    ##  3 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+    ##  4 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+    ##  5 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+    ##  6 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+    ##  7 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+    ##  8 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+    ##  9 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+    ## 10 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+    ## # ... with 1,766 more rows, and 25 more variables
 
 You can also download data from multiple stations at once:
 
 ``` r
-kam_pg <- weather_dl(station_ids = c(48248, 51423), start = "2016-01-01", end = "2016-02-15")
-kam_pg
+kam_pg <- weather_dl(station_ids = c(48248, 51423), start = "2018-02-01", end = "2018-04-15")
 ```
-
-    ## # A tibble: 2,208 x 35
-    ##    stat… stat… prov    lat   lon  elev clim… WMO_… TC_id date       time                year  month
-    ##  * <chr> <dbl> <fct> <dbl> <dbl> <dbl> <chr> <chr> <chr> <date>     <dttm>              <chr> <chr>
-    ##  1 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 00:00:00 2016  01   
-    ##  2 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 01:00:00 2016  01   
-    ##  3 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 02:00:00 2016  01   
-    ##  4 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 03:00:00 2016  01   
-    ##  5 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 04:00:00 2016  01   
-    ##  6 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 05:00:00 2016  01   
-    ##  7 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 06:00:00 2016  01   
-    ##  8 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 07:00:00 2016  01   
-    ##  9 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 08:00:00 2016  01   
-    ## 10 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 09:00:00 2016  01   
-    ## # ... with 2,198 more rows, and 22 more variables
 
 And plot it:
 

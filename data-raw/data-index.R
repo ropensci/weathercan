@@ -2,8 +2,25 @@ library(dplyr)
 
 ## Get names expected from stations data download
 
-p_names <- c("station_name", "station_id", "prov", "lat", "lon", "elev",
-             "climate_id", "WMO_id", "TC_id")
+province <- c("ALBERTA" = "AB",
+              "BRITISH COLUMBIA" = "BC",
+              "MANITOBA" = "MB",
+              "NEW BRUNSWICK" = "NB",
+              "NEWFOUNDLAND" = "NL",
+              "NORTHWEST TERRITORIES" = "NT",
+              "NOVA SCOTIA" = "NS",
+              "NUNAVUT" = "NU",
+              "ONTARIO" = "ON",
+              "PRINCE EDWARD ISLAND" = "PE",
+              "QUEBEC" = "QC",
+              "SASKATCHEWAN" = "SK",
+              "YUKON TERRITORY" = "YT")
+
+p_names <- c("station_name" = "Station Name", "station_id" = "ID",
+             "station_operator" = "Current Station Operator",
+             "prov" = "Province", "lat" = "Latitude", "lon" = "Longitude",
+             "elev" = "Elevation", "climate_id" = "Climate Identifier",
+             "WMO_id" = "WMO Identifier", "TC_id" = "TC Identifier")
 
 w_names <- list(
   "hour" = c("time" = "Date/Time", "year" = "Year", "month" = "Month",
@@ -76,7 +93,7 @@ w_names <- list(
 #   "month" = c("date", "year", "month", "mean_max_temp", "mean_max_temp_flag", "mean_min_temp", "mean_min_temp_flag", "mean_temp", "mean_temp_flag", "extr_max_temp", "extr_max_temp_flag", "extr_min_temp", "extr_min_temp_flag", "total_rain", "total_rain_flag", "total_snow", "total_snow_flag", "total_precip", "total_precip_flag", "snow_grnd_last_day", "snow_grnd_last_day_flag", "dir_max_gust", "dir_max_gust_flag","spd_max_gust", "spd_max_gust_flag")
 # )
 
-devtools::use_data(w_names, p_names, overwrite = TRUE, internal = TRUE)
+devtools::use_data(province, w_names, p_names, overwrite = TRUE, internal = TRUE)
 
 # Add flags data set to package data
 # Get legend of flags (same for all intervals where duplicated)
