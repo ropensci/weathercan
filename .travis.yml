@@ -20,15 +20,20 @@ matrix:
       r: oldrel
 
     - os: osx
-      osx_image: xcode8.1
       r: release
 
     - os: osx
-      r: release
+      r: oldrel
+
+    - os: osx
+      r: devel
 
   allow_failures:
     - os: linux
       dist: trusty
+      r: devel
+
+    - os: osx
       r: devel
 
 r_packages:

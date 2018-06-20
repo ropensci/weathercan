@@ -70,7 +70,7 @@
 #' @docType package
 #' @name weathercan-package
 #' @aliases weathercan weathercan-package
-#' @importFrom magrittr "%>%"
+#' @importFrom dplyr "%>%"
 NULL
 
 # Dealing with CRAN Notes due to Non-standard evaluation
@@ -87,6 +87,7 @@ NULL
         "visib", "wind_chill", "variable", "value", "qual", "interval", "month",
         "start", "year", "elev", "problems",
         "V1", "V2",
+        "html", "skip", "data",
         "." # piping requires '.' at times
       )
     )

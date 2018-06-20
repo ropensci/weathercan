@@ -15,6 +15,6 @@ devtools::use_data(pg, overwrite = TRUE)
 
 # with Daylight savings on March 13th (AM)
 finches <- feedr::dl_data(start = "2016-03", end = "2016-03-16")
-finches <- tibble::as_tibble(finches)
+finches <- dplyr::as_tibble(finches)
 
 devtools::use_data(finches, overwrite = TRUE)

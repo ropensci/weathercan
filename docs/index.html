@@ -98,6 +98,7 @@
 <a href="#weathercan" class="anchor"></a>weathercan <img src="https://github.com/ropensci/weathercan/raw/master/inst/assets/weathercan_logo.png" align="right" width="110/">
 </h1></div>
 
+<p><a href="https://github.com/ropensci/onboarding/issues/160"><img src="https://badges.ropensci.org/160_status.svg"></a> <a href="https://zenodo.org/badge/latestdoi/60650396"><img src="https://zenodo.org/badge/60650396.svg" alt="DOI"></a> <a href="https://doi.org/10.21105/joss.00571"><img src="http://joss.theoj.org/papers/10.21105/joss.00571/status.svg" alt="DOI"></a></p>
 <p>This package is makes it easier to search for and download multiple months/years of historical weather data from <a href="http://climate.weather.gc.ca/historical_data/search_historic_data_e.html">Environment and Climate Change Canada (ECCC) website</a>.</p>
 <p>Bear in mind that these downloads can be fairly large and performing multiple downloads may use up ECCC’s bandwidth unecessarily. Try to stick to what you need.</p>
 <p>For more details and tutorials checkout the <a href="http://ropensci.github.io/weathercan">weathercan website</a></p>
@@ -122,23 +123,23 @@ devtools::<span class="kw">install_github</span>(<span class="st">"ropensci/weat
 <p><code>weathercan</code> includes a data frame called <code>stations</code> which includes a list of stations and their details (including <code>station_id</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(stations)</code></pre></div>
 <pre><code>## # A tibble: 6 x 12
-##   prov   station_name           station_id clima… WMO_id TC_id   lat   lon   elev inte… start   end
-##   &lt;fctr&gt; &lt;chr&gt;                  &lt;fctr&gt;     &lt;fctr&gt; &lt;fctr&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt;
-## 1 BC     ACTIVE PASS            14         10100… &lt;NA&gt;   &lt;NA&gt;   48.9  -123   4.00 hour     NA    NA
-## 2 BC     ALBERT HEAD            15         10102… &lt;NA&gt;   &lt;NA&gt;   48.4  -123  17.0  hour     NA    NA
-## 3 BC     BAMBERTON OCEAN CEMENT 16         10105… &lt;NA&gt;   &lt;NA&gt;   48.6  -124  85.3  hour     NA    NA
-## 4 BC     BEAR CREEK             17         10107… &lt;NA&gt;   &lt;NA&gt;   48.5  -124 350    hour     NA    NA
-## 5 BC     BEAVER LAKE            18         10107… &lt;NA&gt;   &lt;NA&gt;   48.5  -123  61.0  hour     NA    NA
-## 6 BC     BECHER BAY             19         10107… &lt;NA&gt;   &lt;NA&gt;   48.3  -124  12.2  hour     NA    NA</code></pre>
+##   prov  station_name     station_id climate_id WMO_id TC_id   lat   lon   elev interval start   end
+##   &lt;fct&gt; &lt;chr&gt;            &lt;fct&gt;      &lt;fct&gt;      &lt;fct&gt;  &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;int&gt; &lt;int&gt;
+## 1 BC    ACTIVE PASS      14         1010066    &lt;NA&gt;   &lt;NA&gt;   48.9  -123   4.00 hour        NA    NA
+## 2 BC    ALBERT HEAD      15         1010235    &lt;NA&gt;   &lt;NA&gt;   48.4  -123  17.0  hour        NA    NA
+## 3 BC    BAMBERTON OCEAN… 16         1010595    &lt;NA&gt;   &lt;NA&gt;   48.6  -124  85.3  hour        NA    NA
+## 4 BC    BEAR CREEK       17         1010720    &lt;NA&gt;   &lt;NA&gt;   48.5  -124 350    hour        NA    NA
+## 5 BC    BEAVER LAKE      18         1010774    &lt;NA&gt;   &lt;NA&gt;   48.5  -123  61.0  hour        NA    NA
+## 6 BC    BECHER BAY       19         1010780    &lt;NA&gt;   &lt;NA&gt;   48.3  -124  12.2  hour        NA    NA</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">glimpse</span>(stations)</code></pre></div>
-<pre><code>## Observations: 26,232
+<pre><code>## Observations: 26,208
 ## Variables: 12
-## $ prov         &lt;fctr&gt; BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, B...
+## $ prov         &lt;fct&gt; BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC, BC...
 ## $ station_name &lt;chr&gt; "ACTIVE PASS", "ALBERT HEAD", "BAMBERTON OCEAN CEMENT", "BEAR CREEK", "BEA...
-## $ station_id   &lt;fctr&gt; 14, 15, 16, 17, 18, 19, 20, 21, 22, 25, 24, 23, 26, 27, 28, 29, 30, 31, 3...
-## $ climate_id   &lt;fctr&gt; 1010066, 1010235, 1010595, 1010720, 1010774, 1010780, 1010960, 1010961, 1...
-## $ WMO_id       &lt;fctr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N...
-## $ TC_id        &lt;fctr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N...
+## $ station_id   &lt;fct&gt; 14, 15, 16, 17, 18, 19, 20, 21, 22, 25, 24, 23, 26, 27, 28, 29, 30, 31, 32...
+## $ climate_id   &lt;fct&gt; 1010066, 1010235, 1010595, 1010720, 1010774, 1010780, 1010960, 1010961, 10...
+## $ WMO_id       &lt;fct&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ TC_id        &lt;fct&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
 ## $ lat          &lt;dbl&gt; 48.87, 48.40, 48.58, 48.50, 48.50, 48.33, 48.60, 48.57, 48.57, 48.58, 48.5...
 ## $ lon          &lt;dbl&gt; -123.28, -123.48, -123.52, -124.00, -123.35, -123.63, -123.47, -123.45, -1...
 ## $ elev         &lt;dbl&gt; 4.00, 17.00, 85.30, 350.50, 61.00, 12.20, 38.00, 30.50, 91.40, 53.30, 38.0...
@@ -148,62 +149,49 @@ devtools::<span class="kw">install_github</span>(<span class="st">"ropensci/weat
 <p>You can look through this data frame directly, or you can use the <code>stations_search</code> function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/stations_search.html">stations_search</a></span>(<span class="st">"Kamloops"</span>, <span class="dt">interval =</span> <span class="st">"hour"</span>)</code></pre></div>
 <pre><code>## # A tibble: 3 x 12
-##   prov   station_name station_id climate_id WMO_id TC_id    lat   lon  elev interval start   end
-##   &lt;fctr&gt; &lt;chr&gt;        &lt;fctr&gt;     &lt;fctr&gt;     &lt;fctr&gt; &lt;fctr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;int&gt; &lt;int&gt;
-## 1 BC     KAMLOOPS A   1275       1163780    71887  YKA     50.7  -120   345 hour      1953  2013
-## 2 BC     KAMLOOPS A   51423      1163781    71887  YKA     50.7  -120   345 hour      2013  2018
-## 3 BC     KAMLOOPS AUT 42203      1163842    71741  ZKA     50.7  -120   345 hour      2006  2018</code></pre>
+##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev interval start   end
+##   &lt;fct&gt; &lt;chr&gt;        &lt;fct&gt;      &lt;fct&gt;      &lt;fct&gt;  &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;int&gt; &lt;int&gt;
+## 1 BC    KAMLOOPS A   1275       1163780    71887  YKA    50.7  -120   345 hour      1953  2013
+## 2 BC    KAMLOOPS A   51423      1163781    71887  YKA    50.7  -120   345 hour      2013  2018
+## 3 BC    KAMLOOPS AUT 42203      1163842    71741  ZKA    50.7  -120   345 hour      2006  2018</code></pre>
 <p>Time frame must be one of “hour”, “day”, or “month”.</p>
 <p>You can also search by proximity:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/stations_search.html">stations_search</a></span>(<span class="dt">coords =</span> <span class="kw">c</span>(<span class="fl">50.667492</span>, -<span class="fl">120.329049</span>), <span class="dt">dist =</span> <span class="dv">20</span>, <span class="dt">interval =</span> <span class="st">"hour"</span>)</code></pre></div>
 <pre><code>## # A tibble: 3 x 13
-##   prov   station_name station_id climate_id WMO_id TC_id    lat   lon  elev inte… start   end dist…
-##   &lt;fctr&gt; &lt;chr&gt;        &lt;fctr&gt;     &lt;fctr&gt;     &lt;fctr&gt; &lt;fctr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
-## 1 BC     KAMLOOPS A   1275       1163780    71887  YKA     50.7  -120   345 hour   1953  2013  8.64
-## 2 BC     KAMLOOPS AUT 42203      1163842    71741  ZKA     50.7  -120   345 hour   2006  2018  8.64
-## 3 BC     KAMLOOPS A   51423      1163781    71887  YKA     50.7  -120   345 hour   2013  2018  9.28</code></pre>
+##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev interval start   end
+##   &lt;fct&gt; &lt;chr&gt;        &lt;fct&gt;      &lt;fct&gt;      &lt;fct&gt;  &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;int&gt; &lt;int&gt;
+## 1 BC    KAMLOOPS A   1275       1163780    71887  YKA    50.7  -120   345 hour      1953  2013
+## 2 BC    KAMLOOPS AUT 42203      1163842    71741  ZKA    50.7  -120   345 hour      2006  2018
+## 3 BC    KAMLOOPS A   51423      1163781    71887  YKA    50.7  -120   345 hour      2013  2018
+## # ... with 1 more variable: distance &lt;dbl&gt;</code></pre>
 </div>
 <div id="weather" class="section level3">
 <h3 class="hasAnchor">
 <a href="#weather" class="anchor"></a>Weather</h3>
 <p>Once you have your <code>station_id</code>(s) you can download weather data:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kam &lt;-<span class="st"> </span><span class="kw"><a href="reference/weather_dl.html">weather_dl</a></span>(<span class="dt">station_ids =</span> <span class="dv">51423</span>, <span class="dt">start =</span> <span class="st">"2016-01-01"</span>, <span class="dt">end =</span> <span class="st">"2016-02-15"</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kam &lt;-<span class="st"> </span><span class="kw"><a href="reference/weather_dl.html">weather_dl</a></span>(<span class="dt">station_ids =</span> <span class="dv">51423</span>, <span class="dt">start =</span> <span class="st">"2018-02-01"</span>, <span class="dt">end =</span> <span class="st">"2018-04-15"</span>)
 kam</code></pre></div>
-<pre><code>## # A tibble: 1,104 x 35
-##    stat… stat… prov    lat   lon  elev clim… WMO_… TC_id date       time                year  month
-##  * &lt;chr&gt; &lt;dbl&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;date&gt;     &lt;dttm&gt;              &lt;chr&gt; &lt;chr&gt;
-##  1 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 00:00:00 2016  01   
-##  2 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 01:00:00 2016  01   
-##  3 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 02:00:00 2016  01   
-##  4 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 03:00:00 2016  01   
-##  5 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 04:00:00 2016  01   
-##  6 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 05:00:00 2016  01   
-##  7 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 06:00:00 2016  01   
-##  8 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 07:00:00 2016  01   
-##  9 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 08:00:00 2016  01   
-## 10 KAML… 51423 BC     50.7  -120   345 1163… 71887 YKA   2016-01-01 2016-01-01 09:00:00 2016  01   
-## # ... with 1,094 more rows, and 22 more variables</code></pre>
+<pre><code>## # A tibble: 1,776 x 35
+##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id
+##  * &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;            &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;
+##  1 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+##  2 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+##  3 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+##  4 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+##  5 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+##  6 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+##  7 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+##  8 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+##  9 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+## 10 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+## # ... with 1,766 more rows, and 25 more variables</code></pre>
 <p>You can also download data from multiple stations at once:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kam_pg &lt;-<span class="st"> </span><span class="kw"><a href="reference/weather_dl.html">weather_dl</a></span>(<span class="dt">station_ids =</span> <span class="kw">c</span>(<span class="dv">48248</span>, <span class="dv">51423</span>), <span class="dt">start =</span> <span class="st">"2016-01-01"</span>, <span class="dt">end =</span> <span class="st">"2016-02-15"</span>)
-kam_pg</code></pre></div>
-<pre><code>## # A tibble: 2,208 x 35
-##    stat… stat… prov    lat   lon  elev clim… WMO_… TC_id date       time                year  month
-##  * &lt;chr&gt; &lt;dbl&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;date&gt;     &lt;dttm&gt;              &lt;chr&gt; &lt;chr&gt;
-##  1 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 00:00:00 2016  01   
-##  2 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 01:00:00 2016  01   
-##  3 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 02:00:00 2016  01   
-##  4 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 03:00:00 2016  01   
-##  5 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 04:00:00 2016  01   
-##  6 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 05:00:00 2016  01   
-##  7 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 06:00:00 2016  01   
-##  8 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 07:00:00 2016  01   
-##  9 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 08:00:00 2016  01   
-## 10 PRIN… 48248 BC     53.9  -123   680 1096… 71302 VXS   2016-01-01 2016-01-01 09:00:00 2016  01   
-## # ... with 2,198 more rows, and 22 more variables</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kam_pg &lt;-<span class="st"> </span><span class="kw"><a href="reference/weather_dl.html">weather_dl</a></span>(<span class="dt">station_ids =</span> <span class="kw">c</span>(<span class="dv">48248</span>, <span class="dv">51423</span>), <span class="dt">start =</span> <span class="st">"2018-02-01"</span>, <span class="dt">end =</span> <span class="st">"2018-04-15"</span>)</code></pre></div>
 <p>And plot it:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
 
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(<span class="dt">data =</span> kam_pg, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> time, <span class="dt">y =</span> temp, <span class="dt">group =</span> station_name, <span class="dt">colour =</span> station_name)) +
+<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(<span class="dt">data =</span> kam_pg, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> time, <span class="dt">y =</span> temp, 
+                          <span class="dt">group =</span> station_name, <span class="dt">colour =</span> station_name)) +
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_minimal</a></span>() +<span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>()</code></pre></div>
 <p><img src="tools/readme/kam_plt-1.png" width="1152"></p>
@@ -214,18 +202,23 @@ kam_pg</code></pre></div>
 <a href="#citation" class="anchor"></a>Citation</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">citation</span>(<span class="st">"weathercan"</span>)</code></pre></div>
 <pre><code>## 
-## To cite package 'weathercan' in publications use:
+## To cite 'weathercan' in publications, please use:
 ## 
-##   Steffi LaZerte (NA). weathercan: Download Weather Data from the Environment and Climate
-##   Change Canada Website. R package version 0.2.4. https://github.com/ropensci/weathercan
+##   LaZerte, Stefanie E and Sam Albers (2018). weathercan: Download and format weather data
+##   from Environment and Climate Change Canada. The Journal of Open Source Software
+##   3(22):571. doi:10.21105/joss.00571.
 ## 
 ## A BibTeX entry for LaTeX users is
 ## 
-##   @Manual{,
-##     title = {weathercan: Download Weather Data from the Environment and Climate Change Canada Website},
-##     author = {Steffi LaZerte},
-##     note = {R package version 0.2.4},
-##     url = {https://github.com/ropensci/weathercan},
+##   @Article{,
+##     title = {{weathercan}: {D}ownload and format weather data from Environment and Climate Change Canada},
+##     author = {Stefanie E LaZerte and Sam Albers},
+##     journal = {The Journal of Open Source Software},
+##     volume = {3},
+##     number = {22},
+##     pages = {571},
+##     year = {2018},
+##     url = {http://joss.theoj.org/papers/10.21105/joss.00571},
 ##   }</code></pre>
 </div>
 <div id="license" class="section level2">
@@ -271,6 +264,10 @@ kam_pg</code></pre></div>
 </ul>
 <h2>License</h2>
 <p><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></p>
+<h2>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html">Citing weathercan</a></li>
+</ul>
 <h2>Developers</h2>
 <ul class="list-unstyled">
 <li>Steffi LaZerte <br><small class="roles"> Author, maintainer </small> <br><small>(https://orcid.org/0000-0002-7690-8360)</small>
@@ -279,7 +276,9 @@ kam_pg</code></pre></div>
 </ul>
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://zenodo.org/badge/latestdoi/60650396"><img src="https://zenodo.org/badge/60650396.svg" alt="DOI"></a></li>
+<li><a href="https://travis-ci.org/ropensci/weathercan"><img src="https://travis-ci.org/ropensci/weathercan.svg?branch=master" alt="Build Status"></a></li>
+<li><a href="https://ci.appveyor.com/project/steffilazerte/weathercan/branch/master"><img src="https://ci.appveyor.com/api/projects/status/l2afqnduhmmir3xl/branch/master?svg=true" alt="AppVeyor Build status"></a></li>
+<li><a href="https://codecov.io/gh/ropensci/weathercan"><img src="https://codecov.io/gh/ropensci/weathercan/branch/master/graph/badge.svg" alt="codecov"></a></li>
 </ul>
 </div>
 

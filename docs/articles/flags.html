@@ -91,7 +91,7 @@
       <h1>The meanings of flags</h1>
                         <h4 class="author">Steffi LaZerte</h4>
             
-            <h4 class="date">2018-02-01</h4>
+            <h4 class="date">2018-06-04</h4>
           </div>
 
     
@@ -106,32 +106,32 @@
 <pre><code>## # A tibble: 6 x 4
 ##   station_name `Date/Time` `Total Precip (mm)` `Total Precip Flag`
 ##   &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;               &lt;chr&gt;              
-## 1 MAGOG        2017-03     30.4                ^                  
-## 2 MAGOG        2017-04     114.0               ^                  
-## 3 MAGOG        2017-05     78.8                ^                  
-## 4 MAGOG        2017-06     140.7               ^                  
-## 5 MAGOG        2017-07     80.7                ""                 
-## 6 MAGOG        2017-08     135.8               ""</code></pre>
+## 1 MAGOG        2017-09     63.0                ^                  
+## 2 MAGOG        2017-10     140.8               ^                  
+## 3 MAGOG        2017-11     70.0                ^                  
+## 4 MAGOG        2017-12     45.7                ^                  
+## 5 MAGOG        2018-01     34.6                ^                  
+## 6 MAGOG        2018-02     77.2                ^</code></pre>
 <pre><code>## # A tibble: 6 x 4
 ##   station_name `Date/Time` `Snow Grnd Last Day (cm)` `Snow Grnd Last Day Flag`
 ##   &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;                     &lt;chr&gt;                    
-## 1 MAGOG        2017-03     ""                        M                        
-## 2 MAGOG        2017-04     0                         ""                       
-## 3 MAGOG        2017-05     0                         ""                       
-## 4 MAGOG        2017-06     0                         ""                       
-## 5 MAGOG        2017-07     0                         ""                       
-## 6 MAGOG        2017-08     0                         ""</code></pre>
+## 1 MAGOG        2017-09     0                         ""                       
+## 2 MAGOG        2017-10     0                         ""                       
+## 3 MAGOG        2017-11     0                         ""                       
+## 4 MAGOG        2017-12     10                        ""                       
+## 5 MAGOG        2018-01     2                         ""                       
+## 6 MAGOG        2018-02     0                         ""</code></pre>
 <p>In this output, you can see two flags: <code>^</code> in <code>Total Precip</code> and <code>M</code> in <code>Snow Grnd Last Day</code></p>
 <p>This same sample, formated looks like:</p>
 <pre><code>## # A tibble: 6 x 5
 ##   date       total_precip total_precip_flag snow_grnd_last_day snow_grnd_last_day_flag
 ##   &lt;date&gt;            &lt;dbl&gt; &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;                  
-## 1 2017-03-01         30.4 ^                                 NA M                      
-## 2 2017-04-01        114   ^                                  0 ""                     
-## 3 2017-05-01         78.8 ^                                  0 ""                     
-## 4 2017-06-01        141   ^                                  0 ""                     
-## 5 2017-07-01         80.7 ""                                 0 ""                     
-## 6 2017-08-01        136   ""                                 0 ""</code></pre>
+## 1 2017-09-01         63.0 ^                               0    ""                     
+## 2 2017-10-01        141   ^                               0    ""                     
+## 3 2017-11-01         70.0 ^                               0    ""                     
+## 4 2017-12-01         45.7 ^                              10.0  ""                     
+## 5 2018-01-01         34.6 ^                               2.00 ""                     
+## 6 2018-02-01         77.2 ^                               0    ""</code></pre>
 <p>As you can see, we still have the two flags, but the missing data flag (<code>M</code>) is now replaced with NA. The other flag <code>^</code> is not, as it indicates that “The value displayed is based on incomplete data” (see below).</p>
 </div>
 <div id="flags" class="section level2">
@@ -157,8 +157,8 @@
 <td align="left">Not Available</td>
 </tr>
 <tr class="even">
-<td align="left">‡</td>
-<td align="left">Partner data that is not subject to review by the National Climate Archives</td>
+<td align="left">Date/Time</td>
+<td align="left">Year</td>
 </tr>
 <tr class="odd">
 <td align="left">A</td>
@@ -202,7 +202,7 @@
 </tr>
 <tr class="odd">
 <td align="left">†</td>
-<td align="left">Data for this day has undergone only basic quality checking</td>
+<td align="left">Data that is not subject to review by the National Climate Archives</td>
 </tr>
 <tr class="even">
 <td align="left">B</td>

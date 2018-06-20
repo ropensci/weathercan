@@ -21,7 +21,7 @@ test_that("weather_dl() hour format = FALSE", {
   expect_equal(w$prov[1], factor("BC", levels = levels(stations$prov)))
 
   expect_equal(w$`Date/Time`[1], "2014-01-01 00:00")
-  expect_equal(w$`Data Quality`[1], "\u2021")
+  #expect_equal(w$`Data Quality`[1], "\u2021")
 })
 
 test_that("weather_dl() day format = FALSE", {
@@ -31,7 +31,7 @@ test_that("weather_dl() day format = FALSE", {
 
   ## Basics
   expect_is(w, "data.frame")
-  expect_length(w, 36)
+  expect_length(w, 37)
   expect_equal(nrow(w), 365)
   expect_is(w$prov, "factor")
 
@@ -44,7 +44,8 @@ test_that("weather_dl() day format = FALSE", {
   expect_equal(w$prov[1], factor("BC", levels = levels(stations$prov)))
 
   expect_equal(w$`Date/Time`[1], "2014-01-01")
-  expect_equal(w$`Data Quality`[1], "\u2021")
+  #expect_equal(w$`Data Quality`[1], "\u2021")
+  expect_equal(w$`Data Quality`[1], "")
 
 })
 
@@ -56,8 +57,8 @@ test_that("weather_dl() month format = FALSE", {
 
   ## Basics
   expect_is(w, "data.frame")
-  expect_length(w, 34)
-  expect_equal(nrow(w), 836)
+  expect_length(w, 35)
+  expect_equal(nrow(w), 842)
   expect_is(w$prov, "factor")
 
   c <- dplyr::select(w, -station_id, -prov, -lat, -lon, -elev)

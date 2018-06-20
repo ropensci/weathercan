@@ -70,8 +70,8 @@ weather_interp <- function(data, weather,
   }
 
   ## Convert to tibbles for consistency
-  data <- tibble::as_tibble(data)
-  weather <- tibble::as_tibble(weather)
+  data <- dplyr::as_tibble(data)
+  weather <- dplyr::as_tibble(weather)
 
   if(interval == "hour") if(!lubridate::is.POSIXct(data$time) |
                             !lubridate::is.POSIXct(weather$time)) stop(msg)
@@ -98,7 +98,7 @@ weather_interp <- function(data, weather,
 
   ## Get columns in 'cols'
   if(any(cols == "all")) {
-    cols <- w_names[[interval]]
+    cols <- names(w_names[[interval]])
     cols <- cols[-grep(paste0("(flag)|(qual)|(weather)|(time)|(date)|(hour)|",
                               "(^day$)|(month)|(year)|(^wind_dir$)|",
                               "(^dir_max_gust$)"),

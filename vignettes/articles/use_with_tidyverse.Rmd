@@ -17,7 +17,6 @@ In addition to *weathercan*, you'll need several packages from the *tidyverse*  
 
 ```{R pck}
 library(weathercan)
-library(tibble)
 library(dplyr)
 library(tidyr)
 library(ggplot2)
