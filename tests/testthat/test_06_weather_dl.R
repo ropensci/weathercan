@@ -155,6 +155,19 @@ test_that("weather (hour) handles data with different numbers of columns", {
   expect_gt(nrow(d), 0)
 })
 
+test_that("weather (hour) skips with message if end date < start date", {
+
+  expect_message({weather_dl(station_ids = 51423, start = "2014-01-31",
+                            end = "2014-01-01")}, "The end date ")
+
+  expect_message({weather_dl(station_ids = 51423, end = "2012-01-01")},
+                 "The end date ")
+
+  expect_message({w <- weather_dl(c(42203, 49909), end = "2006-04-20")},
+                 "End date earlier")
+  expect_true(nrow(w) > 0)
+})
+
 # weather by day ----------------------------------------------------------
 context("weather by day")
 
@@ -328,6 +341,22 @@ test_that("weather (day) handles data with different numbers of columns", {
   expect_gt(nrow(d[d$station_id == 27534,]), 0)
 })
 
+test_that("weather (day) skips with message if end date < start date", {
+
+  expect_message({weather_dl(station_ids = 51423, start = "2014-01-31",
+                             end = "2014-01-01", interval = "day")},
+                 "The end date ")
+
+  expect_message({weather_dl(station_ids = 51423, end = "2012-01-01",
+                             interval = "day")},
+                 "The end date ")
+
+  expect_message({w <- weather_dl(c(51423, 4291), end = "1928-11-10",
+                                  interval = "day")},
+                 "End date earlier")
+  expect_true(nrow(w) > 0)
+})
+
 # weather by month --------------------------------------------------------
 context("weather by month")
 
@@ -451,6 +480,22 @@ test_that("weather (month) handles data with different numbers of columns", {
   expect_length(d, 35)
   expect_gt(nrow(d[d$station_id == 4291,]), 0)
   expect_gt(nrow(d[d$station_id == 27534,]), 0)
+})
+
+test_that("weather (month) skips with message if end date < start date", {
+
+  expect_message({weather_dl(station_ids = 27534, start = "2005-01-31",
+                             end = "2005-01-01", interval = "month")},
+                 "The end date ")
+
+  expect_message({weather_dl(station_ids = 27534, end = "1995-01-01",
+                             interval = "month")},
+                 "The end date ")
+
+  expect_message({w <- weather_dl(c(27534, 4291), end = "1928-11-10",
+                                  interval = "month")},
+                 "End date earlier")
+  expect_true(nrow(w) > 0)
 })
 
 # list_cols ---------------------------------------------------------------

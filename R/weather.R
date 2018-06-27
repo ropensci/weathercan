@@ -126,6 +126,7 @@ weather_dl <- function(station_ids,
   tz_list <- c()
   w_all <- data.frame()
   missing <- c()
+  end_dates <- c()
   msg_fmt <- dplyr::tibble()
 
   for(s in station_ids) {
@@ -175,9 +176,39 @@ weather_dl <- function(station_ids,
                                       levels = c("hour", "day", "month"),
                                       ordered = TRUE))
 
-    if(is.null(start)) s.start <- stn1$start else s.start <- as.Date(start)
+    if(is.null(start)) {
+      s.start <- stn1$start
+      msg.start <- "earliest date"
+    } else {
+      s.start <- as.Date(start)
+      msg.start <- start
+    }
+
     if(is.null(end)) s.end <- Sys.Date() else s.end <- as.Date(end)
+    msg.end <- as.character(s.end)
+
     dates <- lubridate::interval(s.start, s.end)
+
+    if(lubridate::int_end(dates) < lubridate::int_start(dates)) {
+      if(length(station_ids) > 1) {
+        if(!quiet) message("End date earlier than start date for station ", s)
+        end_dates <- c(end_dates, s)
+        next
+      } else {
+        if(!quiet) message(paste0("The end date (", msg.end, ") ",
+                                  "is earlier than the start date (",
+                                  as.character(s.start),
+                                  ") for station ", s, " for this interval (",
+                                  interval, "), ",
+                                  "\nAvailable Station Data:\n",
+                                  paste0(utils::capture.output(print(
+                                    dplyr::filter(stn,
+                                                  station_id %in% s,
+                                                  !is.na(start)))),
+                                    collapse = "\n")))
+        return(dplyr::tibble())
+      }
+    }
 
     date_range <- seq(lubridate::floor_date(s.start, unit = "month"),
                       lubridate::floor_date(s.end, unit = "month"),
@@ -244,11 +275,9 @@ weather_dl <- function(station_ids,
           next
         } else {
           if(!quiet) message(paste0("There are no data for station ", s, ", ",
-                                    "in this time range (",
-                                    as.character(lubridate::int_start(dates)),
-                                    " to ",
-                                    as.character(lubridate::int_end(dates)),
-                                    "), for this interval (", interval, "), ",
+                                    "in this time range (", msg.start,
+                                    " to ", msg.end, "), for this interval (",
+                                    interval, "), ",
                                     "\nAvailable Station Data:\n",
                                     paste0(utils::capture.output(print(
                                       dplyr::filter(stn,
@@ -322,9 +351,7 @@ weather_dl <- function(station_ids,
 
     message(paste0("There are no data for ", type, " stations (",
                    paste0(missing, collapse = ", "), "), ",
-                   "in this time range (",
-                   as.character(lubridate::int_start(dates)), " to ",
-                   as.character(lubridate::int_end(dates)), "), ",
+                   "in this time range (", msg.start, " to ", msg.end, "), ",
                    "for this interval (", interval, ")",
                    "\nAvailable Station Data:\n",
                    paste0(utils::capture.output(print(
@@ -334,6 +361,20 @@ weather_dl <- function(station_ids,
                      collapse = "\n")))
   }
 
+  if(length(end_dates) > 0 & !quiet) {
+    if(all(station_ids %in% missing)) type <- "all" else type <- "some"
+
+    message(paste0("The end dates (", msg.end, ") are earlier than the ",
+                   "start dates (", msg.start, ") for ", type, " stations (",
+                   paste0(end_dates, collapse = ", "),
+                   "), for this interval (", interval, "), ",
+                   "\nAvailable Station Data:\n",
+                   paste0(utils::capture.output(print(
+                     dplyr::filter(stn,
+                                   station_id %in% end_dates,
+                                   !is.na(start)))),
+                     collapse = "\n")))
+  }
   ## Return Format messages
 
   msg_fmt <- dplyr::filter(msg_fmt, !is.na(col))
