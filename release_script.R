@@ -28,9 +28,11 @@ codemetar::write_codemeta()
 # Update NEWS
 # Update cran-comments
 
-## Update website
 ## Push to github
 ## Check travis / appveyor
+
+## Update website
+## Push to github
 
 ## Actually release it (SEND TO CRAN!)
 devtools::release()
