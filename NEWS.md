@@ -4,7 +4,7 @@ author: "Steffi LaZerte"
 output: html_document
 ---
 
-# weathercan 0.2.7 (2018-06-04)
+# weathercan 0.2.7 (2018-06-27)
 
 ## Bug fixes
 - Fix bug created when ECCC changed file metadata for dates after April 1st 2018 (only affected downloads which included dates both before AND after April 1st, 2018) - Results in a new column `station_operator` for all data (NA where unavailable for older stations).
@@ -12,7 +12,8 @@ output: html_document
 
 ## Changes
 - Update readme/vignettes/internal data sets to include new columns
-- Update interal `stations` data frame
+- Update internal `stations` data frame as well as `flags` and `glossary`
+- Remove `tibble` dependency by relying on `dplyr`
 
 # weathercan 0.2.6 (2018-05-25)
 
