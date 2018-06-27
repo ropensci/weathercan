@@ -97,12 +97,12 @@ devtools::use_data(province, w_names, p_names, overwrite = TRUE, internal = TRUE
 
 # Add flags data set to package data
 # Get legend of flags (same for all intervals where duplicated)
-flags <- dplyr::bind_rows(weather_raw(station_id = 51423,  date = as.Date("2014-01-01"),
-                                      interval = "hour", nrows = 25, header = FALSE)[11:14,],
-                          weather_raw(station_id = 51423,  date = as.Date("2014-01-01"),
-                                      interval = "day", nrows = 25, header = FALSE)[10:23,],
-                          weather_raw(station_id = 43823,  date = as.Date("2014-01-01"),
-                                      interval = "month", nrows = 25, header = FALSE)[10:16,]) %>%
+flags <- dplyr::bind_rows(weather_raw(weather_html(station_id = 51423,  date = as.Date("2014-01-01"),
+                                      interval = "hour"), nrows = 25, header = FALSE)[11:14,],
+                          weather_raw(weather_html(station_id = 51423,  date = as.Date("2014-01-01"),
+                                      interval = "day"), nrows = 25, header = FALSE)[10:23,],
+                                      weather_raw(weather_html(station_id = 43823,  date = as.Date("2014-01-01"),
+                                      interval = "month"), nrows = 25, header = FALSE)[10:16,]) %>%
   dplyr::rename(code = V1, meaning = V2) %>%
   dplyr::distinct() %>%
   dplyr::as_tibble()
