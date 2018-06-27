@@ -9,6 +9,7 @@ output: html_document
 ## Bug fixes
 - Fix bug created when ECCC changed file metadata for dates after April 1st 2018 (only affected downloads which included dates both before AND after April 1st, 2018) - Results in a new column `station_operator` for all data (NA where unavailable for older stations).
 - Adjust code flexibility to handle future changes
+- Add catch to warn user if end dates earlier than start dates
 
 ## Changes
 - Update readme/vignettes/internal data sets to include new columns
