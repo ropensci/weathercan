@@ -10,14 +10,14 @@
   "codeRepository": "https://github.com/ropensci/weathercan",
   "issueTracker": "https://github.com/ropensci/weathercan/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.2.4",
+  "version": "0.2.7",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.4.3",
+    "version": "3.4.4",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.4.3 (2017-11-30)",
+  "runtimePlatform": "R version 3.4.4 (2018-03-15)",
   "author": [
     {
       "@type": "Person",
@@ -32,7 +32,8 @@
       "@type": "Person",
       "givenName": "Sam",
       "familyName": "Albers",
-      "email": "sam.albers@gmail.com"
+      "email": "sam.albers@gmail.com",
+      "@id": "https://orcid.org/0000-0002-9270-7884"
     }
   ],
   "maintainer": {
@@ -160,27 +161,15 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "magrittr",
-      "name": "magrittr",
-      "version": "1.5",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      }
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "methods",
       "name": "methods",
       "version": "3.2.2"
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "stringi",
-      "name": "stringi",
-      "version": "1.1.2",
+      "identifier": "purrr",
+      "name": "purrr",
+      "version": "0.2.4",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -190,9 +179,9 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "tibble",
-      "name": "tibble",
-      "version": "1.2",
+      "identifier": "stringi",
+      "name": "stringi",
+      "version": "1.1.2",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -228,10 +217,42 @@
       "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
-      "version": "3.3.3"
+      "version": "3.1.2"
     }
   ],
   "releaseNotes": "https://github.com/ropensci/weathercan/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/weathercan/blob/master/README.md",
-  "fileSize": "499.644KB"
+  "fileSize": "585.017KB",
+  "contIntegration": "https://travis-ci.org/ropensci/weathercan",
+  "citation": [
+    {
+      "@type": "ScholarlyArticle",
+      "datePublished": "2018",
+      "author": [
+        {
+          "@type": "Person",
+          "givenName": "Stefanie E",
+          "familyName": "LaZerte"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Sam",
+          "familyName": "Albers"
+        }
+      ],
+      "name": "{weathercan}: {D}ownload and format weather data from Environment and Climate Change Canada",
+      "url": "http://joss.theoj.org/papers/10.21105/joss.00571",
+      "paginiation": "571",
+      "isPartOf": {
+        "@type": "PublicationIssue",
+        "issueNumber": "22",
+        "datePublished": "2018",
+        "isPartOf": {
+          "@type": ["PublicationVolume", "Periodical"],
+          "volumeNumber": "3",
+          "name": "The Journal of Open Source Software"
+        }
+      }
+    }
+  ]
 }

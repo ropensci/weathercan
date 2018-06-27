@@ -19,3 +19,4 @@
 ^CONTRIBUTING\.md$
 ^\.github$
 ^codemeta\.json$
+^release_script.R$
