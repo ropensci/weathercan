@@ -44,11 +44,17 @@ stations_dl <- function(url = NULL,
     return()
   }
 
-  if(is.null(url)) url <- paste0("ftp://client_climate@ftp.tor.ec.gc.ca/",
-                                 "Pub/Get_More_Data_Plus_de_donnees/",
-                                 "Station%20Inventory%20EN.csv")
-
   if(verbose) message("Trying to access stations data frame")
+  if(is.null(url)) {
+    url <- paste0("ftp://client_climate@ftp.tor.ec.gc.ca/",
+                  "Pub/Get_More_Data_Plus_de_donnees/",
+                  "Station%20Inventory%20EN.csv")
+    if(suppressWarnings(
+      httr::http_error("ftp://client_climate@ftp.tor.ec.gc.ca"))) {
+      stop("Cannot reach ECCC ftp site, please try again later", call. = FALSE)
+    }
+  }
+
   headings <- try(readLines(url, n = 5), silent = TRUE)
   if("try-error" %in% class(headings)) {
     stop("'url' must point to a csv file either local or online.")
@@ -113,6 +119,7 @@ stations_dl <- function(url = NULL,
                                            "NS", "NU", "ON", "PE", "QC", "SK",
                                            "YT"))) %>%
     tidyr::spread(type, date) %>%
+    dplyr::arrange(prov, station_name, interval) %>%
     dplyr::tbl_df()
 }
 

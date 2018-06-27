@@ -10,6 +10,7 @@ test_that("stations_dl() runs and returns data", {
                    paste0("Need R version 3.3.4 or greater to update the ",
                           "stations data"))
   } else if(getRversion() >= "3.3.4") {
+    # If get message about not reachable, try again
     expect_error({s <- stations_dl()}, regexp = NA)
     expect_warning(expect_error({stations_dl(url = "test.csv")}))
     expect_is(s, "data.frame")
@@ -19,7 +20,7 @@ test_that("stations_dl() runs and returns data", {
     expect_is(s$prov, "factor")
     expect_is(s$station_name, "character")
     expect_gt(nrow(s), 10)
-    expect_equal(unique(s$interval), c("hour", "day", "month"))
+    expect_equal(unique(s$interval), c("day", "hour", "month"))
 
     # Check content
     expect_equal(nrow(s[is.na(s$station_name),]), 0)
