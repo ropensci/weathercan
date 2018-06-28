@@ -69,7 +69,7 @@ Data can be returned 'raw' (format = FALSE) or can be formatted.
   converts data to numeric where possible. If character strings are contained
   in traditionally numeric fields (e.g., weather speed may have values such
   as "< 30"), they can be replaced with a character specified by `string_as`.
-  The default is NA. Formating also replaces data associated with certain
+  The default is NA. Formatting also replaces data associated with certain
   flags with NA (M = Missing).
 
   Start and end date can be specified, but if not, it will default to the

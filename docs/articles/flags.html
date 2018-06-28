@@ -102,7 +102,7 @@
 <a href="#what-are-flags" class="anchor"></a>What are flags</h2>
 <p>The data output of the <code><a href="../reference/weather_dl.html">weather_dl()</a></code> function include a corresponding <code>_flag</code> column for each data column. These columns are used by ECCC to add notes regarding measurements.</p>
 <p>In the <code><a href="../reference/weather_dl.html">weather_dl()</a></code> function if <code>format = TRUE</code> (the default), data corresponding to flags <code>M</code>, <code>NA</code>, <code>[empty]</code> and <code>L</code> are all replaced with <code>NA</code>.</p>
-<p>For example, a sample of unformated data from Magog station in Quebec looks like:</p>
+<p>For example, a sample of unformatted data from Magog station in Quebec looks like:</p>
 <pre><code>## # A tibble: 6 x 4
 ##   station_name `Date/Time` `Total Precip (mm)` `Total Precip Flag`
 ##   &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;               &lt;chr&gt;              
@@ -122,7 +122,7 @@
 ## 5 MAGOG        2018-01     2                         ""                       
 ## 6 MAGOG        2018-02     0                         ""</code></pre>
 <p>In this output, you can see two flags: <code>^</code> in <code>Total Precip</code> and <code>M</code> in <code>Snow Grnd Last Day</code></p>
-<p>This same sample, formated looks like:</p>
+<p>This same sample, formatted looks like:</p>
 <pre><code>## # A tibble: 6 x 5
 ##   date       total_precip total_precip_flag snow_grnd_last_day snow_grnd_last_day_flag
 ##   &lt;date&gt;            &lt;dbl&gt; &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;                  

@@ -118,9 +118,9 @@
 <h2 class="hasAnchor">
 <a href="#using-weathercan-to-load-in-data" class="anchor"></a>Using weathercan to load in data</h2>
 <p>Your first decision that you need to make when analyzing data from weather stations across canada is to determine for which stations you’d like to query from Environment and Climate Change Canada. In this example, to keep processing time low, we will query two stations with very long records that happen to be far apart. To make that choice we can use (tidyverse)[<a href="http://tidyverse.org/" class="uri">http://tidyverse.org/</a>] tools and the included <code>stations</code> data frame in this package:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stations %&gt;%
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(station_id %in%<span class="st"> </span><span class="kw">c</span>(<span class="dv">707</span>, <span class="dv">4859</span>, <span class="dv">6693</span>,<span class="dv">5397</span>, <span class="dv">2315</span>),
-         interval ==<span class="st"> "day"</span>) %&gt;%
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stations <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(station_id <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">707</span>, <span class="dv">4859</span>, <span class="dv">6693</span>,<span class="dv">5397</span>, <span class="dv">2315</span>),
+         interval <span class="op">==</span><span class="st"> "day"</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(prov, station_name, station_id, start, end)</code></pre></div>
 <pre><code>## # A tibble: 5 x 5
 ##   prov  station_name     station_id start   end
@@ -133,15 +133,15 @@
 <p>These two weather stations will be our test data for this vignette. You can broaden or expand your analysis by choosing different or more station. Our next step is to use the <code><a href="../../reference/weather_dl.html">weather_dl()</a></code> function to load in the data.</p>
 <p>The following will take quite some time to download as it is downloading over 100 years of daily data for 5 stations.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pancan_df &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/weather_dl.html">weather_dl</a></span>(<span class="dt">station_ids =</span> <span class="kw">c</span>(<span class="dv">707</span>, <span class="dv">4859</span>, <span class="dv">6693</span>,<span class="dv">5397</span>, <span class="dv">2315</span>), 
-                        <span class="dt">interval =</span> <span class="st">"day"</span>) %&gt;%
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(year &gt;=<span class="st"> </span><span class="dv">1920</span>) %&gt;%
+                        <span class="dt">interval =</span> <span class="st">"day"</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(year <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1920</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(station_name, station_id, prov, lat, lon, elev, climate_id, WMO_id, TC_id, mean_temp, date)</code></pre></div>
 </div>
 <div id="plot-the-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#plot-the-data" class="anchor"></a>Plot the data</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(pancan_df, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> date, <span class="dt">y =</span> mean_temp, <span class="dt">colour =</span> station_name)) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>() +
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(pancan_df, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> date, <span class="dt">y =</span> mean_temp, <span class="dt">colour =</span> station_name)) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>()</code></pre></div>
 <pre><code>## Warning: Removed 25710 rows containing missing values (geom_point).</code></pre>
 <pre><code>## Warning: Removed 6682 rows containing missing values (geom_path).</code></pre>
@@ -151,8 +151,8 @@
 <div id="creating-list-columns" class="section level2">
 <h2 class="hasAnchor">
 <a href="#creating-list-columns" class="anchor"></a>Creating list-columns</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pancan_df_nest &lt;-<span class="st"> </span>pancan_df %&gt;%
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(station_name, station_id, prov, lat, lon, elev, climate_id, WMO_id, TC_id) %&gt;%
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pancan_df_nest &lt;-<span class="st"> </span>pancan_df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(station_name, station_id, prov, lat, lon, elev, climate_id, WMO_id, TC_id) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/nest">nest</a></span>()
 pancan_df_nest</code></pre></div>
 <pre><code>## # A tibble: 5 x 10
@@ -169,11 +169,11 @@ pancan_df_nest</code></pre></div>
 <h2 class="hasAnchor">
 <a href="#fit-some-models" class="anchor"></a>Fit some models</h2>
 <p>Define the model</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">clim_model &lt;-<span class="st"> </span>function(df) {
-  <span class="kw">lm</span>(mean_temp ~<span class="st"> </span>date, <span class="dt">data =</span> df)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">clim_model &lt;-<span class="st"> </span><span class="cf">function</span>(df) {
+  <span class="kw">lm</span>(mean_temp <span class="op">~</span><span class="st"> </span>date, <span class="dt">data =</span> df)
 }</code></pre></div>
 <p>Run the model with the existing data</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pancan_df_nest &lt;-<span class="st"> </span>pancan_df_nest %&gt;%<span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pancan_df_nest &lt;-<span class="st"> </span>pancan_df_nest <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">model =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map">map</a></span>(data, clim_model))
 pancan_df_nest</code></pre></div>
 <pre><code>## # A tibble: 5 x 11
@@ -186,7 +186,7 @@ pancan_df_nest</code></pre></div>
 ## 5 TABER              2315 AB     49.8 -112   811   3036360    ""     ""   
 ## # ... with 2 more variables: data &lt;list&gt;, model &lt;list&gt;</code></pre>
 <p>Then add the residuals to the model</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pancan_df_nest &lt;-<span class="st"> </span>pancan_df_nest %&gt;%<span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pancan_df_nest &lt;-<span class="st"> </span>pancan_df_nest <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">model =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map">map</a></span>(data, clim_model),
          <span class="dt">resids =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map2">map2</a></span>(data, model, add_residuals)) 
 pancan_df_nest</code></pre></div>
@@ -225,11 +225,11 @@ resids</code></pre></div>
 ## 10 AGASSIZ CDA         707 BC     49.2  -122  15.0 1100120    ""     ""   
 ## # ... with 179,850 more rows, and 3 more variables: mean_temp &lt;dbl&gt;,
 ## #   date &lt;date&gt;, resid &lt;dbl&gt;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(<span class="dt">data =</span> resids, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(date, resid)) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">group =</span> station_name), <span class="dt">alpha =</span> <span class="dv">1</span> /<span class="st"> </span><span class="dv">3</span>) +<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>() +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_abline">geom_hline</a></span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>(~<span class="st"> </span>station_name, <span class="dt">ncol =</span> <span class="dv">1</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(<span class="dt">data =</span> resids, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(date, resid)) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">group =</span> station_name), <span class="dt">alpha =</span> <span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="dv">3</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_abline">geom_hline</a></span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>(<span class="op">~</span><span class="st"> </span>station_name, <span class="dt">ncol =</span> <span class="dv">1</span>)</code></pre></div>
 <pre><code>## Warning: Removed 6682 rows containing missing values (geom_path).</code></pre>
 <pre><code>## Warning: Removed 25710 rows containing missing values (geom_point).</code></pre>
 <p><img src="use_with_tidyverse_files/figure-html/resid-1.png" width="960"></p>
@@ -237,9 +237,9 @@ resids</code></pre></div>
 <div id="using-broom" class="section level3">
 <h3 class="hasAnchor">
 <a href="#using-broom" class="anchor"></a>Using broom</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">glance_df &lt;-<span class="st"> </span>pancan_df_nest %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">glance =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map">map</a></span>(model, broom::glance)) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/unnest">unnest</a></span>(glance, <span class="dt">.drop =</span> <span class="ot">TRUE</span>) %&gt;%
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">glance_df &lt;-<span class="st"> </span>pancan_df_nest <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">glance =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map">map</a></span>(model, broom<span class="op">::</span>glance)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/unnest">unnest</a></span>(glance, <span class="dt">.drop =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(station_name, prov, r.squared, p.value, AIC)</code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -292,9 +292,9 @@ resids</code></pre></div>
 <div id="looking-at-the-predictions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#looking-at-the-predictions" class="anchor"></a>Looking at the predictions</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">preds &lt;-<span class="st"> </span>pancan_df_nest %&gt;%<span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">preds &lt;-<span class="st"> </span>pancan_df_nest <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">model =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map">map</a></span>(data, clim_model),
-         <span class="dt">preds =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map2">map2</a></span>(data, model, add_predictions)) %&gt;%
+         <span class="dt">preds =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/map2">map2</a></span>(data, model, add_predictions)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/tidyr/topics/unnest">unnest</a></span>(preds)
 preds</code></pre></div>
 <pre><code>## # A tibble: 179,860 x 12
@@ -312,10 +312,10 @@ preds</code></pre></div>
 ## 10 AGASSIZ CDA         707 BC     49.2  -122  15.0 1100120    ""     ""   
 ## # ... with 179,850 more rows, and 3 more variables: mean_temp &lt;dbl&gt;,
 ## #   date &lt;date&gt;, pred &lt;dbl&gt;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(<span class="dt">data =</span> preds, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> date, <span class="dt">y =</span> mean_temp, <span class="dt">colour =</span> station_name)) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>() +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">y =</span> pred)) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>(~<span class="st"> </span>station_name, <span class="dt">scales =</span> <span class="st">"free_y"</span>, <span class="dt">ncol =</span> <span class="dv">1</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(<span class="dt">data =</span> preds, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> date, <span class="dt">y =</span> mean_temp, <span class="dt">colour =</span> station_name)) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">y =</span> pred)) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">facet_wrap</a></span>(<span class="op">~</span><span class="st"> </span>station_name, <span class="dt">scales =</span> <span class="st">"free_y"</span>, <span class="dt">ncol =</span> <span class="dv">1</span>)</code></pre></div>
 <pre><code>## Warning: Removed 25710 rows containing missing values (geom_point).</code></pre>
 <p><img src="use_with_tidyverse_files/figure-html/pred-1.png" width="960"></p>
 </div>

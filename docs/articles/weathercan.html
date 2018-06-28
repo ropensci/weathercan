@@ -157,7 +157,7 @@
 ## 10 BC    KAMLOOPS CH… 1279       1163815    &lt;NA&gt;   &lt;NA&gt;   50.6  -121   701 month     1974
 ## # ... with 11 more rows, and 1 more variable</code></pre>
 <p>You can also search by proximity. These results include a new column <code>distance</code> specifying the distance in km from the coordinates:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/stations_search.html">stations_search</a></span>(<span class="dt">coords =</span> <span class="kw">c</span>(<span class="fl">50.667492</span>, -<span class="fl">120.329049</span>), <span class="dt">dist =</span> <span class="dv">20</span>, <span class="dt">interval =</span> <span class="st">"hour"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/stations_search.html">stations_search</a></span>(<span class="dt">coords =</span> <span class="kw">c</span>(<span class="fl">50.667492</span>, <span class="op">-</span><span class="fl">120.329049</span>), <span class="dt">dist =</span> <span class="dv">20</span>, <span class="dt">interval =</span> <span class="st">"hour"</span>)</code></pre></div>
 <pre><code>## # A tibble: 3 x 13
 ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev interval start
 ##   &lt;fct&gt; &lt;chr&gt;        &lt;fct&gt;      &lt;fct&gt;      &lt;fct&gt;  &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;int&gt;
@@ -166,13 +166,13 @@
 ## 3 BC    KAMLOOPS A   51423      1163781    71887  YKA    50.7  -120   345 hour      2013
 ## # ... with 2 more variables</code></pre>
 <p>We can also perform more complex searches using <code><a href="http://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> function from the <code>dplyr</code> package:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">BCstations &lt;-<span class="st"> </span>stations %&gt;%
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(prov %in%<span class="st"> </span><span class="kw">c</span>(<span class="st">"BC"</span>)) %&gt;%
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(interval ==<span class="st"> "hour"</span>) %&gt;%
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(lat &gt;<span class="st"> </span><span class="dv">49</span> &amp;<span class="st"> </span>lat &lt;<span class="st"> </span><span class="fl">49.5</span>) %&gt;%
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(lon &gt;<span class="st"> </span>-<span class="dv">119</span> &amp;<span class="st"> </span>lon &lt;<span class="st"> </span>-<span class="dv">116</span>) %&gt;%
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(start &lt;=<span class="st"> </span><span class="dv">2002</span>) %&gt;%
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(end &gt;=<span class="st"> </span><span class="dv">2016</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">BCstations &lt;-<span class="st"> </span>stations <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(prov <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">"BC"</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(interval <span class="op">==</span><span class="st"> "hour"</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(lat <span class="op">&gt;</span><span class="st"> </span><span class="dv">49</span> <span class="op">&amp;</span><span class="st"> </span>lat <span class="op">&lt;</span><span class="st"> </span><span class="fl">49.5</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(lon <span class="op">&gt;</span><span class="st"> </span><span class="op">-</span><span class="dv">119</span> <span class="op">&amp;</span><span class="st"> </span>lon <span class="op">&lt;</span><span class="st"> </span><span class="op">-</span><span class="dv">116</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(start <span class="op">&lt;=</span><span class="st"> </span><span class="dv">2002</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(end <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2016</span>)
 BCstations</code></pre></div>
 <pre><code>## # A tibble: 3 x 12
 ##   prov  station_name  station_id climate_id WMO_id TC_id   lat   lon  elev interval start
@@ -182,7 +182,7 @@ BCstations</code></pre></div>
 ## 3 BC    WARFIELD RCS  31067      1148705    71401  XWF    49.1  -118   567 hour      2001
 ## # ... with 1 more variable</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## weather_dl() accepts numbers so we can create a vector to input into weather:
-stn_vector &lt;-<span class="st"> </span>BCstations$station_id 
+stn_vector &lt;-<span class="st"> </span>BCstations<span class="op">$</span>station_id 
 stn_vector</code></pre></div>
 <pre><code>## [1] 6838  6839  31067
 ## 8736 Levels: 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 ... 54698</code></pre>
@@ -230,9 +230,9 @@ kam.pg</code></pre></div>
 ## 10 PRINCE GEORGE A…      48248 NA               BC     53.9  -123   680 1096453    71302 
 ## # ... with 2,198 more rows, and 26 more variables</code></pre>
 <p>And plot it:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(<span class="dt">data =</span> kam.pg, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> time, <span class="dt">y =</span> temp, <span class="dt">group =</span> station_name, <span class="dt">colour =</span> station_name)) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position =</span> <span class="st">"top"</span>) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() +
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(<span class="dt">data =</span> kam.pg, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> time, <span class="dt">y =</span> temp, <span class="dt">group =</span> station_name, <span class="dt">colour =</span> station_name)) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position =</span> <span class="st">"top"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_minimal</a></span>()</code></pre></div>
 <p><img src="weathercan_files/figure-html/unnamed-chunk-11-1.png" width="1152"></p>
 <p>Or you can use the vector created above:</p>

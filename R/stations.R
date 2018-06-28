@@ -136,7 +136,7 @@ stations_dl <- function(url = NULL,
 #' @param coords Numeric. A vector of length 2 with latitude and longitude of a
 #'   place to match against. Overrides \code{lat} and \code{lon} if also
 #'   provided.
-#' @param dist Numeric. Match all stations within this many kilometers of the
+#' @param dist Numeric. Match all stations within this many kilometres of the
 #'   \code{coords}.
 #' @param interval Character. Return only stations with data at these intervals.
 #'   Must be any of "hour", "day", "month".

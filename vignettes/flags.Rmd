@@ -21,7 +21,7 @@ The data output of the `weather_dl()` function include a corresponding `_flag` c
 
 In the `weather_dl()` function if `format = TRUE` (the default), data corresponding to flags `M`, `NA`, `[empty]` and `L` are all replaced with `NA`.
 
-For example, a sample of unformated data from Magog station in Quebec looks like:
+For example, a sample of unformatted data from Magog station in Quebec looks like:
 
 ```{r, echo = FALSE}
 options(width = 100)
@@ -33,7 +33,7 @@ dplyr::select(w, station_name, `Date/Time`, `Snow Grnd Last Day (cm)`, `Snow Grn
 
 In this output, you can see two flags: `^` in `Total Precip` and `M` in `Snow Grnd Last Day`
 
-This same sample, formated looks like:
+This same sample, formatted looks like:
 
 ```{r, echo = FALSE}
 

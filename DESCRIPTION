@@ -12,6 +12,7 @@ Description: Provides means for downloading historical weather data from
     and automatically processed into a single dataset. Tools are also provided 
     to identify stations either by name or proximity to a location.
 License: GPL-3
+Language: en-CA
 BugReports: https://github.com/ropensci/weathercan/issues
 LazyData: TRUE
 URL: https://github.com/ropensci/weathercan

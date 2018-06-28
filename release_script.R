@@ -28,6 +28,10 @@ codemetar::write_codemeta()
 # Update NEWS
 # Update cran-comments
 
+# Check spelling
+dict <- hunspell::dictionary('en_CA')
+devtools::spell_check()
+
 ## Push to github
 ## Check travis / appveyor
 
