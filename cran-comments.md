@@ -17,4 +17,4 @@ New submission
 
 ## Downstream dependencies
 
-Currently, there are no downstream dependencies
+Currently, there are no downstream dependencies (this is a new submission)

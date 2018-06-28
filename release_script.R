@@ -9,13 +9,12 @@ source("data-raw/data-index.R")
 
 ## Checks
 devtools::check()     # Local
-devtools::build_win() # Win builder
+devtools::check_win_release() # Win builder
+devtools::check_win_devel()
+devtools::check_win_oldrelease()
+devtools::check_rhub() # windows/linux/macos
 
-library(rhub)
-check_on_debian()
-check_on_windows()
-check_on_ubuntu()
-check_on_macos()
+devtools::check_rhub(platforms = "windows-x86_64-devel")
 
 ## Run in console
 system("cd ..; R CMD build weathercan")
