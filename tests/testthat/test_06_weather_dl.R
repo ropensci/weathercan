@@ -59,13 +59,14 @@ test_that("weather (hour) formats timezone to UTC with multiple zones", {
 
 test_that("weather (hour) gets all", {
   expect_silent(w <- weather_dl(station_ids = 50821,
-                                start = Sys.Date() - lubridate::days(1),
+                                start = "2018-01-01",
+                                end = "2018-01-02",
                                 interval = "hour", trim = FALSE))
   expect_is(w, "data.frame")
   expect_length(w, 35)
   expect_equal(nrow(w), 48)
-  expect_equal(w$date[1], Sys.Date() - lubridate::days(1))
-  expect_equal(w$date[nrow(w)], Sys.Date())
+  expect_equal(w$date[1], as.Date("2018-01-01"))
+  expect_equal(w$date[nrow(w)], as.Date("2018-01-02"))
 })
 
 test_that("weather (hour) trims NAs", {
@@ -208,9 +209,13 @@ test_that("weather (day) returns a data frame", {
 })
 
 test_that("weather (day) gets all", {
-  expect_silent(weather_dl(station_ids = 54398, interval = "day", trim = FALSE))
+  expect_silent(weather_dl(station_ids = 54398, interval = "day",
+                           start = "2016-01-01", end = "2016-12-31",
+                           trim = FALSE))
   expect_message(expect_error({w <- weather_dl(station_ids = 54398,
                                                interval = "day",
+                                               start = "2016-01-01",
+                                               end = "2016-12-31",
                                                trim = FALSE,
                                                verbose = TRUE)}, NA))
 
@@ -218,14 +223,16 @@ test_that("weather (day) gets all", {
   expect_length(w, 37)
   expect_gte(nrow(w), 20)
   expect_equal(min(w$date), as.Date("2016-01-01"))
-  expect_equal(max(w$date), Sys.Date())
+  expect_equal(max(w$date), as.Date("2016-12-31"))
 
-  expect_silent(w <- weather_dl(station_ids = 54398, start = "2017-01-01",
+  expect_silent(w <- weather_dl(station_ids = 54398,
+                                start = "2017-01-01", end = "2018-12-31",
                                 interval = "day", trim = FALSE))
   expect_equal(min(w$date), as.Date("2017-01-01"))
-  expect_equal(max(w$date), Sys.Date())
+  expect_equal(max(w$date), as.Date("2018-12-31"))
 
-  expect_silent(w <- weather_dl(station_ids = 54398, end = "2016-04-01",
+  expect_silent(w <- weather_dl(station_ids = 54398,
+                                end = "2016-04-01",
                                 interval = "day", trim = FALSE))
   expect_equal(min(w$date), as.Date("2016-01-01"))
   expect_equal(max(w$date), as.Date("2016-04-01"))
