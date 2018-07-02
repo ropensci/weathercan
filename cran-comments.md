@@ -18,3 +18,7 @@ New submission
 ## Downstream dependencies
 
 Currently, there are no downstream dependencies (this is a new submission)
+
+## Comments
+
+2018-07-02 - Replaced \dontrun{} with \donttest{} in all Rd files as per CRAN submission request
