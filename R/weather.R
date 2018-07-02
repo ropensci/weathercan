@@ -69,14 +69,14 @@
 #'
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #' kam <- weather_dl(station_ids = 51423,
 #'                   start = "2016-01-01", end = "2016-02-15")
 #' }
 #'
 #' stations_search("Kamloops A$", interval = "hour")
 #' stations_search("Prince George Airport", interval = "hour")
-#'\dontrun{
+#'\donttest{
 #' kam.pg <- weather_dl(station_ids = c(48248, 51423),
 #'                      start = "2016-01-01", end = "2016-02-15")
 #'

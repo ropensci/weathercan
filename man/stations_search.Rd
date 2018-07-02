@@ -54,7 +54,7 @@ stations_search(name = "Kamloops", interval = "hour")
 
 stations_search(coords = c(53.915495, -122.739379))
 
-\dontrun{
+\donttest{
 loc <- ggmap::geocode("Prince George, BC")
 stations_search(coords = loc[c("lat", "lon")])
 }

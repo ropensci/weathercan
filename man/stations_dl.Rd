@@ -37,7 +37,7 @@ Station%20Inventory%20EN.csv unless otherwise specified
 }
 \examples{
 
-\dontrun{
+\donttest{
  # Update stations data frame
  s <- stations_dl()
 

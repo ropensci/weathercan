@@ -31,6 +31,7 @@ RoxygenNote: 6.0.1
 Suggests:
     devtools,
     ggplot2,
+    ggmap,
     knitr,
     rmarkdown,
     sp,

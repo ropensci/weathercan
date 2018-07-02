@@ -52,7 +52,7 @@ head(kamloops)
 head(finches)
 
 # Match weather to finches
-\dontrun{
+\donttest{
 ## Not run
 finch_weather <- weather_interp(data = finches, weather = kamloops)
 }
