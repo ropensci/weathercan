@@ -201,10 +201,8 @@ and 12PM will be returned as NA.)</p>
 #&gt; 6 06200003BB 2016-03-01 2016-03-01 07:32:36 2400      House Finch   SY    M    
 #&gt; # ... with 3 more variables: site_name &lt;chr&gt;, lon &lt;dbl&gt;, lat &lt;dbl&gt;</div><div class='input'>
 # Match weather to finches
-</div><span class='co'># NOT RUN {</span>
-<span class='co'>## Not run</span>
-<span class='no'>finch_weather</span> <span class='kw'>&lt;-</span> <span class='fu'>weather_interp</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>finches</span>, <span class='kw'>weather</span> <span class='kw'>=</span> <span class='no'>kamloops</span>)
-<span class='co'># }</span><div class='input'>
+</div><div class='input'><span class='co'>## Not run</span>
+<span class='no'>finch_weather</span> <span class='kw'>&lt;-</span> <span class='fu'>weather_interp</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>finches</span>, <span class='kw'>weather</span> <span class='kw'>=</span> <span class='no'>kamloops</span>)</div><div class='output co'>#&gt; <span class='message'>temp is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='output co'>#&gt; <span class='message'>temp_dew is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='output co'>#&gt; <span class='message'>rel_hum is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='output co'>#&gt; <span class='message'>wind_spd is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='output co'>#&gt; <span class='message'>visib is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='output co'>#&gt; <span class='message'>pressure is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='output co'>#&gt; <span class='message'>hmdx is missing 4163 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='output co'>#&gt; <span class='message'>wind_chill is missing 3810 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

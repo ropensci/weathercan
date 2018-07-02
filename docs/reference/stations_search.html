@@ -223,10 +223,28 @@ missing data, etc.)</p></td>
 #&gt; 17 BC    PRINCE GEORGE     48370      1096439    71896  YXS    53.9  -123   691
 #&gt; # ... with 4 more variables: interval &lt;chr&gt;, start &lt;int&gt;, end &lt;int&gt;,
 #&gt; #   distance &lt;dbl&gt;</div><div class='input'>
-</div><span class='co'># NOT RUN {</span>
-<span class='no'>loc</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ggmap</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/ggmap/topics/geocode'>geocode</a></span>(<span class='st'>"Prince George, BC"</span>)
-<span class='fu'>stations_search</span>(<span class='kw'>coords</span> <span class='kw'>=</span> <span class='no'>loc</span>[<span class='fu'>c</span>(<span class='st'>"lat"</span>, <span class='st'>"lon"</span>)])
-<span class='co'># }</span><div class='input'>
+</div><div class='input'><span class='no'>loc</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ggmap</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/ggmap/topics/geocode'>geocode</a></span>(<span class='st'>"Prince George, BC"</span>)</div><div class='output co'>#&gt; <span class='message'>Source : https://maps.googleapis.com/maps/api/geocode/json?address=Prince%20George%2C%20BC</span></div><div class='input'><span class='fu'>stations_search</span>(<span class='kw'>coords</span> <span class='kw'>=</span> <span class='no'>loc</span>[<span class='fu'>c</span>(<span class='st'>"lat"</span>, <span class='st'>"lon"</span>)])</div><div class='output co'>#&gt; # A tibble: 17 x 13
+#&gt;    prov  station_name      station_id climate_id WMO_id TC_id   lat   lon  elev
+#&gt;    &lt;fct&gt; &lt;chr&gt;             &lt;fct&gt;      &lt;fct&gt;      &lt;fct&gt;  &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+#&gt;  1 BC    PRINCE GEORGE     629        1096435    &lt;NA&gt;   &lt;NA&gt;   53.9  -123   569
+#&gt;  2 BC    PRINCE GEORGE     629        1096435    &lt;NA&gt;   &lt;NA&gt;   53.9  -123   569
+#&gt;  3 BC    PRINCE GEORGE WE… 637        1096470    &lt;NA&gt;   &lt;NA&gt;   53.9  -123   591
+#&gt;  4 BC    PRINCE GEORGE WE… 637        1096470    &lt;NA&gt;   &lt;NA&gt;   53.9  -123   591
+#&gt;  5 BC    PRINCE GEORGE MA… 50169      1096454    &lt;NA&gt;   VPX    53.9  -123   601
+#&gt;  6 BC    PRINCE GEORGE MA… 50169      1096454    &lt;NA&gt;   VPX    53.9  -123   601
+#&gt;  7 BC    PRINCE GEORGE STP 636        1096468    &lt;NA&gt;   &lt;NA&gt;   53.9  -123   579
+#&gt;  8 BC    PRINCE GEORGE STP 636        1096468    &lt;NA&gt;   &lt;NA&gt;   53.9  -123   579
+#&gt;  9 BC    PR GEORGE FOREMA… 634        1096460    &lt;NA&gt;   &lt;NA&gt;   53.9  -123   579
+#&gt; 10 BC    PR GEORGE FOREMA… 634        1096460    &lt;NA&gt;   &lt;NA&gt;   53.9  -123   579
+#&gt; 11 BC    PRINCE GEORGE A   631        1096450    71896  YXS    53.9  -123   691
+#&gt; 12 BC    PRINCE GEORGE A   631        1096450    71896  YXS    53.9  -123   691
+#&gt; 13 BC    PRINCE GEORGE A   631        1096450    71896  YXS    53.9  -123   691
+#&gt; 14 BC    PRINCE GEORGE AI… 48248      1096453    71302  VXS    53.9  -123   680
+#&gt; 15 BC    PRINCE GEORGE AI… 48248      1096453    71302  VXS    53.9  -123   680
+#&gt; 16 BC    PRINCE GEORGE     48370      1096439    71896  YXS    53.9  -123   691
+#&gt; 17 BC    PRINCE GEORGE     48370      1096439    71896  YXS    53.9  -123   691
+#&gt; # ... with 4 more variables: interval &lt;chr&gt;, start &lt;int&gt;, end &lt;int&gt;,
+#&gt; #   distance &lt;dbl&gt;</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

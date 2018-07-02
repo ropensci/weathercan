@@ -161,13 +161,26 @@ Station<!-- %20Inventory%20EN.csv unless otherwise specified --></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-</div><span class='co'># NOT RUN {</span>
- <span class='co'># Update stations data frame</span>
- <span class='no'>s</span> <span class='kw'>&lt;-</span> <span class='fu'>stations_dl</span>()
-
+</div><div class='input'> <span class='co'># Update stations data frame</span>
+ <span class='no'>s</span> <span class='kw'>&lt;-</span> <span class='fu'>stations_dl</span>()</div><div class='output co'>#&gt; <span class='message'>According to Environment Canada, Modified Date: 2018-07-02 01:31 UTC</span></div><div class='output co'>#&gt; <span class='message'>Environment Canada Disclaimers:</span>
+#&gt; <span class='message'>"Station Inventory Disclaimer: Please note that this inventory list is a snapshot of stations on our website as of the modified date, and may be subject to change without notice."</span>
+#&gt; <span class='message'>"Station ID Disclaimer: Station IDs are an internal index numbering system and may be subject to change without notice."</span></div><div class='input'>
  <span class='co'># Use new data frame to search for stations</span>
- <span class='fu'><a href='stations_search.html'>stations_search</a></span>(<span class='st'>"Winnipeg"</span>, <span class='kw'>stn</span> <span class='kw'>=</span> <span class='no'>s</span>)
-<span class='co'># }</span><div class='input'>
+ <span class='fu'><a href='stations_search.html'>stations_search</a></span>(<span class='st'>"Winnipeg"</span>, <span class='kw'>stn</span> <span class='kw'>=</span> <span class='no'>s</span>)</div><div class='output co'>#&gt; # A tibble: 84 x 12
+#&gt;    prov  station_name      station_id climate_id WMO_id TC_id   lat   lon  elev
+#&gt;    &lt;fct&gt; &lt;chr&gt;             &lt;fct&gt;      &lt;fct&gt;      &lt;fct&gt;  &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+#&gt;  1 MB    WINNIPEG A CS     27174      502S001    71849  XWG    49.9 -97.2   239
+#&gt;  2 MB    WINNIPEG A CS     27174      502S001    71849  XWG    49.9 -97.2   239
+#&gt;  3 MB    WINNIPEG A CS     27174      502S001    71849  XWG    49.9 -97.2   239
+#&gt;  4 MB    WINNIPEG A FIRE … 27525      5023223    &lt;NA&gt;   &lt;NA&gt;   49.9 -97.2   239
+#&gt;  5 MB    WINNIPEG A FIRE … 27525      5023223    &lt;NA&gt;   &lt;NA&gt;   49.9 -97.2   239
+#&gt;  6 MB    WINNIPEG ANDERSO… 3689       5023170    &lt;NA&gt;   &lt;NA&gt;   49.9 -97.2    NA
+#&gt;  7 MB    WINNIPEG ANDERSO… 3689       5023170    &lt;NA&gt;   &lt;NA&gt;   49.9 -97.2    NA
+#&gt;  8 MB    WINNIPEG ASSINIB… 3690       5023174    &lt;NA&gt;   &lt;NA&gt;   49.9 -97.2   229
+#&gt;  9 MB    WINNIPEG ASSINIB… 3690       5023174    &lt;NA&gt;   &lt;NA&gt;   49.9 -97.2   229
+#&gt; 10 MB    WINNIPEG BLUMBER… 3691       5023178    &lt;NA&gt;   &lt;NA&gt;   49.9 -97.4   236
+#&gt; # ... with 74 more rows, and 3 more variables: interval &lt;chr&gt;, start &lt;int&gt;,
+#&gt; #   end &lt;int&gt;</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
