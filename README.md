@@ -6,6 +6,8 @@ weathercan <img src="https://github.com/ropensci/weathercan/raw/master/inst/asse
 
 [![](https://badges.ropensci.org/160_status.svg)](https://github.com/ropensci/onboarding/issues/160) [![DOI](https://zenodo.org/badge/60650396.svg)](https://zenodo.org/badge/latestdoi/60650396) [![DOI](http://joss.theoj.org/papers/10.21105/joss.00571/status.svg)](https://doi.org/10.21105/joss.00571)
 
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/weathercan)](https://cran.r-project.org/package=weathercan) [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/grand-total/weathercan)](https://CRAN.R-project.org/package=weathercan)
+
 This package is makes it easier to search for and download multiple months/years of historical weather data from [Environment and Climate Change Canada (ECCC) website](http://climate.weather.gc.ca/historical_data/search_historic_data_e.html).
 
 Bear in mind that these downloads can be fairly large and performing multiple downloads may use up ECCC's bandwidth unecessarily. Try to stick to what you need.
@@ -48,12 +50,12 @@ head(stations)
     ## # A tibble: 6 x 12
     ##   prov  station_name  station_id climate_id WMO_id TC_id   lat   lon  elev interval start   end
     ##   <fct> <chr>         <fct>      <fct>      <fct>  <fct> <dbl> <dbl> <dbl> <chr>    <int> <int>
-    ## 1 AB    ABEE AGDM     32232      3010010    71285  XAF    54.3  -113   664 day       2002  2018
-    ## 2 AB    ABEE AGDM     32232      3010010    71285  XAF    54.3  -113   664 hour      1990  2018
-    ## 3 AB    ABEE AGDM     32232      3010010    71285  XAF    54.3  -113   664 month     2002  2007
-    ## 4 AB    ACADIA VALLEY 2030       3020018    <NA>   <NA>   51.2  -110   732 day       1980  1991
-    ## 5 AB    ACADIA VALLEY 47748      3020035    71048  PAC    51.1  -110   735 day       2009  2018
-    ## 6 AB    ACADIA VALLEY 2030       3020018    <NA>   <NA>   51.2  -110   732 hour        NA    NA
+    ## 1 AB    ABEE AGDM     32232      3010010    71285  XAF    54.3 -113.   664 day       2002  2018
+    ## 2 AB    ABEE AGDM     32232      3010010    71285  XAF    54.3 -113.   664 hour      1990  2018
+    ## 3 AB    ABEE AGDM     32232      3010010    71285  XAF    54.3 -113.   664 month     2002  2007
+    ## 4 AB    ACADIA VALLEY 2030       3020018    <NA>   <NA>   51.2 -110.   732 day       1980  1991
+    ## 5 AB    ACADIA VALLEY 47748      3020035    71048  PAC    51.1 -110.   735 day       2009  2018
+    ## 6 AB    ACADIA VALLEY 2030       3020018    <NA>   <NA>   51.2 -110.   732 hour        NA    NA
 
 ``` r
 glimpse(stations)
@@ -83,9 +85,9 @@ stations_search("Kamloops", interval = "hour")
     ## # A tibble: 3 x 12
     ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev interval start   end
     ##   <fct> <chr>        <fct>      <fct>      <fct>  <fct> <dbl> <dbl> <dbl> <chr>    <int> <int>
-    ## 1 BC    KAMLOOPS A   1275       1163780    71887  YKA    50.7  -120   345 hour      1953  2013
-    ## 2 BC    KAMLOOPS A   51423      1163781    71887  YKA    50.7  -120   345 hour      2013  2018
-    ## 3 BC    KAMLOOPS AUT 42203      1163842    71741  ZKA    50.7  -120   345 hour      2006  2018
+    ## 1 BC    KAMLOOPS A   1275       1163780    71887  YKA    50.7 -120.  345. hour      1953  2013
+    ## 2 BC    KAMLOOPS A   51423      1163781    71887  YKA    50.7 -120.  345. hour      2013  2018
+    ## 3 BC    KAMLOOPS AUT 42203      1163842    71741  ZKA    50.7 -120.  345  hour      2006  2018
 
 Time frame must be one of "hour", "day", or "month".
 
@@ -98,9 +100,9 @@ stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour"
     ## # A tibble: 3 x 13
     ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev interval start   end
     ##   <fct> <chr>        <fct>      <fct>      <fct>  <fct> <dbl> <dbl> <dbl> <chr>    <int> <int>
-    ## 1 BC    KAMLOOPS A   1275       1163780    71887  YKA    50.7  -120   345 hour      1953  2013
-    ## 2 BC    KAMLOOPS AUT 42203      1163842    71741  ZKA    50.7  -120   345 hour      2006  2018
-    ## 3 BC    KAMLOOPS A   51423      1163781    71887  YKA    50.7  -120   345 hour      2013  2018
+    ## 1 BC    KAMLOOPS A   1275       1163780    71887  YKA    50.7 -120.  345. hour      1953  2013
+    ## 2 BC    KAMLOOPS AUT 42203      1163842    71741  ZKA    50.7 -120.  345  hour      2006  2018
+    ## 3 BC    KAMLOOPS A   51423      1163781    71887  YKA    50.7 -120.  345. hour      2013  2018
     ## # ... with 1 more variable: distance <dbl>
 
 ### Weather
@@ -115,16 +117,16 @@ kam
     ## # A tibble: 1,776 x 35
     ##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id
     ##  * <chr>             <dbl> <chr>            <fct> <dbl> <dbl> <dbl> <chr>      <chr>  <chr>
-    ##  1 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
-    ##  2 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
-    ##  3 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
-    ##  4 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
-    ##  5 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
-    ##  6 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
-    ##  7 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
-    ##  8 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
-    ##  9 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
-    ## 10 KAMLOOPS A        51423 NAV Canada       BC     50.7  -120   345 1163781    71887  YKA  
+    ##  1 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA  
+    ##  2 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA  
+    ##  3 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA  
+    ##  4 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA  
+    ##  5 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA  
+    ##  6 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA  
+    ##  7 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA  
+    ##  8 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA  
+    ##  9 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA  
+    ## 10 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA  
     ## # ... with 1,766 more rows, and 25 more variables
 
 You can also download data from multiple stations at once:
