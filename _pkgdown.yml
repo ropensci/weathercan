@@ -47,7 +47,7 @@ navbar:
     - text: "Getting Started"
       href: articles/weathercan.html
     - text: "Presentations"
-      href: "http://ropensci.github.io/Presentations/#weathercan"
+      href: "http://steffilazerte.github.io/Presentations/#weathercan"
     - text: "Reference"
       href: reference/index.html
     - text: "Articles"

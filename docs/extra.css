@@ -14,6 +14,10 @@ a:focus, a:hover {
   color: #8F0500 !important;
 }
 
+.navbar-link {
+  color: #FFFFFF !important;
+}
+
 .navbar-inverse .navbar-collapse {
   border-color: #C90000 !important;
 }
@@ -48,4 +52,9 @@ a:focus, a:hover {
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
   background-color: #C90000 !important;
   color: #FFFFFF !important;
+}
+
+
+.label-default{
+  background-color: #C90000 !important;
 }

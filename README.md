@@ -17,14 +17,20 @@ For more details and tutorials checkout the [weathercan website](http://ropensci
 Installation
 ------------
 
-Use the `devtools` package to directly install R packages from github:
+You can install `weathercan` directly from CRAN:
+
+``` r
+install.packages("weathercan")
+```
+
+Use the `devtools` package to install the developmental package from GitHub:
 
 ``` r
 install.packages("devtools") # If not already installed
 devtools::install_github("ropensci/weathercan") 
 ```
 
-To build the vignettes (tutorials) locally, use:
+To build the developmental vignettes (tutorials) locally, use:
 
 ``` r
 devtools::install_github("ropensci/weathercan", build_vignettes = TRUE) 
