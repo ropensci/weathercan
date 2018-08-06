@@ -2,7 +2,6 @@
 title: "Mapping weather data"
 author: "Steffi LaZerte"
 date: "`r Sys.Date()`"
-resource_files: "`r list.files('mapping_svg/')`"
 output: rmarkdown::html_vignette
 
 ---
@@ -116,8 +115,9 @@ We'll do a station-specific summaries/pop-ups for when users click on a station 
 mb_stations <- w %>%
   group_by(station_id) %>%
   mutate(n = n(),
-         n_missing = length(is.na(mean_temp)),
+         n_missing = sum(is.na(mean_temp)),
          mean_temp = mean(mean_temp, na.rm = TRUE)) %>%
+  filter((n - n_missing) > 0) %>% # Only keep stations with some temperature data
   select(station_name, station_id, lat, lon, mean_temp, n, n_missing) %>%
   distinct() %>%
   mutate(station_name = tools::toTitleCase(tolower(station_name)),
