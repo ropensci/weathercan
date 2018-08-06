@@ -32,7 +32,8 @@ articles:
     contents:
     - weathercan
     - interpolate_data
-    - use_with_tidyverse
+    - articles/use_with_tidyverse
+    - articles/mapping
   - title: References
     desc: Information on weather data measurements
     contents:
@@ -52,11 +53,16 @@ navbar:
       href: reference/index.html
     - text: "Articles"
       menu:
+        - text: "All Articles"
+          href: articles/index.html
+        - text: "--------"
         - text: "Tutorials"
         - text: "Interpolating"
           href: articles/interpolate_data.html
         - text: "Using weathercan with the tidyverse"
           href: articles/articles/use_with_tidyverse.html
+        - text: "Mapping weather data"
+          href: articles/articles/mapping.html
         - text: "---------"
         - text: "Reference vignetts"
         - text: "Data flags"

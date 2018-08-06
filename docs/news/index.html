@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>All news • weathercan</title>
+<title>Changelog • weathercan</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -18,13 +18,24 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
   <link href="../extra.css" rel="stylesheet">
   
+<meta property="og:title" content="Changelog" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +58,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">weathercan</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">weathercan</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.7.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -61,7 +76,7 @@
   <a href="../articles/weathercan.html">Getting Started</a>
 </li>
 <li>
-  <a href="http://ropensci.github.io/Presentations/#weathercan">Presentations</a>
+  <a href="http://steffilazerte.github.io/Presentations/#weathercan">Presentations</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -73,12 +88,19 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/index.html">All Articles</a>
+    </li>
+    <li class="divider"></li>
     <li class="dropdown-header">Tutorials</li>
     <li>
       <a href="../articles/interpolate_data.html">Interpolating</a>
     </li>
     <li>
       <a href="../articles/articles/use_with_tidyverse.html">Using weathercan with the tidyverse</a>
+    </li>
+    <li>
+      <a href="../articles/articles/mapping.html">Mapping weather data</a>
     </li>
     <li class="divider"></li>
     <li class="dropdown-header">Reference vignetts</li>
@@ -100,6 +122,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -107,23 +130,24 @@
       
       </header>
 
-      <div class="row">
-
-  <div class="col-md-9">
+<div class="row">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Change log <small>All releases</small></h1>
+      <h1>Changelog <small></small></h1>
+      <small>Source: <a href='https://github.com/ropensci/weathercan/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div class="contents">
     <div id="weathercan-0-2-7-2018-06-27" class="section level1">
-<h1 class="hasAnchor">
-<a href="#weathercan-0-2-7-2018-06-27" class="anchor"></a>weathercan 0.2.7 (2018-06-27)</h1>
+<h1 class="page-header">
+<a href="#weathercan-0-2-7-2018-06-27" class="anchor"></a>weathercan 0.2.7 (2018-06-27)<small> 2018-07-05 </small>
+</h1>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fix bug created when ECCC changed file metadata for dates after April 1st 2018 (only affected downloads which included dates both before AND after April 1st, 2018) - Results in a new column <code>station_operator</code> for all data (NA where unavailable for older stations).</li>
 <li>Adjust code flexibility to handle future changes</li>
+<li>Add catch to warn user if end dates earlier than start dates</li>
 </ul>
 </div>
 <div id="changes" class="section level2">
@@ -139,8 +163,9 @@
 </div>
 </div>
     <div id="weathercan-0-2-6-2018-05-25" class="section level1">
-<h1 class="hasAnchor">
-<a href="#weathercan-0-2-6-2018-05-25" class="anchor"></a>weathercan 0.2.6 (2018-05-25)</h1>
+<h1 class="page-header">
+<a href="#weathercan-0-2-6-2018-05-25" class="anchor"></a>weathercan 0.2.6 (2018-05-25)<small> Unreleased </small>
+</h1>
 <div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
@@ -152,8 +177,9 @@
 </div>
 </div>
     <div id="weathercan-0-2-5-2018-03-02" class="section level1">
-<h1 class="hasAnchor">
-<a href="#weathercan-0-2-5-2018-03-02" class="anchor"></a>weathercan 0.2.5 (2018-03-02)</h1>
+<h1 class="page-header">
+<a href="#weathercan-0-2-5-2018-03-02" class="anchor"></a>weathercan 0.2.5 (2018-03-02)<small> Unreleased </small>
+</h1>
 <div id="changes-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#changes-1" class="anchor"></a>Changes</h2>
@@ -175,8 +201,9 @@
 </div>
 </div>
     <div id="weathercan-0-2-4-2018-02-01" class="section level1">
-<h1 class="hasAnchor">
-<a href="#weathercan-0-2-4-2018-02-01" class="anchor"></a>weathercan 0.2.4 (2018-02-01)</h1>
+<h1 class="page-header">
+<a href="#weathercan-0-2-4-2018-02-01" class="anchor"></a>weathercan 0.2.4 (2018-02-01)<small> Unreleased </small>
+</h1>
 <p>Now part of <a href="http://ropensci.org">ropensci.org</a>!</p>
 <div id="changes-2" class="section level2">
 <h2 class="hasAnchor">
@@ -201,8 +228,9 @@
 </div>
 </div>
     <div id="weathercan-0-2-3-2017-11-22" class="section level1">
-<h1 class="hasAnchor">
-<a href="#weathercan-0-2-3-2017-11-22" class="anchor"></a>weathercan 0.2.3 (2017-11-22)</h1>
+<h1 class="page-header">
+<a href="#weathercan-0-2-3-2017-11-22" class="anchor"></a>weathercan 0.2.3 (2017-11-22)<small> Unreleased </small>
+</h1>
 <div id="changes-3" class="section level2">
 <h2 class="hasAnchor">
 <a href="#changes-3" class="anchor"></a>Changes</h2>
@@ -230,15 +258,16 @@
 </div>
 </div>
     <div id="weathercan-0-2-2-2017-06-16" class="section level1">
-<h1 class="hasAnchor">
-<a href="#weathercan-0-2-2-2017-06-16" class="anchor"></a>weathercan 0.2.2 (2017-06-16)</h1>
+<h1 class="page-header">
+<a href="#weathercan-0-2-2-2017-06-16" class="anchor"></a>weathercan 0.2.2 (2017-06-16)<small> Unreleased </small>
+</h1>
 <div id="changes-4" class="section level2">
 <h2 class="hasAnchor">
 <a href="#changes-4" class="anchor"></a>Changes</h2>
 <ul>
-<li>Update and expand vignettes (closes #15)</li>
+<li>Update and expand vignettes (closes <a href='https://github.com/ropensci/weathercan/issues/15'>#15</a>)</li>
 <li>Data now returned as tibbles</li>
-<li>Added listcol functionality (closes #8)</li>
+<li>Added listcol functionality (closes <a href='https://github.com/ropensci/weathercan/issues/8'>#8</a>)</li>
 <li>Added internal tests for interpolation</li>
 <li>Updated R version</li>
 <li>Standardized reference to stations dataset (<code>stn</code>) in all functions</li>
@@ -248,28 +277,30 @@
 <h2 class="hasAnchor">
 <a href="#major-changes" class="anchor"></a>Major changes</h2>
 <ul>
-<li>envirocan renamed to weathercan (closes #17)</li>
+<li>envirocan renamed to weathercan (closes <a href='https://github.com/ropensci/weathercan/issues/17'>#17</a>)</li>
 </ul>
 </div>
 <div id="bug-fixes-4" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Fixed inclusion of New Brunswick stations (closes #9)</li>
-<li>Downloads with no data return empty tibble and an informative message (closes #21)</li>
+<li>Fixed inclusion of New Brunswick stations (closes <a href='https://github.com/ropensci/weathercan/issues/9'>#9</a>)</li>
+<li>Downloads with no data return empty tibble and an informative message (closes <a href='https://github.com/ropensci/weathercan/issues/21'>#21</a>)</li>
 </ul>
 </div>
 </div>
     <div id="envirocan-0-2-1-2017-03-04" class="section level1">
-<h1 class="hasAnchor">
-<a href="#envirocan-0-2-1-2017-03-04" class="anchor"></a>envirocan 0.2.1 (2017-03-04)</h1>
+<h1 class="page-header">
+<a href="#envirocan-0-2-1-2017-03-04" class="anchor"></a>envirocan 0.2.1 (2017-03-04)<small> Unreleased </small>
+</h1>
 <ul>
 <li>Minor bug fixes: correcting encoding information for downloads, updating function calls to dplyr package, updating stations dataset</li>
 </ul>
 </div>
     <div id="envirocan-0-2-0-2016-07-08" class="section level1">
-<h1 class="hasAnchor">
-<a href="#envirocan-0-2-0-2016-07-08" class="anchor"></a>envirocan 0.2.0 (2016-07-08)</h1>
+<h1 class="page-header">
+<a href="#envirocan-0-2-0-2016-07-08" class="anchor"></a>envirocan 0.2.0 (2016-07-08)<small> Unreleased </small>
+</h1>
 <ul>
 <li>Added new function, <code><a href="../reference/weather_interp.html">add_weather()</a></code> which performs a linear interpolation and merges weather data into an existing data frame.</li>
 <li>Added two new hourly datasets with weather data downloaded for Kamloops and Prince George, BC: kamloops, pg</li>
@@ -280,15 +311,17 @@
 </ul>
 </div>
     <div id="envirocan-0-1-1-1-2016-06-23" class="section level1">
-<h1 class="hasAnchor">
-<a href="#envirocan-0-1-1-1-2016-06-23" class="anchor"></a>envirocan 0.1.1.1 (2016-06-23)</h1>
+<h1 class="page-header">
+<a href="#envirocan-0-1-1-1-2016-06-23" class="anchor"></a>envirocan 0.1.1.1 (2016-06-23)<small> Unreleased </small>
+</h1>
 <ul>
 <li>quick fix to correct duplicated monthly data downloads</li>
 </ul>
 </div>
     <div id="envirocan-0-1-1-2016-06-23" class="section level1">
-<h1 class="hasAnchor">
-<a href="#envirocan-0-1-1-2016-06-23" class="anchor"></a>envirocan 0.1.1 (2016-06-23)</h1>
+<h1 class="page-header">
+<a href="#envirocan-0-1-1-2016-06-23" class="anchor"></a>envirocan 0.1.1 (2016-06-23)<small> Unreleased </small>
+</h1>
 <div id="functionality" class="section level2">
 <h2 class="hasAnchor">
 <a href="#functionality" class="anchor"></a>Functionality</h2>
@@ -307,8 +340,9 @@
 </div>
 </div>
     <div id="envirocan-0-1-0-2016-06-21" class="section level1">
-<h1 class="hasAnchor">
-<a href="#envirocan-0-1-0-2016-06-21" class="anchor"></a>envirocan 0.1.0 (2016-06-21)</h1>
+<h1 class="page-header">
+<a href="#envirocan-0-1-0-2016-06-21" class="anchor"></a>envirocan 0.1.0 (2016-06-21)<small> Unreleased </small>
+</h1>
 <p>This is the initial release for envirocan.</p>
 <div id="include-functionality" class="section level2">
 <h2 class="hasAnchor">
@@ -329,7 +363,6 @@
 </ul>
 </div>
 </div>
-    </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -359,11 +392,14 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

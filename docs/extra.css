@@ -18,6 +18,7 @@ a:focus, a:hover {
   color: #FFFFFF !important;
 }
 
+
 .navbar-inverse .navbar-collapse {
   border-color: #C90000 !important;
 }
@@ -53,7 +54,6 @@ a:focus, a:hover {
   background-color: #C90000 !important;
   color: #FFFFFF !important;
 }
-
 
 .label-default{
   background-color: #C90000 !important;

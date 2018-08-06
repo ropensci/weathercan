@@ -18,13 +18,30 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
   <link href="../extra.css" rel="stylesheet">
   
+<meta property="og:title" content="Interpolate and add weather data to a dataframe — weather_interp" />
+
+<meta property="og:description" content="When data and the weather measurements do not perfectly line up, perform a
+linear interpolation between two weather measurements and merge the results
+into the provided dataset. Only applies to numerical weather columns (see
+weather for more details)." />
+<meta name="twitter:card" content="summary" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +64,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">weathercan</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">weathercan</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.7.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -61,7 +82,7 @@
   <a href="../articles/weathercan.html">Getting Started</a>
 </li>
 <li>
-  <a href="http://ropensci.github.io/Presentations/#weathercan">Presentations</a>
+  <a href="http://steffilazerte.github.io/Presentations/#weathercan">Presentations</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -73,12 +94,19 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/index.html">All Articles</a>
+    </li>
+    <li class="divider"></li>
     <li class="dropdown-header">Tutorials</li>
     <li>
       <a href="../articles/interpolate_data.html">Interpolating</a>
     </li>
     <li>
       <a href="../articles/articles/use_with_tidyverse.html">Using weathercan with the tidyverse</a>
+    </li>
+    <li>
+      <a href="../articles/articles/mapping.html">Mapping weather data</a>
     </li>
     <li class="divider"></li>
     <li class="dropdown-header">Reference vignetts</li>
@@ -100,6 +128,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -107,23 +136,27 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Interpolate and add weather data to a dataframe</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/weathercan/blob/master/R/interpolate.R'><code>R/interpolate.R</code></a></small>
+    <div class="hidden name"><code>weather_interp.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>When data and the weather measurements do not perfectly line up, perform a
 linear interpolation between two weather measurements and merge the results
 into the provided dataset. Only applies to numerical weather columns (see
 <code>weather</code> for more details).</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>weather_interp</span>(<span class='no'>data</span>, <span class='no'>weather</span>, <span class='kw'>cols</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>interval</span> <span class='kw'>=</span> <span class='st'>"hour"</span>, <span class='kw'>na_gap</span> <span class='kw'>=</span> <span class='fl'>2</span>,
   <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -176,12 +209,12 @@ and 12PM will be returned as NA.)</p>
 <span class='fu'>head</span>(<span class='no'>kamloops</span>)</div><div class='output co'>#&gt; # A tibble: 6 x 35
 #&gt;   station_name station_id station_operator prov    lat   lon  elev climate_id
 #&gt;   &lt;chr&gt;             &lt;dbl&gt; &lt;lgl&gt;            &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     
-#&gt; 1 KAMLOOPS A        51423 NA               BC     50.7  -120   345 1163781   
-#&gt; 2 KAMLOOPS A        51423 NA               BC     50.7  -120   345 1163781   
-#&gt; 3 KAMLOOPS A        51423 NA               BC     50.7  -120   345 1163781   
-#&gt; 4 KAMLOOPS A        51423 NA               BC     50.7  -120   345 1163781   
-#&gt; 5 KAMLOOPS A        51423 NA               BC     50.7  -120   345 1163781   
-#&gt; 6 KAMLOOPS A        51423 NA               BC     50.7  -120   345 1163781   
+#&gt; 1 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781   
+#&gt; 2 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781   
+#&gt; 3 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781   
+#&gt; 4 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781   
+#&gt; 5 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781   
+#&gt; 6 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781   
 #&gt; # ... with 27 more variables: WMO_id &lt;chr&gt;, TC_id &lt;chr&gt;, date &lt;date&gt;,
 #&gt; #   time &lt;dttm&gt;, year &lt;chr&gt;, month &lt;chr&gt;, day &lt;chr&gt;, hour &lt;chr&gt;, weather &lt;chr&gt;,
 #&gt; #   hmdx &lt;dbl&gt;, hmdx_flag &lt;chr&gt;, pressure &lt;dbl&gt;, pressure_flag &lt;chr&gt;,
@@ -191,14 +224,14 @@ and 12PM will be returned as NA.)</p>
 #&gt; #   wind_dir_flag &lt;chr&gt;, wind_spd &lt;dbl&gt;, wind_spd_flag &lt;chr&gt;</div><div class='input'>
 <span class='co'># Data about finch observations at RFID feeders in Kamloops, BC</span>
 <span class='fu'>head</span>(<span class='no'>finches</span>)</div><div class='output co'>#&gt; # A tibble: 6 x 10
-#&gt;   animal_id  date       time                logger_id species       age   sex  
-#&gt;   &lt;fct&gt;      &lt;date&gt;     &lt;dttm&gt;              &lt;fct&gt;     &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;
-#&gt; 1 041868FF93 2016-03-01 2016-03-01 06:57:42 2300      Mountain Chi… AHY   U    
-#&gt; 2 041868FF93 2016-03-01 2016-03-01 06:58:41 2300      Mountain Chi… AHY   U    
-#&gt; 3 041868FF93 2016-03-01 2016-03-01 07:07:21 2300      Mountain Chi… AHY   U    
-#&gt; 4 06200003BB 2016-03-01 2016-03-01 07:32:34 2400      House Finch   SY    M    
-#&gt; 5 06200003BB 2016-03-01 2016-03-01 07:32:35 2400      House Finch   SY    M    
-#&gt; 6 06200003BB 2016-03-01 2016-03-01 07:32:36 2400      House Finch   SY    M    
+#&gt;   animal_id date       time                logger_id species age   sex  
+#&gt;   &lt;fct&gt;     &lt;date&gt;     &lt;dttm&gt;              &lt;fct&gt;     &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;
+#&gt; 1 041868FF… 2016-03-01 2016-03-01 06:57:42 2300      Mounta… AHY   U    
+#&gt; 2 041868FF… 2016-03-01 2016-03-01 06:58:41 2300      Mounta… AHY   U    
+#&gt; 3 041868FF… 2016-03-01 2016-03-01 07:07:21 2300      Mounta… AHY   U    
+#&gt; 4 06200003… 2016-03-01 2016-03-01 07:32:34 2400      House … SY    M    
+#&gt; 5 06200003… 2016-03-01 2016-03-01 07:32:35 2400      House … SY    M    
+#&gt; 6 06200003… 2016-03-01 2016-03-01 07:32:36 2400      House … SY    M    
 #&gt; # ... with 3 more variables: site_name &lt;chr&gt;, lon &lt;dbl&gt;, lat &lt;dbl&gt;</div><div class='input'>
 # Match weather to finches
 </div><div class='input'><span class='co'>## Not run</span>
@@ -224,11 +257,14 @@ and 12PM will be returned as NA.)</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

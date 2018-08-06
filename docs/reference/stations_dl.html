@@ -18,13 +18,31 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
   <link href="../extra.css" rel="stylesheet">
   
+<meta property="og:title" content="Get available stations — stations_dl" />
+
+<meta property="og:description" content="This function can be used to download a Station Inventory CSV file from
+Environment and Climate Change Canada. This is only necessary if the station
+you're interested was only recently added. The 'stations' data set included
+in this package contains station data downloaded when the package was last
+compiled. This function may take a few minutes to run." />
+<meta name="twitter:card" content="summary" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +65,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">weathercan</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">weathercan</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.7.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -61,7 +83,7 @@
   <a href="../articles/weathercan.html">Getting Started</a>
 </li>
 <li>
-  <a href="http://ropensci.github.io/Presentations/#weathercan">Presentations</a>
+  <a href="http://steffilazerte.github.io/Presentations/#weathercan">Presentations</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -73,12 +95,19 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/index.html">All Articles</a>
+    </li>
+    <li class="divider"></li>
     <li class="dropdown-header">Tutorials</li>
     <li>
       <a href="../articles/interpolate_data.html">Interpolating</a>
     </li>
     <li>
       <a href="../articles/articles/use_with_tidyverse.html">Using weathercan with the tidyverse</a>
+    </li>
+    <li>
+      <a href="../articles/articles/mapping.html">Mapping weather data</a>
     </li>
     <li class="divider"></li>
     <li class="dropdown-header">Reference vignetts</li>
@@ -100,6 +129,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -107,12 +137,15 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Get available stations</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/weathercan/blob/master/R/stations.R'><code>R/stations.R</code></a></small>
+    <div class="hidden name"><code>stations_dl.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This function can be used to download a Station Inventory CSV file from
 Environment and Climate Change Canada. This is only necessary if the station
@@ -120,10 +153,11 @@ you're interested was only recently added. The 'stations' data set included
 in this package contains station data downloaded when the package was last
 compiled. This function may take a few minutes to run.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>stations_dl</span>(<span class='kw'>url</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -162,25 +196,9 @@ Station<!-- %20Inventory%20EN.csv unless otherwise specified --></p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 </div><div class='input'> <span class='co'># Update stations data frame</span>
- <span class='no'>s</span> <span class='kw'>&lt;-</span> <span class='fu'>stations_dl</span>()</div><div class='output co'>#&gt; <span class='message'>According to Environment Canada, Modified Date: 2018-07-02 01:31 UTC</span></div><div class='output co'>#&gt; <span class='message'>Environment Canada Disclaimers:</span>
-#&gt; <span class='message'>"Station Inventory Disclaimer: Please note that this inventory list is a snapshot of stations on our website as of the modified date, and may be subject to change without notice."</span>
-#&gt; <span class='message'>"Station ID Disclaimer: Station IDs are an internal index numbering system and may be subject to change without notice."</span></div><div class='input'>
+ <span class='no'>s</span> <span class='kw'>&lt;-</span> <span class='fu'>stations_dl</span>()</div><div class='output co'>#&gt; <span class='error'>Error in curl::curl_fetch_memory(url, handle = handle): response reading failed</span></div><div class='input'>
  <span class='co'># Use new data frame to search for stations</span>
- <span class='fu'><a href='stations_search.html'>stations_search</a></span>(<span class='st'>"Winnipeg"</span>, <span class='kw'>stn</span> <span class='kw'>=</span> <span class='no'>s</span>)</div><div class='output co'>#&gt; # A tibble: 84 x 12
-#&gt;    prov  station_name      station_id climate_id WMO_id TC_id   lat   lon  elev
-#&gt;    &lt;fct&gt; &lt;chr&gt;             &lt;fct&gt;      &lt;fct&gt;      &lt;fct&gt;  &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-#&gt;  1 MB    WINNIPEG A CS     27174      502S001    71849  XWG    49.9 -97.2   239
-#&gt;  2 MB    WINNIPEG A CS     27174      502S001    71849  XWG    49.9 -97.2   239
-#&gt;  3 MB    WINNIPEG A CS     27174      502S001    71849  XWG    49.9 -97.2   239
-#&gt;  4 MB    WINNIPEG A FIRE … 27525      5023223    &lt;NA&gt;   &lt;NA&gt;   49.9 -97.2   239
-#&gt;  5 MB    WINNIPEG A FIRE … 27525      5023223    &lt;NA&gt;   &lt;NA&gt;   49.9 -97.2   239
-#&gt;  6 MB    WINNIPEG ANDERSO… 3689       5023170    &lt;NA&gt;   &lt;NA&gt;   49.9 -97.2    NA
-#&gt;  7 MB    WINNIPEG ANDERSO… 3689       5023170    &lt;NA&gt;   &lt;NA&gt;   49.9 -97.2    NA
-#&gt;  8 MB    WINNIPEG ASSINIB… 3690       5023174    &lt;NA&gt;   &lt;NA&gt;   49.9 -97.2   229
-#&gt;  9 MB    WINNIPEG ASSINIB… 3690       5023174    &lt;NA&gt;   &lt;NA&gt;   49.9 -97.2   229
-#&gt; 10 MB    WINNIPEG BLUMBER… 3691       5023178    &lt;NA&gt;   &lt;NA&gt;   49.9 -97.4   236
-#&gt; # ... with 74 more rows, and 3 more variables: interval &lt;chr&gt;, start &lt;int&gt;,
-#&gt; #   end &lt;int&gt;</div><div class='input'>
+ <span class='fu'><a href='stations_search.html'>stations_search</a></span>(<span class='st'>"Winnipeg"</span>, <span class='kw'>stn</span> <span class='kw'>=</span> <span class='no'>s</span>)</div><div class='output co'>#&gt; <span class='error'>Error in dplyr::filter(stn, interval %in% !!interval, !is.na(start)): object 's' not found</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -204,11 +222,14 @@ Station<!-- %20Inventory%20EN.csv unless otherwise specified --></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

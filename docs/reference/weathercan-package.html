@@ -18,13 +18,30 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
   <link href="../extra.css" rel="stylesheet">
   
+<meta property="og:title" content="Easy downloading of weather data from Environment and Climate Change Canada — weathercan-package" />
+
+<meta property="og:description" content="weathercan is an R package for simplifying the downloading of
+Historical Climate Data from the Environment and Climate Change Canada (ECCC)
+website
+(http://climate.weather.gc.ca/historical_data/search_historic_data_e.html)" />
+<meta name="twitter:card" content="summary" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +64,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">weathercan</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">weathercan</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.7.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -61,7 +82,7 @@
   <a href="../articles/weathercan.html">Getting Started</a>
 </li>
 <li>
-  <a href="http://ropensci.github.io/Presentations/#weathercan">Presentations</a>
+  <a href="http://steffilazerte.github.io/Presentations/#weathercan">Presentations</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -73,12 +94,19 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/index.html">All Articles</a>
+    </li>
+    <li class="divider"></li>
     <li class="dropdown-header">Tutorials</li>
     <li>
       <a href="../articles/interpolate_data.html">Interpolating</a>
     </li>
     <li>
       <a href="../articles/articles/use_with_tidyverse.html">Using weathercan with the tidyverse</a>
+    </li>
+    <li>
+      <a href="../articles/articles/mapping.html">Mapping weather data</a>
     </li>
     <li class="divider"></li>
     <li class="dropdown-header">Reference vignetts</li>
@@ -100,6 +128,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -107,18 +136,22 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Easy downloading of weather data from Environment and Climate Change Canada</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/weathercan/blob/master/R/weathercan-pkg.R'><code>R/weathercan-pkg.R</code></a></small>
+    <div class="hidden name"><code>weathercan-package.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p><code>weathercan</code> is an R package for simplifying the downloading of
 Historical Climate Data from the Environment and Climate Change Canada (ECCC)
 website
 (http://climate.weather.gc.ca/historical_data/search_historic_data_e.html)</p>
     
+    </div>
 
         
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -126,7 +159,8 @@ website
     <p>Bear in mind that these downloads can be fairly large and performing
 multiple, downloads may use up Environment Canada's bandwidth unnecessarily.
 Try to stick to what you need.</p>
-<p>There are three main aspects of this package:</p><ol>
+<p>There are three main aspects of this package:</p>
+<ol>
 <li><p>Access <strong>stations</strong> lists</p><ul>
 <li><p><code><a href='stations.html'>stations</a></code> (a data frame listing stations)</p></li>
 <li><p><code><a href='stations_search.html'>stations_search</a>()</code> identify stations by name or
@@ -141,19 +175,23 @@ Try to stick to what you need.</p>
 <li><p><code><a href='weather_interp.html'>weather_interp</a>()</code></p></li>
 </ul></li>
 </ol>
-    <p>We also include several practice data sets:</p><ul>
+    <p>We also include several practice data sets:</p>
+<ul>
 <li><p><code><a href='finches.html'>finches</a></code></p></li>
 <li><p><code><a href='kamloops.html'>kamloops</a></code></p></li>
 <li><p><code><a href='kamloops_day.html'>kamloops_day</a></code></p></li>
 <li><p><code><a href='pg.html'>pg</a></code></p></li>
 </ul>
-    <p>As well as several vignettes:</p><ul>
+    <p>As well as several vignettes:</p>
+<ul>
 <li><p>General Usage: <code>vignette("usage")</code></p></li>
 <li><p>Merging and Interpolating: <code>vignette("interpolation")</code></p></li>
 <li><p>Data Flags: <code><a href='../articles/flags.html'>vignette("flags")</a></code></p></li>
 <li><p>Data Glossary: <code><a href='../articles/glossary.html'>vignette("glossary")</a></code></p></li>
-</ul><p><a href='http://ropensci.github.io/weathercan'>Online</a> we also have an
-advanced article:</p><ul>
+</ul>
+    <p><a href='http://ropensci.github.io/weathercan'>Online</a> we also have an
+advanced article:</p>
+<ul>
 <li><p>Using <code>weathercan</code> with
     <a href='http://tidyverse.org/'>tidyverse</a>
     (<a href='http://ropensci.github.io/weathercan/articles/articles/use_with_tidyverse.html'>here</a>)</p></li>
@@ -185,11 +223,14 @@ advanced article:</p><ul>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

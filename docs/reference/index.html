@@ -18,13 +18,24 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
   <link href="../extra.css" rel="stylesheet">
   
+<meta property="og:title" content="Function reference" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +58,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">weathercan</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">weathercan</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.7.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -61,7 +76,7 @@
   <a href="../articles/weathercan.html">Getting Started</a>
 </li>
 <li>
-  <a href="http://ropensci.github.io/Presentations/#weathercan">Presentations</a>
+  <a href="http://steffilazerte.github.io/Presentations/#weathercan">Presentations</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -73,12 +88,19 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/index.html">All Articles</a>
+    </li>
+    <li class="divider"></li>
     <li class="dropdown-header">Tutorials</li>
     <li>
       <a href="../articles/interpolate_data.html">Interpolating</a>
     </li>
     <li>
       <a href="../articles/articles/use_with_tidyverse.html">Using weathercan with the tidyverse</a>
+    </li>
+    <li>
+      <a href="../articles/articles/mapping.html">Mapping weather data</a>
     </li>
     <li class="divider"></li>
     <li class="dropdown-header">Reference vignetts</li>
@@ -100,6 +122,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -107,130 +130,126 @@
       
       </header>
 
-      <div class="row">
-  <div class="col-md-9">
+<div class="row">
+  <div class="contents col-md-9">
     <div class="page-header">
-      <h1>
-        Reference
-        <small>version&nbsp;0.2.7</small>
-      </h1>
+      <h1>Reference</h1>
     </div>
 
-    <div class="contents">
-      <table class="ref-index">
+    <table class="ref-index">
 
-      <colgroup>
-        <col class="alias" />
-        <col class="title" />
-      </colgroup>
+    <colgroup>
+      
+      <col class="alias" />
+      <col class="title" />
+    </colgroup>
 
-      <tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-using-weathercan" class="hasAnchor"><a href="#section-using-weathercan" class="anchor"></a>Using weathercan</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="stations_search.html">stations_search</a></code> </p>
-          </td>
-          <td><p>Search for stations by name or location</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="stations_dl.html">stations_dl</a></code> </p>
-          </td>
-          <td><p>Get available stations</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="weather_dl.html">weather_dl</a></code> </p>
-          </td>
-          <td><p>Download weather data from Environment Canada</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="weather_interp.html">weather_interp</a></code> </p>
-          </td>
-          <td><p>Interpolate and add weather data to a dataframe</p></td>
-        </tr>
-      </tbody><tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-utility-functions" class="hasAnchor"><a href="#section-utility-functions" class="anchor"></a>Utility functions</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="tz_calc.html">tz_calc</a></code> </p>
-          </td>
-          <td><p>Get timezone from lat/lon</p></td>
-        </tr>
-      </tbody><tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-reference-data" class="hasAnchor"><a href="#section-reference-data" class="anchor"></a>Reference Data</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="stations.html">stations</a></code> </p>
-          </td>
-          <td><p>Station data downloaded from Environment and Climate Change Canada</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="flags.html">flags</a></code> </p>
-          </td>
-          <td><p>Meaning of coded 'flags'</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="glossary.html">glossary</a></code> </p>
-          </td>
-          <td><p>Glossary of units and terms</p></td>
-        </tr>
-      </tbody><tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-example-data" class="hasAnchor"><a href="#section-example-data" class="anchor"></a>Example Data</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="kamloops.html">kamloops</a></code> </p>
-          </td>
-          <td><p>Hourly weather data for Kamloops</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="kamloops_day.html">kamloops_day</a></code> </p>
-          </td>
-          <td><p>Daily weather data for Kamloops</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="pg.html">pg</a></code> </p>
-          </td>
-          <td><p>Hourly weather data for Prince George</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="finches.html">finches</a></code> </p>
-          </td>
-          <td><p>RFID Data on finch visits to feeders</p></td>
-        </tr>
-      </tbody>
-      </table>
-    </div>
+    <tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-using-weathercan" class="hasAnchor"><a href="#section-using-weathercan" class="anchor"></a>Using weathercan</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="stations_search.html">stations_search()</a></code> </p>
+        </td>
+        <td><p>Search for stations by name or location</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="stations_dl.html">stations_dl()</a></code> </p>
+        </td>
+        <td><p>Get available stations</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="weather_dl.html">weather_dl()</a></code> </p>
+        </td>
+        <td><p>Download weather data from Environment Canada</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="weather_interp.html">weather_interp()</a></code> </p>
+        </td>
+        <td><p>Interpolate and add weather data to a dataframe</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-utility-functions" class="hasAnchor"><a href="#section-utility-functions" class="anchor"></a>Utility functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="tz_calc.html">tz_calc()</a></code> </p>
+        </td>
+        <td><p>Get timezone from lat/lon</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-reference-data" class="hasAnchor"><a href="#section-reference-data" class="anchor"></a>Reference Data</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="stations.html">stations</a></code> </p>
+        </td>
+        <td><p>Station data downloaded from Environment and Climate Change Canada</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="flags.html">flags</a></code> </p>
+        </td>
+        <td><p>Meaning of coded 'flags'</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="glossary.html">glossary</a></code> </p>
+        </td>
+        <td><p>Glossary of units and terms</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-example-data" class="hasAnchor"><a href="#section-example-data" class="anchor"></a>Example Data</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="kamloops.html">kamloops</a></code> </p>
+        </td>
+        <td><p>Hourly weather data for Kamloops</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="kamloops_day.html">kamloops_day</a></code> </p>
+        </td>
+        <td><p>Daily weather data for Kamloops</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pg.html">pg</a></code> </p>
+        </td>
+        <td><p>Hourly weather data for Prince George</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="finches.html">finches</a></code> </p>
+        </td>
+        <td><p>RFID Data on finch visits to feeders</p></td>
+      </tr>
+    </tbody>
+    </table>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -250,11 +269,14 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+
