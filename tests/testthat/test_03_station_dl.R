@@ -4,6 +4,7 @@ context("stations_dl")
 
 test_that("stations_dl() runs and returns data", {
   skip_on_cran()
+  skip_on_travis()
 
   if(getRversion() < "3.3.4") {
     expect_message(s <- stations_dl(),
