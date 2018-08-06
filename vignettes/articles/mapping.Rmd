@@ -2,7 +2,9 @@
 title: "Mapping weather data"
 author: "Steffi LaZerte"
 date: "`r Sys.Date()`"
+resource_files: "`r list.files('mapping_svg/')`"
 output: rmarkdown::html_vignette
+
 ---
 
 <style>
@@ -99,7 +101,7 @@ file.remove("./mapping_shp/ecological_shp.zip")
 
 We'll select all currently operating stations (`end >= 2018`) and download the daily weather data for 2017:
 
-```{r, cache = TRUE, message = FALSE}
+```{r, message = FALSE}
 mb <- dplyr::filter(stations, prov == "MB", interval == "day", end >= 2018)
 w <- weather_dl(mb$station_id, start = "2017-01-01", end = "2017-12-31", interval = "day")
 ```
@@ -136,7 +138,7 @@ mb_stations <- w %>%
 
 Before we summarize this data, we'll filter the Eco Regions to just Manitoba and will join this to the stations data (after transforming the stations data to the same CRS), so we can figure out which stations belong to which regions.
 
-```{r, cache = TRUE}
+```{r}
 mb_ecoregions <- st_read("./mapping_shp/env_ecological_areas.shp") %>%
   filter(MANITOBA == "yes") %>%
   # Get the larger-scale regions and combine
@@ -163,6 +165,22 @@ mb_ecoregions <- st_join(mb_ecoregions, mb_stations) %>%
                            ~htmltools::HTML(paste0("<strong>Region: </strong>", .x)))) %>%
   ungroup()
 ```
+
+```{r, include = FALSE}
+# The above details work locally
+# This chunk makes the figure paths work online for the weathercan website
+mb_ecoregions <- mutate(mb_ecoregions, 
+                        info = str_replace(info, "./mapping_svg/",
+    "https://raw.githubusercontent.com/ropensci/weathercan/master/vignettes/articles/mapping_svg/"),
+    info = str_replace(info, ".svg'>", ".svg?sanitize=true'>"))
+                        
+    
+mb_stations <- mutate(mb_stations, info = str_replace(info, "./mapping_svg/",
+    "https://raw.githubusercontent.com/ropensci/weathercan/master/vignettes/articles/mapping_svg/"),
+    info = str_replace(info, ".svg'>", ".svg?sanitize=true'>"))
+```
+
+
 
 ### Figures
 
