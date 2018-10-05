@@ -2,33 +2,11 @@
 % Please edit documentation in R/utils.R
 \name{tz_calc}
 \alias{tz_calc}
-\alias{get_tz}
-\title{Get timezone from lat/lon}
+\title{DEFUNCT: Get timezone from lat/lon}
 \usage{
-tz_calc(coords = NULL, lat = NULL, lon = NULL, etc = FALSE)
-}
-\arguments{
-\item{coords}{Vector or Data frame. Lat, lon coordinates. Can be a vector for
-a set of two, or a data frame or matrix for multiple. Provide either coords
-OR lat and lon}
-
-\item{lat}{Vector. One or more latitudes, must also provide longitude}
-
-\item{lon}{Vector. One or more longitudes, must also provide latitude}
-
-\item{etc}{Logical. Return Etc timezone? Non-daylight savings offset only.}
+tz_calc()
 }
 \description{
-Get timezone from lat/lon
-}
-\examples{
-
-# Daylight savings
-tz_calc(lat = 53.881857, lon = -122.786271)
-tz_calc(coords = c(53.881857, -122.786271))
-
-# No daylight savings
-tz_calc(lat = 53.881857, lon = -122.786271, etc = TRUE)
-tz_calc(coords = c(53.881857, -122.786271), etc = TRUE)
-
+Accessed Google API to determine local timezone from coordinates. Defunct
+as the API is no longer accessible without a Key.
 }

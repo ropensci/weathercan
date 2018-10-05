@@ -33,7 +33,9 @@ Suggests:
     ggplot2,
     ggmap,
     knitr,
+    lutz,
     rmarkdown,
+    sf,
     sp,
     stringr,
     testthat

@@ -86,7 +86,7 @@ NULL
         "prov", "distance", "flag", "hmdx", "pressure", "rel_hum", "temp_dew",
         "visib", "wind_chill", "variable", "value", "qual", "interval", "month",
         "start", "year", "elev", "problems",
-        "V1", "V2",
+        "V1", "V2", "tz",
         "html", "skip", "data",
         "." # piping requires '.' at times
       )
