@@ -11,6 +11,10 @@ output: html_document
 
 ## Changes
 - Sort `stations` by `station_id` not by `station_name`
+
+## Other
+- Update all internal data frames
+
 # weathercan 0.2.7 (2018-06-27)
 
 ## Bug fixes
