@@ -136,7 +136,7 @@ stations_dl <- function(url = NULL,
                                            "NS", "NU", "ON", "PE", "QC", "SK",
                                            "YT"))) %>%
     tidyr::spread(type, date) %>%
-    dplyr::arrange(prov, station_name, interval) %>%
+    dplyr::arrange(prov, station_id, interval) %>%
     dplyr::tbl_df()
 }
 
