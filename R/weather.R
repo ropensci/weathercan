@@ -582,7 +582,7 @@ preamble_format <- function(preamble, s) {
   preamble %>%
     dplyr::select(p) %>%
     dplyr::mutate(station_id = s,
-                  prov = factor(province[prov], levels = province),
+                  prov = factor(province[.data$prov], levels = province),
                   lat = as.numeric(as.character(lat)),
                   lon = as.numeric(as.character(lon)),
                   elev = as.numeric(as.character(elev)))

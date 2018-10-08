@@ -71,6 +71,8 @@
 #' @name weathercan-package
 #' @aliases weathercan weathercan-package
 #' @importFrom dplyr "%>%"
+#' @importFrom rlang .data
+
 NULL
 
 # Dealing with CRAN Notes due to Non-standard evaluation
