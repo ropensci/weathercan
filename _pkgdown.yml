@@ -11,9 +11,11 @@ reference:
       - stations_dl
       - weather_dl
       - weather_interp
+      - weathercan-package
   - title: "Utility functions"
     contents:
       - tz_calc
+      - get_tz
   - title: "Reference Data"
     contents:
       - stations
