@@ -4,6 +4,17 @@ author: "Steffi LaZerte"
 output: html_document
 ---
 
+# weathercan 0.2.8 (2018-10-08)
+
+## Bug fixes
+- Add timezones to the `stations` data frame to remove dependency of Google API. Timezones added with the `lutz` package, so updates the the `stations` data frame now require `lutz` and `sf` packages (added to Suggests).
+
+## Changes
+- Sort `stations` by `station_id` not by `station_name`
+
+## Other
+- Update all internal data frames
+
 # weathercan 0.2.7 (2018-06-27)
 
 ## Bug fixes

@@ -44,6 +44,14 @@ stations_dl <- function(url = NULL,
     return()
   }
 
+  if(!requireNamespace("lutz", quietly = TRUE) |
+     !requireNamespace("sf", quietly = TRUE)) {
+    stop("Package 'lutz' and its dependency, 'sf', are required to get ",
+         "timezones for the updated stations dataframe. ",
+         "Use the code \"install.packages(c('lutz', 'sf'))\" to install.",
+         call. = FALSE)
+  }
+
   if(verbose) message("Trying to access stations data frame")
   if(is.null(url)) {
     url <- paste0("ftp://client_climate@ftp.tor.ec.gc.ca/",
@@ -74,7 +82,7 @@ stations_dl <- function(url = NULL,
 
   if(verbose) message("Downloading stations data frame")
 
-  utils::read.csv(file = url,
+  s <- utils::read.csv(file = url,
                          skip = skip,
                          strip.white = TRUE) %>%
     dplyr::select(prov = Province,
@@ -91,7 +99,16 @@ stations_dl <- function(url = NULL,
                   TC_id = TC.ID,
                   lat = dplyr::matches("Latitude..Decimal"),
                   lon = dplyr::matches("Longitude..Decimal"),
-                  elev = dplyr::starts_with("Elevation..m.")) %>%
+                  elev = dplyr::starts_with("Elevation..m."))
+
+  # Calculate Timezones
+  station_tz <- dplyr::select(s, station_id, lat, lon) %>%
+    dplyr::distinct() %>%
+    dplyr::mutate(tz = lutz::tz_lookup_coords(lat, lon, method = "accurate"),
+                  tz = purrr::map_chr(tz, ~tz_offset(.x)))
+
+  s %>%
+    dplyr::left_join(station_tz, by = c("station_id", "lat", "lon")) %>%
     tidyr::gather(interval, date, dplyr::matches("(start)|(end)")) %>%
     tidyr::separate(interval, c("interval", "type"), sep = "_") %>%
     dplyr::mutate(type = factor(type, levels = c("start", "end")),
@@ -119,7 +136,7 @@ stations_dl <- function(url = NULL,
                                            "NS", "NU", "ON", "PE", "QC", "SK",
                                            "YT"))) %>%
     tidyr::spread(type, date) %>%
-    dplyr::arrange(prov, station_name, interval) %>%
+    dplyr::arrange(prov, station_id, interval) %>%
     dplyr::tbl_df()
 }
 

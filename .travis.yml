@@ -6,6 +6,18 @@ cache: packages
 git:
   depth: 150
 
+# In order to get sf installed
+addons:
+  apt:
+    sources:
+      - sourceline: 'ppa:ubuntugis/ppa'
+    packages:
+      - libgdal-dev
+      - libproj-dev
+      - libudunits2-dev
+      - libgeos-dev
+      - libv8-3.14-dev
+
 matrix:
   include:
     - os: linux

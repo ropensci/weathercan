@@ -67,7 +67,7 @@ compiled. This function may take a few minutes to run." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">weathercan</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.7.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.8</span>
       </span>
     </div>
 
@@ -155,7 +155,8 @@ compiled. This function may take a few minutes to run.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>stations_dl</span>(<span class='kw'>url</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>stations_dl</span>(<span class='kw'>url</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -196,9 +197,25 @@ Station<!-- %20Inventory%20EN.csv unless otherwise specified --></p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 </div><div class='input'> <span class='co'># Update stations data frame</span>
- <span class='no'>s</span> <span class='kw'>&lt;-</span> <span class='fu'>stations_dl</span>()</div><div class='output co'>#&gt; <span class='error'>Error in curl::curl_fetch_memory(url, handle = handle): response reading failed</span></div><div class='input'>
+ <span class='no'>s</span> <span class='kw'>&lt;-</span> <span class='fu'>stations_dl</span>()</div><div class='output co'>#&gt; <span class='message'>According to Environment Canada, Modified Date: 2018-10-08 01:31 UTC</span></div><div class='output co'>#&gt; <span class='message'>Environment Canada Disclaimers:</span>
+#&gt; <span class='message'>"Station Inventory Disclaimer: Please note that this inventory list is a snapshot of stations on our website as of the modified date, and may be subject to change without notice."</span>
+#&gt; <span class='message'>"Station ID Disclaimer: Station IDs are an internal index numbering system and may be subject to change without notice."</span></div><div class='input'>
  <span class='co'># Use new data frame to search for stations</span>
- <span class='fu'><a href='stations_search.html'>stations_search</a></span>(<span class='st'>"Winnipeg"</span>, <span class='kw'>stn</span> <span class='kw'>=</span> <span class='no'>s</span>)</div><div class='output co'>#&gt; <span class='error'>Error in dplyr::filter(stn, interval %in% !!interval, !is.na(start)): object 's' not found</span></div><div class='input'>
+ <span class='fu'><a href='stations_search.html'>stations_search</a></span>(<span class='st'>"Winnipeg"</span>, <span class='kw'>stn</span> <span class='kw'>=</span> <span class='no'>s</span>)</div><div class='output co'>#&gt; # A tibble: 84 x 13
+#&gt;    prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz   
+#&gt;    &lt;fct&gt; &lt;chr&gt;        &lt;fct&gt;      &lt;fct&gt;      &lt;fct&gt;  &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
+#&gt;  1 MB    WINNIPEG A … 27174      502S001    71849  XWG    49.9 -97.2  239. Etc/…
+#&gt;  2 MB    WINNIPEG A … 27174      502S001    71849  XWG    49.9 -97.2  239. Etc/…
+#&gt;  3 MB    WINNIPEG A … 27174      502S001    71849  XWG    49.9 -97.2  239. Etc/…
+#&gt;  4 MB    WINNIPEG A … 27525      5023223    &lt;NA&gt;   &lt;NA&gt;   49.9 -97.2  239. Etc/…
+#&gt;  5 MB    WINNIPEG A … 27525      5023223    &lt;NA&gt;   &lt;NA&gt;   49.9 -97.2  239. Etc/…
+#&gt;  6 MB    WINNIPEG AN… 3689       5023170    &lt;NA&gt;   &lt;NA&gt;   49.9 -97.2   NA  Etc/…
+#&gt;  7 MB    WINNIPEG AN… 3689       5023170    &lt;NA&gt;   &lt;NA&gt;   49.9 -97.2   NA  Etc/…
+#&gt;  8 MB    WINNIPEG AS… 3690       5023174    &lt;NA&gt;   &lt;NA&gt;   49.9 -97.2  229. Etc/…
+#&gt;  9 MB    WINNIPEG AS… 3690       5023174    &lt;NA&gt;   &lt;NA&gt;   49.9 -97.2  229. Etc/…
+#&gt; 10 MB    WINNIPEG BL… 3691       5023178    &lt;NA&gt;   &lt;NA&gt;   49.9 -97.4  236. Etc/…
+#&gt; # ... with 74 more rows, and 3 more variables: interval &lt;chr&gt;, start &lt;int&gt;,
+#&gt; #   end &lt;int&gt;</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

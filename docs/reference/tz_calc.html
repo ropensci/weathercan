@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get timezone from lat/lon — tz_calc • weathercan</title>
+<title>DEFUNCT: Get timezone from lat/lon — tz_calc • weathercan</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -32,9 +32,10 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Get timezone from lat/lon — tz_calc" />
+<meta property="og:title" content="DEFUNCT: Get timezone from lat/lon — tz_calc" />
 
-<meta property="og:description" content="Get timezone from lat/lon" />
+<meta property="og:description" content="Accessed Google API to determine local timezone from coordinates. Defunct
+as the API is no longer accessible without a Key." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -63,7 +64,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">weathercan</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.7.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.8</span>
       </span>
     </div>
 
@@ -136,58 +137,26 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get timezone from lat/lon</h1>
+    <h1>DEFUNCT: Get timezone from lat/lon</h1>
     <small class="dont-index">Source: <a href='https://github.com/ropensci/weathercan/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
     <div class="hidden name"><code>tz_calc.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Get timezone from lat/lon</p>
+    <p>Accessed Google API to determine local timezone from coordinates. Defunct
+as the API is no longer accessible without a Key.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>tz_calc</span>(<span class='kw'>coords</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lon</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>etc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>coords</th>
-      <td><p>Vector or Data frame. Lat, lon coordinates. Can be a vector for
-a set of two, or a data frame or matrix for multiple. Provide either coords
-OR lat and lon</p></td>
-    </tr>
-    <tr>
-      <th>lat</th>
-      <td><p>Vector. One or more latitudes, must also provide longitude</p></td>
-    </tr>
-    <tr>
-      <th>lon</th>
-      <td><p>Vector. One or more longitudes, must also provide latitude</p></td>
-    </tr>
-    <tr>
-      <th>etc</th>
-      <td><p>Logical. Return Etc timezone? Non-daylight savings offset only.</p></td>
-    </tr>
-    </table>
-    
+    <pre class="usage"><span class='fu'>tz_calc</span>()</pre>
+        
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'># Daylight savings</span>
-<span class='fu'>tz_calc</span>(<span class='kw'>lat</span> <span class='kw'>=</span> <span class='fl'>53.881857</span>, <span class='kw'>lon</span> <span class='kw'>=</span> -<span class='fl'>122.786271</span>)</div><div class='output co'>#&gt; [1] "America/Vancouver"</div><div class='input'><span class='fu'>tz_calc</span>(<span class='kw'>coords</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>53.881857</span>, -<span class='fl'>122.786271</span>))</div><div class='output co'>#&gt; [1] "America/Vancouver"</div><div class='input'>
-<span class='co'># No daylight savings</span>
-<span class='fu'>tz_calc</span>(<span class='kw'>lat</span> <span class='kw'>=</span> <span class='fl'>53.881857</span>, <span class='kw'>lon</span> <span class='kw'>=</span> -<span class='fl'>122.786271</span>, <span class='kw'>etc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "Etc/GMT+8"</div><div class='input'><span class='fu'>tz_calc</span>(<span class='kw'>coords</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>53.881857</span>, -<span class='fl'>122.786271</span>), <span class='kw'>etc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "Etc/GMT+8"</div><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-            
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+                </ul>
 
   </div>
 </div>

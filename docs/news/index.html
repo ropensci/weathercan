@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">weathercan</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.7.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.8</span>
       </span>
     </div>
 
@@ -137,22 +137,49 @@
       <small>Source: <a href='https://github.com/ropensci/weathercan/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="weathercan-0-2-7-2018-06-27" class="section level1">
+    <div id="weathercan-0-2-8-2018-10-08" class="section level1">
 <h1 class="page-header">
-<a href="#weathercan-0-2-7-2018-06-27" class="anchor"></a>weathercan 0.2.7 (2018-06-27)<small> 2018-07-05 </small>
+<a href="#weathercan-0-2-8-2018-10-08" class="anchor"></a>weathercan 0.2.8 (2018-10-08)<small> Unreleased </small>
 </h1>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li>Add timezones to the <code>stations</code> data frame to remove dependency of Google API. Timezones added with the <code>lutz</code> package, so updates the the <code>stations</code> data frame now require <code>lutz</code> and <code>sf</code> packages (added to Suggests).</li>
+</ul>
+</div>
+<div id="changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#changes" class="anchor"></a>Changes</h2>
+<ul>
+<li>Sort <code>stations</code> by <code>station_id</code> not by <code>station_name</code>
+</li>
+</ul>
+</div>
+<div id="other" class="section level2">
+<h2 class="hasAnchor">
+<a href="#other" class="anchor"></a>Other</h2>
+<ul>
+<li>Update all internal data frames</li>
+</ul>
+</div>
+</div>
+    <div id="weathercan-0-2-7-2018-06-27" class="section level1">
+<h1 class="page-header">
+<a href="#weathercan-0-2-7-2018-06-27" class="anchor"></a>weathercan 0.2.7 (2018-06-27)<small> 2018-07-05 </small>
+</h1>
+<div id="bug-fixes-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fix bug created when ECCC changed file metadata for dates after April 1st 2018 (only affected downloads which included dates both before AND after April 1st, 2018) - Results in a new column <code>station_operator</code> for all data (NA where unavailable for older stations).</li>
 <li>Adjust code flexibility to handle future changes</li>
 <li>Add catch to warn user if end dates earlier than start dates</li>
 </ul>
 </div>
-<div id="changes" class="section level2">
+<div id="changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes" class="anchor"></a>Changes</h2>
+<a href="#changes-1" class="anchor"></a>Changes</h2>
 <ul>
 <li>Update readme/vignettes/internal data sets to include new columns</li>
 <li>Update internal <code>stations</code> data frame as well as <code>flags</code> and <code>glossary</code>
@@ -166,9 +193,9 @@
 <h1 class="page-header">
 <a href="#weathercan-0-2-6-2018-05-25" class="anchor"></a>weathercan 0.2.6 (2018-05-25)<small> Unreleased </small>
 </h1>
-<div id="bug-fixes-1" class="section level2">
+<div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fix bug created when ECCC removed Data Quality Column</li>
 <li>Adjust code flexibility to handle future changes</li>
@@ -180,9 +207,9 @@
 <h1 class="page-header">
 <a href="#weathercan-0-2-5-2018-03-02" class="anchor"></a>weathercan 0.2.5 (2018-03-02)<small> Unreleased </small>
 </h1>
-<div id="changes-1" class="section level2">
+<div id="changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-1" class="anchor"></a>Changes</h2>
+<a href="#changes-2" class="anchor"></a>Changes</h2>
 <ul>
 <li>More sensible messages when missing station data</li>
 <li>Streamline messages from multiple stations</li>
@@ -192,9 +219,9 @@
 <li>Update <code>stations</code> dataframe</li>
 </ul>
 </div>
-<div id="bug-fixes-2" class="section level2">
+<div id="bug-fixes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fix error when missing station data from one of several stations</li>
 </ul>
@@ -205,9 +232,9 @@
 <a href="#weathercan-0-2-4-2018-02-01" class="anchor"></a>weathercan 0.2.4 (2018-02-01)<small> Unreleased </small>
 </h1>
 <p>Now part of <a href="http://ropensci.org">ropensci.org</a>!</p>
-<div id="changes-2" class="section level2">
+<div id="changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-2" class="anchor"></a>Changes</h2>
+<a href="#changes-3" class="anchor"></a>Changes</h2>
 <ul>
 <li>
 <code>sp</code> moved to suggests, users are now prompted to install sp if they want to search stations by coordinates</li>
@@ -221,7 +248,7 @@
 <code><a href="../reference/stations_dl.html">stations_dl()</a></code> replaces <code><a href="../reference/stations_dl.html">stations_all()</a></code>
 </li>
 <li>
-<code><a href="../reference/tz_calc.html">tz_calc()</a></code> replaces <code><a href="../reference/tz_calc.html">get_tz()</a></code>
+<code><a href="../reference/tz_calc.html">tz_calc()</a></code> replaces <code><a href="../reference/get_tz.html">get_tz()</a></code>
 </li>
 <li>Internal code modifications to match best practices</li>
 </ul>
@@ -231,9 +258,9 @@
 <h1 class="page-header">
 <a href="#weathercan-0-2-3-2017-11-22" class="anchor"></a>weathercan 0.2.3 (2017-11-22)<small> Unreleased </small>
 </h1>
-<div id="changes-3" class="section level2">
+<div id="changes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-3" class="anchor"></a>Changes</h2>
+<a href="#changes-4" class="anchor"></a>Changes</h2>
 <ul>
 <li>Updated <code>stations</code> data</li>
 <li>Added <code>flags</code> and <code>glossary</code> datasets as well as vignettes</li>
@@ -247,9 +274,9 @@
 <li>Data downloaded from multiple timezones defaults to UTC</li>
 </ul>
 </div>
-<div id="bug-fixes-3" class="section level2">
+<div id="bug-fixes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/weather_dl.html">weather(format = FALSE)</a></code> properly returns data</li>
@@ -261,9 +288,9 @@
 <h1 class="page-header">
 <a href="#weathercan-0-2-2-2017-06-16" class="anchor"></a>weathercan 0.2.2 (2017-06-16)<small> Unreleased </small>
 </h1>
-<div id="changes-4" class="section level2">
+<div id="changes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-4" class="anchor"></a>Changes</h2>
+<a href="#changes-5" class="anchor"></a>Changes</h2>
 <ul>
 <li>Update and expand vignettes (closes <a href='https://github.com/ropensci/weathercan/issues/15'>#15</a>)</li>
 <li>Data now returned as tibbles</li>
@@ -280,9 +307,9 @@
 <li>envirocan renamed to weathercan (closes <a href='https://github.com/ropensci/weathercan/issues/17'>#17</a>)</li>
 </ul>
 </div>
-<div id="bug-fixes-4" class="section level2">
+<div id="bug-fixes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-5" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed inclusion of New Brunswick stations (closes <a href='https://github.com/ropensci/weathercan/issues/9'>#9</a>)</li>
 <li>Downloads with no data return empty tibble and an informative message (closes <a href='https://github.com/ropensci/weathercan/issues/21'>#21</a>)</li>
@@ -330,9 +357,9 @@
 <li>Add option to trim missing data from start and end of the range</li>
 </ul>
 </div>
-<div id="bug-fixes-5" class="section level2">
+<div id="bug-fixes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-5" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-6" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Add messages so functions fail gracefully if timezone doesn’t exist</li>
 <li>Correct bugs that prevented downloading of monthly data</li>
@@ -369,6 +396,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#weathercan-0-2-8-2018-10-08">0.2.8</a></li>
         <li><a href="#weathercan-0-2-7-2018-06-27">0.2.7</a></li>
         <li><a href="#weathercan-0-2-6-2018-05-25">0.2.6</a></li>
         <li><a href="#weathercan-0-2-5-2018-03-02">0.2.5</a></li>

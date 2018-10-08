@@ -18,6 +18,7 @@
 #'   \item{lat}{Latitude of station location in degree decimal format}
 #'   \item{lon}{Longitude of station location in degree decimal format}
 #'   \item{elev}{Elevation of station location in metres}
+#'   \item{tz}{Local timezone excluding any Daylight Savings}
 #'   \item{interval}{Interval of the data measurements ('hour', 'day', 'month')}
 #'   \item{start}{Starting year of data record}
 #'   \item{end}{Ending year of data record}

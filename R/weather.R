@@ -245,11 +245,12 @@ weather_dl <- function(station_ids,
       if(format) {
         if(verbose) message("Formatting station data: ", s)
         w <- weather_format(w = w,
+                            preamble = preamble,
+                            stations = stations,
                             interval = interval,
                             tz_disp = tz_disp,
                             string_as = string_as,
-                            quiet = quiet,
-                            preamble = preamble)
+                            quiet = quiet)
         # Catch messages
         if(nrow(w$msg) > 0) {
           msg_fmt <- dplyr::bind_rows(dplyr::bind_cols(station_id = s,
@@ -442,8 +443,8 @@ weather_raw <- function(html, skip = 0,
                      dplyr::funs(gsub("^I$", "^", .)))
 }
 
-weather_format <- function(w, interval = "hour", string_as = "NA", preamble,
-                           tz_disp = NULL, quiet = FALSE) {
+weather_format <- function(w, stations, preamble, interval = "hour",
+                           string_as = "NA", tz_disp = NULL, quiet = FALSE) {
 
   ## Get names from stored name list
   n <- w_names[[interval]]
@@ -460,9 +461,9 @@ weather_format <- function(w, interval = "hour", string_as = "NA", preamble,
 
   ## Get correct timezone
   if(interval == "hour"){
-    tz <- tz_calc(coords = unique(preamble[, c("lat", "lon")]), etc = TRUE)
+    tz <- stations$tz[stations$station_id == preamble$station_id[1]][1]
     w$time <- as.POSIXct(w$time, tz = tz)
-    w$date <- as.Date(w$time, tz = tz)
+    w$date <- lubridate::as_date(w$time)
     if(!is.null(tz_disp)){
       w$time <- lubridate::with_tz(w$time, tz = tz_disp) ## Display in timezone
     }
@@ -581,7 +582,7 @@ preamble_format <- function(preamble, s) {
   preamble %>%
     dplyr::select(p) %>%
     dplyr::mutate(station_id = s,
-                  prov = factor(province[prov], levels = province),
+                  prov = factor(province[.data$prov], levels = province),
                   lat = as.numeric(as.character(lat)),
                   lon = as.numeric(as.character(lon)),
                   elev = as.numeric(as.character(elev)))
