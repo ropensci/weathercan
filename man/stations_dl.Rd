@@ -5,7 +5,8 @@
 \alias{stations_all}
 \title{Get available stations}
 \usage{
-stations_dl(url = NULL, skip = NULL, verbose = FALSE, quiet = FALSE)
+stations_dl(url = NULL, skip = NULL, verbose = FALSE,
+  quiet = FALSE)
 }
 \arguments{
 \item{url}{Character. Url from which to grab the station information (see
