@@ -1,24 +1,20 @@
-## Test environments
-As of June 27, 2018
+## Release v.0.2.8
 
-* Local - ubuntu 16.04 (R 3.4.4), Windows 10 (R 3.5.0)
+Addressed change in Google Api which resulted in errors when testing hourly data downloads.
+
+## Test environments
+As of October 8th, 2018
+
+* Local - ubuntu 16.04 (R 3.5.1)
 * Travis CI - ubuntu 14.04 (R 3.4.4, 3.5.0, and devel)
 * Travis CI - OSX 10.12.6 (R 3.5.0)
-* Appveyor - Windows Server 2012 (R 3.4.4, 3.5.0 (release), 3.5.0 (patched), all on both i386 and x64)
-* win-builder (devel and release)
+* Appveyor - Windows Server 2012 R2 x64 (R 3.4.4 (oldrel), 3.5.1 (release), 3.5.1 (patched))
+* win-builder (oldrelease, release, and devel)
 
 ## R CMD check results
 
-There were no ERRORs, no WARNINGs
-
-1 NOTE: 
-Maintainer: ‘Steffi LaZerte <steffi@steffi.ca>’
-New submission
+There were no ERRORs, no WARNINGs no NOTEs
 
 ## Downstream dependencies
 
-Currently, there are no downstream dependencies (this is a new submission)
-
-## Comments
-
-2018-07-02 - Replaced \dontrun{} with \donttest{} in all Rd files as per CRAN submission request
+There are no downstream dependencies
