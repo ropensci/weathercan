@@ -119,19 +119,19 @@
 
 <p><a href="https://github.com/ropensci/onboarding/issues/160"><img src="https://badges.ropensci.org/160_status.svg"></a> <a href="https://zenodo.org/badge/latestdoi/60650396"><img src="https://zenodo.org/badge/60650396.svg" alt="DOI"></a> <a href="https://doi.org/10.21105/joss.00571"><img src="http://joss.theoj.org/papers/10.21105/joss.00571/status.svg" alt="DOI"></a></p>
 <p><a href="https://cran.r-project.org/package=weathercan"><img src="https://www.r-pkg.org/badges/version/weathercan" alt="CRAN_Status_Badge"></a> <a href="https://CRAN.R-project.org/package=weathercan"><img src="http://cranlogs.r-pkg.org/badges/grand-total/weathercan" alt="CRAN Downloads"></a></p>
-<p>This package is makes it easier to search for and download multiple months/years of historical weather data from <a href="http://climate.weather.gc.ca/historical_data/search_historic_data_e.html">Environment and Climate Change Canada (ECCC) website</a>.</p>
+<p>This package makes it easier to search for and download multiple months/years of historical weather data from <a href="http://climate.weather.gc.ca/historical_data/search_historic_data_e.html">Environment and Climate Change Canada (ECCC) website</a>.</p>
 <p>Bear in mind that these downloads can be fairly large and performing multiple downloads may use up ECCC’s bandwidth unecessarily. Try to stick to what you need.</p>
 <p>For more details and tutorials checkout the <a href="http://ropensci.github.io/weathercan">weathercan website</a></p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install <code>weathercan</code> directly from CRAN:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"weathercan"</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">"weathercan"</span>)</a></code></pre></div>
 <p>Use the <code>devtools</code> package to install the developmental package from GitHub:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"devtools"</span>) <span class="co"># If not already installed</span>
-devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"ropensci/weathercan"</span>) </code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">"devtools"</span>) <span class="co"># If not already installed</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"ropensci/weathercan"</span>) </a></code></pre></div>
 <p>To build the developmental vignettes (tutorials) locally, use:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"ropensci/weathercan"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>) </code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"ropensci/weathercan"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>) </a></code></pre></div>
 <p>View the available vignettes with <code>vignette(package = "weathercan")</code></p>
 <p>View a particular vignette with, for example, <code><a href="articles/weathercan.html">vignette("weathercan", package = "weathercan")</a></code></p>
 </div>
@@ -143,7 +143,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <h3 class="hasAnchor">
 <a href="#stations" class="anchor"></a>Stations</h3>
 <p><code>weathercan</code> includes a data frame called <code>stations</code> which includes a list of stations and their details (including <code>station_id</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(stations)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">head</span>(stations)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 13
 ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz   interval start   end
 ##   &lt;fct&gt; &lt;chr&gt;        &lt;fct&gt;      &lt;fct&gt;      &lt;fct&gt;  &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;ch&gt; &lt;chr&gt;    &lt;int&gt; &lt;int&gt;
@@ -153,7 +153,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 ## 4 AB    EDMONTON CO… 1796       301BK03    &lt;NA&gt;   &lt;NA&gt;   53.6 -114.  671. Etc… day       1978  1979
 ## 5 AB    EDMONTON CO… 1796       301BK03    &lt;NA&gt;   &lt;NA&gt;   53.6 -114.  671. Etc… hour        NA    NA
 ## 6 AB    EDMONTON CO… 1796       301BK03    &lt;NA&gt;   &lt;NA&gt;   53.6 -114.  671. Etc… month     1978  1979</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">glimpse</span>(stations)</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">glimpse</span>(stations)</a></code></pre></div>
 <pre><code>## Observations: 26,217
 ## Variables: 13
 ## $ prov         &lt;fct&gt; AB, AB, AB, AB, AB, AB, AB, AB, AB, AB, AB, AB, AB, AB, AB, AB, AB, AB, AB...
@@ -170,7 +170,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 ## $ start        &lt;int&gt; 1908, NA, 1908, 1978, NA, 1978, 1987, NA, 1987, 1987, NA, 1987, 1980, NA, ...
 ## $ end          &lt;int&gt; 1922, NA, 1922, 1979, NA, 1979, 1990, NA, 1990, 1998, NA, 1998, 2009, NA, ...</code></pre>
 <p>You can look through this data frame directly, or you can use the <code>stations_search</code> function:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/stations_search.html">stations_search</a></span>(<span class="st">"Kamloops"</span>, <span class="dt">interval =</span> <span class="st">"hour"</span>)</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="reference/stations_search.html">stations_search</a></span>(<span class="st">"Kamloops"</span>, <span class="dt">interval =</span> <span class="st">"hour"</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 13
 ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz   interval start   end
 ##   &lt;fct&gt; &lt;chr&gt;        &lt;fct&gt;      &lt;fct&gt;      &lt;fct&gt;  &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;ch&gt; &lt;chr&gt;    &lt;int&gt; &lt;int&gt;
@@ -179,7 +179,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 ## 3 BC    KAMLOOPS AUT 42203      1163842    71741  ZKA    50.7 -120.  345  Etc… hour      2006  2018</code></pre>
 <p>Time frame must be one of “hour”, “day”, or “month”.</p>
 <p>You can also search by proximity:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/stations_search.html">stations_search</a></span>(<span class="dt">coords =</span> <span class="kw">c</span>(<span class="fl">50.667492</span>, <span class="op">-</span><span class="fl">120.329049</span>), <span class="dt">dist =</span> <span class="dv">20</span>, <span class="dt">interval =</span> <span class="st">"hour"</span>)</code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="reference/stations_search.html">stations_search</a></span>(<span class="dt">coords =</span> <span class="kw">c</span>(<span class="fl">50.667492</span>, <span class="fl">-120.329049</span>), <span class="dt">dist =</span> <span class="dv">20</span>, <span class="dt">interval =</span> <span class="st">"hour"</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 14
 ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval start   end
 ##   &lt;fct&gt; &lt;chr&gt;        &lt;fct&gt;      &lt;fct&gt;      &lt;fct&gt;  &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;int&gt; &lt;int&gt;
@@ -192,8 +192,8 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <h3 class="hasAnchor">
 <a href="#weather" class="anchor"></a>Weather</h3>
 <p>Once you have your <code>station_id</code>(s) you can download weather data:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kam &lt;-<span class="st"> </span><span class="kw"><a href="reference/weather_dl.html">weather_dl</a></span>(<span class="dt">station_ids =</span> <span class="dv">51423</span>, <span class="dt">start =</span> <span class="st">"2018-02-01"</span>, <span class="dt">end =</span> <span class="st">"2018-04-15"</span>)
-kam</code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">kam &lt;-<span class="st"> </span><span class="kw"><a href="reference/weather_dl.html">weather_dl</a></span>(<span class="dt">station_ids =</span> <span class="dv">51423</span>, <span class="dt">start =</span> <span class="st">"2018-02-01"</span>, <span class="dt">end =</span> <span class="st">"2018-04-15"</span>)</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">kam</a></code></pre></div>
 <pre><code>## # A tibble: 1,776 x 35
 ##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id
 ##  * &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;            &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;
@@ -209,20 +209,20 @@ kam</code></pre></div>
 ## 10 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA  
 ## # ... with 1,766 more rows, and 25 more variables</code></pre>
 <p>You can also download data from multiple stations at once:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kam_pg &lt;-<span class="st"> </span><span class="kw"><a href="reference/weather_dl.html">weather_dl</a></span>(<span class="dt">station_ids =</span> <span class="kw">c</span>(<span class="dv">48248</span>, <span class="dv">51423</span>), <span class="dt">start =</span> <span class="st">"2018-02-01"</span>, <span class="dt">end =</span> <span class="st">"2018-04-15"</span>)</code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">kam_pg &lt;-<span class="st"> </span><span class="kw"><a href="reference/weather_dl.html">weather_dl</a></span>(<span class="dt">station_ids =</span> <span class="kw">c</span>(<span class="dv">48248</span>, <span class="dv">51423</span>), <span class="dt">start =</span> <span class="st">"2018-02-01"</span>, <span class="dt">end =</span> <span class="st">"2018-04-15"</span>)</a></code></pre></div>
 <p>And plot it:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
-
-<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(<span class="dt">data =</span> kam_pg, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> time, <span class="dt">y =</span> temp, <span class="dt">group =</span> station_name, <span class="dt">colour =</span> station_name)) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_minimal</a></span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>()</code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="kw"><a href="ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="dt">data =</span> kam_pg, <span class="kw"><a href="ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> time, <span class="dt">y =</span> temp, <span class="dt">group =</span> station_name, <span class="dt">colour =</span> station_name)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>()</a></code></pre></div>
 <p><img src="tools/readme/kam_plt-1.png" width="1152"></p>
 </div>
 </div>
 <div id="citation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#citation" class="anchor"></a>Citation</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">citation</span>(<span class="st">"weathercan"</span>)</code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">citation</span>(<span class="st">"weathercan"</span>)</a></code></pre></div>
 <pre><code>## 
 ## To cite 'weathercan' in publications, please use:
 ## 
