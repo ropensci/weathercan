@@ -4,6 +4,11 @@ author: "Steffi LaZerte"
 output: html_document
 ---
 
+# weathercan 0.2.8.9000 (2019-02-25)
+
+## Bug fixes
+- Fix bug #69 which resulted in daily downloads missing partial years when the date range spaned two calendar years
+
 # weathercan 0.2.8 (2018-10-08)
 
 ## Bug fixes

@@ -210,12 +210,16 @@ weather_dl <- function(station_ids,
       }
     }
 
-    date_range <- seq(lubridate::floor_date(s.start, unit = "month"),
-                      lubridate::floor_date(s.end, unit = "month"),
-                      by = ifelse(interval %in% c("hour"), "month", "year"))
-    #date_range <- dplyr::tibble(date_range = unique(date_range))
-
-    if(interval == "month") date_range <- date_range[1]
+    if(interval == "hour") {
+      date_range <- seq(lubridate::floor_date(s.start, unit = "month"),
+                        lubridate::floor_date(s.end, unit = "month"),
+                        by = dplyr::if_else(interval %in% c("hour"), "month", "year"))
+    } else if(interval == "day") {
+      date_range <- seq(lubridate::floor_date(s.start, unit = "year"),
+                        lubridate::floor_date(s.end, unit = "year"), by = "year")
+    } else if(interval == "month") {
+      date_range <- lubridate::floor_date(s.start, unit = "year")
+    }
 
     w <- dplyr::tibble(date_range = date_range) %>%
       dplyr::mutate(html = purrr::map(date_range,

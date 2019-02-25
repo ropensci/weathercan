@@ -1,7 +1,7 @@
 Package: weathercan
 Type: Package
 Title: Download Weather Data from the Environment and Climate Change Canada Website
-Version: 0.2.8
+Version: 0.2.8.9000
 Authors@R: c(
      person("Steffi", "LaZerte", email = "steffi@steffi.ca", role = c("aut","cre"), comment = c(ORCID = "0000-0002-7690-8360")),
      person("Sam", "Albers", email = "sam.albers@gmail.com", role = c("ctb"), comment = c(ORCID = "0000-0002-9270-7884")))
@@ -28,7 +28,7 @@ Imports:
     stringi (>= 1.1.2),
     tidyr (>= 0.4.1),
     xml2 (>= 0.1.2)
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Suggests:
     devtools,
     ggplot2,
