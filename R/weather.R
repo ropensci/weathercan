@@ -388,7 +388,7 @@ weather_dl <- function(station_ids,
     stations <- paste0(unique(msg_fmt$station_id), collapse = ", ")
     message("Some variables have non-numeric values (", cols,
             "), for stations: ", stations)
-    if(all(!is.null(msg_fmt$replace))) {
+    if(all(is.na(msg_fmt$replace) || msg_fmt$replace != "no_replace")) {
       message("  Replaced all non-numeric entries with ",
               msg_fmt$replace[1], ". ",
               "Use 'string_as = NULL' to keep as characters (see ?weather_dl).")
@@ -547,7 +547,8 @@ weather_format <- function(w, stations, preamble, interval = "hour",
     } else {
       m <- paste0(names(num)[warn],
                   collapse = ", ")
-      non_num$replace <- NULL
+
+      non_num <- dplyr::mutate(non_num, replace = "no_replace")
 
       replace <- c("date", "year", "month", "day",
                    "hour", "time", "qual", "weather",

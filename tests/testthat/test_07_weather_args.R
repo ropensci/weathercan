@@ -73,3 +73,12 @@ test_that("weather_dl() month format = FALSE", {
   expect_equal(w$WMO_id[1], "")
   expect_equal(w$TC_id[1], "")
 })
+
+
+test_that("weather_dl() month string_as = NULL", {
+  expect_warning(expect_message(w <- weather_dl(station_id = 49568, interval = "day",
+                                                start = "2012-11-01", end = "2013-03-31",
+                                                string_as = NULL)),
+                 NA)
+
+})
