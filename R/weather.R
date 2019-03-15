@@ -246,7 +246,7 @@ weather_dl <- function(station_ids,
         if(verbose) message("Formatting station data: ", s)
         w <- weather_format(w = w,
                             preamble = preamble,
-                            stations = weathercan::stations,
+                            stn = stn,
                             interval = interval,
                             tz_disp = tz_disp,
                             string_as = string_as,
