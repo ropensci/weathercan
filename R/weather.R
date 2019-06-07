@@ -435,17 +435,25 @@ weather_raw <- function(html, skip = 0,
                         nrows = -1,
                         header = TRUE,
                         encoding = "UTF-8") {
-  utils::read.csv(text = httr::content(html, as = "text",
-                                       type = "text/csv",
-                                       encoding = encoding),
-                  nrows = nrows, strip.white = TRUE,
-                  skip = skip, header = header,
-                  colClasses = "character", check.names = FALSE) %>%
+  w <- utils::read.csv(text = httr::content(html, as = "text",
+                                            type = "text/csv",
+                                            encoding = encoding),
+                       nrows = nrows, strip.white = TRUE,
+                       skip = skip, header = header,
+                       colClasses = "character", check.names = FALSE)
+
     # For some reason the flags "^" are replaced with "I",
     # change back to match flags on ECCC website
-    dplyr::mutate_at(.vars = dplyr::vars(dplyr::ends_with("Flag")),
-                     dplyr::funs(gsub("^I$", "^", .)))
+  if(packageVersion("dplyr") > package_version("0.8.0")) {
+    w <- dplyr::mutate_at(w, .vars = dplyr::vars(dplyr::ends_with("Flag")),
+                          list(~gsub("^I$", "^", .)))
+  } else {
+    w <- dplyr::mutate_at(w, .vars = dplyr::vars(dplyr::ends_with("Flag")),
+                          dplyr::funs(gsub("^I$", "^", .)))
+  }
+  w
 }
+
 
 weather_format <- function(w, stn, preamble, interval = "hour",
                            string_as = "NA", tz_disp = NULL, quiet = FALSE) {
