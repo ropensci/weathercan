@@ -250,7 +250,7 @@ weather_dl <- function(station_ids,
         if(verbose) message("Formatting station data: ", s)
         w <- weather_format(w = w,
                             preamble = preamble,
-                            stations = stations,
+                            stn = stn,
                             interval = interval,
                             tz_disp = tz_disp,
                             string_as = string_as,
@@ -385,9 +385,9 @@ weather_dl <- function(station_ids,
   msg_fmt <- dplyr::filter(msg_fmt, !is.na(col))
   if(!quiet && nrow(msg_fmt) > 0) {
     cols <- paste0(unique(msg_fmt$col), collapse = ", ")
-    stations <- paste0(unique(msg_fmt$station_id), collapse = ", ")
+    stations_msg <- paste0(unique(msg_fmt$station_id), collapse = ", ")
     message("Some variables have non-numeric values (", cols,
-            "), for stations: ", stations)
+            "), for stations: ", stations_msg)
     if(all(is.na(msg_fmt$replace) || msg_fmt$replace != "no_replace")) {
       message("  Replaced all non-numeric entries with ",
               msg_fmt$replace[1], ". ",
@@ -447,7 +447,7 @@ weather_raw <- function(html, skip = 0,
                      dplyr::funs(gsub("^I$", "^", .)))
 }
 
-weather_format <- function(w, stations, preamble, interval = "hour",
+weather_format <- function(w, stn, preamble, interval = "hour",
                            string_as = "NA", tz_disp = NULL, quiet = FALSE) {
 
   ## Get names from stored name list
@@ -465,7 +465,7 @@ weather_format <- function(w, stations, preamble, interval = "hour",
 
   ## Get correct timezone
   if(interval == "hour"){
-    tz <- stations$tz[stations$station_id == preamble$station_id[1]][1]
+    tz <- stn$tz[stn$station_id == preamble$station_id[1]][1]
     w$time <- as.POSIXct(w$time, tz = tz)
     w$date <- lubridate::as_date(w$time)
     if(!is.null(tz_disp)){
