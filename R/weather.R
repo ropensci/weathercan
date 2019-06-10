@@ -210,12 +210,16 @@ weather_dl <- function(station_ids,
       }
     }
 
-    date_range <- seq(lubridate::floor_date(s.start, unit = "month"),
-                      lubridate::floor_date(s.end, unit = "month"),
-                      by = ifelse(interval %in% c("hour"), "month", "year"))
-    #date_range <- dplyr::tibble(date_range = unique(date_range))
-
-    if(interval == "month") date_range <- date_range[1]
+    if(interval == "hour") {
+      date_range <- seq(lubridate::floor_date(s.start, unit = "month"),
+                        lubridate::floor_date(s.end, unit = "month"),
+                        by = dplyr::if_else(interval %in% c("hour"), "month", "year"))
+    } else if(interval == "day") {
+      date_range <- seq(lubridate::floor_date(s.start, unit = "year"),
+                        lubridate::floor_date(s.end, unit = "year"), by = "year")
+    } else if(interval == "month") {
+      date_range <- lubridate::floor_date(s.start, unit = "year")
+    }
 
     w <- dplyr::tibble(date_range = date_range) %>%
       dplyr::mutate(html = purrr::map(date_range,
@@ -384,7 +388,7 @@ weather_dl <- function(station_ids,
     stations_msg <- paste0(unique(msg_fmt$station_id), collapse = ", ")
     message("Some variables have non-numeric values (", cols,
             "), for stations: ", stations_msg)
-    if(all(!is.null(msg_fmt$replace))) {
+    if(all(is.na(msg_fmt$replace) | msg_fmt$replace != "no_replace")) {
       message("  Replaced all non-numeric entries with ",
               msg_fmt$replace[1], ". ",
               "Use 'string_as = NULL' to keep as characters (see ?weather_dl).")
@@ -431,17 +435,25 @@ weather_raw <- function(html, skip = 0,
                         nrows = -1,
                         header = TRUE,
                         encoding = "UTF-8") {
-  utils::read.csv(text = httr::content(html, as = "text",
-                                       type = "text/csv",
-                                       encoding = encoding),
-                  nrows = nrows, strip.white = TRUE,
-                  skip = skip, header = header,
-                  colClasses = "character", check.names = FALSE) %>%
+  w <- utils::read.csv(text = httr::content(html, as = "text",
+                                            type = "text/csv",
+                                            encoding = encoding),
+                       nrows = nrows, strip.white = TRUE,
+                       skip = skip, header = header,
+                       colClasses = "character", check.names = FALSE)
+
     # For some reason the flags "^" are replaced with "I",
     # change back to match flags on ECCC website
-    dplyr::mutate_at(.vars = dplyr::vars(dplyr::ends_with("Flag")),
-                     dplyr::funs(gsub("^I$", "^", .)))
+  if(utils::packageVersion("dplyr") > package_version("0.8.0")) {
+    w <- dplyr::mutate_at(w, .vars = dplyr::vars(dplyr::ends_with("Flag")),
+                          list(~gsub("^I$", "^", .)))
+  } else {
+    w <- dplyr::mutate_at(w, .vars = dplyr::vars(dplyr::ends_with("Flag")),
+                          dplyr::funs(gsub("^I$", "^", .)))
+  }
+  w
 }
+
 
 weather_format <- function(w, stn, preamble, interval = "hour",
                            string_as = "NA", tz_disp = NULL, quiet = FALSE) {
@@ -543,7 +555,8 @@ weather_format <- function(w, stn, preamble, interval = "hour",
     } else {
       m <- paste0(names(num)[warn],
                   collapse = ", ")
-      non_num$replace <- NULL
+
+      non_num <- dplyr::mutate(non_num, replace = "no_replace")
 
       replace <- c("date", "year", "month", "day",
                    "hour", "time", "qual", "weather",

@@ -35,17 +35,22 @@ test_that("weather_html/raw (day) download a data frame", {
   #              c("\\u2021"))
 })
 
+
 test_that("weather_html/raw (month) download a data frame", {
-  expect_silent(wd <- weather_html(station_id = 43823,
-                                   date = as.Date("2005-01-01"),
+  expect_silent(wd <- weather_html(station_id = 5401,
+                                   date = as.Date("2017-01-01"),
                                    interval = "month"))
   expect_silent(wd <- weather_raw(wd, skip = 17))
 
   ## Basics
   expect_is(wd, "data.frame")
   expect_length(wd, 25)
-  expect_equal(nrow(wd), 4)
+  expect_equal(nrow(wd), 842)
   expect_is(wd[, "Date/Time"], "character")
   expect_lt(length(data.frame(wd)[is.na(data.frame(wd))]),
             length(data.frame(wd)[!is.na(data.frame(wd))]))
+
+  # Expect 'I' flags converted to '^'
+  expect_true("^" %in% wd$`Total Precip Flag`)
+  expect_false("I" %in% wd$`Total Precip Flag`)
 })

@@ -4,6 +4,13 @@ author: "Steffi LaZerte"
 output: html_document
 ---
 
+# weathercan 0.2.8.9000 (2019-02-25)
+
+## Bug fixes
+- Fix bug #69 which resulted in daily downloads missing partial years when the date range spaned two calendar years
+- Fix bug #70 where internal `stations` data frame references conflicted with local references to `stations`
+- Fix bug #72 which was a security vulnerability in an article's json
+
 # weathercan 0.2.8 (2018-10-08)
 
 ## Bug fixes

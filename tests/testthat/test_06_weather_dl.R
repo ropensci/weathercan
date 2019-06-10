@@ -169,6 +169,13 @@ test_that("weather (hour) skips with message if end date < start date", {
   expect_true(nrow(w) > 0)
 })
 
+test_that("weather (hour) crosses the year line", {
+  expect_silent(w <- weather_dl(station_id = 27534, interval = "day",
+                                start = "1999-12-01", end = "2000-01-05"))
+  expect_equal(min(w$date), as.Date("1999-12-01"))
+  expect_equal(max(w$date), as.Date("2000-01-05"))
+})
+
 # weather by day ----------------------------------------------------------
 context("weather by day")
 
@@ -239,6 +246,14 @@ test_that("weather (day) gets all", {
 
 })
 
+
+test_that("weather (day) crosses the year line", {
+  expect_message(w <- weather_dl(station_id = 49568, interval = "day",
+                                start = "2012-11-01", end = "2013-04-05"))
+  expect_equal(min(w$date), as.Date("2012-11-01"))
+  expect_equal(max(w$date), as.Date("2013-04-05"))
+
+})
 
 test_that("weather (day) trims NAs", {
   expect_silent(w1 <- weather_dl(station_ids = 54398, interval = "day",
@@ -504,6 +519,16 @@ test_that("weather (month) skips with message if end date < start date", {
                  "End date earlier")
   expect_true(nrow(w) > 0)
 })
+
+
+test_that("weather (month) crosses the year line", {
+  expect_silent(w <- weather_dl(station_id = 27534, interval = "month",
+                                start = "1999-11-01", end = "2000-03-05"))
+  expect_equal(min(w$date), as.Date("1999-11-01"))
+  expect_equal(max(w$date), as.Date("2000-03-01"))
+})
+
+
 
 # list_cols ---------------------------------------------------------------
 
