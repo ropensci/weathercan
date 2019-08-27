@@ -3,6 +3,10 @@ title: "News"
 author: "Steffi LaZerte"
 output: html_document
 ---
+# weathercan 0.2.8.9001 (2019-08-25)
+
+## Changes
+- Add parameter in station_search() to restrict by start and end dates. This addresses issue #35.
 
 # weathercan 0.2.8.9000 (2019-02-25)
 

@@ -159,6 +159,10 @@ stations_dl <- function(url = NULL,
 #'   Must be any of "hour", "day", "month".
 #' @param stn Data frame. The \code{stations} data frame to use. Will use the
 #'   one included in the package unless otherwise specified.
+#' @param starts_before Numeric. Restrict results to stations with data collection
+#' beginning before the specified year.
+#' @param ends_after Numeric. Restrict results to stations with data collection
+#' ending after the specified year.
 #' @param verbose Logical. Include progress messages
 #' @param quiet Logical. Suppress all messages (including messages regarding
 #'   missing data, etc.)
@@ -190,6 +194,8 @@ stations_search <- function(name = NULL,
                             dist = 10,
                             interval = c("hour", "day", "month"),
                             stn = weathercan::stations,
+                            starts_before = NULL,
+                            ends_after = NULL,
                             verbose = FALSE,
                             quiet = FALSE) {
   if(all(is.null(name), is.null(coords)) |
@@ -216,7 +222,15 @@ stations_search <- function(name = NULL,
   check_int(interval)
 
   stn <- dplyr::filter(stn, interval %in% !! interval, !is.na(start))
-
+  
+  if (!is.null(starts_before)){
+    stn <- dplyr::filter(stn, start < starts_before)
+  }
+  
+  if (!is.null(ends_after)){
+    stn <- dplyr::filter(stn, end > ends_after)
+  }
+  
   if(!is.null(name)) {
 
     if(!quiet) if(length(name) == 2 & is.numeric(name)) {
