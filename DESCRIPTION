@@ -33,6 +33,7 @@ Suggests:
     devtools,
     ggplot2,
     ggmap,
+    htmltools,
     knitr,
     lutz,
     rmarkdown,
