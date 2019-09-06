@@ -89,7 +89,6 @@ library(weathercan)
 library(leaflet)
 library(sf)
 library(htmltools)
-library(leaflet)
 ```
 
 ### Download Manitoban Eco Regions shapefile
