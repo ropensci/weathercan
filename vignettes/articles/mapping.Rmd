@@ -2,8 +2,7 @@
 title: "Mapping weather data"
 author: "Steffi LaZerte"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-
+output: rmarkdown::html_document
 ---
 
 <style>

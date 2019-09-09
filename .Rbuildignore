@@ -21,3 +21,4 @@
 ^codemeta\.json$
 ^release_script.R$
 ^CRAN-RELEASE$
+^vignettes/articles$
