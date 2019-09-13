@@ -1,8 +1,8 @@
-#' Download weather data from Environment Canada
+#' Download weather data from Environment and Climate Change Canada
 #'
-#' Downloads data from Environment Canada for one or more stations. For details
-#' and units, see the glossary vignette (\code{vignette("glossary", package =
-#' "weathercan")}) or the glossary online
+#' Downloads data from Environment and Climate Change Canada (ECCC) for one or
+#' more stations. For details and units, see the glossary vignette
+#' (\code{vignette("glossary", package = "weathercan")}) or the glossary online
 #' \url{http://climate.weather.gc.ca/glossary_e.html}.
 #'
 #' @details Data can be returned 'raw' (format = FALSE) or can be formatted.
