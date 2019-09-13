@@ -2,6 +2,13 @@
 # stations_dl ------------------------------------------------------------
 context("stations_dl")
 
+test_that("stations_normals() gets normals info", {
+  expect_silent(n <- stations_normals(years = "1981-2010")) %>%
+    expect_is("character")
+  expect_gt(length(n), 1000)
+  expect_true(all(nchar(n) == 7))
+})
+
 test_that("stations_dl() runs and returns data", {
   skip_on_cran()
   skip_on_travis()

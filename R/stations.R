@@ -19,8 +19,10 @@
 #' @param quiet Logical. Suppress all messages (including messages regarding
 #'   missing data, etc.)
 #'
-#' @return A tibble containing station names, station ID codes and dates of
-#'   operation
+#' @inheritParams normals_dl
+#'
+#' @return A tibble containing station names, station ID codes, dates of
+#'   operation, as well as whether or not there are data on climate normals.
 #'
 #' @examples
 #'
@@ -36,7 +38,7 @@
 #'
 #' @export
 
-stations_dl <- function(url = NULL,
+stations_dl <- function(url = NULL, normals_years = "1981-2010", url_normals = NULL,
                         skip = NULL, verbose = FALSE, quiet = FALSE) {
 
   if(getRversion() <= "3.3.3") {
@@ -51,6 +53,9 @@ stations_dl <- function(url = NULL,
          "Use the code \"install.packages(c('lutz', 'sf'))\" to install.",
          call. = FALSE)
   }
+
+  # Get normals data
+  normals <- stations_normals(years = normals_years, url = url_normals)
 
   if(verbose) message("Trying to access stations data frame")
   if(is.null(url)) {
@@ -107,7 +112,7 @@ stations_dl <- function(url = NULL,
     dplyr::mutate(tz = lutz::tz_lookup_coords(lat, lon, method = "accurate"),
                   tz = purrr::map_chr(tz, ~tz_offset(.x)))
 
-  s %>%
+  s <- s %>%
     dplyr::left_join(station_tz, by = c("station_id", "lat", "lon")) %>%
     tidyr::gather(interval, date, dplyr::matches("(start)|(end)")) %>%
     tidyr::separate(interval, c("interval", "type"), sep = "_") %>%
@@ -137,7 +142,12 @@ stations_dl <- function(url = NULL,
                                            "YT"))) %>%
     tidyr::spread(type, date) %>%
     dplyr::arrange(prov, station_id, interval) %>%
+    dplyr::mutate(normals = FALSE) %>%
     dplyr::tbl_df()
+
+  s$normals[s$climate_id %in% normals] <- TRUE
+
+  s
 }
 
 #' Search for stations by name or location
@@ -262,6 +272,31 @@ stations_search <- function(name = NULL,
 
   stn
 }
+
+
+stations_normals <- function(years = "1981-2010", url = NULL) {
+
+  if(is.null(url)) url <- paste0("https://dd.meteo.gc.ca/climate/observations/",
+                                 "normals/csv")
+
+  check_normals(years)
+
+  dplyr::tibble(prov = province,
+                url = file.path(url, years, province)) %>%
+    dplyr::mutate(climate_id = purrr::map(.data$url,
+                                          ~stations_extract_normals(.))) %>%
+    dplyr::pull(climate_id) %>%
+    unlist()
+}
+
+stations_extract_normals <- function(url) {
+  xml2::read_html(url) %>%
+    rvest::html_nodes("a") %>%
+    rvest::html_text() %>%
+    stringr::str_subset(".csv") %>%
+    stringr::str_extract("[0-9A-Z]{7}")
+}
+
 
 #' @export
 stations_all <- function(url = NULL,

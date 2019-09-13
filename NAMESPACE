@@ -2,6 +2,7 @@
 
 export(add_weather)
 export(get_tz)
+export(normals_dl)
 export(stations_all)
 export(stations_dl)
 export(stations_search)

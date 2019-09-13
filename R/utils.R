@@ -7,11 +7,35 @@ tz_offset <- function(tz) {
   t
 }
 
+check_url <- function(url) {
+  h <- tryCatch(httr::GET(url), error = function(e) return("Invalid 'url'"))
+  httr::stop_for_status(h)
+}
 
 check_int <- function(interval) {
   if(!all(interval %in% c("hour", "day", "month"))) {
     stop("'interval' can only be 'hour', 'day', or 'month'")
   }
+}
+
+check_ids <- function(ids, stn, type){
+  if(any(!ids %in% stn[[type]])) {
+    stop("'", type, "'", paste0(ids[!ids %in% stn[[type]]], collapse = ", "),
+         "are not present in the stations data frame", call. = FALSE)
+  }
+}
+
+check_normals <- function(normals_years) {
+ if(!is.character(normals_years) ||
+    !stringr::str_detect(normals_years, "^[0-9]{4}-[0-9]{4}$")) {
+   stop("'normals_years' must be a text string in the format YYYY-YYYY e.g., '1981-2010'",
+        call. = FALSE)
+ }
+}
+
+find_skip <- function(headings, cols) {
+  grep(paste0("(.*?)", paste0("(", cols, ")", collapse = "(.*?)"), "(.*?)"),
+       headings) - 1
 }
 
 #' DEFUNCT: Get timezone from lat/lon

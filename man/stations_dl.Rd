@@ -5,12 +5,15 @@
 \alias{stations_all}
 \title{Get available stations}
 \usage{
-stations_dl(url = NULL, skip = NULL, verbose = FALSE,
-  quiet = FALSE)
+stations_dl(url = NULL, normals_years = "1981-2010",
+  url_normals = NULL, skip = NULL, verbose = FALSE, quiet = FALSE)
 }
 \arguments{
 \item{url}{Character. Url from which to grab the station information (see
 details)}
+
+\item{normals_years}{Character. The year range for which you want climate
+normals. Default "1981-2010".}
 
 \item{skip}{Numeric. Number of lines to skip at the beginning of the csv. If
 NULL, automatically derived.}
@@ -21,8 +24,8 @@ NULL, automatically derived.}
 missing data, etc.)}
 }
 \value{
-A tibble containing station names, station ID codes and dates of
-  operation
+A tibble containing station names, station ID codes, dates of
+  operation, as well as whether or not there are data on climate normals.
 }
 \description{
 This function can be used to download a Station Inventory CSV file from

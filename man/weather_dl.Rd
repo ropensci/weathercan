@@ -41,8 +41,8 @@ numeric measurement with. See Details.}
 \item{stn}{Data frame. The \code{stations} data frame to use. Will use the
 one included in the package unless otherwise specified.}
 
-\item{url}{Character. Url from which to grab the weather data. If NULL uses
-default url (see details)}
+\item{url}{Character. Url from which to grab the data. If NULL uses default
+url (see details)}
 
 \item{encoding}{Character. Text encoding for download.}
 

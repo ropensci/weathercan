@@ -56,8 +56,8 @@
 #'   \code{OlsonNames()}).
 #' @param stn Data frame. The \code{stations} data frame to use. Will use the
 #'   one included in the package unless otherwise specified.
-#' @param url Character. Url from which to grab the weather data. If NULL uses
-#'   default url (see details)
+#' @param url Character. Url from which to grab the data. If NULL uses default
+#'   url (see details)
 #' @param encoding Character. Text encoding for download.
 #' @param list_col Logical. Return data as nested data set? Defaults to FALSE.
 #'   Only applies if `format = TRUE`
