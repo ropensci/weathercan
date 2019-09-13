@@ -74,9 +74,8 @@ stations_dl <- function(url = NULL, normals_years = "1981-2010", url_normals = N
   }
 
   if(is.null(skip)) {
-    skip <- grep(paste0("(.*?)(Name)(.*?)(Province)(.*?)(Climate ID)(.*?)",
-                        "(Station ID)(.*?)(WMO ID)(.*?)(TC ID)(.*?)"),
-                 headings) - 1
+    skip <- find_skip(headings, cols = c("Name", "Province", "Climate ID",
+                                         "Station ID", "WMO ID", "TC ID"))
   }
 
   if(!quiet) message("According to Environment Canada, ",
