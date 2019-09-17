@@ -330,10 +330,11 @@ test_that("weather (day) verbose and quiet", {
                            start = "2017-01-01", end = "2017-02-01",
                            quiet = TRUE))
 
+  # Warning about number to character
   expect_message(weather_dl(c(42013, 51423), interval = "day",
                             start = "2017-01-01", end = "2017-02-01",
                             verbose = TRUE),
-                 "(Getting station: 42013\\n)")
+                 "<31")
 })
 
 test_that("weather (day) handles data with different numbers of columns", {

@@ -547,7 +547,7 @@ weather_format <- function(w, stn, preamble, interval = "hour",
     m <- paste0(names(num)[warn], collapse = ", ")
     non_num <- dplyr::tibble(col = names(num)[warn])
     for(i in names(num)[warn]) {
-      problems <- w[grep("<|>|\\)|\\(", w[,i]),
+      problems <- w[grep("<|>|\\)|\\(", w[[i]]),
                     names(w) %in% c("date", "year", "month",
                                     "day", "hour", "time", i)]
       if(nrow(problems) > 20) rows <- 20 else rows <- nrow(problems)
