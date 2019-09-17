@@ -25,6 +25,7 @@ Imports:
     methods (>= 3.2.2),
     purrr (>= 0.2.4),
     rlang (>= 0.1.4),
+    rvest (>= 0.3.4),
     stringi (>= 1.1.2),
     tidyr (>= 0.4.1),
     xml2 (>= 0.1.2)
