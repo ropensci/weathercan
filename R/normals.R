@@ -1,8 +1,9 @@
 #' Download climate normals from Environment and Climate Change Canada
 #'
-#' Downloads climate normals from Environment and Climate Change Canada (ECCC) for one or
-#' more stations (defined by `climate_id`s). For details and units, see the glossary-normals vignette
-#' (\code{vignette("glossary", package = "weathercan")}) or the glossary online
+#' Downloads climate normals from Environment and Climate Change Canada (ECCC)
+#' for one or more stations (defined by `climate_id`s). For details and units,
+#' see the glossary-normals vignette (\code{vignette("glossary", package =
+#' "weathercan")}) or the glossary online
 #' \url{http://climate.weather.gc.ca/glossary_e.html}.
 #'
 #' @param climate_ids Character. A vector containing the Climate ID(s) of the
@@ -13,13 +14,54 @@
 #'   normals. Default "1981-2010".
 #' @inheritParams weather_dl
 #'
+#' @details Climate normals from ECCC include two types of data, averages by
+#'   month for a variety of measurements as well as data relating to the
+#'   frost-free period. Because these two data sources are quite different, we
+#'   return them as nested data so the user can extract them as they wish.
+#'
 #' @return tibble with nested normals and first/last frost data
 #'
 #' @examples
 #'
-#' normals_dl(climate_ids = c("3010234", "3010410", "3010815"))
+#' # Find the climate_id
+#' stations_search("Brandon A", normals_only = TRUE)
 #'
-#' normals_dl(climate_ids = "5010480")
+#' # Download climate normals
+#' n <- normals_dl(climate_ids = "5010480")
+#'
+#' # Pull out last frost data
+#' library(tidyr)
+#' f <- unnest(n, "frost")
+#'
+#' # Pull out normals
+#' n <- unnest(n, "data")
+#'
+#' # Pull out both (note this can be an awkward data set)
+#' nf <- unnest(n, "frost") %>%
+#'   unnest("data")
+#'
+#' # Download multiple stations
+#' n <- normals_dl(climate_ids = c("3010234", "3010410", "3010815"))
+#' n
+#'
+#' # Note that some have files online but no data
+#' n$data[2]
+#'
+#' # Some have no last frost data
+#' n$frost[3]
+#'
+#' # To pull out all the data, use 'keep_empty' parameter (Otherwise stations
+#' # missing one or the other will be omitted)
+#' # Note: This requires `tidyr` v1
+#'
+#' if(packageVersion("tidyr") >= "1.0.0") {
+#'   unnest(n, "data", keep_empty = TRUE) %>%
+#'     unnest("frost", keep_empty = TRUE)
+#' }
+#'
+#' # Otherwise, if you don't have/don't want tidyr v1, keep the data separate
+#' n <- unnest(n, "data")
+#' f <- unnest(n, "frost")
 #'
 #' @export
 

@@ -166,6 +166,7 @@ stations_dl <- function(url = NULL, normals_years = "1981-2010", url_normals = N
 #'   \code{coords}.
 #' @param interval Character. Return only stations with data at these intervals.
 #'   Must be any of "hour", "day", "month".
+#' @param normals_only Logical. Return only stations with climate normals?
 #' @param stn Data frame. The \code{stations} data frame to use. Will use the
 #'   one included in the package unless otherwise specified.
 #' @param verbose Logical. Include progress messages
