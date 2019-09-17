@@ -22,7 +22,7 @@ test_that("stations_dl() runs and returns data", {
     expect_error({s <- stations_dl()}, regexp = NA)
     expect_warning(expect_error({stations_dl(url = "test.csv")}))
     expect_is(s, "data.frame")
-    expect_length(s, 13)
+    expect_length(s, 14)
     expect_lt(length(data.frame(s)[is.na(data.frame(s))]),
               length(data.frame(s)[!is.na(data.frame(s))]))
     expect_is(s$prov, "factor")
@@ -46,7 +46,7 @@ test_that("stations_search 'name' returns correct format", {
   expect_error(stations_search())
   expect_error(stations_search(name = mean()))
   expect_is(stations_search("XXX"), "data.frame")
-  expect_length(stations_search("XXX"), 13)
+  expect_length(stations_search("XXX"), 14)
 
 })
 
@@ -82,7 +82,7 @@ test_that("stations_search 'coords' returns correct format", {
   expect_error(stations_search(coords = 44))
   expect_message(stn <- stations_search(coords = c(54, -122)))
   expect_is(stn, "data.frame")
-  expect_length(stn, 14)
+  expect_length(stn, 15)
   expect_gt(nrow(stn), 0)
 })
 

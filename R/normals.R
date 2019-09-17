@@ -33,7 +33,8 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
   n <- dplyr::filter(stn, climate_id %in% climate_ids) %>%
     dplyr::select(.data$prov, .data$station_name,
                   .data$climate_id, .data$normals) %>%
-    dplyr::distinct()
+    dplyr::distinct() %>%
+    dplyr::mutate(climate_id = as.character(climate_id))
 
   if(nrow(n) == 0) stop("No stations matched these climate ids", call. = FALSE)
 
@@ -75,7 +76,7 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
             paste0(n$climate_id[no_data], collapse = ", "), ")")
   }
 
-  dplyr::select(n, -"n_data", -"n_frost")
+  dplyr::select(n, -"n_data", -"n_frost", -"url")
 }
 
 normals_url <- function(prov, climate_id, normals_years, url = NULL) {
@@ -198,7 +199,7 @@ frost_extract <- function(f) {
 
   # Frost free days overall
   f1 <- utils::read.csv(text = f[1:3], check.names = FALSE, header = FALSE,
-                        col.names = c("variable", "value", "code")) %>%
+                        col.names = c("variable", "value", "frost_code")) %>%
     tidyr::spread(key = "variable", value = "value")
 
   n <- f_names[f_names %in% names(f1)]

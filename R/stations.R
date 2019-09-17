@@ -198,6 +198,7 @@ stations_search <- function(name = NULL,
                             coords = NULL,
                             dist = 10,
                             interval = c("hour", "day", "month"),
+                            normals_only = FALSE,
                             stn = weathercan::stations,
                             verbose = FALSE,
                             quiet = FALSE) {
@@ -225,6 +226,8 @@ stations_search <- function(name = NULL,
   check_int(interval)
 
   stn <- dplyr::filter(stn, interval %in% !! interval, !is.na(start))
+
+  if(normals_only) stn <- dplyr::filter(stn, .data$normals == TRUE)
 
   if(!is.null(name)) {
 
