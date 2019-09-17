@@ -242,7 +242,7 @@ weather_dl <- function(station_ids,
       # Extract only most recent preamble
       preamble <- preamble_format(w$preamble[nrow(w)][[1]], s = s)
 
-      w <- dplyr::select(w, -date_range, -skip) %>%
+      w <- dplyr::select(w, -"date_range", -"skip", -"html", -"preamble") %>%
         tidyr::unnest(data)
 
       ## Format data if requested
@@ -336,16 +336,25 @@ weather_dl <- function(station_ids,
     if(list_col && format){
       w_all <- dplyr::as_tibble(w_all)
       ## Appropriate grouping levels
-      if(interval == "hour"){
-        w_all <- tidyr::nest(w_all, -dplyr::one_of(p), -date)
-      }
+      if(packageVersion("tidyr") > "0.8.99") {
+        col <- dplyr::case_when(interval == "hour" ~ "date",
+                                interval == "day" ~ "month",
+                                interval == "month" ~ "year")
 
-      if(interval == "day"){
-        w_all <- tidyr::nest(w_all, -dplyr::one_of(p), -month)
-      }
+        w_all <- tidyr::nest(w_all, key = -dplyr::one_of(p, col))
 
-      if(interval == "month"){
-        w_all <- tidyr::nest(w_all, -dplyr::one_of(p), -year)
+      } else {
+        if(interval == "hour"){
+          w_all <- tidyr::nest(w_all, -dplyr::one_of(p), -date)
+        }
+
+        if(interval == "day"){
+          w_all <- tidyr::nest(w_all, -dplyr::one_of(p), -month)
+        }
+
+        if(interval == "month"){
+          w_all <- tidyr::nest(w_all, -dplyr::one_of(p), -year)
+        }
       }
     }
   }
@@ -381,7 +390,6 @@ weather_dl <- function(station_ids,
                      collapse = "\n")))
   }
   ## Return Format messages
-
   msg_fmt <- dplyr::filter(msg_fmt, !is.na(col))
   if(!quiet && nrow(msg_fmt) > 0) {
     cols <- paste0(unique(msg_fmt$col), collapse = ", ")
@@ -399,8 +407,14 @@ weather_dl <- function(station_ids,
 
     if(verbose) {
       show <- msg_fmt %>%
-        dplyr::select(station_id, problems) %>%
-        tidyr::unnest()
+        dplyr::select(station_id, problems)
+
+      if(packageVersion("tidyr") > "0.8.99") {
+        show <- tidyr::unnest(show, "problems")
+      } else {
+        show <- tidyr::unnest(show)
+      }
+
       message("  Examples:  ")
       message(paste0("  ", utils::capture.output(show), collapse = "\n"))
     }
@@ -428,7 +442,7 @@ weather_html <- function(station_id,
                                  Month = format(date, "%m"),
                                  submit = 'Download+Data'))
   httr::stop_for_status(html)
-  return(html)
+  html
 }
 
 weather_raw <- function(html, skip = 0,
@@ -483,7 +497,7 @@ weather_format <- function(w, stn, preamble, interval = "hour",
 
   ## Replace some flagged values with NA
   w <- w %>%
-    tidyr::gather("variable", "value",
+    tidyr::gather(key = "variable", value = "value",
                   names(w)[!(names(w) %in% c("date", "year", "month", "day",
                                              "hour", "time", "qual",
                                              "weather"))]) %>%
