@@ -20,4 +20,5 @@
 ^\.github$
 ^codemeta\.json$
 ^release_script.R$
+^release_test_dependencies.R$
 ^CRAN-RELEASE$
