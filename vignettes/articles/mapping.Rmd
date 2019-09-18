@@ -2,8 +2,7 @@
 title: "Mapping weather data"
 author: "Steffi LaZerte"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-
+output: rmarkdown::html_document
 ---
 
 <style>
@@ -80,11 +79,15 @@ div.info.legend.leaflet-control br {
 ### Loading packages
 
 ```{r, message = FALSE}
-library(tidyverse)
+library(dplyr)
 library(purrr)
+library(stringr)
+library(ggplot2)
+library(tidyr)
 library(weathercan)
 library(leaflet)
 library(sf)
+library(htmltools)
 ```
 
 ### Download Manitoban Eco Regions shapefile
@@ -101,7 +104,7 @@ file.remove("./mapping_shp/ecological_shp.zip")
 We'll select all currently operating stations (`end >= 2018`) and download the daily weather data for 2017:
 
 ```{r, message = FALSE}
-mb <- dplyr::filter(stations, prov == "MB", interval == "day", end >= 2018)
+mb <- filter(stations, prov == "MB", interval == "day", end >= 2018)
 w <- weather_dl(mb$station_id, start = "2017-01-01", end = "2017-12-31", interval = "day")
 ```
 
@@ -129,7 +132,7 @@ mb_stations <- w %>%
                        "<strong>No. days total:  </strong>", n, "</div>",
                        "<img src = './mapping_svg/", station_id, ".svg'>"),
          pretty_name = map(station_name, 
-                           ~htmltools::HTML(paste0("<strong>Station: </strong>", .x)))) %>%
+                           ~HTML(paste0("<strong>Station: </strong>", .x)))) %>%
   ungroup() %>%
   st_as_sf(coords = c("lon", "lat"), crs = "+proj=longlat")
 ```
@@ -162,7 +165,7 @@ mb_ecoregions <- st_join(mb_ecoregions, mb_stations) %>%
                         paste0(info, "<img src = './mapping_svg/", ECOREGION, ".svg'>"),
                         info),
          pretty_name = map(REGION_NAM, 
-                           ~htmltools::HTML(paste0("<strong>Region: </strong>", .x)))) %>%
+                           ~HTML(paste0("<strong>Region: </strong>", .x)))) %>%
   ungroup()
 ```
 
