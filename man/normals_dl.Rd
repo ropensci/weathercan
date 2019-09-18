@@ -62,7 +62,7 @@ library(tidyr)
 f <- unnest(n, "frost")
 
 # Pull out normals
-n <- unnest(n, "data")
+nm <- unnest(n, "data")
 
 # Pull out both (note this can be an awkward data set)
 nf <- unnest(n, "frost") \%>\%
@@ -88,7 +88,7 @@ if(packageVersion("tidyr") >= "1.0.0") {
 }
 
 # Otherwise, if you don't have/don't want tidyr v1, keep the data separate
-n <- unnest(n, "data")
+nm <- unnest(n, "data")
 f <- unnest(n, "frost")
 
 }

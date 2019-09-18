@@ -336,7 +336,7 @@ weather_dl <- function(station_ids,
     if(list_col && format){
       w_all <- dplyr::as_tibble(w_all)
       ## Appropriate grouping levels
-      if(packageVersion("tidyr") > "0.8.99") {
+      if(utils::packageVersion("tidyr") > "0.8.99") {
         col <- dplyr::case_when(interval == "hour" ~ "date",
                                 interval == "day" ~ "month",
                                 interval == "month" ~ "year")
@@ -409,7 +409,7 @@ weather_dl <- function(station_ids,
       show <- msg_fmt %>%
         dplyr::select(station_id, problems)
 
-      if(packageVersion("tidyr") > "0.8.99") {
+      if(utils::packageVersion("tidyr") > "0.8.99") {
         show <- tidyr::unnest(show, "problems")
       } else {
         show <- tidyr::unnest(show)

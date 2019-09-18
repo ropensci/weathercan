@@ -288,7 +288,7 @@ stations_normals <- function(years = "1981-2010", url = NULL) {
                 url = file.path(url, years, province)) %>%
     dplyr::mutate(climate_id = purrr::map(.data$url,
                                           ~stations_extract_normals(.))) %>%
-    dplyr::pull(climate_id) %>%
+    dplyr::pull(.data$climate_id) %>%
     unlist()
 }
 

@@ -34,7 +34,7 @@
 #' f <- unnest(n, "frost")
 #'
 #' # Pull out normals
-#' n <- unnest(n, "data")
+#' nm <- unnest(n, "data")
 #'
 #' # Pull out both (note this can be an awkward data set)
 #' nf <- unnest(n, "frost") %>%
@@ -60,7 +60,7 @@
 #' }
 #'
 #' # Otherwise, if you don't have/don't want tidyr v1, keep the data separate
-#' n <- unnest(n, "data")
+#' nm <- unnest(n, "data")
 #' f <- unnest(n, "frost")
 #'
 #' @export
@@ -72,11 +72,11 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
   check_ids(climate_ids, stn, type = "climate_id")
   check_normals(normals_years)
 
-  n <- dplyr::filter(stn, climate_id %in% climate_ids) %>%
+  n <- dplyr::filter(stn, .data$climate_id %in% climate_ids) %>%
     dplyr::select(.data$prov, .data$station_name,
                   .data$climate_id, .data$normals) %>%
     dplyr::distinct() %>%
-    dplyr::mutate(climate_id = as.character(climate_id))
+    dplyr::mutate(climate_id = as.character(.data$climate_id))
 
   if(nrow(n) == 0) stop("No stations matched these climate ids", call. = FALSE)
 
@@ -84,14 +84,14 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
     stop("No stations had climate normals available", .call = FALSE)
   } else if(any(n$normals == FALSE)) {
     message("Not all stations have climate normals available (climate ids: ",
-            paste0(n$climate_id[!s$normals], collapse = ", "), ")")
+            paste0(n$climate_id[!n$normals], collapse = ", "), ")")
     n <- dplyr::filter(n, .data$normals == TRUE)
   }
 
   n <- dplyr::mutate(n, url = normals_url(.data$prov,
                                           .data$climate_id,
                                           normals_years, url)) %>%
-    dplyr::select(-normals)
+    dplyr::select(-"normals")
 
   # Get skip value
   headings <- try(readLines(con <- url(n$url[1], encoding = "latin1"), n = 20),
@@ -110,8 +110,8 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
                      data = purrr::map2(.data$data, .data$climate_id,
                                         ~ normals_extract(.x, climate_id = .y)),
                      frost = purrr::map(.data$frost, ~ frost_extract(.)),
-                     n_data = purrr::map_dbl(data, nrow),
-                     n_frost = purrr::map_dbl(frost, nrow))
+                     n_data = purrr::map_dbl(.data$data, nrow),
+                     n_frost = purrr::map_dbl(.data$frost, nrow))
 
   if(any(no_data <- n$n_data + n$n_frost == 0)) {
     message("All climate normals missing for some stations (climate_ids: ",
@@ -172,18 +172,18 @@ normals_extract <- function(n, climate_id) {
   # Line up names to deal with duplicate variable names
   n <- n %>%
     dplyr::rename("variable" = ` `) %>%
-    dplyr::mutate(variable = tolower(variable))
+    dplyr::mutate(variable = tolower(.data$variable))
 
   # Mark title variables align variable names accordingly
   nn <- dplyr::filter(n_names,
-                      stringr::str_detect(new_var, "title"),
-                      variable %in% n$variable)
-  nn <- dplyr::filter(n_names, group %in% nn$group)  # Remove missing groups
+                      stringr::str_detect(.data$new_var, "title"),
+                      .data$variable %in% n$variable)
+  nn <- dplyr::filter(n_names, .data$group %in% nn$group) # Remove missing groups
 
   # Detect missing measurements
-  missing_data <- dplyr::filter(nn, type == "unique") %>%
+  missing_data <- dplyr::filter(nn, .data$type == "unique") %>%
     dplyr::anti_join(dplyr::select(n, "variable"), by = "variable")
-  nn <- dplyr::filter(nn, !new_var %in% missing_data$new_var)
+  nn <- dplyr::filter(nn, !.data$new_var %in% missing_data$new_var)
 
   # Detect extra measurements not expected
   missing_names <- dplyr::anti_join(dplyr::select(n, "variable"),
@@ -231,7 +231,7 @@ normals_extract <- function(n, climate_id) {
   o <- names(n)[!names(n) %in% c("variable", "Code")]
   n_nice %>%
     dplyr::mutate(period = factor(.data$period, levels = o)) %>%
-    dplyr::arrange(period) %>%
+    dplyr::arrange(.data$period) %>%
     dplyr::as_tibble()
 }
 
@@ -248,9 +248,9 @@ frost_extract <- function(f) {
   f1 <- dplyr::rename(f1, !!!n) %>%
     dplyr::mutate_at(.vars = dplyr::vars(dplyr::contains("date")),
                      ~lubridate::yday(lubridate::as_date(paste0("1999", .)))) %>%
-    dplyr::mutate(length_frost_free = stringr::str_extract(length_frost_free,
-                                                           "[0-9]*"),
-                  length_frost_free = as.numeric(length_frost_free))
+    dplyr::mutate(length_frost_free =
+                    stringr::str_extract(.data$length_frost_free, "[0-9]*"),
+                  length_frost_free = as.numeric(.data$length_frost_free))
 
   # Frost free probabilities
   f2 <- utils::read.csv(text = f[4:length(f)], header = FALSE, stringsAsFactors = FALSE)

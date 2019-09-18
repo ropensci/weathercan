@@ -125,3 +125,10 @@ test_that("stations_search quiet/verbose", {
                  "Calculating station distances")
 
 })
+
+
+test_that("stations_search returns normals only", {
+  expect_silent(s <- stations_search("Brandon", normals_only = TRUE))
+  expect_gt(nrow(stations), nrow(s))
+  expect_true(all(s$normals))
+})

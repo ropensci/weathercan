@@ -20,6 +20,7 @@
   \item{interval}{Interval of the data measurements ('hour', 'day', 'month')}
   \item{start}{Starting year of data record}
   \item{end}{Ending year of data record}
+  \item{normals}{Whether climate normals are available for that station}
 }}
 \source{
 \url{http://climate.weather.gc.ca/index_e.html}
