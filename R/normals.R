@@ -19,6 +19,10 @@
 #'   frost-free period. Because these two data sources are quite different, we
 #'   return them as nested data so the user can extract them as they wish.
 #'
+#' Climate normals are downloaded from the url stored in
+#' `getOption("weathercan.urls.normals")`. To change this location use
+#' `options(weathercan.urls.normals = "your_new_url")`.
+#'
 #' @return tibble with nested normals and first/last frost data
 #'
 #' @examples
@@ -67,7 +71,7 @@
 
 normals_dl <- function(climate_ids, normals_years = "1981-2010",
                        format = TRUE, stn = weathercan::stations,
-                       url = NULL, verbose = FALSE, quiet = FALSE) {
+                       verbose = FALSE, quiet = FALSE) {
 
   check_ids(climate_ids, stn, type = "climate_id")
   check_normals(normals_years)
@@ -88,28 +92,32 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
     n <- dplyr::filter(n, .data$normals == TRUE)
   }
 
-  n <- dplyr::mutate(n, url = normals_url(.data$prov,
-                                          .data$climate_id,
-                                          normals_years, url)) %>%
+  n <- dplyr::mutate(n,
+                     loc = normals_url(.data$prov,
+                                       .data$climate_id,
+                                       normals_years)) %>%
     dplyr::select(-"normals")
 
   # Get skip value
-  headings <- try(readLines(con <- url(n$url[1], encoding = "latin1"), n = 20),
+  headings <- try(readLines(con <- url(n[['loc']][1], encoding = "latin1"), n = 20),
                   silent = TRUE)
   close(con)
 
   if("try-error" %in% class(headings)) {
-    stop("'url' must point to a csv file either local or online.")
+    stop("The link in `options(\"weathecan.urls.normals\")` ",
+         "must point to the site where climate normals are stored by province",
+         call. = FALSE)
   }
   skip <- find_skip(headings, cols = c("Jan", "Feb", "Mar"))
 
   # Download data
   n <- dplyr::mutate(n,
-                     data = purrr::map(.data$url, ~ normals_raw(., skip)),
+                     data = purrr::map(.data$loc, ~ normals_raw(., skip)),
                      frost = purrr::map(.data$data, ~ frost_find(.)),
                      data = purrr::map2(.data$data, .data$climate_id,
                                         ~ normals_extract(.x, climate_id = .y)),
-                     frost = purrr::map(.data$frost, ~ frost_extract(.)),
+                     frost = purrr::map2(.data$frost, .data$climate_id,
+                                         ~ frost_extract(.x, climate_id = .y)),
                      n_data = purrr::map_dbl(.data$data, nrow),
                      n_frost = purrr::map_dbl(.data$frost, nrow))
 
@@ -118,41 +126,37 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
             paste0(n$climate_id[no_data], collapse = ", "), ")")
   }
 
-  dplyr::select(n, -"n_data", -"n_frost", -"url")
+  dplyr::select(n, -"n_data", -"n_frost", -"loc")
 }
 
-normals_url <- function(prov, climate_id, normals_years, url = NULL) {
-  if(is.null(url)) {
-    url <- paste0("https://dd.meteo.gc.ca/climate/observations/",
-                  "normals/csv")
-  } else {
-    check_url(url)
-  }
+normals_url <- function(prov, climate_id, normals_years) {
 
-  url <- paste0(url, "/", normals_years)
+  check_url(getOption("weathercan.urls.normals"))
+
+  loc <- paste0(getOption("weathercan.urls.normals"), "/", normals_years)
 
   # Check if year-range present
-  if(httr::http_error(httr::GET(url))) {
+  if(httr::http_error(httr::GET(loc))) {
     stop("Climate normals are not available for years ", normals_years, call. = FALSE)
   }
-  paste0(url, "/", prov,
+  paste0(loc, "/", prov,
          "/climate_normals_", prov, "_", climate_id, "_", normals_years, ".csv")
 }
 
-normals_raw <- function(url, skip = 14,
+normals_raw <- function(loc, skip = 14,
                         nrows = -1,
                         header = TRUE) {
 
   # Check if file present
-  status <- httr::GET(url)
+  status <- httr::GET(loc)
   httr::stop_for_status(status,
                         paste0("access climate normals for this ",
                                "station (climate id: " ,
-                               stringr::str_extract(url, "[0-9A-Z]{7}"),
+                               stringr::str_extract(loc, "[0-9A-Z]{7}"),
                                ")"))
 
   # Download file
-  d <- readLines(con <- url(url, encoding = "latin1"), n = nrows)
+  d <- readLines(con <- url(loc, encoding = "latin1"), n = nrows)
   close(con)
   if(!is.null(skip)) d <- d[(skip + 1):length(d)]
   d

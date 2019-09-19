@@ -25,7 +25,7 @@ data frame or the \code{\link{stations_search}} function to find IDs.}
 "month".}
 
 \item{trim}{Logical. Trim missing values from the start and end of the
-weather dataframe. Only applies if `format = TRUE`}
+weather dataframe. Only applies if \code{format = TRUE}}
 
 \item{format}{Logical. If TRUE, formats data for immediate use. If FALSE,
 returns data exactly as downloaded from Environment and Climate Change
@@ -41,13 +41,12 @@ numeric measurement with. See Details.}
 \item{stn}{Data frame. The \code{stations} data frame to use. Will use the
 one included in the package unless otherwise specified.}
 
-\item{url}{Character. Url from which to grab the data. If NULL uses default
-url (see details)}
+\item{url}{DEPRECATED. To set a different url use \code{options()} (see details).}
 
 \item{encoding}{Character. Text encoding for download.}
 
 \item{list_col}{Logical. Return data as nested data set? Defaults to FALSE.
-Only applies if `format = TRUE`}
+Only applies if \code{format = TRUE}}
 
 \item{verbose}{Logical. Include progress messages}
 
@@ -65,34 +64,35 @@ more stations. For details and units, see the glossary vignette
 }
 \details{
 Data can be returned 'raw' (format = FALSE) or can be formatted.
-  Formatting transforms dates/times to date/time class, renames columns, and
-  converts data to numeric where possible. If character strings are contained
-  in traditionally numeric fields (e.g., weather speed may have values such
-  as "< 30"), they can be replaced with a character specified by `string_as`.
-  The default is NA. Formatting also replaces data associated with certain
-  flags with NA (M = Missing).
+Formatting transforms dates/times to date/time class, renames columns, and
+converts data to numeric where possible. If character strings are contained
+in traditionally numeric fields (e.g., weather speed may have values such
+as "< 30"), they can be replaced with a character specified by \code{string_as}.
+The default is NA. Formatting also replaces data associated with certain
+flags with NA (M = Missing).
 
-  Start and end date can be specified, but if not, it will default to the
-  start and end date of the range (this could result in downloading a lot of
-  data!).
+Start and end date can be specified, but if not, it will default to the
+start and end date of the range (this could result in downloading a lot of
+data!).
 
-  Times are returned as the Etc/GMT offset timezone corresponding to the
-  location. This does not include daylight savings. However, for
-  compatibility with other data sets, timezones can be converted by
-  specifying the desired timezone in `tz_disp`.
+Times are returned as the Etc/GMT offset timezone corresponding to the
+location. This does not include daylight savings. However, for
+compatibility with other data sets, timezones can be converted by
+specifying the desired timezone in \code{tz_disp}.
 
-  By default, downloads from
-  "http://climate.weather.gc.ca/climate_data/bulk_data_e.html"
+Files are downloaded from the url stored in
+\code{getOption("weathercan.urls.weather")}. To change this location use
+\code{options(weathercan.urls.weather = "your_new_url")}.
 
-  Data is downloaded from ECCC as a series of files which are then bound
-  together. Each file corresponds to a different month, or year, depending on
-  the interval. Metadata (station name, lat, lon, elevation, etc.) is
-  extracted from the start of the most recent file (i.e. most recent dates)
-  for a given station. Note that important data (i.e. station name, lat, lon)
-  is unlikely to change between files (i.e. dates), but some data may or may
-  not be available depending on the date of the file (e.g., station operator
-  was added as of April 1st 2018, so will be in all data which includes dates
-  on or after April 2018).
+Data is downloaded from ECCC as a series of files which are then bound
+together. Each file corresponds to a different month, or year, depending on
+the interval. Metadata (station name, lat, lon, elevation, etc.) is
+extracted from the start of the most recent file (i.e. most recent dates)
+for a given station. Note that important data (i.e. station name, lat, lon)
+is unlikely to change between files (i.e. dates), but some data may or may
+not be available depending on the date of the file (e.g., station operator
+was added as of April 1st 2018, so will be in all data which includes dates
+on or after April 2018).
 }
 \examples{
 

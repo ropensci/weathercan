@@ -78,6 +78,16 @@ NULL
 # Dealing with CRAN Notes due to Non-standard evaluation
 .onLoad <- function(libname = find.package("weathercan"),
                     pkgname = "weathercan"){
+
+  options(weathercan.urls.weather =
+            "http://climate.weather.gc.ca/climate_data/bulk_data_e.html",
+          weathercan.urls.normals =
+            "https://dd.meteo.gc.ca/climate/observations/normals/csv",
+          weathercan.urls.stations =
+            paste0("ftp://client_climate@ftp.tor.ec.gc.ca/",
+                   "Pub/Get_More_Data_Plus_de_donnees/",
+                   "Station%20Inventory%20EN.csv"))
+
   # CRAN Note avoidance
   if(getRversion() >= "2.15.1")
     utils::globalVariables(

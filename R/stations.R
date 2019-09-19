@@ -7,12 +7,16 @@
 #' compiled. This function may take a few minutes to run.
 #'
 #' @details
-#' URL defaults to
-#' ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/
-#' Station%20Inventory%20EN.csv unless otherwise specified
 #'
-#' @param url Character. Url from which to grab the station information (see
-#'   details)
+#' The stations list is downloaded from the url stored in
+#' `getOption("weathercan.urls.stations")`. To change this location use
+#' `options(weathercan.urls.stations = "your_new_url")`.
+#'
+#' The list of which stations have climate normals is downloaded from the url
+#' stored in `getOption("weathercan.urls.normals")`. To change this location use
+#' `options(weathercan.urls.normals = "your_new_url")`.
+#'
+#' @param url DEPRECATED. To set a different url use `options()` (see details).
 #' @param skip Numeric. Number of lines to skip at the beginning of the csv. If
 #'   NULL, automatically derived.
 #' @param verbose Logical. Include progress messages
@@ -38,12 +42,18 @@
 #'
 #' @export
 
-stations_dl <- function(url = NULL, normals_years = "1981-2010", url_normals = NULL,
+stations_dl <- function(url = NULL, normals_years = "1981-2010",
                         skip = NULL, verbose = FALSE, quiet = FALSE) {
 
   if(getRversion() <= "3.3.3") {
     message("Need R version 3.3.4 or greater to update the stations data")
     return()
+  }
+
+  if(!is.null(url)) {
+    warning("'url' is deprecated, use ",
+            "`options(weathercan.url.stations = \"your_new_url\")` instead",
+            .call = FALSE)
   }
 
   if(!requireNamespace("lutz", quietly = TRUE) |
@@ -55,22 +65,21 @@ stations_dl <- function(url = NULL, normals_years = "1981-2010", url_normals = N
   }
 
   # Get normals data
-  normals <- stations_normals(years = normals_years, url = url_normals)
+  normals <- stations_normals(years = normals_years)
 
   if(verbose) message("Trying to access stations data frame")
-  if(is.null(url)) {
-    url <- paste0("ftp://client_climate@ftp.tor.ec.gc.ca/",
-                  "Pub/Get_More_Data_Plus_de_donnees/",
-                  "Station%20Inventory%20EN.csv")
-    if(suppressWarnings(
-      httr::http_error("ftp://client_climate@ftp.tor.ec.gc.ca"))) {
-      stop("Cannot reach ECCC ftp site, please try again later", call. = FALSE)
-    }
+
+  u <- httr::parse_url(getOption("weathercan.urls.stations"))
+  u$path <- NULL
+  if(httr::http_error(httr::build_url(u))) {
+    stop("Cannot reach ECCC ftp site, please try again later", call. = FALSE)
   }
 
-  headings <- try(readLines(url, n = 5), silent = TRUE)
+  headings <- try(readLines(getOption("weathercan.urls.stations"), n = 5),
+                  silent = TRUE)
   if("try-error" %in% class(headings)) {
-    stop("'url' must point to a csv file either local or online.")
+    stop("`options(\"weathercan.urls.stations\")` must point to a ",
+         "csv file either local or online", call. = FALSE)
   }
 
   if(is.null(skip)) {
@@ -86,9 +95,9 @@ stations_dl <- function(url = NULL, normals_years = "1981-2010", url_normals = N
 
   if(verbose) message("Downloading stations data frame")
 
-  s <- utils::read.csv(file = url,
-                         skip = skip,
-                         strip.white = TRUE) %>%
+  s <- utils::read.csv(file = getOption("weathercan.urls.stations"),
+                       skip = skip,
+                       strip.white = TRUE) %>%
     dplyr::select(prov = Province,
                   station_name = Name,
                   station_id = Station.ID,
@@ -277,23 +286,21 @@ stations_search <- function(name = NULL,
 }
 
 
-stations_normals <- function(years = "1981-2010", url = NULL) {
-
-  if(is.null(url)) url <- paste0("https://dd.meteo.gc.ca/climate/observations/",
-                                 "normals/csv")
+stations_normals <- function(years = "1981-2010") {
 
   check_normals(years)
 
   dplyr::tibble(prov = province,
-                url = file.path(url, years, province)) %>%
-    dplyr::mutate(climate_id = purrr::map(.data$url,
+                loc = file.path(getOption("weathercan.urls.normals"),
+                                years, province)) %>%
+    dplyr::mutate(climate_id = purrr::map(.data$loc,
                                           ~stations_extract_normals(.))) %>%
     dplyr::pull(.data$climate_id) %>%
     unlist()
 }
 
-stations_extract_normals <- function(url) {
-  xml2::read_html(url) %>%
+stations_extract_normals <- function(loc) {
+  xml2::read_html(loc) %>%
     rvest::html_nodes("a") %>%
     rvest::html_text() %>%
     stringr::str_subset(".csv") %>%

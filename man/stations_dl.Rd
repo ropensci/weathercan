@@ -5,12 +5,11 @@
 \alias{stations_all}
 \title{Get available stations}
 \usage{
-stations_dl(url = NULL, normals_years = "1981-2010",
-  url_normals = NULL, skip = NULL, verbose = FALSE, quiet = FALSE)
+stations_dl(url = NULL, normals_years = "1981-2010", skip = NULL,
+  verbose = FALSE, quiet = FALSE)
 }
 \arguments{
-\item{url}{Character. Url from which to grab the station information (see
-details)}
+\item{url}{DEPRECATED. To set a different url use \code{options()} (see details).}
 
 \item{normals_years}{Character. The year range for which you want climate
 normals. Default "1981-2010".}
@@ -25,7 +24,7 @@ missing data, etc.)}
 }
 \value{
 A tibble containing station names, station ID codes, dates of
-  operation, as well as whether or not there are data on climate normals.
+operation, as well as whether or not there are data on climate normals.
 }
 \description{
 This function can be used to download a Station Inventory CSV file from
@@ -35,9 +34,13 @@ in this package contains station data downloaded when the package was last
 compiled. This function may take a few minutes to run.
 }
 \details{
-URL defaults to
-ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/
-Station%20Inventory%20EN.csv unless otherwise specified
+The stations list is downloaded from the url stored in
+\code{getOption("weathercan.urls.stations")}. To change this location use
+\code{options(weathercan.urls.stations = "your_new_url")}.
+
+The list of which stations have climate normals is downloaded from the url
+stored in \code{getOption("weathercan.urls.normals")}. To change this location use
+\code{options(weathercan.urls.normals = "your_new_url")}.
 }
 \examples{
 

@@ -5,8 +5,7 @@
 \title{Download climate normals from Environment and Climate Change Canada}
 \usage{
 normals_dl(climate_ids, normals_years = "1981-2010", format = TRUE,
-  stn = weathercan::stations, url = NULL, verbose = FALSE,
-  quiet = FALSE)
+  stn = weathercan::stations, verbose = FALSE, quiet = FALSE)
 }
 \arguments{
 \item{climate_ids}{Character. A vector containing the Climate ID(s) of the
@@ -25,9 +24,6 @@ of data downloads.}
 \item{stn}{Data frame. The \code{stations} data frame to use. Will use the
 one included in the package unless otherwise specified.}
 
-\item{url}{Character. Url from which to grab the data. If NULL uses default
-url (see details)}
-
 \item{verbose}{Logical. Include progress messages}
 
 \item{quiet}{Logical. Suppress all messages (including messages regarding
@@ -38,16 +34,20 @@ tibble with nested normals and first/last frost data
 }
 \description{
 Downloads climate normals from Environment and Climate Change Canada (ECCC)
-for one or more stations (defined by `climate_id`s). For details and units,
+for one or more stations (defined by \code{climate_id}s). For details and units,
 see the glossary-normals vignette (\code{vignette("glossary", package =
 "weathercan")}) or the glossary online
 \url{http://climate.weather.gc.ca/glossary_e.html}.
 }
 \details{
 Climate normals from ECCC include two types of data, averages by
-  month for a variety of measurements as well as data relating to the
-  frost-free period. Because these two data sources are quite different, we
-  return them as nested data so the user can extract them as they wish.
+month for a variety of measurements as well as data relating to the
+frost-free period. Because these two data sources are quite different, we
+return them as nested data so the user can extract them as they wish.
+
+Climate normals are downloaded from the url stored in
+\code{getOption("weathercan.urls.normals")}. To change this location use
+\code{options(weathercan.urls.normals = "your_new_url")}.
 }
 \examples{
 

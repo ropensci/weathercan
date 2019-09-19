@@ -2,8 +2,8 @@
 #'
 #' Downloads data from Environment and Climate Change Canada (ECCC) for one or
 #' more stations. For details and units, see the glossary vignette
-#' (\code{vignette("glossary", package = "weathercan")}) or the glossary online
-#' \url{http://climate.weather.gc.ca/glossary_e.html}.
+#' (`vignette("glossary", package = "weathercan")`) or the glossary online
+#' <http://climate.weather.gc.ca/glossary_e.html>.
 #'
 #' @details Data can be returned 'raw' (format = FALSE) or can be formatted.
 #'   Formatting transforms dates/times to date/time class, renames columns, and
@@ -22,8 +22,9 @@
 #'   compatibility with other data sets, timezones can be converted by
 #'   specifying the desired timezone in `tz_disp`.
 #'
-#'   By default, downloads from
-#'   "http://climate.weather.gc.ca/climate_data/bulk_data_e.html"
+#'   Files are downloaded from the url stored in
+#'   `getOption("weathercan.urls.weather")`. To change this location use
+#'   `options(weathercan.urls.weather = "your_new_url")`.
 #'
 #'   Data is downloaded from ECCC as a series of files which are then bound
 #'   together. Each file corresponds to a different month, or year, depending on
@@ -56,8 +57,7 @@
 #'   \code{OlsonNames()}).
 #' @param stn Data frame. The \code{stations} data frame to use. Will use the
 #'   one included in the package unless otherwise specified.
-#' @param url Character. Url from which to grab the data. If NULL uses default
-#'   url (see details)
+#' @param url DEPRECATED. To set a different url use `options()` (see details).
 #' @param encoding Character. Text encoding for download.
 #' @param list_col Logical. Return data as nested data set? Defaults to FALSE.
 #'   Only applies if `format = TRUE`
@@ -105,8 +105,11 @@ weather_dl <- function(station_ids,
                        verbose = FALSE,
                        quiet = FALSE) {
 
-  if(is.null(url)) url <- paste0("http://climate.weather.gc.ca/",
-                                 "climate_data/bulk_data_e.html")
+  if(!is.null(url)) {
+    warning("'url' is deprecated, use ",
+            "`options(weathercan.url.weather = \"your_new_url\")` instead",
+            .call = FALSE)
+  }
 
   # Address as.POSIXct...
   if((!is.null(start) &
@@ -225,8 +228,7 @@ weather_dl <- function(station_ids,
       dplyr::mutate(html = purrr::map(date_range,
                                       ~ weather_html(station_id = s,
                                                      date = .x,
-                                                     interval = interval,
-                                                     url = url)),
+                                                     interval = interval)),
                     preamble = purrr::map(html, ~ preamble_raw(.x,
                                                                encoding =
                                                                  encoding)),
@@ -426,13 +428,9 @@ weather_dl <- function(station_ids,
 
 weather_html <- function(station_id,
                          date,
-                         interval = "hour",
-                         url = NULL) {
+                         interval = "hour") {
 
-  if(is.null(url)) url <- paste0("http://climate.weather.gc.ca/",
-                                 "climate_data/bulk_data_e.html")
-
-  html <- httr::GET(url,
+  html <- httr::GET(url = getOption("weathercan.url.weather"),
                     query = list(format = 'csv',
                                  stationID = station_id,
                                  timeframe = ifelse(interval == "hour", 1,
