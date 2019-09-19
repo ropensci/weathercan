@@ -107,7 +107,7 @@ weather_dl <- function(station_ids,
 
   if(!is.null(url)) {
     warning("'url' is deprecated, use ",
-            "`options(weathercan.url.weather = \"your_new_url\")` instead",
+            "`options(weathercan.urls.weather = \"your_new_url\")` instead",
             .call = FALSE)
   }
 
@@ -430,7 +430,7 @@ weather_html <- function(station_id,
                          date,
                          interval = "hour") {
 
-  html <- httr::GET(url = getOption("weathercan.url.weather"),
+  html <- httr::GET(url = getOption("weathercan.urls.weather"),
                     query = list(format = 'csv',
                                  stationID = station_id,
                                  timeframe = ifelse(interval == "hour", 1,

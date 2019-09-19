@@ -52,7 +52,7 @@ stations_dl <- function(url = NULL, normals_years = "1981-2010",
 
   if(!is.null(url)) {
     warning("'url' is deprecated, use ",
-            "`options(weathercan.url.stations = \"your_new_url\")` instead",
+            "`options(weathercan.urls.stations = \"your_new_url\")` instead",
             .call = FALSE)
   }
 
