@@ -612,21 +612,3 @@ preamble_format <- function(preamble, s) {
                   lon = as.numeric(as.character(lon)),
                   elev = as.numeric(as.character(elev)))
 }
-
-
-#' @export
-weather <- function(station_ids,
-                    start = NULL, end = NULL,
-                    interval = "hour",
-                    trim = TRUE,
-                    format = TRUE,
-                    string_as = NA,
-                    tz_disp = NULL,
-                    stn = weathercan::stations,
-                    url = NULL,
-                    encoding = "UTF-8",
-                    list_col = FALSE,
-                    verbose = FALSE,
-                    quiet = FALSE) {
-  .Deprecated("weather_dl")
-}

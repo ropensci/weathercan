@@ -306,10 +306,3 @@ stations_extract_normals <- function(loc) {
     stringr::str_subset(".csv") %>%
     stringr::str_extract("[0-9A-Z]{7}")
 }
-
-
-#' @export
-stations_all <- function(url = NULL,
-                         skip = NULL, verbose = FALSE, quiet = FALSE) {
-  .Deprecated("stations_dl")
-}
