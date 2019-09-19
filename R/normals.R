@@ -167,7 +167,7 @@ normals_extract <- function(n, climate_id) {
   # Read normals
   n <- utils::read.csv(text = n, check.names = FALSE, stringsAsFactors = FALSE)
 
-  if(nrow(n) == 0) return(data.frame())
+  if(nrow(n) == 0) return(dplyr::tibble())
 
   # Line up names to deal with duplicate variable names
   n <- n %>%
@@ -178,29 +178,51 @@ normals_extract <- function(n, climate_id) {
   nn <- dplyr::filter(n_names,
                       stringr::str_detect(.data$new_var, "title"),
                       .data$variable %in% n$variable)
-  nn <- dplyr::filter(n_names, .data$group %in% nn$group) # Remove missing groups
+  # Remove missing groups
+  nn <- dplyr::filter(n_names, .data$group %in% nn$group)
 
   # Detect missing measurements
   missing_data <- dplyr::filter(nn, .data$type == "unique") %>%
     dplyr::anti_join(dplyr::select(n, "variable"), by = "variable")
   nn <- dplyr::filter(nn, !.data$new_var %in% missing_data$new_var)
 
+  # Remove leftover missing subgroups
+  nn <- dplyr::group_by(nn, .data$subgroup) %>%
+    dplyr::filter(!all(.data$type == "sub")) %>%
+    dplyr::ungroup()
+
+  # Make subgroups unique
+  n <- dplyr::left_join(n,
+                        dplyr::filter(nn, type != "sub") %>%
+                          dplyr::select("variable", "subgroup"),
+                        by = "variable")
+  for(i in 1:nrow(n)) {
+    if(is.na(n[["subgroup"]][i])) n[["subgroup"]][i] <- n[["subgroup"]][i-1]
+  }
+
+  n <- dplyr::mutate(n, variable_sub =
+                       paste0(.data$variable, "_", .data$subgroup))
+
   # Detect extra measurements not expected
-  missing_names <- dplyr::anti_join(dplyr::select(n, "variable"),
-                                    nn, by = "variable")
+  missing_names <- dplyr::anti_join(dplyr::select(n, "variable_sub"),
+                                    nn, by = "variable_sub")
 
   if(nrow(missing_names) > 0) {
     stop("Not all variables for climate station ", climate_id,
-         " were identified. Please report this here: ",
+         " were identified.\nPlease report this here: ",
+         "https://github.com/ropensci/weathercan/issues", call. = FALSE)
+  } else if (nrow(nn) != nrow(n)) {
+    stop("Variables for climate station ", climate_id,
+         " were misidentified. Please report this here: ",
          "https://github.com/ropensci/weathercan/issues", call. = FALSE)
   }
 
-  # Add new, unique measurement names
-  n_nice <- n %>%
-    dplyr::mutate(new_var = nn$new_var)
+  # Join new, unique measurement names by sub labels
+  n_nice <- dplyr::left_join(n, dplyr::select(nn, "new_var", "variable_sub"),
+                             by = "variable_sub")
 
-  # Check name order
-  if(!all(nn$variable[nn$new_var %in% n_nice$new_var] == n$variable)) {
+  # Check for problems
+  if(!all(nn$variable[nn$new_var %in% n_nice$new_var] %in% n$variable)) {
     stop("Variable names did not align correctly during formating, ",
          "consider using 'format = FALSE' and/or reporting this error.",
          .call = FALSE)
@@ -235,40 +257,76 @@ normals_extract <- function(n, climate_id) {
     dplyr::as_tibble()
 }
 
-frost_extract <- function(f) {
+frost_extract <- function(f, climate_id) {
 
-  if(all(f == "")) return(data.frame())
+  if(all(f == "")) return(dplyr::tibble())
+
+  frost_free <- stringr::str_which(f, f_names$variable[f_names$group == 1][1])
+  frost_probs <- stringr::str_which(f, f_names$variable[f_names$group == 2][1])
 
   # Frost free days overall
-  f1 <- utils::read.csv(text = f[1:3], check.names = FALSE, header = FALSE,
-                        col.names = c("variable", "value", "frost_code")) %>%
-    tidyr::spread(key = "variable", value = "value")
+  if(length(frost_free) > 0) {
+    if(length(frost_probs) == 0) last <- length(f) else last <- frost_probs - 1
 
-  n <- f_names[f_names %in% names(f1)]
-  f1 <- dplyr::rename(f1, !!!n) %>%
-    dplyr::mutate_at(.vars = dplyr::vars(dplyr::contains("date")),
-                     ~lubridate::yday(lubridate::as_date(paste0("1999", .)))) %>%
-    dplyr::mutate(length_frost_free =
-                    stringr::str_extract(.data$length_frost_free, "[0-9]*"),
-                  length_frost_free = as.numeric(.data$length_frost_free))
+    f1 <- utils::read.csv(text = f[frost_free:last],
+                          check.names = FALSE, header = FALSE,
+                          col.names = c("variable", "value", "frost_code")) %>%
+      tidyr::spread(key = "variable", value = "value")
+
+    n <- tibble_to_list(f_names[f_names$variable %in% names(f1),
+                                c("new_var", "variable")])
+    f1 <- dplyr::rename(f1, !!!n) %>%
+      dplyr::mutate_at(.vars = dplyr::vars(dplyr::contains("date")),
+                       ~lubridate::yday(lubridate::as_date(paste0("1999", .)))) %>%
+      dplyr::mutate(length_frost_free =
+                      stringr::str_extract(.data$length_frost_free, "[0-9]*"),
+                    length_frost_free = as.numeric(.data$length_frost_free))
+  } else f1 <- na_tibble(f_names$new_var[f_names$group == 1])
 
   # Frost free probabilities
-  f2 <- utils::read.csv(text = f[4:length(f)], header = FALSE, stringsAsFactors = FALSE)
-  f2 <- data.frame(prob = rep(c("10%", "25%", "33%", "50%", "66%", "75%", "90%"), 3),
-                   value = c(t(f2[2, 2:8]), t(f2[4, 2:8]), t(f2[6, 2:8])),
-                   measure = c(rep(f2[1,1], 7), rep(f2[3,1], 7), rep(f2[5,1], 7))) %>%
-    tidyr::spread("measure", "value")
+  if(length(frost_probs) > 0) {
+    f2 <- utils::read.csv(text = f[frost_probs:length(f)],
+                          header = FALSE, stringsAsFactors = FALSE)
+    f2 <- data.frame(prob = rep(c("10%", "25%", "33%", "50%",
+                                  "66%", "75%", "90%"), 3),
+                     value = c(t(f2[2, 2:8]), t(f2[4, 2:8]), t(f2[6, 2:8])),
+                     measure = c(rep(f2[1,1], 7), rep(f2[3,1], 7),
+                                 rep(f2[5,1], 7))) %>%
+      tidyr::spread("measure", "value")
 
-  n <- f_names[f_names %in% names(f2)]
-  f2 <- dplyr::rename(f2, !!n)
+    n <- tibble_to_list(f_names[f_names$variable %in% names(f2),
+                                c("new_var", "variable")])
 
-  cbind(f1, f2)
+    f2 <- dplyr::rename(f2, !!n)
+  } else f2 <- na_tibble(f_names$new_var[f_names$group == 2])
+
+  if(nrow(f1) == 0 & nrow(f2) == 0) {
+    r <- cbind(f1, f2)
+  } else {
+    r <- dplyr::full_join(
+      dplyr::mutate(f1, climate_id = climate_id),
+      dplyr::mutate(f2, climate_id = climate_id), by = "climate_id") %>%
+      dplyr::select(-climate_id)
+  }
+
+  dplyr::as_tibble(r)
 }
 
 frost_find <- function(n, type = "extract") {
+
   frost <- stringr::str_which(n, "station data \\(Frost-Free\\)")
+
+  # If no frost-free title, look for next measurement
+
+  if(length(frost) == 0) {
+    for(i in f_names$variable) {
+      frost <- stringr::str_which(n, i)
+      if(length(frost) != 0) break
+    }
+  }
+
   if(length(frost) == 1) {
-    if(type == "extract") r <- n[(frost + 2):length(n)]
+    if(type == "extract") r <- n[(frost):length(n)]
     if(type == "remove") r <- n[1:(frost-1)]
   } else {
     if(type == "extract") r <- ""

@@ -4,7 +4,11 @@ author: "Steffi LaZerte"
 output: html_document
 ---
 
-# weathercan 0.2.8.9000 (2019-02-25)
+# weathercan 0.3.0 (2019-09-27)
+
+## Big changes
+- New function: `normals_dl()` function downloads climate normals
+- New argument: `stations_search()` has `normals_only` to return only stations with climate normals
 
 ## Bug fixes
 - Fix bug #69 which resulted in daily downloads missing partial years when the date range spaned two calendar years

@@ -38,6 +38,16 @@ find_skip <- function(headings, cols) {
        headings) - 1
 }
 
+na_tibble <- function(cols) {
+  n <- as.list(rep(as.numeric(NA), length(cols))) %>%
+    stats::setNames(cols)
+  dplyr::tibble(!!!n)
+}
+
+tibble_to_list <- function(tbl) {
+  stats::setNames(tbl[[2]], tbl[[1]])
+}
+
 #' DEFUNCT: Get timezone from lat/lon
 #'
 #' Accessed Google API to determine local timezone from coordinates. Defunct
