@@ -20,7 +20,7 @@ test_that("stations_dl() runs and returns data", {
   } else if(getRversion() >= "3.3.4") {
     # If get message about not reachable, try again
     expect_error({s <- stations_dl()}, regexp = NA)
-    expect_warning(expect_error({stations_dl(url = "test.csv")}))
+    expect_warning(stations_dl(url = "test.csv"))
     expect_is(s, "data.frame")
     expect_length(s, 14)
     expect_lt(length(data.frame(s)[is.na(data.frame(s))]),
