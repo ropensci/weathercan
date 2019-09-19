@@ -159,10 +159,10 @@ stations_dl <- function(url = NULL,
 #'   Must be any of "hour", "day", "month".
 #' @param stn Data frame. The \code{stations} data frame to use. Will use the
 #'   one included in the package unless otherwise specified.
-#' @param starts_before Numeric. Restrict results to stations with data collection
-#' beginning before the specified year.
-#' @param ends_after Numeric. Restrict results to stations with data collection
-#' ending after the specified year.
+#' @param starts_latest Numeric. Restrict results to stations with data collection
+#' beginning in or before the specified year.
+#' @param ends_earliest Numeric. Restrict results to stations with data collection
+#' ending in or after the specified year.
 #' @param verbose Logical. Include progress messages
 #' @param quiet Logical. Suppress all messages (including messages regarding
 #'   missing data, etc.)
@@ -181,6 +181,7 @@ stations_dl <- function(url = NULL,
 #' stations_search(name = "Kamloops", interval = "hour")
 #'
 #' stations_search(coords = c(53.915495, -122.739379))
+#' stations_search(name='Ottawa', starts_latest=1950, ends_earliest=2010)
 #'
 #' \donttest{
 #' loc <- ggmap::geocode("Prince George, BC")
@@ -194,8 +195,8 @@ stations_search <- function(name = NULL,
                             dist = 10,
                             interval = c("hour", "day", "month"),
                             stn = weathercan::stations,
-                            starts_before = NULL,
-                            ends_after = NULL,
+                            starts_latest = NULL,
+                            ends_earliest = NULL,
                             verbose = FALSE,
                             quiet = FALSE) {
   if(all(is.null(name), is.null(coords)) |
@@ -222,15 +223,27 @@ stations_search <- function(name = NULL,
   check_int(interval)
 
   stn <- dplyr::filter(stn, interval %in% !! interval, !is.na(start))
-  
-  if (!is.null(starts_before)){
-    stn <- dplyr::filter(stn, start < starts_before)
+
+  if (!is.null(starts_latest)){
+    suppressWarnings({
+      starts_latest <- try(as.numeric(as.numeric(starts_latest)), silent = TRUE)
+      })
+    if (is.na(starts_latest)){
+      stop("'starts_latest' needs to be coercible into numeric")
+    }
+    stn <- dplyr::filter(stn, start <= starts_latest)
   }
-  
-  if (!is.null(ends_after)){
-    stn <- dplyr::filter(stn, end > ends_after)
+
+  if (!is.null(ends_earliest)){
+    suppressWarnings({
+      ends_earliest <- try(as.numeric(as.numeric(ends_earliest)), silent = TRUE)
+    })
+    if (is.na(ends_earliest)){
+      stop("'ends_earliest' needs to be coercible into numeric")
+    }
+    stn <- dplyr::filter(stn, end >= ends_earliest)
   }
-  
+
   if(!is.null(name)) {
 
     if(!quiet) if(length(name) == 2 & is.numeric(name)) {

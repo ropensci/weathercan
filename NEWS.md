@@ -8,8 +8,6 @@ output: html_document
 ## Changes
 - Add parameter in station_search() to restrict by start and end dates. This addresses issue #35.
 
-# weathercan 0.2.8.9000 (2019-02-25)
-
 ## Bug fixes
 - Fix bug #69 which resulted in daily downloads missing partial years when the date range spaned two calendar years
 - Fix bug #70 where internal `stations` data frame references conflicted with local references to `stations`
