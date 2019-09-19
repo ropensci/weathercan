@@ -241,6 +241,7 @@ stations_search <- function(name = NULL,
     if (is.na(ends_earliest)){
       stop("'ends_earliest' needs to be coercible into numeric")
     }
+    end <- NULL
     stn <- dplyr::filter(stn, end >= ends_earliest)
   }
 
