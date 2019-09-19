@@ -6,42 +6,42 @@
 \title{Daily weather data for Kamloops}
 \format{An example dataset of daily weather data for Kamloops:
 \describe{
-  \item{station_name}{Station name}
-  \item{station_id}{Environment Canada's station ID number. Required for
-  downloading station data.}
-  \item{prov}{Province}
-  \item{lat}{Latitude of station location in degree decimal format}
-  \item{lon}{Longitude of station location in degree decimal format}
-  \item{date}{Date}
-  \item{year}{Year}
-  \item{month}{Month}
-  \item{day}{Day}
-  \item{cool_deg_days}{Cool degree days}
-  \item{cool_deg_days_flag}{Cool degree days flag}
-  \item{dir_max_gust}{Direction of max wind gust}
-  \item{dir_max_gust_flag}{Direction of max wind gust flag}
-  \item{heat_deg_days}{Heat degree days}
-  \item{heat_deg_days_flag}{Heat degree days flag}
-  \item{max_temp}{Maximum temperature}
-  \item{max_temp_flag}{Maximum temperature flag}
-  \item{mean_temp}{Mean temperature}
-  \item{mean_temp_flag}{Mean temperature flag}
-  \item{min_temp}{Minimum temperature}
-  \item{min_temp_flag}{Minimum temperature flag}
-  \item{snow_grnd}{Snow on the ground (cm)}
-  \item{snow_grnd_flag}{Snow on the ground flag}
-  \item{spd_max_gust}{Speed of the max gust km/h}
-  \item{spd_max_gust_flag}{Speed of the max gust flag}
-  \item{total_precip}{Total precipitation (any form)}
-  \item{total_precip_flag}{Total precipitation flag}
-  \item{total_rain}{Total rain (any form)}
-  \item{total_rain_flag}{Total rain flag}
-  \item{total_snow}{Total snow (any form)}
-  \item{total_snow_flag}{Total snow flag}
-  \item{elev}{Elevation (m)}
-  \item{climate_id}{Climate identifier}
-  \item{WMO_id}{World Meteorological Organization Identifier}
-  \item{TC_id}{Transport Canada Identifier}
+\item{station_name}{Station name}
+\item{station_id}{Environment Canada's station ID number. Required for
+downloading station data.}
+\item{prov}{Province}
+\item{lat}{Latitude of station location in degree decimal format}
+\item{lon}{Longitude of station location in degree decimal format}
+\item{date}{Date}
+\item{year}{Year}
+\item{month}{Month}
+\item{day}{Day}
+\item{cool_deg_days}{Cool degree days}
+\item{cool_deg_days_flag}{Cool degree days flag}
+\item{dir_max_gust}{Direction of max wind gust}
+\item{dir_max_gust_flag}{Direction of max wind gust flag}
+\item{heat_deg_days}{Heat degree days}
+\item{heat_deg_days_flag}{Heat degree days flag}
+\item{max_temp}{Maximum temperature}
+\item{max_temp_flag}{Maximum temperature flag}
+\item{mean_temp}{Mean temperature}
+\item{mean_temp_flag}{Mean temperature flag}
+\item{min_temp}{Minimum temperature}
+\item{min_temp_flag}{Minimum temperature flag}
+\item{snow_grnd}{Snow on the ground (cm)}
+\item{snow_grnd_flag}{Snow on the ground flag}
+\item{spd_max_gust}{Speed of the max gust km/h}
+\item{spd_max_gust_flag}{Speed of the max gust flag}
+\item{total_precip}{Total precipitation (any form)}
+\item{total_precip_flag}{Total precipitation flag}
+\item{total_rain}{Total rain (any form)}
+\item{total_rain_flag}{Total rain flag}
+\item{total_snow}{Total snow (any form)}
+\item{total_snow_flag}{Total snow flag}
+\item{elev}{Elevation (m)}
+\item{climate_id}{Climate identifier}
+\item{WMO_id}{World Meteorological Organization Identifier}
+\item{TC_id}{Transport Canada Identifier}
 }}
 \source{
 \url{http://climate.weather.gc.ca/index_e.html}

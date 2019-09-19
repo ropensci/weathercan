@@ -19,52 +19,52 @@ Try to stick to what you need.
 There are three main aspects of this package:
 
 \enumerate{
-  \item Access \strong{stations} lists
-  \itemize{
-    \item \code{\link{stations}} (a data frame listing stations)
-    \item \code{\link{stations_search}()} identify stations by name or
-    proximity to a location
-    \item \code{\link{stations_dl}()} re-download stations data
-    }
+\item Access \strong{stations} lists
+\itemize{
+\item \code{\link{stations}} (a data frame listing stations)
+\item \code{\link{stations_search}()} identify stations by name or
+proximity to a location
+\item \code{\link{stations_dl}()} re-download stations data
+}
 
 \item Download \strong{weather} data
- \itemize{
-   \item \code{\link{weather_dl}()}
-   }
+\itemize{
+\item \code{\link{weather_dl}()}
+}
 
 \item Merge\strong{weather} data into other data sets through interpolation
- over time
- \itemize{
-   \item \code{\link{weather_interp}()}
-   }
+over time
+\itemize{
+\item \code{\link{weather_interp}()}
+}
 }
 
 We also include several practice data sets:
 
 \itemize{
-   \item \code{\link{finches}}
-   \item \code{\link{kamloops}}
-   \item \code{\link{kamloops_day}}
-   \item \code{\link{pg}}
-   }
+\item \code{\link{finches}}
+\item \code{\link{kamloops}}
+\item \code{\link{kamloops_day}}
+\item \code{\link{pg}}
+}
 
 As well as several vignettes:
 
 \itemize{
-   \item General Usage: \code{vignette("usage")}
-   \item Merging and Interpolating: \code{vignette("interpolation")}
-   \item Data Flags: \code{vignette("flags")}
-   \item Data Glossary: \code{vignette("glossary")}
-   }
+\item General Usage: \code{vignette("usage")}
+\item Merging and Interpolating: \code{vignette("interpolation")}
+\item Data Flags: \code{vignette("flags")}
+\item Data Glossary: \code{vignette("glossary")}
+}
 
 \href{http://ropensci.github.io/weathercan}{Online} we also have an
 advanced article:
 
 \itemize{
-    \item Using \code{weathercan} with
-    \href{http://tidyverse.org/}{tidyverse}
-    (\href{http://ropensci.github.io/weathercan/articles/articles/use_with_tidyverse.html}{here})
-    }
+\item Using \code{weathercan} with
+\href{http://tidyverse.org/}{tidyverse}
+(\href{http://ropensci.github.io/weathercan/articles/articles/use_with_tidyverse.html}{here})
+}
 }
 \references{
 Environment and Climate Change Canada: \url{https://www.ec.gc.ca/}

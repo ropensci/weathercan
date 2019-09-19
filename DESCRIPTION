@@ -30,6 +30,7 @@ Imports:
     tidyr (>= 0.4.1),
     xml2 (>= 0.1.2)
 RoxygenNote: 6.1.1
+Roxygen: list(markdown = TRUE)
 Suggests:
     devtools,
     ggplot2,
