@@ -145,3 +145,25 @@ test_that("stations_search 'ends_earliest' returns correct data", {
                stations_search(name="Halifax", ends_earliest = 1984) )
 
 })
+
+test_that("stations_search 'starts_latest' and 'ends_earliest' together", {
+
+  expect_equal(nrow(stations_search(name="Halifax",
+                                    starts_latest = 2000,
+                                    ends_earliest = 2005)), 3)
+
+  expect_lt(nrow(stations_search(name="Halifax",
+                                 starts_latest = 1940,
+                                 ends_earliest = 2017)),
+            nrow(stations_search(name="Halifax",
+                                 starts_latest = 2000,
+                                 ends_earliest = 2005)))
+
+  expect_true(all(stations_search(name="Halifax",
+                                  starts_latest = 2000,
+                                  ends_earliest = 2001)$start <= 2000))
+  expect_true(all(stations_search(name="Halifax",
+                                  starts_latest = 2000,
+                                  ends_earliest = 2001)$end >= 2001))
+
+})
