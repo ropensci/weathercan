@@ -20,6 +20,10 @@ check_int <- function(interval) {
 
 check_ids <- function(ids, stn, type){
   if(any(!ids %in% stn[[type]])) {
+    if(type == "climate_id" & any(nchar(as.character(ids)) != 7)) {
+      stop("'climate_id's expect an id with 7 characters (e.g., 301AR54). ",
+           "Did you use 'station_id' by accident?", call. = FALSE)
+    }
     stop("'", type, "'", paste0(ids[!ids %in% stn[[type]]], collapse = ", "),
          "are not present in the stations data frame", call. = FALSE)
   }

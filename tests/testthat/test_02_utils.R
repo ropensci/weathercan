@@ -23,6 +23,8 @@ test_that("check_ids() as expected", {
   expect_silent(check_ids("301AR54", stations, type = "climate_id"))
   expect_error(check_ids(1, stations, type = "station_id"))
   expect_error(check_ids(1, stations, type = "climate_id"))
+  expect_error(check_ids(1795, stations, type = "climate_id"),
+               "Did you use 'station_id' by accident?")
 })
 
 test_that("check_normals() as expected", {
