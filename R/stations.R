@@ -226,9 +226,10 @@ stations_search <- function(name = NULL,
 
   if (!is.null(starts_latest)){
     suppressWarnings({
-      starts_latest <- try(as.numeric(as.numeric(starts_latest)), silent = TRUE)
+      starts_latest <- try(as.numeric(as.character(starts_latest)),
+                           silent = TRUE)
       })
-    if (is.na(starts_latest)){
+    if (is.na(starts_latest) | class(starts_latest) == "try-error"){
       stop("'starts_latest' needs to be coercible into numeric")
     }
     stn <- dplyr::filter(stn, start <= starts_latest)
@@ -236,9 +237,10 @@ stations_search <- function(name = NULL,
 
   if (!is.null(ends_earliest)){
     suppressWarnings({
-      ends_earliest <- try(as.numeric(as.numeric(ends_earliest)), silent = TRUE)
+      ends_earliest <- try(as.numeric(as.character(ends_earliest)),
+                           silent = TRUE)
     })
-    if (is.na(ends_earliest)){
+    if (is.na(ends_earliest) | class(ends_earliest) == "try-error"){
       stop("'ends_earliest' needs to be coercible into numeric")
     }
     end <- NULL
