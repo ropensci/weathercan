@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Steffi LaZerte" />
+
+<meta name="date" content="2019-09-20" />
+
+<title>The meanings of flags and codes</title>
+
+
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">The meanings of flags and codes</h1>
+<h4 class="author">Steffi LaZerte</h4>
+<h4 class="date">2019-09-20</h4>
+
+
+
+<div id="what-are-flagscodes" class="section level2">
+<h2>What are flags/codes</h2>
+<p>The data output of the <code>weather_dl()</code> function include corresponding <code>_flag</code> columns for each data column. These columns are used by ECCC to add notes regarding measurements.</p>
+<p>Similarly, the data output of the <code>normals_dl()</code> function include corresponding <code>_code</code> columns. These columns are used by ECCC to add notes regarding the amount of data used to calculate the normals.</p>
+<div id="flags" class="section level3">
+<h3>Flags</h3>
+<p>In the <code>weather_dl()</code> function if <code>format = TRUE</code> (the default), data corresponding to flags <code>M</code>, <code>NA</code>, <code>[empty]</code> and <code>L</code> are all replaced with <code>NA</code>.</p>
+<p>For example, a sample of unformatted data from Magog station in Quebec looks like:</p>
+<pre><code>## # A tibble: 12 x 6
+##    station_name `Date/Time` `Total Precip (m… `Total Precip Fl… `Snow Grnd Last D… `Snow Grnd Last …
+##    &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;             &lt;chr&gt;             &lt;chr&gt;              &lt;chr&gt;            
+##  1 MAGOG        2017-03     30.4              ^                 &quot;&quot;                 M                
+##  2 MAGOG        2017-04     114.0             ^                 0                  &quot;&quot;               
+##  3 MAGOG        2017-05     78.8              ^                 0                  &quot;&quot;               
+##  4 MAGOG        2017-06     140.7             ^                 0                  &quot;&quot;               
+##  5 MAGOG        2017-07     80.7              &quot;&quot;                0                  &quot;&quot;               
+##  6 MAGOG        2017-08     135.8             &quot;&quot;                0                  &quot;&quot;               
+##  7 MAGOG        2017-09     63.0              ^                 0                  &quot;&quot;               
+##  8 MAGOG        2017-10     140.8             ^                 0                  &quot;&quot;               
+##  9 MAGOG        2017-11     70.0              ^                 0                  &quot;&quot;               
+## 10 MAGOG        2017-12     45.7              ^                 10                 &quot;&quot;               
+## 11 MAGOG        2018-01     34.6              ^                 2                  &quot;&quot;               
+## 12 MAGOG        2018-02     77.2              ^                 0                  &quot;&quot;</code></pre>
+<p>In this output, you can see two flags: <code>^</code> in <code>Total Precip</code> and <code>M</code> in <code>Snow Grnd Last Day</code></p>
+<p>This same sample, formatted looks like:</p>
+<pre><code>## # A tibble: 12 x 5
+##    date       total_precip total_precip_flag snow_grnd_last_day snow_grnd_last_day_flag
+##    &lt;date&gt;            &lt;dbl&gt; &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;                  
+##  1 2017-03-01         30.4 ^                                 NA M                      
+##  2 2017-04-01        114   ^                                  0 &quot;&quot;                     
+##  3 2017-05-01         78.8 ^                                  0 &quot;&quot;                     
+##  4 2017-06-01        141.  ^                                  0 &quot;&quot;                     
+##  5 2017-07-01         80.7 &quot;&quot;                                 0 &quot;&quot;                     
+##  6 2017-08-01        136.  &quot;&quot;                                 0 &quot;&quot;                     
+##  7 2017-09-01         63   ^                                  0 &quot;&quot;                     
+##  8 2017-10-01        141.  ^                                  0 &quot;&quot;                     
+##  9 2017-11-01         70   ^                                  0 &quot;&quot;                     
+## 10 2017-12-01         45.7 ^                                 10 &quot;&quot;                     
+## 11 2018-01-01         34.6 ^                                  2 &quot;&quot;                     
+## 12 2018-02-01         77.2 ^                                  0 &quot;&quot;</code></pre>
+<p>As you can see, we still have the two flags, but the missing data flag (<code>M</code>) is now replaced with NA. The other flag <code>^</code> is not, as it indicates that “The value displayed is based on incomplete data” (see below).</p>
+</div>
+<div id="flags---weather-data" class="section level3">
+<h3>Flags - Weather Data</h3>
+<p>The flags index can be accessed through the built in data frame: <code>flags</code></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">code</th>
+<th align="left">meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">E</td>
+<td align="left">Estimated</td>
+</tr>
+<tr class="even">
+<td align="left">M</td>
+<td align="left">Missing</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="left">Not Available</td>
+</tr>
+<tr class="even">
+<td align="left">A</td>
+<td align="left">Accumulated</td>
+</tr>
+<tr class="odd">
+<td align="left">C</td>
+<td align="left">Precipitation occurred, amount uncertain</td>
+</tr>
+<tr class="even">
+<td align="left">F</td>
+<td align="left">Accumulated and estimated</td>
+</tr>
+<tr class="odd">
+<td align="left">L</td>
+<td align="left">Precipitation may or may not have occurred</td>
+</tr>
+<tr class="even">
+<td align="left">N</td>
+<td align="left">Temperature missing but known to be &gt; 0</td>
+</tr>
+<tr class="odd">
+<td align="left">S</td>
+<td align="left">More than one occurrence</td>
+</tr>
+<tr class="even">
+<td align="left">T</td>
+<td align="left">Trace</td>
+</tr>
+<tr class="odd">
+<td align="left">Y</td>
+<td align="left">Temperature missing but known to be &lt; 0</td>
+</tr>
+<tr class="even">
+<td align="left">[empty]</td>
+<td align="left">No data available</td>
+</tr>
+<tr class="odd">
+<td align="left">^</td>
+<td align="left">The value displayed is based on incomplete data</td>
+</tr>
+<tr class="even">
+<td align="left">†</td>
+<td align="left">Data that is not subject to review by the National Climate Archives</td>
+</tr>
+<tr class="odd">
+<td align="left">B</td>
+<td align="left">More than one occurrence and estimated</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="codes" class="section level3">
+<h3>Codes</h3>
+<p>In the <code>normals_dl</code>() function, codes are associated with each variable:</p>
+<pre><code>## # A tibble: 13 x 7
+##    period temp_daily_aver… temp_daily_aver… temp_daily_max temp_daily_max_… temp_daily_min
+##    &lt;fct&gt;             &lt;dbl&gt; &lt;chr&gt;                     &lt;dbl&gt; &lt;chr&gt;                     &lt;dbl&gt;
+##  1 Jan               -16.6 A                         -11.1 A                         -21.9
+##  2 Feb               -13.6 A                          -8.1 A                         -19  
+##  3 Mar                -6.2 A                          -1   A                         -11.4
+##  4 Apr                 4   A                          10.5 A                          -2.6
+##  5 May                10.6 A                          17.8 A                           3.4
+##  6 Jun                15.9 A                          22.4 A                           9.3
+##  7 Jul                18.5 A                          25.2 A                          11.7
+##  8 Aug                17.7 A                          24.9 A                          10.4
+##  9 Sep                11.8 A                          18.9 A                           4.7
+## 10 Oct                 4.1 A                          10.4 A                          -2.2
+## 11 Nov                -5.6 A                          -0.5 A                         -10.6
+## 12 Dec               -14   A                          -9   A                         -19  
+## 13 Year                2.2 A                           8.4 A                          -3.9
+## # … with 1 more variable: temp_daily_min_code &lt;chr&gt;</code></pre>
+<p>For example, here, the code indicates that these temperature variables meet the WMO ‘3 and 5 rule’ (no more than 3 consecutive and no more than 5 total missing for either temperature or precipitation).</p>
+</div>
+<div id="codes---climate-normals" class="section level3">
+<h3>Codes - Climate Normals</h3>
+<p>The codes index for climate normals can be accessed through the built-in data frame: <code>codes</code></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">code</th>
+<th align="left">meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">A</td>
+<td align="left">WMO ‘3 and 5 rule’ (i.e. no more than 3 consecutive and no more than 5 total missing for either temperature or precipitation)</td>
+</tr>
+<tr class="even">
+<td align="left">B</td>
+<td align="left">At least 25 years</td>
+</tr>
+<tr class="odd">
+<td align="left">C</td>
+<td align="left">At least 20 years</td>
+</tr>
+<tr class="even">
+<td align="left">D</td>
+<td align="left">At least 15 years</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
