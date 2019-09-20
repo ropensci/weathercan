@@ -10,6 +10,9 @@ output: html_document
 - New function: `normals_dl()` function downloads climate normals
 - New argument: `stations_search()` has `normals_only` to return only stations with climate normals
 
+## Small changes
+- Add parameter in `station_search()` to restrict by start and end dates. This addresses issue #35.
+
 ## Bug fixes
 - Fix bug #69 which resulted in daily downloads missing partial years when the date range spaned two calendar years
 - Fix bug #70 where internal `stations` data frame references conflicted with local references to `stations`

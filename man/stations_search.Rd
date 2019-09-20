@@ -6,7 +6,8 @@
 \usage{
 stations_search(name = NULL, coords = NULL, dist = 10,
   interval = c("hour", "day", "month"), normals_only = FALSE,
-  stn = weathercan::stations, verbose = FALSE, quiet = FALSE)
+  stn = weathercan::stations, starts_latest = NULL,
+  ends_earliest = NULL, verbose = FALSE, quiet = FALSE)
 }
 \arguments{
 \item{name}{Character. A vector of length 1 or more with text against which
@@ -28,6 +29,12 @@ Must be any of "hour", "day", "month".}
 
 \item{stn}{Data frame. The \code{stations} data frame to use. Will use the
 one included in the package unless otherwise specified.}
+
+\item{starts_latest}{Numeric. Restrict results to stations with data collection
+beginning in or before the specified year.}
+
+\item{ends_earliest}{Numeric. Restrict results to stations with data collection
+ending in or after the specified year.}
 
 \item{verbose}{Logical. Include progress messages}
 
@@ -55,6 +62,7 @@ stations_search(name = "Kamloops")
 stations_search(name = "Kamloops", interval = "hour")
 
 stations_search(coords = c(53.915495, -122.739379))
+stations_search(name='Ottawa', starts_latest=1950, ends_earliest=2010)
 
 \donttest{
 loc <- ggmap::geocode("Prince George, BC")

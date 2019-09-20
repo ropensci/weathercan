@@ -2,7 +2,7 @@
 title: "Using with the tidyverse"
 author: "Sam Albers"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: rmarkdown::html_document
 ---
 
 ## Source material

@@ -126,6 +126,54 @@ test_that("stations_search quiet/verbose", {
 
 })
 
+test_that("stations_search 'starts_latest' returns correct data", {
+
+  expect_equal(nrow(stations_search(name="Yoho", starts_latest = 1800)), 0)
+  expect_gt(nrow(stations_search(name="Yoho", starts_latest = 1965)), 0)
+  expect_error(stations_search(name="Yoho", starts_latest = "nineteen eighty-four"))
+
+  expect_gt(nrow(stations_search(name="Yoho", starts_latest = 2000)),
+            nrow(stations_search(name="Yoho", starts_latest = 1965)))
+
+  expect_equal(stations_search(name="Yoho", starts_latest = "1984"),
+        stations_search(name="Yoho", starts_latest = 1984) )
+})
+
+test_that("stations_search 'ends_earliest' returns correct data", {
+
+  expect_equal(nrow(stations_search(name="Halifax", ends_earliest = 3000)), 0)
+  expect_gt(nrow(stations_search(name="Halifax", ends_earliest = 1965)), 0)
+  expect_error(stations_search(name="Halifax", ends_earliest = "nineteen eighty-four"))
+
+  expect_lt(nrow(stations_search(name="Halifax", ends_earliest = 2000)),
+            nrow(stations_search(name="Halifax", ends_earliest = 1965)))
+
+  expect_equal(stations_search(name="Halifax", ends_earliest = "1984"),
+               stations_search(name="Halifax", ends_earliest = 1984) )
+
+})
+
+test_that("stations_search 'starts_latest' and 'ends_earliest' together", {
+
+  expect_equal(nrow(stations_search(name="Halifax",
+                                    starts_latest = 2000,
+                                    ends_earliest = 2005)), 3)
+
+  expect_lt(nrow(stations_search(name="Halifax",
+                                 starts_latest = 1940,
+                                 ends_earliest = 2017)),
+            nrow(stations_search(name="Halifax",
+                                 starts_latest = 2000,
+                                 ends_earliest = 2005)))
+
+  expect_true(all(stations_search(name="Halifax",
+                                  starts_latest = 2000,
+                                  ends_earliest = 2001)$start <= 2000))
+  expect_true(all(stations_search(name="Halifax",
+                                  starts_latest = 2000,
+                                  ends_earliest = 2001)$end >= 2001))
+
+})
 
 test_that("stations_search returns normals only", {
   expect_silent(s <- stations_search("Brandon", normals_only = TRUE))
