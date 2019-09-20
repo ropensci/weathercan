@@ -94,7 +94,7 @@ w_names <- list(
 # )
 
 
-n_names <- dplyr::tribble(
+n_names <- tribble(
   ~new_var, ~variable, ~type,
   "title_temp", "Temperature", "title",
   "temp_daily_average", paste0("Daily Average (\U00B0", "C)"), "unique",
@@ -242,113 +242,43 @@ n_names <- dplyr::tribble(
   "cloud_3_7", "3 to 7 tenths", "sub",
   "cloud_8_10", "8 to 10 tenths", "sub"
 ) %>%
-  dplyr::mutate(variable = tolower(variable),
-                group = stringr::str_detect(new_var, "title"),
-                group = cumsum(group),
-                subgroup = type != "sub",
-                subgroup = cumsum(subgroup),
-                variable_sub = paste0(variable, "_", subgroup))
+  mutate(variable = tolower(variable),
+         group = stringr::str_detect(new_var, "title"),
+         group = cumsum(group),
+         subgroup = type != "sub",
+         subgroup = cumsum(subgroup),
+         variable_sub = paste0(variable, "_", subgroup))
 
-f_names <- dplyr::tribble(
+f_names <- tribble(
   ~new_var, ~variable, ~group,
   "date_last_spring_frost", "Average Date of Last Spring Frost", 1,
   "date_first_fall_frost", "Average Date of First Fall Frost", 1,
   "length_frost_free", "Average Length of Frost-Free Period", 1,
   "prob_last_spring_temp_below_0_on_date",
-    paste0("Probability of last temperature in spring of 0 \U00B0",
-           "C or lower on or after indicated dates"), 2,
+  paste0("Probability of last temperature in spring of 0 \U00B0",
+         "C or lower on or after indicated dates"), 2,
   "prob_first_fall_temp_below_0_on_date",
-    paste0("Probability of first temperature in fall of 0 \U00B0",
-           "C or lower on or after indicated dates"), 2,
+  paste0("Probability of first temperature in fall of 0 \U00B0",
+         "C or lower on or after indicated dates"), 2,
   "prob_length_frost_free",
   paste0("Probability of frost-free period equal ",
          "to or less than indicated period (Days)"), 2,
   "probability", "probability", 3)
 
+n_formats <- select(n_names, "new_var") %>%
+  filter(!stringr::str_detect(new_var, "title")) %>%
+  mutate(format = case_when(
+    stringr::str_detect(new_var, "date") ~ "date",
+    stringr::str_detect(new_var, "dir") ~ "character",
+    TRUE ~ "numeric"))
+
+f_formats <- select(f_names, "new_var") %>%
+  mutate(format = case_when(
+    stringr::str_detect(new_var, "on_date") ~ "date",
+    TRUE ~ "numeric"))
+
 usethis::use_data(province, w_names, p_names, n_names, f_names,
+                  n_formats, f_formats,
                   overwrite = TRUE, internal = TRUE)
-
-# Add flags data set to package data
-# Get legend of flags (same for all intervals where duplicated)
-flags <- dplyr::bind_rows(weather_raw(weather_html(station_id = 51423,  date = as.Date("2014-01-01"),
-                                                   interval = "hour"), nrows = 25, header = FALSE)[11:14,],
-                          weather_raw(weather_html(station_id = 51423,  date = as.Date("2014-01-01"),
-                                      interval = "day"), nrows = 25, header = FALSE)[10:23,],
-                                      weather_raw(weather_html(station_id = 43823,  date = as.Date("2014-01-01"),
-                                      interval = "month"), nrows = 25, header = FALSE)[10:16,]) %>%
-  dplyr::rename(code = V1, meaning = V2) %>%
-  dplyr::distinct() %>%
-  dplyr::as_tibble()
-devtools::use_data(flags, overwrite = TRUE)
-
-
-gloss_url <- list(
-  "hour" = c("temp" = "temp", "temp_dew" = "dewPnt", "rel_hum" = "r_humidity",
-             "wind_dir" = "windDir", "wind_spd" = "windSpd",
-             "visib" = "visibility", "pressure" = "stnPre", "hmdx" = "humidex",
-             "wind_chill" = "windChill", "weather" = "weatherState"),
-  "day" = c("max_temp" = "maxTemp", "min_temp" = "minTemp",
-            "mean_temp" = "meanTemp", "heat_deg_days" = "hdd",
-            "cool_deg_days" = "cooling", "total_rain" = "totalRain",
-            "total_snow" = "totalSnow", "total_precip" = "totalPrec",
-            "snow_grnd" = "s_onGround", "dir_max_gust" = "d_maxGust",
-            "spd_max_gust" = "s_maxGust"),
-  "month" = c("mean_max_temp" = "meanMax", "mean_min_temp" = "meanMin",
-              "mean_temp" = "meanTemp", "extr_max_temp" = "extreme_maxtemp",
-              "extr_min_temp" = "extreme_mintemp", "total_rain" = "totalRain",
-              "total_snow" = "totalSnow", "total_precip" = "totalPrec",
-              "snow_grnd_last_day" = "s_lastDay", "dir_max_gust" = "d_maxGust",
-              "spd_max_gust" = "s_maxGust")
-) %>%
-  lapply(., utils::stack) %>%
-  lapply(., FUN = function(x) dplyr::mutate(x, ind = as.character(ind))) %>%
-  dplyr::tibble(interval = names(.), data = .) %>%
-  tidyr::unnest() %>%
-  dplyr::mutate(value = paste0("http://climate.weather.gc.ca/glossary_e.html#",
-                               values)) %>%
-  dplyr::select(interval, weathercan_name = ind, ECCC_ref = value)
-
-# gloss_url <- list(
-#   "hour" = c(NA, NA, NA, NA, NA, NA, "temp", NA, "dewPnt", NA, "r_humidity", NA, "windDir", NA, "windSpd", NA, "visibility", NA, "stnPre", NA, "humidex", NA, "windChill", NA, "weatherState"),
-#
-#   "day" = c(NA, NA, NA, NA, NA, "maxTemp", NA, "minTemp", NA, "meanTemp", NA, "hdd", NA, "cooling", NA, "totalRain", NA, "totalSnow", NA, "totalPrec", NA, "s_onGround", NA, "d_maxGust", NA, "s_maxGust", NA),
-#
-#   "month" = c(NA, NA, NA, "meanMax", NA, "meanMin", NA, "meanTemp", NA, "extreme_maxtemp", NA, "extreme_mintemp", NA, "totalRain", NA, "totalSnow", NA, "totalPrec", NA, "s_lastDay", NA, "d_maxGust", NA, "s_maxGust", NA)
-# )
-
-#wd1 <- weather_raw(station_id = 51423, date = as.Date("2014-01-01"), skip = 15, interval = "hour")
-#wd2 <- weather_raw(station_id = 51423, date = as.Date("2014-01-01"), skip = 25, interval = "day")
-#wd3 <- weather_raw(station_id = 43823, date = as.Date("2005-01-01"), skip = 17, interval = "month")
-
-#n <- c(names(wd1), names(wd2), names(wd3))
-
-glossary <- dplyr::tibble(interval = c(rep("hour", length(w_names$hour)),
-                                         rep("day", length(w_names$day)),
-                                         rep("month", length(w_names$month))),
-                            ECCC_name = unlist(w_names, use.names = FALSE),
-                            weathercan_name = names(unlist(c(w_names, use.names = FALSE))),
-                            units = stringr::str_replace_all(stringr::str_extract(ECCC_name, "\\(.*\\)"),
-                                                             "\\(|\\)", "")) %>%
-  dplyr::left_join(gloss_url, by = c("interval", "weathercan_name")) %>%
-  dplyr::mutate(ECCC_ref = replace(ECCC_ref,
-                                   weathercan_name == "qual",
-                                   "http://climate.weather.gc.ca/climate_data/data_quality_e.html"),
-                ECCC_ref = replace(ECCC_ref, stringr::str_detect(weathercan_name, "_flag"), "See `flags` vignette or dataset for more details"),
-                ECCC_ref = replace(ECCC_ref, stringr::str_detect(ECCC_ref, "#NA"), NA),
-                units = replace(units, weathercan_name %in% c("year", "month", "day", "hour"),
-                                weathercan_name[weathercan_name %in% c("year", "month", "day", "hour")]),
-                ECCC_ref = replace(ECCC_ref, weathercan_name %in% c("year", "month", "day", "hour"),
-                                   "http://climate.weather.gc.ca/glossary_e.html#dataInt"),
-                units = replace(units, weathercan_name == "time", "ISO date/time"),
-                units = replace(units, weathercan_name == "date", "ISO date"),
-                units = replace(units, weathercan_name %in% c("hmdx", "wind_chill"), "index"),
-                units = replace(units, stringr::str_detect(weathercan_name, c("(qual)|(_flag)|(weather)")), "note")) %>%
-  dplyr::mutate_all(.funs = dplyr::funs(stringr::str_replace_all(., "°", "\U00B0")))
-devtools::use_data(glossary, overwrite = TRUE)
-
-
-eccc_urls <- list("normals" =
-                    "https://dd.meteo.gc.ca/climate/observations/normals/csv",
-                  "weather" =
 
 # Technical documentation: ftp://ftp.tor.ec.gc.ca/Pub/Documentation_Technical/Technical_Documentation.pdf

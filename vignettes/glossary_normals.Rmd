@@ -1,10 +1,10 @@
 ---
-title: "Weather: Terms and Units"
+title: "Climate Normals: Terms and Units"
 author: "Steffi LaZerte"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{glossary}
+  %\VignetteIndexEntry{glossary_normals}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,9 +14,13 @@ library(weathercan)
 library(dplyr)
 ```
 
-This table shows details regarding original column (measurement) names and units of all weather measurements. It further provides links back to the ECCC glossary for more details.
+This table shows details regarding original column (measurement) names and units of all climate normals measurements. It further provides links back to the ECCC glossary for more details.
 
-For details on climate normals measurements, see the `glossary_normals` vignette.
+See the ECCC website on climate normals for more details: <`r paste0("https://www.canada.ca/en/environment-climate-change/services/",
+            "climate-change/canadian-centre-climate-services/display-download/",
+            "technical-documentation-climate-normals.html")`>
+
+For details on weather measurements, see the `glossary` vignette.
 
 ```{r, asis = TRUE, echo = FALSE}
 temp <- glossary %>%
