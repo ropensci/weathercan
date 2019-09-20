@@ -35,9 +35,8 @@ tibble with nested normals and first/last frost data
 \description{
 Downloads climate normals from Environment and Climate Change Canada (ECCC)
 for one or more stations (defined by \code{climate_id}s). For details and units,
-see the glossary-normals vignette (\code{vignette("glossary", package =
-"weathercan")}) or the glossary online
-\url{http://climate.weather.gc.ca/glossary_e.html}.
+see the \code{\link{glossary_normals}} data frame or the \code{glossary_normals} vignette
+(\code{vignette("glossary_normals", package = "weathercan")}).
 }
 \details{
 Climate normals from ECCC include two types of data, averages by

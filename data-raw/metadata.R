@@ -91,6 +91,21 @@ glossary_normals <- tibble(ECCC_name = html_nodes(h, "h3") %>% html_text(),
              "evaporation", "frost", "hours", "wind", "sun", "humidex",
              "wind_chill", "humidity", "pressure", "rad", "visibility",
              "cloud")) %>%
-  select(ECCC_name, weathercan_name, description)
+  select(ECCC_name, weathercan_name, description) %>%
+  bind_rows(select(n_names, weathercan_name = new_var, ECCC_name = variable)) %>%
+  bind_rows(select(f_names, weathercan_name = new_var, ECCC_name = variable)) %>%
+  mutate(ECCC_name = str_to_title(ECCC_name),
+         ECCC_name = str_replace_all(ECCC_name, c("Mm" = "mm",
+                                                  "Cm" = "cm",
+                                                  "Yyyy" = "YYYY",
+                                                  "Dd" = "DD",
+                                                  "Km/H" = "km/h",
+                                                  "Pm" = "PM",
+                                                  "Am Obs" = "AM Obs",
+                                                  "Kpa" = "kPa",
+                                                  "lst" = "LST",
+                                                  "Rf" = "RF",
+                                                  "Mj/M2" = "MJ/m2"))) %>%
+  filter(weathercan_name != "probability")
 
 usethis::use_data(glossary_normals, overwrite = TRUE)

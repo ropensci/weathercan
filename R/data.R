@@ -234,8 +234,7 @@
 #' \describe{
 #'   \item{ECCC_name}{Original measurement type from ECCC}
 #'   \item{weathercan_name}{R-compatible name given when downloaded with the
-#'   `normals_dl()` function using the default argument `format =
-#'   TRUE`.}
+#'   `normals_dl()` function}
 #'   \item{description}{Description of the measurment type from ECCC}
 #' }
 "glossary_normals"

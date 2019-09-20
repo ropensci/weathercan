@@ -8,7 +8,7 @@
 \describe{
 \item{ECCC_name}{Original measurement type from ECCC}
 \item{weathercan_name}{R-compatible name given when downloaded with the
-\code{normals_dl()} function using the default argument \code{format = TRUE}.}
+\code{normals_dl()} function}
 \item{description}{Description of the measurment type from ECCC}
 }}
 \usage{
