@@ -3,8 +3,10 @@ title: "News"
 author: "Steffi LaZerte"
 output: html_document
 ---
+# weathercan 0.2.8.9001 (2019-08-25)
 
-# weathercan 0.2.8.9000 (2019-02-25)
+## Changes
+- Add parameter in station_search() to restrict by start and end dates. This addresses issue #35.
 
 ## Bug fixes
 - Fix bug #69 which resulted in daily downloads missing partial years when the date range spaned two calendar years
