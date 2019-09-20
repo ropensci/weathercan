@@ -38,18 +38,18 @@
 #' f <- unnest(n, "frost")
 #'
 #' # Pull out normals
-#' nm <- unnest(n, "data")
+#' nm <- unnest(n, "normals")
 #'
 #' # Pull out both (note this can be an awkward data set)
 #' nf <- unnest(n, "frost") %>%
-#'   unnest("data")
+#'   unnest("normals")
 #'
 #' # Download multiple stations
 #' n <- normals_dl(climate_ids = c("3010234", "3010410", "3010815"))
 #' n
 #'
 #' # Note that some have files online but no data
-#' n$data[2]
+#' n$normals[2]
 #'
 #' # Some have no last frost data
 #' n$frost[3]
@@ -59,13 +59,16 @@
 #' # Note: This requires `tidyr` v1
 #'
 #' if(packageVersion("tidyr") >= "1.0.0") {
-#'   unnest(n, "data", keep_empty = TRUE) %>%
+#'   n %>%
+#'     unnest("normals", keep_empty = TRUE) %>%
 #'     unnest("frost", keep_empty = TRUE)
 #' }
 #'
 #' # Otherwise, if you don't have/don't want tidyr v1, keep the data separate
-#' nm <- unnest(n, "data")
+#' # and join them together
+#' nm <- unnest(n, "normals")
 #' f <- unnest(n, "frost")
+#' n <- dplyr::full_join(nm, f)
 #'
 #' @export
 
@@ -112,13 +115,13 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
 
   # Download data
   n <- dplyr::mutate(n,
-                     data = purrr::map(.data$loc, ~ normals_raw(., skip)),
-                     frost = purrr::map(.data$data, ~ frost_find(.)),
-                     data = purrr::map2(.data$data, .data$climate_id,
+                     normals = purrr::map(.data$loc, ~ normals_raw(., skip)),
+                     frost = purrr::map(.data$normals, ~ frost_find(.)),
+                     normals = purrr::map2(.data$normals, .data$climate_id,
                                         ~ normals_extract(.x, climate_id = .y)),
                      frost = purrr::map2(.data$frost, .data$climate_id,
                                          ~ frost_extract(.x, climate_id = .y)),
-                     n_data = purrr::map_dbl(.data$data, nrow),
+                     n_data = purrr::map_dbl(.data$normals, nrow),
                      n_frost = purrr::map_dbl(.data$frost, nrow))
 
   if(any(no_data <- n$n_data + n$n_frost == 0)) {
@@ -243,7 +246,7 @@ normals_extract <- function(n, climate_id) {
 
   # Spread variables
   n_nice <- n_nice %>%
-    dplyr::select(-"Code", -"variable") %>%
+    dplyr::select(-"Code", -"variable", -"subgroup", -"variable_sub") %>%
     tidyr::gather(key = "period", value = "measure", -"new_var") %>%
     tidyr::spread(key = "new_var", value = "measure") %>%
     # Add Codes

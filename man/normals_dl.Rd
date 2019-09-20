@@ -62,18 +62,18 @@ library(tidyr)
 f <- unnest(n, "frost")
 
 # Pull out normals
-nm <- unnest(n, "data")
+nm <- unnest(n, "normals")
 
 # Pull out both (note this can be an awkward data set)
 nf <- unnest(n, "frost") \%>\%
-  unnest("data")
+  unnest("normals")
 
 # Download multiple stations
 n <- normals_dl(climate_ids = c("3010234", "3010410", "3010815"))
 n
 
 # Note that some have files online but no data
-n$data[2]
+n$normals[2]
 
 # Some have no last frost data
 n$frost[3]
@@ -83,12 +83,15 @@ n$frost[3]
 # Note: This requires `tidyr` v1
 
 if(packageVersion("tidyr") >= "1.0.0") {
-  unnest(n, "data", keep_empty = TRUE) \%>\%
+  n \%>\%
+    unnest("normals", keep_empty = TRUE) \%>\%
     unnest("frost", keep_empty = TRUE)
 }
 
 # Otherwise, if you don't have/don't want tidyr v1, keep the data separate
-nm <- unnest(n, "data")
+# and join them together
+nm <- unnest(n, "normals")
 f <- unnest(n, "frost")
+n <- dplyr::full_join(nm, f)
 
 }
