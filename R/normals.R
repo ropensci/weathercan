@@ -78,7 +78,7 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
   if(nrow(n) == 0) stop("No stations matched these climate ids", call. = FALSE)
 
   if(all(n$normals == FALSE)) {
-    stop("No stations had climate normals available", .call = FALSE)
+    stop("No stations had climate normals available", call. = FALSE)
   } else if(any(n$normals == FALSE)) {
     message("Not all stations have climate normals available (climate ids: ",
             paste0(n$climate_id[!n$normals], collapse = ", "), ")")
