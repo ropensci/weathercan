@@ -39,14 +39,10 @@
 #'
 #' # Pull out last frost data
 #' library(tidyr)
-#' f <- unnest(n, "frost")
+#' f <- unnest(n, frost)
 #'
 #' # Pull out normals
-#' nm <- unnest(n, "normals")
-#'
-#' # Pull out both (note this can be an awkward data set)
-#' nf <- unnest(n, "frost") %>%
-#'   unnest("normals")
+#' nm <- unnest(n, normals)
 #'
 #' # Download multiple stations
 #' n <- normals_dl(climate_ids = c("3010234", "3010410", "3010815"))
@@ -58,21 +54,11 @@
 #' # Some have no last frost data
 #' n$frost[3]
 #'
-#' # To pull out all the data, use 'keep_empty' parameter (Otherwise stations
-#' # missing one or the other will be omitted)
-#' # Note: This requires `tidyr` v1
-#'
-#' if(packageVersion("tidyr") >= "1.0.0") {
-#'   n %>%
-#'     unnest("normals", keep_empty = TRUE) %>%
-#'     unnest("frost", keep_empty = TRUE)
-#' }
-#'
-#' # Otherwise, if you don't have/don't want tidyr v1, keep the data separate
-#' # and join them together
-#' nm <- unnest(n, "normals")
-#' f <- unnest(n, "frost")
-#' n <- dplyr::full_join(nm, f)
+#' # Note, putting both into the same data set can be done but makes for a very
+#' # unweildly dataset (there is lots of repetition)
+#' nm <- unnest(n, normals)
+#' f <- unnest(n, frost)
+#' both <- dplyr::full_join(nm, f)
 #'
 #' @export
 
