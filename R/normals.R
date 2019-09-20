@@ -129,6 +129,11 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
             paste0(n$climate_id[no_data], collapse = ", "), ")")
   }
 
+  # Format dates etc.
+  n <- dplyr::mutate(n,
+                     normals = purrr::map2(.data$normals, .data$climate_id, normals_format),
+                     frost = purrr::map2(.data$frost, .data$climate_id, frost_format))
+
   dplyr::select(n, -"n_data", -"n_frost", -"loc")
 }
 
@@ -257,11 +262,45 @@ normals_extract <- function(n, climate_id) {
   n_nice <- dplyr::select(n_nice, "period", !!o)
 
   # Row order
-  o <- names(n)[!names(n) %in% c("variable", "Code")]
+  o <- names(n)[!names(n) %in% c("variable", "Code", "subgroup", "variable_sub")]
   n_nice %>%
     dplyr::mutate(period = factor(.data$period, levels = o)) %>%
     dplyr::arrange(.data$period) %>%
     dplyr::as_tibble()
+}
+
+normals_format <- function(n, climate_id) {
+  fmts <- dplyr::filter(n_formats, .data$new_var %in% names(n))
+  dates <- dplyr::filter(fmts, .data$format == "date") %>%
+    dplyr::pull("new_var")
+  nums <- dplyr::filter(fmts, .data$format == "numeric") %>%
+    dplyr::pull("new_var")
+  chars <- dplyr::filter(fmts, .data$format == "character") %>%
+    dplyr::pull("new_var")
+
+  # Prepare dates (if missing, NA)
+  n_fmt <- n %>%
+    dplyr::mutate_at(.vars = dates,
+                     ~dplyr::if_else(. == "", as.character(NA),
+                                     paste0(., "/", as.numeric(period)))) %>%
+    dplyr::mutate_at(.vars = dates,
+                     ~dplyr::if_else(period == "Year", as.character(NA), .))
+
+  # In case of warnings
+  tryCatch({n_fmt <- dplyr::mutate_at(n_fmt, .vars = dates, ~lubridate::ydm(.))},
+           warning = function(w) stop(climate_id,
+                                      " has a formating issue with dates",
+                                      call. = FALSE))
+  tryCatch({n_fmt <- dplyr::mutate_at(n_fmt, .vars = nums, as.numeric)},
+           warning = function(w) stop(climate_id,
+                                      " has a formating issue with numbers",
+                                      call. = FALSE))
+  tryCatch({n_fmt <- dplyr::mutate_at(n_fmt, .vars = chars,
+                                      ~dplyr::if_else(. == "", as.character(NA), .))},
+           warning = function(w) stop(climate_id,
+                                      " has a formating issue with characters",
+                                      call. = FALSE))
+  n_fmt
 }
 
 frost_extract <- function(f, climate_id) {
@@ -340,4 +379,35 @@ frost_find <- function(n, type = "extract") {
     if(type == "remove") r <- n
   }
   r
+}
+
+frost_format <- function(f, climate_id) {
+  fmts <- dplyr::filter(f_formats, .data$new_var %in% names(f))
+  dates <- dplyr::filter(fmts, .data$format == "date") %>%
+    dplyr::pull("new_var")
+  nums <- dplyr::filter(fmts, .data$format == "numeric") %>%
+    dplyr::pull("new_var")
+  chars <- dplyr::filter(fmts, .data$format == "character") %>%
+    dplyr::pull("new_var")
+
+  f_fmt <- dplyr::mutate_at(f, .vars = dates,
+                            ~dplyr::if_else(. == "" | is.na(.), as.character(NA),
+                                            paste0(., " 1999")))
+
+  # In case of warnings
+  tryCatch({f_fmt <- dplyr::mutate_at(f_fmt, .vars = dates,
+                                      ~lubridate::yday(lubridate::mdy(.)))},
+           warning = function(w) stop(climate_id,
+                                      " has a formating issue with dates",
+                                      call. = FALSE))
+  tryCatch({f_fmt <- dplyr::mutate_at(f_fmt, .vars = nums, ~as.numeric(as.character(.)))},
+           warning = function(w) stop(climate_id,
+                                      " has a formating issue with numbers",
+                                      call. = FALSE))
+  tryCatch({f_fmt <- dplyr::mutate_at(f_fmt, .vars = chars,
+                                      ~dplyr::if_else(. == "", as.character(NA), .))},
+           warning = function(w) stop(climate_id,
+                                      " has a formating issue with characters",
+                                      call. = FALSE))
+  f_fmt
 }
