@@ -12,6 +12,10 @@
 #'   IDs.
 #' @param normals_years Character. The year range for which you want climate
 #'   normals. Default "1981-2010".
+#' @param format Logical. If TRUE (default) formats measurements to numeric and
+#'   date accordingly. Unlike `weather_dl()`, `normals_dl()` will always format
+#'   column headings as normals data from ECCC cannot be directly made into a
+#'   data frame without doing so.
 #' @inheritParams weather_dl
 #'
 #' @details Climate normals from ECCC include two types of data, averages by

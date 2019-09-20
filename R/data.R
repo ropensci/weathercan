@@ -227,7 +227,7 @@
 #' Glossary of terms for Climate Normals
 #'
 #' A reference dataset matching information on columns in climate normals data
-#' downloaded using the \code{normals_dl()} function. Indicates the names and
+#' downloaded using the `normals_dl()` function. Indicates the names and
 #' descriptions of different data measurements.
 #'
 #' @format A data frame with 18 rows and 3 variables:
@@ -236,7 +236,7 @@
 #'   \item{weathercan_name}{R-compatible name given when downloaded with the
 #'   `normals_dl()` function using the default argument `format =
 #'   TRUE`.}
-#'   \item{description} Description of the measurment type from ECCC
+#'   \item{description}{Description of the measurment type from ECCC}
 #' }
 "glossary_normals"
 
