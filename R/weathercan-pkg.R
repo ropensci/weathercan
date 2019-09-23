@@ -91,7 +91,7 @@ NULL
         "start", "year", "elev", "problems",
         "V1", "V2", "tz",
         "html", "skip", "data",
-        "." # piping requires '.' at times
+        ".", " " # piping requires '.' at times
       )
     )
   invisible()
