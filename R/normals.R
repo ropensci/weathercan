@@ -29,7 +29,7 @@
 #' @return tibble with nested normals and first/last frost data
 #'
 #' @examples
-#'
+#' \dontrun{
 #' # Find the climate_id
 #' stations_search("Brandon A", normals_only = TRUE)
 #'
@@ -58,6 +58,7 @@
 #' nm <- unnest(n, normals)
 #' f <- unnest(n, frost)
 #' both <- dplyr::full_join(nm, f)
+#' }
 #'
 #' @export
 
