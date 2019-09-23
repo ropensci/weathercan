@@ -49,7 +49,7 @@ Climate normals are downloaded from the url stored in
 \code{options(weathercan.urls.normals = "your_new_url")}.
 }
 \examples{
-
+\dontrun{
 # Find the climate_id
 stations_search("Brandon A", normals_only = TRUE)
 
@@ -78,5 +78,6 @@ n$frost[3]
 nm <- unnest(n, normals)
 f <- unnest(n, frost)
 both <- dplyr::full_join(nm, f)
+}
 
 }
