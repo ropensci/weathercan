@@ -98,58 +98,59 @@ stations_dl <- function(url = NULL, normals_years = "1981-2010",
   s <- utils::read.csv(file = getOption("weathercan.urls.stations"),
                        skip = skip,
                        strip.white = TRUE) %>%
-    dplyr::select(prov = Province,
-                  station_name = Name,
-                  station_id = Station.ID,
-                  climate_id = Climate.ID,
+    dplyr::select(prov = "Province",
+                  station_name = "Name",
+                  station_id = "Station.ID",
+                  climate_id = "Climate.ID",
                   hour_start = dplyr::matches("HLY.First"),
                   hour_end = dplyr::matches("HLY.Last"),
                   day_start = dplyr::matches("DLY.First"),
                   day_end = dplyr::matches("DLY.Last"),
                   month_start = dplyr::matches("MLY.First"),
                   month_end = dplyr::matches("MLY.Last"),
-                  WMO_id = WMO.ID,
-                  TC_id = TC.ID,
+                  WMO_id = "WMO.ID",
+                  TC_id = "TC.ID",
                   lat = dplyr::matches("Latitude..Decimal"),
                   lon = dplyr::matches("Longitude..Decimal"),
                   elev = dplyr::starts_with("Elevation..m."))
 
   # Calculate Timezones
-  station_tz <- dplyr::select(s, station_id, lat, lon) %>%
+  station_tz <- dplyr::select(s, "prov", "station_id", "lat", "lon") %>%
     dplyr::distinct() %>%
-    dplyr::mutate(tz = lutz::tz_lookup_coords(lat, lon, method = "accurate"),
-                  tz = purrr::map_chr(tz, ~tz_offset(.x)))
+    dplyr::mutate(tz = lutz::tz_lookup_coords(.data$lat, .data$lon,
+                                              method = "accurate"),
+                  tz = purrr::map_chr(.data$tz, ~tz_offset(.x)))
 
   s <- s %>%
-    dplyr::left_join(station_tz, by = c("station_id", "lat", "lon")) %>%
-    tidyr::gather(interval, date, dplyr::matches("(start)|(end)")) %>%
-    tidyr::separate(interval, c("interval", "type"), sep = "_") %>%
-    dplyr::mutate(type = factor(type, levels = c("start", "end")),
-                  station_name = as.character(station_name),
-                  station_id = factor(station_id),
-                  lat = replace(lat, lat == 0, NA),
-                  lon = replace(lon, lon == 0, NA),
-                  WMO_id = factor(WMO_id),
-                  date = replace(date, date == "", NA),
-                  TC_id = replace(TC_id, TC_id == "", NA),
-                  prov = factor(prov, levels = c("ALBERTA",
-                                                 "BRITISH COLUMBIA",
-                                                 "MANITOBA",
-                                                 "NEW BRUNSWICK",
-                                                 "NEWFOUNDLAND",
-                                                 "NORTHWEST TERRITORIES",
-                                                 "NOVA SCOTIA",
-                                                 "NUNAVUT",
-                                                 "ONTARIO",
-                                                 "PRINCE EDWARD ISLAND",
-                                                 "QUEBEC",
-                                                 "SASKATCHEWAN",
-                                                 "YUKON TERRITORY"),
+    dplyr::left_join(station_tz, by = c("station_id", "prov", "lat", "lon")) %>%
+    tidyr::gather(key = "interval", value = "date", dplyr::matches("(start)|(end)")) %>%
+    tidyr::separate(.data$interval, c("interval", "type"), sep = "_") %>%
+    dplyr::mutate(type = factor(.data$type, levels = c("start", "end")),
+                  station_name = as.character(.data$station_name),
+                  station_id = factor(.data$station_id),
+                  lat = replace(.data$lat, .data$lat == 0, NA),
+                  lon = replace(.data$lon, .data$lon == 0, NA),
+                  WMO_id = factor(.data$WMO_id),
+                  date = replace(.data$date, date == "", NA),
+                  TC_id = replace(.data$TC_id, .data$TC_id == "", NA),
+                  prov = factor(.data$prov, levels = c("ALBERTA",
+                                                       "BRITISH COLUMBIA",
+                                                       "MANITOBA",
+                                                       "NEW BRUNSWICK",
+                                                       "NEWFOUNDLAND",
+                                                       "NORTHWEST TERRITORIES",
+                                                       "NOVA SCOTIA",
+                                                       "NUNAVUT",
+                                                       "ONTARIO",
+                                                       "PRINCE EDWARD ISLAND",
+                                                       "QUEBEC",
+                                                       "SASKATCHEWAN",
+                                                       "YUKON TERRITORY"),
                                 labels = c("AB", "BC", "MB", "NB", "NL", "NT",
                                            "NS", "NU", "ON", "PE", "QC", "SK",
                                            "YT"))) %>%
-    tidyr::spread(type, date) %>%
-    dplyr::arrange(prov, station_id, interval) %>%
+    tidyr::spread(.data$type, .data$date) %>%
+    dplyr::arrange(.data$prov, .data$station_id, .data$interval) %>%
     dplyr::mutate(normals = FALSE) %>%
     dplyr::tbl_df()
 
@@ -242,7 +243,7 @@ stations_search <- function(name = NULL,
 
   check_int(interval)
 
-  stn <- dplyr::filter(stn, interval %in% !! interval, !is.na(start))
+  stn <- dplyr::filter(stn, .data$interval %in% !! interval, !is.na(.data$start))
 
   if(normals_only) {
     stn <- dplyr::filter(stn, .data$normals == TRUE)
@@ -256,7 +257,7 @@ stations_search <- function(name = NULL,
       if (is.na(starts_latest) | class(starts_latest) == "try-error"){
         stop("'starts_latest' needs to be coercible into numeric")
       }
-      stn <- dplyr::filter(stn, start <= starts_latest)
+      stn <- dplyr::filter(stn, .data$start <= starts_latest)
     }
 
     if (!is.null(ends_earliest)){
@@ -267,7 +268,7 @@ stations_search <- function(name = NULL,
       if (is.na(ends_earliest) | class(ends_earliest) == "try-error"){
         stop("'ends_earliest' needs to be coercible into numeric")
       }
-      stn <- dplyr::filter(stn, end >= ends_earliest)
+      stn <- dplyr::filter(stn, .data$end >= ends_earliest)
     }
   }
 
@@ -298,7 +299,7 @@ stations_search <- function(name = NULL,
     stn$distance <- NA
     stn$distance[!is.na(stn$lat)] <- sp::spDistsN1(pts = locs,
                                                    pt = coords, longlat = TRUE)
-    stn <- dplyr::arrange(stn, distance)
+    stn <- dplyr::arrange(stn, .data$distance)
 
     i <- which(stn$distance <= dist)
     if(length(i) == 0) {
@@ -310,10 +311,13 @@ stations_search <- function(name = NULL,
 
   stn <- stn[i, ]
 
-  if(!is.null(name)) stn <- dplyr::arrange(stn, station_name,
-                                           station_id, interval)
-  if(!is.null(coords)) stn <- dplyr::arrange(stn, distance, station_name,
-                                             station_id, interval)
+  if(!is.null(name)) stn <- dplyr::arrange(stn, .data$station_name,
+                                           .data$station_id,
+                                           .data$interval)
+  if(!is.null(coords)) stn <- dplyr::arrange(stn, .data$distance,
+                                             .data$station_name,
+                                             .data$station_id,
+                                             .data$interval)
   if(normals_only) {
     stn <- dplyr::select(stn, -"interval", -"start", -"end") %>%
       dplyr::distinct()

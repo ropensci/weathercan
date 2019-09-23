@@ -217,7 +217,7 @@ normals_extract <- function(n, climate_id) {
 
   # Make subgroups unique
   n <- dplyr::left_join(n,
-                        dplyr::filter(nn, type != "sub") %>%
+                        dplyr::filter(nn, .data$type != "sub") %>%
                           dplyr::select("variable", "subgroup"),
                         by = "variable")
   for(i in 1:nrow(n)) {

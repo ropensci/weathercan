@@ -84,14 +84,7 @@ NULL
     utils::globalVariables(
       # Vars used in Non-Standard Evaluations, declare here to
       # avoid CRAN warnings
-      c("Province", "Name", "Station.ID", "Climate.ID", "WMO.ID", "TC.ID",
-        "type", "station_name", "station_id", "lat", "lon", "WMO_id", "TC_id",
-        "prov", "distance", "flag", "hmdx", "pressure", "rel_hum", "temp_dew",
-        "visib", "wind_chill", "variable", "value", "qual", "interval", "month",
-        "start", "year", "elev", "problems",
-        "V1", "V2", "tz",
-        "html", "skip", "data",
-        ".", " " # piping requires '.' at times
+      c(".", " " # piping requires '.' at times
       )
     )
   invisible()

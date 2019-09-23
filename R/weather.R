@@ -135,10 +135,10 @@ weather_dl <- function(station_ids,
   for(s in station_ids) {
     if(verbose) message("Getting station: ", s)
     stn1 <- stn %>%
-      dplyr::filter(station_id %in% s,
-                    !is.na(start),
-                    interval == !! interval) %>%
-      dplyr::arrange(interval)
+      dplyr::filter(.data$station_id %in% s,
+                    !is.na(.data$start),
+                    .data$interval == !! interval) %>%
+      dplyr::arrange(.data$interval)
 
     ## Check if station missing that interval
     if(nrow(stn1) == 0) {
@@ -153,8 +153,8 @@ weather_dl <- function(station_ids,
                                   "\nAvailable Station Data:\n",
                                   paste0(utils::capture.output(print(
                                     dplyr::filter(stn,
-                                                  station_id %in% s,
-                                                  !is.na(start)))),
+                                                  .data$station_id %in% s,
+                                                  !is.na(.data$start)))),
                                     collapse = "\n")))
         return(dplyr::tibble())
       }
@@ -162,20 +162,20 @@ weather_dl <- function(station_ids,
 
     if(class(try(as.Date(stn1$start), silent = TRUE)) == "try-error") {
       stn1 <- dplyr::mutate(stn1,
-                            start = lubridate::ymd(as.character(start),
+                            start = lubridate::ymd(as.character(.data$start),
                                                    truncated = 2),
-                            start = lubridate::floor_date(start, "year"))
+                            start = lubridate::floor_date(.data$start, "year"))
     }
     if(class(try(as.Date(stn1$end), silent = TRUE)) == "try-error") {
       stn1 <- dplyr::mutate(stn1,
-                            end = lubridate::ymd(as.character(end),
+                            end = lubridate::ymd(as.character(.data$end),
                                                  truncated = 2),
-                            end = lubridate::ceiling_date(end, "year"))
+                            end = lubridate::ceiling_date(.data$end, "year"))
     }
     stn1 <- stn1 %>%
-      dplyr::mutate(end = replace(end, end > Sys.Date(), Sys.Date()),
-                    int = lubridate::interval(start, end),
-                    interval = factor(interval,
+      dplyr::mutate(end = replace(.data$end, .data$end > Sys.Date(), Sys.Date()),
+                    int = lubridate::interval(.data$start, .data$end),
+                    interval = factor(.data$interval,
                                       levels = c("hour", "day", "month"),
                                       ordered = TRUE))
 
@@ -206,8 +206,8 @@ weather_dl <- function(station_ids,
                                   "\nAvailable Station Data:\n",
                                   paste0(utils::capture.output(print(
                                     dplyr::filter(stn,
-                                                  station_id %in% s,
-                                                  !is.na(start)))),
+                                                  .data$station_id %in% s,
+                                                  !is.na(.data$start)))),
                                     collapse = "\n")))
         return(dplyr::tibble())
       }
@@ -225,24 +225,24 @@ weather_dl <- function(station_ids,
     }
 
     w <- dplyr::tibble(date_range = date_range) %>%
-      dplyr::mutate(html = purrr::map(date_range,
+      dplyr::mutate(html = purrr::map(.data$date_range,
                                       ~ weather_html(station_id = s,
                                                      date = .x,
                                                      interval = interval)),
-                    preamble = purrr::map(html, ~ preamble_raw(.x,
+                    preamble = purrr::map(.data$html, ~ preamble_raw(.x,
                                                                encoding =
                                                                  encoding)),
-                    skip = purrr::map_dbl(preamble, ~ nrow(.x))) %>%
-      dplyr::filter(skip > 3) # No data, if no preamble
+                    skip = purrr::map_dbl(.data$preamble, ~ nrow(.x))) %>%
+      dplyr::filter(.data$skip > 3) # No data, if no preamble
 
     if(nrow(w) > 0) {
-      w <- dplyr::mutate(w, data = purrr::map2(html, skip,
+      w <- dplyr::mutate(w, data = purrr::map2(.data$html, .data$skip,
                                                ~ weather_raw(.x, .y,
                                                              encoding =
                                                                encoding)))
 
       # Extract only most recent preamble
-      preamble <- preamble_format(w$preamble[nrow(w)][[1]], s = s)
+      preamble <- preamble_format(w[["preamble"]][nrow(w)][[1]], s = s)
 
       w <- dplyr::select(w, -"date_range", -"skip", -"html", -"preamble") %>%
         tidyr::unnest(data)
@@ -288,8 +288,8 @@ weather_dl <- function(station_ids,
                                     "\nAvailable Station Data:\n",
                                     paste0(utils::capture.output(print(
                                       dplyr::filter(stn,
-                                                    station_id %in% s,
-                                                    !is.na(start)))),
+                                                    .data$station_id %in% s,
+                                                    !is.na(.data$start)))),
                                       collapse = "\n")))
           return(dplyr::tibble())
         }
@@ -347,15 +347,15 @@ weather_dl <- function(station_ids,
 
       } else {
         if(interval == "hour"){
-          w_all <- tidyr::nest(w_all, -dplyr::one_of(p), -date)
+          w_all <- tidyr::nest(w_all, -dplyr::one_of(p), -"date")
         }
 
         if(interval == "day"){
-          w_all <- tidyr::nest(w_all, -dplyr::one_of(p), -month)
+          w_all <- tidyr::nest(w_all, -dplyr::one_of(p), -"month")
         }
 
         if(interval == "month"){
-          w_all <- tidyr::nest(w_all, -dplyr::one_of(p), -year)
+          w_all <- tidyr::nest(w_all, -dplyr::one_of(p), -"year")
         }
       }
     }
@@ -372,8 +372,8 @@ weather_dl <- function(station_ids,
                    "\nAvailable Station Data:\n",
                    paste0(utils::capture.output(print(
                      dplyr::filter(stn,
-                                   station_id %in% missing,
-                                   !is.na(start)))),
+                                   .data$station_id %in% missing,
+                                   !is.na(.data$start)))),
                      collapse = "\n")))
   }
 
@@ -387,8 +387,8 @@ weather_dl <- function(station_ids,
                    "\nAvailable Station Data:\n",
                    paste0(utils::capture.output(print(
                      dplyr::filter(stn,
-                                   station_id %in% end_dates,
-                                   !is.na(start)))),
+                                   .data$station_id %in% end_dates,
+                                   !is.na(.data$start)))),
                      collapse = "\n")))
   }
   ## Return Format messages
@@ -409,10 +409,10 @@ weather_dl <- function(station_ids,
 
     if(verbose) {
       show <- msg_fmt %>%
-        dplyr::select(station_id, problems)
+        dplyr::select("station_id", "problems")
 
       if(utils::packageVersion("tidyr") > "0.8.99") {
-        show <- tidyr::unnest(show, "problems")
+        show <- tidyr::unnest(show, .data$problems)
       } else {
         show <- tidyr::unnest(show)
       }
@@ -478,9 +478,9 @@ weather_format <- function(w, stn, preamble, interval = "hour",
 
   w <- dplyr::rename(w, !!!n)
 
-  if(interval == "day") w <- dplyr::mutate(w, date = as.Date(date))
+  if(interval == "day") w <- dplyr::mutate(w, date = as.Date(.data$date))
   if(interval == "month") {
-    w <- dplyr::mutate(w, date = as.Date(paste0(date, "-01")))
+    w <- dplyr::mutate(w, date = as.Date(paste0(.data$date, "-01")))
   }
 
   ## Get correct timezone
@@ -499,32 +499,32 @@ weather_format <- function(w, stn, preamble, interval = "hour",
                   names(w)[!(names(w) %in% c("date", "year", "month", "day",
                                              "hour", "time", "qual",
                                              "weather"))]) %>%
-    tidyr::separate(variable, into = c("variable", "type"),
+    tidyr::separate(.data$variable, into = c("variable", "type"),
                     sep = "_flag", fill = "right") %>%
-    dplyr::mutate(type = replace(type, type == "", "flag"),
-                  type = replace(type, is.na(type), "value")) %>%
-    tidyr::spread(type, value) %>%
-    dplyr::mutate(value = replace(value, value == "", NA),  ## No data
-                  value = replace(value, flag == "M", NA))  ## Missing
+    dplyr::mutate(type = replace(.data$type, .data$type == "", "flag"),
+                  type = replace(.data$type, is.na(.data$type), "value")) %>%
+    tidyr::spread(.data$type, .data$value) %>%
+    dplyr::mutate(value = replace(.data$value, .data$value == "", NA),  ## No data
+                  value = replace(.data$value, .data$flag == "M", NA))  ## Missing
 
   if("qual" %in% names(w)){
     w <- dplyr::mutate(w,
                        # Convert to ascii
-                       qual = stringi::stri_escape_unicode(qual),
-                       qual = replace(qual, qual == "\\u2020",
+                       qual = stringi::stri_escape_unicode(.data$qual),
+                       qual = replace(.data$qual, .data$qual == "\\u2020",
                                       "Only preliminary quality checking"),
-                       qual = replace(qual, qual == "\\u2021",
+                       qual = replace(.data$qual, .data$qual == "\\u2021",
                                       paste0("Partner data that is not subject",
                                              " to review by the National ",
                                              "Climate Archives")))
   }
   w <- w %>%
-    tidyr::gather(type, value, flag, value) %>%
-    dplyr::mutate(variable = replace(variable, type == "flag",
-                                     paste0(variable[type == "flag"],
+    tidyr::gather(key = "type", value = "value", .data$flag, .data$value) %>%
+    dplyr::mutate(variable = replace(.data$variable, .data$type == "flag",
+                                     paste0(.data$variable[.data$type == "flag"],
                                             "_flag"))) %>%
-    dplyr::select(date, dplyr::everything(), -type) %>%
-    tidyr::spread(variable, value)
+    dplyr::select(date, dplyr::everything(), -"type") %>%
+    tidyr::spread(.data$variable, .data$value)
 
   ## Can we convert to numeric?
   #w$wind_spd[c(54, 89, 92)] <- c(">3", ">5", ">10")
@@ -598,9 +598,9 @@ preamble_format <- function(preamble, s) {
   p <- paste0("(", paste0(p_names, collapse = ")|("), ")")
 
   preamble <- preamble %>%
-    dplyr::mutate(V1 = stringr::str_extract(V1, pattern = p)) %>%
-    dplyr::filter(!is.na(V1)) %>%
-    tidyr::spread(V1, V2)
+    dplyr::mutate(V1 = stringr::str_extract(.data$V1, pattern = p)) %>%
+    dplyr::filter(!is.na(.data$V1)) %>%
+    tidyr::spread(.data$V1, .data$V2)
 
   p <- p_names[p_names %in% names(preamble)]
 
@@ -608,7 +608,7 @@ preamble_format <- function(preamble, s) {
     dplyr::select(p) %>%
     dplyr::mutate(station_id = s,
                   prov = factor(province[.data$prov], levels = province),
-                  lat = as.numeric(as.character(lat)),
-                  lon = as.numeric(as.character(lon)),
-                  elev = as.numeric(as.character(elev)))
+                  lat = as.numeric(as.character(.data$lat)),
+                  lon = as.numeric(as.character(.data$lon)),
+                  elev = as.numeric(as.character(.data$elev)))
 }
