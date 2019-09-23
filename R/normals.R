@@ -20,11 +20,21 @@
 #' @details Climate normals from ECCC include two types of data, averages by
 #'   month for a variety of measurements as well as data relating to the
 #'   frost-free period. Because these two data sources are quite different, we
-#'   return them as nested data so the user can extract them as they wish.
+#'   return them as nested data so the user can extract them as they wish. See
+#'   examples for how to use the [`unnest()`] function from the [`tidyr`]
+#'   package to extract the two different datasets.
 #'
-#' Climate normals are downloaded from the url stored in
-#' `getOption("weathercan.urls.normals")`. To change this location use
-#' `options(weathercan.urls.normals = "your_new_url")`.
+#'   The data also returns a column called `meets_wmo` this reflects whether or
+#'   not the climate normals for this station met the WMO standards for
+#'   temperature and precipitation (i.e. both have code >= A). Each measurement column has a corresponding
+#'   `_code` column which reflects the data quality of that measurement (see the
+#'   [ECCC calculations
+#'   document](http://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf)
+#'   for more details)
+#'
+#'   Climate normals are downloaded from the url stored in
+#'   `getOption("weathercan.urls.normals")`. To change this location use
+#'   `options(weathercan.urls.normals = "your_new_url")`.
 #'
 #' @return tibble with nested normals and first/last frost data
 #'

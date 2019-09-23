@@ -42,7 +42,16 @@ see the \code{\link{glossary_normals}} data frame or the \code{glossary_normals}
 Climate normals from ECCC include two types of data, averages by
 month for a variety of measurements as well as data relating to the
 frost-free period. Because these two data sources are quite different, we
-return them as nested data so the user can extract them as they wish.
+return them as nested data so the user can extract them as they wish. See
+examples for how to use the \code{\link[=unnest]{unnest()}} function from the \code{\link{tidyr}}
+package to extract the two different datasets.
+
+The data also returns a column called \code{meets_wmo} this reflects whether or
+not the climate normals for this station met the WMO standards for
+temperature and precipitation (i.e. both have code >= A). Each measurement column has a corresponding
+\code{_code} column which reflects the data quality of that measurement (see the
+\href{http://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf}{ECCC calculations document}
+for more details)
 
 Climate normals are downloaded from the url stored in
 \code{getOption("weathercan.urls.normals")}. To change this location use
