@@ -111,12 +111,14 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
          "must point to the site where climate normals are stored by province",
          call. = FALSE)
   }
-  skip <- find_skip(headings, cols = c("Jan", "Feb", "Mar"))
 
   # Download data
   n <- dplyr::mutate(n,
-                     normals = purrr::map(.data$loc, ~ normals_raw(., skip)),
-                     frost = purrr::map(.data$normals, ~ frost_find(.)),
+                     normals = purrr::map(.data$loc, normals_raw),
+                     frost = purrr::map(.data$normals, frost_find),
+                     meets_wmo = purrr::map_lgl(
+                       .data$normals,
+                       ~stringr::str_detect(.[1], "WMO standards")),
                      normals = purrr::map2(.data$normals, .data$climate_id,
                                         ~ normals_extract(.x, climate_id = .y)),
                      frost = purrr::map2(.data$frost, .data$climate_id,
@@ -134,7 +136,8 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
                      normals = purrr::map2(.data$normals, .data$climate_id, normals_format),
                      frost = purrr::map2(.data$frost, .data$climate_id, frost_format))
 
-  dplyr::select(n, -"n_data", -"n_frost", -"loc")
+  dplyr::select(n, "prov", "station_name", "climate_id",
+                "meets_wmo", "normals", "frost")
 }
 
 normals_url <- function(prov, climate_id, normals_years) {
@@ -151,7 +154,7 @@ normals_url <- function(prov, climate_id, normals_years) {
          "/climate_normals_", prov, "_", climate_id, "_", normals_years, ".csv")
 }
 
-normals_raw <- function(loc, skip = 14,
+normals_raw <- function(loc,
                         nrows = -1,
                         header = TRUE) {
 
@@ -166,12 +169,21 @@ normals_raw <- function(loc, skip = 14,
   # Download file
   d <- readLines(con <- url(loc, encoding = "latin1"), n = nrows)
   close(con)
-  if(!is.null(skip)) d <- d[(skip + 1):length(d)]
+  wmo <- find_line(d, cols = "meets WMO standards")
+  skip <- find_line(d, cols = c("Jan", "Feb", "Mar"))
+  if(length(wmo) > 0) {
+    d <- d[c(wmo, skip:length(d))]
+  } else {
+    d <- d[skip:length(d)]
+  }
   d
 }
 
 
 normals_extract <- function(n, climate_id) {
+
+  # Remove WMO if exists
+  if(stringr::str_detect(n[1], "WMO standards")) n <- n[-1]
 
   # Remove frost dates
   n <- frost_find(n, type = "remove")
@@ -296,7 +308,9 @@ normals_format <- function(n, climate_id) {
                                       " has a formating issue with numbers",
                                       call. = FALSE))
   tryCatch({n_fmt <- dplyr::mutate_at(n_fmt, .vars = chars,
-                                      ~dplyr::if_else(. == "", as.character(NA), .))},
+                                      ~dplyr::if_else(. == "",
+                                                      as.character(NA),
+                                                      as.character(.)))},
            warning = function(w) stop(climate_id,
                                       " has a formating issue with characters",
                                       call. = FALSE))
@@ -360,13 +374,13 @@ frost_extract <- function(f, climate_id) {
 
 frost_find <- function(n, type = "extract") {
 
-  frost <- stringr::str_which(n, "station data \\(Frost-Free\\)")
+  frost <- find_line(n, "station data \\(Frost-Free\\)")
 
   # If no frost-free title, look for next measurement
 
   if(length(frost) == 0) {
     for(i in f_names$variable) {
-      frost <- stringr::str_which(n, i)
+      frost <- find_line(n, i)
       if(length(frost) != 0) break
     }
   }
@@ -400,12 +414,15 @@ frost_format <- function(f, climate_id) {
            warning = function(w) stop(climate_id,
                                       " has a formating issue with dates",
                                       call. = FALSE))
-  tryCatch({f_fmt <- dplyr::mutate_at(f_fmt, .vars = nums, ~as.numeric(as.character(.)))},
+  tryCatch({f_fmt <- dplyr::mutate_at(f_fmt, .vars = nums,
+                                      ~as.numeric(as.character(.)))},
            warning = function(w) stop(climate_id,
                                       " has a formating issue with numbers",
                                       call. = FALSE))
   tryCatch({f_fmt <- dplyr::mutate_at(f_fmt, .vars = chars,
-                                      ~dplyr::if_else(. == "", as.character(NA), .))},
+                                      ~dplyr::if_else(. == "",
+                                                      as.character(NA),
+                                                      as.character(.)))},
            warning = function(w) stop(climate_id,
                                       " has a formating issue with characters",
                                       call. = FALSE))

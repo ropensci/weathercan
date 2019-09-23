@@ -37,9 +37,9 @@ check_normals <- function(normals_years) {
  }
 }
 
-find_skip <- function(headings, cols) {
+find_line <- function(headings, cols) {
   grep(paste0("(.*?)", paste0("(", cols, ")", collapse = "(.*?)"), "(.*?)"),
-       headings) - 1
+       headings)
 }
 
 na_tibble <- function(cols) {

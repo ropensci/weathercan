@@ -270,12 +270,15 @@ n_formats <- select(n_names, "new_var") %>%
   mutate(format = case_when(
     stringr::str_detect(new_var, "date") ~ "date",
     stringr::str_detect(new_var, "dir") ~ "character",
-    TRUE ~ "numeric"))
+    TRUE ~ "numeric")) %>%
+  bind_rows(tibble(new_var = paste0(n_formats[["new_var"]], "_code"),
+                   format = "character"))
 
 f_formats <- select(f_names, "new_var") %>%
   mutate(format = case_when(
     stringr::str_detect(new_var, "on_date") ~ "date",
-    TRUE ~ "numeric"))
+    TRUE ~ "numeric")) %>%
+  bind_rows(tibble(new_var = "frost_code", format = "character"))
 
 usethis::use_data(province, w_names, p_names, n_names, f_names,
                   n_formats, f_formats,

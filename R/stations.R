@@ -83,7 +83,7 @@ stations_dl <- function(url = NULL, normals_years = "1981-2010",
   }
 
   if(is.null(skip)) {
-    skip <- find_skip(headings, cols = c("Name", "Province", "Climate ID",
+    skip <- find_line(headings, cols = c("Name", "Province", "Climate ID",
                                          "Station ID", "WMO ID", "TC ID"))
   }
 
