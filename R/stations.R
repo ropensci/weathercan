@@ -244,29 +244,31 @@ stations_search <- function(name = NULL,
 
   stn <- dplyr::filter(stn, interval %in% !! interval, !is.na(start))
 
-  if(normals_only) stn <- dplyr::filter(stn, .data$normals == TRUE)
+  if(normals_only) {
+    stn <- dplyr::filter(stn, .data$normals == TRUE)
+  } else {
 
-  if (!is.null(starts_latest)){
-    suppressWarnings({
-      starts_latest <- try(as.numeric(as.character(starts_latest)),
-                           silent = TRUE)
+    if (!is.null(starts_latest)){
+      suppressWarnings({
+        starts_latest <- try(as.numeric(as.character(starts_latest)),
+                             silent = TRUE)
       })
-    if (is.na(starts_latest) | class(starts_latest) == "try-error"){
-      stop("'starts_latest' needs to be coercible into numeric")
+      if (is.na(starts_latest) | class(starts_latest) == "try-error"){
+        stop("'starts_latest' needs to be coercible into numeric")
+      }
+      stn <- dplyr::filter(stn, start <= starts_latest)
     }
-    stn <- dplyr::filter(stn, start <= starts_latest)
-  }
 
-  if (!is.null(ends_earliest)){
-    suppressWarnings({
-      ends_earliest <- try(as.numeric(as.character(ends_earliest)),
-                           silent = TRUE)
-    })
-    if (is.na(ends_earliest) | class(ends_earliest) == "try-error"){
-      stop("'ends_earliest' needs to be coercible into numeric")
+    if (!is.null(ends_earliest)){
+      suppressWarnings({
+        ends_earliest <- try(as.numeric(as.character(ends_earliest)),
+                             silent = TRUE)
+      })
+      if (is.na(ends_earliest) | class(ends_earliest) == "try-error"){
+        stop("'ends_earliest' needs to be coercible into numeric")
+      }
+      stn <- dplyr::filter(stn, end >= ends_earliest)
     }
-    end <- NULL
-    stn <- dplyr::filter(stn, end >= ends_earliest)
   }
 
   if(!is.null(name)) {
@@ -307,11 +309,15 @@ stations_search <- function(name = NULL,
   }
 
   stn <- stn[i, ]
+
   if(!is.null(name)) stn <- dplyr::arrange(stn, station_name,
                                            station_id, interval)
   if(!is.null(coords)) stn <- dplyr::arrange(stn, distance, station_name,
                                              station_id, interval)
-
+  if(normals_only) {
+    stn <- dplyr::select(stn, -"interval", -"start", -"end") %>%
+      dplyr::distinct()
+  }
   stn
 }
 
