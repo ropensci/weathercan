@@ -147,7 +147,7 @@ stations_dl <- function(url = NULL, normals_years = "1981-2010",
                                 labels = c("AB", "BC", "MB", "NB", "NL", "NT",
                                            "NS", "NU", "ON", "PE", "QC", "SK",
                                            "YT")),
-                  prov = as.character(prov)) %>%
+                  prov = as.character(.data$prov)) %>%
     tidyr::spread(.data$type, .data$date) %>%
     dplyr::arrange(.data$prov, .data$station_id, .data$interval) %>%
     dplyr::mutate(normals = FALSE) %>%
