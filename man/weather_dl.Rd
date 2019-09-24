@@ -6,9 +6,10 @@
 \title{Download weather data from Environment and Climate Change Canada}
 \usage{
 weather_dl(station_ids, start = NULL, end = NULL, interval = "hour",
-  trim = TRUE, format = TRUE, string_as = NA, tz_disp = NULL,
-  stn = weathercan::stations, url = NULL, encoding = "UTF-8",
-  list_col = FALSE, verbose = FALSE, quiet = FALSE)
+  trim = TRUE, format = TRUE, string_as = NA, time_disp = "none",
+  tz_disp = NULL, stn = weathercan::stations, url = NULL,
+  encoding = "UTF-8", list_col = FALSE, verbose = FALSE,
+  quiet = FALSE)
 }
 \arguments{
 \item{station_ids}{Numeric/Character. A vector containing the ID(s) of the
@@ -35,8 +36,9 @@ of data downloads.}
 \item{string_as}{Character. What value to replace character strings in a
 numeric measurement with. See Details.}
 
-\item{tz_disp}{Character. What timezone to display times in (must be one of
-\code{OlsonNames()}).}
+\item{time_disp}{Character. Either "none" (default) or "UTC". See details.}
+
+\item{tz_disp}{DEPRECATED. See details}
 
 \item{stn}{Data frame. The \code{stations} data frame to use. Will use the
 one included in the package unless otherwise specified.}
@@ -75,10 +77,17 @@ Start and end date can be specified, but if not, it will default to the
 start and end date of the range (this could result in downloading a lot of
 data!).
 
-Times are returned as the Etc/GMT offset timezone corresponding to the
-location. This does not include daylight savings. However, for
-compatibility with other data sets, timezones can be converted by
-specifying the desired timezone in \code{tz_disp}.
+For hourly data, timezones are always "UTC", but the actual times are
+either local time (default; \code{time_disp = "none"}), or UTC (\code{time_disp = "UTC"}). When \code{time_disp = "none"}, times reflect the local time without
+daylight savings. This means that relative measures of time, such as
+"nighttime", "daytime", "dawn", and "dusk" are comparable among stations in
+different timezones. This is useful for comparing daily cycles. When
+\code{time_disp = "UTC"} the times are transformed into UTC timezone. Thus
+midnight in Kamloops would register as 08:00:00 (Pacific time is 8 hours
+behind UTC). This is useful for tracking weather events through time, but
+will result in odd 'daily' measures of weather (e.g., data collected in the
+afternoon on Sept 1 in Kamloops will be recorded as being collected on Sept
+2 in UTC).
 
 Files are downloaded from the url stored in
 \code{getOption("weathercan.urls.weather")}. To change this location use
