@@ -1,10 +1,16 @@
-tz_offset <- function(tz) {
+tz_offset <- function(tz, as = "tz") {
   t <- as.numeric(difftime(as.POSIXct("2016-01-01 00:00:00", tz = "UTC"),
                            as.POSIXct("2016-01-01 00:00:00", tz = tz), units = "hours"))
 
-  if(t > 0) t <- paste0("Etc/GMT-", t)
-  if(t <= 0) t <- paste0("Etc/GMT+", abs(t))
+  if(as == "tz"){
+    if(t > 0) t <- paste0("Etc/GMT-", t)
+    if(t <= 0) t <- paste0("Etc/GMT+", abs(t))
+  }
   t
+}
+
+tz_hours <- function(tz) {
+  as.numeric(stringr::str_extract(tz, "[0-9+-.]{1,4}"))
 }
 
 check_url <- function(url) {

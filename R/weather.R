@@ -17,10 +17,18 @@
 #'   start and end date of the range (this could result in downloading a lot of
 #'   data!).
 #'
-#'   Times are returned as the Etc/GMT offset timezone corresponding to the
-#'   location. This does not include daylight savings. However, for
-#'   compatibility with other data sets, timezones can be converted by
-#'   specifying the desired timezone in `tz_disp`.
+#'   For hourly data, timezones are always "UTC", but the actual times are
+#'   either local time (default; `time_disp = "none"`), or UTC (`time_disp =
+#'   "UTC"`). When `time_disp = "none"`, times reflect the local time without
+#'   daylight savings. This means that relative measures of time, such as
+#'   "nighttime", "daytime", "dawn", and "dusk" are comparable among stations in
+#'   different timezones. This is useful for comparing daily cycles. When
+#'   `time_disp = "UTC"` the times are transformed into UTC timezone. Thus
+#'   midnight in Kamloops would register as 08:00:00 (Pacific time is 8 hours
+#'   behind UTC). This is useful for tracking weather events through time, but
+#'   will result in odd 'daily' measures of weather (e.g., data collected in the
+#'   afternoon on Sept 1 in Kamloops will be recorded as being collected on Sept
+#'   2 in UTC).
 #'
 #'   Files are downloaded from the url stored in
 #'   `getOption("weathercan.urls.weather")`. To change this location use
@@ -53,8 +61,8 @@
 #'   of data downloads.
 #' @param string_as Character. What value to replace character strings in a
 #'   numeric measurement with. See Details.
-#' @param tz_disp Character. What timezone to display times in (must be one of
-#'   \code{OlsonNames()}).
+#' @param time_disp Character. Either "none" (default) or "UTC". See details.
+#' @param tz_disp DEPRECATED. See details
 #' @param stn Data frame. The \code{stations} data frame to use. Will use the
 #'   one included in the package unless otherwise specified.
 #' @param url DEPRECATED. To set a different url use `options()` (see details).
@@ -97,6 +105,7 @@ weather_dl <- function(station_ids,
                        trim = TRUE,
                        format = TRUE,
                        string_as = NA,
+                       time_disp = "none",
                        tz_disp = NULL,
                        stn = weathercan::stations,
                        url = NULL,
@@ -109,6 +118,10 @@ weather_dl <- function(station_ids,
     warning("'url' is deprecated, use ",
             "`options(weathercan.urls.weather = \"your_new_url\")` instead",
             .call = FALSE)
+  }
+
+  if(!is.null(tz_disp)) {
+    warning("'tz_disp' is deprecated, see Details under ?weather_dl", .call = FALSE)
   }
 
   # Address as.POSIXct...
@@ -126,7 +139,6 @@ weather_dl <- function(station_ids,
 
   check_int(interval)
 
-  tz_list <- c()
   w_all <- data.frame()
   missing <- c()
   end_dates <- c()
@@ -255,7 +267,7 @@ weather_dl <- function(station_ids,
                             preamble = preamble,
                             stn = stn,
                             interval = interval,
-                            tz_disp = tz_disp,
+                            time_disp = time_disp,
                             string_as = string_as,
                             quiet = quiet)
         # Catch messages
@@ -303,19 +315,11 @@ weather_dl <- function(station_ids,
       ## Fill missing headers with NA
       w[names(p_names)[!names(p_names) %in% names(w)]] <- NA
 
-
-      if(interval == "hour") tz_list <- c(tz_list, lubridate::tz(w$time[1]))
       w_all <- rbind(w_all, w)
     }
   }
 
   if(nrow(w_all) > 0) {
-
-    # Convert to UTC if multiple timezones
-    if(interval == "hour" && is.null(tz_disp) && length(unique(tz_list)) > 1) {
-      w_all$time <- lubridate::with_tz(w_all$time, "UTC")
-    }
-
 
     ## Trim to available data provided it is formatted
     if(trim && format && nrow(w_all) > 0){
@@ -469,7 +473,7 @@ weather_raw <- function(html, skip = 0,
 
 
 weather_format <- function(w, stn, preamble, interval = "hour",
-                           string_as = "NA", tz_disp = NULL, quiet = FALSE) {
+                           string_as = "NA", time_disp = NULL, quiet = FALSE) {
 
   ## Get names from stored name list
   n <- w_names[[interval]]
@@ -486,12 +490,12 @@ weather_format <- function(w, stn, preamble, interval = "hour",
 
   ## Get correct timezone
   if(interval == "hour"){
-    tz <- stn$tz[stn$station_id == preamble$station_id[1]][1]
-    w$time <- as.POSIXct(w$time, tz = tz)
-    w$date <- lubridate::as_date(w$time)
-    if(!is.null(tz_disp)){
-      w$time <- lubridate::with_tz(w$time, tz = tz_disp) ## Display in timezone
+    w <- dplyr::mutate(w, time = as.POSIXct(.data$time, tz = "UTC"))
+    if(time_disp == "UTC") {
+      offset <- tz_hours(stn$tz[stn$station_id == preamble$station_id[1]][1])
+      w <- dplyr::mutate(w, time = .data$time + lubridate::hours(offset))
     }
+    w <- dplyr::mutate(w, date = lubridate::as_date(.data$time))
   }
 
   ## Replace some flagged values with NA

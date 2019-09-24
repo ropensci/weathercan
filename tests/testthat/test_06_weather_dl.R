@@ -25,7 +25,7 @@ test_that("weather (hour) returns a data frame", {
   expect_equal(w$station_id[1], 51423)
   expect_equal(w$station_name[1], "KAMLOOPS A")
   expect_equal(w$prov[1], factor("BC", levels = levels(stations$prov)))
-  expect_equal(w$time[1], as.POSIXct("2014-01-01 00:00:00", tz = "Etc/GMT+8"))
+  expect_equal(w$time[1], as.POSIXct("2014-01-01 00:00:00", tz = "UTC"))
   #expect_equal(w$qual[1], paste0("Partner data that is not subject to review ",
   #                               "by the National Climate Archives"))
 })
@@ -33,28 +33,35 @@ test_that("weather (hour) returns a data frame", {
 test_that("weather (hour) formats timezone display", {
   expect_silent({w <- weather_dl(station_ids = 51423, start = "2014-03-01",
                                  end = "2014-04-01",
-                                 tz_disp = "America/Vancouver")})
+                                 time_disp = "UTC")})
   expect_equal(w$time[1],
-               as.POSIXct("2014-03-01 00:00:00", tz = "America/Vancouver"))
-  expect_equal(w$time[w$date == as.Date("2014-04-01")][1],
-               as.POSIXct("2014-04-01 01:00:00", tz = "America/Vancouver"))
+               as.POSIXct("2014-03-01 08:00:00", tz = "UTC"))
 })
 
-test_that("weather (hour) formats timezone to UTC with multiple zones", {
+test_that("weather (hour) formats NL timezone", {
+  expect_silent({w <- weather_dl(station_ids = 6556,
+                                 start = "1965-01-01",
+                                 end = "1965-01-15")}) %>%
+    expect_is("data.frame")
+  expect_equal(w$time[1],
+               as.POSIXct("1965-01-01 00:30:00", tz = "UTC"))
+})
+
+test_that("weather (hour) formats time_disp", {
   expect_silent({w <- weather_dl(c(42203, 49909), start = "2017-09-01",
-                                 end = "2017-09-30")})
+                                 end = "2017-09-30", time_disp = "UTC")})
   expect_equal(lubridate::tz(w$time[1]), "UTC")
   expect_equal(w$time[1], as.POSIXct("2017-09-01 08:00:00", tz = "UTC"))
   expect_equal(w$time[w$station_id == 49909][1],
                as.POSIXct("2017-09-01 06:00:00", tz = "UTC"))
 
-  expect_silent({w <- weather_dl(c(42203), start = "2017-09-01",
+  expect_silent({w <- weather_dl(c(42203, 49909),
+                                 start = "2017-09-01",
                                  end = "2017-09-30")})
-  expect_equal(lubridate::tz(w$time[1]), "Etc/GMT+8")
-
-  expect_silent({w <- weather_dl(c(49909), start = "2017-09-01",
-                                 end = "2017-09-30")})
-  expect_equal(lubridate::tz(w$time[1]), "Etc/GMT+6")
+  expect_equal(dplyr::filter(w, station_id == 42203)$time[1],
+               as.POSIXct("2017-09-01 00:00:00", tz = "UTC"))
+  expect_equal(dplyr::filter(w, station_id == 49909)$time[1],
+               as.POSIXct("2017-09-01 00:00:00", tz = "UTC"))
 })
 
 test_that("weather (hour) gets all", {
