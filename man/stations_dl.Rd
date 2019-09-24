@@ -34,12 +34,12 @@ in this package contains station data downloaded when the package was last
 compiled. This function may take a few minutes to run.
 }
 \details{
-The stations list is downloaded from the url stored in
-\code{getOption("weathercan.urls.stations")}. To change this location use
+The stations list is downloaded from the url stored in the option
+\code{weathercan.urls.stations}. To change this location use
 \code{options(weathercan.urls.stations = "your_new_url")}.
 
 The list of which stations have climate normals is downloaded from the url
-stored in \code{getOption("weathercan.urls.normals")}. To change this location use
+stored in the option \code{weathercan.urls.normals}. To change this location use
 \code{options(weathercan.urls.normals = "your_new_url")}.
 }
 \examples{

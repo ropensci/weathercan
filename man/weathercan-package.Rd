@@ -8,8 +8,7 @@
 \description{
 \code{weathercan} is an R package for simplifying the downloading of
 Historical Climate Data from the Environment and Climate Change Canada (ECCC)
-website
-(http://climate.weather.gc.ca/historical_data/search_historic_data_e.html)
+website (\url{http://climate.weather.gc.ca})
 }
 \details{
 Bear in mind that these downloads can be fairly large and performing

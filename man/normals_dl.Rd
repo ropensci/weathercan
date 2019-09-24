@@ -35,26 +35,26 @@ tibble with nested normals and first/last frost data
 \description{
 Downloads climate normals from Environment and Climate Change Canada (ECCC)
 for one or more stations (defined by \code{climate_id}s). For details and units,
-see the \code{\link{glossary_normals}} data frame or the \code{glossary_normals} vignette
-(\code{vignette("glossary_normals", package = "weathercan")}).
+see the \code{\link{glossary_normals}} data frame or the \code{glossary_normals} vignette:
+\code{vignette("glossary_normals", package = "weathercan")}
 }
 \details{
 Climate normals from ECCC include two types of data, averages by
 month for a variety of measurements as well as data relating to the
 frost-free period. Because these two data sources are quite different, we
 return them as nested data so the user can extract them as they wish. See
-examples for how to use the \code{\link[=unnest]{unnest()}} function from the \code{\link{tidyr}}
+examples for how to use the \code{unnest()} function from the \href{https://tidyr.tidyverse.org/}{tidyr}
 package to extract the two different datasets.
 
 The data also returns a column called \code{meets_wmo} this reflects whether or
 not the climate normals for this station met the WMO standards for
-temperature and precipitation (i.e. both have code >= A). Each measurement column has a corresponding
-\code{_code} column which reflects the data quality of that measurement (see the
-\href{http://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf}{ECCC calculations document}
+temperature and precipitation (i.e. both have code >= A). Each measurement
+column has a corresponding \code{_code} column which reflects the data quality
+of that measurement (see the \href{http://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf}{ECCC calculations document}
 for more details)
 
-Climate normals are downloaded from the url stored in
-\code{getOption("weathercan.urls.normals")}. To change this location use
+Climate normals are downloaded from the url stored in option
+\code{weathercan.urls.normals}. To change this location use:
 \code{options(weathercan.urls.normals = "your_new_url")}.
 }
 \examples{
@@ -82,8 +82,8 @@ n$normals[2]
 # Some have no last frost data
 n$frost[3]
 
-# Note, putting both into the same data set can be done but makes for a very
-# unweildly dataset (there is lots of repetition)
+# Note, putting both into the same data set can be done but makes for
+# a very unweildly dataset (there is lots of repetition)
 nm <- unnest(n, normals)
 f <- unnest(n, frost)
 both <- dplyr::full_join(nm, f)

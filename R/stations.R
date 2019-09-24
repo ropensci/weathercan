@@ -8,12 +8,12 @@
 #'
 #' @details
 #'
-#' The stations list is downloaded from the url stored in
-#' `getOption("weathercan.urls.stations")`. To change this location use
+#' The stations list is downloaded from the url stored in the option
+#' `weathercan.urls.stations`. To change this location use
 #' `options(weathercan.urls.stations = "your_new_url")`.
 #'
 #' The list of which stations have climate normals is downloaded from the url
-#' stored in `getOption("weathercan.urls.normals")`. To change this location use
+#' stored in the option `weathercan.urls.normals`. To change this location use
 #' `options(weathercan.urls.normals = "your_new_url")`.
 #'
 #' @param url DEPRECATED. To set a different url use `options()` (see details).
