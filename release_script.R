@@ -23,18 +23,20 @@ codemetar::write_codemeta()
 
 ## Checks
 devtools::check()     # Local
-devtools::check_win_release() # Win builder
+
+#devtools::check_win_release() # Win builder
 devtools::check_win_devel()
 devtools::check_win_oldrelease()
-devtools::check_rhub(interactive = FALSE,
-                     args = c("_R_CHECK_FORCE_SUGGESTS_" = "false")) # windows/linux/macos
-devtools::check_rhub(platforms = "windows-x86_64-devel",
-                     interactive = FALSE,
-                     env_vars = c("_R_CHECK_FORCE_SUGGESTS_" = "false"))
 
-## Run in console
 system("cd ..; R CMD build weathercan")
-system("cd ..; R CMD check weathercan_0.2.8.tar.gz --as-cran")
+system("cd ..; R CMD check weathercan_0.3.0.tar.gz --as-cran --run-donttest")
+rhub::check_for_cran(path = "../weathercan_0.3.0.tar.gz",
+                     check_args = "--as-cran --run-donttest",
+                     platforms = "windows-x86_64-devel")
+
+# Problems with latex, open weathercan-manual.tex and compile to get actual errors
+# Re-try (skip tests for speed)
+#system("cd ..; R CMD check weathercan_0.3.0.tar.gz --as-cran --no-tests")
 
 ## Push to github
 ## Check travis / appveyor
@@ -47,6 +49,8 @@ devtools::revdep()
 ## Update website
 pkgdown::build_site(lazy = TRUE)
 ## Push to github
+
+## CHECK FOR SECURITY VULNERABILITIES!
 
 ## Actually release it (SEND TO CRAN!)
 devtools::release()
