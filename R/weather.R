@@ -1,9 +1,9 @@
-#' Download weather data from Environment Canada
+#' Download weather data from Environment and Climate Change Canada
 #'
-#' Downloads data from Environment Canada for one or more stations. For details
-#' and units, see the glossary vignette (\code{vignette("glossary", package =
-#' "weathercan")}) or the glossary online
-#' \url{http://climate.weather.gc.ca/glossary_e.html}.
+#' Downloads data from Environment and Climate Change Canada (ECCC) for one or
+#' more stations. For details and units, see the glossary vignette
+#' (`vignette("glossary", package = "weathercan")`) or the glossary online
+#' <http://climate.weather.gc.ca/glossary_e.html>.
 #'
 #' @details Data can be returned 'raw' (format = FALSE) or can be formatted.
 #'   Formatting transforms dates/times to date/time class, renames columns, and
@@ -17,13 +17,22 @@
 #'   start and end date of the range (this could result in downloading a lot of
 #'   data!).
 #'
-#'   Times are returned as the Etc/GMT offset timezone corresponding to the
-#'   location. This does not include daylight savings. However, for
-#'   compatibility with other data sets, timezones can be converted by
-#'   specifying the desired timezone in `tz_disp`.
+#'   For hourly data, timezones are always "UTC", but the actual times are
+#'   either local time (default; `time_disp = "none"`), or UTC (`time_disp =
+#'   "UTC"`). When `time_disp = "none"`, times reflect the local time without
+#'   daylight savings. This means that relative measures of time, such as
+#'   "nighttime", "daytime", "dawn", and "dusk" are comparable among stations in
+#'   different timezones. This is useful for comparing daily cycles. When
+#'   `time_disp = "UTC"` the times are transformed into UTC timezone. Thus
+#'   midnight in Kamloops would register as 08:00:00 (Pacific time is 8 hours
+#'   behind UTC). This is useful for tracking weather events through time, but
+#'   will result in odd 'daily' measures of weather (e.g., data collected in the
+#'   afternoon on Sept 1 in Kamloops will be recorded as being collected on Sept
+#'   2 in UTC).
 #'
-#'   By default, downloads from
-#'   "http://climate.weather.gc.ca/climate_data/bulk_data_e.html"
+#'   Files are downloaded from the url stored in
+#'   `getOption("weathercan.urls.weather")`. To change this location use
+#'   `options(weathercan.urls.weather = "your_new_url")`.
 #'
 #'   Data is downloaded from ECCC as a series of files which are then bound
 #'   together. Each file corresponds to a different month, or year, depending on
@@ -52,12 +61,11 @@
 #'   of data downloads.
 #' @param string_as Character. What value to replace character strings in a
 #'   numeric measurement with. See Details.
-#' @param tz_disp Character. What timezone to display times in (must be one of
-#'   \code{OlsonNames()}).
+#' @param time_disp Character. Either "none" (default) or "UTC". See details.
+#' @param tz_disp DEPRECATED. See details
 #' @param stn Data frame. The \code{stations} data frame to use. Will use the
 #'   one included in the package unless otherwise specified.
-#' @param url Character. Url from which to grab the weather data. If NULL uses
-#'   default url (see details)
+#' @param url DEPRECATED. To set a different url use `options()` (see details).
 #' @param encoding Character. Text encoding for download.
 #' @param list_col Logical. Return data as nested data set? Defaults to FALSE.
 #'   Only applies if `format = TRUE`
@@ -97,6 +105,7 @@ weather_dl <- function(station_ids,
                        trim = TRUE,
                        format = TRUE,
                        string_as = NA,
+                       time_disp = "none",
                        tz_disp = NULL,
                        stn = weathercan::stations,
                        url = NULL,
@@ -105,8 +114,15 @@ weather_dl <- function(station_ids,
                        verbose = FALSE,
                        quiet = FALSE) {
 
-  if(is.null(url)) url <- paste0("http://climate.weather.gc.ca/",
-                                 "climate_data/bulk_data_e.html")
+  if(!is.null(url)) {
+    warning("'url' is deprecated, use ",
+            "`options(weathercan.urls.weather = \"your_new_url\")` instead",
+            .call = FALSE)
+  }
+
+  if(!is.null(tz_disp)) {
+    warning("'tz_disp' is deprecated, see Details under ?weather_dl", .call = FALSE)
+  }
 
   # Address as.POSIXct...
   if((!is.null(start) &
@@ -123,7 +139,6 @@ weather_dl <- function(station_ids,
 
   check_int(interval)
 
-  tz_list <- c()
   w_all <- data.frame()
   missing <- c()
   end_dates <- c()
@@ -131,11 +146,12 @@ weather_dl <- function(station_ids,
 
   for(s in station_ids) {
     if(verbose) message("Getting station: ", s)
+
     stn1 <- stn %>%
-      dplyr::filter(station_id %in% s,
-                    !is.na(start),
-                    interval == !! interval) %>%
-      dplyr::arrange(interval)
+      dplyr::filter(.data$station_id %in% s,
+                    !is.na(.data$start),
+                    .data$interval == !!interval) %>%
+      dplyr::arrange(.data$interval)
 
     ## Check if station missing that interval
     if(nrow(stn1) == 0) {
@@ -150,8 +166,8 @@ weather_dl <- function(station_ids,
                                   "\nAvailable Station Data:\n",
                                   paste0(utils::capture.output(print(
                                     dplyr::filter(stn,
-                                                  station_id %in% s,
-                                                  !is.na(start)))),
+                                                  .data$station_id %in% s,
+                                                  !is.na(.data$start)))),
                                     collapse = "\n")))
         return(dplyr::tibble())
       }
@@ -159,20 +175,20 @@ weather_dl <- function(station_ids,
 
     if(class(try(as.Date(stn1$start), silent = TRUE)) == "try-error") {
       stn1 <- dplyr::mutate(stn1,
-                            start = lubridate::ymd(as.character(start),
+                            start = lubridate::ymd(as.character(.data$start),
                                                    truncated = 2),
-                            start = lubridate::floor_date(start, "year"))
+                            start = lubridate::floor_date(.data$start, "year"))
     }
     if(class(try(as.Date(stn1$end), silent = TRUE)) == "try-error") {
       stn1 <- dplyr::mutate(stn1,
-                            end = lubridate::ymd(as.character(end),
+                            end = lubridate::ymd(as.character(.data$end),
                                                  truncated = 2),
-                            end = lubridate::ceiling_date(end, "year"))
+                            end = lubridate::ceiling_date(.data$end, "year"))
     }
     stn1 <- stn1 %>%
-      dplyr::mutate(end = replace(end, end > Sys.Date(), Sys.Date()),
-                    int = lubridate::interval(start, end),
-                    interval = factor(interval,
+      dplyr::mutate(end = replace(.data$end, .data$end > Sys.Date(), Sys.Date()),
+                    int = lubridate::interval(.data$start, .data$end),
+                    interval = factor(.data$interval,
                                       levels = c("hour", "day", "month"),
                                       ordered = TRUE))
 
@@ -203,8 +219,8 @@ weather_dl <- function(station_ids,
                                   "\nAvailable Station Data:\n",
                                   paste0(utils::capture.output(print(
                                     dplyr::filter(stn,
-                                                  station_id %in% s,
-                                                  !is.na(start)))),
+                                                  .data$station_id %in% s,
+                                                  !is.na(.data$start)))),
                                     collapse = "\n")))
         return(dplyr::tibble())
       }
@@ -222,28 +238,30 @@ weather_dl <- function(station_ids,
     }
 
     w <- dplyr::tibble(date_range = date_range) %>%
-      dplyr::mutate(html = purrr::map(date_range,
+      dplyr::mutate(html = purrr::map(.data$date_range,
                                       ~ weather_html(station_id = s,
                                                      date = .x,
-                                                     interval = interval,
-                                                     url = url)),
-                    preamble = purrr::map(html, ~ preamble_raw(.x,
+                                                     interval = interval)),
+                    preamble = purrr::map(.data$html, ~ preamble_raw(.x,
                                                                encoding =
                                                                  encoding)),
-                    skip = purrr::map_dbl(preamble, ~ nrow(.x))) %>%
-      dplyr::filter(skip > 3) # No data, if no preamble
+                    skip = purrr::map_dbl(.data$preamble, ~ nrow(.x))) %>%
+      dplyr::filter(.data$skip > 3) # No data, if no preamble
 
     if(nrow(w) > 0) {
-      w <- dplyr::mutate(w, data = purrr::map2(html, skip,
+      w <- dplyr::mutate(w, data = purrr::map2(.data$html, .data$skip,
                                                ~ weather_raw(.x, .y,
                                                              encoding =
                                                                encoding)))
 
       # Extract only most recent preamble
-      preamble <- preamble_format(w$preamble[nrow(w)][[1]], s = s)
+      preamble <- preamble_format(w[["preamble"]][nrow(w)][[1]], s = s)
 
-      w <- dplyr::select(w, -date_range, -skip) %>%
-        tidyr::unnest(data)
+      w <- dplyr::select(w, -"date_range", -"skip", -"html", -"preamble")
+
+      if(utils::packageVersion("tidyr") > "0.8.99") {
+        w <- tidyr::unnest(w, .data$data)
+      } else w <- tidyr::unnest(w)
 
       ## Format data if requested
       if(format) {
@@ -252,7 +270,7 @@ weather_dl <- function(station_ids,
                             preamble = preamble,
                             stn = stn,
                             interval = interval,
-                            tz_disp = tz_disp,
+                            time_disp = time_disp,
                             string_as = string_as,
                             quiet = quiet)
         # Catch messages
@@ -286,8 +304,8 @@ weather_dl <- function(station_ids,
                                     "\nAvailable Station Data:\n",
                                     paste0(utils::capture.output(print(
                                       dplyr::filter(stn,
-                                                    station_id %in% s,
-                                                    !is.na(start)))),
+                                                    .data$station_id %in% s,
+                                                    !is.na(.data$start)))),
                                       collapse = "\n")))
           return(dplyr::tibble())
         }
@@ -300,19 +318,11 @@ weather_dl <- function(station_ids,
       ## Fill missing headers with NA
       w[names(p_names)[!names(p_names) %in% names(w)]] <- NA
 
-
-      if(interval == "hour") tz_list <- c(tz_list, lubridate::tz(w$time[1]))
       w_all <- rbind(w_all, w)
     }
   }
 
   if(nrow(w_all) > 0) {
-
-    # Convert to UTC if multiple timezones
-    if(interval == "hour" && is.null(tz_disp) && length(unique(tz_list)) > 1) {
-      w_all$time <- lubridate::with_tz(w_all$time, "UTC")
-    }
-
 
     ## Trim to available data provided it is formatted
     if(trim && format && nrow(w_all) > 0){
@@ -336,16 +346,25 @@ weather_dl <- function(station_ids,
     if(list_col && format){
       w_all <- dplyr::as_tibble(w_all)
       ## Appropriate grouping levels
-      if(interval == "hour"){
-        w_all <- tidyr::nest(w_all, -dplyr::one_of(p), -date)
-      }
+      if(utils::packageVersion("tidyr") > "0.8.99") {
+        col <- dplyr::case_when(interval == "hour" ~ "date",
+                                interval == "day" ~ "month",
+                                interval == "month" ~ "year")
 
-      if(interval == "day"){
-        w_all <- tidyr::nest(w_all, -dplyr::one_of(p), -month)
-      }
+        w_all <- tidyr::nest(w_all, key = -dplyr::one_of(p, col))
 
-      if(interval == "month"){
-        w_all <- tidyr::nest(w_all, -dplyr::one_of(p), -year)
+      } else {
+        if(interval == "hour"){
+          w_all <- tidyr::nest(w_all, -dplyr::one_of(p), -"date")
+        }
+
+        if(interval == "day"){
+          w_all <- tidyr::nest(w_all, -dplyr::one_of(p), -"month")
+        }
+
+        if(interval == "month"){
+          w_all <- tidyr::nest(w_all, -dplyr::one_of(p), -"year")
+        }
       }
     }
   }
@@ -361,8 +380,8 @@ weather_dl <- function(station_ids,
                    "\nAvailable Station Data:\n",
                    paste0(utils::capture.output(print(
                      dplyr::filter(stn,
-                                   station_id %in% missing,
-                                   !is.na(start)))),
+                                   .data$station_id %in% missing,
+                                   !is.na(.data$start)))),
                      collapse = "\n")))
   }
 
@@ -376,12 +395,11 @@ weather_dl <- function(station_ids,
                    "\nAvailable Station Data:\n",
                    paste0(utils::capture.output(print(
                      dplyr::filter(stn,
-                                   station_id %in% end_dates,
-                                   !is.na(start)))),
+                                   .data$station_id %in% end_dates,
+                                   !is.na(.data$start)))),
                      collapse = "\n")))
   }
   ## Return Format messages
-
   msg_fmt <- dplyr::filter(msg_fmt, !is.na(col))
   if(!quiet && nrow(msg_fmt) > 0) {
     cols <- paste0(unique(msg_fmt$col), collapse = ", ")
@@ -399,11 +417,24 @@ weather_dl <- function(station_ids,
 
     if(verbose) {
       show <- msg_fmt %>%
-        dplyr::select(station_id, problems) %>%
-        tidyr::unnest()
+        dplyr::select("station_id", "problems")
+
+      if(utils::packageVersion("tidyr") > "0.8.99") {
+        show <- tidyr::unnest(show, .data$problems)
+      } else {
+        show <- tidyr::unnest(show)
+      }
+
       message("  Examples:  ")
       message(paste0("  ", utils::capture.output(show), collapse = "\n"))
     }
+  }
+
+  if(interval == "hour" && !getOption("weathercan.time.message")){
+   message("As of weathercan v0.3.0 time display is either local time or UTC\n",
+           "See Details under ?weather_dl for more information.\n",
+           "This message is shown once per session")
+    options("weathercan.time.message" = TRUE)
   }
 
   dplyr::tbl_df(w_all)
@@ -412,13 +443,9 @@ weather_dl <- function(station_ids,
 
 weather_html <- function(station_id,
                          date,
-                         interval = "hour",
-                         url = NULL) {
+                         interval = "hour") {
 
-  if(is.null(url)) url <- paste0("http://climate.weather.gc.ca/",
-                                 "climate_data/bulk_data_e.html")
-
-  html <- httr::GET(url,
+  html <- httr::GET(url = getOption("weathercan.urls.weather"),
                     query = list(format = 'csv',
                                  stationID = station_id,
                                  timeframe = ifelse(interval == "hour", 1,
@@ -428,7 +455,7 @@ weather_html <- function(station_id,
                                  Month = format(date, "%m"),
                                  submit = 'Download+Data'))
   httr::stop_for_status(html)
-  return(html)
+  html
 }
 
 weather_raw <- function(html, skip = 0,
@@ -456,7 +483,7 @@ weather_raw <- function(html, skip = 0,
 
 
 weather_format <- function(w, stn, preamble, interval = "hour",
-                           string_as = "NA", tz_disp = NULL, quiet = FALSE) {
+                           string_as = "NA", time_disp = NULL, quiet = FALSE) {
 
   ## Get names from stored name list
   n <- w_names[[interval]]
@@ -464,55 +491,55 @@ weather_format <- function(w, stn, preamble, interval = "hour",
   ## Trim to match names in data
   n <- n[n %in% names(w)]
 
-  w <- dplyr::rename(w, !!!n)
+  w <- dplyr::rename(w, !!n)
 
-  if(interval == "day") w <- dplyr::mutate(w, date = as.Date(date))
+  if(interval == "day") w <- dplyr::mutate(w, date = as.Date(.data$date))
   if(interval == "month") {
-    w <- dplyr::mutate(w, date = as.Date(paste0(date, "-01")))
+    w <- dplyr::mutate(w, date = as.Date(paste0(.data$date, "-01")))
   }
 
   ## Get correct timezone
   if(interval == "hour"){
-    tz <- stn$tz[stn$station_id == preamble$station_id[1]][1]
-    w$time <- as.POSIXct(w$time, tz = tz)
-    w$date <- lubridate::as_date(w$time)
-    if(!is.null(tz_disp)){
-      w$time <- lubridate::with_tz(w$time, tz = tz_disp) ## Display in timezone
+    w <- dplyr::mutate(w, time = as.POSIXct(.data$time, tz = "UTC"))
+    if(time_disp == "UTC") {
+      offset <- tz_hours(stn$tz[stn$station_id == preamble$station_id[1]][1])
+      w <- dplyr::mutate(w, time = .data$time + lubridate::hours(offset))
     }
+    w <- dplyr::mutate(w, date = lubridate::as_date(.data$time))
   }
 
   ## Replace some flagged values with NA
   w <- w %>%
-    tidyr::gather("variable", "value",
+    tidyr::gather(key = "variable", value = "value",
                   names(w)[!(names(w) %in% c("date", "year", "month", "day",
                                              "hour", "time", "qual",
                                              "weather"))]) %>%
-    tidyr::separate(variable, into = c("variable", "type"),
+    tidyr::separate(.data$variable, into = c("variable", "type"),
                     sep = "_flag", fill = "right") %>%
-    dplyr::mutate(type = replace(type, type == "", "flag"),
-                  type = replace(type, is.na(type), "value")) %>%
-    tidyr::spread(type, value) %>%
-    dplyr::mutate(value = replace(value, value == "", NA),  ## No data
-                  value = replace(value, flag == "M", NA))  ## Missing
+    dplyr::mutate(type = replace(.data$type, .data$type == "", "flag"),
+                  type = replace(.data$type, is.na(.data$type), "value")) %>%
+    tidyr::spread(.data$type, .data$value) %>%
+    dplyr::mutate(value = replace(.data$value, .data$value == "", NA),  ## No data
+                  value = replace(.data$value, .data$flag == "M", NA))  ## Missing
 
   if("qual" %in% names(w)){
     w <- dplyr::mutate(w,
                        # Convert to ascii
-                       qual = stringi::stri_escape_unicode(qual),
-                       qual = replace(qual, qual == "\\u2020",
+                       qual = stringi::stri_escape_unicode(.data$qual),
+                       qual = replace(.data$qual, .data$qual == "\\u2020",
                                       "Only preliminary quality checking"),
-                       qual = replace(qual, qual == "\\u2021",
+                       qual = replace(.data$qual, .data$qual == "\\u2021",
                                       paste0("Partner data that is not subject",
                                              " to review by the National ",
                                              "Climate Archives")))
   }
   w <- w %>%
-    tidyr::gather(type, value, flag, value) %>%
-    dplyr::mutate(variable = replace(variable, type == "flag",
-                                     paste0(variable[type == "flag"],
+    tidyr::gather(key = "type", value = "value", .data$flag, .data$value) %>%
+    dplyr::mutate(variable = replace(.data$variable, .data$type == "flag",
+                                     paste0(.data$variable[.data$type == "flag"],
                                             "_flag"))) %>%
-    dplyr::select(date, dplyr::everything(), -type) %>%
-    tidyr::spread(variable, value)
+    dplyr::select(date, dplyr::everything(), -"type") %>%
+    tidyr::spread(.data$variable, .data$value)
 
   ## Can we convert to numeric?
   #w$wind_spd[c(54, 89, 92)] <- c(">3", ">5", ">10")
@@ -533,7 +560,7 @@ weather_format <- function(w, stn, preamble, interval = "hour",
     m <- paste0(names(num)[warn], collapse = ", ")
     non_num <- dplyr::tibble(col = names(num)[warn])
     for(i in names(num)[warn]) {
-      problems <- w[grep("<|>|\\)|\\(", w[,i]),
+      problems <- w[grep("<|>|\\)|\\(", w[[i]]),
                     names(w) %in% c("date", "year", "month",
                                     "day", "hour", "time", i)]
       if(nrow(problems) > 20) rows <- 20 else rows <- nrow(problems)
@@ -586,35 +613,17 @@ preamble_format <- function(preamble, s) {
   p <- paste0("(", paste0(p_names, collapse = ")|("), ")")
 
   preamble <- preamble %>%
-    dplyr::mutate(V1 = stringr::str_extract(V1, pattern = p)) %>%
-    dplyr::filter(!is.na(V1)) %>%
-    tidyr::spread(V1, V2)
+    dplyr::mutate(V1 = stringr::str_extract(.data$V1, pattern = p)) %>%
+    dplyr::filter(!is.na(.data$V1)) %>%
+    tidyr::spread(.data$V1, .data$V2)
 
   p <- p_names[p_names %in% names(preamble)]
 
   preamble %>%
     dplyr::select(p) %>%
     dplyr::mutate(station_id = s,
-                  prov = factor(province[.data$prov], levels = province),
-                  lat = as.numeric(as.character(lat)),
-                  lon = as.numeric(as.character(lon)),
-                  elev = as.numeric(as.character(elev)))
-}
-
-
-#' @export
-weather <- function(station_ids,
-                    start = NULL, end = NULL,
-                    interval = "hour",
-                    trim = TRUE,
-                    format = TRUE,
-                    string_as = NA,
-                    tz_disp = NULL,
-                    stn = weathercan::stations,
-                    url = NULL,
-                    encoding = "UTF-8",
-                    list_col = FALSE,
-                    verbose = FALSE,
-                    quiet = FALSE) {
-  .Deprecated("weather_dl")
+                  prov = province[.data$prov],
+                  lat = as.numeric(as.character(.data$lat)),
+                  lon = as.numeric(as.character(.data$lon)),
+                  elev = as.numeric(as.character(.data$elev)))
 }

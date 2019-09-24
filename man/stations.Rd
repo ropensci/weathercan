@@ -6,20 +6,21 @@
 \title{Station data downloaded from Environment and Climate Change Canada}
 \format{A data frame with 26211 rows and 12 variables:
 \describe{
-  \item{prov}{Province}
-  \item{station_name}{Station name}
-  \item{station_id}{Environment Canada's station ID number. Required for
-  downloading station data.}
-  \item{climate_id}{Climate ID number}
-  \item{WMO_id}{Climate ID number}
-  \item{TC_id}{Climate ID number}
-  \item{lat}{Latitude of station location in degree decimal format}
-  \item{lon}{Longitude of station location in degree decimal format}
-  \item{elev}{Elevation of station location in metres}
-  \item{tz}{Local timezone excluding any Daylight Savings}
-  \item{interval}{Interval of the data measurements ('hour', 'day', 'month')}
-  \item{start}{Starting year of data record}
-  \item{end}{Ending year of data record}
+\item{prov}{Province}
+\item{station_name}{Station name}
+\item{station_id}{Environment Canada's station ID number. Required for
+downloading station data.}
+\item{climate_id}{Climate ID number}
+\item{WMO_id}{Climate ID number}
+\item{TC_id}{Climate ID number}
+\item{lat}{Latitude of station location in degree decimal format}
+\item{lon}{Longitude of station location in degree decimal format}
+\item{elev}{Elevation of station location in metres}
+\item{tz}{Local timezone excluding any Daylight Savings}
+\item{interval}{Interval of the data measurements ('hour', 'day', 'month')}
+\item{start}{Starting year of data record}
+\item{end}{Ending year of data record}
+\item{normals}{Whether climate normals are available for that station}
 }}
 \source{
 \url{http://climate.weather.gc.ca/index_e.html}

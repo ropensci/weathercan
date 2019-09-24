@@ -1,15 +1,16 @@
-## Release v.0.2.8
+## Release v.0.3.0
 
-Addressed change in Google Api which resulted in errors when testing hourly data downloads.
+* Addressed compatibility with tidyr v1.0
+* Added functionality (climate normals), general bug fixes
 
 ## Test environments
-As of October 8th, 2018
+As of Sept 24th, 2019
 
-* Local - ubuntu 16.04 (R 3.5.1)
-* Travis CI - ubuntu 14.04 (R 3.4.4, 3.5.0, and devel)
-* Travis CI - OSX 10.12.6 (R 3.5.0)
-* Appveyor - Windows Server 2012 R2 x64 (R 3.4.4 (oldrel), 3.5.1 (release), 3.5.1 (patched))
-* win-builder (oldrelease, release, and devel)
+* Local - ubuntu 18.04 (R 3.6.1)
+* Travis CI - ubuntu 14.04.5 (R 3.6.1, 3.5.3, and devel)
+* Travis CI - OSX 10.13.3 (R 3.6.1,  3.5.3)
+* win-builder (oldrelease, release) (devel not available)
+* rhub - windows-x86_64-devel
 
 ## R CMD check results
 

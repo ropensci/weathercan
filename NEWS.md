@@ -3,13 +3,22 @@ title: "News"
 author: "Steffi LaZerte"
 output: html_document
 ---
-# weathercan 0.2.8.9001 (2019-08-25)
 
-## Changes
-- Add parameter in station_search() to restrict by start and end dates. This addresses issue #35.
+# weathercan 0.3.0 (2019-09-27)
+
+## Big changes
+- New function: `normals_dl()` function downloads climate normals. Addresses issue #38.
+- New argument: `stations_search()` has `normals_only` to return only stations with climate normals
+- Deprecated `url` argument in favour of `weathercan.urls.stations`, `weathercan.urls.weather` and `weathercan.urls.normals` options.
+- Deprecated `tz_disp` in favour of `time_disp`. Now all timezones are UTC, but the displayed time is either local time or UTC. When `time_disp` = "none", the time displayed is local time without daylight savings, similar to how ECCC presents the data. This means that data from different time zones will have similar ecological times (i.e. midnights will be comparable), but the actual times are not UTC. When `time_disp` = "UTC', the time displayed is in UTC timezone, meaning that stations from different times zones will have true times (i.e. midnight observation in Toronto will be three hours before midnight observation in Vancouver). Addresses issue #74.
+
+## Small changes
+- Add parameter in `station_search()` to restrict by start and end dates. Addresses issue #35.
+- Internal change, switching to .data and "" for all non-standard evaluations as opposed to listing global variables
+- Tweaks to keep compatibility wit `tidyr`
 
 ## Bug fixes
-- Fix bug #69 which resulted in daily downloads missing partial years when the date range spaned two calendar years
+- Fix bug #69 which resulted in daily downloads missing partial years when the date range spanned two calendar years
 - Fix bug #70 where internal `stations` data frame references conflicted with local references to `stations`
 - Fix bug #72 which was a security vulnerability in an article's json
 

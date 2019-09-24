@@ -1,5 +1,5 @@
 ---
-title: "Terms and Units"
+title: "Weather: Terms and Units"
 author: "Steffi LaZerte"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -14,7 +14,9 @@ library(weathercan)
 library(dplyr)
 ```
 
-This table shows details regarding original column (measurement) names and units of all measurements. It further provides links back to the ECCC glossary for more details.
+This table shows details regarding original column (measurement) names and units of all weather measurements. It further provides links back to the ECCC glossary for more details.
+
+For details on climate normals measurements, see the `glossary_normals` vignette.
 
 ```{r, asis = TRUE, echo = FALSE}
 temp <- glossary %>%

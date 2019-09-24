@@ -24,7 +24,7 @@ options(width = 100)
 
 This package makes it easier to search for and download multiple months/years of historical weather data from [Environment and Climate Change Canada (ECCC) website](http://climate.weather.gc.ca/historical_data/search_historic_data_e.html).
 
-Bear in mind that these downloads can be fairly large and performing multiple downloads may use up ECCC's bandwidth unecessarily. Try to stick to what you need.
+Bear in mind that these downloads can be fairly large and performing multiple downloads may use up ECCC's bandwidth unnecessarily. Try to stick to what you need.
 
 For more details and tutorials checkout the [weathercan website](http://ropensci.github.io/weathercan)
 
@@ -105,6 +105,29 @@ ggplot(data = kam_pg, aes(x = time, y = temp, group = station_name, colour = sta
   theme_minimal() + 
   geom_line()
 ```
+
+## Climate Normals
+
+To access climate normals, you first need to know the `climate_id` associated with the station you're interested in.
+
+```{r}
+stations_search("Winnipeg", normals_only = TRUE)
+```
+
+Then you can download the climate normals with the `normals_dl()` function.
+
+```{r}
+n <- normals_dl("5023222")
+```
+
+There are two parts to the normals data, average weather measurements and average frost dates.
+
+```{r}
+library(tidyr)
+unnest(n, normals)
+unnest(n, frost)
+```
+
 
 ## Citation
 

@@ -2,6 +2,13 @@
 # stations_dl ------------------------------------------------------------
 context("stations_dl")
 
+test_that("stations_normals() gets normals info", {
+  expect_silent(n <- stations_normals(years = "1981-2010")) %>%
+    expect_is("character")
+  expect_gt(length(n), 1000)
+  expect_true(all(nchar(n) == 7))
+})
+
 test_that("stations_dl() runs and returns data", {
   skip_on_cran()
   skip_on_travis()
@@ -13,12 +20,12 @@ test_that("stations_dl() runs and returns data", {
   } else if(getRversion() >= "3.3.4") {
     # If get message about not reachable, try again
     expect_error({s <- stations_dl()}, regexp = NA)
-    expect_warning(expect_error({stations_dl(url = "test.csv")}))
+    expect_warning(stations_dl(url = "test.csv"))
     expect_is(s, "data.frame")
-    expect_length(s, 13)
+    expect_length(s, 14)
     expect_lt(length(data.frame(s)[is.na(data.frame(s))]),
               length(data.frame(s)[!is.na(data.frame(s))]))
-    expect_is(s$prov, "factor")
+    expect_is(s$prov, "character")
     expect_is(s$station_name, "character")
     expect_gt(nrow(s), 10)
     expect_equal(unique(s$interval), c("day", "hour", "month"))
@@ -39,7 +46,7 @@ test_that("stations_search 'name' returns correct format", {
   expect_error(stations_search())
   expect_error(stations_search(name = mean()))
   expect_is(stations_search("XXX"), "data.frame")
-  expect_length(stations_search("XXX"), 13)
+  expect_length(stations_search("XXX"), 14)
 
 })
 
@@ -75,7 +82,7 @@ test_that("stations_search 'coords' returns correct format", {
   expect_error(stations_search(coords = 44))
   expect_message(stn <- stations_search(coords = c(54, -122)))
   expect_is(stn, "data.frame")
-  expect_length(stn, 14)
+  expect_length(stn, 15)
   expect_gt(nrow(stn), 0)
 })
 
@@ -166,4 +173,11 @@ test_that("stations_search 'starts_latest' and 'ends_earliest' together", {
                                   starts_latest = 2000,
                                   ends_earliest = 2001)$end >= 2001))
 
+})
+
+test_that("stations_search returns normals only", {
+  expect_silent(s <- stations_search("Brandon", normals_only = TRUE))
+  expect_gt(nrow(stations), nrow(s))
+  expect_true(all(s$normals))
+  expect_equal(unique(s$station_id), s$station_id)
 })

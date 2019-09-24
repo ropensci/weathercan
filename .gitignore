@@ -5,3 +5,7 @@
 .Ruserdata
 .Rproj
 ropensci_onboarding.md
+data-raw/normals/*
+doc
+Meta
+inst/doc

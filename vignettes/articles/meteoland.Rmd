@@ -1,0 +1,138 @@
+---
+title: "Meteoland"
+author: "Steffi LaZerte"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_document
+---
+
+[`meteoland`](https://github.com/vegmod/meteoland) is a package for interpolating meteorological data over spatial scales. As of version v0.7.9 they support transforming and important `weathercan` output for use in spatial interpolations. In this article we will go over a hypothetical example.
+
+## Setup
+First we'll load the packages and find the stations we're interested in and 
+```{r}
+library(meteoland)
+library(weathercan)
+library(dplyr)
+library(tidyr)
+library(sf)
+library(ggplot2)
+library(rnaturalearth)
+
+s <- stations %>%
+  filter(prov == "MB", interval != "month", start <= 2015, end >= 2015, !is.na(elev)) %>%
+  group_by(station_id) %>%
+  mutate(n = length(interval)) %>%
+  filter(n == 2)
+
+s_map <- s %>%
+  st_as_sf(coords = c("lon", "lat"), crs = 4326) %>%
+  st_transform(3347)
+
+mb <- ne_states(country = "Canada", returnclass = "sf") %>%
+  filter(name == "Manitoba") %>%
+  st_transform(3347)
+
+ggplot() +
+  geom_sf(data = mb) +
+  geom_sf(data = s_map)
+```
+
+Let's focus on northern Manitoba
+
+```{r}
+s <- filter(s, lat > 55)
+s_map <- s %>%
+  st_as_sf(coords = c("lon", "lat"), crs = 4326) %>%
+  st_transform(3347)
+
+ggplot() +
+  geom_sf(data = mb) +
+  geom_sf(data = s_map)
+```
+
+
+## Download data
+
+```{r}
+mb_hr <- weather_dl(station_id = unique(s$station_id), interval = "hour",
+                    start = "2015-01-01", end = "2015-12-31", verbose = TRUE)
+mb_day <- weather_dl(station_id = unique(s$station_id), interval = "day",
+                     start = "2015-01-01", end = "2015-12-31", verbose = TRUE)
+```
+
+## Pass to `meteoland`
+
+First we'll reshape our hourly and daily data into a `meteoland` interpolations data object.
+```{r}
+mb_north <- reshapeweathercan(mb_hr, mb_day, output = "MeteorologyInterpolationData")
+```
+
+We can get a sense of the data coverage (number of dates with data per station per variable).
+```{r}
+interpolation.coverage(mb_north, type = 'spatial') %>%
+  head()
+```
+
+Or the number of stations with data per date per variable.
+```{r}
+interpolation.coverage(mb_north, type = 'temporal') %>%
+  head()
+```
+
+Next we have to calibrate the variable we're intersted in (here `Tmin`)
+```{r}
+tmin <- interpolation.calibration(mb_north, variable = "Tmin",
+                                  N_seq = 20,
+                                  alpha_seq = seq(5, 10, by = 1),
+                                  verbose = TRUE)
+
+mb_north@params$N_MinTemperature = tmin$N
+mb_north@params$alpha_MinTemperature = tmin$alpha
+```
+
+Next we cross-validate the data
+```{r}
+cv <- interpolation.cv(mb_north, verbose = TRUE)
+summary(cv)
+```
+
+We create a dummy `SpatialPointsTopography` object representing the points (in this case) that we wish to interpolate over. Note that here I'm using a mean elevation as a placeholder as I don't have actual elevation values. If you have slope and aspect, even better. Remember, interpolation is only as good as the data you give it!
+
+```{r}
+interp <- expand.grid(lat = seq(56, 58.5, 0.25),
+                      lon = seq(-101, -95, 0.25), 
+                      elev = mean(s_map$elev))
+
+interp <- SpatialPointsTopography(as.matrix(interp[, c("lon", "lat")]),
+                                  elevation = interp$elev,
+                                  proj4string = CRS("+proj=longlat +ellps=WGS84"))
+```
+
+Now for the actual interpolation. Here we interpolate over all dates in the range of the original data.
+```{r}
+new_interp <- interpolationpoints(mb_north, interp)
+```
+
+We can summarize and plot our interpolations
+```{r}
+map <- summarypoints(new_interp, var = "MinTemperature")
+
+mb_interp <- st_as_sf(map) %>%
+  rename_at(.vars = vars(contains("matrix")), ~"min_temp") %>%
+  mutate(station_id = NA, interp = TRUE)
+
+mb_stations <- mb_day %>%
+  group_by(station_id, lat, lon) %>%
+  summarize(min_temp = mean(min_temp, na.rm = TRUE)) %>%
+  st_as_sf(coords = c("lon", "lat"), crs = st_crs(mb_interp)) %>%
+  mutate(interp = FALSE)
+
+map_sf <- rbind(mb_interp, mb_stations) %>%
+  mutate(interp = factor(interp, levels = c("TRUE", "FALSE")))
+
+ggplot() +
+  geom_sf(data = mb) +
+  geom_sf(data = map_sf, aes(fill = min_temp, shape = interp, colour = interp), size = 4) +
+  scale_shape_manual(values = c(21,23)) +
+  coord_sf(ylim = c(2100000, 2550000))
+```

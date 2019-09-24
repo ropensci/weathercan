@@ -1,12 +1,15 @@
-pandoc: 1.19.2.1
-pkgdown: 1.1.0
+pandoc: 2.3.1
+pkgdown: 1.4.1
 pkgdown_sha: ~
 articles:
   mapping: articles/mapping.html
+  meteoland: articles/meteoland.html
   use_with_tidyverse: articles/use_with_tidyverse.html
   flags: flags.html
   glossary: glossary.html
+  glossary_normals: glossary_normals.html
   interpolate_data: interpolate_data.html
+  normals: normals.html
   weathercan: weathercan.html
 urls:
   reference: http://ropensci.github.io/weathercan/reference

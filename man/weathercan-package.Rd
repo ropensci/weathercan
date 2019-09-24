@@ -8,63 +8,62 @@
 \description{
 \code{weathercan} is an R package for simplifying the downloading of
 Historical Climate Data from the Environment and Climate Change Canada (ECCC)
-website
-(http://climate.weather.gc.ca/historical_data/search_historic_data_e.html)
+website (\url{http://climate.weather.gc.ca})
 }
 \details{
 Bear in mind that these downloads can be fairly large and performing
-multiple, downloads may use up Environment Canada's bandwidth unnecessarily.
-Try to stick to what you need.
+repeated, large downloads may use up Environment Canada's bandwidth
+unnecessarily. Try to stick to what you need.
 
-There are three main aspects of this package:
-
+There are four main aspects of this package:
 \enumerate{
-  \item Access \strong{stations} lists
-  \itemize{
-    \item \code{\link{stations}} (a data frame listing stations)
-    \item \code{\link{stations_search}()} identify stations by name or
-    proximity to a location
-    \item \code{\link{stations_dl}()} re-download stations data
-    }
-
+\item Access \strong{stations} lists
+\itemize{
+\item \code{\link{stations}} (a data frame listing stations)
+\item \code{\link[=stations_search]{stations_search()}} identify stations by name or proximity to a
+location
+\item \code{\link[=stations_dl]{stations_dl()}} re-download/update stations data
+}
 \item Download \strong{weather} data
- \itemize{
-   \item \code{\link{weather_dl}()}
-   }
-
-\item Merge\strong{weather} data into other data sets through interpolation
- over time
- \itemize{
-   \item \code{\link{weather_interp}()}
-   }
+\itemize{
+\item \code{\link[=weather_dl]{weather_dl()}}
+}
+\item Merge \strong{weather} data into other data sets through interpolation
+over time
+\itemize{
+\item \code{\link[=weather_interp]{weather_interp()}}
+}
+\item Download \strong{climate normals} data
+\itemize{
+\item \code{\link[=normals_dl]{normals_dl()}}
+}
 }
 
 We also include several practice data sets:
-
 \itemize{
-   \item \code{\link{finches}}
-   \item \code{\link{kamloops}}
-   \item \code{\link{kamloops_day}}
-   \item \code{\link{pg}}
-   }
+\item \code{\link{finches}}
+\item \code{\link{kamloops}}
+\item \code{\link{kamloops_day}}
+\item \code{\link{pg}}
+}
 
 As well as several vignettes:
-
 \itemize{
-   \item General Usage: \code{vignette("usage")}
-   \item Merging and Interpolating: \code{vignette("interpolation")}
-   \item Data Flags: \code{vignette("flags")}
-   \item Data Glossary: \code{vignette("glossary")}
-   }
+\item General Usage: \code{vignette("usage")}
+\item Merging and Interpolating: \code{vignette("interpolation")}
+\item Flags and Codes: \code{vignette("flags")}
+\item Weather Data Glossary: \code{vignette("glossary")}
+\item Climate Normals Glossary: \code{vignette("glossary_normals")}
+}
 
-\href{http://ropensci.github.io/weathercan}{Online} we also have an
-advanced article:
-
+\href{http://ropensci.github.io/weathercan}{Online} we also have some
+advanced articles:
 \itemize{
-    \item Using \code{weathercan} with
-    \href{http://tidyverse.org/}{tidyverse}
-    (\href{http://ropensci.github.io/weathercan/articles/articles/use_with_tidyverse.html}{here})
-    }
+\item Using \code{weathercan} with \href{http://tidyverse.org/}{tidyverse}
+(\href{http://ropensci.github.io/weathercan/articles/articles/use_with_tidyverse.html}{here})
+\item Mapping weather data
+(\href{http://ropensci.github.io/weathercan/articles/articles/mapping.html}{here})
+}
 }
 \references{
 Environment and Climate Change Canada: \url{https://www.ec.gc.ca/}

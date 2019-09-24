@@ -22,6 +22,7 @@
 #'   \item{interval}{Interval of the data measurements ('hour', 'day', 'month')}
 #'   \item{start}{Starting year of data record}
 #'   \item{end}{Ending year of data record}
+#'   \item{normals}{Whether climate normals are available for that station}
 #' }
 #' @source \url{http://climate.weather.gc.ca/index_e.html}
 "stations"
@@ -191,6 +192,19 @@
 #' }
 "flags"
 
+#' Meaning of climate normal 'codes'
+#'
+#' A reference dataset containing `codes` matched to their meaning. Data
+#' downloaded using the \code{normals_dl()} function contains columns indicating
+#' `code`. These are presented here for interpretation.
+#'
+#' @format A data frame with 4 rows and 2 variables:
+#' \describe{
+#'   \item{code}{Code}
+#'   \item{meaning}{Explanation of the code}
+#' }
+"codes"
+
 #' Glossary of units and terms
 #'
 #' A reference dataset matching information on columns in data downloaded using
@@ -209,3 +223,33 @@
 #'   website.}
 #' }
 "glossary"
+
+#' Glossary of terms for Climate Normals
+#'
+#' A reference dataset matching information on columns in climate normals data
+#' downloaded using the `normals_dl()` function. Indicates the names and
+#' descriptions of different data measurements.
+#'
+#' @format A data frame with 18 rows and 3 variables:
+#' \describe{
+#'   \item{ECCC_name}{Original measurement type from ECCC}
+#'   \item{weathercan_name}{R-compatible name given when downloaded with the
+#'   `normals_dl()` function}
+#'   \item{description}{Description of the measurement type from ECCC}
+#' }
+"glossary_normals"
+
+
+#' List of climate normals measurements for each station
+#'
+#' A data frame listing the climate normals measurements available for each
+#' station.
+#'
+#' @format A data frame with 113,325 rows and 4 variables:
+#' \describe{
+#'   \item{prov}{Province}
+#'   \item{station_name}{Station Name}
+#'   \item{climate_id}{Climate ID}
+#'   \item{measurement}{Climate normals measurement available for this station}
+#' }
+"normals_measurements"

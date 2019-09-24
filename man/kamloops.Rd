@@ -6,41 +6,41 @@
 \title{Hourly weather data for Kamloops}
 \format{An example dataset of hourly weather data for Kamloops:
 \describe{
-  \item{station_name}{Station name}
-  \item{station_id}{Environment Canada's station ID number. Required for
-  downloading station data.}
-  \item{prov}{Province}
-  \item{lat}{Latitude of station location in degree decimal format}
-  \item{lon}{Longitude of station location in degree decimal format}
-  \item{date}{Date}
-  \item{time}{Time}
-  \item{year}{Year}
-  \item{month}{Month}
-  \item{day}{Day}
-  \item{hour}{Hour}
-  \item{qual}{Data quality}
-  \item{weather}{The state of the atmosphere at a specific time.}
-  \item{hmdx}{Humidex}
-  \item{hmdx_flag}{Humidex data flag}
-  \item{pressure}{Pressure (kPa)}
-  \item{pressure_flag}{Pressure data flag}
-  \item{rel_hum}{Relative humidity}
-  \item{rel_hum_flag}{Relative humidity data flag}
-  \item{temp}{Temperature}
-  \item{temp_dew}{Dew Point Temperature}
-  \item{temp_dew_flag}{Dew Point Temperature flag}
-  \item{visib}{Visibility (km)}
-  \item{visib_flag}{Visibility data flag}
-  \item{wind_chill}{Wind Chill}
-  \item{wind_chill_flag}{Wind Chill flag}
-  \item{wind_dir}{Wind Direction (10's of degrees)}
-  \item{wind_dir_flag}{wind Direction Flag}
-  \item{wind_spd}{Wind speed km/hr}
-  \item{wind_spd_flag}{Wind speed flag}
-  \item{elev}{Elevation (m)}
-  \item{climate_id}{Climate identifier}
-  \item{WMO_id}{World Meteorological Organization Identifier}
-  \item{TC_id}{Transport Canada Identifier}
+\item{station_name}{Station name}
+\item{station_id}{Environment Canada's station ID number. Required for
+downloading station data.}
+\item{prov}{Province}
+\item{lat}{Latitude of station location in degree decimal format}
+\item{lon}{Longitude of station location in degree decimal format}
+\item{date}{Date}
+\item{time}{Time}
+\item{year}{Year}
+\item{month}{Month}
+\item{day}{Day}
+\item{hour}{Hour}
+\item{qual}{Data quality}
+\item{weather}{The state of the atmosphere at a specific time.}
+\item{hmdx}{Humidex}
+\item{hmdx_flag}{Humidex data flag}
+\item{pressure}{Pressure (kPa)}
+\item{pressure_flag}{Pressure data flag}
+\item{rel_hum}{Relative humidity}
+\item{rel_hum_flag}{Relative humidity data flag}
+\item{temp}{Temperature}
+\item{temp_dew}{Dew Point Temperature}
+\item{temp_dew_flag}{Dew Point Temperature flag}
+\item{visib}{Visibility (km)}
+\item{visib_flag}{Visibility data flag}
+\item{wind_chill}{Wind Chill}
+\item{wind_chill_flag}{Wind Chill flag}
+\item{wind_dir}{Wind Direction (10's of degrees)}
+\item{wind_dir_flag}{wind Direction Flag}
+\item{wind_spd}{Wind speed km/hr}
+\item{wind_spd_flag}{Wind speed flag}
+\item{elev}{Elevation (m)}
+\item{climate_id}{Climate identifier}
+\item{WMO_id}{World Meteorological Organization Identifier}
+\item{TC_id}{Transport Canada Identifier}
 }}
 \source{
 \url{http://climate.weather.gc.ca/index_e.html}

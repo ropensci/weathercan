@@ -93,85 +93,195 @@ w_names <- list(
 #   "month" = c("date", "year", "month", "mean_max_temp", "mean_max_temp_flag", "mean_min_temp", "mean_min_temp_flag", "mean_temp", "mean_temp_flag", "extr_max_temp", "extr_max_temp_flag", "extr_min_temp", "extr_min_temp_flag", "total_rain", "total_rain_flag", "total_snow", "total_snow_flag", "total_precip", "total_precip_flag", "snow_grnd_last_day", "snow_grnd_last_day_flag", "dir_max_gust", "dir_max_gust_flag","spd_max_gust", "spd_max_gust_flag")
 # )
 
-devtools::use_data(province, w_names, p_names, overwrite = TRUE, internal = TRUE)
 
-# Add flags data set to package data
-# Get legend of flags (same for all intervals where duplicated)
-flags <- dplyr::bind_rows(weather_raw(weather_html(station_id = 51423,  date = as.Date("2014-01-01"),
-                                      interval = "hour"), nrows = 25, header = FALSE)[11:14,],
-                          weather_raw(weather_html(station_id = 51423,  date = as.Date("2014-01-01"),
-                                      interval = "day"), nrows = 25, header = FALSE)[10:23,],
-                                      weather_raw(weather_html(station_id = 43823,  date = as.Date("2014-01-01"),
-                                      interval = "month"), nrows = 25, header = FALSE)[10:16,]) %>%
-  dplyr::rename(code = V1, meaning = V2) %>%
-  dplyr::distinct() %>%
-  dplyr::as_tibble()
-devtools::use_data(flags, overwrite = TRUE)
-
-
-gloss_url <- list(
-  "hour" = c("temp" = "temp", "temp_dew" = "dewPnt", "rel_hum" = "r_humidity",
-             "wind_dir" = "windDir", "wind_spd" = "windSpd",
-             "visib" = "visibility", "pressure" = "stnPre", "hmdx" = "humidex",
-             "wind_chill" = "windChill", "weather" = "weatherState"),
-  "day" = c("max_temp" = "maxTemp", "min_temp" = "minTemp",
-            "mean_temp" = "meanTemp", "heat_deg_days" = "hdd",
-            "cool_deg_days" = "cooling", "total_rain" = "totalRain",
-            "total_snow" = "totalSnow", "total_precip" = "totalPrec",
-            "snow_grnd" = "s_onGround", "dir_max_gust" = "d_maxGust",
-            "spd_max_gust" = "s_maxGust"),
-  "month" = c("mean_max_temp" = "meanMax", "mean_min_temp" = "meanMin",
-              "mean_temp" = "meanTemp", "extr_max_temp" = "extreme_maxtemp",
-              "extr_min_temp" = "extreme_mintemp", "total_rain" = "totalRain",
-              "total_snow" = "totalSnow", "total_precip" = "totalPrec",
-              "snow_grnd_last_day" = "s_lastDay", "dir_max_gust" = "d_maxGust",
-              "spd_max_gust" = "s_maxGust")
+n_names <- tribble(
+  ~new_var, ~variable, ~type,
+  "title_temp", "Temperature", "title",
+  "temp_daily_average", paste0("Daily Average (\U00B0", "C)"), "unique",
+  "temp_sd", "Standard Deviation", "unique",
+  "temp_daily_max", paste0("Daily Maximum (\U00B0", "C)"), "unique",
+  "temp_daily_min", paste0("Daily Minimum (\U00B0", "C)"), "unique",
+  "temp_extreme_max", paste0("Extreme Maximum (\U00B0", "C)"), "unique",
+  "temp_extreme_max_date", "Date (yyyy/dd)", "sub",
+  "temp_extreme_min", paste0("Extreme Minimum (\U00B0", "C)"), "unique",
+  "temp_extreme_min_date", "Date (yyyy/dd)", "sub",
+  "title_precip", "Precipitation", "title",
+  "rain", "Rainfall (mm)", "unique",
+  "snow", "Snowfall (cm)", "unique",
+  "precip", "Precipitation (mm)", "unique",
+  "snow_mean_depth", "Average Snow Depth (cm)", "unique",
+  "snow_median_depth", "Median Snow Depth (cm)", "unique",
+  "snow_depth_month_end", "Snow Depth at Month-end (cm)", "unique",
+  "rain_extreme_daily", "Extreme Daily Rainfall (mm)", "unique",
+  "rain_extreme_daily_date", "Date (yyyy/dd)", "sub",
+  "snow_extreme_daily", "Extreme Daily Snowfall (cm)", "unique",
+  "snow_extreme_daily_date", "Date (yyyy/dd)", "sub",
+  "precip_extreme_daily", "Extreme Daily Precipitation (mm)", "unique",
+  "precip_extreme_daily_date", "Date (yyyy/dd)", "sub",
+  "snow_extreme_depth", "Extreme Snow Depth (cm)", "unique",
+  "snow_extreme_depth_date", "Date (yyyy/dd)", "sub",
+  "title_temp_max", "Days with Maximum Temperature", "title",
+  "temp_max_days_<=0", paste0("<= 0 \U00B0", "C"), "sub",
+  "temp_max_days_>0", paste0("> 0 \U00B0", "C"), "sub",
+  "temp_max_days_>10", paste0("> 10 \U00B0", "C"), "sub",
+  "temp_max_days_>20", paste0("> 20 \U00B0", "C"), "sub",
+  "temp_max_days_>30", paste0("> 30 \U00B0", "C"), "sub",
+  "temp_max_days_>35", paste0("> 35 \U00B0", "C"), "sub",
+  "title_temp_min", "Days with Minimum Temperature", "title",
+  "temp_min_days_>0", paste0("> 0 \U00B0", "C"), "sub",
+  "temp_min_days_<=2", paste0("<= 2 \U00B0", "C"), "sub",
+  "temp_min_days_<=0", paste0("<= 0 \U00B0", "C"), "sub",
+  "temp_min_days_<-2", paste0("< -2 \U00B0", "C"), "sub",
+  "temp_min_days_<-10", paste0("< -10 \U00B0", "C"), "sub",
+  "temp_min_days_<-20", paste0("< -20 \U00B0", "C"), "sub",
+  "temp_min_days_<-30", paste0("< - 30 \U00B0", "C"), "sub",
+  "title_rain_days", "Days with Rainfall", "title",
+  "rain_days_>=0.2", ">= 0.2 mm", "sub",
+  "rain_days_>=5", ">= 5 mm", "sub",
+  "rain_days_>=10", ">= 10 mm", "sub",
+  "rain_days_>=25", ">= 25 mm", "sub",
+  "title_snow_days", "Days With Snowfall", "title",
+  "snow_days_>=0.2", ">= 0.2 cm", "sub",
+  "snow_days_>=5", ">= 5 cm", "sub",
+  "snow_days_>=10", ">= 10 cm", "sub",
+  "snow_days_>=25", ">= 25 cm", "sub",
+  "title_precip_days", "Days with Precipitation", "title",
+  "precip_days_>=0.2", ">= 0.2 mm", "sub",
+  "precip_days_>=5", ">= 5 mm", "sub",
+  "precip_days_>=10", ">= 10 mm", "sub",
+  "precip_days_>=25", ">= 25 mm", "sub",
+  "title_snowdepth_days", "Days with Snow Depth", "title",
+  "snow_depth_days_>=1", ">= 1 cm", "sub",
+  "snow_depth_days_>=5", ">= 5 cm", "sub",
+  "snow_depth_days_>=10", ">= 10 cm", "sub",
+  "snow_depth_days_>=20", ">= 20 cm", "sub",
+  "title_wind", "Wind", "title",
+  "wind_speed", "Speed (km/h)", "unique",
+  "wind_dir", "Most Frequent Direction", "unique",
+  "wind_max_speed", "Maximum Hourly Speed (km/h)", "unique",
+  "wind_max_speed_date", "Date (yyyy/dd)", "sub",
+  "wind_max_speed_dir", "Direction of Maximum Hourly Speed", "unique",
+  "wind_max_gust", "Maximum Gust Speed (km/h)", "unique",
+  "wind_max_gust_date", "Date (yyyy/dd)", "sub",
+  "wind_max_gust_dir", "Direction of Maximum Gust", "unique",
+  "wind_days_>=52", "Days with Winds >= 52 km/h", "unique",
+  "wind_days_>=63", "Days with Winds >= 63 km/h", "unique",
+  "title_dd", "Degree Days", "title",
+  "dd_above_24", paste0("Above 24 \U00B0", "C"), "sub",
+  "dd_above_18", paste0("Above 18 \U00B0", "C"), "sub",
+  "dd_above_15", paste0("Above 15 \U00B0", "C"), "sub",
+  "dd_above_10", paste0("Above 10 \U00B0", "C"), "sub",
+  "dd_above_5", paste0("Above 5 \U00B0", "C"), "sub",
+  "dd_above_0", paste0("Above 0 \U00B0", "C"), "sub",
+  "dd_below_0", paste0("Below 0 \U00B0", "C"), "sub",
+  "dd_below_5", paste0("Below 5 \U00B0", "C"), "sub",
+  "dd_below_10", paste0("Below 10 \U00B0", "C"), "sub",
+  "dd_below_15", paste0("Below 15 \U00B0", "C"), "sub",
+  "dd_below_18", paste0("Below 18 \U00B0", "C"), "sub",
+  "title_soil_temp", "Soil Temperature", "title",
+  "soil_temp_am_5", paste0("at 5 cm depth (AM obs) (\U00B0", "C)"), "unique",
+  "soil_temp_pm_5", paste0("at 5 cm depth (PM obs) (\U00B0", "C)"), "unique",
+  "soil_temp_am_10", paste0("at 10 cm depth (AM obs) (\U00B0", "C)"), "unique",
+  "soil_temp_pm_10", paste0("at 10 cm depth (PM obs) (\U00B0", "C)"), "unique",
+  "soil_temp_am_20", paste0("at 20 cm depth (AM obs) (\U00B0", "C)"), "unique",
+  "soil_temp_pm_20", paste0("at 20 cm depth (PM obs) (\U00B0", "C)"), "unique",
+  "soil_temp_am_50", paste0("at 50 cm depth (AM obs) (\U00B0", "C)"), "unique",
+  "soil_temp_pm_50", paste0("at 50 cm depth (PM obs) (\U00B0", "C)"), "unique",
+  "soil_temp_am_100", paste0("at 100 cm depth (AM obs) (\U00B0", "C)"), "unique",
+  "soil_temp_pm_100", paste0("at 100 cm depth (PM obs) (\U00B0", "C)"), "unique",
+  "soil_temp_am_150", paste0("at 150 cm depth (AM obs) (\U00B0", "C)"), "unique",
+  "soil_temp_pm_150", paste0("at 150 cm depth (PM obs) (\U00B0", "C)"), "unique",
+  "soil_temp_am_300", paste0("at 300 cm depth (AM obs) (\U00B0", "C)"), "unique",
+  "soil_temp_pm_300", paste0("at 300 cm depth (PM obs) (\U00B0", "C)"), "unique",
+  "title_evaporation", "Evaporation", "title",
+  "lake_evaporation", "Lake Evaporation (mm)", "unique",
+  "title_sunshine", "Bright Sunshine", "title",
+  "sun_hours", "Total Hours", "unique",
+  "sun_measurable_days", "Days with measurable", "unique",
+  "sun_perc_daylight_hours", "% of possible daylight hours", "unique",
+  "sun_extreme_daily", "Extreme Daily", "unique",
+  "sun_extreme_daily_date", "Date (yyyy/dd)", "sub",
+  "title_hmdx", "Humidex", "title",
+  "hmdx_extreme", "Extreme Humidex", "unique",
+  "hmdx_extreme_date", "Date (yyyy/dd)", "sub",
+  "hmdx_days_>=30", "Days with Humidex >= 30", "unique",
+  "hmdx_days_>=35", "Days with Humidex >= 35", "unique",
+  "hmdx_days_>=40", "Days with Humidex >= 40", "unique",
+  "title_wind_chill", "Wind Chill", "title",
+  "wind_chill_extreme", "Extreme Wind Chill", "unique",
+  "wind_chill_extreme_date", "Date (yyyy/dd)", "sub",
+  "wind_chill_days_<-20", "Days with Wind Chill < -20", "unique",
+  "wind_chill_days_<-30", "Days with Wind Chill < -30", "unique",
+  "wind_chill_days_<-40", "Days with Wind Chill < -40", "unique",
+  "title_humidity", "Humidity", "title",
+  "humidity_mean_pressure", "Average Vapour Pressure (kPa)", "unique",
+  "humidity_mean_0600LST", "Average Relative Humidity - 0600LST (%)", "unique",
+  "humidity_mean_1500LST", "Average Relative Humidity - 1500LST (%)", "unique",
+  "title_pressure", "Pressure", "title",
+  "pressure_stn_mean", "Average Station Pressure (kPa)", "unique",
+  "pressure_sea_mean", "Average Sea Level Pressure (kPa)", "unique",
+  "title_radiation", "Radiation", "title",
+  "rad_global_rf1", "Global - RF1 (MJ/m2)", "unique",
+  "rad_extreme_global_rf1", "Extreme Global - RF1 (MJ/m2)", "unique",
+  "rad_extreme_global_rf1_date", "Date (yyyy/dd)", "sub",
+  "rad_diffuse_rf2", "Diffuse - RF2 (MJ/m2)", "unique",
+  "rad_extreme_diffuse_rf2", "Extreme Diffuse - RF2 (MJ/m2)", "unique",
+  "rad_extreme_diffuse_rf2_date", "Date (yyyy/dd)", "sub",
+  "rad_reflected_rf3", "Reflected - RF3 (MJ/m2)", "unique",
+  "rad_extreme_reflected_rf3", "Extreme Reflected - RF3 (MJ/m2)", "unique",
+  "rad_extreme_reflected_rf3_date", "Date (yyyy/dd)", "sub",
+  "rad_net_rf4", "Net - RF4 (MJ/m2)", "unique",
+  "rad_extreme_net_rf4", "Extreme Net - RF4 (MJ/m2)", "unique",
+  "rad_extreme_net_rf4_date", "Date (yyyy/dd)", "sub",
+  "title_visibility", "Visibility (hours with)", "title",
+  "visibility_<1", "< 1 km", "sub",
+  "visibility_1_9", "1 to 9 km", "sub",
+  "visibility_>9", "> 9 km", "sub",
+  "title_cloud", "Cloud Amount (hours with)", "title",
+  "cloud_0_2", "0 to 2 tenths", "sub",
+  "cloud_3_7", "3 to 7 tenths", "sub",
+  "cloud_8_10", "8 to 10 tenths", "sub"
 ) %>%
-  lapply(., utils::stack) %>%
-  lapply(., FUN = function(x) dplyr::mutate(x, ind = as.character(ind))) %>%
-  dplyr::tibble(interval = names(.), data = .) %>%
-  tidyr::unnest() %>%
-  dplyr::mutate(value = paste0("http://climate.weather.gc.ca/glossary_e.html#",
-                               values)) %>%
-  dplyr::select(interval, weathercan_name = ind, ECCC_ref = value)
+  mutate(variable = tolower(variable),
+         group = stringr::str_detect(new_var, "title"),
+         group = cumsum(group),
+         subgroup = type != "sub",
+         subgroup = cumsum(subgroup),
+         variable_sub = paste0(variable, "_", subgroup))
 
-# gloss_url <- list(
-#   "hour" = c(NA, NA, NA, NA, NA, NA, "temp", NA, "dewPnt", NA, "r_humidity", NA, "windDir", NA, "windSpd", NA, "visibility", NA, "stnPre", NA, "humidex", NA, "windChill", NA, "weatherState"),
-#
-#   "day" = c(NA, NA, NA, NA, NA, "maxTemp", NA, "minTemp", NA, "meanTemp", NA, "hdd", NA, "cooling", NA, "totalRain", NA, "totalSnow", NA, "totalPrec", NA, "s_onGround", NA, "d_maxGust", NA, "s_maxGust", NA),
-#
-#   "month" = c(NA, NA, NA, "meanMax", NA, "meanMin", NA, "meanTemp", NA, "extreme_maxtemp", NA, "extreme_mintemp", NA, "totalRain", NA, "totalSnow", NA, "totalPrec", NA, "s_lastDay", NA, "d_maxGust", NA, "s_maxGust", NA)
-# )
+f_names <- tribble(
+  ~new_var, ~variable, ~group,
+  "date_last_spring_frost", "Average Date of Last Spring Frost", 1,
+  "date_first_fall_frost", "Average Date of First Fall Frost", 1,
+  "length_frost_free", "Average Length of Frost-Free Period", 1,
+  "prob_last_spring_temp_below_0_on_date",
+  paste0("Probability of last temperature in spring of 0 \U00B0",
+         "C or lower on or after indicated dates"), 2,
+  "prob_first_fall_temp_below_0_on_date",
+  paste0("Probability of first temperature in fall of 0 \U00B0",
+         "C or lower on or after indicated dates"), 2,
+  "prob_length_frost_free",
+  paste0("Probability of frost-free period equal ",
+         "to or less than indicated period (Days)"), 2,
+  "probability", "probability", 3)
 
-#wd1 <- weather_raw(station_id = 51423, date = as.Date("2014-01-01"), skip = 15, interval = "hour")
-#wd2 <- weather_raw(station_id = 51423, date = as.Date("2014-01-01"), skip = 25, interval = "day")
-#wd3 <- weather_raw(station_id = 43823, date = as.Date("2005-01-01"), skip = 17, interval = "month")
+n_formats <- select(n_names, "new_var") %>%
+  filter(!stringr::str_detect(new_var, "title")) %>%
+  mutate(format = case_when(
+    stringr::str_detect(new_var, "date") ~ "date",
+    stringr::str_detect(new_var, "dir") ~ "character",
+    TRUE ~ "numeric")) %>%
+  bind_rows(tibble(new_var = paste0(n_formats[["new_var"]], "_code"),
+                   format = "character"))
 
-#n <- c(names(wd1), names(wd2), names(wd3))
+f_formats <- select(f_names, "new_var") %>%
+  mutate(format = case_when(
+    stringr::str_detect(new_var, "on_date") ~ "date",
+    TRUE ~ "numeric")) %>%
+  bind_rows(tibble(new_var = "frost_code", format = "character"))
 
-glossary <- dplyr::tibble(interval = c(rep("hour", length(w_names$hour)),
-                                         rep("day", length(w_names$day)),
-                                         rep("month", length(w_names$month))),
-                            ECCC_name = unlist(w_names, use.names = FALSE),
-                            weathercan_name = names(unlist(c(w_names, use.names = FALSE))),
-                            units = stringr::str_replace_all(stringr::str_extract(ECCC_name, "\\(.*\\)"),
-                                                             "\\(|\\)", "")) %>%
-  dplyr::left_join(gloss_url, by = c("interval", "weathercan_name")) %>%
-  dplyr::mutate(ECCC_ref = replace(ECCC_ref,
-                                   weathercan_name == "qual",
-                                   "http://climate.weather.gc.ca/climate_data/data_quality_e.html"),
-                ECCC_ref = replace(ECCC_ref, stringr::str_detect(weathercan_name, "_flag"), "See `flags` vignette or dataset for more details"),
-                ECCC_ref = replace(ECCC_ref, stringr::str_detect(ECCC_ref, "#NA"), NA),
-                units = replace(units, weathercan_name %in% c("year", "month", "day", "hour"),
-                                weathercan_name[weathercan_name %in% c("year", "month", "day", "hour")]),
-                ECCC_ref = replace(ECCC_ref, weathercan_name %in% c("year", "month", "day", "hour"),
-                                   "http://climate.weather.gc.ca/glossary_e.html#dataInt"),
-                units = replace(units, weathercan_name == "time", "ISO date/time"),
-                units = replace(units, weathercan_name == "date", "ISO date"),
-                units = replace(units, weathercan_name %in% c("hmdx", "wind_chill"), "index"),
-                units = replace(units, stringr::str_detect(weathercan_name, c("(qual)|(_flag)|(weather)")), "note")) %>%
-  dplyr::mutate_all(.funs = dplyr::funs(stringr::str_replace_all(., "°", "\U00B0")))
-devtools::use_data(glossary, overwrite = TRUE)
-
+usethis::use_data(province, w_names, p_names, n_names, f_names,
+                  n_formats, f_formats,
+                  overwrite = TRUE, internal = TRUE)
 
 # Technical documentation: ftp://ftp.tor.ec.gc.ca/Pub/Documentation_Technical/Technical_Documentation.pdf

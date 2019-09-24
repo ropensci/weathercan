@@ -5,9 +5,9 @@
 \title{Search for stations by name or location}
 \usage{
 stations_search(name = NULL, coords = NULL, dist = 10,
-  interval = c("hour", "day", "month"), stn = weathercan::stations,
-  starts_latest = NULL, ends_earliest = NULL, verbose = FALSE,
-  quiet = FALSE)
+  interval = c("hour", "day", "month"), normals_only = FALSE,
+  stn = weathercan::stations, starts_latest = NULL,
+  ends_earliest = NULL, verbose = FALSE, quiet = FALSE)
 }
 \arguments{
 \item{name}{Character. A vector of length 1 or more with text against which
@@ -25,6 +25,8 @@ provided.}
 \item{interval}{Character. Return only stations with data at these intervals.
 Must be any of "hour", "day", "month".}
 
+\item{normals_only}{Logical. Return only stations with climate normals?}
+
 \item{stn}{Data frame. The \code{stations} data frame to use. Will use the
 one included in the package unless otherwise specified.}
 
@@ -41,9 +43,9 @@ missing data, etc.)}
 }
 \value{
 Returns a subset of the stations data frame which match the search
-  parameters. If the search was by location, an extra column 'distance' shows
-  the distance in kilometres from the location to the station. If no stations
-  are found withing `dist`, the closest 10 stations are returned.
+parameters. If the search was by location, an extra column 'distance' shows
+the distance in kilometres from the location to the station. If no stations
+are found withing \code{dist}, the closest 10 stations are returned.
 }
 \description{
 Returns stations that match the name provided OR which are within \code{dist}
@@ -52,7 +54,7 @@ information with which to decide which station to then get weather data from.
 }
 \details{
 To search by coordinates, users must make sure they have the
- \code{\link[sp]{sp}} package installed.
+\code{\link[sp]{sp}} package installed.
 }
 \examples{
 
@@ -61,10 +63,5 @@ stations_search(name = "Kamloops", interval = "hour")
 
 stations_search(coords = c(53.915495, -122.739379))
 stations_search(name='Ottawa', starts_latest=1950, ends_earliest=2010)
-
-\donttest{
-loc <- ggmap::geocode("Prince George, BC")
-stations_search(coords = loc[c("lat", "lon")])
-}
 
 }

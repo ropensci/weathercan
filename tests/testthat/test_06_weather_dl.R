@@ -2,9 +2,19 @@
 # weather by hour ---------------------------------------------------------
 context("weather by hour")
 
+setup({options("weathercan.time.message" = TRUE)})
+
+test_that("weather_dl hour alerts to change in time handling", {
+  options("weathercan.time.message" = FALSE)
+
+  expect_message({weather_dl(station_ids = 51423, start = "2014-01-01",
+                             end = "2014-01-31")},
+                 "As of weathercan v0.3.0 time display is")
+})
+
 test_that("weather (hour) returns a data frame", {
   expect_silent({weather_dl(station_ids = 51423, start = "2014-01-01",
-                            end = "2014-01-31")})
+                             end = "2014-01-31")})
   expect_message({w <- weather_dl(station_ids = 51423, start = "2014-01-01",
                                   end = "2014-01-31", verbose = TRUE)})
 
@@ -13,7 +23,7 @@ test_that("weather (hour) returns a data frame", {
   expect_length(w, 35)
   expect_equal(nrow(w), 744)
   expect_is(w$station_name, "character")
-  expect_is(w$prov, "factor")
+  expect_is(w$prov, "character")
   expect_is(w$temp, "numeric")
   expect_is(w$temp_flag, "character")
   expect_is(w$date, "Date")
@@ -24,8 +34,8 @@ test_that("weather (hour) returns a data frame", {
   ## Data
   expect_equal(w$station_id[1], 51423)
   expect_equal(w$station_name[1], "KAMLOOPS A")
-  expect_equal(w$prov[1], factor("BC", levels = levels(stations$prov)))
-  expect_equal(w$time[1], as.POSIXct("2014-01-01 00:00:00", tz = "Etc/GMT+8"))
+  expect_equal(w$prov[1], "BC")
+  expect_equal(w$time[1], as.POSIXct("2014-01-01 00:00:00", tz = "UTC"))
   #expect_equal(w$qual[1], paste0("Partner data that is not subject to review ",
   #                               "by the National Climate Archives"))
 })
@@ -33,28 +43,35 @@ test_that("weather (hour) returns a data frame", {
 test_that("weather (hour) formats timezone display", {
   expect_silent({w <- weather_dl(station_ids = 51423, start = "2014-03-01",
                                  end = "2014-04-01",
-                                 tz_disp = "America/Vancouver")})
+                                 time_disp = "UTC")})
   expect_equal(w$time[1],
-               as.POSIXct("2014-03-01 00:00:00", tz = "America/Vancouver"))
-  expect_equal(w$time[w$date == as.Date("2014-04-01")][1],
-               as.POSIXct("2014-04-01 01:00:00", tz = "America/Vancouver"))
+               as.POSIXct("2014-03-01 08:00:00", tz = "UTC"))
 })
 
-test_that("weather (hour) formats timezone to UTC with multiple zones", {
+test_that("weather (hour) formats NL timezone", {
+  expect_silent({w <- weather_dl(station_ids = 6556,
+                                 start = "1965-01-01",
+                                 end = "1965-01-15")}) %>%
+    expect_is("data.frame")
+  expect_equal(w$time[1],
+               as.POSIXct("1965-01-01 00:30:00", tz = "UTC"))
+})
+
+test_that("weather (hour) formats time_disp", {
   expect_silent({w <- weather_dl(c(42203, 49909), start = "2017-09-01",
-                                 end = "2017-09-30")})
+                                 end = "2017-09-30", time_disp = "UTC")})
   expect_equal(lubridate::tz(w$time[1]), "UTC")
   expect_equal(w$time[1], as.POSIXct("2017-09-01 08:00:00", tz = "UTC"))
   expect_equal(w$time[w$station_id == 49909][1],
                as.POSIXct("2017-09-01 06:00:00", tz = "UTC"))
 
-  expect_silent({w <- weather_dl(c(42203), start = "2017-09-01",
+  expect_silent({w <- weather_dl(c(42203, 49909),
+                                 start = "2017-09-01",
                                  end = "2017-09-30")})
-  expect_equal(lubridate::tz(w$time[1]), "Etc/GMT+8")
-
-  expect_silent({w <- weather_dl(c(49909), start = "2017-09-01",
-                                 end = "2017-09-30")})
-  expect_equal(lubridate::tz(w$time[1]), "Etc/GMT+6")
+  expect_equal(dplyr::filter(w, station_id == 42203)$time[1],
+               as.POSIXct("2017-09-01 00:00:00", tz = "UTC"))
+  expect_equal(dplyr::filter(w, station_id == 49909)$time[1],
+               as.POSIXct("2017-09-01 00:00:00", tz = "UTC"))
 })
 
 test_that("weather (hour) gets all", {
@@ -199,7 +216,7 @@ test_that("weather (day) returns a data frame", {
   expect_equal(nrow(w), i)
 
   expect_is(w$station_name, "character")
-  expect_is(w$prov, "factor")
+  expect_is(w$prov, "character")
   expect_is(w$mean_temp, "numeric")
   expect_is(w$mean_temp_flag, "character")
   expect_is(w$date, "Date")
@@ -209,7 +226,7 @@ test_that("weather (day) returns a data frame", {
   ## Data
   expect_equal(w$station_id[1], 51423)
   expect_equal(w$station_name[1], "KAMLOOPS A")
-  expect_equal(w$prov[1], factor("BC", levels = levels(stations$prov)))
+  expect_equal(w$prov[1], "BC")
   #expect_equal(w$qual[1],
   #             paste0("Partner data that is not subject to review by the ",
   #                    "National Climate Archives"))
@@ -330,10 +347,11 @@ test_that("weather (day) verbose and quiet", {
                            start = "2017-01-01", end = "2017-02-01",
                            quiet = TRUE))
 
+  # Warning about number to character
   expect_message(weather_dl(c(42013, 51423), interval = "day",
                             start = "2017-01-01", end = "2017-02-01",
                             verbose = TRUE),
-                 "(Getting station: 42013\\n)")
+                 "<31")
 })
 
 test_that("weather (day) handles data with different numbers of columns", {
@@ -391,7 +409,7 @@ test_that("weather (month) returns a data frame", {
   expect_length(w, 35)
   expect_equal(nrow(w), 5)
   expect_is(w$station_name, "character")
-  expect_is(w$prov, "factor")
+  expect_is(w$prov, "character")
   expect_is(w$mean_temp, "numeric")
   expect_is(w$mean_temp_flag, "character")
   expect_is(w$date, "Date")
@@ -404,7 +422,7 @@ test_that("weather (month) returns a data frame", {
   expect_equal(w$climate_id[1], "7024440")
   expect_equal(w$WMO_id[1], "")
   expect_equal(w$TC_id[1], "")
-  expect_equal(w$prov[1], factor("QC", levels = levels(stations$prov)))
+  expect_equal(w$prov[1], "QC")
 
 })
 
@@ -535,32 +553,61 @@ test_that("weather (month) crosses the year line", {
 context("Generating list_col")
 
 test_that("list_col=TRUE and interval=hour groups on the right level", {
-  expect_equal(ncol(weather_dl(station_ids = c(51423), start = "2018-04-01",
-                               end = "2018-04-15", interval = "hour") %>%
-                      tidyr::nest(-dplyr::one_of(names(p_names)), -date)),
-               ncol(weather_dl(station_ids = c(51423), start = "2018-04-01",
-                               end = "2018-04-15", interval = "hour",
-                               list_col = TRUE)))
+  if(packageVersion("tidyr") > "0.8.99") {
+    expect_equal(ncol(weather_dl(station_ids = c(51423), start = "2018-04-01",
+                                 end = "2018-04-15", interval = "hour") %>%
+                        tidyr::nest(key = -tidyr::one_of(names(p_names), "date"))),
+                 ncol(weather_dl(station_ids = c(51423), start = "2018-04-01",
+                                 end = "2018-04-15", interval = "hour",
+                                 list_col = TRUE)))
+  } else {
+    expect_equal(ncol(weather_dl(station_ids = c(51423), start = "2018-04-01",
+                                 end = "2018-04-15", interval = "hour") %>%
+                        tidyr::nest(-dplyr::one_of(names(p_names), "date"))),
+                 ncol(weather_dl(station_ids = c(51423), start = "2018-04-01",
+                                 end = "2018-04-15", interval = "hour",
+                                 list_col = TRUE)))
+  }
 })
 
 test_that("list_col=TRUE and interval=day groups on the right level", {
-  expect_equal(ncol(weather_dl(station_ids = c(27119), start = "2015-01-01",
-                               end = "2015-01-15", interval = "day") %>%
-                      tidyr::nest(-dplyr::one_of(names(p_names)), -month)),
-               ncol(weather_dl(station_ids = c(27119),
-                               start = "2015-01-01",
-                               end = "2015-01-15",
-                               interval = "day",
-                               list_col = TRUE)))
+  if(packageVersion("tidyr") > "0.8.99") {
+    expect_equal(ncol(weather_dl(station_ids = c(27119), start = "2015-01-01",
+                                 end = "2015-01-15", interval = "day") %>%
+                        tidyr::nest(key = -dplyr::one_of(names(p_names), "month"))),
+                 ncol(weather_dl(station_ids = c(27119),
+                                 start = "2015-01-01",
+                                 end = "2015-01-15",
+                                 interval = "day",
+                                 list_col = TRUE)))
+  } else {
+    expect_equal(ncol(weather_dl(station_ids = c(27119), start = "2015-01-01",
+                                 end = "2015-01-15", interval = "day") %>%
+                        tidyr::nest(-dplyr::one_of(names(p_names)), -month)),
+                 ncol(weather_dl(station_ids = c(27119),
+                                 start = "2015-01-01",
+                                 end = "2015-01-15",
+                                 interval = "day",
+                                 list_col = TRUE)))
+  }
 })
 
 test_that("list_col=TRUE and interval=month groups on the right level", {
-  expect_equal(ncol(weather_dl(station_ids = c(5217), start = "2015-01-01",
-                               end = "2015-01-15", interval = "month") %>%
-                      tidyr::nest(-dplyr::one_of(names(p_names)), -year)),
-               ncol(weather_dl(station_ids = c(5217), start = "2015-01-01",
-                               end = "2015-01-15", interval = "month",
-                               list_col = TRUE)))
+  if(packageVersion("tidyr") > "0.8.99") {
+    expect_equal(ncol(weather_dl(station_ids = c(5217), start = "2015-01-01",
+                                 end = "2015-01-15", interval = "month") %>%
+                        tidyr::nest(key = -dplyr::one_of(names(p_names), "year"))),
+                 ncol(weather_dl(station_ids = c(5217), start = "2015-01-01",
+                                 end = "2015-01-15", interval = "month",
+                                 list_col = TRUE)))
+  } else {
+    expect_equal(ncol(weather_dl(station_ids = c(5217), start = "2015-01-01",
+                                 end = "2015-01-15", interval = "month") %>%
+                        tidyr::nest(-dplyr::one_of(names(p_names)), -year)),
+                 ncol(weather_dl(station_ids = c(5217), start = "2015-01-01",
+                                 end = "2015-01-15", interval = "month",
+                                 list_col = TRUE)))
+  }
 })
 
 

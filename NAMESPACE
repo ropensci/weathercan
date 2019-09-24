@@ -2,11 +2,10 @@
 
 export(add_weather)
 export(get_tz)
-export(stations_all)
+export(normals_dl)
 export(stations_dl)
 export(stations_search)
 export(tz_calc)
-export(weather)
 export(weather_dl)
 export(weather_interp)
 importFrom(dplyr,"%>%")
