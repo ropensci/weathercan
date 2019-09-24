@@ -14,6 +14,7 @@ source("data-raw/data-index.R")
 # Check spelling
 dict <- hunspell::dictionary('en_CA')
 devtools::spell_check()
+spelling::update_wordlist()
 
 ## Finalize package version
 

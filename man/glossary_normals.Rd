@@ -9,7 +9,7 @@
 \item{ECCC_name}{Original measurement type from ECCC}
 \item{weathercan_name}{R-compatible name given when downloaded with the
 \code{normals_dl()} function}
-\item{description}{Description of the measurment type from ECCC}
+\item{description}{Description of the measurement type from ECCC}
 }}
 \usage{
 glossary_normals
