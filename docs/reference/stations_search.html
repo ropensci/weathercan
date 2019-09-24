@@ -282,10 +282,6 @@ are found withing <code>dist</code>, the closest 10 stations are returned.</p>
 #&gt; </span><span style='color: #BCBCBC;'>3</span><span> ON    OTTAWA MACD…       </span><span style='text-decoration: underline;'>4</span><span>337 6106000     </span><span style='text-decoration: underline;'>71</span><span>628 YOW    45.3 -</span><span style='color: #BB0000;'>75.7</span><span> 114   Etc/…
 #&gt; </span><span style='color: #949494;'># … with 4 more variables: interval </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span style='color: #949494;'>, start </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span style='color: #949494;'>, end </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span style='color: #949494;'>,
 #&gt; #   normals </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span></div><div class='input'>
-<span class='co'># \donttest{</span>
-<span class='no'>loc</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ggmap</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ggmap/man/geocode.html'>geocode</a></span>(<span class='st'>"Prince George, BC"</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Google now requires an API key.</span>
-#&gt; <span class='error'>       See ?register_google for details.</span></div><div class='input'><span class='fu'>stations_search</span>(<span class='kw'>coords</span> <span class='kw'>=</span> <span class='no'>loc</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"lat"</span>, <span class='st'>"lon"</span>)])</div><div class='output co'>#&gt; <span class='error'>Error in stations_search(coords = loc[c("lat", "lon")]): object 'loc' not found</span></div><div class='input'># }
-
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

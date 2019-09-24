@@ -196,10 +196,12 @@
 <p>To visualize missing data we can use the <code><a href="https://rdrr.io/pkg/naniar/man/gg_miss_var.html">gg_miss_var()</a></code> function from the <code>naniar</code> package.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(normals, <span class="op">-</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"_code"</span>)) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># Remove '_code' columns</span></a>
 <a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/naniar/man/gg_miss_var.html">gg_miss_var</a></span>(<span class="dt">facet =</span> station_name)</a></code></pre></div>
-<p><img src="normals_files/figure-html/unnamed-chunk-6-1.png" width="100%"></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span>({<span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(normals, <span class="op">-</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"_code"</span>)) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># Remove '_code' columns</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/pkg/naniar/man/gg_miss_var.html">gg_miss_var</a></span>(<span class="dt">facet =</span> station_name)})</a></code></pre></div>
+<p><img src="normals_files/figure-html/unnamed-chunk-7-1.png" width="100%"></p>
 <p>Let’s take a look at the frost data.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="cf">if</span>(<span class="st">"normals"</span> <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(frost)) frost &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(frost, <span class="op">-</span>normals) <span class="co"># tidyr v1</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">glimpse</a></span>(frost)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="cf">if</span>(<span class="st">"normals"</span> <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(frost)) frost &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(frost, <span class="op">-</span>normals) <span class="co"># tidyr v1</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">glimpse</a></span>(frost)</a></code></pre></div>
 <pre><code>## Observations: 7
 ## Variables: 12
 ## $ prov                                  &lt;chr&gt; "MB", "MB", "MB", "MB", "MB", "MB", "MB"
@@ -218,7 +220,7 @@
 <h3 class="hasAnchor">
 <a href="#finding-stations-with-specific-measurements" class="anchor"></a>Finding stations with specific measurements</h3>
 <p>The include data frame, <code>normals_measurements</code> contains a list of stations with their corresponding measurements. Be aware that this data might be out of date!</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">normals_measurements</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">normals_measurements</a></code></pre></div>
 <pre><code>## # A tibble: 113,325 x 4
 ##    prov  station_name climate_id measurement            
 ##    &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;                  
@@ -234,10 +236,10 @@
 ## 10 AB    HORBURG      301C3D4    temp_extreme_max_code  
 ## # … with 113,315 more rows</code></pre>
 <p>For example, if you wanted all <code>climate_id</code>s for stations that have data on soil temperature</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">normals_measurements <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(measurement, <span class="st">"soil"</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span>(climate_id) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">normals_measurements <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(measurement, <span class="st">"soil"</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span>(climate_id) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>()</a></code></pre></div>
 <pre><code>##  [1] "3070560" "1100119" "112G8L1" "8502800" "8403605" "2403500" "6073960" "6105976"
 ##  [9] "4028060" "4043900" "4075518" "2100630"</code></pre>
 </div>
