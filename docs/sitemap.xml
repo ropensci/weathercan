@@ -4,6 +4,9 @@
     <loc>http://ropensci.github.io/weathercan/index.html</loc>
   </url>
   <url>
+    <loc>http://ropensci.github.io/weathercan/reference/codes.html</loc>
+  </url>
+  <url>
     <loc>http://ropensci.github.io/weathercan/reference/finches.html</loc>
   </url>
   <url>
@@ -16,10 +19,19 @@
     <loc>http://ropensci.github.io/weathercan/reference/glossary.html</loc>
   </url>
   <url>
+    <loc>http://ropensci.github.io/weathercan/reference/glossary_normals.html</loc>
+  </url>
+  <url>
     <loc>http://ropensci.github.io/weathercan/reference/kamloops.html</loc>
   </url>
   <url>
     <loc>http://ropensci.github.io/weathercan/reference/kamloops_day.html</loc>
+  </url>
+  <url>
+    <loc>http://ropensci.github.io/weathercan/reference/normals_dl.html</loc>
+  </url>
+  <url>
+    <loc>http://ropensci.github.io/weathercan/reference/normals_measurements.html</loc>
   </url>
   <url>
     <loc>http://ropensci.github.io/weathercan/reference/pg.html</loc>
@@ -49,6 +61,9 @@
     <loc>http://ropensci.github.io/weathercan/articles/articles/mapping.html</loc>
   </url>
   <url>
+    <loc>http://ropensci.github.io/weathercan/articles/articles/meteoland.html</loc>
+  </url>
+  <url>
     <loc>http://ropensci.github.io/weathercan/articles/articles/use_with_tidyverse.html</loc>
   </url>
   <url>
@@ -58,7 +73,13 @@
     <loc>http://ropensci.github.io/weathercan/articles/glossary.html</loc>
   </url>
   <url>
+    <loc>http://ropensci.github.io/weathercan/articles/glossary_normals.html</loc>
+  </url>
+  <url>
     <loc>http://ropensci.github.io/weathercan/articles/interpolate_data.html</loc>
+  </url>
+  <url>
+    <loc>http://ropensci.github.io/weathercan/articles/normals.html</loc>
   </url>
   <url>
     <loc>http://ropensci.github.io/weathercan/articles/weathercan.html</loc>

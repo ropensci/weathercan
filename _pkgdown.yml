@@ -11,6 +11,7 @@ reference:
       - stations_dl
       - weather_dl
       - weather_interp
+      - normals_dl
       - weathercan-package
   - title: "Utility functions"
     contents:
@@ -20,7 +21,10 @@ reference:
     contents:
       - stations
       - flags
+      - codes
       - glossary
+      - glossary_normals
+      - normals_measurements
   - title: "Example Data"
     contents:
       - kamloops
@@ -33,14 +37,17 @@ articles:
     desc: Using weathercan
     contents:
     - weathercan
+    - normals
     - interpolate_data
     - articles/use_with_tidyverse
     - articles/mapping
+    - articles/meteoland
   - title: References
     desc: Information on weather data measurements
     contents:
     - flags
     - glossary
+    - glossary_normals
 
 navbar:
   type: inverse
