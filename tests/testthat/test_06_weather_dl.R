@@ -23,7 +23,7 @@ test_that("weather (hour) returns a data frame", {
   expect_length(w, 35)
   expect_equal(nrow(w), 744)
   expect_is(w$station_name, "character")
-  expect_is(w$prov, "factor")
+  expect_is(w$prov, "character")
   expect_is(w$temp, "numeric")
   expect_is(w$temp_flag, "character")
   expect_is(w$date, "Date")
@@ -34,7 +34,7 @@ test_that("weather (hour) returns a data frame", {
   ## Data
   expect_equal(w$station_id[1], 51423)
   expect_equal(w$station_name[1], "KAMLOOPS A")
-  expect_equal(w$prov[1], factor("BC", levels = levels(stations$prov)))
+  expect_equal(w$prov[1], "BC")
   expect_equal(w$time[1], as.POSIXct("2014-01-01 00:00:00", tz = "UTC"))
   #expect_equal(w$qual[1], paste0("Partner data that is not subject to review ",
   #                               "by the National Climate Archives"))
@@ -216,7 +216,7 @@ test_that("weather (day) returns a data frame", {
   expect_equal(nrow(w), i)
 
   expect_is(w$station_name, "character")
-  expect_is(w$prov, "factor")
+  expect_is(w$prov, "character")
   expect_is(w$mean_temp, "numeric")
   expect_is(w$mean_temp_flag, "character")
   expect_is(w$date, "Date")
@@ -226,7 +226,7 @@ test_that("weather (day) returns a data frame", {
   ## Data
   expect_equal(w$station_id[1], 51423)
   expect_equal(w$station_name[1], "KAMLOOPS A")
-  expect_equal(w$prov[1], factor("BC", levels = levels(stations$prov)))
+  expect_equal(w$prov[1], "BC")
   #expect_equal(w$qual[1],
   #             paste0("Partner data that is not subject to review by the ",
   #                    "National Climate Archives"))
@@ -409,7 +409,7 @@ test_that("weather (month) returns a data frame", {
   expect_length(w, 35)
   expect_equal(nrow(w), 5)
   expect_is(w$station_name, "character")
-  expect_is(w$prov, "factor")
+  expect_is(w$prov, "character")
   expect_is(w$mean_temp, "numeric")
   expect_is(w$mean_temp_flag, "character")
   expect_is(w$date, "Date")
@@ -422,7 +422,7 @@ test_that("weather (month) returns a data frame", {
   expect_equal(w$climate_id[1], "7024440")
   expect_equal(w$WMO_id[1], "")
   expect_equal(w$TC_id[1], "")
-  expect_equal(w$prov[1], factor("QC", levels = levels(stations$prov)))
+  expect_equal(w$prov[1], "QC")
 
 })
 

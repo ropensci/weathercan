@@ -127,10 +127,8 @@ stations_dl <- function(url = NULL, normals_years = "1981-2010",
     tidyr::separate(.data$interval, c("interval", "type"), sep = "_") %>%
     dplyr::mutate(type = factor(.data$type, levels = c("start", "end")),
                   station_name = as.character(.data$station_name),
-                  station_id = factor(.data$station_id),
                   lat = replace(.data$lat, .data$lat == 0, NA),
                   lon = replace(.data$lon, .data$lon == 0, NA),
-                  WMO_id = factor(.data$WMO_id),
                   date = replace(.data$date, date == "", NA),
                   TC_id = replace(.data$TC_id, .data$TC_id == "", NA),
                   prov = factor(.data$prov, levels = c("ALBERTA",
@@ -148,7 +146,8 @@ stations_dl <- function(url = NULL, normals_years = "1981-2010",
                                                        "YUKON TERRITORY"),
                                 labels = c("AB", "BC", "MB", "NB", "NL", "NT",
                                            "NS", "NU", "ON", "PE", "QC", "SK",
-                                           "YT"))) %>%
+                                           "YT")),
+                  prov = as.character(prov)) %>%
     tidyr::spread(.data$type, .data$date) %>%
     dplyr::arrange(.data$prov, .data$station_id, .data$interval) %>%
     dplyr::mutate(normals = FALSE) %>%

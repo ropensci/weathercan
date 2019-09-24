@@ -10,7 +10,7 @@ test_that("weather_dl() hour format = FALSE", {
   expect_is(w, "data.frame")
   expect_length(w, 34)
   expect_equal(nrow(w), 744)
-  expect_is(w$prov, "factor")
+  expect_is(w$prov, "character")
 
   c <- dplyr::select(w, -station_id, -prov, -lat, -lon, -elev)
   expect_true(all(apply(c, 2, is.character)))
@@ -18,7 +18,7 @@ test_that("weather_dl() hour format = FALSE", {
   ## Data
   expect_equal(w$station_id[1], 51423)
   expect_equal(w$station_name[1], "KAMLOOPS A")
-  expect_equal(w$prov[1], factor("BC", levels = levels(stations$prov)))
+  expect_equal(w$prov[1], "BC")
 
   expect_equal(w$`Date/Time`[1], "2014-01-01 00:00")
   #expect_equal(w$`Data Quality`[1], "\u2021")
@@ -33,7 +33,7 @@ test_that("weather_dl() day format = FALSE", {
   expect_is(w, "data.frame")
   expect_length(w, 37)
   expect_equal(nrow(w), 365)
-  expect_is(w$prov, "factor")
+  expect_is(w$prov, "character")
 
   c <- dplyr::select(w, -station_id, -prov, -lat, -lon, -elev)
   expect_true(all(apply(c, 2, is.character)))
@@ -41,7 +41,7 @@ test_that("weather_dl() day format = FALSE", {
   ## Data
   expect_equal(w$station_id[1], 51423)
   expect_equal(w$station_name[1], "KAMLOOPS A")
-  expect_equal(w$prov[1], factor("BC", levels = levels(stations$prov)))
+  expect_equal(w$prov[1], "BC")
 
   expect_equal(w$`Date/Time`[1], "2014-01-01")
   #expect_equal(w$`Data Quality`[1], "\u2021")
@@ -59,7 +59,7 @@ test_that("weather_dl() month format = FALSE", {
   expect_is(w, "data.frame")
   expect_length(w, 35)
   expect_equal(nrow(w), 842)
-  expect_is(w$prov, "factor")
+  expect_is(w$prov, "character")
 
   c <- dplyr::select(w, -station_id, -prov, -lat, -lon, -elev)
   expect_true(all(apply(c, 2, is.character)))
@@ -67,7 +67,7 @@ test_that("weather_dl() month format = FALSE", {
   ## Data
   expect_equal(w$station_id[1], 5401)
   expect_equal(w$station_name[1], "MAGOG")
-  expect_equal(w$prov[1], factor("QC", levels = levels(stations$prov)))
+  expect_equal(w$prov[1], "QC")
   expect_equal(w$`Date/Time`[1], "1948-01")
   expect_equal(w$climate_id[1], "7024440")
   expect_equal(w$WMO_id[1], "")
