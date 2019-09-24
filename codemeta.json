@@ -10,14 +10,14 @@
   "codeRepository": "https://github.com/ropensci/weathercan",
   "issueTracker": "https://github.com/ropensci/weathercan/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.2.8",
+  "version": "0.3.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.5.1",
+    "version": "3.6.1",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.5.1 (2018-07-02)",
+  "runtimePlatform": "R version 3.6.1 (2019-07-05)",
   "author": [
     {
       "@type": "Person",
@@ -34,6 +34,13 @@
       "familyName": "Albers",
       "email": "sam.albers@gmail.com",
       "@id": "https://orcid.org/0000-0002-9270-7884"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Nick",
+      "familyName": "Brown",
+      "email": "nicholas512@gmail.com",
+      "@id": "https://orcid.org/0000-0002-2719-0671"
     }
   ],
   "maintainer": [
@@ -84,6 +91,18 @@
     },
     {
       "@type": "SoftwareApplication",
+      "identifier": "htmltools",
+      "name": "htmltools",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=htmltools"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "knitr",
       "name": "knitr",
       "provider": {
@@ -93,6 +112,18 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=knitr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "leaflet",
+      "name": "leaflet",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=leaflet"
     },
     {
       "@type": "SoftwareApplication",
@@ -247,6 +278,19 @@
     },
     {
       "@type": "SoftwareApplication",
+      "identifier": "rvest",
+      "name": "rvest",
+      "version": ">= 0.3.4",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rvest"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "stringi",
       "name": "stringi",
       "version": ">= 1.1.2",
@@ -287,7 +331,6 @@
   ],
   "releaseNotes": "https://github.com/ropensci/weathercan/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/weathercan/blob/master/README.md",
-  "fileSize": "3051.364KB",
   "contIntegration": "https://travis-ci.org/ropensci/weathercan",
   "citation": [
     {
@@ -331,6 +374,16 @@
     "url": "https://github.com/ropensci/onboarding/issues/160",
     "provider": "http://ropensci.org"
   },
-  "keywords": ["weather-data", "environment-canada", "weather-downloader", "r", "rstats", "r-package", "peer-reviewed"],
-  "relatedLink": "https://CRAN.R-project.org/package=weathercan"
+  "keywords": [
+    "weather-data",
+    "environment-canada",
+    "weather-downloader",
+    "r",
+    "rstats",
+    "r-package",
+    "peer-reviewed"
+  ],
+  "relatedLink": "https://CRAN.R-project.org/package=weathercan",
+  "copyrightHolder": {},
+  "funder": {}
 }
