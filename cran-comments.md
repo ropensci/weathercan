@@ -1,7 +1,7 @@
 ## Release v.0.3.0
 
 * Addressed compatibility with tidyr v1.0
-* Added functionality (climate normals), general bug fixes
+* Added functionality (climate normals), changed timezone handling, general bug fixes
 
 ## Test environments
 As of Sept 24th, 2019

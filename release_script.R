@@ -47,6 +47,10 @@ devtools::revdep()
 
 ## Build site (so website uses newest version
 ## Update website
+pkgdown::build_articles(lazy = TRUE)
+pkgdown::build_home()
+pkgdown::build_news()
+pkgdown::build_reference()
 pkgdown::build_site(lazy = TRUE)
 ## Push to github
 
