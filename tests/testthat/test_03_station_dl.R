@@ -179,4 +179,5 @@ test_that("stations_search returns normals only", {
   expect_silent(s <- stations_search("Brandon", normals_only = TRUE))
   expect_gt(nrow(stations), nrow(s))
   expect_true(all(s$normals))
+  expect_equal(unique(s$station_id), s$station_id)
 })
