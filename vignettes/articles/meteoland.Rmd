@@ -1,0 +1,103 @@
+---
+title: "Meteoland"
+author: "Steffi LaZerte"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_document
+---
+
+```{r}
+
+library(meteoland)
+library(weathercan)
+library(dplyr)
+library(tidyr)
+library(sf)
+library(ggplot2)
+library(rnaturalearth)
+
+s <- stations %>%
+  filter(prov == "MB", interval != "month", start <= 2015, end >= 2015, !is.na(elev)) %>%
+  group_by(station_id) %>%
+  mutate(n = length(interval)) %>%
+  filter(n == 2)
+
+s_map <- s %>%
+  st_as_sf(coords = c("lon", "lat"), crs = 4326) %>%
+  st_transform(3347)
+
+
+mb <- ne_states(country = "Canada", returnclass = "sf") %>%
+  filter(name == "Manitoba") %>%
+  st_transform(3347)
+
+ggplot() +
+  geom_sf(data = mb) +
+  geom_sf(data = s_map)
+
+s <- filter(s, lat > 55)
+s_map <- s %>%
+  st_as_sf(coords = c("lon", "lat"), crs = 4326) %>%
+  st_transform(3347)
+
+ggplot() +
+  geom_sf(data = mb) +
+  geom_sf(data = s_map)
+
+mb_hr <- weather_dl(station_id = unique(s$station_id), interval = "hour",
+                    start = "2015-01-01", end = "2015-12-31", verbose = TRUE)
+mb_day <- weather_dl(station_id = unique(s$station_id), interval = "day",
+                     start = "2015-01-01", end = "2015-12-31", verbose = TRUE)
+
+mb_north <- reshapeweathercan(mb_hr, mb_day, output = "MeteorologyInterpolationData")
+
+interpolation.coverage(mb_north, type = 'spatial') %>%
+  head()
+
+interpolation.coverage(mb_north, type = 'temporal') %>%
+  head()
+
+tmin <- interpolation.calibration(mb_north, variable = "Tmin",
+                                   N_seq = 20,
+                                   alpha_seq = seq(5, 10, by = 1),
+                                   verbose = TRUE)
+
+mb_north@params$N_MinTemperature = tmin$N
+mb_north@params$alpha_MinTemperature = tmin$alpha
+
+cv <- interpolation.cv(mb_north, verbose = TRUE)
+summary(cv)
+
+interp <- data.frame(station_id = c("A", "B", "C", "D"),
+                     lat = c(57, 57, 57, 56),
+                     lon = c(-101, -99, -95, -96),
+                     elev = c(100, 125, 150, 200))
+
+interp <- SpatialPointsTopography(as.matrix(interp[, c("lon", "lat")]),
+                                  elevation = interp$elev,
+                                  proj4string = CRS("+proj=longlat +ellps=WGS84"))
+
+new_interp <- interpolationpoints(mb_north, interp)
+
+map <- summarypoints(new_interp, var = "MeanTemperature")
+
+mb_interp <- st_as_sf(map) %>%
+  rename_at(.vars = vars(contains("matrix")), ~"temp") %>%
+  mutate(station_id = NA, interp = TRUE)
+
+mb_stations <- mb_day %>%
+  group_by(station_id, lat, lon) %>%
+  summarize(temp = mean(mean_temp, na.rm = TRUE)) %>%
+  st_as_sf(coords = c("lon", "lat"), crs = st_crs(mb_interp)) %>%
+  mutate(interp = FALSE)
+
+map_sf <- rbind(mb_interp, mb_stations)
+
+
+ggplot() +
+  geom_sf(data = mb) +
+  geom_sf(data = map_sf, aes(colour = interp, fill = temp, size = interp), shape = 21) +
+  scale_size_manual(values = c(3, 4)) +
+  scale_colour_manual(values = c(NA, "black")) +
+  coord_sf(ylim = c(2100000, 2550000))
+
+```

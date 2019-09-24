@@ -23,7 +23,7 @@ knitr::kable(flags)
 
 ## ---- echo = FALSE--------------------------------------------------------------------------------
 n <- normals_dl(climate_ids = "5010480") %>%
-  unnest("normals")
+  unnest(normals)
 select(n, period, contains("temp_daily"))
 
 ## ---- echo = FALSE--------------------------------------------------------------------------------
