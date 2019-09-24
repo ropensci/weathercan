@@ -257,8 +257,11 @@ weather_dl <- function(station_ids,
       # Extract only most recent preamble
       preamble <- preamble_format(w[["preamble"]][nrow(w)][[1]], s = s)
 
-      w <- dplyr::select(w, -"date_range", -"skip", -"html", -"preamble") %>%
-        tidyr::unnest(data)
+      w <- dplyr::select(w, -"date_range", -"skip", -"html", -"preamble")
+
+      if(utils::packageVersion("tidyr") > "0.8.99") {
+        w <- tidyr::unnest(w, .data$data)
+      } else w <- tidyr::unnest(w)
 
       ## Format data if requested
       if(format) {
