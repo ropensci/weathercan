@@ -134,10 +134,11 @@ weather_dl <- function(station_ids,
 
   for(s in station_ids) {
     if(verbose) message("Getting station: ", s)
+
     stn1 <- stn %>%
       dplyr::filter(.data$station_id %in% s,
                     !is.na(.data$start),
-                    .data$interval == !! interval) %>%
+                    .data$interval == !!interval) %>%
       dplyr::arrange(.data$interval)
 
     ## Check if station missing that interval
@@ -476,7 +477,7 @@ weather_format <- function(w, stn, preamble, interval = "hour",
   ## Trim to match names in data
   n <- n[n %in% names(w)]
 
-  w <- dplyr::rename(w, !!!n)
+  w <- dplyr::rename(w, !!n)
 
   if(interval == "day") w <- dplyr::mutate(w, date = as.Date(.data$date))
   if(interval == "month") {

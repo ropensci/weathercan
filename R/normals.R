@@ -335,7 +335,7 @@ frost_extract <- function(f, climate_id) {
 
     n <- tibble_to_list(f_names[f_names$variable %in% names(f1),
                                 c("new_var", "variable")])
-    f1 <- dplyr::rename(f1, !!!n) %>%
+    f1 <- dplyr::rename(f1, !!n) %>%
       dplyr::mutate_at(.vars = dplyr::vars(dplyr::contains("date")),
                        ~lubridate::yday(lubridate::as_date(paste0("1999", .)))) %>%
       dplyr::mutate(length_frost_free =

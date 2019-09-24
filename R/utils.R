@@ -45,7 +45,7 @@ find_line <- function(headings, cols) {
 na_tibble <- function(cols) {
   n <- as.list(rep(as.numeric(NA), length(cols))) %>%
     stats::setNames(cols)
-  dplyr::tibble(!!!n)
+  dplyr::tibble(!!n)
 }
 
 tibble_to_list <- function(tbl) {
