@@ -64,9 +64,4 @@ stations_search(name = "Kamloops", interval = "hour")
 stations_search(coords = c(53.915495, -122.739379))
 stations_search(name='Ottawa', starts_latest=1950, ends_earliest=2010)
 
-\donttest{
-loc <- ggmap::geocode("Prince George, BC")
-stations_search(coords = loc[c("lat", "lon")])
-}
-
 }

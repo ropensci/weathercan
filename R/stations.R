@@ -202,11 +202,6 @@ stations_dl <- function(url = NULL, normals_years = "1981-2010",
 #' stations_search(coords = c(53.915495, -122.739379))
 #' stations_search(name='Ottawa', starts_latest=1950, ends_earliest=2010)
 #'
-#' \donttest{
-#' loc <- ggmap::geocode("Prince George, BC")
-#' stations_search(coords = loc[c("lat", "lon")])
-#' }
-#'
 #' @export
 
 stations_search <- function(name = NULL,
