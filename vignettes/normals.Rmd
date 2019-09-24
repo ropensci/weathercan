@@ -58,9 +58,14 @@ normals
 ```
 
 To visualize missing data we can use the `gg_miss_var()` function from the `naniar` package.
-```{r, warning = FALSE, fig.asp = 2, out.width = "100%", fig.width = 8}
+```{r, eval = FALSE, fig.asp = 2, out.width = "100%", fig.width = 8}
 select(normals, -contains("_code")) %>%  # Remove '_code' columns
   gg_miss_var(facet = station_name)
+```
+
+```{r, warning = FALSE, fig.asp = 2, out.width = "100%", fig.width = 8}
+suppressWarnings({select(normals, -contains("_code")) %>%  # Remove '_code' columns
+    gg_miss_var(facet = station_name)})
 ```
 
 Let's take a look at the frost data.
