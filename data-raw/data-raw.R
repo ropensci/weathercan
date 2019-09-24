@@ -2,8 +2,6 @@
 stations <- stations_dl()
 usethis::use_data(stations, overwrite = TRUE)
 
-write.csv(stations, "./data-raw/stations.csv", row.names = FALSE)
-
 kamloops_day <- weather_dl(51423, start = "2016-01-01", end = "2016-06-30", interval = "day")
 usethis::use_data(kamloops_day, overwrite = TRUE)
 
