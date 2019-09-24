@@ -74,10 +74,13 @@ test_that("approx_na_rm (time) without NAs pads NAs at start/end", {
 
 test_that("approx_na_rm (time) replaces gaps with NAs", {
   k <- kamloops[kamloops$time >= as.POSIXct("2016-02-29 08:00:00",
-                                            tz = "Etc/GMT+8") &
+                                            tz = "UTC") &
                   kamloops$time <= as.POSIXct("2016-03-30 9:00:00",
-                                              tz = "Etc/GMT+8"), ]
-  f <- finches[finches$time >= as.POSIXct("2016-03-08 06:00:00"), ][1:500,]
+                                              tz = "UTC"), ]
+  f <- finches %>%
+    dplyr::mutate(time = lubridate::force_tz(.data$time, "UTC")) %>%
+    dplyr::filter(time >= as.POSIXct("2016-03-08 06:00:00")) %>%
+    dplyr::slice(1:500)
 
   expect_silent(a <- approx_na_rm(x = k$time, y = k$temp, xout = f$time,
                                   na_gap = lubridate::hours(2)))
