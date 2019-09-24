@@ -430,6 +430,13 @@ weather_dl <- function(station_ids,
     }
   }
 
+  if(interval == "hour" && !getOption("weathercan.time.message")){
+   message("As of weathercan v0.3.0 time display is either local time or UTC\n",
+           "See Details under ?weather_dl for more information.\n",
+           "This message is shown once per session")
+    options("weathercan.time.message" = TRUE)
+  }
+
   dplyr::tbl_df(w_all)
 }
 

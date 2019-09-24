@@ -77,7 +77,8 @@ NULL
           weathercan.urls.stations =
             paste0("ftp://client_climate@ftp.tor.ec.gc.ca/",
                    "Pub/Get_More_Data_Plus_de_donnees/",
-                   "Station%20Inventory%20EN.csv"))
+                   "Station%20Inventory%20EN.csv"),
+          weathercan.time.message = FALSE)
 
   # CRAN Note avoidance
   if(getRversion() >= "2.15.1")

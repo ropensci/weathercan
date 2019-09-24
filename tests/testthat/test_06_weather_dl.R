@@ -2,9 +2,19 @@
 # weather by hour ---------------------------------------------------------
 context("weather by hour")
 
+setup({options("weathercan.time.message" = TRUE)})
+
+test_that("weather_dl hour alerts to change in time handling", {
+  options("weathercan.time.message" = FALSE)
+
+  expect_message({weather_dl(station_ids = 51423, start = "2014-01-01",
+                             end = "2014-01-31")},
+                 "As of weathercan v0.3.0 time display is")
+})
+
 test_that("weather (hour) returns a data frame", {
   expect_silent({weather_dl(station_ids = 51423, start = "2014-01-01",
-                            end = "2014-01-31")})
+                             end = "2014-01-31")})
   expect_message({w <- weather_dl(station_ids = 51423, start = "2014-01-01",
                                   end = "2014-01-31", verbose = TRUE)})
 
