@@ -79,7 +79,7 @@ interpolation.coverage(mb_north, type = 'temporal') %>%
   head()
 ```
 
-Next we have to calibrate the variable we're intersted in (here `Tmin`)
+Next we have to calibrate the variable we're interested in (here `Tmin`)
 ```{r}
 tmin <- interpolation.calibration(mb_north, variable = "Tmin",
                                   N_seq = 20,

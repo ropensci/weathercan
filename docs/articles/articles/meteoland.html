@@ -356,7 +356,7 @@
 ## 2015-01-04        10        10            10
 ## 2015-01-05        10        10            10
 ## 2015-01-06        10        10            10</code></pre>
-<p>Next we have to calibrate the variable we’re intersted in (here <code>Tmin</code>)</p>
+<p>Next we have to calibrate the variable we’re interested in (here <code>Tmin</code>)</p>
 <div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" data-line-number="1">tmin &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/meteoland/man/interpolation.cv.html">interpolation.calibration</a></span>(mb_north, <span class="dt">variable =</span> <span class="st">"Tmin"</span>,</a>
 <a class="sourceLine" id="cb87-2" data-line-number="2">                                  <span class="dt">N_seq =</span> <span class="dv">20</span>,</a>
 <a class="sourceLine" id="cb87-3" data-line-number="3">                                  <span class="dt">alpha_seq =</span> <span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dt">by =</span> <span class="dv">1</span>),</a>
