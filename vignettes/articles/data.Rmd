@@ -12,6 +12,7 @@ library(tidyverse)
 library(pryr)
 library(weathercan)
 library(rvest)
+library(skimr)
 ```
 
 ## How many months?
@@ -20,6 +21,10 @@ m <- stations %>%
   select(station_name, interval, start, end, normals) %>%
   mutate(nmonths = (end - start) * 12)
 m
+
+sum(m$nmonths, na.rm = TRUE)/12
+
+skim(m)
 ```
 
 ## Station with hours, days and months
