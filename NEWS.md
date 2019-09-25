@@ -4,7 +4,7 @@ author: "Steffi LaZerte"
 output: html_document
 ---
 
-# weathercan 0.3.0 (2019-09-27)
+# weathercan 0.3.0 (2019-09-25)
 
 ## Big changes
 - New function: `normals_dl()` function downloads climate normals. Addresses issue #38.

@@ -9,6 +9,9 @@ source("data-raw/data-index.R")
 
 ## Documentation
 # Update NEWS
+# Update README.Rmd
+# Compile README.md
+rmarkdown::render("README.Rmd")
 # Update cran-comments
 
 # Check spelling
