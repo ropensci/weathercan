@@ -25,6 +25,14 @@ m
 sum(m$nmonths, na.rm = TRUE)/12
 
 skim(m)
+
+filter(stations, start < 1850) %>%
+  as.data.frame()
+
+filter(stations, start < 1900) %>%
+  pull(station_name) %>%
+  unique() %>%
+  length()
 ```
 
 ## Station with hours, days and months
