@@ -1,0 +1,89 @@
+---
+title: "How much data?"
+author: "Steffi LaZerte"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_document
+---
+
+## Setup
+
+```{r, message = FALSE}
+library(tidyverse)
+library(pryr)
+library(weathercan)
+library(rvest)
+```
+
+## How many months?
+```{r}
+m <- stations %>%
+  select(station_name, interval, start, end, normals) %>%
+  mutate(nmonths = (end - start) * 12)
+m
+```
+
+## Station with hours, days and months
+```{r}
+stations_search("Winnipeg", starts_latest = 2000, ends_earliest = 2000)
+s <- c(3698, 28051)
+```
+
+How much data for hours in a month?
+```{r}
+d <- weather_dl(s, start = "2000-01-01", end = "2000-01-31")
+size_hour <- object_size(d) / length(s) # Average Per station
+size_hour
+```
+
+How much data for days in a month?
+```{r}
+d <- weather_dl(s, start = "2000-01-01", end = "2000-01-31", interval = "day")
+size_day <- object_size(d) / length(s) # Average Per station
+size_day
+```
+
+How much data for months in a year?
+```{r}
+d <- weather_dl(s, start = "2000-01-01", end = "2000-12-31", interval = "month")
+size_month <- object_size(d) / length(s) # Average Per station
+size_month
+```
+
+How much data?
+```{r}
+total <- m %>%
+  mutate(size = case_when(interval == "hour" ~ nmonths * size_hour,
+                          interval == "day" ~ nmonths * size_day,
+                          interval == "month" ~ nmonths/12 * size_month)) %>%
+  pull(size) %>%
+  sum(na.rm = TRUE)
+total
+
+format(structure(total, class = "object_size"), units = "auto")
+```
+
+
+## Climate normals
+
+```{r}
+n <- html_session(file.path(getOption("weathercan.urls.normals"), "1981-2010"))
+
+size <- list()
+for(p in weathercan:::province) {
+  size[[p]] <- follow_link(n, p) %>%
+    html_nodes(css = "pre") %>%
+    html_text() %>%
+    str_extract_all("[0-9K.]{1,5}[ ]*\n", simplify = TRUE) %>%
+    str_extract_all("[0-9K.]{1,5}", simplify = TRUE) %>%
+    as.vector()
+}
+
+tibble(char = unlist(size, use.names = FALSE)) %>%
+  mutate(kilo = str_detect(char, "K"),
+         size = as.numeric(str_remove(char, "K")),
+         size = if_else(kilo, size * 1000, size)) %>%
+  pull(size) %>%
+  sum() %>%
+  structure(., class = "object_size") %>%
+  format(., units = "auto")
+```
