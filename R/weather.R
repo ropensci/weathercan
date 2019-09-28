@@ -242,50 +242,50 @@ weather_dl <- function(station_ids,
                                       ~ weather_html(station_id = s,
                                                      date = .x,
                                                      interval = interval)),
-                    preamble = purrr::map(.data$html, ~ preamble_raw(.x,
-                                                               encoding =
-                                                                 encoding)),
-                    skip = purrr::map_dbl(.data$preamble, ~ nrow(.x))) %>%
-      dplyr::filter(.data$skip > 3) # No data, if no preamble
+                    data = purrr::map(.data$html,
+                                      ~ weather_raw(.,
+                                                    encoding = encoding,
+                                                    header = TRUE)))
 
-    if(nrow(w) > 0) {
-      w <- dplyr::mutate(w, data = purrr::map2(.data$html, .data$skip,
-                                               ~ weather_raw(.x, .y,
-                                                             encoding =
-                                                               encoding)))
+    # Extract only most recent meta
+    meta <-  weather_html(station_id = s,
+                              interval = interval,
+                              format = "txt") %>%
+      meta_raw(encoding = encoding, interval = interval) %>%
+      meta_format(s = s)
 
-      # Extract only most recent preamble
-      preamble <- preamble_format(w[["preamble"]][nrow(w)][[1]], s = s)
+    w <- dplyr::select(w, "data")
 
-      w <- dplyr::select(w, -"date_range", -"skip", -"html", -"preamble")
+    if(utils::packageVersion("tidyr") > "0.8.99") {
+      w <- tidyr::unnest(w, .data$data)
+    } else w <- tidyr::unnest(w)
 
-      if(utils::packageVersion("tidyr") > "0.8.99") {
-        w <- tidyr::unnest(w, .data$data)
-      } else w <- tidyr::unnest(w)
+    ## Format data if requested
+    if(format) {
+      if(verbose) message("Formatting station data: ", s)
 
-      ## Format data if requested
-      if(format) {
-        if(verbose) message("Formatting station data: ", s)
-        w <- weather_format(w = w,
-                            preamble = preamble,
-                            stn = stn,
-                            interval = interval,
-                            time_disp = time_disp,
-                            string_as = string_as,
-                            quiet = quiet)
-        # Catch messages
-        if(nrow(w$msg) > 0) {
-          msg_fmt <- dplyr::bind_rows(dplyr::bind_cols(station_id = s,
-                                                       w$msg),
-                                      msg_fmt)
-        }
-
-        # Get formatted data
-        w <- w$data
-
-        ## Trim to match date range
-        w <- w[w$date >= s.start & w$date <= s.end, ]
+      w <- w %>%
+        dplyr::select(-"Station Name", -"Climate ID",
+                      -dplyr::contains("Latitude"),
+                      -dplyr::contains("Longitude")) %>%
+        weather_format(meta = meta,
+                       stn = stn,
+                       interval = interval,
+                       time_disp = time_disp,
+                       string_as = string_as,
+                       quiet = quiet)
+      # Catch messages
+      if(nrow(w$msg) > 0) {
+        msg_fmt <- dplyr::bind_rows(dplyr::bind_cols(station_id = s,
+                                                     w$msg),
+                                    msg_fmt)
       }
+
+      # Get formatted data
+      w <- w$data
+
+      ## Trim to match date range
+      w <- w[w$date >= s.start & w$date <= s.end, ]
 
       ## Check if all missing, remove and message
       n <- c("time", "date", "year", "month", "day", "hour")
@@ -310,24 +310,23 @@ weather_dl <- function(station_ids,
           return(dplyr::tibble())
         }
       }
-
-      ## Add header info
-      if(verbose) message("Adding header data: ", s)
-      if(nrow(w) > 0) w <- cbind(preamble, w)
-
-      ## Fill missing headers with NA
-      w[names(p_names)[!names(p_names) %in% names(w)]] <- NA
-
-      w_all <- rbind(w_all, w)
     }
+
+    ## Add header info
+    if(verbose) message("Adding header data: ", s)
+    if(nrow(w) > 0) w <- cbind(meta, w)
+
+    ## Fill missing headers with NA
+    w[names(m_names)[!names(m_names) %in% names(w)]] <- NA
+
+    w_all <- rbind(w_all, w)
   }
 
   if(nrow(w_all) > 0) {
-
     ## Trim to available data provided it is formatted
     if(trim && format && nrow(w_all) > 0){
       if(verbose) message("Trimming missing values before and after")
-      temp <-  w_all[, !(names(w_all) %in% c(names(p_names), "date", "time",
+      temp <-  w_all[, !(names(w_all) %in% c(names(m_names), "date", "time",
                                              "year", "month",
                                              "day", "hour", "qual"))]
       temp <- w_all$date[which(rowSums(is.na(temp) | temp == "") != ncol(temp))]
@@ -335,37 +334,16 @@ weather_dl <- function(station_ids,
       w_all <- w_all[w_all$date >= min(temp) & w_all$date <= max(temp), ]
     }
 
-    p <- names(p_names)[names(p_names) %in% names(w_all)]
+    m <- names(m_names)[names(m_names) %in% names(w_all)]
 
     ## Arrange
     w_all <- dplyr::select(w_all,
-                           dplyr::one_of(p),
+                           dplyr::one_of(m),
                            dplyr::everything())
 
     ## If list_col is TRUE and data is formatted
-    if(list_col && format){
-      w_all <- dplyr::as_tibble(w_all)
-      ## Appropriate grouping levels
-      if(utils::packageVersion("tidyr") > "0.8.99") {
-        col <- dplyr::case_when(interval == "hour" ~ "date",
-                                interval == "day" ~ "month",
-                                interval == "month" ~ "year")
-
-        w_all <- tidyr::nest(w_all, key = -dplyr::one_of(p, col))
-
-      } else {
-        if(interval == "hour"){
-          w_all <- tidyr::nest(w_all, -dplyr::one_of(p), -"date")
-        }
-
-        if(interval == "day"){
-          w_all <- tidyr::nest(w_all, -dplyr::one_of(p), -"month")
-        }
-
-        if(interval == "month"){
-          w_all <- tidyr::nest(w_all, -dplyr::one_of(p), -"year")
-        }
-      }
+    if(list_col && format) {
+      w_all <- weather_list_cols(w_all, interval, names = m)
     }
   }
 
@@ -442,32 +420,47 @@ weather_dl <- function(station_ids,
 
 
 weather_html <- function(station_id,
-                         date,
-                         interval = "hour") {
+                         date = NULL,
+                         interval = "hour",
+                         format = "csv") {
+
+  q <- list(format = format, stationID = station_id,
+            timeframe = ifelse(interval == "hour", 1,
+                               ifelse(interval == "day", 2,
+                                      3)),
+            submit = 'Download+Data')
+  if(format == "csv") {
+    q['Year'] <- format(date, "%Y")
+    q['Month'] = format(date, "%m")
+  }
 
   html <- httr::GET(url = getOption("weathercan.urls.weather"),
-                    query = list(format = 'csv',
-                                 stationID = station_id,
-                                 timeframe = ifelse(interval == "hour", 1,
-                                                    ifelse(interval == "day", 2,
-                                                           3)),
-                                 Year = format(date, "%Y"),
-                                 Month = format(date, "%m"),
-                                 submit = 'Download+Data'))
+                    query = q)
   httr::stop_for_status(html)
   html
 }
+
 
 weather_raw <- function(html, skip = 0,
                         nrows = -1,
                         header = TRUE,
                         encoding = "UTF-8") {
-  w <- utils::read.csv(text = httr::content(html, as = "text",
-                                            type = "text/csv",
-                                            encoding = encoding),
-                       nrows = nrows, strip.white = TRUE,
-                       skip = skip, header = header,
-                       colClasses = "character", check.names = FALSE)
+
+  raw <- httr::content(html, type = "raw")
+
+  # Look for and remove BOM
+  if(raw[1] == as.raw(0xef) &
+     raw[2] == as.raw(0xbb) &
+     raw[3] == as.raw(0xbf)) {
+    raw <- raw[4:length(raw)]
+  }
+
+  w <- iconv(readBin(raw, character()),
+             from = "UTF-8", to = "UTF-8") %>%
+    utils::read.csv(text = .,
+                    nrows = nrows, strip.white = TRUE,
+                    skip = skip, header = header,
+                    colClasses = "character", check.names = FALSE)
 
     # For some reason the flags "^" are replaced with "I",
     # change back to match flags on ECCC website
@@ -482,7 +475,7 @@ weather_raw <- function(html, skip = 0,
 }
 
 
-weather_format <- function(w, stn, preamble, interval = "hour",
+weather_format <- function(w, stn, meta, interval = "hour",
                            string_as = "NA", time_disp = NULL, quiet = FALSE) {
 
   ## Get names from stored name list
@@ -502,7 +495,7 @@ weather_format <- function(w, stn, preamble, interval = "hour",
   if(interval == "hour"){
     w <- dplyr::mutate(w, time = as.POSIXct(.data$time, tz = "UTC"))
     if(time_disp == "UTC") {
-      offset <- tz_hours(stn$tz[stn$station_id == preamble$station_id[1]][1])
+      offset <- tz_hours(stn$tz[stn$station_id == meta$station_id[1]][1])
       w <- dplyr::mutate(w, time = .data$time + lubridate::hours(offset))
     }
     w <- dplyr::mutate(w, date = lubridate::as_date(.data$time))
@@ -602,25 +595,77 @@ weather_format <- function(w, stn, preamble, interval = "hour",
   list(data = w, msg = non_num)
 }
 
-preamble_raw <- function(html, nrows = 30, search_key = "Date/Time", encoding) {
-  preamble <- weather_raw(html, nrows = nrows,
-                          header = FALSE, encoding = encoding)
-  preamble[1:grep("Date/Time", preamble$V1), ]
+weather_list_cols <- function(w_all, interval, names) {
+  w_all <- dplyr::as_tibble(w_all)
+  ## Appropriate grouping levels
+  if(utils::packageVersion("tidyr") > "0.8.99") {
+    col <- dplyr::case_when(interval == "hour" ~ "date",
+                            interval == "day" ~ "month",
+                            interval == "month" ~ "year")
+
+    w_all <- tidyr::nest(w_all, key = -dplyr::one_of(names, col))
+
+  } else {
+    if(interval == "hour"){
+      w_all <- tidyr::nest(w_all, -dplyr::one_of(names), -"date")
+    }
+
+    if(interval == "day"){
+      w_all <- tidyr::nest(w_all, -dplyr::one_of(names), -"month")
+    }
+
+    if(interval == "month"){
+      w_all <- tidyr::nest(w_all, -dplyr::one_of(names), -"year")
+    }
+  }
+  w_all
 }
 
-preamble_format <- function(preamble, s) {
+meta_raw <- function(html, encoding = "UTF-8", interval, return = "meta") {
 
-  p <- paste0("(", paste0(p_names, collapse = ")|("), ")")
+  split <- httr::content(html, as = "text", encoding = encoding) %>%
+    stringr::str_split("\n", simplify = TRUE) %>%
+    stringr::str_subset("^\r$", negate = TRUE)
 
-  preamble <- preamble %>%
-    dplyr::mutate(V1 = stringr::str_extract(.data$V1, pattern = p)) %>%
+  if(return == "meta") {
+    i <- dplyr::case_when(interval == "hour" ~ "All times",
+                          TRUE ~ "Legend")
+    r <- utils::read.delim(text = httr::content(html, as = "text",
+                                                type = "text/csv",
+                                                encoding = encoding),
+                           nrows = stringr::str_which(split, i) - 1,
+                           header = FALSE, check.names = FALSE,
+                           colClasses = "character")
+
+    if(ncol(r) > 2) {
+      r <- dplyr::mutate(r, V2 = paste0(.data$V2, .data$V3)) %>%
+        dplyr::select("V1", "V2")
+    }
+  } else if(return == "legend") {
+    r <- utils::read.delim(text = httr::content(html, as = "text",
+                                                type = "text/csv",
+                                                encoding = encoding),
+                           skip = stringr::str_which(split, "Legend") + 1,
+                           strip.white = TRUE,
+                           header = FALSE, check.names = FALSE,
+                           colClasses = "character")
+  }
+  r
+}
+
+meta_format <- function(meta, s) {
+
+  m <- paste0("(", paste0(m_names, collapse = ")|("), ")")
+
+  meta <- meta %>%
+    dplyr::mutate(V1 = stringr::str_extract(.data$V1, pattern = m)) %>%
     dplyr::filter(!is.na(.data$V1)) %>%
     tidyr::spread(.data$V1, .data$V2)
 
-  p <- p_names[p_names %in% names(preamble)]
+  m <- m_names[m_names %in% names(meta)]
 
-  preamble %>%
-    dplyr::select(p) %>%
+  meta %>%
+    dplyr::select(m) %>%
     dplyr::mutate(station_id = s,
                   prov = province[.data$prov],
                   lat = as.numeric(as.character(.data$lat)),

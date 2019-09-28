@@ -16,7 +16,7 @@ province <- c("ALBERTA" = "AB",
               "SASKATCHEWAN" = "SK",
               "YUKON TERRITORY" = "YT")
 
-p_names <- c("station_name" = "Station Name", "station_id" = "ID",
+m_names <- c("station_name" = "Station Name", "station_id" = "ID",
              "station_operator" = "Current Station Operator",
              "prov" = "Province", "lat" = "Latitude", "lon" = "Longitude",
              "elev" = "Elevation", "climate_id" = "Climate Identifier",
@@ -280,7 +280,7 @@ f_formats <- select(f_names, "new_var") %>%
     TRUE ~ "numeric")) %>%
   bind_rows(tibble(new_var = "frost_code", format = "character"))
 
-usethis::use_data(province, w_names, p_names, n_names, f_names,
+usethis::use_data(province, w_names, m_names, n_names, f_names,
                   n_formats, f_formats,
                   overwrite = TRUE, internal = TRUE)
 

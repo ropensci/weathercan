@@ -4,6 +4,12 @@ author: "Steffi LaZerte"
 output: html_document
 ---
 
+# weathercan 0.3.1 (2019-09-27)
+
+## Small changes
+- Internal changes to address change in formatting of historical weather data provided by ECCC (fixes #83)
+
+
 # weathercan 0.3.0 (2019-09-25)
 
 ## Big changes

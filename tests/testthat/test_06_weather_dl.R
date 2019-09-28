@@ -556,14 +556,14 @@ test_that("list_col=TRUE and interval=hour groups on the right level", {
   if(packageVersion("tidyr") > "0.8.99") {
     expect_equal(ncol(weather_dl(station_ids = c(51423), start = "2018-04-01",
                                  end = "2018-04-15", interval = "hour") %>%
-                        tidyr::nest(key = -tidyr::one_of(names(p_names), "date"))),
+                        tidyr::nest(key = -tidyr::one_of(names(m_names), "date"))),
                  ncol(weather_dl(station_ids = c(51423), start = "2018-04-01",
                                  end = "2018-04-15", interval = "hour",
                                  list_col = TRUE)))
   } else {
     expect_equal(ncol(weather_dl(station_ids = c(51423), start = "2018-04-01",
                                  end = "2018-04-15", interval = "hour") %>%
-                        tidyr::nest(-dplyr::one_of(names(p_names), "date"))),
+                        tidyr::nest(-dplyr::one_of(names(m_names), "date"))),
                  ncol(weather_dl(station_ids = c(51423), start = "2018-04-01",
                                  end = "2018-04-15", interval = "hour",
                                  list_col = TRUE)))
@@ -574,7 +574,7 @@ test_that("list_col=TRUE and interval=day groups on the right level", {
   if(packageVersion("tidyr") > "0.8.99") {
     expect_equal(ncol(weather_dl(station_ids = c(27119), start = "2015-01-01",
                                  end = "2015-01-15", interval = "day") %>%
-                        tidyr::nest(key = -dplyr::one_of(names(p_names), "month"))),
+                        tidyr::nest(key = -dplyr::one_of(names(m_names), "month"))),
                  ncol(weather_dl(station_ids = c(27119),
                                  start = "2015-01-01",
                                  end = "2015-01-15",
@@ -583,7 +583,7 @@ test_that("list_col=TRUE and interval=day groups on the right level", {
   } else {
     expect_equal(ncol(weather_dl(station_ids = c(27119), start = "2015-01-01",
                                  end = "2015-01-15", interval = "day") %>%
-                        tidyr::nest(-dplyr::one_of(names(p_names)), -month)),
+                        tidyr::nest(-dplyr::one_of(names(m_names)), -month)),
                  ncol(weather_dl(station_ids = c(27119),
                                  start = "2015-01-01",
                                  end = "2015-01-15",
@@ -596,14 +596,14 @@ test_that("list_col=TRUE and interval=month groups on the right level", {
   if(packageVersion("tidyr") > "0.8.99") {
     expect_equal(ncol(weather_dl(station_ids = c(5217), start = "2015-01-01",
                                  end = "2015-01-15", interval = "month") %>%
-                        tidyr::nest(key = -dplyr::one_of(names(p_names), "year"))),
+                        tidyr::nest(key = -dplyr::one_of(names(m_names), "year"))),
                  ncol(weather_dl(station_ids = c(5217), start = "2015-01-01",
                                  end = "2015-01-15", interval = "month",
                                  list_col = TRUE)))
   } else {
     expect_equal(ncol(weather_dl(station_ids = c(5217), start = "2015-01-01",
                                  end = "2015-01-15", interval = "month") %>%
-                        tidyr::nest(-dplyr::one_of(names(p_names)), -year)),
+                        tidyr::nest(-dplyr::one_of(names(m_names)), -year)),
                  ncol(weather_dl(station_ids = c(5217), start = "2015-01-01",
                                  end = "2015-01-15", interval = "month",
                                  list_col = TRUE)))

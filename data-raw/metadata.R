@@ -1,17 +1,20 @@
 library(rvest)
 library(dplyr)
+library(stringr)
 
 # Add flags data set to package data
 # Get legend of flags (same for all intervals where duplicated)
-flags <- bind_rows(weather_raw(weather_html(station_id = 51423,  date = as.Date("2014-01-01"),
-                                            interval = "hour"), nrows = 25, header = FALSE)[11:13,],
-                   weather_raw(weather_html(station_id = 51423,  date = as.Date("2014-01-01"),
-                                            interval = "day"), nrows = 25, header = FALSE)[10:22,],
-                   weather_raw(weather_html(station_id = 43823,  date = as.Date("2014-01-01"),
-                                            interval = "month"), nrows = 25, header = FALSE)[10:16,]) %>%
-  rename(code = V1, meaning = V2) %>%
+flags <- tibble(interval = c("hour", "day", "month"),
+                station_id = c(51423, 51423, 43823)) %>%
+  mutate(flags = purrr::map2(.data$station_id, .data$interval,
+                             ~ meta_raw(weather_html(station_id = .x,
+                                                     interval = .y,
+                                                     format = "txt"),
+                                        interval = .y, return = "legend"))) %>%
+  tidyr::unnest(flags) %>%
+  select(code = "V1", meaning = "V2") %>%
   distinct() %>%
-  as_tibble()
+  arrange(code)
 usethis::use_data(flags, overwrite = TRUE)
 
 
@@ -47,14 +50,14 @@ glossary <- tibble(interval = c(rep("hour", length(w_names$hour)),
                                 rep("month", length(w_names$month))),
                    ECCC_name = unlist(w_names, use.names = FALSE),
                    weathercan_name = names(unlist(c(w_names, use.names = FALSE))),
-                   units = stringr::str_replace_all(stringr::str_extract(ECCC_name, "\\(.*\\)"),
-                                                    "\\(|\\)", "")) %>%
+                   units = str_replace_all(str_extract(ECCC_name, "\\(.*\\)"),
+                                           "\\(|\\)", "")) %>%
   left_join(gloss_url, by = c("interval", "weathercan_name")) %>%
   mutate(ECCC_ref = replace(ECCC_ref,
                             weathercan_name == "qual",
                             "http://climate.weather.gc.ca/climate_data/data_quality_e.html"),
-         ECCC_ref = replace(ECCC_ref, stringr::str_detect(weathercan_name, "_flag"), "See `flags` vignette or dataset for more details"),
-         ECCC_ref = replace(ECCC_ref, stringr::str_detect(ECCC_ref, "#NA"), NA),
+         ECCC_ref = replace(ECCC_ref, str_detect(weathercan_name, "_flag"), "See `flags` vignette or dataset for more details"),
+         ECCC_ref = replace(ECCC_ref, str_detect(ECCC_ref, "#NA"), NA),
          units = replace(units, weathercan_name %in% c("year", "month", "day", "hour"),
                          weathercan_name[weathercan_name %in% c("year", "month", "day", "hour")]),
          ECCC_ref = replace(ECCC_ref, weathercan_name %in% c("year", "month", "day", "hour"),
@@ -62,17 +65,18 @@ glossary <- tibble(interval = c(rep("hour", length(w_names$hour)),
          units = replace(units, weathercan_name == "time", "ISO date/time"),
          units = replace(units, weathercan_name == "date", "ISO date"),
          units = replace(units, weathercan_name %in% c("hmdx", "wind_chill"), "index"),
-         units = replace(units, stringr::str_detect(weathercan_name, c("(qual)|(_flag)|(weather)")), "note")) %>%
-  mutate_all(.funs = ~stringr::str_replace_all(., "°", "\U00B0"))
+         units = replace(units, str_detect(weathercan_name, c("(qual)|(_flag)|(weather)")), "note")) %>%
+  mutate_all(.funs = ~str_replace_all(., "°", "\U00B0"))
 
 usethis::use_data(glossary, overwrite = TRUE)
 
 
-codes <- normals_raw(loc = normals_url("AB", "301C3D4", normals_years = "1981-2010"),
-                     skip = 0) %>%
+codes <- normals_raw(loc = normals_url("AB", "301C3D4",
+                                       normals_years = "1981-2010"),
+                     return = "all") %>%
   .[8:11] %>%
-  stringr::str_replace_all("\"\"", "'") %>%
-  stringr::str_remove_all("\"") %>%
+  str_replace_all("\"\"", "'") %>%
+  str_remove_all("\"") %>%
   tibble::enframe(name = NULL) %>%
   tidyr::separate(value, sep = " = ", into = c("code", "meaning"))
 usethis::use_data(codes, overwrite = TRUE)
@@ -84,8 +88,8 @@ h <- paste0("https://www.canada.ca/en/environment-climate-change/services/",
   xml2::read_html()
 
 glossary_normals <- tibble(ECCC_name = html_nodes(h, "h3") %>% html_text(),
-       description = html_nodes(h, "h3+p") %>% html_text()) %>%
-  filter(!stringr::str_detect(ECCC_name, "Thank you")) %>%
+                           description = html_nodes(h, "h3+p") %>% html_text()) %>%
+  filter(!str_detect(ECCC_name, "Thank you")) %>%
   mutate(weathercan_name =
            c("temp", "precip", "snow_depth", "days", "dd", "soil_temp",
              "evaporation", "frost", "hours", "wind", "sun", "humidex",

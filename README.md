@@ -83,7 +83,7 @@ head(stations)
 glimpse(stations)
 ```
 
-    ## Observations: 26,283
+    ## Observations: 26,286
     ## Variables: 14
     ## $ prov         <chr> "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB"…
     ## $ station_name <chr> "DAYSLAND", "DAYSLAND", "DAYSLAND", "EDMONTON CORONATION", "EDMONTON CORONAT…
@@ -151,17 +151,17 @@ kam
 
     ## # A tibble: 1,776 x 35
     ##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id
-    ##    <chr>             <dbl> <chr>            <chr> <dbl> <dbl> <dbl> <chr>      <chr>  <chr>
-    ##  1 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA  
-    ##  2 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA  
-    ##  3 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA  
-    ##  4 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA  
-    ##  5 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA  
-    ##  6 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA  
-    ##  7 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA  
-    ##  8 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA  
-    ##  9 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA  
-    ## 10 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA  
+    ##    <chr>             <dbl> <lgl>            <chr> <dbl> <dbl> <dbl> <chr>      <chr>  <chr>
+    ##  1 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  
+    ##  2 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  
+    ##  3 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  
+    ##  4 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  
+    ##  5 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  
+    ##  6 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  
+    ##  7 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  
+    ##  8 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  
+    ##  9 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  
+    ## 10 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  
     ## # … with 1,766 more rows, and 25 more variables
 
 You can also download data from multiple stations at

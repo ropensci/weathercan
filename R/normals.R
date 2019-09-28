@@ -156,8 +156,8 @@ normals_url <- function(prov, climate_id, normals_years) {
 
 normals_raw <- function(loc,
                         nrows = -1,
-                        header = TRUE) {
-
+                        header = TRUE,
+                        return = "data") {
   # Check if file present
   status <- httr::GET(loc)
   httr::stop_for_status(status,
@@ -171,10 +171,12 @@ normals_raw <- function(loc,
   close(con)
   wmo <- find_line(d, cols = "meets WMO standards")
   skip <- find_line(d, cols = c("Jan", "Feb", "Mar"))
-  if(length(wmo) > 0) {
-    d <- d[c(wmo, skip:length(d))]
-  } else {
-    d <- d[skip:length(d)]
+  if(return == "data") {
+    if(length(wmo) > 0) {
+      d <- d[c(wmo, skip:length(d))]
+    } else {
+      d <- d[skip:length(d)]
+    }
   }
   d
 }
