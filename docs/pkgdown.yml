@@ -2,6 +2,7 @@ pandoc: 2.3.1
 pkgdown: 1.4.1
 pkgdown_sha: ~
 articles:
+  data: articles/data.html
   mapping: articles/mapping.html
   meteoland: articles/meteoland.html
   use_with_tidyverse: articles/use_with_tidyverse.html
