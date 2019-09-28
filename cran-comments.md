@@ -1,8 +1,8 @@
 ## Release v.0.3.1
 
 * This is a patch following quickly after a major release (~3 days)
-* The format of the data at source changed suddenly and unexpectedly the day after v0.3.0 was pushed to CRAN (this was bad luck, not data source that is prone to constant changes)
-* Changes made fix the package to work with the newly formated data
+* The format of the data sourced by this package changed suddenly and unexpectedly the day after v0.3.0 was pushed to CRAN (this was bad luck; this data source is not prone to constant changes)
+* The changes made fix the package to work with the newly formated data
 
 ## Test environments
 As of Sept 28th, 2019
