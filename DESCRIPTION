@@ -28,6 +28,7 @@ Imports:
     rlang (>= 0.1.4),
     rvest (>= 0.3.4),
     stringi (>= 1.1.2),
+    stringr (>= 1.4.0),
     tidyr (>= 0.4.1),
     xml2 (>= 0.1.2)
 RoxygenNote: 6.1.1
@@ -44,7 +45,6 @@ Suggests:
     rmarkdown,
     sf,
     sp,
-    stringr,
     testthat
 VignetteBuilder: knitr
 Encoding: UTF-8
