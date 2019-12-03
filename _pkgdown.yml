@@ -1,8 +1,13 @@
-url: http://ropensci.github.io/weathercan
-
-template:
-  params:
-    bootswatch: paper
+# pkgdown dependencies that are not declared in DESCRIPTION
+extra_packages:
+  - tidyverse
+  - pryr
+  - skimr
+  - svglite
+  - meteoland
+  - rnaturalearth
+  - rnaturalearthhires
+  - rgeos
 
 reference:
   - title: "Using weathercan"
@@ -81,3 +86,4 @@ navbar:
   right:
     - icon: fa-github fa-lg
       href: https://github.com/ropensci/weathercan
+
