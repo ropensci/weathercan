@@ -25,7 +25,7 @@ multiple downloads may use up ECCC’s bandwidth unnecessarily. Try to
 stick to what you need.
 
 For more details and tutorials checkout the [weathercan
-website](http://ropensci.github.io/weathercan)
+website](http://docs.ropensci.org/weathercan)
 
 ## Installation
 
