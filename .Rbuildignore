@@ -25,3 +25,4 @@
 ^vignettes/articles$
 ^doc$
 ^Meta$
+^LICENSE\.md$
