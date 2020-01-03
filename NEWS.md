@@ -4,6 +4,11 @@ author: "Steffi LaZerte"
 output: html_document
 ---
 
+# weathercan 0.3.1.9001 (2020-01-03)
+
+## Small changes
+- Internal changes to address expected changes to normals metadata
+
 # weathercan 0.3.1 (2019-09-27)
 
 ## Small changes

@@ -22,11 +22,22 @@ test_that("normals_raw() download normals as character", {
     expect_is("character")
 })
 
-test_that("normals_extract() / frost_extract() extract data", {
+test_that("normals_extract() cleans up raw data", {
+  n <- paste0("https://dd.meteo.gc.ca/climate/observations/normals/csv/",
+              "1981-2010/MB/climate_normals_MB_5010480_1981-2010.csv") %>%
+    normals_raw()
+  expect_silent(n1 <- normals_extract(n)) %>%
+    expect_is("character")
+  expect_lt(length(n1), length(n))
+  expect_true(stringr::str_detect(n1[1], "Jan"))
+})
+
+test_that("data_extract() / frost_extract() extract data", {
   n <- paste0("https://dd.meteo.gc.ca/climate/observations/normals/csv/",
          "1981-2010/MB/climate_normals_MB_5010480_1981-2010.csv") %>%
-    normals_raw()
-  expect_silent(normals_extract(n, climate_id = "5010480")) %>%
+    normals_raw() %>%
+    normals_extract()
+  expect_silent(data_extract(n, climate_id = "5010480")) %>%
     expect_is("data.frame")
   expect_silent(frost_extract(n, climate_id = "5010480")) %>%
     expect_is("data.frame")
@@ -35,12 +46,13 @@ test_that("normals_extract() / frost_extract() extract data", {
 test_that("normals_format()/frost_format() format data to correct class", {
   n <- paste0("https://dd.meteo.gc.ca/climate/observations/normals/csv/",
               "1981-2010/MB/climate_normals_MB_5010480_1981-2010.csv") %>%
-    normals_raw()
+    normals_raw() %>%
+    normals_extract()
 
   f <- frost_extract(n, climate_id = "5010480")
-  n <- normals_extract(n, climate_id = "5010480")
+  n <- data_extract(n, climate_id = "5010480")
 
-  expect_silent(n_fmt <- normals_format(n)) %>%
+  expect_silent(n_fmt <- data_format(n)) %>%
     expect_is("data.frame")
   expect_is(n_fmt[["temp_daily_average"]], "numeric")
   expect_is(n_fmt[["temp_extreme_max_date"]], "Date")
