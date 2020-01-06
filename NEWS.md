@@ -8,6 +8,7 @@ output: html_document
 
 ## Small changes
 - Internal changes to address expected changes to normals metadata
+- Update links to website
 
 # weathercan 0.3.1 (2019-09-27)
 

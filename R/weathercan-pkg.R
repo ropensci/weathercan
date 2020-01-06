@@ -41,13 +41,13 @@
 #'  - Weather Data Glossary: `vignette("glossary")`
 #'  - Climate Normals Glossary: `vignette("glossary_normals")`
 #'
-#' [Online](http://ropensci.github.io/weathercan) we also have some
+#' [Online](https://docs.ropensci.org/weathercan/) we also have some
 #' advanced articles:
 #'
 #'  - Using `weathercan` with [tidyverse](http://tidyverse.org/)
-#'  ([here](http://ropensci.github.io/weathercan/articles/articles/use_with_tidyverse.html))
+#'  ([here](https://docs.ropensci.org/weathercan/articles/articles/use_with_tidyverse.html))
 #'  - Mapping weather data
-#'  ([here](http://ropensci.github.io/weathercan/articles/articles/mapping.html))
+#'  ([here](https://docs.ropensci.org/weathercan/articles/articles/mapping.html))
 #'
 #' @references
 #' Environment and Climate Change Canada: <https://www.ec.gc.ca/>
