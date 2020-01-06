@@ -107,7 +107,7 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
   close(con)
 
   if("try-error" %in% class(headings)) {
-    stop("The link in `options(\"weathecan.urls.normals\")` ",
+    stop("The link in `options(\"weathercan.urls.normals\")` ",
          "must point to the site where climate normals are stored by province",
          call. = FALSE)
   }
