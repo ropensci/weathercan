@@ -1,23 +1,21 @@
-## Release v.0.3.1
+## Release v.0.3.2
 
-* This is a patch following quickly after a major release (~3 days)
-* The format of the data sourced by this package changed suddenly and unexpectedly the day after v0.3.0 was pushed to CRAN (this was bad luck; this data source is not prone to constant changes)
-* The changes made fix the package to work with the newly formated data
+* This patches a problem highlighted in CRAN tests where connections to files on 
+Windows weren't being opened correctly
 
 ## Test environments
-As of Sept 28th, 2019
+As of Jan 6th, 2020
 
-* Local - ubuntu 18.04 (R 3.6.1)
+* Local - ubuntu 18.04 (R 3.6.2)
+* AppVeyor - Windows Server 2012 R2 x86 & 64 (R 3.6.2, 3.6.2 Patched, 3.5.3)
 * Travis CI - ubuntu 14.04.5 (R 3.6.1, 3.5.3, and devel)
-* Travis CI - OSX 10.13.3 (R 3.6.1,  3.5.3)
+* Travis CI - OSX 10.13.6 (R 3.6.2,  3.5.3)
 * win-builder (oldrelease, release, devel)
 * rhub - windows-x86_64-oldrelease, release, devel
 
 ## R CMD check results
 
-There were no ERRORs, no WARNINGs, and 1 NOTEs
-
-"NOTE: Days since last update: 3"
+There were no ERRORs, no WARNINGs, and no NOTEs
 
 ## Downstream dependencies
 
