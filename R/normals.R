@@ -101,17 +101,6 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
                                        normals_years)) %>%
     dplyr::select(-"normals")
 
-  # Get skip value
-  headings <- try(readLines(con <- url(n[['loc']][1], encoding = "latin1"), n = 20),
-                  silent = TRUE)
-  close(con)
-
-  if("try-error" %in% class(headings)) {
-    stop("The link in `options(\"weathercan.urls.normals\")` ",
-         "must point to the site where climate normals are stored by province",
-         call. = FALSE)
-  }
-
   # Download data
   n <- dplyr::mutate(n,
                      normals = purrr::map(.data$loc, normals_raw),
@@ -159,8 +148,7 @@ normals_url <- function(prov, climate_id, normals_years) {
 }
 
 normals_raw <- function(loc,
-                        nrows = -1,
-                        header = TRUE) {
+                        nrows = -1) {
   # Check if file present
   status <- httr::GET(loc)
   httr::stop_for_status(status,
@@ -170,10 +158,29 @@ normals_raw <- function(loc,
                                ")"))
 
   # Download file
-  d <- readLines(con <- url(loc, encoding = "latin1"), n = nrows)
-  close(con)
+  d <- try(normals_read_lines(loc, nrows), silent = TRUE)
+
+  # If error, try with 'libcurl' instead
+  if("try-error" %in% class(d)) {
+    d <- normals_read_lines(loc, nrows, method = "libcurl")
+  }
   d
 }
+
+# normals_read_lines <- function(loc, nrows, method = "default") {
+#   d <- readLines(con <- url(loc, encoding = "latin1", method = method),
+#                  n = nrows)
+#   close(con)
+#   d
+# }
+
+normals_read_lines <- function(loc, nrows, method = "default") {
+  httr::GET(loc) %>%
+    httr::content(as = "text", encoding = "latin1") %>%
+    stringr::str_split(pattern = "\n") %>%
+    unlist()
+}
+
 
 normals_extract <- function(n, return = "data") {
   wmo <- find_line(n, cols = "meets WMO standards")
