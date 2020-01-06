@@ -21,7 +21,7 @@ devtools::spell_check()
 spelling::update_wordlist()
 
 ## Finalize package version
-v <- "0.3.1"
+v <- "0.3.2"
 
 ## Update codemeta
 codemetar::write_codemeta()
@@ -30,7 +30,7 @@ codemetar::write_codemeta()
 devtools::check()     # Local
 
 system("cd ..; R CMD build weathercan")
-system(paste0("cd ..; R CMD check weathercan_", v, ".tar.gz --as-cran --run-donttest"))
+system(paste0("cd ..; R CMD check weathercan_", v, ".tar.gz --as-cran --run-donttest")) # Local
 
 rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
                      check_args = "--as-cran --run-donttest",
@@ -42,6 +42,11 @@ rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
 devtools::check_win_release() # Win builder
 devtools::check_win_devel()
 devtools::check_win_oldrelease()
+
+rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
+                     check_args = "--as-cran --run-donttest",
+                     platforms = "solaris-x86-patched",
+                     show_status = FALSE)
 
 # Problems with latex, open weathercan-manual.tex and compile to get actual errors
 # Re-try (skip tests for speed)
