@@ -12,8 +12,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">weathercan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
       </span>
     </div>
 
@@ -146,13 +146,27 @@
       <small>Source: <a href='https://github.com/ropensci/weathercan/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="weathercan-0-3-1-2019-09-27" class="section level1">
+    <div id="weathercan-0-3-2-2020-01-06" class="section level1">
 <h1 class="page-header">
-<a href="#weathercan-0-3-1-2019-09-27" class="anchor"></a>weathercan 0.3.1 (2019-09-27)<small> Unreleased </small>
+<a href="#weathercan-0-3-2-2020-01-06" class="anchor"></a>weathercan 0.3.2 (2020-01-06)<small> Unreleased </small>
 </h1>
 <div id="small-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#small-changes" class="anchor"></a>Small changes</h2>
+<ul>
+<li>Internal changes to address expected changes to normals metadata</li>
+<li>Internal changes to address problems with connections on Windows</li>
+<li>Update links to website</li>
+</ul>
+</div>
+</div>
+    <div id="weathercan-0-3-1-2019-09-27" class="section level1">
+<h1 class="page-header">
+<a href="#weathercan-0-3-1-2019-09-27" class="anchor"></a>weathercan 0.3.1 (2019-09-27)<small> 2019-09-29 </small>
+</h1>
+<div id="small-changes-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#small-changes-1" class="anchor"></a>Small changes</h2>
 <ul>
 <li>Internal changes to address change in formatting of historical weather data provided by ECCC (fixes <a href='https://github.com/ropensci/weathercan/issues/83'>#83</a>)</li>
 </ul>
@@ -172,9 +186,9 @@
 <li>Deprecated <code>tz_disp</code> in favour of <code>time_disp</code>. Now all timezones are UTC, but the displayed time is either local time or UTC. When <code>time_disp</code> = “none”, the time displayed is local time without daylight savings, similar to how ECCC presents the data. This means that data from different time zones will have similar ecological times (i.e. midnights will be comparable), but the actual times are not UTC. When <code>time_disp</code> = "UTC’, the time displayed is in UTC timezone, meaning that stations from different times zones will have true times (i.e. midnight observation in Toronto will be three hours before midnight observation in Vancouver). Addresses issue <a href='https://github.com/ropensci/weathercan/issues/74'>#74</a>.</li>
 </ul>
 </div>
-<div id="small-changes-1" class="section level2">
+<div id="small-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#small-changes-1" class="anchor"></a>Small changes</h2>
+<a href="#small-changes-2" class="anchor"></a>Small changes</h2>
 <ul>
 <li>Add parameter in <code>station_search()</code> to restrict by start and end dates. Addresses issue <a href='https://github.com/ropensci/weathercan/issues/35'>#35</a>.</li>
 <li>Internal change, switching to .data and "" for all non-standard evaluations as opposed to listing global variables</li>
@@ -452,6 +466,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#weathercan-0-3-2-2020-01-06">0.3.2</a></li>
         <li><a href="#weathercan-0-3-1-2019-09-27">0.3.1</a></li>
         <li><a href="#weathercan-0-3-0-2019-09-25">0.3.0</a></li>
         <li><a href="#weathercan-0-2-8-2018-10-08">0.2.8</a></li>

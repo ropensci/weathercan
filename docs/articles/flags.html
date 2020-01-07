@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The meanings of flags and codes • weathercan</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">weathercan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
       </span>
     </div>
 
@@ -108,7 +108,7 @@
       <h1>The meanings of flags and codes</h1>
                         <h4 class="author">Steffi LaZerte</h4>
             
-            <h4 class="date">2019-09-24</h4>
+            <h4 class="date">2020-01-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/weathercan/blob/master/vignettes/flags.Rmd"><code>vignettes/flags.Rmd</code></a></small>
       <div class="hidden name"><code>flags.Rmd</code></div>
@@ -172,24 +172,32 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">E</td>
-<td align="left">Estimated</td>
+<td align="left">[empty]</td>
+<td align="left">No data available</td>
 </tr>
 <tr class="even">
-<td align="left">M</td>
-<td align="left">Missing</td>
+<td align="left">†</td>
+<td align="left">Data that is not subject to review by the National Climate Archives</td>
 </tr>
 <tr class="odd">
-<td align="left">NA</td>
-<td align="left">Not Available</td>
+<td align="left">^</td>
+<td align="left">The value displayed is based on incomplete data</td>
 </tr>
 <tr class="even">
 <td align="left">A</td>
 <td align="left">Accumulated</td>
 </tr>
 <tr class="odd">
+<td align="left">B</td>
+<td align="left">More than one occurrence and estimated</td>
+</tr>
+<tr class="even">
 <td align="left">C</td>
 <td align="left">Precipitation occurred, amount uncertain</td>
+</tr>
+<tr class="odd">
+<td align="left">E</td>
+<td align="left">Estimated</td>
 </tr>
 <tr class="even">
 <td align="left">F</td>
@@ -200,36 +208,28 @@
 <td align="left">Precipitation may or may not have occurred</td>
 </tr>
 <tr class="even">
+<td align="left">M</td>
+<td align="left">Missing</td>
+</tr>
+<tr class="odd">
 <td align="left">N</td>
 <td align="left">Temperature missing but known to be &gt; 0</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">S</td>
 <td align="left">More than one occurrence</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">T</td>
 <td align="left">Trace</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Y</td>
 <td align="left">Temperature missing but known to be &lt; 0</td>
 </tr>
-<tr class="even">
-<td align="left">[empty]</td>
-<td align="left">No data available</td>
-</tr>
 <tr class="odd">
-<td align="left">^</td>
-<td align="left">The value displayed is based on incomplete data</td>
-</tr>
-<tr class="even">
-<td align="left">†</td>
-<td align="left">Data that is not subject to review by the National Climate Archives</td>
-</tr>
-<tr class="odd">
-<td align="left">B</td>
-<td align="left">More than one occurrence and estimated</td>
+<td align="left">NA</td>
+<td align="left">Not Available</td>
 </tr>
 </tbody>
 </table>
