@@ -61,7 +61,7 @@ devtools::revdep()
 
 ## Build site (so website uses newest version
 ## Update website
-pkgdown::build_articles(lazy = TRUE)
+pkgdown::build_articles(lazy = FALSE)
 pkgdown::build_home()
 pkgdown::build_news()
 pkgdown::build_reference()
@@ -74,5 +74,5 @@ pkgdown::build_site(lazy = TRUE)
 devtools::release()
 
 ## Once it is released (Accepted by CRAN) create signed release on github
-system("git tag -s v0.2.8 -m 'v0.2.8'")
+system("git tag -s v0.3.2 -m 'v0.3.2'")
 system("git push --tags")
