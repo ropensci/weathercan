@@ -12,7 +12,4 @@ articles:
   interpolate_data: interpolate_data.html
   normals: normals.html
   weathercan: weathercan.html
-urls:
-  reference: http://ropensci.github.io/weathercan/reference
-  article: http://ropensci.github.io/weathercan/articles
 

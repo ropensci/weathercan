@@ -56,13 +56,13 @@ As well as several vignettes:
 \item Climate Normals Glossary: \code{vignette("glossary_normals")}
 }
 
-\href{http://ropensci.github.io/weathercan}{Online} we also have some
+\href{https://docs.ropensci.org/weathercan/}{Online} we also have some
 advanced articles:
 \itemize{
 \item Using \code{weathercan} with \href{http://tidyverse.org/}{tidyverse}
-(\href{http://ropensci.github.io/weathercan/articles/articles/use_with_tidyverse.html}{here})
+(\href{https://docs.ropensci.org/weathercan/articles/articles/use_with_tidyverse.html}{here})
 \item Mapping weather data
-(\href{http://ropensci.github.io/weathercan/articles/articles/mapping.html}{here})
+(\href{https://docs.ropensci.org/weathercan/articles/articles/mapping.html}{here})
 }
 }
 \references{

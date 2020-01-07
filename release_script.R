@@ -21,7 +21,7 @@ devtools::spell_check()
 spelling::update_wordlist()
 
 ## Finalize package version
-v <- "0.3.1"
+v <- "0.3.2"
 
 ## Update codemeta
 codemetar::write_codemeta()
@@ -30,7 +30,7 @@ codemetar::write_codemeta()
 devtools::check()     # Local
 
 system("cd ..; R CMD build weathercan")
-system(paste0("cd ..; R CMD check weathercan_", v, ".tar.gz --as-cran --run-donttest"))
+system(paste0("cd ..; R CMD check weathercan_", v, ".tar.gz --as-cran --run-donttest")) # Local
 
 rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
                      check_args = "--as-cran --run-donttest",
@@ -42,6 +42,11 @@ rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
 devtools::check_win_release() # Win builder
 devtools::check_win_devel()
 devtools::check_win_oldrelease()
+
+rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
+                     check_args = "--as-cran --run-donttest",
+                     platforms = "solaris-x86-patched",
+                     show_status = FALSE)
 
 # Problems with latex, open weathercan-manual.tex and compile to get actual errors
 # Re-try (skip tests for speed)
@@ -56,7 +61,7 @@ devtools::revdep()
 
 ## Build site (so website uses newest version
 ## Update website
-pkgdown::build_articles(lazy = TRUE)
+pkgdown::build_articles(lazy = FALSE)
 pkgdown::build_home()
 pkgdown::build_news()
 pkgdown::build_reference()
@@ -69,5 +74,5 @@ pkgdown::build_site(lazy = TRUE)
 devtools::release()
 
 ## Once it is released (Accepted by CRAN) create signed release on github
-system("git tag -s v0.2.8 -m 'v0.2.8'")
+system("git tag -s v0.3.2 -m 'v0.3.2'")
 system("git push --tags")

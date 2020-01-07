@@ -101,26 +101,14 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
                                        normals_years)) %>%
     dplyr::select(-"normals")
 
-  # Get skip value
-  headings <- try(readLines(con <- url(n[['loc']][1], encoding = "latin1"), n = 20),
-                  silent = TRUE)
-  close(con)
-
-  if("try-error" %in% class(headings)) {
-    stop("The link in `options(\"weathecan.urls.normals\")` ",
-         "must point to the site where climate normals are stored by province",
-         call. = FALSE)
-  }
-
   # Download data
   n <- dplyr::mutate(n,
                      normals = purrr::map(.data$loc, normals_raw),
+                     meets_wmo = purrr::map_lgl(.data$normals, meets_wmo),
+                     normals = purrr::map(.data$normals, normals_extract),
                      frost = purrr::map(.data$normals, frost_find),
-                     meets_wmo = purrr::map_lgl(
-                       .data$normals,
-                       ~stringr::str_detect(.[1], "WMO standards")),
                      normals = purrr::map2(.data$normals, .data$climate_id,
-                                        ~ normals_extract(.x, climate_id = .y)),
+                                        ~ data_extract(.x, climate_id = .y)),
                      frost = purrr::map2(.data$frost, .data$climate_id,
                                          ~ frost_extract(.x, climate_id = .y)),
                      n_data = purrr::map_dbl(.data$normals, nrow),
@@ -133,8 +121,12 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
 
   # Format dates etc.
   n <- dplyr::mutate(n,
-                     normals = purrr::map2(.data$normals, .data$climate_id, normals_format),
-                     frost = purrr::map2(.data$frost, .data$climate_id, frost_format))
+                     normals = purrr::map2(.data$normals,
+                                           .data$climate_id,
+                                           data_format),
+                     frost = purrr::map2(.data$frost,
+                                         .data$climate_id,
+                                         frost_format))
 
   dplyr::select(n, "prov", "station_name", "climate_id",
                 "meets_wmo", "normals", "frost")
@@ -150,14 +142,13 @@ normals_url <- function(prov, climate_id, normals_years) {
   if(httr::http_error(httr::GET(loc))) {
     stop("Climate normals are not available for years ", normals_years, call. = FALSE)
   }
+
   paste0(loc, "/", prov,
          "/climate_normals_", prov, "_", climate_id, "_", normals_years, ".csv")
 }
 
 normals_raw <- function(loc,
-                        nrows = -1,
-                        header = TRUE,
-                        return = "data") {
+                        nrows = -1) {
   # Check if file present
   status <- httr::GET(loc)
   httr::stop_for_status(status,
@@ -167,25 +158,50 @@ normals_raw <- function(loc,
                                ")"))
 
   # Download file
-  d <- readLines(con <- url(loc, encoding = "latin1"), n = nrows)
-  close(con)
-  wmo <- find_line(d, cols = "meets WMO standards")
-  skip <- find_line(d, cols = c("Jan", "Feb", "Mar"))
-  if(return == "data") {
-    if(length(wmo) > 0) {
-      d <- d[c(wmo, skip:length(d))]
-    } else {
-      d <- d[skip:length(d)]
-    }
+  d <- try(normals_read_lines(loc, nrows), silent = TRUE)
+
+  # If error, try with 'libcurl' instead
+  if("try-error" %in% class(d)) {
+    d <- normals_read_lines(loc, nrows, method = "libcurl")
   }
   d
 }
 
+# normals_read_lines <- function(loc, nrows, method = "default") {
+#   d <- readLines(con <- url(loc, encoding = "latin1", method = method),
+#                  n = nrows)
+#   close(con)
+#   d
+# }
 
-normals_extract <- function(n, climate_id) {
+normals_read_lines <- function(loc, nrows, method = "default") {
+  httr::GET(loc) %>%
+    httr::content(as = "text", encoding = "latin1") %>%
+    stringr::str_split(pattern = "\n") %>%
+    unlist()
+}
 
-  # Remove WMO if exists
-  if(stringr::str_detect(n[1], "WMO standards")) n <- n[-1]
+
+normals_extract <- function(n, return = "data") {
+  wmo <- find_line(n, cols = "meets WMO standards")
+  skip <- find_line(n, cols = c("Jan", "Feb", "Mar"))
+  if(return == "data") {
+    if(length(wmo) > 0) {
+      n <- n[c(wmo, skip:length(n))]
+    } else {
+      n <- n[skip:length(n)]
+    }
+    # Remove WMO if exists
+    if(stringr::str_detect(n[1], "WMO standards")) n <- n[-1]
+
+    # Remove empty strings if they exist
+    n <- stringr::str_remove_all(n, "[,]{2,}$")
+  }
+  n
+}
+
+
+data_extract <- function(n, climate_id) {
 
   # Remove frost dates
   n <- frost_find(n, type = "remove")
@@ -196,9 +212,8 @@ normals_extract <- function(n, climate_id) {
   if(nrow(n) == 0) return(dplyr::tibble())
 
   # Line up names to deal with duplicate variable names
-  n <- n %>%
-    dplyr::rename("variable" = ` `) %>%
-    dplyr::mutate(variable = tolower(.data$variable))
+  names(n)[1] <- "variable"
+  n <- dplyr::mutate(n, variable = tolower(.data$variable))
 
   # Mark title variables align variable names accordingly
   nn <- dplyr::filter(n_names,
@@ -283,7 +298,7 @@ normals_extract <- function(n, climate_id) {
     dplyr::as_tibble()
 }
 
-normals_format <- function(n, climate_id) {
+data_format <- function(n, climate_id) {
   fmts <- dplyr::filter(n_formats, .data$new_var %in% names(n))
   dates <- dplyr::filter(fmts, .data$format == "date") %>%
     dplyr::pull("new_var")
@@ -429,4 +444,9 @@ frost_format <- function(f, climate_id) {
                                       " has a formating issue with characters",
                                       call. = FALSE))
   f_fmt
+}
+
+meets_wmo <- function(n) {
+  start <- stringr::str_which(n, "STATION_NAME")
+  any(stringr::str_detect(n[start:(start+1)], "\\*"))
 }

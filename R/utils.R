@@ -14,8 +14,7 @@ tz_hours <- function(tz) {
 }
 
 check_url <- function(url) {
-  h <- tryCatch(httr::GET(url), error = function(e) return("Invalid 'url'"))
-  httr::stop_for_status(h)
+  httr::stop_for_status(httr::GET(url), task = paste0("access ", url))
 }
 
 check_int <- function(interval) {

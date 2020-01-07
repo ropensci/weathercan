@@ -10,14 +10,14 @@
   "codeRepository": "https://github.com/ropensci/weathercan",
   "issueTracker": "https://github.com/ropensci/weathercan/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.6.1",
+    "version": "3.6.2",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.6.1 (2019-07-05)",
+  "runtimePlatform": "R version 3.6.2 (2019-12-12)",
   "author": [
     {
       "@type": "Person",
@@ -187,18 +187,6 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "stringr",
-      "name": "stringr",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=stringr"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "testthat",
       "name": "testthat",
       "provider": {
@@ -316,6 +304,19 @@
     },
     {
       "@type": "SoftwareApplication",
+      "identifier": "stringr",
+      "name": "stringr",
+      "version": ">= 1.4.0",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=stringr"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "tidyr",
       "name": "tidyr",
       "version": ">= 0.4.1",
@@ -395,7 +396,7 @@
     "r-package",
     "peer-reviewed"
   ],
-  "relatedLink": "https://CRAN.R-project.org/package=weathercan",
+  "relatedLink": ["https://CRAN.R-project.org/package=weathercan", "https://docs.ropensci.org/weathercan"],
   "copyrightHolder": {},
   "funder": {}
 }
