@@ -23,9 +23,6 @@ spelling::update_wordlist()
 ## Finalize package version
 v <- "0.3.2"
 
-## Update codemeta
-codemetar::write_codemeta()
-
 ## Checks
 devtools::check()     # Local
 
@@ -69,6 +66,10 @@ pkgdown::build_site(lazy = TRUE)
 ## Push to github
 
 ## CHECK FOR SECURITY VULNERABILITIES!
+
+## Update codemeta
+codemetar::write_codemeta()
+
 
 ## Actually release it (SEND TO CRAN!)
 devtools::release()

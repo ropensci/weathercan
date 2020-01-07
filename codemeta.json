@@ -396,7 +396,10 @@
     "r-package",
     "peer-reviewed"
   ],
-  "relatedLink": ["https://CRAN.R-project.org/package=weathercan", "https://docs.ropensci.org/weathercan"],
+  "relatedLink": [
+    "https://CRAN.R-project.org/package=weathercan",
+    "https://docs.ropensci.org/weathercan"
+  ],
   "copyrightHolder": {},
   "funder": {}
 }
