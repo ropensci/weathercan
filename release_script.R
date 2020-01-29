@@ -8,11 +8,14 @@ source("data-raw/data-raw.R")
 source("data-raw/data-index.R")
 
 ## Documentation
+
 # Update NEWS
+
 # Update README.Rmd
 # Compile README.md
 # REBUILD!
 rmarkdown::render("README.Rmd")
+
 # Update cran-comments
 
 # Check spelling
@@ -21,10 +24,14 @@ devtools::spell_check()
 spelling::update_wordlist()
 
 ## Finalize package version
-v <- "0.3.2"
+v <- "0.3.3"
 
 ## Checks
 devtools::check()     # Local
+
+devtools::check_win_release() # Win builder
+devtools::check_win_devel()
+devtools::check_win_oldrelease()
 
 system("cd ..; R CMD build weathercan")
 system(paste0("cd ..; R CMD check weathercan_", v, ".tar.gz --as-cran --run-donttest")) # Local
@@ -36,13 +43,16 @@ rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
                                    "windows-x86_64-release"),
                      show_status = FALSE)
 
-devtools::check_win_release() # Win builder
-devtools::check_win_devel()
-devtools::check_win_oldrelease()
+rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
+                     check_args = "--as-cran",
+                     platforms = "solaris-x86-patched",
+                     env_vars = c("_R_CHECK_FORCE_SUGGESTS_" = "false"),
+                     show_status = FALSE)
 
 rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
-                     check_args = "--as-cran --run-donttest",
-                     platforms = "solaris-x86-patched",
+                     check_args = "--as-cran",
+                     platforms = c("fedora-clang-devel", "fedora-gcc-devel"),
+                     env_vars = c("_R_CHECK_FORCE_SUGGESTS_" = "false"),
                      show_status = FALSE)
 
 # Problems with latex, open weathercan-manual.tex and compile to get actual errors
@@ -55,6 +65,7 @@ rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
 ## Check Reverse Dependencies (are there any?)
 tools::dependsOnPkgs("weathercan")
 devtools::revdep()
+revdepcheck::revdep_check()
 
 ## Build site (so website uses newest version
 ## Update website
@@ -69,7 +80,6 @@ pkgdown::build_site(lazy = TRUE)
 
 ## Update codemeta
 codemetar::write_codemeta()
-
 
 ## Actually release it (SEND TO CRAN!)
 devtools::release()
