@@ -73,10 +73,10 @@ weather_interp <- function(data, weather,
   data <- dplyr::as_tibble(data)
   weather <- dplyr::as_tibble(weather)
 
-  if(interval == "hour") if(!lubridate::is.POSIXct(data$time) |
-                            !lubridate::is.POSIXct(weather$time)) stop(msg)
-  if(interval == "day") if(!lubridate::is.Date(data$date) |
-                           !lubridate::is.Date(weather$date)) stop(msg)
+  if(interval == "hour") if(!lubridate::is.POSIXct(data[['time']]) |
+                            !lubridate::is.POSIXct(weather[['time']])) stop(msg)
+  if(interval == "day") if(!lubridate::is.Date(data[['date']]) |
+                           !lubridate::is.Date(weather[['date']])) stop(msg)
 
   ## Make sure 'cols' is do-able
   if(!any((cols %in% c("all", names(weather))))) {
@@ -86,8 +86,8 @@ weather_interp <- function(data, weather,
 
   ## If 'time', convert to same timezone
   if(interval == "hour") {
-    if(attr(data$time, "tzone") != attr(weather$time, "tzone")) {
-      weather$time <- lubridate::with_tz(weather$time, attr(data$time, "tzone"))
+    if(attr(data[['time']], "tzone") != attr(weather[['time']], "tzone")) {
+      weather[['time']] <- lubridate::with_tz(weather[['time']], attr(data[['time']], "tzone"))
     }
   }
 
