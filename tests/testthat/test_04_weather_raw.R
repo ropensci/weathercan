@@ -75,9 +75,8 @@ test_that("meta_html/raw (hour) download meta data", {
   expect_is(meta, "data.frame")
   expect_length(meta, 2)
   expect_equal(nrow(meta), 8)
-  expect_true(all(c("Station Name", "Province", "Latitude", "Longitude",
-                    "Elevation", "Climate Identifier", "WMO Identifier",
-                    "TC Identifier") %in% meta$V1))
+  m <- paste0("(", paste0(m_names, collapse = ")|("), ")")
+  expect_true(all(stringr::str_detect(meta$V1, m)))
   expect_lt(length(data.frame(meta)[is.na(data.frame(meta))]),
             length(data.frame(meta)[!is.na(data.frame(meta))]))
 
@@ -93,9 +92,8 @@ test_that("meta_html/raw (day) download meta data", {
   expect_is(meta, "data.frame")
   expect_length(meta, 2)
   expect_equal(nrow(meta), 8)
-  expect_true(all(c("Station Name", "Province", "Latitude", "Longitude",
-                    "Elevation", "Climate Identifier", "WMO Identifier",
-                    "TC Identifier") %in% meta$V1))
+  m <- paste0("(", paste0(m_names, collapse = ")|("), ")")
+  expect_true(all(stringr::str_detect(meta$V1, m)))
   expect_lt(length(data.frame(meta)[is.na(data.frame(meta))]),
             length(data.frame(meta)[!is.na(data.frame(meta))]))
 
@@ -111,9 +109,8 @@ test_that("meta_html/raw (month) download meta data", {
   expect_is(meta, "data.frame")
   expect_length(meta, 2)
   expect_equal(nrow(meta), 8)
-  expect_true(all(c("Station Name", "Province", "Latitude", "Longitude",
-                    "Elevation", "Climate Identifier", "WMO Identifier",
-                    "TC Identifier") %in% meta$V1))
+  m <- paste0("(", paste0(m_names, collapse = ")|("), ")")
+  expect_true(all(stringr::str_detect(meta$V1, m)))
   expect_lt(length(data.frame(meta)[is.na(data.frame(meta))]),
             length(data.frame(meta)[!is.na(data.frame(meta))]))
 
