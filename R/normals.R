@@ -139,9 +139,7 @@ normals_url <- function(prov, climate_id, normals_years) {
   loc <- paste0(getOption("weathercan.urls.normals"), "/", normals_years)
 
   # Check if year-range present
-  if(httr::http_error(httr::GET(loc))) {
-    stop("Climate normals are not available for years ", normals_years, call. = FALSE)
-  }
+  check_url(loc, task = paste0("access climate normals for years ", normals_years))
 
   paste0(loc, "/", prov,
          "/climate_normals_", prov, "_", climate_id, "_", normals_years, ".csv")
@@ -158,23 +156,6 @@ normals_raw <- function(loc,
                                ")"))
 
   # Download file
-  d <- try(normals_read_lines(loc, nrows), silent = TRUE)
-
-  # If error, try with 'libcurl' instead
-  if("try-error" %in% class(d)) {
-    d <- normals_read_lines(loc, nrows, method = "libcurl")
-  }
-  d
-}
-
-# normals_read_lines <- function(loc, nrows, method = "default") {
-#   d <- readLines(con <- url(loc, encoding = "latin1", method = method),
-#                  n = nrows)
-#   close(con)
-#   d
-# }
-
-normals_read_lines <- function(loc, nrows, method = "default") {
   httr::GET(loc) %>%
     httr::content(as = "text", encoding = "latin1") %>%
     stringr::str_split(pattern = "\n") %>%

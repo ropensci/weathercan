@@ -237,43 +237,26 @@ weather_dl <- function(station_ids,
       date_range <- lubridate::floor_date(s.start, unit = "year")
     }
 
-    w <- dplyr::tibble(date_range = date_range) %>%
-      dplyr::mutate(html = purrr::map(.data$date_range,
-                                      ~ weather_html(station_id = s,
-                                                     date = .x,
-                                                     interval = interval)),
-                    data = purrr::map(.data$html,
-                                      ~ weather_raw(.,
-                                                    encoding = encoding,
-                                                    header = TRUE)))
+    w <- weather_single(date_range, s, interval, encoding)
 
     # Extract only most recent meta
-    meta <-  weather_html(station_id = s,
-                              interval = interval,
-                              format = "txt") %>%
+    meta <-  meta_html(station_id = s, interval = interval) %>%
       meta_raw(encoding = encoding, interval = interval) %>%
       meta_format(s = s)
-
-    w <- dplyr::select(w, "data")
-
-    if(utils::packageVersion("tidyr") > "0.8.99") {
-      w <- tidyr::unnest(w, .data$data)
-    } else w <- tidyr::unnest(w)
 
     ## Format data if requested
     if(format) {
       if(verbose) message("Formatting station data: ", s)
 
-      w <- w %>%
-        dplyr::select(-"Station Name", -"Climate ID",
-                      -dplyr::contains("Latitude"),
-                      -dplyr::contains("Longitude")) %>%
-        weather_format(meta = meta,
-                       stn = stn,
-                       interval = interval,
-                       time_disp = time_disp,
-                       string_as = string_as,
-                       quiet = quiet)
+      w <- weather_format(w, meta = meta,
+                          stn = stn,
+                          interval = interval,
+                          s.start = s.start,
+                          s.end = s.end,
+                          time_disp = time_disp,
+                          string_as = string_as,
+                          quiet = quiet)
+
       # Catch messages
       if(nrow(w$msg) > 0) {
         msg_fmt <- dplyr::bind_rows(dplyr::bind_cols(station_id = s,
@@ -283,9 +266,6 @@ weather_dl <- function(station_ids,
 
       # Get formatted data
       w <- w$data
-
-      ## Trim to match date range
-      w <- w[w$date >= s.start & w$date <= s.end, ]
 
       ## Check if all missing, remove and message
       n <- c("time", "date", "year", "month", "day", "hour")
@@ -419,7 +399,27 @@ weather_dl <- function(station_ids,
 }
 
 
-weather_html <- function(station_id,
+weather_single <- function(date_range, s, interval, encoding) {
+  w <- dplyr::tibble(date_range = date_range) %>%
+    dplyr::mutate(html = purrr::map(.data$date_range,
+                                    ~ weather_html(station_id = s,
+                                                   date = .x,
+                                                   interval = interval)),
+                  data = purrr::map(.data$html,
+                                    ~ weather_raw(.,
+                                                  encoding = encoding,
+                                                  header = TRUE))) %>%
+    dplyr::select("data")
+
+  if(utils::packageVersion("tidyr") > "0.8.99") {
+    w <- tidyr::unnest(w, .data$data)
+  } else w <- tidyr::unnest(w)
+  w
+}
+
+
+
+get_html <- function(station_id,
                          date = NULL,
                          interval = "hour",
                          format = "csv") {
@@ -438,6 +438,14 @@ weather_html <- function(station_id,
                     query = q)
   httr::stop_for_status(html)
   html
+}
+
+weather_html <- function(station_id, date, interval = "hour") {
+  get_html(station_id, date, interval, format = "csv")
+}
+
+meta_html <- function(station_id, interval = "hour") {
+  get_html(station_id, interval, format = "txt")
 }
 
 
@@ -475,8 +483,12 @@ weather_raw <- function(html, skip = 0,
 }
 
 
-weather_format <- function(w, stn, meta, interval = "hour",
+weather_format <- function(w, stn, meta, interval = "hour", s.start, s.end,
                            string_as = "NA", time_disp = NULL, quiet = FALSE) {
+
+  w <- dplyr::select(w, -"Station Name", -"Climate ID",
+                     -dplyr::contains("Latitude"),
+                     -dplyr::contains("Longitude"))
 
   ## Get names from stored name list
   n <- w_names[[interval]]
@@ -592,6 +604,9 @@ weather_format <- function(w, stn, meta, interval = "hour",
                           grep("flag", names(w), value = TRUE)))] <- num
   }
 
+  ## Trim to match date range
+  w <- dplyr::filter(w, .data$date >= s.start & .data$date <= s.end)
+
   list(data = w, msg = non_num)
 }
 
@@ -628,12 +643,11 @@ meta_raw <- function(html, encoding = "UTF-8", interval, return = "meta") {
     stringr::str_subset("^\r$", negate = TRUE)
 
   if(return == "meta") {
-    i <- dplyr::case_when(interval == "hour" ~ "All times",
-                          TRUE ~ "Legend")
+    i <- stringr::str_which(split, "All times|Legend")[1] - 1
     r <- utils::read.delim(text = httr::content(html, as = "text",
                                                 type = "text/csv",
                                                 encoding = encoding),
-                           nrows = stringr::str_which(split, i) - 1,
+                           nrows = i,
                            header = FALSE, check.names = FALSE,
                            colClasses = "character")
 

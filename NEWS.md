@@ -8,6 +8,7 @@ output: html_document
 
 ## Small changes
 - Internal changes to address issues with testing
+- Remove all reliance on ECCC servers when testing on CRAN
 - Update internal datasets
 
 # weathercan 0.3.2 (2020-01-06)

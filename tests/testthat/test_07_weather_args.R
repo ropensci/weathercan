@@ -2,6 +2,10 @@
 context("weather_dl() arguments")
 
 test_that("weather_dl() hour format = FALSE", {
+  if(on_CRAN()) {
+    mockery::stub(weather_dl, "weather_html", tests$weather_html_01)
+    mockery::stub(weather_dl, "meta_html", tests$meta_html_01)
+  }
 
   w <- weather_dl(station_ids = 51423, start = "2014-01-01", end = "2014-01-31",
                   format = FALSE)
@@ -25,6 +29,10 @@ test_that("weather_dl() hour format = FALSE", {
 })
 
 test_that("weather_dl() day format = FALSE", {
+  if(on_CRAN()) {
+    mockery::stub(weather_dl, "weather_html", tests$weather_html_02)
+    mockery::stub(weather_dl, "meta_html", tests$meta_html_02)
+  }
 
   w <- weather_dl(station_ids = 51423, start = "2014-01-01", end = "2014-03-01",
                   interval = "day", format = FALSE)
@@ -50,9 +58,12 @@ test_that("weather_dl() day format = FALSE", {
 })
 
 test_that("weather_dl() month format = FALSE", {
-
+  if(on_CRAN()) {
+    mockery::stub(weather_dl, "weather_html", tests$weather_html_03)
+    mockery::stub(weather_dl, "meta_html", tests$meta_html_03)
+  }
   expect_silent(w <- weather_dl(station_ids = 5401,
-                                start = "2014-01-01", end = "2014-05-01",
+                                start = "2017-01-01", end = "2017-05-01",
                                 interval = "month", format = FALSE))
 
   ## Basics
@@ -76,8 +87,12 @@ test_that("weather_dl() month format = FALSE", {
 
 
 test_that("weather_dl() month string_as = NULL", {
-  expect_warning(expect_message(w <- weather_dl(station_id = 49568, interval = "day",
-                                                start = "2012-11-01", end = "2013-03-31",
+  if(on_CRAN()) {
+    mockery::stub(weather_dl, "weather_html", tests$weather_html_02)
+    mockery::stub(weather_dl, "meta_html", tests$meta_html_02)
+  }
+  expect_warning(expect_message(w <- weather_dl(station_id = 51423, interval = "day",
+                                                start = "2014-01-01", end = "2014-03-01",
                                                 string_as = NULL)),
                  NA)
 

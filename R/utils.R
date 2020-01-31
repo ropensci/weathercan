@@ -13,8 +13,8 @@ tz_hours <- function(tz) {
   as.numeric(stringr::str_extract(tz, "[0-9+-.]{1,4}"))
 }
 
-check_url <- function(url) {
-  httr::stop_for_status(httr::GET(url), task = paste0("access ", url))
+check_url <- function(url, task = paste0("access ", url)) {
+  httr::stop_for_status(httr::GET(url), task = task)
 }
 
 check_int <- function(interval) {
@@ -74,4 +74,11 @@ tz_calc <- function(){
 #' @export
 get_tz <- function(){
   stop("'get_tz()' has been removed", call. = FALSE)
+}
+
+
+on_CRAN <- function() {
+  c <- Sys.getenv("NOT_CRAN")
+  dplyr::case_when(c == "" ~ TRUE,
+                   c == "true" ~ FALSE)
 }

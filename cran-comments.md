@@ -1,11 +1,12 @@
 ## Release v.0.3.3
 
-* The last test archived on CRAN highlighted errors on Windows and Solaris. 
-  However the Windows errors related to weathercan v0.3.1 and were fixed in v0.3.2
-* This patch (v0.3.3) addresses the remaining problem with testing on Solaris
+* This patch (v0.3.3) adds an alternative testing structure (mocking) 
+  to remove the reliance on fragile connetions
+* Now tests should run correctly, regardless of the status of the connection 
+  to ECCC servers
 
 ## Test environments
-As of Jan 29th, 2020
+As of Jan 31st, 2020
 
 * Local - ubuntu 18.04 (R 3.6.2)
 * AppVeyor - Windows Server 2012 R2 x86 & 64 (R 3.6.2, 3.6.2 Patched, 3.5.3)
