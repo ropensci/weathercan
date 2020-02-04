@@ -1,12 +1,12 @@
 ## Release v.0.3.3
 
 * This patch (v0.3.3) adds an alternative testing structure (mocking) 
-  to remove the reliance on fragile connetions
-* Now tests should run correctly, regardless of the status of the connection 
+  to remove the reliance on fragile internet connetions
+* Tests on CRAN should run correctly, regardless of the status of the connection 
   to ECCC servers
 
 ## Test environments
-As of Jan 31st, 2020
+As of Feb 4th, 2020
 
 * Local - ubuntu 18.04 (R 3.6.2)
 * AppVeyor - Windows Server 2012 R2 x86 & 64 (R 3.6.2, 3.6.2 Patched, 3.5.3)
