@@ -46,6 +46,7 @@ Suggests:
     rmarkdown,
     sf,
     sp,
-    testthat
+    testthat,
+    vcr
 VignetteBuilder: knitr
 Encoding: UTF-8
