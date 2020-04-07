@@ -359,7 +359,6 @@ weather_dl <- function(station_ids,
                      collapse = "\n")))
   }
   ## Return Format messages
-  msg_fmt <- dplyr::filter(msg_fmt, !is.na(col))
   if(!quiet && nrow(msg_fmt) > 0) {
     cols <- paste0(unique(msg_fmt$col), collapse = ", ")
     stations_msg <- paste0(unique(msg_fmt$station_id), collapse = ", ")
@@ -396,7 +395,7 @@ weather_dl <- function(station_ids,
     options("weathercan.time.message" = TRUE)
   }
 
-  dplyr::tbl_df(w_all)
+  tibble::as_tibble(w_all)
 }
 
 

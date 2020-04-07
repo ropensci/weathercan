@@ -8,6 +8,7 @@ output: html_document
 
 ## Small changes
 - Internal changes to fix compatibility with tibble v3.0.0
+- Internal changes to fix compatibility with dplyr v1.0.0
 
 # weathercan 0.3.3 (2020-01-24)
 
