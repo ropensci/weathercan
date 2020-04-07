@@ -24,7 +24,7 @@ devtools::spell_check()
 spelling::update_wordlist()
 
 ## Finalize package version
-v <- "0.3.3"
+v <- "0.3.4"
 
 ## Checks
 devtools::check()     # Local
