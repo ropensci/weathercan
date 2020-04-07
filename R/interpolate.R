@@ -121,7 +121,7 @@ weather_interp <- function(data, weather,
   ## For each obs, get interpolated weather...
   for(col in cols){
     if(interval == "hour") t <- "time" else if(interval == "day") t <- "date"
-    w <- weather[!is.na(weather[, col]), ]
+    w <- weather[!is.na(weather[[col]]), ]
     if(nrow(w) < 2) {
       if(!quiet) message(col, " does not have at least 2 points of ",
                          "non-missing data, skipping...")
@@ -132,9 +132,9 @@ weather_interp <- function(data, weather,
                 "may be less accurate as a result.")
       }
 
-      new <- approx_na_rm(x = weather[, t][[1]],
-                          y = weather[, col][[1]],
-                          xout = data[, t][[1]],
+      new <- approx_na_rm(x = weather[[t]],
+                          y = weather[[col]],
+                          xout = data[[t]],
                           na_gap = na_gap) %>%
         dplyr::rename(!!! stats::setNames(c('x', 'y'), c(t, col)))
 

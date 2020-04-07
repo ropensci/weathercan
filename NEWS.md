@@ -4,6 +4,11 @@ author: "Steffi LaZerte"
 output: html_document
 ---
 
+# weathercan 0.3.4 (2020-04-14)
+
+## Small changes
+- Internal changes to fix compatibility with tibble v3.0.0
+
 # weathercan 0.3.3 (2020-01-24)
 
 ## Small changes
