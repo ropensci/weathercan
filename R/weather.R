@@ -395,7 +395,7 @@ weather_dl <- function(station_ids,
     options("weathercan.time.message" = TRUE)
   }
 
-  tibble::as_tibble(w_all)
+  dplyr::as_tibble(w_all)
 }
 
 
