@@ -6,20 +6,20 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Climate Normals • weathercan</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="Climate Normals">
-<meta property="og:description" content="">
-<meta name="twitter:card" content="summary">
+<meta property="og:description" content="weathercan">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
     <div class="container template-article">
       <header><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">weathercan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
       </span>
     </div>
 
@@ -105,10 +105,10 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Climate Normals</h1>
+      <h1 data-toc-skip>Climate Normals</h1>
                         <h4 class="author">Steffi LaZerte</h4>
             
-            <h4 class="date">2020-01-31</h4>
+            <h4 class="date">2020-04-08</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/weathercan/blob/master/vignettes/normals.Rmd"><code>vignettes/normals.Rmd</code></a></small>
       <div class="hidden name"><code>normals.Rmd</code></div>
@@ -122,12 +122,12 @@
 <a href="#downloading-climate-normals" class="anchor"></a>Downloading Climate Normals</h2>
 <p>Climate Normals and Averages describe the average climate conditions specific to a particular location. These can be downloaded from Environment and Climate Change Canada using the <code><a href="../reference/normals_dl.html">normals_dl()</a></code> function.</p>
 <p>First we’ll load the <code>weathercan</code> package for downloading the data and the <code>tidyr</code> package for unnesting the data (see below).</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(weathercan)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyr)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(naniar) <span class="co"># For exploring missing values</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">weathercan</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyr</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">naniar</span>) <span class="co"># For exploring missing values</span></pre></body></html></div>
 <p>To download climate normals, we’ll first find the stations we’re interested in using the <code><a href="../reference/stations_search.html">stations_search()</a></code> function. We’ll use the <code>normals_only = TRUE</code> argument to filter to only stations with available climate normals.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="../reference/stations_search.html">stations_search</a></span>(<span class="st">"Winnipeg"</span>, <span class="dt">normals_only =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="../reference/stations_search.html">stations_search</a></span>(<span class="st">"Winnipeg"</span>, <span class="kw">normals_only</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 3 x 11
 ##   prov  station_name    station_id climate_id WMO_id TC_id   lat   lon  elev tz    normals
 ##   &lt;chr&gt; &lt;chr&gt;                &lt;int&gt; &lt;fct&gt;       &lt;int&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;lgl&gt;  
@@ -135,8 +135,8 @@
 ## 2 MB    WINNIPEG RICHA…       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… TRUE   
 ## 3 MB    WINNIPEG THE F…      28051 5023262     71579 XWN    49.9 -97.1  230  Etc/… TRUE</code></pre>
 <p>Let’s compare the climate normals from these three stations in Winnipeg, MB. Note that unlike the <code><a href="../reference/weather_dl.html">weather_dl()</a></code> function, the <code><a href="../reference/normals_dl.html">normals_dl()</a></code> function requires <code>climate_id</code> not <code>station_id</code>. By default the normals are downloaded for the years “1981-2010” (currently the only normals available).</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">n &lt;-<span class="st"> </span><span class="kw"><a href="../reference/normals_dl.html">normals_dl</a></span>(<span class="dt">climate_ids =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"502S001"</span>, <span class="st">"5023222"</span>, <span class="st">"5023262"</span>))</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">n</a></code></pre></div>
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">n</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/normals_dl.html">normals_dl</a></span>(<span class="kw">climate_ids</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"502S001"</span>, <span class="st">"5023222"</span>, <span class="st">"5023262"</span>))
+<span class="no">n</span></pre></body></html></div>
 <pre><code>## # A tibble: 3 x 6
 ##   prov  station_name               climate_id meets_wmo normals            frost          
 ##   &lt;chr&gt; &lt;chr&gt;                      &lt;chr&gt;      &lt;lgl&gt;     &lt;list&gt;             &lt;list&gt;         
@@ -146,10 +146,10 @@
 <p>Because there are two different types of climate normals (weather measurements and first/last frost dates), the data are nested as two different datasets. We can see that the Airport (Richardson Int’l) has the most data with 197 average weather measurements as well as first/last frost dates. The other two weather stations have fewer weather measurements and no frost data available.</p>
 <p>We can also see that only one of the three stations has data quality sufficient to meet the WMO standards for temperature and precipitation (i.e. both these measurements have code &gt;= A). See the <a href="http://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf">ECCC calculations document</a> for more details.</p>
 <p>To extract either data set we can use the <code><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest()</a></code> function from the <code>tidyr</code> package.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">normals &lt;-<span class="st"> </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span>(n, normals)</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">frost &lt;-<span class="st"> </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span>(n, frost)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">normals</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span>(<span class="no">n</span>, <span class="no">normals</span>)
+<span class="no">frost</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span>(<span class="no">n</span>, <span class="no">frost</span>)</pre></body></html></div>
 <p>Note that this extracts the measurements for all three stations (in the case of the <code>normals</code> data frame), but not all measurements are available for each station</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">normals</a></code></pre></div>
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">normals</span></pre></body></html></div>
 <pre><code>## # A tibble: 39 x 202
 ##    prov  station_name climate_id meets_wmo period temp_daily_aver… temp_daily_aver…
 ##    &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;      &lt;lgl&gt;     &lt;fct&gt;             &lt;dbl&gt; &lt;chr&gt;           
@@ -194,16 +194,16 @@
 ## 39 MB    WINNIPEG TH… 5023262    FALSE     Year               NA   &lt;NA&gt;            
 ## # … with 195 more variables</code></pre>
 <p>To visualize missing data we can use the <code><a href="https://rdrr.io/pkg/naniar/man/gg_miss_var.html">gg_miss_var()</a></code> function from the <code>naniar</code> package.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(normals, <span class="op">-</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"_code"</span>)) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># Remove '_code' columns</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/naniar/man/gg_miss_var.html">gg_miss_var</a></span>(<span class="dt">facet =</span> station_name)</a></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span>({<span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(normals, <span class="op">-</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"_code"</span>)) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># Remove '_code' columns</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/pkg/naniar/man/gg_miss_var.html">gg_miss_var</a></span>(<span class="dt">facet =</span> station_name)})</a></code></pre></div>
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">normals</span>, -<span class="fu"><a href="https://tidyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"_code"</span>)) <span class="kw">%&gt;%</span>  <span class="co"># Remove '_code' columns</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/naniar/man/gg_miss_var.html">gg_miss_var</a></span>(<span class="kw">facet</span> <span class="kw">=</span> <span class="no">station_name</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span>({<span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">normals</span>, -<span class="fu"><a href="https://tidyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"_code"</span>)) <span class="kw">%&gt;%</span>  <span class="co"># Remove '_code' columns</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/naniar/man/gg_miss_var.html">gg_miss_var</a></span>(<span class="kw">facet</span> <span class="kw">=</span> <span class="no">station_name</span>)})</pre></body></html></div>
 <p><img src="normals_files/figure-html/unnamed-chunk-7-1.png" width="100%"></p>
 <p>Let’s take a look at the frost data.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="cf">if</span>(<span class="st">"normals"</span> <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(frost)) frost &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(frost, <span class="op">-</span>normals) <span class="co"># tidyr v1</span></a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">glimpse</a></span>(frost)</a></code></pre></div>
-<pre><code>## Observations: 7
-## Variables: 12
+<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="kw">if</span>(<span class="st">"normals"</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">frost</span>)) <span class="no">frost</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">frost</span>, -<span class="no">normals</span>) <span class="co"># tidyr v1</span>
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">glimpse</a></span>(<span class="no">frost</span>)</pre></body></html></div>
+<pre><code>## Rows: 7
+## Columns: 12
 ## $ prov                                  &lt;chr&gt; "MB", "MB", "MB", "MB", "MB", "MB", "MB"
 ## $ station_name                          &lt;chr&gt; "WINNIPEG RICHARDSON INT'L A", "WINNIPEG …
 ## $ climate_id                            &lt;chr&gt; "5023222", "5023222", "5023222", "5023222…
@@ -220,7 +220,7 @@
 <h3 class="hasAnchor">
 <a href="#finding-stations-with-specific-measurements" class="anchor"></a>Finding stations with specific measurements</h3>
 <p>The include data frame, <code>normals_measurements</code> contains a list of stations with their corresponding measurements. Be aware that this data might be out of date!</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">normals_measurements</a></code></pre></div>
+<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">normals_measurements</span></pre></body></html></div>
 <pre><code>## # A tibble: 113,325 x 4
 ##    prov  station_name climate_id measurement            
 ##    &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;                  
@@ -236,10 +236,10 @@
 ## 10 AB    HORBURG      301C3D4    temp_extreme_max_code  
 ## # … with 113,315 more rows</code></pre>
 <p>For example, if you wanted all <code>climate_id</code>s for stations that have data on soil temperature</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">normals_measurements <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(measurement, <span class="st">"soil"</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span>(climate_id) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="no">normals_measurements</span> <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw pkg">stringr</span><span class="kw ns">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(<span class="no">measurement</span>, <span class="st">"soil"</span>)) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span>(<span class="no">climate_id</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>()</pre></body></html></div>
 <pre><code>##  [1] "3070560" "1100119" "112G8L1" "8502800" "8403605" "2403500" "6073960" "6105976"
 ##  [9] "4028060" "4043900" "4075518" "2100630"</code></pre>
 </div>
@@ -265,17 +265,11 @@
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-        <div id="tocnav">
-      <h2 class="hasAnchor">
-<a href="#tocnav" class="anchor"></a>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-<li><a href="#downloading-climate-normals">Downloading Climate Normals</a></li>
-      <li><a href="#understanding-climate-normals">Understanding Climate Normals</a></li>
-      </ul>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
 </div>
-      </div>
 
 </div>
 
@@ -286,7 +280,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

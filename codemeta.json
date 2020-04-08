@@ -10,14 +10,14 @@
   "codeRepository": "https://github.com/ropensci/weathercan",
   "issueTracker": "https://github.com/ropensci/weathercan/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.6.2",
+    "version": "3.6.3",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.6.2 (2019-12-12)",
+  "runtimePlatform": "R version 3.6.3 (2020-02-29)",
   "author": [
     {
       "@type": "Person",
@@ -339,6 +339,19 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=tidyr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "tidyselect",
+      "name": "tidyselect",
+      "version": ">= 1.0.0",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=tidyselect"
     },
     {
       "@type": "SoftwareApplication",
