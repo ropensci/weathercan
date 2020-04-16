@@ -269,7 +269,7 @@ weather_dl <- function(station_ids,
 
       ## Check if all missing, remove and message
       n <- c("time", "date", "year", "month", "day", "hour")
-      temp <- w[, !(names(w) %in% n)]
+      temp <- dplyr::select(w, -tidyselect::any_of(n))
 
       if(nrow(temp) == 0 || all(is.na(temp) | temp == "")) {
         if(length(station_ids) > 1) {
@@ -306,9 +306,10 @@ weather_dl <- function(station_ids,
     ## Trim to available data provided it is formatted
     if(trim && format && nrow(w_all) > 0){
       if(verbose) message("Trimming missing values before and after")
-      temp <-  w_all[, !(names(w_all) %in% c(names(m_names), "date", "time",
-                                             "year", "month",
-                                             "day", "hour", "qual"))]
+      temp <-  dplyr::select(w_all,
+                             -tidyselect::any_of(c(names(m_names), "date", "time",
+                                                   "year", "month",
+                                                   "day", "hour", "qual")))
       temp <- w_all$date[which(rowSums(is.na(temp) | temp == "") != ncol(temp))]
 
       w_all <- w_all[w_all$date >= min(temp) & w_all$date <= max(temp), ]
@@ -358,7 +359,6 @@ weather_dl <- function(station_ids,
                      collapse = "\n")))
   }
   ## Return Format messages
-  msg_fmt <- dplyr::filter(msg_fmt, !is.na(col))
   if(!quiet && nrow(msg_fmt) > 0) {
     cols <- paste0(unique(msg_fmt$col), collapse = ", ")
     stations_msg <- paste0(unique(msg_fmt$station_id), collapse = ", ")
@@ -395,7 +395,7 @@ weather_dl <- function(station_ids,
     options("weathercan.time.message" = TRUE)
   }
 
-  dplyr::tbl_df(w_all)
+  dplyr::as_tibble(w_all)
 }
 
 
@@ -549,10 +549,11 @@ weather_format <- function(w, stn, meta, interval = "hour", s.start, s.end,
   ## Can we convert to numeric?
   #w$wind_spd[c(54, 89, 92)] <- c(">3", ">5", ">10")
 
-  num <- apply(w[, !(names(w) %in% c("date", "year", "month",
-                                     "day", "hour", "time", "qual",
-                                     "weather",
-                                     grep("flag", names(w), value = TRUE)))],
+  num <- apply(dplyr::select(
+    w, -tidyselect::any_of(c("date", "year", "month",
+                             "day", "hour", "time", "qual",
+                             "weather",
+                             grep("flag", names(w), value = TRUE)))),
                MARGIN = 2,
                FUN = function(x) tryCatch(as.numeric(x),
                                           warning = function(w) w))
@@ -578,11 +579,11 @@ weather_format <- function(w, stn, meta, interval = "hour", s.start, s.end,
                         "hour", "time", "qual", "weather",
                         grep("flag", names(w), value = TRUE))
 
-        replacement <- apply(w[, !(names(w) %in% valid_cols)],
+        replacement <- apply(dplyr::select(w, -tidyselect::any_of(valid_cols)),
                              MARGIN = 2,
                              FUN = as.numeric)
 
-        w[, !(names(w) %in% valid_cols)] <- replacement
+        w[!(names(w) %in% valid_cols)] <- as.data.frame(replacement)
       })
     } else {
       m <- paste0(names(num)[warn],
@@ -595,13 +596,13 @@ weather_format <- function(w, stn, meta, interval = "hour", s.start, s.end,
                    grep("flag", names(w), value = TRUE),
                    names(num)[warn])
 
-      w[, !(names(w) %in% replace)] <- num[!warn]
+      w[!(names(w) %in% replace)] <- as.data.frame(num[!warn])
     }
   } else {
     non_num <- data.frame()
-    w[, !(names(w) %in% c("date", "year", "month", "day",
-                          "hour", "time", "qual", "weather",
-                          grep("flag", names(w), value = TRUE)))] <- num
+    w[!(names(w) %in% c("date", "year", "month", "day",
+                        "hour", "time", "qual", "weather",
+                        grep("flag", names(w), value = TRUE)))] <- as.data.frame(num)
   }
 
   ## Trim to match date range
@@ -681,7 +682,7 @@ meta_format <- function(meta, s) {
   meta %>%
     dplyr::select(m) %>%
     dplyr::mutate(station_id = s,
-                  prov = province[.data$prov],
+                  prov = province[[.data$prov]],
                   lat = as.numeric(as.character(.data$lat)),
                   lon = as.numeric(as.character(.data$lon)),
                   elev = as.numeric(as.character(.data$elev)))
