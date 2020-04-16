@@ -56,6 +56,13 @@ rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
                      env_vars = c("_R_CHECK_FORCE_SUGGESTS_" = "false"),
                      show_status = FALSE)
 
+rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
+                     check_args = "--as-cran --run-donttest",
+                     platforms = c("debian-gcc-devel",
+                                   "ubuntu-gcc-devel",
+                                   "ubuntu-rchk"),
+                     show_status = FALSE)
+
 system(paste0("cd ..; R CMD check weathercan_", v, ".tar.gz --as-cran --run-donttest")) # Local
 
 # Problems with latex, open weathercan-manual.tex and compile to get actual errors
@@ -67,16 +74,22 @@ system(paste0("cd ..; R CMD check weathercan_", v, ".tar.gz --as-cran --run-dont
 
 ## Check Reverse Dependencies (are there any?)
 tools::dependsOnPkgs("weathercan")
-devtools::revdep()
-revdepcheck::revdep_check()
+
+## Double check
+options(repos = c(CRAN = 'http://cran.rstudio.com'))
+db <- available.packages()
+pkgs <- rownames(db)
+deps <- tools::package_dependencies(pkgs, db, which = 'all', reverse = TRUE)
+deps$weathercan
 
 
 ## Update codemeta
 codemetar::write_codemeta()
 
 
-## Build site (so website uses newest version
+## Build site (so website uses newest version)
 ## Update website
+## BUILD PACKAGE FIRST!
 pkgdown::build_articles(lazy = FALSE)
 pkgdown::build_home()
 pkgdown::build_news()
@@ -92,5 +105,5 @@ unlink("./vignettes/normals_cache/", recursive = TRUE)
 devtools::release()
 
 ## Once it is released (Accepted by CRAN) create signed release on github
-system("git tag -s v0.3.3 -m 'v0.3.3'")
+system("git tag -s v0.3.4 -m 'v0.3.4'")
 system("git push --tags")
