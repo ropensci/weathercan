@@ -70,7 +70,7 @@ NULL
                     pkgname = "weathercan"){
 
   options(weathercan.urls.weather =
-            "http://climate.weather.gc.ca/climate_data/bulk_data_e.html",
+            "https://climate.weather.gc.ca/climate_data/bulk_data_e.html",
           weathercan.urls.normals =
             "https://dd.meteo.gc.ca/climate/observations/normals/csv",
           weathercan.urls.stations =
