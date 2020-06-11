@@ -151,7 +151,7 @@ stations_dl <- function(url = NULL, normals_years = "1981-2010",
     tidyr::spread(.data$type, .data$date) %>%
     dplyr::arrange(.data$prov, .data$station_id, .data$interval) %>%
     dplyr::mutate(normals = FALSE) %>%
-    dplyr::tbl_df()
+    dplyr::as_tibble()
 
   s$normals[s$climate_id %in% normals] <- TRUE
 
