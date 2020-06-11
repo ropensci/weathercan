@@ -5,7 +5,7 @@
 
 ## Internal data files
 source("data-raw/data-raw.R")
-source("data-raw/data-index.R")
+source("data-raw/data-index.R") # includes test stubs for mockery
 
 ## Documentation
 
