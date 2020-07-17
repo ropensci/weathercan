@@ -1,5 +1,13 @@
 # Steps/Commands to run before a CRAN release -----------------------------
 
+
+library(magrittr)
+library(cchecks)
+cch_pkgs_history("weathercan", limit = 50)$data$history %>%
+  dplyr::select(date_updated, "summary") %>%
+  data.frame()
+
+
 ## Check if version is appropriate
 # http://shiny.andyteucher.ca/shinyapps/rver-deps/
 
