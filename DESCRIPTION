@@ -23,6 +23,7 @@ Imports:
     dplyr (>= 0.7.0),
     httr (>= 1.1.0),
     lubridate (>= 1.7.1),
+    memoise (>= 1.1.0),
     methods (>= 3.2.2),
     purrr (>= 0.2.4),
     rlang (>= 0.1.4),
@@ -42,11 +43,11 @@ Suggests:
     knitr,
     leaflet,
     lutz,
-    mockery,
     naniar,
     rmarkdown,
     sf,
     sp,
-    testthat
+    testthat,
+    vcr
 VignetteBuilder: knitr
 Encoding: UTF-8

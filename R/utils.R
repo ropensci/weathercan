@@ -75,10 +75,3 @@ tz_calc <- function(){
 get_tz <- function(){
   stop("'get_tz()' has been removed", call. = FALSE)
 }
-
-
-on_CRAN <- function() {
-  c <- Sys.getenv("NOT_CRAN")
-  dplyr::case_when(c == "" ~ TRUE,
-                   c == "true" ~ FALSE)
-}

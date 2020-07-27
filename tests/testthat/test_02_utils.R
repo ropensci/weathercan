@@ -2,16 +2,14 @@ context("Testing utility functions")
 
 test_that("tz_offset() returns the correct tz", {
   expect_equal(tz_offset("America/Winnipeg"), "Etc/GMT+6")
-
   expect_equal(tz_offset("America/Vancouver"), "Etc/GMT+8")
-
   expect_equal(tz_offset("America/Winnipeg"), "Etc/GMT+6")
-
   expect_equal(tz_offset("America/Edmonton"), "Etc/GMT+7")
-
 })
 
 test_that("check_urls() as expected", {
+  skip_on_cran()
+  skip_if_offline()
   expect_silent(check_url("google.com"))
   expect_silent(check_url("https://dd.meteo.gc.ca/climate/observations/"))
   expect_error(check_url("google"))

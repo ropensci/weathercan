@@ -4,11 +4,13 @@ context("weather_raw")
 
 test_that("weather_html/raw (hour) download a data frame", {
 
-  if(on_CRAN()) mockery::stub(weather_html, "get_html", tests$weather_html_01)
+  #if(on_CRAN()) mockery::stub(weather_html, "get_html", tests$weather_html_01)
 
-  expect_silent(wd <- weather_html(station_id = 51423,
-                                   date = as.Date("2014-01-01"),
-                                   interval = "hour"))
+  vcr::use_cassette("weather_raw1", {
+    expect_silent(wd <- weather_html(station_id = 51423,
+                                     date = as.Date("2014-01-01"),
+                                     interval = "hour"))
+  })
 
   expect_silent(wd <- weather_raw(wd))
 
@@ -24,11 +26,13 @@ test_that("weather_html/raw (hour) download a data frame", {
 })
 
 test_that("weather_html/raw (day) download a data frame", {
-  if(on_CRAN()) mockery::stub(weather_html, "get_html", tests$weather_html_02)
 
-  expect_silent(wd <- weather_html(station_id = 51423,
-                                   date = as.Date("2014-01-01"),
-                                   interval = "day"))
+  vcr::use_cassette("weather_raw2", {
+    expect_silent(wd <- weather_html(station_id = 51423,
+                                     date = as.Date("2014-01-01"),
+                                     interval = "day"))
+  })
+
   expect_silent(wd <- weather_raw(wd))
 
   ## Basics
@@ -43,12 +47,11 @@ test_that("weather_html/raw (day) download a data frame", {
 
 
 test_that("weather_html/raw (month) download a data frame", {
-  if(on_CRAN()) mockery::stub(weather_html, "get_html", tests$weather_html_03)
-
-
-  expect_silent(wd <- weather_html(station_id = 5401,
-                                   date = as.Date("2017-01-01"),
-                                   interval = "month"))
+  vcr::use_cassette("weather_raw3", {
+    expect_silent(wd <- weather_html(station_id = 5401,
+                                     date = as.Date("2017-01-01"),
+                                     interval = "month"))
+  })
 
   expect_silent(wd <- weather_raw(wd))
 
@@ -66,10 +69,10 @@ test_that("weather_html/raw (month) download a data frame", {
 })
 
 test_that("meta_html/raw (hour) download meta data", {
-  if(on_CRAN()) mockery::stub(meta_html, "get_html", tests$meta_html_01)
-
-  expect_silent(meta <- meta_html(station_id = 51423, interval = "hour"))
-  expect_silent(meta <- meta_raw(meta, interval = "hour"))
+  vcr::use_cassette("meta_raw1", {
+    expect_silent(meta <- meta_html(station_id = 51423, interval = "hour"))
+  })
+    expect_silent(meta <- meta_raw(meta, interval = "hour"))
 
   ## Basics
   expect_is(meta, "data.frame")
@@ -83,9 +86,9 @@ test_that("meta_html/raw (hour) download meta data", {
 })
 
 test_that("meta_html/raw (day) download meta data", {
-  if(on_CRAN()) mockery::stub(meta_html, "get_html", tests$meta_html_02)
-
-  expect_silent(meta <- meta_html(station_id = 51423, interval = "day"))
+  vcr::use_cassette("meta_raw2", {
+    expect_silent(meta <- meta_html(station_id = 51423, interval = "day"))
+  })
   expect_silent(meta <- meta_raw(meta, interval = "day"))
 
   ## Basics
@@ -100,9 +103,9 @@ test_that("meta_html/raw (day) download meta data", {
 })
 
 test_that("meta_html/raw (month) download meta data", {
-  if(on_CRAN()) mockery::stub(meta_html, "get_html", tests$meta_html_03)
-
-  expect_silent(meta <- meta_html(station_id = 5401, interval = "month"))
+  vcr::use_cassette("meta_raw3", {
+    expect_silent(meta <- meta_html(station_id = 5401, interval = "month"))
+  })
   expect_silent(meta <- meta_raw(meta, interval = "month"))
 
   ## Basics

@@ -156,11 +156,13 @@ normals_raw <- function(loc,
                                ")"))
 
   # Download file
-  httr::GET(loc) %>%
+  status %>%
     httr::content(as = "text", encoding = "latin1") %>%
     stringr::str_split(pattern = "\n") %>%
     unlist()
 }
+
+normals_raw <- memoise::memoise(normals_raw, ~memoise::timeout(24 * 60 * 60))
 
 
 normals_extract <- function(n, return = "data") {

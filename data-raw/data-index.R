@@ -280,75 +280,8 @@ f_formats <- select(f_names, "new_var") %>%
     TRUE ~ "numeric")) %>%
   bind_rows(tibble(new_var = "frost_code", format = "character"))
 
-tests <- list(
-  weather_html_01 = get_html(station_id = 51423, date = as.Date("2014-01-01"),
-                             interval = "hour", format = "csv"),
-  meta_html_01 = get_html(station_id = 51423, interval = "hour", format = "txt"),
-
-  weather_html_02 = get_html(station_id = 51423, date = as.Date("2014-01-01"),
-                             interval = "day", format = "csv"),
-  meta_html_02 = get_html(station_id = 51423, interval = "day", format = "txt"),
-
-  weather_html_03 = get_html(station_id = 5401, date = as.Date("2017-01-01"),
-                             interval = "month", format = "csv"),
-  meta_html_03 = get_html(station_id = 5401, interval = "month", format = "txt"),
-
-  weather_html_04 = get_html(station_id = 6556, date = as.Date("1965-01-01"),
-                             interval = "hour", format = "csv"),
-  meta_html_04 = get_html(station_id = 6556, interval = "hour", format = "txt"),
-
-  weather_html_05a = get_html(station_id = 42203, date = as.Date("2017-09-01"),
-                             interval = "hour", format = "csv"),
-  weather_html_05b = get_html(station_id = 49909, date = as.Date("2017-09-01"),
-                             interval = "hour", format = "csv"),
-  meta_html_05a = get_html(station_id = 42203, interval = "hour", format = "txt"),
-  meta_html_05b = get_html(station_id = 49909, interval = "hour", format = "txt"),
-
-  weather_html_06 = get_html(station_id = 50821, date = as.Date("2018-01-01"),
-                             interval = "hour", format = "csv"),
-  meta_html_06 = get_html(station_id = 50821, interval = "hour", format = "txt"),
-
-  weather_html_07a = get_html(station_id = 6819, date = as.Date("2017-08-01"),
-                             interval = "hour", format = "csv"),
-  weather_html_07b = get_html(station_id = 6819, date = as.Date("2017-09-01"),
-                              interval = "hour", format = "csv"),
-  meta_html_07 = get_html(station_id = 50821, interval = "hour", format = "txt"),
-
-  weather_html_08a = get_html(station_id = 1275, date = as.Date("2017-01-01"),
-                              interval = "hour", format = "csv"),
-  weather_html_08b = get_html(station_id = 1001, date = as.Date("2017-01-01"),
-                              interval = "hour", format = "csv"),
-  meta_html_08a = get_html(station_id = 1275, interval = "hour", format = "txt"),
-  meta_html_08b = get_html(station_id = 1001, interval = "hour", format = "txt"),
-
-  weather_html_09 = get_html(station_id = 51423, date = as.Date("2016-01-01"),
-                             interval = "day", format = "csv"),
-  meta_html_09 = get_html(station_id = 51423, interval = "day", format = "txt"),
-
-  weather_html_10a = get_html(station_id = 54398, date = as.Date("2016-01-01"),
-                              interval = "day", format = "csv"),
-  weather_html_10b = get_html(station_id = 54398, date = as.Date("2017-01-01"),
-                              interval = "day", format = "csv"),
-  meta_html_10 = get_html(station_id = 54398, interval = "day", format = "txt"),
-
-  weather_html_11 = get_html(station_id = 5401, date = as.Date("2014-01-01"),
-                             interval = "month", format = "csv"),
-  meta_html_11 = get_html(station_id = 5401, interval = "month", format = "txt"),
-
-  weather_html_12 = get_html(station_id = 51423, date = as.Date("2012-01-01"),
-                             interval = "month", format = "csv"),
-  meta_html_12 = get_html(station_id = 51423, interval = "month", format = "txt"),
-
-  weather_html_13 = get_html(station_id = 5940, date = as.Date("2014-01-01"),
-                             interval = "month", format = "csv"),
-  meta_html_13 = get_html(station_id = 5940, interval = "month", format = "txt"),
-
-  normals_raw_01 = normals_raw(paste0("https://dd.meteo.gc.ca/climate/observations/normals/csv/",
-                                      "1981-2010/MB/climate_normals_MB_5010480_1981-2010.csv"))
-)
-
 usethis::use_data(province, w_names, m_names, n_names, f_names,
-                  n_formats, f_formats, tests,
+                  n_formats, f_formats,
                   overwrite = TRUE, internal = TRUE)
 
 # Technical documentation: ftp://ftp.tor.ec.gc.ca/Pub/Documentation_Technical/Technical_Documentation.pdf

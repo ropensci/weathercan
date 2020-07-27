@@ -398,7 +398,6 @@ weather_dl <- function(station_ids,
   dplyr::as_tibble(w_all)
 }
 
-
 weather_single <- function(date_range, s, interval, encoding) {
   w <- dplyr::tibble(date_range = date_range) %>%
     dplyr::mutate(html = purrr::map(.data$date_range,
@@ -420,16 +419,17 @@ weather_single <- function(date_range, s, interval, encoding) {
 
 
 get_html <- function(station_id,
-                         date = NULL,
-                         interval = "hour",
-                         format = "csv") {
+                     date = NULL,
+                     interval = "hour",
+                     format = "csv") {
 
   q <- list(format = format, stationID = station_id,
             timeframe = ifelse(interval == "hour", 1,
                                ifelse(interval == "day", 2,
                                       3)),
             submit = 'Download+Data')
-  if(format == "csv") {
+
+  if(format == "csv" & interval != "month") {
     q['Year'] <- format(date, "%Y")
     q['Month'] = format(date, "%m")
   }
@@ -440,12 +440,17 @@ get_html <- function(station_id,
   html
 }
 
+# Cache function results
+get_html <- memoise::memoise(get_html, ~memoise::timeout(24 * 60 * 60))
+
+
 weather_html <- function(station_id, date, interval = "hour") {
+  if(interval == "month") date <- NULL
   get_html(station_id, date, interval, format = "csv")
 }
 
 meta_html <- function(station_id, interval = "hour") {
-  get_html(station_id, interval, format = "txt")
+  get_html(station_id, date = NULL, interval, format = "txt")
 }
 
 
