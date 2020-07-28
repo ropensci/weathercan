@@ -158,6 +158,8 @@ normals_raw <- function(loc,
   # Download file
   status %>%
     httr::content(as = "text", encoding = "latin1") %>%
+    # Get rid of degree symbols right away
+    stringr::str_remove_all("\\u00B0") %>%
     stringr::str_split(pattern = "\n") %>%
     unlist()
 }

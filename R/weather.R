@@ -473,7 +473,10 @@ weather_raw <- function(html, skip = 0,
     utils::read.csv(text = .,
                     nrows = nrows, strip.white = TRUE,
                     skip = skip, header = header,
-                    colClasses = "character", check.names = FALSE)
+                    colClasses = "character", check.names = FALSE) %>%
+    # Get rid of degree symbols right away
+    dplyr::rename_all(~stringr::str_remove_all(., "\\u00B0"))
+
 
     # For some reason the flags "^" are replaced with "I",
     # change back to match flags on ECCC website
