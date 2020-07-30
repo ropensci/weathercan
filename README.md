@@ -83,8 +83,8 @@ head(stations)
 glimpse(stations)
 ```
 
-    ## Observations: 26,286
-    ## Variables: 14
+    ## Rows: 26,298
+    ## Columns: 14
     ## $ prov         <chr> "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB"…
     ## $ station_name <chr> "DAYSLAND", "DAYSLAND", "DAYSLAND", "EDMONTON CORONATION", "EDMONTON CORONAT…
     ## $ station_id   <int> 1795, 1795, 1795, 1796, 1796, 1796, 1797, 1797, 1797, 1798, 1798, 1798, 1799…
@@ -111,14 +111,13 @@ stations_search("Kamloops", interval = "hour")
     ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval start   end
     ##   <chr> <chr>             <int> <fct>       <int> <fct> <dbl> <dbl> <dbl> <chr> <chr>    <int> <int>
     ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/… hour      1953  2013
-    ## 2 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/… hour      2013  2019
-    ## 3 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/… hour      2006  2019
+    ## 2 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/… hour      2013  2020
+    ## 3 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/… hour      2006  2020
     ## # … with 1 more variable: normals <lgl>
 
 Time frame must be one of “hour”, “day”, or “month”.
 
-You can also search by
-proximity:
+You can also search by proximity:
 
 ``` r
 stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour")
@@ -128,24 +127,16 @@ stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour"
     ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval start   end
     ##   <chr> <chr>             <int> <fct>       <int> <fct> <dbl> <dbl> <dbl> <chr> <chr>    <int> <int>
     ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/… hour      1953  2013
-    ## 2 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/… hour      2006  2019
-    ## 3 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/… hour      2013  2019
+    ## 2 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/… hour      2006  2020
+    ## 3 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/… hour      2013  2020
     ## # … with 2 more variables: normals <lgl>, distance <dbl>
 
 ### Weather
 
-Once you have your `station_id`(s) you can download weather
-data:
+Once you have your `station_id`(s) you can download weather data:
 
 ``` r
 kam <- weather_dl(station_ids = 51423, start = "2018-02-01", end = "2018-04-15")
-```
-
-    ## As of weathercan v0.3.0 time display is either local time or UTC
-    ## See Details under ?weather_dl for more information.
-    ## This message is shown once per session
-
-``` r
 kam
 ```
 
@@ -164,8 +155,7 @@ kam
     ## 10 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  
     ## # … with 1,766 more rows, and 25 more variables
 
-You can also download data from multiple stations at
-once:
+You can also download data from multiple stations at once:
 
 ``` r
 kam_pg <- weather_dl(station_ids = c(48248, 51423), start = "2018-02-01", end = "2018-04-15")
@@ -353,7 +343,6 @@ contributing](CONTRIBUTING.md)
 
 Please note that this project is released with a [Contributor Code of
 Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree
-to abide by its
-terms.
+to abide by its terms.
 
 [![ropensci\_footer](http://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)
