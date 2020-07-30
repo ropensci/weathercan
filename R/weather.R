@@ -453,6 +453,11 @@ meta_html <- function(station_id, interval = "hour") {
   get_html(station_id, date = NULL, interval, format = "txt")
 }
 
+remove_sym <- function(df) {
+  to_remove <- "\\u00BB|\\u00BF|\\u00EF|\\u00C2|\\u00B0"
+  dplyr::rename_all(df, ~stringr::str_remove_all(., to_remove))
+}
+
 
 weather_raw <- function(html, skip = 0,
                         nrows = -1,
@@ -474,8 +479,9 @@ weather_raw <- function(html, skip = 0,
                     nrows = nrows, strip.white = TRUE,
                     skip = skip, header = header,
                     colClasses = "character", check.names = FALSE) %>%
-    # Get rid of degree symbols right away
-    dplyr::rename_all(~stringr::str_remove_all(., "\\u00B0"))
+    # Get rid of special symbols right away
+    remove_sym()
+
 
 
     # For some reason the flags "^" are replaced with "I",
@@ -673,7 +679,8 @@ meta_raw <- function(html, encoding = "UTF-8", interval, return = "meta") {
                            header = FALSE, check.names = FALSE,
                            colClasses = "character")
   }
-  r
+  # Get rid of any special symbols
+  remove_sym(r)
 }
 
 meta_format <- function(meta, s) {
