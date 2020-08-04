@@ -11,7 +11,8 @@ cks$data$checks %>%
   dplyr::filter(!status %in% c("OK", "NOTE"))
 
 cks$data$check_details$details %>%
-  dplyr::select(flavors, output) %>%
+  dplyr::mutate(output = glue::glue("{flavors}\n{output}\n\n")) %>%
+  dplyr::pull(output) %>%
   cat()
 
 cchn_pkg_rule_list()
