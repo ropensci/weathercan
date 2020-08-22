@@ -14,7 +14,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Tue, 28 Jul 2020 16:22:23 GMT
+      date: Sat, 22 Aug 2020 18:46:05 GMT
       server: Apache
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -779,7 +779,7 @@ http_interactions:
         CS\",\"6104027\",\"2001-12-31 21:00\",\"2001\",\"12\",\"31\",\"21:00\",\"-7.6\",\"\",\"-11.2\",\"\",\"75\",\"\",\"24\",\"\",\"11\",\"\",\"\",\"M\",\"\",\"M\",\"\",\"\",\"-13\",\"\",\"NA\"\r\n\"-75.63\",\"45.00\",\"KEMPTVILLE
         CS\",\"6104027\",\"2001-12-31 22:00\",\"2001\",\"12\",\"31\",\"22:00\",\"-7.6\",\"\",\"-11.2\",\"\",\"75\",\"\",\"26\",\"\",\"7\",\"\",\"\",\"M\",\"\",\"M\",\"\",\"\",\"-11\",\"\",\"NA\"\r\n\"-75.63\",\"45.00\",\"KEMPTVILLE
         CS\",\"6104027\",\"2001-12-31 23:00\",\"2001\",\"12\",\"31\",\"23:00\",\"-8.5\",\"\",\"-11.3\",\"\",\"80\",\"\",\"26\",\"\",\"9\",\"\",\"\",\"M\",\"\",\"M\",\"\",\"\",\"-13\",\"\",\"NA\"\r\n"
-  recorded_at: 2020-07-28 16:22:20 GMT
+  recorded_at: 2020-08-22 18:45:42 GMT
   recorded_with: vcr/0.5.4, webmockr/0.6.2
 - request:
     method: get
@@ -796,7 +796,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Tue, 28 Jul 2020 16:22:23 GMT
+      date: Sat, 22 Aug 2020 18:46:05 GMT
       server: Apache
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -1561,7 +1561,7 @@ http_interactions:
         CS\",\"6104027\",\"2002-01-31 21:00\",\"2002\",\"01\",\"31\",\"21:00\",\"-13.2\",\"\",\"-14.0\",\"\",\"94\",\"\",\"6\",\"\",\"11\",\"\",\"\",\"M\",\"\",\"M\",\"\",\"\",\"-19\",\"\",\"NA\"\r\n\"-75.63\",\"45.00\",\"KEMPTVILLE
         CS\",\"6104027\",\"2002-01-31 22:00\",\"2002\",\"01\",\"31\",\"22:00\",\"-12.9\",\"\",\"-13.5\",\"\",\"95\",\"\",\"6\",\"\",\"17\",\"\",\"\",\"M\",\"\",\"M\",\"\",\"\",\"-21\",\"\",\"NA\"\r\n\"-75.63\",\"45.00\",\"KEMPTVILLE
         CS\",\"6104027\",\"2002-01-31 23:00\",\"2002\",\"01\",\"31\",\"23:00\",\"-12.8\",\"\",\"-13.4\",\"\",\"95\",\"\",\"6\",\"\",\"13\",\"\",\"\",\"M\",\"\",\"M\",\"\",\"\",\"-20\",\"\",\"NA\"\r\n"
-  recorded_at: 2020-07-28 16:22:20 GMT
+  recorded_at: 2020-08-22 18:45:42 GMT
   recorded_with: vcr/0.5.4, webmockr/0.6.2
 - request:
     method: get
@@ -1578,7 +1578,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Tue, 28 Jul 2020 16:22:23 GMT
+      date: Sat, 22 Aug 2020 18:46:05 GMT
       server: Apache
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -1598,5 +1598,5 @@ http_interactions:
         times are specified in Local Standard Time (LST). Add 1 hour to adjust for
         Daylight Saving Time where and when it is observed.\r\n\r\nLegend\r\nE\tEstimated\r\nM\tMissing\r\nNA\tNot
         Available*\r\n[empty]\tIndicates an unobserved value\r\n\r\n*https://climate.weather.gc.ca/FAQ_e.html#Q5"
-  recorded_at: 2020-07-28 16:22:20 GMT
+  recorded_at: 2020-08-22 18:45:42 GMT
   recorded_with: vcr/0.5.4, webmockr/0.6.2

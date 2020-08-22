@@ -45,7 +45,7 @@ devtools::spell_check()
 spelling::update_wordlist()
 
 ## Finalize package version
-v <- "0.3.5"
+v <- "0.4.0"
 
 ## Checks
 devtools::check()     # Local
@@ -59,7 +59,8 @@ devtools::check_win_oldrelease()
 # Build package to check on Rhub and locally
 system("cd ..; R CMD build weathercan")
 
-rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"))
+rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
+                     show_status = FALSE)
 
 rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
                      check_args = "--as-cran --run-donttest",

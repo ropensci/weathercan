@@ -14,7 +14,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Tue, 28 Jul 2020 16:22:53 GMT
+      date: Sat, 22 Aug 2020 18:46:51 GMT
       server: Apache
       strict-transport-security: max-age=63072000; preload
       vary: Accept-Encoding
@@ -35,7 +35,7 @@ http_interactions:
         <a href=\"/climate/observations/normals/\">Parent Directory</a>                                    -
         \  \n<img src=\"/icons/folder.gif\" alt=\"[DIR]\"> <a href=\"1981-2010/\">1981-2010/</a>
         \                    2019-06-13 06:58    -   \n<hr></pre>\n</body></html>\n"
-  recorded_at: 2020-07-28 16:22:42 GMT
+  recorded_at: 2020-08-22 18:46:12 GMT
   recorded_with: vcr/0.5.4, webmockr/0.6.2
 - request:
     method: get
@@ -52,7 +52,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Tue, 28 Jul 2020 16:22:53 GMT
+      date: Sat, 22 Aug 2020 18:46:51 GMT
       server: Apache
       strict-transport-security: max-age=63072000; preload
       vary: Accept-Encoding
@@ -91,5 +91,5 @@ http_interactions:
         alt=\"[DIR]\"> <a href=\"SK/\">SK/</a>                                2019-06-13
         06:58    -   \n<img src=\"/icons/folder.gif\" alt=\"[DIR]\"> <a href=\"YT/\">YT/</a>
         \                               2019-06-13 06:59    -   \n<hr></pre>\n</body></html>\n"
-  recorded_at: 2020-07-28 16:22:42 GMT
+  recorded_at: 2020-08-22 18:46:12 GMT
   recorded_with: vcr/0.5.4, webmockr/0.6.2

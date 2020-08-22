@@ -14,7 +14,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Tue, 28 Jul 2020 16:21:54 GMT
+      date: Sat, 22 Aug 2020 18:45:26 GMT
       server: Apache
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -755,7 +755,7 @@ http_interactions:
         AUT\",\"1163842\",\"2017-09-30 21:00\",\"2017\",\"09\",\"30\",\"21:00\",\"9.2\",\"\",\"6.6\",\"\",\"84\",\"\",\"24\",\"\",\"7\",\"\",\"\",\"\",\"97.50\",\"\",\"\",\"\",\"\",\"\",\"NA\"\r\n\"-120.44\",\"50.70\",\"KAMLOOPS
         AUT\",\"1163842\",\"2017-09-30 22:00\",\"2017\",\"09\",\"30\",\"22:00\",\"9.5\",\"\",\"5.7\",\"\",\"77\",\"\",\"24\",\"\",\"14\",\"\",\"\",\"\",\"97.52\",\"\",\"\",\"\",\"\",\"\",\"NA\"\r\n\"-120.44\",\"50.70\",\"KAMLOOPS
         AUT\",\"1163842\",\"2017-09-30 23:00\",\"2017\",\"09\",\"30\",\"23:00\",\"9.7\",\"\",\"5.3\",\"\",\"74\",\"\",\"23\",\"\",\"11\",\"\",\"\",\"\",\"97.54\",\"\",\"\",\"\",\"\",\"\",\"NA\"\r\n"
-  recorded_at: 2020-07-28 16:21:51 GMT
+  recorded_at: 2020-08-22 18:45:05 GMT
   recorded_with: vcr/0.5.4, webmockr/0.6.2
 - request:
     method: get
@@ -772,7 +772,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Tue, 28 Jul 2020 16:21:54 GMT
+      date: Sat, 22 Aug 2020 18:45:27 GMT
       server: Apache
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -792,7 +792,7 @@ http_interactions:
         times are specified in Local Standard Time (LST). Add 1 hour to adjust for
         Daylight Saving Time where and when it is observed.\r\n\r\nLegend\r\nE\tEstimated\r\nM\tMissing\r\nNA\tNot
         Available*\r\n[empty]\tIndicates an unobserved value\r\n\r\n*https://climate.weather.gc.ca/FAQ_e.html#Q5"
-  recorded_at: 2020-07-28 16:21:51 GMT
+  recorded_at: 2020-08-22 18:45:05 GMT
   recorded_with: vcr/0.5.4, webmockr/0.6.2
 - request:
     method: get
@@ -809,7 +809,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Tue, 28 Jul 2020 16:21:55 GMT
+      date: Sat, 22 Aug 2020 18:45:28 GMT
       server: Apache
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -1550,7 +1550,7 @@ http_interactions:
         RCS\",\"5010490\",\"2017-09-30 21:00\",\"2017\",\"09\",\"30\",\"21:00\",\"15.5\",\"\",\"11.0\",\"\",\"75\",\"\",\"14\",\"\",\"16\",\"\",\"\",\"\",\"95.74\",\"\",\"\",\"\",\"\",\"\",\"NA\"\r\n\"-99.95\",\"49.90\",\"BRANDON
         RCS\",\"5010490\",\"2017-09-30 22:00\",\"2017\",\"09\",\"30\",\"22:00\",\"15.3\",\"\",\"11.2\",\"\",\"77\",\"\",\"15\",\"\",\"24\",\"\",\"\",\"\",\"95.65\",\"\",\"\",\"\",\"\",\"\",\"NA\"\r\n\"-99.95\",\"49.90\",\"BRANDON
         RCS\",\"5010490\",\"2017-09-30 23:00\",\"2017\",\"09\",\"30\",\"23:00\",\"15.7\",\"\",\"11.9\",\"\",\"78\",\"\",\"23\",\"\",\"24\",\"\",\"\",\"\",\"95.76\",\"\",\"\",\"\",\"\",\"\",\"NA\"\r\n"
-  recorded_at: 2020-07-28 16:21:51 GMT
+  recorded_at: 2020-08-22 18:45:05 GMT
   recorded_with: vcr/0.5.4, webmockr/0.6.2
 - request:
     method: get
@@ -1567,7 +1567,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Tue, 28 Jul 2020 16:21:55 GMT
+      date: Sat, 22 Aug 2020 18:45:28 GMT
       server: Apache
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -1587,5 +1587,5 @@ http_interactions:
         times are specified in Local Standard Time (LST). Add 1 hour to adjust for
         Daylight Saving Time where and when it is observed.\r\n\r\nLegend\r\nE\tEstimated\r\nM\tMissing\r\nNA\tNot
         Available*\r\n[empty]\tIndicates an unobserved value\r\n\r\n*https://climate.weather.gc.ca/FAQ_e.html#Q5"
-  recorded_at: 2020-07-28 16:21:51 GMT
+  recorded_at: 2020-08-22 18:45:05 GMT
   recorded_with: vcr/0.5.4, webmockr/0.6.2

@@ -14,7 +14,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Tue, 28 Jul 2020 16:22:20 GMT
+      date: Sat, 22 Aug 2020 18:46:02 GMT
       server: Apache
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -779,7 +779,7 @@ http_interactions:
         AUT\",\"1163842\",\"2006-01-31 21:00\",\"2006\",\"01\",\"31\",\"21:00\"\r\n\"-120.44\",\"50.70\",\"KAMLOOPS
         AUT\",\"1163842\",\"2006-01-31 22:00\",\"2006\",\"01\",\"31\",\"22:00\"\r\n\"-120.44\",\"50.70\",\"KAMLOOPS
         AUT\",\"1163842\",\"2006-01-31 23:00\",\"2006\",\"01\",\"31\",\"23:00\"\r\n"
-  recorded_at: 2020-07-28 16:22:18 GMT
+  recorded_at: 2020-08-22 18:45:40 GMT
   recorded_with: vcr/0.5.4, webmockr/0.6.2
 - request:
     method: get
@@ -796,7 +796,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Tue, 28 Jul 2020 16:22:21 GMT
+      date: Sat, 22 Aug 2020 18:46:02 GMT
       server: Apache
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -1489,7 +1489,7 @@ http_interactions:
         AUT\",\"1163842\",\"2006-02-28 21:00\",\"2006\",\"02\",\"28\",\"21:00\"\r\n\"-120.44\",\"50.70\",\"KAMLOOPS
         AUT\",\"1163842\",\"2006-02-28 22:00\",\"2006\",\"02\",\"28\",\"22:00\"\r\n\"-120.44\",\"50.70\",\"KAMLOOPS
         AUT\",\"1163842\",\"2006-02-28 23:00\",\"2006\",\"02\",\"28\",\"23:00\"\r\n"
-  recorded_at: 2020-07-28 16:22:18 GMT
+  recorded_at: 2020-08-22 18:45:40 GMT
   recorded_with: vcr/0.5.4, webmockr/0.6.2
 - request:
     method: get
@@ -1506,7 +1506,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Tue, 28 Jul 2020 16:22:21 GMT
+      date: Sat, 22 Aug 2020 18:46:02 GMT
       server: Apache
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -2271,7 +2271,7 @@ http_interactions:
         AUT\",\"1163842\",\"2006-03-31 21:00\",\"2006\",\"03\",\"31\",\"21:00\"\r\n\"-120.44\",\"50.70\",\"KAMLOOPS
         AUT\",\"1163842\",\"2006-03-31 22:00\",\"2006\",\"03\",\"31\",\"22:00\"\r\n\"-120.44\",\"50.70\",\"KAMLOOPS
         AUT\",\"1163842\",\"2006-03-31 23:00\",\"2006\",\"03\",\"31\",\"23:00\"\r\n"
-  recorded_at: 2020-07-28 16:22:18 GMT
+  recorded_at: 2020-08-22 18:45:40 GMT
   recorded_with: vcr/0.5.4, webmockr/0.6.2
 - request:
     method: get
@@ -2288,7 +2288,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Tue, 28 Jul 2020 16:22:21 GMT
+      date: Sat, 22 Aug 2020 18:46:03 GMT
       server: Apache
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -3029,5 +3029,5 @@ http_interactions:
         AUT\",\"1163842\",\"2006-04-30 21:00\",\"2006\",\"04\",\"30\",\"21:00\",\"10.2\",\"\",\"-0.7\",\"\",\"47\",\"\",\"5\",\"\",\"9\",\"\",\"\",\"\",\"97.70\",\"\",\"\",\"\",\"\",\"\",\"NA\"\r\n\"-120.44\",\"50.70\",\"KAMLOOPS
         AUT\",\"1163842\",\"2006-04-30 22:00\",\"2006\",\"04\",\"30\",\"22:00\",\"9.7\",\"\",\"-0.9\",\"\",\"48\",\"\",\"8\",\"\",\"17\",\"\",\"\",\"\",\"97.70\",\"\",\"\",\"\",\"\",\"\",\"NA\"\r\n\"-120.44\",\"50.70\",\"KAMLOOPS
         AUT\",\"1163842\",\"2006-04-30 23:00\",\"2006\",\"04\",\"30\",\"23:00\",\"8.0\",\"\",\"0.5\",\"\",\"59\",\"\",\"12\",\"\",\"4\",\"\",\"\",\"\",\"97.70\",\"\",\"\",\"\",\"\",\"\",\"NA\"\r\n"
-  recorded_at: 2020-07-28 16:22:18 GMT
+  recorded_at: 2020-08-22 18:45:40 GMT
   recorded_with: vcr/0.5.4, webmockr/0.6.2

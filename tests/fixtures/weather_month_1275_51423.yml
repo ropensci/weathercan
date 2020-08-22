@@ -14,7 +14,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Tue, 28 Jul 2020 16:22:34 GMT
+      date: Sat, 22 Aug 2020 18:46:19 GMT
       server: Apache
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -787,7 +787,7 @@ http_interactions:
         A\",\"1163780\",\"2013-04\",\"2013\",\"04\",\"15.5\",\"\",\"3.4\",\"\",\"9.5\",\"\",\"23.8\",\"\",\"-2.7\",\"\",\"21.6\",\"\",\"0.2\",\"\",\"21.8\",\"\",\"0\",\"\",\"22\",\"\",\"67\",\"\"\r\n\"-120.44\",\"50.70\",\"KAMLOOPS
         A\",\"1163780\",\"2013-05\",\"2013\",\"05\",\"22.5\",\"\",\"8.3\",\"\",\"15.4\",\"\",\"32.3\",\"\",\"-1.9\",\"\",\"49.4\",\"\",\"0.0\",\"\",\"49.4\",\"\",\"0\",\"\",\"20\",\"\",\"67\",\"\"\r\n\"-120.44\",\"50.70\",\"KAMLOOPS
         A\",\"1163780\",\"2013-06\",\"2013\",\"06\",\"24.6\",\"I\",\"10.5\",\"I\",\"17.5\",\"I\",\"30.5\",\"I\",\"7.2\",\"I\",\"11.0\",\"I\",\"0.0\",\"I\",\"11.0\",\"I\",\"\",\"\",\"3\",\"I\",\"52\",\"I\"\r\n"
-  recorded_at: 2020-07-28 16:22:30 GMT
+  recorded_at: 2020-08-22 18:45:55 GMT
   recorded_with: vcr/0.5.4, webmockr/0.6.2
 - request:
     method: get
@@ -804,7 +804,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Tue, 28 Jul 2020 16:22:34 GMT
+      date: Sat, 22 Aug 2020 18:46:20 GMT
       server: Apache
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -824,5 +824,5 @@ http_interactions:
         than one occurrence and estimated\r\nE\tEstimated\r\nM\tMissing\r\nS\tMore
         than one occurrence\r\nT\tTrace\r\n[empty]\tIndicates an unobserved value\r\n^\tThe
         value displayed is based on incomplete data"
-  recorded_at: 2020-07-28 16:22:30 GMT
+  recorded_at: 2020-08-22 18:45:55 GMT
   recorded_with: vcr/0.5.4, webmockr/0.6.2

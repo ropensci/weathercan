@@ -14,7 +14,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Tue, 28 Jul 2020 16:22:24 GMT
+      date: Sat, 22 Aug 2020 18:46:07 GMT
       server: Apache
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -403,7 +403,7 @@ http_interactions:
         SNOW\",\"6115526\",\"2016-12-29\",\"2016\",\"12\",\"29\",\"†\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.0\",\"\",\"7.0\",\"\",\"7.0\",\"\",\"51\",\"\",\"\",\"\",\"\",\"\"\r\n\"-79.05\",\"44.98\",\"MUSKOKA
         SNOW\",\"6115526\",\"2016-12-30\",\"2016\",\"12\",\"30\",\"†\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.0\",\"\",\"4.0\",\"\",\"2.4\",\"\",\"55\",\"\",\"\",\"\",\"\",\"\"\r\n\"-79.05\",\"44.98\",\"MUSKOKA
         SNOW\",\"6115526\",\"2016-12-31\",\"2016\",\"12\",\"31\",\"†\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.0\",\"\",\"23.0\",\"\",\"19.4\",\"\",\"56\",\"\",\"\",\"\",\"\",\"\"\r\n"
-  recorded_at: 2020-07-28 16:22:21 GMT
+  recorded_at: 2020-08-22 18:45:43 GMT
   recorded_with: vcr/0.5.4, webmockr/0.6.2
 - request:
     method: get
@@ -420,7 +420,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Tue, 28 Jul 2020 16:22:25 GMT
+      date: Sat, 22 Aug 2020 18:46:07 GMT
       server: Apache
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -808,7 +808,7 @@ http_interactions:
         SNOW\",\"6115526\",\"2017-12-29\",\"2017\",\"12\",\"29\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\"\r\n\"-79.05\",\"44.98\",\"MUSKOKA
         SNOW\",\"6115526\",\"2017-12-30\",\"2017\",\"12\",\"30\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\"\r\n\"-79.05\",\"44.98\",\"MUSKOKA
         SNOW\",\"6115526\",\"2017-12-31\",\"2017\",\"12\",\"31\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\"\r\n"
-  recorded_at: 2020-07-28 16:22:21 GMT
+  recorded_at: 2020-08-22 18:45:43 GMT
   recorded_with: vcr/0.5.4, webmockr/0.6.2
 - request:
     method: get
@@ -825,7 +825,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Tue, 28 Jul 2020 16:22:25 GMT
+      date: Sat, 22 Aug 2020 18:46:07 GMT
       server: Apache
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -848,5 +848,5 @@ http_interactions:
         but known to be < 0\r\n[empty]\tIndicates an unobserved value\r\n^\tThe value
         displayed is based on incomplete data\r\n†\tData that is not subject to review
         by the National Climate Archives"
-  recorded_at: 2020-07-28 16:22:21 GMT
+  recorded_at: 2020-08-22 18:45:43 GMT
   recorded_with: vcr/0.5.4, webmockr/0.6.2
