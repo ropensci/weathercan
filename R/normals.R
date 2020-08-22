@@ -191,8 +191,8 @@ data_extract <- function(n, climate_id) {
   # Remove frost dates
   n <- frost_find(n, type = "remove")
 
-  # Read normals
-  n <- utils::read.csv(text = n, check.names = FALSE, stringsAsFactors = FALSE)
+  # Read normals (expect warnings due to header rows, etc.)
+  suppressWarnings(n <- readr::read_csv(n, col_types = readr::cols()))
 
   if(nrow(n) == 0) return(dplyr::tibble())
 
@@ -330,9 +330,9 @@ frost_extract <- function(f, climate_id) {
   if(length(frost_free) > 0) {
     if(length(frost_probs) == 0) last <- length(f) else last <- frost_probs - 1
 
-    f1 <- utils::read.csv(text = f[frost_free:last],
-                          check.names = FALSE, header = FALSE,
-                          col.names = c("variable", "value", "frost_code")) %>%
+    f1 <- readr::read_csv(f[frost_free:last],
+                          col_names = c("variable", "value", "frost_code"),
+                          col_types = readr::cols()) %>%
       tidyr::spread(key = "variable", value = "value")
 
     n <- tibble_to_list(f_names[f_names$variable %in% names(f1),
@@ -347,8 +347,9 @@ frost_extract <- function(f, climate_id) {
 
   # Frost free probabilities
   if(length(frost_probs) > 0) {
-    f2 <- utils::read.csv(text = f[frost_probs:length(f)],
-                          header = FALSE, stringsAsFactors = FALSE)
+    f2 <- readr::read_csv(f[frost_probs:length(f)],
+                          col_names = FALSE, col_types = readr::cols()) %>%
+      as.data.frame()
     f2 <- data.frame(prob = rep(c("10%", "25%", "33%", "50%",
                                   "66%", "75%", "90%"), 3),
                      value = c(t(f2[2, 2:8]), t(f2[4, 2:8]), t(f2[6, 2:8])),

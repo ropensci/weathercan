@@ -24,8 +24,8 @@ test_that("weather (month) returns a data frame", {
   expect_equal(w$station_id[1], 5401)
   expect_equal(w$station_name[1], "MAGOG")
   expect_equal(w$climate_id[1], "7024440")
-  expect_equal(w$WMO_id[1], "")
-  expect_equal(w$TC_id[1], "")
+  expect_true(is.na(w$WMO_id[1]))
+  expect_true(is.na(w$TC_id[1]))
   expect_equal(w$prov[1], "QC")
 
 })

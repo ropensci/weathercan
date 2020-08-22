@@ -4,7 +4,8 @@
 \name{pg}
 \alias{pg}
 \title{Hourly weather data for Prince George}
-\format{An example dataset of hourly weather data for Prince George:
+\format{
+An example dataset of hourly weather data for Prince George:
 \describe{
 \item{station_name}{Station name}
 \item{station_id}{Environment Canada's station ID number. Required for
@@ -41,7 +42,8 @@ downloading station data.}
 \item{climate_id}{Climate identifier}
 \item{WMO_id}{World Meteorological Organization Identifier}
 \item{TC_id}{Transport Canada Identifier}
-}}
+}
+}
 \source{
 \url{http://climate.weather.gc.ca/index_e.html}
 }

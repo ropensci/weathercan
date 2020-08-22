@@ -124,3 +124,4 @@ test_that("normals_dl() downloads normals/frost dates as tibble", {
                   dplyr::pull(climate_id) %>%
                   unique(), 3)
 })
+

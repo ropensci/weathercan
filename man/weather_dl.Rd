@@ -5,11 +5,23 @@
 \alias{weather}
 \title{Download weather data from Environment and Climate Change Canada}
 \usage{
-weather_dl(station_ids, start = NULL, end = NULL, interval = "hour",
-  trim = TRUE, format = TRUE, string_as = NA, time_disp = "none",
-  tz_disp = NULL, stn = weathercan::stations, url = NULL,
-  encoding = "UTF-8", list_col = FALSE, verbose = FALSE,
-  quiet = FALSE)
+weather_dl(
+  station_ids,
+  start = NULL,
+  end = NULL,
+  interval = "hour",
+  trim = TRUE,
+  format = TRUE,
+  string_as = NA,
+  time_disp = "none",
+  tz_disp = NULL,
+  stn = weathercan::stations,
+  url = NULL,
+  encoding = "UTF-8",
+  list_col = FALSE,
+  verbose = FALSE,
+  quiet = FALSE
+)
 }
 \arguments{
 \item{station_ids}{Numeric/Character. A vector containing the ID(s) of the

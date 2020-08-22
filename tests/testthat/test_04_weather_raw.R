@@ -18,7 +18,7 @@ test_that("weather_html/raw (hour) download a data frame", {
   expect_is(wd, "data.frame")
   expect_length(wd, 28)
   expect_equal(nrow(wd), 744)
-  expect_is(wd[, "Date/Time"], "character")
+  expect_is(dplyr::pull(wd, "Date/Time"), "character")
   expect_lt(length(data.frame(wd)[is.na(data.frame(wd))]),
             length(data.frame(wd)[!is.na(data.frame(wd))]))
   #expect_true(stringi::stri_escape_unicode(wd[, "Data Quality"][1]) %in%
@@ -39,8 +39,9 @@ test_that("weather_html/raw (day) download a data frame", {
   expect_is(wd, "data.frame")
   expect_length(wd, 31)
   expect_equal(nrow(wd), 365)
-  expect_is(wd[, "Date/Time"], "character")
-  expect_lt(length(wd[is.na(wd)]), length(wd[!is.na(wd)]))
+  expect_is(dplyr::pull(wd, "Date/Time"), "character")
+  expect_lt(length(data.frame(wd)[is.na(data.frame(wd))]),
+            length(data.frame(wd)[!is.na(data.frame(wd))]))
   # expect_true(stringi::stri_escape_unicode(wd[, "Data Quality"][1]) %in%
   #              c("\\u2021"))
 })
@@ -59,7 +60,7 @@ test_that("weather_html/raw (month) download a data frame", {
   expect_is(wd, "data.frame")
   expect_length(wd, 29)
   expect_equal(nrow(wd), 842)
-  expect_is(wd[, "Date/Time"], "character")
+  expect_is(dplyr::pull(wd, "Date/Time"), "character")
   expect_lt(length(data.frame(wd)[is.na(data.frame(wd))]),
             length(data.frame(wd)[!is.na(data.frame(wd))]))
 
@@ -79,7 +80,7 @@ test_that("meta_html/raw (hour) download meta data", {
   expect_length(meta, 2)
   expect_equal(nrow(meta), 8)
   m <- paste0("(", paste0(m_names, collapse = ")|("), ")")
-  expect_true(all(stringr::str_detect(meta$V1, m)))
+  expect_true(all(stringr::str_detect(meta$X1, m)))
   expect_lt(length(data.frame(meta)[is.na(data.frame(meta))]),
             length(data.frame(meta)[!is.na(data.frame(meta))]))
 
@@ -96,7 +97,7 @@ test_that("meta_html/raw (day) download meta data", {
   expect_length(meta, 2)
   expect_equal(nrow(meta), 8)
   m <- paste0("(", paste0(m_names, collapse = ")|("), ")")
-  expect_true(all(stringr::str_detect(meta$V1, m)))
+  expect_true(all(stringr::str_detect(meta$X1, m)))
   expect_lt(length(data.frame(meta)[is.na(data.frame(meta))]),
             length(data.frame(meta)[!is.na(data.frame(meta))]))
 
@@ -113,7 +114,7 @@ test_that("meta_html/raw (month) download meta data", {
   expect_length(meta, 2)
   expect_equal(nrow(meta), 8)
   m <- paste0("(", paste0(m_names, collapse = ")|("), ")")
-  expect_true(all(stringr::str_detect(meta$V1, m)))
+  expect_true(all(stringr::str_detect(meta$X1, m)))
   expect_lt(length(data.frame(meta)[is.na(data.frame(meta))]),
             length(data.frame(meta)[!is.na(data.frame(meta))]))
 

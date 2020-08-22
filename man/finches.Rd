@@ -4,7 +4,8 @@
 \name{finches}
 \alias{finches}
 \title{RFID Data on finch visits to feeders}
-\format{An example dataset of finch RFID data for interpolation:
+\format{
+An example dataset of finch RFID data for interpolation:
 \describe{
 \item{bird_id}{Bird ID number}
 \item{time}{Time}
@@ -12,7 +13,8 @@
 \item{species}{Species}
 \item{lat}{Latitude of station location in degree decimal format}
 \item{lon}{Longitude of station location in degree decimal format}
-}}
+}
+}
 \usage{
 finches
 }

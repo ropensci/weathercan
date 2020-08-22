@@ -47,7 +47,7 @@ test_that("weather_dl() day format = FALSE", {
 
   expect_equal(w$`Date/Time`[1], "2014-01-01")
   #expect_equal(w$`Data Quality`[1], "\u2021")
-  expect_equal(w$`Data Quality`[1], "")
+  expect_true(is.na(w$`Data Quality`[1]))
 
 })
 
@@ -73,8 +73,8 @@ test_that("weather_dl() month format = FALSE", {
   expect_equal(w$prov[1], "QC")
   expect_equal(w$`Date/Time`[1], "1948-01")
   expect_equal(w$climate_id[1], "7024440")
-  expect_equal(w$WMO_id[1], "")
-  expect_equal(w$TC_id[1], "")
+  expect_true(is.na(w$WMO_id[1]))
+  expect_true(is.na(w$TC_id[1]))
 })
 
 

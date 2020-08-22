@@ -75,7 +75,7 @@ stations_dl <- function(url = NULL, normals_years = "1981-2010",
     stop("Cannot reach ECCC ftp site, please try again later", call. = FALSE)
   }
 
-  headings <- try(readLines(getOption("weathercan.urls.stations"), n = 5),
+  headings <- try(readr::read_lines(getOption("weathercan.urls.stations"), n_max = 5),
                   silent = TRUE)
   if("try-error" %in% class(headings)) {
     stop("`options(\"weathercan.urls.stations\")` must point to a ",
@@ -95,24 +95,23 @@ stations_dl <- function(url = NULL, normals_years = "1981-2010",
 
   if(verbose) message("Downloading stations data frame")
 
-  s <- utils::read.csv(file = getOption("weathercan.urls.stations"),
-                       skip = skip,
-                       strip.white = TRUE) %>%
+  s <- readr::read_csv(file = getOption("weathercan.urls.stations"),
+                       skip = skip, col_types = readr::cols()) %>%
     dplyr::select(prov = "Province",
                   station_name = "Name",
-                  station_id = "Station.ID",
-                  climate_id = "Climate.ID",
-                  hour_start = dplyr::matches("HLY.First"),
-                  hour_end = dplyr::matches("HLY.Last"),
-                  day_start = dplyr::matches("DLY.First"),
-                  day_end = dplyr::matches("DLY.Last"),
-                  month_start = dplyr::matches("MLY.First"),
-                  month_end = dplyr::matches("MLY.Last"),
-                  WMO_id = "WMO.ID",
-                  TC_id = "TC.ID",
-                  lat = dplyr::matches("Latitude..Decimal"),
-                  lon = dplyr::matches("Longitude..Decimal"),
-                  elev = dplyr::starts_with("Elevation..m."))
+                  station_id = `Station ID`,
+                  climate_id = `Climate ID`,
+                  hour_start = dplyr::matches("HLY First"),
+                  hour_end = dplyr::matches("HLY Last"),
+                  day_start = dplyr::matches("DLY First"),
+                  day_end = dplyr::matches("DLY Last"),
+                  month_start = dplyr::matches("MLY First"),
+                  month_end = dplyr::matches("MLY Last"),
+                  WMO_id = "WMO ID",
+                  TC_id = "TC ID",
+                  lat = dplyr::matches("Latitude \\(Decimal"),
+                  lon = dplyr::matches("Longitude \\(Decimal"),
+                  elev = dplyr::starts_with("Elevation"))
 
   # Calculate Timezones
   station_tz <- dplyr::select(s, "prov", "station_id", "lat", "lon") %>%
