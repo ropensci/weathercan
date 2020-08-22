@@ -25,22 +25,18 @@ location
 \item \code{\link[=stations_dl]{stations_dl()}} re-download/update stations data
 }
 \item Download \strong{weather} data
-}
 \itemize{
 \item \code{\link[=weather_dl]{weather_dl()}}
 }
-\enumerate{
 \item Merge \strong{weather} data into other data sets through interpolation
 over time
-}
 \itemize{
 \item \code{\link[=weather_interp]{weather_interp()}}
 }
-\enumerate{
 \item Download \strong{climate normals} data
-}
 \itemize{
 \item \code{\link[=normals_dl]{normals_dl()}}
+}
 }
 
 We also include several practice data sets:

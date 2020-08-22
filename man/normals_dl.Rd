@@ -4,14 +4,8 @@
 \alias{normals_dl}
 \title{Download climate normals from Environment and Climate Change Canada}
 \usage{
-normals_dl(
-  climate_ids,
-  normals_years = "1981-2010",
-  format = TRUE,
-  stn = weathercan::stations,
-  verbose = FALSE,
-  quiet = FALSE
-)
+normals_dl(climate_ids, normals_years = "1981-2010", format = TRUE,
+  stn = weathercan::stations, verbose = FALSE, quiet = FALSE)
 }
 \arguments{
 \item{climate_ids}{Character. A vector containing the Climate ID(s) of the
@@ -49,13 +43,13 @@ Climate normals from ECCC include two types of data, averages by
 month for a variety of measurements as well as data relating to the
 frost-free period. Because these two data sources are quite different, we
 return them as nested data so the user can extract them as they wish. See
-examples for how to use the \code{unnest()} function from the \href{https://tidyr.tidyverse.org/}{\code{tidyr}}
+examples for how to use the \code{unnest()} function from the \href{https://tidyr.tidyverse.org/}{tidyr}
 package to extract the two different datasets.
 
 The data also returns a column called \code{meets_wmo} this reflects whether or
 not the climate normals for this station met the WMO standards for
 temperature and precipitation (i.e. both have code >= A). Each measurement
-column has a corresponding \verb{_code} column which reflects the data quality
+column has a corresponding \code{_code} column which reflects the data quality
 of that measurement (see the \href{http://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf}{ECCC calculations document}
 for more details)
 
