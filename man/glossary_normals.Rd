@@ -4,13 +4,15 @@
 \name{glossary_normals}
 \alias{glossary_normals}
 \title{Glossary of terms for Climate Normals}
-\format{A data frame with 18 rows and 3 variables:
+\format{
+A data frame with 18 rows and 3 variables:
 \describe{
 \item{ECCC_name}{Original measurement type from ECCC}
 \item{weathercan_name}{R-compatible name given when downloaded with the
 \code{normals_dl()} function}
 \item{description}{Description of the measurement type from ECCC}
-}}
+}
+}
 \usage{
 glossary_normals
 }

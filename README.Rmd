@@ -23,11 +23,11 @@ options(width = 100)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/weathercan)](https://cran.r-project.org/package=weathercan) [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/grand-total/weathercan)](https://CRAN.R-project.org/package=weathercan)
 
 
-This package makes it easier to search for and download multiple months/years of historical weather data from [Environment and Climate Change Canada (ECCC) website](http://climate.weather.gc.ca/historical_data/search_historic_data_e.html).
+This package makes it easier to search for and download multiple months/years of historical weather data from [Environment and Climate Change Canada (ECCC) website](https://climate.weather.gc.ca/historical_data/search_historic_data_e.html).
 
 Bear in mind that these downloads can be fairly large and performing multiple downloads may use up ECCC's bandwidth unnecessarily. Try to stick to what you need.
 
-For more details and tutorials checkout the [weathercan website](http://docs.ropensci.org/weathercan)
+For more details and tutorials checkout the [weathercan website](https://docs.ropensci.org/weathercan)
 
 ## Installation
 

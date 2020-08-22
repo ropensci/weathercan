@@ -4,10 +4,18 @@
 \alias{stations_search}
 \title{Search for stations by name or location}
 \usage{
-stations_search(name = NULL, coords = NULL, dist = 10,
-  interval = c("hour", "day", "month"), normals_only = FALSE,
-  stn = weathercan::stations, starts_latest = NULL,
-  ends_earliest = NULL, verbose = FALSE, quiet = FALSE)
+stations_search(
+  name = NULL,
+  coords = NULL,
+  dist = 10,
+  interval = c("hour", "day", "month"),
+  normals_only = FALSE,
+  stn = weathercan::stations,
+  starts_latest = NULL,
+  ends_earliest = NULL,
+  verbose = FALSE,
+  quiet = FALSE
+)
 }
 \arguments{
 \item{name}{Character. A vector of length 1 or more with text against which

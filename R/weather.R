@@ -3,7 +3,7 @@
 #' Downloads data from Environment and Climate Change Canada (ECCC) for one or
 #' more stations. For details and units, see the glossary vignette
 #' (`vignette("glossary", package = "weathercan")`) or the glossary online
-#' <http://climate.weather.gc.ca/glossary_e.html>.
+#' <https://climate.weather.gc.ca/glossary_e.html>.
 #'
 #' @details Data can be returned 'raw' (format = FALSE) or can be formatted.
 #'   Formatting transforms dates/times to date/time class, renames columns, and

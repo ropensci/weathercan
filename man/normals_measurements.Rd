@@ -4,13 +4,15 @@
 \name{normals_measurements}
 \alias{normals_measurements}
 \title{List of climate normals measurements for each station}
-\format{A data frame with 113,325 rows and 4 variables:
+\format{
+A data frame with 113,325 rows and 4 variables:
 \describe{
 \item{prov}{Province}
 \item{station_name}{Station Name}
 \item{climate_id}{Climate ID}
 \item{measurement}{Climate normals measurement available for this station}
-}}
+}
+}
 \usage{
 normals_measurements
 }

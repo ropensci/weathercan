@@ -5,8 +5,13 @@
 \alias{stations_all}
 \title{Get available stations}
 \usage{
-stations_dl(url = NULL, normals_years = "1981-2010", skip = NULL,
-  verbose = FALSE, quiet = FALSE)
+stations_dl(
+  url = NULL,
+  normals_years = "1981-2010",
+  skip = NULL,
+  verbose = FALSE,
+  quiet = FALSE
+)
 }
 \arguments{
 \item{url}{DEPRECATED. To set a different url use \code{options()} (see details).}

@@ -4,7 +4,8 @@
 \name{glossary}
 \alias{glossary}
 \title{Glossary of units and terms}
-\format{A data frame with 77 rows and 5 variables:
+\format{
+A data frame with 77 rows and 5 variables:
 \describe{
 \item{interval}{Data interval type, 'hour', 'day', or 'month'.}
 \item{ECCC_name}{Original column name when downloaded directly from ECCC}
@@ -14,7 +15,8 @@
 \item{units}{Units of the measurement.}
 \item{ECCC_ref}{Link to the glossary or reference page on the ECCC
 website.}
-}}
+}
+}
 \usage{
 glossary
 }

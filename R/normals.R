@@ -29,7 +29,7 @@
 #'   temperature and precipitation (i.e. both have code >= A). Each measurement
 #'   column has a corresponding `_code` column which reflects the data quality
 #'   of that measurement (see the [ECCC calculations
-#'   document](http://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf)
+#'   document](https://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf)
 #'   for more details)
 #'
 #'   Climate normals are downloaded from the url stored in option

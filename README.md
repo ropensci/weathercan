@@ -18,14 +18,14 @@ Downloads](http://cranlogs.r-pkg.org/badges/grand-total/weathercan)](https://CRA
 This package makes it easier to search for and download multiple
 months/years of historical weather data from [Environment and Climate
 Change Canada (ECCC)
-website](http://climate.weather.gc.ca/historical_data/search_historic_data_e.html).
+website](https://climate.weather.gc.ca/historical_data/search_historic_data_e.html).
 
 Bear in mind that these downloads can be fairly large and performing
 multiple downloads may use up ECCC’s bandwidth unnecessarily. Try to
 stick to what you need.
 
 For more details and tutorials checkout the [weathercan
-website](http://docs.ropensci.org/weathercan)
+website](https://docs.ropensci.org/weathercan)
 
 ## Installation
 
@@ -109,7 +109,7 @@ stations_search("Kamloops", interval = "hour")
 
     ## # A tibble: 3 x 14
     ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval start   end
-    ##   <chr> <chr>             <int> <fct>       <int> <fct> <dbl> <dbl> <dbl> <chr> <chr>    <int> <int>
+    ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr> <chr>    <dbl> <dbl>
     ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/… hour      1953  2013
     ## 2 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/… hour      2013  2020
     ## 3 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/… hour      2006  2020
@@ -125,7 +125,7 @@ stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour"
 
     ## # A tibble: 3 x 15
     ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval start   end
-    ##   <chr> <chr>             <int> <fct>       <int> <fct> <dbl> <dbl> <dbl> <chr> <chr>    <int> <int>
+    ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr> <chr>    <dbl> <dbl>
     ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/… hour      1953  2013
     ## 2 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/… hour      2006  2020
     ## 3 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/… hour      2013  2020
@@ -184,7 +184,7 @@ stations_search("Winnipeg", normals_only = TRUE)
 
     ## # A tibble: 3 x 11
     ##   prov  station_name            station_id climate_id WMO_id TC_id   lat   lon  elev tz      normals
-    ##   <chr> <chr>                        <int> <fct>       <int> <fct> <dbl> <dbl> <dbl> <chr>   <lgl>  
+    ##   <chr> <chr>                        <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>   <lgl>  
     ## 1 MB    WINNIPEG A CS                27174 502S001     71849 XWG    49.9 -97.2  239. Etc/GM… TRUE   
     ## 2 MB    WINNIPEG RICHARDSON IN…       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/GM… TRUE   
     ## 3 MB    WINNIPEG THE FORKS           28051 5023262     71579 XWN    49.9 -97.1  230  Etc/GM… TRUE
@@ -269,7 +269,7 @@ unnest(n, frost)
     ## 5 MB    WINNIPEG RI… 5023222    TRUE      <tibbl… A                       265              143
     ## 6 MB    WINNIPEG RI… 5023222    TRUE      <tibbl… A                       265              143
     ## 7 MB    WINNIPEG RI… 5023222    TRUE      <tibbl… A                       265              143
-    ## # … with 5 more variables: length_frost_free <dbl>, prob <chr>,
+    ## # … with 5 more variables: length_frost_free <dbl>, prob <fct>,
     ## #   prob_first_fall_temp_below_0_on_date <dbl>, prob_length_frost_free <dbl>,
     ## #   prob_last_spring_temp_below_0_on_date <dbl>
 
