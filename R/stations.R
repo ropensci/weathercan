@@ -78,8 +78,9 @@ stations_dl <- function(url = NULL, normals_years = "1981-2010",
   headings <- try(readr::read_lines(getOption("weathercan.urls.stations"), n_max = 5),
                   silent = TRUE)
   if("try-error" %in% class(headings)) {
-    stop("`options(\"weathercan.urls.stations\")` must point to a ",
-         "csv file either local or online", call. = FALSE)
+    stop(t[[1]])
+    #stop("`options(\"weathercan.urls.stations\")` must point to a ",
+    #     "csv file either local or online", call. = FALSE)
   }
 
   if(is.null(skip)) {
@@ -99,8 +100,8 @@ stations_dl <- function(url = NULL, normals_years = "1981-2010",
                        skip = skip, col_types = readr::cols()) %>%
     dplyr::select(prov = "Province",
                   station_name = "Name",
-                  station_id = `Station ID`,
-                  climate_id = `Climate ID`,
+                  station_id = "Station ID",
+                  climate_id = "Climate ID",
                   hour_start = dplyr::matches("HLY First"),
                   hour_end = dplyr::matches("HLY Last"),
                   day_start = dplyr::matches("DLY First"),
