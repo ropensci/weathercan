@@ -78,9 +78,8 @@ stations_dl <- function(url = NULL, normals_years = "1981-2010",
   headings <- try(readr::read_lines(getOption("weathercan.urls.stations"), n_max = 5),
                   silent = TRUE)
   if("try-error" %in% class(headings)) {
-    stop(as.character(attr(t, "condition")))
-    #stop("`options(\"weathercan.urls.stations\")` must point to a ",
-    #     "csv file either local or online", call. = FALSE)
+    message("Can't access ", getOption("weathercan.urls.stations"), " right now.")
+    return()
   }
 
   if(is.null(skip)) {
