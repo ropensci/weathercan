@@ -39,7 +39,6 @@ Roxygen: list(markdown = TRUE)
 Suggests:
     devtools,
     ggplot2,
-    ggmap,
     htmltools,
     knitr,
     leaflet,

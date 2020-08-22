@@ -98,7 +98,6 @@ test_that("stations_search 'coords' returns correct data", {
   expect_lt(max(stn$distance) - min(stn$distance), 10)
 
   ## Check with Kamloops
-  #ggmap::geocode("Kamloops")
   k <- c(50.67452, -120.3273)
   expect_equal(nrow(stn <- stations_search(coords = k)), 26)
   expect_lt(max(stn$distance), 10)
