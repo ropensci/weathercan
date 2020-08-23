@@ -31,11 +31,14 @@
 #' @examples
 #'
 #' \donttest{
-#'  # Update stations data frame
-#'  s <- stations_dl()
+#'   # Update stations data frame
+#'   if(requireNamespace("lutz", quietly = TRUE) &&
+#'     requireNamespace("sf", quietly = TRUE)) {
+#'     s <- stations_dl()
 #'
-#'  # Use new data frame to search for stations
-#'  stations_search("Winnipeg", stn = s)
+#'     # Use new data frame to search for stations
+#'     stations_search("Winnipeg", stn = s)
+#'    }
 #' }
 #'
 #' @aliases stations_all
@@ -198,8 +201,11 @@ stations_dl <- function(url = NULL, normals_years = "1981-2010",
 #' stations_search(name = "Kamloops")
 #' stations_search(name = "Kamloops", interval = "hour")
 #'
-#' stations_search(coords = c(53.915495, -122.739379))
 #' stations_search(name='Ottawa', starts_latest=1950, ends_earliest=2010)
+#'
+#' if(requireNamespace("sp", quietly = TRUE)) {
+#'   stations_search(coords = c(53.915495, -122.739379))
+#' }
 #'
 #' @export
 
