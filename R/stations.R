@@ -224,6 +224,11 @@ stations_search <- function(name = NULL,
     stop("Need a search name OR search coordinate")
   }
 
+  if(is.null(stn)) {
+    stn <- weathercan::stations
+    message("No valid stn data frame supplied, using built-in")
+  }
+
   if(!is.null(coords)) {
     suppressWarnings({
       coords <- try(as.numeric(as.character(coords)), silent = TRUE)
