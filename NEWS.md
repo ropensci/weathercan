@@ -107,7 +107,7 @@ output: html_document
 
 # weathercan 0.2.4 (2018-02-01)
 
-Now part of [ropensci.org](http://ropensci.org)!
+Now part of [ropensci.org](https://ropensci.org)!
 
 ## Changes
 - `sp` moved to suggests, users are now prompted to install sp if they want to search stations by coordinates

@@ -45,13 +45,13 @@ downloading station data.}
 }
 }
 \source{
-\url{http://climate.weather.gc.ca/index_e.html}
+\url{https://climate.weather.gc.ca/index_e.html}
 }
 \usage{
 pg
 }
 \description{
 Downloaded with \code{\link{weather}()}. Terms are more thoroughly defined
-here \url{http://climate.weather.gc.ca/glossary_e.html}
+here \url{https://climate.weather.gc.ca/glossary_e.html}
 }
 \keyword{datasets}

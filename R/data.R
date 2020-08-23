@@ -24,13 +24,13 @@
 #'   \item{end}{Ending year of data record}
 #'   \item{normals}{Whether climate normals are available for that station}
 #' }
-#' @source \url{http://climate.weather.gc.ca/index_e.html}
+#' @source \url{https://climate.weather.gc.ca/index_e.html}
 "stations"
 
 #' Hourly weather data for Kamloops
 #'
 #' Downloaded with \code{\link{weather}()}. Terms are more thoroughly defined
-#' here \url{http://climate.weather.gc.ca/glossary_e.html}
+#' here \url{https://climate.weather.gc.ca/glossary_e.html}
 #'
 #' @format An example dataset of hourly weather data for Kamloops:
 #' \describe{
@@ -70,13 +70,13 @@
 #'   \item{WMO_id}{World Meteorological Organization Identifier}
 #'   \item{TC_id}{Transport Canada Identifier}
 #' }
-#' @source \url{http://climate.weather.gc.ca/index_e.html}
+#' @source \url{https://climate.weather.gc.ca/index_e.html}
 "kamloops"
 
 #' Hourly weather data for Prince George
 #'
 #' Downloaded with \code{\link{weather}()}. Terms are more thoroughly defined
-#' here \url{http://climate.weather.gc.ca/glossary_e.html}
+#' here \url{https://climate.weather.gc.ca/glossary_e.html}
 #'
 #' @format An example dataset of hourly weather data for Prince George:
 #' \describe{
@@ -116,13 +116,13 @@
 #'   \item{WMO_id}{World Meteorological Organization Identifier}
 #'   \item{TC_id}{Transport Canada Identifier}
 #' }
-#' @source \url{http://climate.weather.gc.ca/index_e.html}
+#' @source \url{https://climate.weather.gc.ca/index_e.html}
 "pg"
 
 #' Daily weather data for Kamloops
 #'
 #' Downloaded with \code{\link{weather}()}. Terms are more thoroughly defined
-#' here \url{http://climate.weather.gc.ca/glossary_e.html}
+#' here \url{https://climate.weather.gc.ca/glossary_e.html}
 #'
 #' @format An example dataset of daily weather data for Kamloops:
 #' \describe{
@@ -163,7 +163,7 @@
 #'   \item{WMO_id}{World Meteorological Organization Identifier}
 #'   \item{TC_id}{Transport Canada Identifier}
 #' }
-#' @source \url{http://climate.weather.gc.ca/index_e.html}
+#' @source \url{https://climate.weather.gc.ca/index_e.html}
 "kamloops_day"
 
 #' RFID Data on finch visits to feeders

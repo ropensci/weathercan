@@ -25,7 +25,7 @@ downloading station data.}
 }
 }
 \source{
-\url{http://climate.weather.gc.ca/index_e.html}
+\url{https://climate.weather.gc.ca/index_e.html}
 }
 \usage{
 stations
