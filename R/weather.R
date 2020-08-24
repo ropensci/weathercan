@@ -650,7 +650,6 @@ weather_list_cols <- function(w_all, interval, names) {
 }
 
 meta_raw <- function(html, encoding = "UTF-8", interval, return = "meta") {
-
   split <- httr::content(html, as = "text", encoding = encoding) %>%
     stringr::str_split("\n", simplify = TRUE) %>%
     stringr::str_subset("^\r$", negate = TRUE)
@@ -671,12 +670,14 @@ meta_raw <- function(html, encoding = "UTF-8", interval, return = "meta") {
            "https://github.com/ropensci/weathercan/issues", call. = FALSE)
     }
   } else if(return == "legend") {
-    r <- readr::read_tsv(httr::content(html, as = "text",
-                                       type = "text/csv",
-                                       encoding = encoding),
-                         skip = stringr::str_which(split, "Legend") + 1,
-                         col_names = FALSE,
-                         col_types = readr::cols())
+    r <- httr::content(html, as = "text",
+                       type = "text/csv",
+                       encoding = encoding) %>%
+      stringr::str_replace_all("(\\t)+", "\\\t") %>%
+      stringr::str_remove("\\*https\\:\\/\\/climate.weather.gc.ca\\/FAQ_e.html#Q5") %>%
+      readr::read_tsv(., skip = stringr::str_which(split, "Legend") + 1,
+                      col_names = FALSE,
+                      col_types = readr::cols())
   }
   # Get rid of any special symbols
   remove_sym(r)

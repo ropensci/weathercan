@@ -7,14 +7,14 @@ library(stringr)
 flags <- tibble(interval = c("hour", "day", "month"),
                 station_id = c(51423, 51423, 43823)) %>%
   mutate(flags = purrr::map2(.data$station_id, .data$interval,
-                             ~ meta_raw(weather_html(station_id = .x,
-                                                     interval = .y,
-                                                     format = "txt"),
+                             ~ meta_raw(meta_html(station_id = .x,
+                                                  interval = .y),
                                         interval = .y, return = "legend"))) %>%
   tidyr::unnest(flags) %>%
-  select(code = "V1", meaning = "V2") %>%
+  select(code = "X1", meaning = "X2") %>%
   distinct() %>%
-  arrange(code)
+  arrange(code) %>%
+  mutate(meaning = str_remove(meaning, "\\*"))
 usethis::use_data(flags, overwrite = TRUE)
 
 
@@ -72,8 +72,7 @@ usethis::use_data(glossary, overwrite = TRUE)
 
 
 codes <- normals_raw(loc = normals_url("AB", "301C3D4",
-                                       normals_years = "1981-2010"),
-                     return = "all") %>%
+                                       normals_years = "1981-2010")) %>%
   .[8:11] %>%
   str_replace_all("\"\"", "'") %>%
   str_remove_all("\"") %>%
