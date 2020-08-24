@@ -63,14 +63,14 @@ As well as several vignettes:
 \href{https://docs.ropensci.org/weathercan/}{Online} we also have some
 advanced articles:
 \itemize{
-\item Using \code{weathercan} with \href{https://tidyverse.org/}{tidyverse}
+\item Using \code{weathercan} with \href{https://www.tidyverse.org/}{tidyverse}
 (\href{https://docs.ropensci.org/weathercan/articles/articles/use_with_tidyverse.html}{here})
 \item Mapping weather data
 (\href{https://docs.ropensci.org/weathercan/articles/articles/mapping.html}{here})
 }
 }
 \references{
-Environment and Climate Change Canada: \url{https://www.ec.gc.ca/}
+Environment and Climate Change Canada: \url{https://www.canada.ca/en/environment-climate-change.html}
 
 Glossary of terms \url{https://climate.weather.gc.ca/glossary_e.html}
 

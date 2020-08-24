@@ -14,9 +14,9 @@ Description: Provides means for downloading historical weather data from
     to identify stations either by name or proximity to a location.
 License: GPL-3
 Language: en-CA
-BugReports: https://github.com/ropensci/weathercan/issues
+BugReports: https://github.com/ropensci/weathercan/issues/
 LazyData: TRUE
-URL: https://docs.ropensci.org/weathercan, https://github.com/ropensci/weathercan
+URL: https://docs.ropensci.org/weathercan/, https://github.com/ropensci/weathercan/
 Depends:
     R (>= 3.1.2)
 Imports:

@@ -44,13 +44,13 @@
 #' [Online](https://docs.ropensci.org/weathercan/) we also have some
 #' advanced articles:
 #'
-#'  - Using `weathercan` with [tidyverse](https://tidyverse.org/)
+#'  - Using `weathercan` with [tidyverse](https://www.tidyverse.org/)
 #'  ([here](https://docs.ropensci.org/weathercan/articles/articles/use_with_tidyverse.html))
 #'  - Mapping weather data
 #'  ([here](https://docs.ropensci.org/weathercan/articles/articles/mapping.html))
 #'
 #' @references
-#' Environment and Climate Change Canada: <https://www.ec.gc.ca/>
+#' Environment and Climate Change Canada: <https://www.canada.ca/en/environment-climate-change.html>
 #'
 #' Glossary of terms <https://climate.weather.gc.ca/glossary_e.html>
 #'
