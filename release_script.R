@@ -26,6 +26,7 @@ cchn_pkg_rule_list()
 ## Internal data files
 source("data-raw/data-raw.R")
 source("data-raw/data-index.R")
+source("data-raw/metadata.R")
 
 ## Documentation
 
@@ -44,9 +45,6 @@ dict <- hunspell::dictionary('en_CA')
 devtools::spell_check()
 spelling::update_wordlist()
 
-## Finalize package version
-v <- "0.4.0"
-
 ## Checks
 devtools::check()     # Local
 devtools::check(run_dont_test = TRUE)     # Local
@@ -57,38 +55,41 @@ devtools::check_win_devel()
 devtools::check_win_oldrelease()
 
 # Build package to check on Rhub and locally
+v <- "0.4.0"
 system("cd ..; R CMD build weathercan")
+system(paste0("cd ..; R CMD check weathercan_", v, ".tar.gz --as-cran --run-donttest")) # Local
 
-rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
-                     show_status = FALSE)
-
+# Check Windows
 rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
                      check_args = "--as-cran --run-donttest",
                      platforms = c("windows-x86_64-oldrel",
                                    "windows-x86_64-devel",
                                    "windows-x86_64-release"),
-                     show_status = FALSE)
+                     show_status = FALSE,
+                     env_vars=c(R_COMPILE_AND_INSTALL_PACKAGES = "always"))
 
-rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
-                     check_args = "--as-cran",
-                     platforms = "solaris-x86-patched",
-                     env_vars = c("_R_CHECK_FORCE_SUGGESTS_" = "false"),
-                     show_status = FALSE)
 
-rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
-                     check_args = "--as-cran",
-                     platforms = c("fedora-clang-devel", "fedora-gcc-devel"),
-                     env_vars = c("_R_CHECK_FORCE_SUGGESTS_" = "false"),
-                     show_status = FALSE)
-
+# Check debian
 rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
                      check_args = "--as-cran --run-donttest",
-                     platforms = c("debian-gcc-devel",
-                                   "ubuntu-gcc-devel",
-                                   "ubuntu-rchk"),
+                     platforms = c("debian-gcc-devel", # CRAN = r-devel-linux-x86_64-debian-gcc
+                                   "debian-gcc-patched"), # CRAN = r-patched-linux-x86_64),
                      show_status = FALSE)
 
-system(paste0("cd ..; R CMD check weathercan_", v, ".tar.gz --as-cran --run-donttest")) # Local
+# Check fedora
+rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
+                     check_args = "--as-cran",
+                     platforms = c("fedora-clang-devel",
+                                   "fedora-gcc-devel"), # CRAN = r-devel-linux-x86_64-fedora-gc
+                     env_vars = c("_R_CHECK_FORCE_SUGGESTS_" = "false"),
+                     show_status = FALSE)
+
+# Check solaris
+rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
+                     check_args = "--as-cran",
+                     platforms = "solaris-x86-patched",   # CRAN = r-patched-solaris-x86
+                     env_vars = c("_R_CHECK_FORCE_SUGGESTS_" = "false"),
+                     show_status = FALSE)
 
 # Problems with latex, open weathercan-manual.tex and compile to get actual errors
 # Re-try (skip tests for speed)
@@ -130,5 +131,5 @@ unlink("./vignettes/normals_cache/", recursive = TRUE)
 devtools::release()
 
 ## Once it is released (Accepted by CRAN) create signed release on github
-system("git tag -s v0.3.4 -m 'v0.3.4'")
+system("git tag -s v0.4.0 -m 'v0.4.0'")
 system("git push --tags")
