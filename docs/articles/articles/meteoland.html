@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">weathercan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -108,7 +108,7 @@
       <h1 data-toc-skip>Meteoland</h1>
                         <h4 class="author">Steffi LaZerte</h4>
             
-            <h4 class="date">2020-04-08</h4>
+            <h4 class="date">2020-08-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/weathercan/blob/master/vignettes/articles/meteoland.Rmd"><code>vignettes/articles/meteoland.Rmd</code></a></small>
       <div class="hidden name"><code>meteoland.Rmd</code></div>
@@ -245,18 +245,18 @@
 ## Available Station Data:
 ## # A tibble: 3 x 14
 ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz   
-##   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt; &lt;fct&gt;       &lt;int&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
+##   &lt;chr&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
 ## 1 MB    GILLAM            10217 5060999        NA WGX    56.4 -94.7  145. Etc/…
 ## 2 MB    GILLAM            10217 5060999        NA WGX    56.4 -94.7  145. Etc/…
 ## 3 MB    GILLAM            10217 5060999        NA WGX    56.4 -94.7  145. Etc/…
-## # … with 4 more variables: interval &lt;chr&gt;, start &lt;int&gt;, end &lt;int&gt;,
+## # … with 4 more variables: interval &lt;chr&gt;, start &lt;dbl&gt;, end &lt;dbl&gt;,
 ## #   normals &lt;lgl&gt;</code></pre>
 <pre><code>## Some variables have non-numeric values (spd_max_gust), for stations: 53118, 52758, 48972, 48969, 48728, 48588, 44244, 30475, 29533</code></pre>
 <pre><code>##   Replaced all non-numeric entries with NA. Use 'string_as = NULL' to keep as characters (see ?weather_dl).</code></pre>
 <pre><code>##   Examples:</code></pre>
 <pre><code>##   # A tibble: 180 x 6
 ##      station_id date       year  month day   spd_max_gust
-##           &lt;int&gt; &lt;date&gt;     &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       
+##           &lt;dbl&gt; &lt;date&gt;     &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       
 ##    1      53118 2015-01-03 2015  01    03    &lt;31         
 ##    2      53118 2015-01-04 2015  01    04    &lt;31         
 ##    3      53118 2015-01-14 2015  01    14    &lt;31         
@@ -1295,9 +1295,9 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">station_id</span>, <span class="no">lat</span>, <span class="no">lon</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span>(<span class="kw">min_temp</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">min_temp</span>, <span class="kw">na.rm</span> <span class="kw">=</span> <span class="fl">TRUE</span>)) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_as_sf.html">st_as_sf</a></span>(<span class="kw">coords</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"lon"</span>, <span class="st">"lat"</span>), <span class="kw">crs</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_crs.html">st_crs</a></span>(<span class="no">mb_interp</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">interp</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
-
-<span class="no">map_sf</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(<span class="no">mb_interp</span>, <span class="no">mb_stations</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">interp</span> <span class="kw">=</span> <span class="fl">FALSE</span>)</pre></body></html></div>
+<pre><code>## `summarise()` regrouping output by 'station_id', 'lat' (override with `.groups` argument)</code></pre>
+<div class="sourceCode" id="cb101"><html><body><pre class="r"><span class="no">map_sf</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(<span class="no">mb_interp</span>, <span class="no">mb_stations</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">interp</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="no">interp</span>, <span class="kw">levels</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"TRUE"</span>, <span class="st">"FALSE"</span>)))
 
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>() +

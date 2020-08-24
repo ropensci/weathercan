@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">weathercan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -150,9 +150,41 @@
       <small>Source: <a href='https://github.com/ropensci/weathercan/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="weathercan-0-3-4-2020-04-14" class="section level1">
+    <div id="weathercan-040-2020-08-23" class="section level1">
+<h1 class="page-header" data-toc-text="0.4.0">
+<a href="#weathercan-040-2020-08-23" class="anchor"></a>weathercan 0.4.0 (2020-08-23)<small> Unreleased </small>
+</h1>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li>Fixed odd bug where some Linux systems failed to download stations data</li>
+</ul>
+</div>
+<div id="features-and-potentially-breaking-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#features-and-potentially-breaking-changes" class="anchor"></a>Features and potentially breaking changes</h2>
+<ul>
+<li>Added caching in memory with memoise (caches for 24hrs, can change this by restarting the R session)
+<ul>
+<li>Caches individual downloaded files, so you may see a speed up even if you change the parameters of the download.</li>
+</ul>
+</li>
+<li>Some missing values in meta data previously were "" but are now explicitly NAs</li>
+</ul>
+</div>
+<div id="internal-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#internal-changes" class="anchor"></a>Internal changes</h2>
+<ul>
+<li>Use readr for reading data</li>
+<li>Use vcr for tests</li>
+</ul>
+</div>
+</div>
+    <div id="weathercan-034-2020-04-14" class="section level1">
 <h1 class="page-header" data-toc-text="0.3.4">
-<a href="#weathercan-0-3-4-2020-04-14" class="anchor"></a>weathercan 0.3.4 (2020-04-14)<small> Unreleased </small>
+<a href="#weathercan-034-2020-04-14" class="anchor"></a>weathercan 0.3.4 (2020-04-14)<small> 2020-04-17 </small>
 </h1>
 <div id="small-changes" class="section level2">
 <h2 class="hasAnchor">
@@ -164,9 +196,9 @@
 </ul>
 </div>
 </div>
-    <div id="weathercan-0-3-3-2020-01-24" class="section level1">
+    <div id="weathercan-033-2020-01-24" class="section level1">
 <h1 class="page-header" data-toc-text="0.3.3">
-<a href="#weathercan-0-3-3-2020-01-24" class="anchor"></a>weathercan 0.3.3 (2020-01-24)<small> 2020-02-05 </small>
+<a href="#weathercan-033-2020-01-24" class="anchor"></a>weathercan 0.3.3 (2020-01-24)<small> 2020-02-05 </small>
 </h1>
 <div id="small-changes-1" class="section level2">
 <h2 class="hasAnchor">
@@ -178,9 +210,9 @@
 </ul>
 </div>
 </div>
-    <div id="weathercan-0-3-2-2020-01-06" class="section level1">
+    <div id="weathercan-032-2020-01-06" class="section level1">
 <h1 class="page-header" data-toc-text="0.3.2">
-<a href="#weathercan-0-3-2-2020-01-06" class="anchor"></a>weathercan 0.3.2 (2020-01-06)<small> 2020-01-08 </small>
+<a href="#weathercan-032-2020-01-06" class="anchor"></a>weathercan 0.3.2 (2020-01-06)<small> 2020-01-08 </small>
 </h1>
 <div id="small-changes-2" class="section level2">
 <h2 class="hasAnchor">
@@ -192,9 +224,9 @@
 </ul>
 </div>
 </div>
-    <div id="weathercan-0-3-1-2019-09-27" class="section level1">
+    <div id="weathercan-031-2019-09-27" class="section level1">
 <h1 class="page-header" data-toc-text="0.3.1">
-<a href="#weathercan-0-3-1-2019-09-27" class="anchor"></a>weathercan 0.3.1 (2019-09-27)<small> 2019-09-29 </small>
+<a href="#weathercan-031-2019-09-27" class="anchor"></a>weathercan 0.3.1 (2019-09-27)<small> 2019-09-29 </small>
 </h1>
 <div id="small-changes-3" class="section level2">
 <h2 class="hasAnchor">
@@ -204,9 +236,9 @@
 </ul>
 </div>
 </div>
-    <div id="weathercan-0-3-0-2019-09-25" class="section level1">
+    <div id="weathercan-030-2019-09-25" class="section level1">
 <h1 class="page-header" data-toc-text="0.3.0">
-<a href="#weathercan-0-3-0-2019-09-25" class="anchor"></a>weathercan 0.3.0 (2019-09-25)<small> 2019-09-25 </small>
+<a href="#weathercan-030-2019-09-25" class="anchor"></a>weathercan 0.3.0 (2019-09-25)<small> 2019-09-25 </small>
 </h1>
 <div id="big-changes" class="section level2">
 <h2 class="hasAnchor">
@@ -228,9 +260,9 @@
 </li>
 </ul>
 </div>
-<div id="bug-fixes" class="section level2">
+<div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fix bug <a href='https://github.com/ropensci/weathercan/issues/69'>#69</a> which resulted in daily downloads missing partial years when the date range spanned two calendar years</li>
 <li>Fix bug <a href='https://github.com/ropensci/weathercan/issues/70'>#70</a> where internal <code>stations</code> data frame references conflicted with local references to <code>stations</code>
@@ -239,13 +271,13 @@
 </ul>
 </div>
 </div>
-    <div id="weathercan-0-2-8-2018-10-08" class="section level1">
+    <div id="weathercan-028-2018-10-08" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.8">
-<a href="#weathercan-0-2-8-2018-10-08" class="anchor"></a>weathercan 0.2.8 (2018-10-08)<small> 2018-10-08 </small>
+<a href="#weathercan-028-2018-10-08" class="anchor"></a>weathercan 0.2.8 (2018-10-08)<small> 2018-10-08 </small>
 </h1>
-<div id="bug-fixes-1" class="section level2">
+<div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Add timezones to the <code>stations</code> data frame to remove dependency of Google API. Timezones added with the <code>lutz</code> package, so updates the the <code>stations</code> data frame now require <code>lutz</code> and <code>sf</code> packages (added to Suggests).</li>
 </ul>
@@ -266,13 +298,13 @@
 </ul>
 </div>
 </div>
-    <div id="weathercan-0-2-7-2018-06-27" class="section level1">
+    <div id="weathercan-027-2018-06-27" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.7">
-<a href="#weathercan-0-2-7-2018-06-27" class="anchor"></a>weathercan 0.2.7 (2018-06-27)<small> 2018-07-05 </small>
+<a href="#weathercan-027-2018-06-27" class="anchor"></a>weathercan 0.2.7 (2018-06-27)<small> 2018-07-05 </small>
 </h1>
-<div id="bug-fixes-2" class="section level2">
+<div id="bug-fixes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fix bug created when ECCC changed file metadata for dates after April 1st 2018 (only affected downloads which included dates both before AND after April 1st, 2018) - Results in a new column <code>station_operator</code> for all data (NA where unavailable for older stations).</li>
 <li>Adjust code flexibility to handle future changes</li>
@@ -291,13 +323,13 @@
 </ul>
 </div>
 </div>
-    <div id="weathercan-0-2-6-2018-05-25" class="section level1">
+    <div id="weathercan-026-2018-05-25" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.6">
-<a href="#weathercan-0-2-6-2018-05-25" class="anchor"></a>weathercan 0.2.6 (2018-05-25)<small> Unreleased </small>
+<a href="#weathercan-026-2018-05-25" class="anchor"></a>weathercan 0.2.6 (2018-05-25)<small> Unreleased </small>
 </h1>
-<div id="bug-fixes-3" class="section level2">
+<div id="bug-fixes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fix bug created when ECCC removed Data Quality Column</li>
 <li>Adjust code flexibility to handle future changes</li>
@@ -305,9 +337,9 @@
 </ul>
 </div>
 </div>
-    <div id="weathercan-0-2-5-2018-03-02" class="section level1">
+    <div id="weathercan-025-2018-03-02" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.5">
-<a href="#weathercan-0-2-5-2018-03-02" class="anchor"></a>weathercan 0.2.5 (2018-03-02)<small> Unreleased </small>
+<a href="#weathercan-025-2018-03-02" class="anchor"></a>weathercan 0.2.5 (2018-03-02)<small> Unreleased </small>
 </h1>
 <div id="changes-2" class="section level2">
 <h2 class="hasAnchor">
@@ -321,19 +353,19 @@
 <li>Update <code>stations</code> dataframe</li>
 </ul>
 </div>
-<div id="bug-fixes-4" class="section level2">
+<div id="bug-fixes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-5" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fix error when missing station data from one of several stations</li>
 </ul>
 </div>
 </div>
-    <div id="weathercan-0-2-4-2018-02-01" class="section level1">
+    <div id="weathercan-024-2018-02-01" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.4">
-<a href="#weathercan-0-2-4-2018-02-01" class="anchor"></a>weathercan 0.2.4 (2018-02-01)<small> Unreleased </small>
+<a href="#weathercan-024-2018-02-01" class="anchor"></a>weathercan 0.2.4 (2018-02-01)<small> Unreleased </small>
 </h1>
-<p>Now part of <a href="http://ropensci.org">ropensci.org</a>!</p>
+<p>Now part of <a href="https://ropensci.org">ropensci.org</a>!</p>
 <div id="changes-3" class="section level2">
 <h2 class="hasAnchor">
 <a href="#changes-3" class="anchor"></a>Changes</h2>
@@ -356,9 +388,9 @@
 </ul>
 </div>
 </div>
-    <div id="weathercan-0-2-3-2017-11-22" class="section level1">
+    <div id="weathercan-023-2017-11-22" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.3">
-<a href="#weathercan-0-2-3-2017-11-22" class="anchor"></a>weathercan 0.2.3 (2017-11-22)<small> Unreleased </small>
+<a href="#weathercan-023-2017-11-22" class="anchor"></a>weathercan 0.2.3 (2017-11-22)<small> Unreleased </small>
 </h1>
 <div id="changes-4" class="section level2">
 <h2 class="hasAnchor">
@@ -376,9 +408,9 @@
 <li>Data downloaded from multiple timezones defaults to UTC</li>
 </ul>
 </div>
-<div id="bug-fixes-5" class="section level2">
+<div id="bug-fixes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-5" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-6" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/weather_dl.html">weather(format = FALSE)</a></code> properly returns data</li>
@@ -386,9 +418,9 @@
 </ul>
 </div>
 </div>
-    <div id="weathercan-0-2-2-2017-06-16" class="section level1">
+    <div id="weathercan-022-2017-06-16" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.2">
-<a href="#weathercan-0-2-2-2017-06-16" class="anchor"></a>weathercan 0.2.2 (2017-06-16)<small> Unreleased </small>
+<a href="#weathercan-022-2017-06-16" class="anchor"></a>weathercan 0.2.2 (2017-06-16)<small> Unreleased </small>
 </h1>
 <div id="changes-5" class="section level2">
 <h2 class="hasAnchor">
@@ -409,26 +441,26 @@
 <li>envirocan renamed to weathercan (closes <a href='https://github.com/ropensci/weathercan/issues/17'>#17</a>)</li>
 </ul>
 </div>
-<div id="bug-fixes-6" class="section level2">
+<div id="bug-fixes-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-6" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-7" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed inclusion of New Brunswick stations (closes <a href='https://github.com/ropensci/weathercan/issues/9'>#9</a>)</li>
 <li>Downloads with no data return empty tibble and an informative message (closes <a href='https://github.com/ropensci/weathercan/issues/21'>#21</a>)</li>
 </ul>
 </div>
 </div>
-    <div id="envirocan-0-2-1-2017-03-04" class="section level1">
+    <div id="envirocan-021-2017-03-04" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.1">
-<a href="#envirocan-0-2-1-2017-03-04" class="anchor"></a>envirocan 0.2.1 (2017-03-04)<small> Unreleased </small>
+<a href="#envirocan-021-2017-03-04" class="anchor"></a>envirocan 0.2.1 (2017-03-04)<small> Unreleased </small>
 </h1>
 <ul>
 <li>Minor bug fixes: correcting encoding information for downloads, updating function calls to dplyr package, updating stations dataset</li>
 </ul>
 </div>
-    <div id="envirocan-0-2-0-2016-07-08" class="section level1">
+    <div id="envirocan-020-2016-07-08" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.0">
-<a href="#envirocan-0-2-0-2016-07-08" class="anchor"></a>envirocan 0.2.0 (2016-07-08)<small> Unreleased </small>
+<a href="#envirocan-020-2016-07-08" class="anchor"></a>envirocan 0.2.0 (2016-07-08)<small> Unreleased </small>
 </h1>
 <ul>
 <li>Added new function, <code><a href="../reference/weather_interp.html">add_weather()</a></code> which performs a linear interpolation and merges weather data into an existing data frame.</li>
@@ -439,17 +471,17 @@
 <li>Minor internal adjustments</li>
 </ul>
 </div>
-    <div id="envirocan-0-1-1-1-2016-06-23" class="section level1">
+    <div id="envirocan-0111-2016-06-23" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.1.1">
-<a href="#envirocan-0-1-1-1-2016-06-23" class="anchor"></a>envirocan 0.1.1.1 (2016-06-23)<small> Unreleased </small>
+<a href="#envirocan-0111-2016-06-23" class="anchor"></a>envirocan 0.1.1.1 (2016-06-23)<small> Unreleased </small>
 </h1>
 <ul>
 <li>quick fix to correct duplicated monthly data downloads</li>
 </ul>
 </div>
-    <div id="envirocan-0-1-1-2016-06-23" class="section level1">
+    <div id="envirocan-011-2016-06-23" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.1">
-<a href="#envirocan-0-1-1-2016-06-23" class="anchor"></a>envirocan 0.1.1 (2016-06-23)<small> Unreleased </small>
+<a href="#envirocan-011-2016-06-23" class="anchor"></a>envirocan 0.1.1 (2016-06-23)<small> Unreleased </small>
 </h1>
 <div id="functionality" class="section level2">
 <h2 class="hasAnchor">
@@ -459,18 +491,18 @@
 <li>Add option to trim missing data from start and end of the range</li>
 </ul>
 </div>
-<div id="bug-fixes-7" class="section level2">
+<div id="bug-fixes-8" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-7" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-8" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Add messages so functions fail gracefully if timezone doesn’t exist</li>
 <li>Correct bugs that prevented downloading of monthly data</li>
 </ul>
 </div>
 </div>
-    <div id="envirocan-0-1-0-2016-06-21" class="section level1">
+    <div id="envirocan-010-2016-06-21" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.0">
-<a href="#envirocan-0-1-0-2016-06-21" class="anchor"></a>envirocan 0.1.0 (2016-06-21)<small> Unreleased </small>
+<a href="#envirocan-010-2016-06-21" class="anchor"></a>envirocan 0.1.0 (2016-06-21)<small> Unreleased </small>
 </h1>
 <p>This is the initial release for envirocan.</p>
 <div id="include-functionality" class="section level2">

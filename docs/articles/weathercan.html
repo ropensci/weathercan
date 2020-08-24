@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">weathercan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -108,7 +108,7 @@
       <h1 data-toc-skip>General Usage</h1>
                         <h4 class="author">Steffi LaZerte</h4>
             
-            <h4 class="date">2020-04-08</h4>
+            <h4 class="date">2020-08-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/weathercan/blob/master/vignettes/weathercan.Rmd"><code>vignettes/weathercan.Rmd</code></a></small>
       <div class="hidden name"><code>weathercan.Rmd</code></div>
@@ -127,7 +127,7 @@
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">stations</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 6 x 14
 ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval
-##   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt; &lt;fct&gt;       &lt;int&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   
+##   &lt;chr&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   
 ## 1 AB    DAYSLAND           1795 301AR54        NA &lt;NA&gt;   52.9 -112.  689. Etc/… day     
 ## 2 AB    DAYSLAND           1795 301AR54        NA &lt;NA&gt;   52.9 -112.  689. Etc/… hour    
 ## 3 AB    DAYSLAND           1795 301AR54        NA &lt;NA&gt;   52.9 -112.  689. Etc/… month   
@@ -139,7 +139,7 @@
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="../reference/stations_search.html">stations_search</a></span>(<span class="st">"Kamloops"</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 40 x 14
 ##    prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval
-##    &lt;chr&gt; &lt;chr&gt;             &lt;int&gt; &lt;fct&gt;       &lt;int&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   
+##    &lt;chr&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   
 ##  1 BC    KAMLOOPS           1274 1163779        NA &lt;NA&gt;   50.7 -120.  379. Etc/… day     
 ##  2 BC    KAMLOOPS           1274 1163779        NA &lt;NA&gt;   50.7 -120.  379. Etc/… month   
 ##  3 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/… day     
@@ -155,7 +155,7 @@
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="../reference/stations_search.html">stations_search</a></span>(<span class="st">"Kamloops"</span>, <span class="kw">interval</span> <span class="kw">=</span> <span class="st">"hour"</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 3 x 14
 ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval
-##   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt; &lt;fct&gt;       &lt;int&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   
+##   &lt;chr&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   
 ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/… hour    
 ## 2 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/… hour    
 ## 3 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/… hour    
@@ -164,7 +164,7 @@
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="../reference/stations_search.html">stations_search</a></span>(<span class="st">"Kamloops"</span>, <span class="kw">interval</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"hour"</span>, <span class="st">"month"</span>))</pre></body></html></div>
 <pre><code>## # A tibble: 21 x 14
 ##    prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval
-##    &lt;chr&gt; &lt;chr&gt;             &lt;int&gt; &lt;fct&gt;       &lt;int&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   
+##    &lt;chr&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   
 ##  1 BC    KAMLOOPS           1274 1163779        NA &lt;NA&gt;   50.7 -120.  379. Etc/… month   
 ##  2 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/… hour    
 ##  3 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/… month   
@@ -180,7 +180,7 @@
 <div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="../reference/stations_search.html">stations_search</a></span>(<span class="kw">coords</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">50.667492</span>, -<span class="fl">120.329049</span>), <span class="kw">dist</span> <span class="kw">=</span> <span class="fl">20</span>, <span class="kw">interval</span> <span class="kw">=</span> <span class="st">"hour"</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 3 x 15
 ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval
-##   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt; &lt;fct&gt;       &lt;int&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   
+##   &lt;chr&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   
 ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/… hour    
 ## 2 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/… hour    
 ## 3 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/… hour    
@@ -196,7 +196,7 @@
 <span class="no">BCstations</span></pre></body></html></div>
 <pre><code>## # A tibble: 3 x 14
 ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval
-##   &lt;chr&gt; &lt;chr&gt;             &lt;int&gt; &lt;fct&gt;       &lt;int&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   
+##   &lt;chr&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   
 ## 1 BC    CRESTON CAM…       6838 114B1F0     71770 WJR    49.1 -116.  641. Etc/… hour    
 ## 2 BC    NELSON CS          6839 1145M29     71776 WNM    49.5 -117.  535. Etc/… hour    
 ## 3 BC    WARFIELD RCS      31067 1148705     71401 XWF    49.1 -118.  567. Etc/… hour    
@@ -262,7 +262,7 @@
 <span class="no">stn_vec_df</span></pre></body></html></div>
 <pre><code>## # A tibble: 3,312 x 35
 ##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id
-##    &lt;chr&gt;             &lt;int&gt; &lt;lgl&gt;            &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt; 
+##    &lt;chr&gt;             &lt;dbl&gt; &lt;lgl&gt;            &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt; 
 ##  1 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770 
 ##  2 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770 
 ##  3 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770 

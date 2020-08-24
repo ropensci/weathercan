@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">weathercan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -108,7 +108,7 @@
       <h1 data-toc-skip>Using with the tidyverse</h1>
                         <h4 class="author">Sam Albers</h4>
             
-            <h4 class="date">2020-04-08</h4>
+            <h4 class="date">2020-08-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/weathercan/blob/master/vignettes/articles/use_with_tidyverse.Rmd"><code>vignettes/articles/use_with_tidyverse.Rmd</code></a></small>
       <div class="hidden name"><code>use_with_tidyverse.Rmd</code></div>
@@ -144,7 +144,7 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">prov</span>, <span class="no">station_name</span>, <span class="no">station_id</span>, <span class="no">start</span>, <span class="no">end</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 5 x 5
 ##   prov  station_name     station_id start   end
-##   &lt;chr&gt; &lt;chr&gt;                 &lt;int&gt; &lt;int&gt; &lt;int&gt;
+##   &lt;chr&gt; &lt;chr&gt;                 &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 ## 1 AB    TABER                  2315  1907  2020
 ## 2 BC    AGASSIZ CDA             707  1889  2020
 ## 3 NL    PORT AUX BASQUES       6693  1909  2017
@@ -163,8 +163,8 @@
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">pancan_df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">date</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">mean_temp</span>, <span class="kw">colour</span> <span class="kw">=</span> <span class="no">station_name</span>)) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>() +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>()</pre></body></html></div>
-<pre><code>## Warning: Removed 27291 rows containing missing values (geom_point).</code></pre>
-<pre><code>## Warning: Removed 7837 rows containing missing values (geom_path).</code></pre>
+<pre><code>## Warning: Removed 27668 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: Removed 8114 row(s) containing missing values (geom_path).</code></pre>
 <p><img src="use_with_tidyverse_files/figure-html/raw_plt-1.png" width="960"></p>
 <p>This is quite a large dataset.</p>
 </div>
@@ -180,11 +180,11 @@
 ## #   TC_id [5]
 ##   station_name station_id prov    lat    lon  elev climate_id WMO_id TC_id data 
 ##   &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt; &lt;lis&gt;
-## 1 AGASSIZ CDA         707 BC     49.2 -122.   15   1100120    ""     ""    &lt;tib…
-## 2 BELLEVILLE         4859 ON     44.2  -77.4  76.2 6150689    ""     ""    &lt;tib…
-## 3 PORT AUX BA…       6693 NL     47.6  -59.2  39.7 8402975    "7119… "WZB" &lt;tib…
-## 4 LENNOXVILLE        5397 QC     45.4  -71.8 181   7024280    "7161… "WQH" &lt;tib…
-## 5 TABER              2315 AB     49.8 -112.  811   3036360    ""     ""    &lt;tib…</code></pre>
+## 1 AGASSIZ CDA         707 BC     49.2 -122.   15   1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
+## 2 BELLEVILLE         4859 ON     44.2  -77.4  76.2 6150689    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
+## 3 PORT AUX BA…       6693 NL     47.6  -59.2  39.7 8402975    71197  WZB   &lt;tib…
+## 4 LENNOXVILLE        5397 QC     45.4  -71.8 181   7024280    71611  WQH   &lt;tib…
+## 5 TABER              2315 AB     49.8 -112.  811   3036360    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…</code></pre>
 </div>
 <div id="fit-some-models" class="section level2">
 <h2 class="hasAnchor">
@@ -202,11 +202,11 @@
 ## #   TC_id [5]
 ##   station_name station_id prov    lat    lon  elev climate_id WMO_id TC_id data 
 ##   &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt; &lt;lis&gt;
-## 1 AGASSIZ CDA         707 BC     49.2 -122.   15   1100120    ""     ""    &lt;tib…
-## 2 BELLEVILLE         4859 ON     44.2  -77.4  76.2 6150689    ""     ""    &lt;tib…
-## 3 PORT AUX BA…       6693 NL     47.6  -59.2  39.7 8402975    "7119… "WZB" &lt;tib…
-## 4 LENNOXVILLE        5397 QC     45.4  -71.8 181   7024280    "7161… "WQH" &lt;tib…
-## 5 TABER              2315 AB     49.8 -112.  811   3036360    ""     ""    &lt;tib…
+## 1 AGASSIZ CDA         707 BC     49.2 -122.   15   1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
+## 2 BELLEVILLE         4859 ON     44.2  -77.4  76.2 6150689    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
+## 3 PORT AUX BA…       6693 NL     47.6  -59.2  39.7 8402975    71197  WZB   &lt;tib…
+## 4 LENNOXVILLE        5397 QC     45.4  -71.8 181   7024280    71611  WQH   &lt;tib…
+## 5 TABER              2315 AB     49.8 -112.  811   3036360    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
 ## # … with 1 more variable: model &lt;list&gt;</code></pre>
 <p>Then add the residuals to the model</p>
 <div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">pancan_df_nest</span> <span class="kw">&lt;-</span> <span class="no">pancan_df_nest</span> <span class="kw">%&gt;%</span>
@@ -218,11 +218,11 @@
 ## #   TC_id [5]
 ##   station_name station_id prov    lat    lon  elev climate_id WMO_id TC_id data 
 ##   &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt; &lt;lis&gt;
-## 1 AGASSIZ CDA         707 BC     49.2 -122.   15   1100120    ""     ""    &lt;tib…
-## 2 BELLEVILLE         4859 ON     44.2  -77.4  76.2 6150689    ""     ""    &lt;tib…
-## 3 PORT AUX BA…       6693 NL     47.6  -59.2  39.7 8402975    "7119… "WZB" &lt;tib…
-## 4 LENNOXVILLE        5397 QC     45.4  -71.8 181   7024280    "7161… "WQH" &lt;tib…
-## 5 TABER              2315 AB     49.8 -112.  811   3036360    ""     ""    &lt;tib…
+## 1 AGASSIZ CDA         707 BC     49.2 -122.   15   1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
+## 2 BELLEVILLE         4859 ON     44.2  -77.4  76.2 6150689    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
+## 3 PORT AUX BA…       6693 NL     47.6  -59.2  39.7 8402975    71197  WZB   &lt;tib…
+## 4 LENNOXVILLE        5397 QC     45.4  -71.8 181   7024280    71611  WQH   &lt;tib…
+## 5 TABER              2315 AB     49.8 -112.  811   3036360    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
 ## # … with 2 more variables: model &lt;list&gt;, resids &lt;list&gt;</code></pre>
 </div>
 <div id="working-with-list-columns" class="section level2">
@@ -235,30 +235,30 @@
 </h3>
 <div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="no">resids</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span>(<span class="no">pancan_df_nest</span>, <span class="no">resids</span>)
 <span class="no">resids</span></pre></body></html></div>
-<pre><code>## # A tibble: 183,115 x 14
+<pre><code>## # A tibble: 183,805 x 14
 ## # Groups:   station_name, station_id, prov, lat, lon, elev, climate_id, WMO_id,
 ## #   TC_id [5]
 ##    station_name station_id prov    lat   lon  elev climate_id WMO_id TC_id data 
 ##    &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt; &lt;lis&gt;
-##  1 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    ""     ""    &lt;tib…
-##  2 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    ""     ""    &lt;tib…
-##  3 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    ""     ""    &lt;tib…
-##  4 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    ""     ""    &lt;tib…
-##  5 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    ""     ""    &lt;tib…
-##  6 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    ""     ""    &lt;tib…
-##  7 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    ""     ""    &lt;tib…
-##  8 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    ""     ""    &lt;tib…
-##  9 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    ""     ""    &lt;tib…
-## 10 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    ""     ""    &lt;tib…
-## # … with 183,105 more rows, and 4 more variables: model &lt;list&gt;,
+##  1 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
+##  2 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
+##  3 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
+##  4 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
+##  5 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
+##  6 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
+##  7 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
+##  8 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
+##  9 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
+## 10 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
+## # … with 183,795 more rows, and 4 more variables: model &lt;list&gt;,
 ## #   mean_temp &lt;dbl&gt;, date &lt;date&gt;, resid &lt;dbl&gt;</code></pre>
 <div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">resids</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="no">date</span>, <span class="no">resid</span>)) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">group</span> <span class="kw">=</span> <span class="no">station_name</span>), <span class="kw">alpha</span> <span class="kw">=</span> <span class="fl">1</span> / <span class="fl">3</span>) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>() +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span>(<span class="kw">yintercept</span> <span class="kw">=</span> <span class="fl">0</span>) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(~ <span class="no">station_name</span>, <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
-<pre><code>## Warning: Removed 7837 rows containing missing values (geom_path).</code></pre>
-<pre><code>## Warning: Removed 27291 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: Removed 8114 row(s) containing missing values (geom_path).</code></pre>
+<pre><code>## Warning: Removed 27668 rows containing missing values (geom_point).</code></pre>
 <p><img src="use_with_tidyverse_files/figure-html/resid-1.png" width="960"></p>
 </div>
 <div id="using-broom" class="section level3">
@@ -294,8 +294,8 @@
 <td align="right">-121.76</td>
 <td align="right">15.0</td>
 <td align="left">1100120</td>
-<td align="left"></td>
-<td align="left"></td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 <td align="left">AGASSIZ CDA</td>
 <td align="left">BC</td>
 <td align="right">0.0030139</td>
@@ -308,13 +308,13 @@
 <td align="right">-77.39</td>
 <td align="right">76.2</td>
 <td align="left">6150689</td>
-<td align="left"></td>
-<td align="left"></td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 <td align="left">BELLEVILLE</td>
 <td align="left">ON</td>
-<td align="right">0.0022778</td>
+<td align="right">0.0027532</td>
 <td align="right">0.0000000</td>
-<td align="right">267057.1</td>
+<td align="right">268006.1</td>
 </tr>
 <tr class="odd">
 <td align="right">6693</td>
@@ -340,9 +340,9 @@
 <td align="left">WQH</td>
 <td align="left">LENNOXVILLE</td>
 <td align="left">QC</td>
-<td align="right">0.0008665</td>
+<td align="right">0.0011971</td>
 <td align="right">0.0000000</td>
-<td align="right">280608.9</td>
+<td align="right">281665.5</td>
 </tr>
 <tr class="odd">
 <td align="right">2315</td>
@@ -350,13 +350,13 @@
 <td align="right">-112.12</td>
 <td align="right">811.0</td>
 <td align="left">3036360</td>
-<td align="left"></td>
-<td align="left"></td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 <td align="left">TABER</td>
 <td align="left">AB</td>
-<td align="right">0.0002688</td>
-<td align="right">0.0119356</td>
-<td align="right">181874.6</td>
+<td align="right">0.0003348</td>
+<td align="right">0.0049701</td>
+<td align="right">182267.3</td>
 </tr>
 </tbody>
 </table>
@@ -370,28 +370,28 @@
          <span class="kw">preds</span> <span class="kw">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">map2</a></span>(<span class="no">data</span>, <span class="no">model</span>, <span class="no">add_predictions</span>)) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span>(<span class="no">preds</span>)
 <span class="no">preds</span></pre></body></html></div>
-<pre><code>## # A tibble: 183,115 x 15
+<pre><code>## # A tibble: 183,805 x 15
 ## # Groups:   station_name, station_id, prov, lat, lon, elev, climate_id, WMO_id,
 ## #   TC_id [5]
 ##    station_name station_id prov    lat   lon  elev climate_id WMO_id TC_id data 
 ##    &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt; &lt;lis&gt;
-##  1 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    ""     ""    &lt;tib…
-##  2 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    ""     ""    &lt;tib…
-##  3 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    ""     ""    &lt;tib…
-##  4 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    ""     ""    &lt;tib…
-##  5 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    ""     ""    &lt;tib…
-##  6 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    ""     ""    &lt;tib…
-##  7 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    ""     ""    &lt;tib…
-##  8 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    ""     ""    &lt;tib…
-##  9 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    ""     ""    &lt;tib…
-## 10 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    ""     ""    &lt;tib…
-## # … with 183,105 more rows, and 5 more variables: model &lt;list&gt;, resids &lt;list&gt;,
+##  1 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
+##  2 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
+##  3 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
+##  4 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
+##  5 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
+##  6 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
+##  7 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
+##  8 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
+##  9 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
+## 10 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
+## # … with 183,795 more rows, and 5 more variables: model &lt;list&gt;, resids &lt;list&gt;,
 ## #   mean_temp &lt;dbl&gt;, date &lt;date&gt;, pred &lt;dbl&gt;</code></pre>
 <div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">preds</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">date</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">mean_temp</span>, <span class="kw">colour</span> <span class="kw">=</span> <span class="no">station_name</span>)) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>() +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">y</span> <span class="kw">=</span> <span class="no">pred</span>)) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(~ <span class="no">station_name</span>, <span class="kw">scales</span> <span class="kw">=</span> <span class="st">"free_y"</span>, <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
-<pre><code>## Warning: Removed 27291 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: Removed 27668 rows containing missing values (geom_point).</code></pre>
 <p><img src="use_with_tidyverse_files/figure-html/pred-1.png" width="960"></p>
 </div>
   </div>

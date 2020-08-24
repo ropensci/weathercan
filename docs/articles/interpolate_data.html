@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">weathercan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -108,7 +108,7 @@
       <h1 data-toc-skip>Interpolating</h1>
                         <h4 class="author">Steffi LaZerte</h4>
             
-            <h4 class="date">2020-04-08</h4>
+            <h4 class="date">2020-08-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/weathercan/blob/master/vignettes/interpolate_data.Rmd"><code>vignettes/interpolate_data.Rmd</code></a></small>
       <div class="hidden name"><code>interpolate_data.Rmd</code></div>
@@ -151,23 +151,23 @@
 ## $ hour             &lt;chr&gt; "00:00", "01:00", "02:00", "03:00", "04:00", "05:00"…
 ## $ weather          &lt;chr&gt; NA, "Mostly Cloudy", NA, NA, "Cloudy", NA, NA, "Clou…
 ## $ hmdx             &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
-## $ hmdx_flag        &lt;chr&gt; "", "", "", "", "", "", "", "", "", "", "", "", "", …
+## $ hmdx_flag        &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
 ## $ pressure         &lt;dbl&gt; 99.95, 99.93, 99.92, 99.90, 99.86, 99.82, 99.80, 99.…
-## $ pressure_flag    &lt;chr&gt; "", "", "", "", "", "", "", "", "", "", "", "", "", …
+## $ pressure_flag    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
 ## $ rel_hum          &lt;dbl&gt; 74, 76, 74, 73, 70, 71, 69, 69, 71, 71, 71, 70, 69, …
-## $ rel_hum_flag     &lt;chr&gt; "", "", "", "", "", "", "", "", "", "", "", "", "", …
+## $ rel_hum_flag     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
 ## $ temp             &lt;dbl&gt; -9.1, -9.6, -9.9, -9.5, -9.4, -9.8, -10.0, -10.2, -1…
 ## $ temp_dew         &lt;dbl&gt; -12.9, -13.1, -13.7, -13.5, -13.9, -14.1, -14.7, -14…
-## $ temp_dew_flag    &lt;chr&gt; "", "", "", "", "", "", "", "", "", "", "", "", "", …
-## $ temp_flag        &lt;chr&gt; "", "", "", "", "", "", "", "", "", "", "", "", "", …
+## $ temp_dew_flag    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ temp_flag        &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
 ## $ visib            &lt;dbl&gt; 64.4, 64.4, 64.4, 64.4, 64.4, 64.4, 64.4, 64.4, 48.3…
-## $ visib_flag       &lt;chr&gt; "", "", "", "", "", "", "", "", "", "", "", "", "", …
+## $ visib_flag       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
 ## $ wind_chill       &lt;dbl&gt; -17, -17, -18, -17, -17, -17, -18, -17, -17, -16, -1…
-## $ wind_chill_flag  &lt;chr&gt; "", "", "", "", "", "", "", "", "", "", "", "", "", …
+## $ wind_chill_flag  &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
 ## $ wind_dir         &lt;dbl&gt; 13, 11, 11, 11, 11, 10, 9, 7, 7, 10, 11, 10, 10, 13,…
-## $ wind_dir_flag    &lt;chr&gt; "", "", "", "", "", "", "", "", "", "", "", "", "", …
+## $ wind_dir_flag    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
 ## $ wind_spd         &lt;dbl&gt; 19, 20, 20, 18, 18, 16, 23, 15, 14, 15, 12, 11, 12, …
-## $ wind_spd_flag    &lt;chr&gt; "", "", "", "", "", "", "", "", "", "", "", "", "", …</code></pre>
+## $ wind_spd_flag    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</code></pre>
 <p>As well as a data set of finch visits to an RFID feeder</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">glimpse</a></span>(<span class="no">finches</span>)</pre></body></html></div>
 <pre><code>## Rows: 16,886
@@ -235,14 +235,14 @@
 <div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">finches_temperature</span> <span class="kw">&lt;-</span> <span class="no">finches_temperature</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">date</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span>(<span class="kw">n</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">time</span>),
-            <span class="kw">temp</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">temp</span>))
-
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">finches_temperature</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">date</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">n</span>)) +
+            <span class="kw">temp</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">temp</span>))</pre></body></html></div>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">finches_temperature</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">date</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">n</span>)) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>() +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="kw">legend.position</span> <span class="kw">=</span> <span class="st">"top"</span>) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">shape</span> <span class="kw">=</span> <span class="st">"Activity"</span>)) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">y</span> <span class="kw">=</span> <span class="no">temp</span> * <span class="fl">100</span>, <span class="kw">colour</span> <span class="kw">=</span> <span class="st">"Temperature"</span>)) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_colour_discrete</a></span>(<span class="kw">name</span> <span class="kw">=</span> <span class="st">""</span>) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_colour_discrete</a></span>(<span class="kw">name</span> <span class="kw">=</span> <span class="st">""</span>) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_shape.html">scale_shape_discrete</a></span>(<span class="kw">name</span> <span class="kw">=</span> <span class="st">""</span>) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(<span class="kw">name</span> <span class="kw">=</span> <span class="st">"Activity"</span>, <span class="kw">sec.axis</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/sec_axis.html">sec_axis</a></span>(~<span class="no">.</span> / <span class="fl">100</span>, <span class="kw">name</span> <span class="kw">=</span> <span class="st">"Temperature (C)"</span>))</pre></body></html></div>
 <p><img src="interpolate_data_files/figure-html/unnamed-chunk-5-1.png" width="100%"></p>
@@ -252,10 +252,10 @@
 <a href="#data-gaps" class="anchor"></a>Data gaps</h2>
 <p>By default, gaps of 2 hours (or 2 days, with a daily scale) will be interpolated over (i.e. they will be filled with values interpolated from either side of the gap), but longer gaps will be skipped and filled with <code>NA</code>s. You can adjust this behaviour with <code>na_gap</code>. Note that as Environment and Climate Change Canada data is downloaded on an hourly scale, it makes no sense to apply <code>na_gap</code> values of less than 1.</p>
 <p>In this example, note the larger number of <code>NA</code>s in <code>temp</code> and how it corresponds to the missing variables in the weather dataset:</p>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="no">finches_temperature</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/weather_interp.html">weather_interp</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">finches</span>, <span class="kw">weather</span> <span class="kw">=</span> <span class="no">kamloops</span>,
+<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="no">finches_temperature</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/weather_interp.html">weather_interp</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">finches</span>, <span class="kw">weather</span> <span class="kw">=</span> <span class="no">kamloops</span>,
                                       <span class="kw">cols</span> <span class="kw">=</span> <span class="st">"temp"</span>, <span class="kw">na_gap</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
 <pre><code>## temp is missing 4 out of 4368 data, interpolation may be less accurate as a result.</code></pre>
-<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">finches_temperature</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">finches_temperature</span>)</pre></body></html></div>
 <pre><code>##       animal_id         date                 time                    
 ##  0620000513:7624   Min.   :2016-03-01   Min.   :2016-03-01 06:57:42  
 ##  041868D861:2767   1st Qu.:2016-03-05   1st Qu.:2016-03-05 13:54:13  
@@ -280,7 +280,7 @@
 ##                     3rd Qu.:-120.4   3rd Qu.:50.67   3rd Qu.: 9.3458  
 ##                     Max.   :-120.4   Max.   :50.67   Max.   :16.3712  
 ##                                                      NA's   :84</code></pre>
-<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="no">finches_temperature</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="no">finches_temperature</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">date</span>, <span class="no">time</span>, <span class="no">temp</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(<span class="no">temp</span>))</pre></body></html></div>
 <pre><code>## # A tibble: 84 x 3
@@ -297,7 +297,7 @@
 ##  9 2016-03-10 2016-03-10 16:00:54    NA
 ## 10 2016-03-10 2016-03-10 16:00:57    NA
 ## # … with 74 more rows</code></pre>
-<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="no">kamloops</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="no">kamloops</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">time</span>, <span class="no">temp</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(<span class="no">temp</span>))</pre></body></html></div>
 <pre><code>## # A tibble: 4 x 2
@@ -312,11 +312,11 @@
 <h2 class="hasAnchor">
 <a href="#multiple-weather-columns" class="anchor"></a>Multiple weather columns</h2>
 <p>We could also add in more than one column at a time:</p>
-<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="no">finches_weather</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/weather_interp.html">weather_interp</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">finches</span>, <span class="kw">weather</span> <span class="kw">=</span> <span class="no">kamloops</span>,
+<div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="no">finches_weather</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/weather_interp.html">weather_interp</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">finches</span>, <span class="kw">weather</span> <span class="kw">=</span> <span class="no">kamloops</span>,
                                   <span class="kw">cols</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"temp"</span>, <span class="st">"wind_spd"</span>))</pre></body></html></div>
 <pre><code>## temp is missing 4 out of 4368 data, interpolation may be less accurate as a result.</code></pre>
 <pre><code>## wind_spd is missing 4 out of 4368 data, interpolation may be less accurate as a result.</code></pre>
-<div class="sourceCode" id="cb25"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">finches_weather</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb27"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">finches_weather</span>)</pre></body></html></div>
 <pre><code>##       animal_id         date                 time                    
 ##  0620000513:7624   Min.   :2016-03-01   Min.   :2016-03-01 06:57:42  
 ##  041868D861:2767   1st Qu.:2016-03-05   1st Qu.:2016-03-05 13:54:13  
@@ -349,7 +349,7 @@
 ##  3rd Qu.:19.907  
 ##  Max.   :44.939  
 ## </code></pre>
-<div class="sourceCode" id="cb27"><html><body><pre class="r"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">glimpse</a></span>(<span class="no">finches_weather</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb29"><html><body><pre class="r"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">glimpse</a></span>(<span class="no">finches_weather</span>)</pre></body></html></div>
 <pre><code>## Rows: 16,886
 ## Columns: 12
 ## $ animal_id &lt;fct&gt; 041868FF93, 041868FF93, 041868FF93, 06200003BB, 06200003BB,…
@@ -364,19 +364,19 @@
 ## $ lat       &lt;dbl&gt; 50.66967, 50.66967, 50.66967, 50.66938, 50.66938, 50.66938,…
 ## $ temp      &lt;dbl&gt; 3.984667, 3.991222, 4.036750, 4.162833, 4.162917, 4.163000,…
 ## $ wind_spd  &lt;dbl&gt; 22.88500, 22.93417, 22.26500, 19.74333, 19.74167, 19.74000,…</code></pre>
-<div class="sourceCode" id="cb29"><html><body><pre class="r"><span class="no">finches_weather</span> <span class="kw">&lt;-</span> <span class="no">finches_weather</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb31"><html><body><pre class="r"><span class="no">finches_weather</span> <span class="kw">&lt;-</span> <span class="no">finches_weather</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">date</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span>(<span class="kw">n</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">time</span>),
             <span class="kw">temp</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">temp</span>),
-            <span class="kw">wind_spd</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">wind_spd</span>))
-
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">finches_weather</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">date</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">n</span>)) +
+            <span class="kw">wind_spd</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">wind_spd</span>))</pre></body></html></div>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<div class="sourceCode" id="cb33"><html><body><pre class="r"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">finches_weather</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">date</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">n</span>)) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>() +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="kw">legend.position</span> <span class="kw">=</span> <span class="st">"top"</span>) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span>(<span class="kw">stat</span> <span class="kw">=</span> <span class="st">"identity"</span>) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">y</span> <span class="kw">=</span> <span class="no">temp</span> * <span class="fl">50</span>, <span class="kw">colour</span> <span class="kw">=</span> <span class="st">"Temperature"</span>), <span class="kw">size</span> <span class="kw">=</span> <span class="fl">2</span>) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">y</span> <span class="kw">=</span> <span class="no">wind_spd</span> * <span class="fl">50</span>, <span class="kw">colour</span> <span class="kw">=</span> <span class="st">"Wind Speed"</span>), <span class="kw">size</span> <span class="kw">=</span> <span class="fl">2</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_colour_discrete</a></span>(<span class="kw">name</span> <span class="kw">=</span> <span class="st">""</span>) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_colour_discrete</a></span>(<span class="kw">name</span> <span class="kw">=</span> <span class="st">""</span>) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(<span class="kw">name</span> <span class="kw">=</span> <span class="st">"Activity Counts"</span>, <span class="kw">sec.axis</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/sec_axis.html">sec_axis</a></span>(~<span class="no">.</span> / <span class="fl">50</span>, <span class="kw">name</span> <span class="kw">=</span> <span class="st">"Temperature (C) / Wind Speed (km/h)"</span>))</pre></body></html></div>
 <p><img src="interpolate_data_files/figure-html/unnamed-chunk-7-1.png" width="100%"></p>
 </div>
