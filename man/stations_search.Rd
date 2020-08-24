@@ -62,7 +62,7 @@ information with which to decide which station to then get weather data from.
 }
 \details{
 To search by coordinates, users must make sure they have the
-\code{\link[sp]{sp}} package installed.
+\href{https://cran.r-project.org/package=sp}{sp} package installed.
 }
 \examples{
 

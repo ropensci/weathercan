@@ -189,7 +189,7 @@ stations_dl <- function(url = NULL, normals_years = "1981-2010",
 #'   missing data, etc.)
 #'
 #' @details To search by coordinates, users must make sure they have the
-#'  \code{\link[sp]{sp}} package installed.
+#'  [sp](https://cran.r-project.org/package=sp) package installed.
 #'
 #' @return Returns a subset of the stations data frame which match the search
 #'   parameters. If the search was by location, an extra column 'distance' shows
