@@ -68,12 +68,13 @@ rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
                      show_status = FALSE,
                      env_vars=c(R_COMPILE_AND_INSTALL_PACKAGES = "always"))
 
-
 # Check debian
 rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
                      check_args = "--as-cran --run-donttest",
-                     platforms = c("debian-gcc-devel", # CRAN = r-devel-linux-x86_64-debian-gcc
-                                   "debian-gcc-patched"), # CRAN = r-patched-linux-x86_64),
+                     platforms = c("debian-clang-devel",
+                                   "debian-gcc-devel", # CRAN = r-devel-linux-x86_64-debian-gcc
+                                   "debian-gcc-patched",
+                                   "debian-gcc-release"), # CRAN = r-patched-linux-x86_64),
                      show_status = FALSE)
 
 # Check fedora
