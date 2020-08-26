@@ -1,13 +1,12 @@
 ## Release v.0.4.0
 
-* weathercan was removed from CRAN earlier this summer for errors on several linux systems
-* These errors have been addressed by the following fixes
-* Switched to readr for reading data to improve consistency across platforms
-* Tests are fully offline with vcr for more consistent behaviour
-* Additionally, added caching to reduce downloads from ECCC
+* Resubmission with requested changes from CRAN (Thank you!)
+* \dontrun removed where unnecessary (normals_dl example)
+* Remove "quietly = TRUE" for requireNamespace() in examples
+* Reset user's options in Vignettes
 
 ## Test environments
-As of August 25th, 2020
+As of August 26th, 2020
 
 * Local - ubuntu 18.04 (R 3.6.3)
 * AppVeyor - Windows Server 2012 R2 64 (R 4.0.2, 4.0.2 Patched, 3.6.3)

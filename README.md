@@ -296,7 +296,7 @@ citation("weathercan")
     ##     number = {22},
     ##     pages = {571},
     ##     year = {2018},
-    ##     url = {http://joss.theoj.org/papers/10.21105/joss.00571},
+    ##     url = {https://joss.theoj.org/papers/10.21105/joss.00571},
     ##   }
 
 ## License

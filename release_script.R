@@ -38,6 +38,16 @@ source("data-raw/metadata.R")
 rmarkdown::render("README.Rmd")
 file.remove("README.html")
 
+## Build site (so website uses newest version)
+## Update website
+## BUILD PACKAGE FIRST!
+pkgdown::build_articles(lazy = FALSE)
+pkgdown::build_home()
+pkgdown::build_news()
+pkgdown::build_reference()
+pkgdown::build_site(lazy = TRUE)
+unlink("./vignettes/normals_cache/", recursive = TRUE)
+
 # Update cran-comments
 
 # Check spelling
@@ -60,13 +70,13 @@ system("cd ..; R CMD build weathercan")
 system(paste0("cd ..; R CMD check weathercan_", v, ".tar.gz --as-cran --run-donttest")) # Local
 
 # Check Windows
-rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
-                     check_args = "--as-cran --run-donttest",
-                     platforms = c("windows-x86_64-oldrel",
-                                   "windows-x86_64-devel",
-                                   "windows-x86_64-release"),
-                     show_status = FALSE,
-                     env_vars=c(R_COMPILE_AND_INSTALL_PACKAGES = "always"))
+# rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
+#                      check_args = "--as-cran --run-donttest",
+#                      platforms = c("windows-x86_64-oldrel",
+#                                    "windows-x86_64-devel",
+#                                    "windows-x86_64-release"),
+#                      show_status = FALSE,
+#                      env_vars=c(R_COMPILE_AND_INSTALL_PACKAGES = "always"))
 
 # Check debian
 rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
@@ -103,12 +113,12 @@ rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
 tools::dependsOnPkgs("weathercan")
 
 ## Double check
-options(repos = c(CRAN = 'http://cran.rstudio.com'))
+old <- options(repos = c(CRAN = 'http://cran.rstudio.com'))
 db <- available.packages()
 pkgs <- rownames(db)
 deps <- tools::package_dependencies(pkgs, db, which = 'all', reverse = TRUE)
 deps$weathercan
-
+options(old)
 
 ## Update codemeta
 codemetar::write_codemeta()

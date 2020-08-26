@@ -217,13 +217,12 @@ stored in the option <code>weathercan.urls.normals</code>. To change this locati
     <pre class="examples"><div class='input'>
 <span class='co'># \donttest{</span>
   <span class='co'># Update stations data frame</span>
-  <span class='kw'>if</span>(<span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"lutz"</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>&amp;&amp;</span>
-    <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"sf"</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)) {
+  <span class='kw'>if</span>(<span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"lutz"</span>) <span class='kw'>&amp;&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"sf"</span>)) {
     <span class='no'>s</span> <span class='kw'>&lt;-</span> <span class='fu'>stations_dl</span>()
 
     <span class='co'># Use new data frame to search for stations</span>
     <span class='fu'><a href='stations_search.html'>stations_search</a></span>(<span class='st'>"Winnipeg"</span>, <span class='kw'>stn</span> <span class='kw'>=</span> <span class='no'>s</span>)
-   }</div><div class='output co'>#&gt; <span class='message'>According to Environment Canada, Modified Date: 2020-08-22 23:30 UTC</span></div><div class='output co'>#&gt; <span class='message'>Environment Canada Disclaimers:</span>
+   }</div><div class='output co'>#&gt; <span class='message'>According to Environment Canada, Modified Date: 2020-08-25 23:30 UTC</span></div><div class='output co'>#&gt; <span class='message'>Environment Canada Disclaimers:</span>
 #&gt; <span class='message'>"Station Inventory Disclaimer: Please note that this inventory list is a snapshot of stations on our website as of the modified date, and may be subject to change without notice."</span>
 #&gt; <span class='message'>"Station ID Disclaimer: Station IDs are an internal index numbering system and may be subject to change without notice."</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 85 x 14</span><span>
 #&gt;    prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz   

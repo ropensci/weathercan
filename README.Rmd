@@ -8,7 +8,7 @@ library(dplyr)
 library(tibble)
 knitr::opts_chunk$set(cache = FALSE,
                       fig.path = "tools/readme/")
-options(width = 100)
+old <- options(width = 100)
 ```
 
 # weathercan <img src="https://github.com/ropensci/weathercan/raw/master/inst/assets/weathercan_logo.png" align = "right" width = 110/>
@@ -159,3 +159,9 @@ We welcome any and all contributions! To make the process as painless as possibl
 Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
 
 [![ropensci_footer](http://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)
+
+
+```{r, include = FALSE}
+# Reset options
+options(old)
+```

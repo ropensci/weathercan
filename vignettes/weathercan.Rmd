@@ -11,7 +11,7 @@ vignette: >
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(cache = FALSE)
-options(tibble.max_extra_cols = 0, width = 90)
+old <- options(tibble.max_extra_cols = 0, width = 90)
 ```
 
 
@@ -116,3 +116,9 @@ stn_vec_df
 ```
 
 For more information on the data flags, see the [Flags vignette](flags.html), for more information on units and terms, see the [Terms and Units vignette](glossary.html).
+
+```{r, include = FALSE}
+# Reset options
+options(old)
+```
+

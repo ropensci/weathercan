@@ -12,7 +12,7 @@ vignette: >
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(cache = FALSE)
-options(tibble.max_extra_cols = 0)
+old <- options(tibble.max_extra_cols = 0)
 ```
 
 ## Packages
@@ -117,5 +117,11 @@ ggplot(data = finches_weather, aes(x = date, y = n)) +
   geom_line(aes(y = wind_spd * 50, colour = "Wind Speed"), size = 2) +
   scale_colour_discrete(name = "") +
   scale_y_continuous(name = "Activity Counts", sec.axis = sec_axis(~. / 50, name = "Temperature (C) / Wind Speed (km/h)"))
+```
+
+
+```{r, include = FALSE}
+# Reset options
+options(old)
 ```
 

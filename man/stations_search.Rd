@@ -71,7 +71,7 @@ stations_search(name = "Kamloops", interval = "hour")
 
 stations_search(name='Ottawa', starts_latest=1950, ends_earliest=2010)
 
-if(requireNamespace("sp", quietly = TRUE)) {
+if(requireNamespace("sp")) {
   stations_search(coords = c(53.915495, -122.739379))
 }
 

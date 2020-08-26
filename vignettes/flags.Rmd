@@ -29,7 +29,7 @@ In the `weather_dl()` function if `format = TRUE` (the default), data correspond
 For example, a sample of unformatted data from Magog station in Quebec looks like:
 
 ```{r, echo = FALSE}
-options(width = 100)
+old <- options(width = 100)
 w <- weather_dl(station_id = 5401, start =  "2017-01-01", 
                 interval = "month", format = FALSE)
 
@@ -78,3 +78,10 @@ The codes index for climate normals can be accessed through the built-in data fr
 ```{r, echo = FALSE}
 knitr::kable(codes)
 ```
+
+
+```{r, include = FALSE}
+# Reset options
+options(old)
+```
+

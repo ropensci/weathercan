@@ -51,8 +51,7 @@ stored in the option \code{weathercan.urls.normals}. To change this location use
 
 \donttest{
   # Update stations data frame
-  if(requireNamespace("lutz", quietly = TRUE) &&
-    requireNamespace("sf", quietly = TRUE)) {
+  if(requireNamespace("lutz") && requireNamespace("sf")) {
     s <- stations_dl()
 
     # Use new data frame to search for stations

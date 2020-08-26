@@ -20,6 +20,7 @@ gc
 GitHub
 Hadley
 http
+https
 Humidex
 isn
 json
@@ -50,7 +51,6 @@ svg
 Temperatureflag
 tibble
 tibbles
-tidyr
 tidyverse
 timeframe
 timezones

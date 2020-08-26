@@ -231,10 +231,13 @@ for more details)</p>
 <code><a href='https://rdrr.io/r/base/options.html'>options(weathercan.urls.normals = "your_new_url")</a></code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'>
 <span class='co'># Find the climate_id</span>
-<span class='fu'><a href='stations_search.html'>stations_search</a></span>(<span class='st'>"Brandon A"</span>, <span class='kw'>normals_only</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
+<span class='fu'><a href='stations_search.html'>stations_search</a></span>(<span class='st'>"Brandon A"</span>, <span class='kw'>normals_only</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 11</span><span>
+#&gt;   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz   
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> MB    BRANDON A          </span><span style='text-decoration: underline;'>3</span><span>471 5010480     </span><span style='text-decoration: underline;'>71</span><span>140 YBR    49.9 -</span><span style='color: #BB0000;'>100.</span><span>  409. Etc/…
+#&gt; </span><span style='color: #949494;'># … with 1 more variable: normals </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span></div><div class='input'>
 <span class='co'># Download climate normals</span>
 <span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='fu'>normals_dl</span>(<span class='kw'>climate_ids</span> <span class='kw'>=</span> <span class='st'>"5010480"</span>)
 
@@ -246,21 +249,26 @@ for more details)</p>
 <span class='no'>nm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>unnest</a></span>(<span class='no'>n</span>, <span class='no'>normals</span>)
 
 <span class='co'># Download multiple stations</span>
-<span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='fu'>normals_dl</span>(<span class='kw'>climate_ids</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"3010234"</span>, <span class='st'>"3010410"</span>, <span class='st'>"3010815"</span>))
-<span class='no'>n</span>
-
+<span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='fu'>normals_dl</span>(<span class='kw'>climate_ids</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"3010234"</span>, <span class='st'>"3010410"</span>, <span class='st'>"3010815"</span>))</div><div class='output co'>#&gt; <span class='message'>All climate normals missing for some stations (climate_ids: 3010410)</span></div><div class='input'><span class='no'>n</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 3 x 6</span><span>
+#&gt;   prov  station_name climate_id meets_wmo normals             frost           
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span>          
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> AB    ANDREW       3010234    FALSE     </span><span style='color: #949494;'>&lt;tibble [13 × 123]&gt;</span><span> </span><span style='color: #949494;'>&lt;tibble [7 × 8]&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> AB    AURORA LO    3010410    FALSE     </span><span style='color: #949494;'>&lt;tibble [0 × 0]&gt;</span><span>    </span><span style='color: #949494;'>&lt;tibble [0 × 0]&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> AB    BRETON       3010815    FALSE     </span><span style='color: #949494;'>&lt;tibble [13 × 65]&gt;</span><span>  </span><span style='color: #949494;'>&lt;tibble [0 × 0]&gt;</span><span></div><div class='input'>
 <span class='co'># Note that some have files online but no data</span>
-<span class='no'>n</span>$<span class='no'>normals</span>[<span class='fl'>2</span>]
-
+<span class='no'>n</span>$<span class='no'>normals</span>[<span class='fl'>2</span>]</div><div class='output co'>#&gt; [[1]]
+#&gt; </span><span style='color: #949494;'># A tibble: 0 x 0</span><span>
+#&gt; </div><div class='input'>
 <span class='co'># Some have no last frost data</span>
-<span class='no'>n</span>$<span class='no'>frost</span>[<span class='fl'>3</span>]
-
+<span class='no'>n</span>$<span class='no'>frost</span>[<span class='fl'>3</span>]</div><div class='output co'>#&gt; [[1]]
+#&gt; </span><span style='color: #949494;'># A tibble: 0 x 0</span><span>
+#&gt; </div><div class='input'>
 <span class='co'># Note, putting both into the same data set can be done but makes for</span>
 <span class='co'># a very unweildly dataset (there is lots of repetition)</span>
 <span class='no'>nm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>unnest</a></span>(<span class='no'>n</span>, <span class='no'>normals</span>)
 <span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>unnest</a></span>(<span class='no'>n</span>, <span class='no'>frost</span>)
-<span class='no'>both</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>full_join</a></span>(<span class='no'>nm</span>, <span class='no'>f</span>)
-}</div></pre>
+<span class='no'>both</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>full_join</a></span>(<span class='no'>nm</span>, <span class='no'>f</span>)</div><div class='output co'>#&gt; <span class='message'>Joining, by = c("prov", "station_name", "climate_id", "meets_wmo")</span></div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
