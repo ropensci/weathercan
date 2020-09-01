@@ -6,7 +6,7 @@
   "@type": "SoftwareSourceCode",
   "identifier": "weathercan",
   "description": "Provides means for downloading historical weather data from \n    the Environment and Climate Change Canada website \n    (<https://climate.weather.gc.ca/historical_data/search_historic_data_e.html>). \n    Data can be downloaded from multiple stations and over large date ranges \n    and automatically processed into a single dataset. Tools are also provided \n    to identify stations either by name or proximity to a location.",
-  "name": "weathercan: Download Weather Data from the Environment and Climate Change Canada Website",
+  "name": "weathercan: Download Weather Data from Environment and Climate Change Canada",
   "codeRepository": "https://github.com/ropensci/weathercan/",
   "issueTracker": "https://github.com/ropensci/weathercan/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
