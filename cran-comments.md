@@ -2,7 +2,7 @@
 
 * Resubmission with requested changes from CRAN (Thank you!)
 * \dontrun removed where unnecessary (normals_dl example)
-* Remove "quietly = TRUE" for requireNamespace() in examples
+* Removed "quietly = TRUE" for requireNamespace() in examples
 * Reset user's options in Vignettes
 
 ## Test environments
