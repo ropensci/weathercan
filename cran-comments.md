@@ -1,7 +1,7 @@
 ## Release v.0.4.0
 
 * Resubmission with requested changes from CRAN (Thank you!)
-* \dontrun removed where unnecessary (normals_dl example)
+* \dontrun replaced with \donttest (long running example in normals_dl)
 * Removed "quietly = TRUE" for requireNamespace() in examples
 * Reset user's options in Vignettes
 

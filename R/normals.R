@@ -40,6 +40,8 @@
 #'
 #' @examples
 #'
+#' \donttest{
+#'
 #' # Find the climate_id
 #' stations_search("Brandon A", normals_only = TRUE)
 #'
@@ -69,6 +71,7 @@
 #' f <- unnest(n, frost)
 #' both <- dplyr::full_join(nm, f)
 #'
+#' }
 #' @export
 
 normals_dl <- function(climate_ids, normals_years = "1981-2010",
