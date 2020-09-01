@@ -65,6 +65,8 @@ Climate normals are downloaded from the url stored in option
 }
 \examples{
 
+\donttest{
+
 # Find the climate_id
 stations_search("Brandon A", normals_only = TRUE)
 
@@ -94,4 +96,5 @@ nm <- unnest(n, normals)
 f <- unnest(n, frost)
 both <- dplyr::full_join(nm, f)
 
+}
 }
