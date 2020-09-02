@@ -1,6 +1,6 @@
 ## ---- include = FALSE-------------------------------------------------------------------
 knitr::opts_chunk$set(cache = FALSE)
-options(tibble.max_extra_cols = 0, width = 90)
+old <- options(tibble.max_extra_cols = 0, width = 90)
 
 ## ---- message = FALSE-------------------------------------------------------------------
 library(dplyr)
@@ -60,4 +60,8 @@ ggplot(data = kam.pg, aes(x = time, y = temp, group = station_name, colour = sta
 stn_vec_df <- weather_dl(station_ids = stn_vector, start = "2016-01-01", end = "2016-02-15")
 
 stn_vec_df
+
+## ---- include = FALSE---------------------------------------------------------
+# Reset options
+options(old)
 

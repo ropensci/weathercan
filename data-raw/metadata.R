@@ -7,14 +7,14 @@ library(stringr)
 flags <- tibble(interval = c("hour", "day", "month"),
                 station_id = c(51423, 51423, 43823)) %>%
   mutate(flags = purrr::map2(.data$station_id, .data$interval,
-                             ~ meta_raw(weather_html(station_id = .x,
-                                                     interval = .y,
-                                                     format = "txt"),
+                             ~ meta_raw(meta_html(station_id = .x,
+                                                  interval = .y),
                                         interval = .y, return = "legend"))) %>%
   tidyr::unnest(flags) %>%
-  select(code = "V1", meaning = "V2") %>%
+  select(code = "X1", meaning = "X2") %>%
   distinct() %>%
-  arrange(code)
+  arrange(code) %>%
+  mutate(meaning = str_remove(meaning, "\\*"))
 usethis::use_data(flags, overwrite = TRUE)
 
 
@@ -40,7 +40,7 @@ gloss_url <- list(
   lapply(., FUN = function(x) mutate(x, ind = as.character(ind))) %>%
   tibble(interval = names(.), data = .) %>%
   tidyr::unnest(data) %>%
-  mutate(value = paste0("http://climate.weather.gc.ca/glossary_e.html#",
+  mutate(value = paste0("https://climate.weather.gc.ca/glossary_e.html#",
                         values)) %>%
   select(interval, weathercan_name = ind, ECCC_ref = value)
 
@@ -55,13 +55,13 @@ glossary <- tibble(interval = c(rep("hour", length(w_names$hour)),
   left_join(gloss_url, by = c("interval", "weathercan_name")) %>%
   mutate(ECCC_ref = replace(ECCC_ref,
                             weathercan_name == "qual",
-                            "http://climate.weather.gc.ca/climate_data/data_quality_e.html"),
+                            "https://climate.weather.gc.ca/climate_data/data_quality_e.html"),
          ECCC_ref = replace(ECCC_ref, str_detect(weathercan_name, "_flag"), "See `flags` vignette or dataset for more details"),
          ECCC_ref = replace(ECCC_ref, str_detect(ECCC_ref, "#NA"), NA),
          units = replace(units, weathercan_name %in% c("year", "month", "day", "hour"),
                          weathercan_name[weathercan_name %in% c("year", "month", "day", "hour")]),
          ECCC_ref = replace(ECCC_ref, weathercan_name %in% c("year", "month", "day", "hour"),
-                            "http://climate.weather.gc.ca/glossary_e.html#dataInt"),
+                            "https://climate.weather.gc.ca/glossary_e.html#dataInt"),
          units = replace(units, weathercan_name == "time", "ISO date/time"),
          units = replace(units, weathercan_name == "date", "ISO date"),
          units = replace(units, weathercan_name %in% c("hmdx", "wind_chill"), "index"),
@@ -72,8 +72,7 @@ usethis::use_data(glossary, overwrite = TRUE)
 
 
 codes <- normals_raw(loc = normals_url("AB", "301C3D4",
-                                       normals_years = "1981-2010"),
-                     return = "all") %>%
+                                       normals_years = "1981-2010")) %>%
   .[8:11] %>%
   str_replace_all("\"\"", "'") %>%
   str_remove_all("\"") %>%

@@ -8,7 +8,7 @@
 \description{
 \code{weathercan} is an R package for simplifying the downloading of
 Historical Climate Data from the Environment and Climate Change Canada (ECCC)
-website (\url{http://climate.weather.gc.ca})
+website (\url{https://climate.weather.gc.ca})
 }
 \details{
 Bear in mind that these downloads can be fairly large and performing
@@ -25,18 +25,22 @@ location
 \item \code{\link[=stations_dl]{stations_dl()}} re-download/update stations data
 }
 \item Download \strong{weather} data
+}
 \itemize{
 \item \code{\link[=weather_dl]{weather_dl()}}
 }
+\enumerate{
 \item Merge \strong{weather} data into other data sets through interpolation
 over time
+}
 \itemize{
 \item \code{\link[=weather_interp]{weather_interp()}}
 }
+\enumerate{
 \item Download \strong{climate normals} data
+}
 \itemize{
 \item \code{\link[=normals_dl]{normals_dl()}}
-}
 }
 
 We also include several practice data sets:
@@ -59,16 +63,16 @@ As well as several vignettes:
 \href{https://docs.ropensci.org/weathercan/}{Online} we also have some
 advanced articles:
 \itemize{
-\item Using \code{weathercan} with \href{http://tidyverse.org/}{tidyverse}
+\item Using \code{weathercan} with \href{https://www.tidyverse.org/}{tidyverse}
 (\href{https://docs.ropensci.org/weathercan/articles/articles/use_with_tidyverse.html}{here})
 \item Mapping weather data
 (\href{https://docs.ropensci.org/weathercan/articles/articles/mapping.html}{here})
 }
 }
 \references{
-Environment and Climate Change Canada: \url{https://www.ec.gc.ca/}
+Environment and Climate Change Canada: \url{https://www.canada.ca/en/environment-climate-change.html}
 
-Glossary of terms \url{http://climate.weather.gc.ca/glossary_e.html}
+Glossary of terms \url{https://climate.weather.gc.ca/glossary_e.html}
 
-ECCC Historical Climate Data: \url{http://climate.weather.gc.ca/}
+ECCC Historical Climate Data: \url{https://climate.weather.gc.ca/}
 }

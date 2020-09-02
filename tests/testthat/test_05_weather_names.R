@@ -3,7 +3,7 @@ context("Data column names")
 
 # Test and alert only if ECCC changes any of the column names
 test_that("weather_raw() hour column names as expected", {
-
+  skip_if_offline()
   skip_on_cran()
   wd <- weather_html(station_id = 51423,
                      date = as.Date("2014-01-01"),
@@ -20,9 +20,8 @@ test_that("weather_raw() hour column names as expected", {
 })
 
 test_that("weather_raw() day column names as expected", {
-
+  skip_if_offline()
   skip_on_cran()
-
   wd <- weather_html(station_id = 51423,
                      date = as.Date("2014-01-01"),
                      interval = "day") %>%
@@ -35,9 +34,8 @@ test_that("weather_raw() day column names as expected", {
 })
 
 test_that("weather_raw() month column names as expected", {
-
+  skip_if_offline()
   skip_on_cran()
-
   wd <- weather_html(station_id = 43823,
                      date = as.Date("2005-01-01"),
                      interval = "month") %>%

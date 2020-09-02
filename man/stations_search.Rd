@@ -4,10 +4,18 @@
 \alias{stations_search}
 \title{Search for stations by name or location}
 \usage{
-stations_search(name = NULL, coords = NULL, dist = 10,
-  interval = c("hour", "day", "month"), normals_only = FALSE,
-  stn = weathercan::stations, starts_latest = NULL,
-  ends_earliest = NULL, verbose = FALSE, quiet = FALSE)
+stations_search(
+  name = NULL,
+  coords = NULL,
+  dist = 10,
+  interval = c("hour", "day", "month"),
+  normals_only = FALSE,
+  stn = weathercan::stations,
+  starts_latest = NULL,
+  ends_earliest = NULL,
+  verbose = FALSE,
+  quiet = FALSE
+)
 }
 \arguments{
 \item{name}{Character. A vector of length 1 or more with text against which
@@ -54,14 +62,17 @@ information with which to decide which station to then get weather data from.
 }
 \details{
 To search by coordinates, users must make sure they have the
-\code{\link[sp]{sp}} package installed.
+\href{https://cran.r-project.org/package=sp}{sp} package installed.
 }
 \examples{
 
 stations_search(name = "Kamloops")
 stations_search(name = "Kamloops", interval = "hour")
 
-stations_search(coords = c(53.915495, -122.739379))
 stations_search(name='Ottawa', starts_latest=1950, ends_earliest=2010)
+
+if(requireNamespace("sp")) {
+  stations_search(coords = c(53.915495, -122.739379))
+}
 
 }

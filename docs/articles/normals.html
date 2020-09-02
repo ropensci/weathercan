@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">weathercan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -108,7 +108,7 @@
       <h1 data-toc-skip>Climate Normals</h1>
                         <h4 class="author">Steffi LaZerte</h4>
             
-            <h4 class="date">2020-04-08</h4>
+            <h4 class="date">2020-08-26</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/weathercan/blob/master/vignettes/normals.Rmd"><code>vignettes/normals.Rmd</code></a></small>
       <div class="hidden name"><code>normals.Rmd</code></div>
@@ -130,7 +130,7 @@
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="../reference/stations_search.html">stations_search</a></span>(<span class="st">"Winnipeg"</span>, <span class="kw">normals_only</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 3 x 11
 ##   prov  station_name    station_id climate_id WMO_id TC_id   lat   lon  elev tz    normals
-##   &lt;chr&gt; &lt;chr&gt;                &lt;int&gt; &lt;fct&gt;       &lt;int&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;lgl&gt;  
+##   &lt;chr&gt; &lt;chr&gt;                &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;lgl&gt;  
 ## 1 MB    WINNIPEG A CS        27174 502S001     71849 XWG    49.9 -97.2  239. Etc/… TRUE   
 ## 2 MB    WINNIPEG RICHA…       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… TRUE   
 ## 3 MB    WINNIPEG THE F…      28051 5023262     71579 XWN    49.9 -97.1  230  Etc/… TRUE</code></pre>
@@ -144,7 +144,7 @@
 ## 2 MB    WINNIPEG A CS              502S001    FALSE     &lt;tibble [13 × 25]&gt; &lt;tibble [0 × 0…
 ## 3 MB    WINNIPEG THE FORKS         5023262    FALSE     &lt;tibble [13 × 53]&gt; &lt;tibble [0 × 0…</code></pre>
 <p>Because there are two different types of climate normals (weather measurements and first/last frost dates), the data are nested as two different datasets. We can see that the Airport (Richardson Int’l) has the most data with 197 average weather measurements as well as first/last frost dates. The other two weather stations have fewer weather measurements and no frost data available.</p>
-<p>We can also see that only one of the three stations has data quality sufficient to meet the WMO standards for temperature and precipitation (i.e. both these measurements have code &gt;= A). See the <a href="http://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf">ECCC calculations document</a> for more details.</p>
+<p>We can also see that only one of the three stations has data quality sufficient to meet the WMO standards for temperature and precipitation (i.e. both these measurements have code &gt;= A). See the <a href="https://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf">ECCC calculations document</a> for more details.</p>
 <p>To extract either data set we can use the <code><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest()</a></code> function from the <code>tidyr</code> package.</p>
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">normals</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span>(<span class="no">n</span>, <span class="no">normals</span>)
 <span class="no">frost</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span>(<span class="no">n</span>, <span class="no">frost</span>)</pre></body></html></div>
@@ -250,7 +250,7 @@
 <p>The measurements contained in the climate normals are very specific. To better understand how they are calculated please explore the following resources:</p>
 <ul>
 <li>
-<a href="http://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf">ECCC Climate Normals Calculations</a>
+<a href="https://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf">ECCC Climate Normals Calculations</a>
 <ul>
 <li><a href="flags.html"><code>weathercan</code> Climate Normals Codes</a></li>
 </ul>

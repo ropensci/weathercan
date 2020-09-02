@@ -4,11 +4,13 @@
 \name{codes}
 \alias{codes}
 \title{Meaning of climate normal 'codes'}
-\format{A data frame with 4 rows and 2 variables:
+\format{
+A data frame with 4 rows and 2 variables:
 \describe{
 \item{code}{Code}
 \item{meaning}{Explanation of the code}
-}}
+}
+}
 \usage{
 codes
 }

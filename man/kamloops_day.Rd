@@ -4,7 +4,8 @@
 \name{kamloops_day}
 \alias{kamloops_day}
 \title{Daily weather data for Kamloops}
-\format{An example dataset of daily weather data for Kamloops:
+\format{
+An example dataset of daily weather data for Kamloops:
 \describe{
 \item{station_name}{Station name}
 \item{station_id}{Environment Canada's station ID number. Required for
@@ -42,15 +43,16 @@ downloading station data.}
 \item{climate_id}{Climate identifier}
 \item{WMO_id}{World Meteorological Organization Identifier}
 \item{TC_id}{Transport Canada Identifier}
-}}
+}
+}
 \source{
-\url{http://climate.weather.gc.ca/index_e.html}
+\url{https://climate.weather.gc.ca/index_e.html}
 }
 \usage{
 kamloops_day
 }
 \description{
 Downloaded with \code{\link{weather}()}. Terms are more thoroughly defined
-here \url{http://climate.weather.gc.ca/glossary_e.html}
+here \url{https://climate.weather.gc.ca/glossary_e.html}
 }
 \keyword{datasets}

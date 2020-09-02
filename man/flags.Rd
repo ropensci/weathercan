@@ -4,11 +4,13 @@
 \name{flags}
 \alias{flags}
 \title{Meaning of coded 'flags'}
-\format{A data frame with 16 rows and 2 variables:
+\format{
+A data frame with 16 rows and 2 variables:
 \describe{
 \item{code}{Flag code}
 \item{meaning}{Explanation of the code}
-}}
+}
+}
 \usage{
 flags
 }

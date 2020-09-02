@@ -5,8 +5,14 @@
 \alias{add_weather}
 \title{Interpolate and add weather data to a dataframe}
 \usage{
-weather_interp(data, weather, cols = "all", interval = "hour",
-  na_gap = 2, quiet = FALSE)
+weather_interp(
+  data,
+  weather,
+  cols = "all",
+  interval = "hour",
+  na_gap = 2,
+  quiet = FALSE
+)
 }
 \arguments{
 \item{data}{Dataframe. Data with dates or times to which weather data should

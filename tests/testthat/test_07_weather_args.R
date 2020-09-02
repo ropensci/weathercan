@@ -2,13 +2,10 @@
 context("weather_dl() arguments")
 
 test_that("weather_dl() hour format = FALSE", {
-  if(on_CRAN()) {
-    mockery::stub(weather_dl, "weather_html", tests$weather_html_01)
-    mockery::stub(weather_dl, "meta_html", tests$meta_html_01)
-  }
-
-  w <- weather_dl(station_ids = 51423, start = "2014-01-01", end = "2014-01-31",
-                  format = FALSE)
+  vcr::use_cassette("weather_hour_51423_2014-01", {
+    w <- weather_dl(station_ids = 51423, start = "2014-01-01", end = "2014-01-31",
+                    format = FALSE)
+  })
 
   ## Basics
   expect_is(w, "data.frame")
@@ -29,13 +26,10 @@ test_that("weather_dl() hour format = FALSE", {
 })
 
 test_that("weather_dl() day format = FALSE", {
-  if(on_CRAN()) {
-    mockery::stub(weather_dl, "weather_html", tests$weather_html_02)
-    mockery::stub(weather_dl, "meta_html", tests$meta_html_02)
-  }
-
-  w <- weather_dl(station_ids = 51423, start = "2014-01-01", end = "2014-03-01",
-                  interval = "day", format = FALSE)
+  vcr::use_cassette("weather_day_51423_2014", {
+    w <- weather_dl(station_ids = 51423, start = "2014-01-01", end = "2014-03-01",
+                    interval = "day", format = FALSE)
+  })
 
   ## Basics
   expect_is(w, "data.frame")
@@ -53,18 +47,16 @@ test_that("weather_dl() day format = FALSE", {
 
   expect_equal(w$`Date/Time`[1], "2014-01-01")
   #expect_equal(w$`Data Quality`[1], "\u2021")
-  expect_equal(w$`Data Quality`[1], "")
+  expect_true(is.na(w$`Data Quality`[1]))
 
 })
 
 test_that("weather_dl() month format = FALSE", {
-  if(on_CRAN()) {
-    mockery::stub(weather_dl, "weather_html", tests$weather_html_03)
-    mockery::stub(weather_dl, "meta_html", tests$meta_html_03)
-  }
-  expect_silent(w <- weather_dl(station_ids = 5401,
-                                start = "2017-01-01", end = "2017-05-01",
-                                interval = "month", format = FALSE))
+  vcr::use_cassette("weather_month_5401", {
+    expect_silent(w <- weather_dl(station_ids = 5401,
+                                  start = "2017-01-01", end = "2017-05-01",
+                                  interval = "month", format = FALSE))
+  })
 
   ## Basics
   expect_is(w, "data.frame")
@@ -81,19 +73,19 @@ test_that("weather_dl() month format = FALSE", {
   expect_equal(w$prov[1], "QC")
   expect_equal(w$`Date/Time`[1], "1948-01")
   expect_equal(w$climate_id[1], "7024440")
-  expect_equal(w$WMO_id[1], "")
-  expect_equal(w$TC_id[1], "")
+  expect_true(is.na(w$WMO_id[1]))
+  expect_true(is.na(w$TC_id[1]))
 })
 
 
 test_that("weather_dl() month string_as = NULL", {
-  if(on_CRAN()) {
-    mockery::stub(weather_dl, "weather_html", tests$weather_html_02)
-    mockery::stub(weather_dl, "meta_html", tests$meta_html_02)
-  }
-  expect_warning(expect_message(w <- weather_dl(station_id = 51423, interval = "day",
-                                                start = "2014-01-01", end = "2014-03-01",
-                                                string_as = NULL)),
-                 NA)
+  vcr::use_cassette("weather_month_5410", {
+    expect_warning(expect_message(w <- weather_dl(station_id = 5410,
+                                                  interval = "month",
+                                                  start = "2014-01-01",
+                                                  end = "2014-03-01",
+                                                  string_as = NULL)),
+                   NA)
+  })
 
 })

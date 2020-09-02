@@ -4,7 +4,8 @@
 \name{stations}
 \alias{stations}
 \title{Station data downloaded from Environment and Climate Change Canada}
-\format{A data frame with 26211 rows and 12 variables:
+\format{
+A data frame with 26211 rows and 12 variables:
 \describe{
 \item{prov}{Province}
 \item{station_name}{Station name}
@@ -21,9 +22,10 @@ downloading station data.}
 \item{start}{Starting year of data record}
 \item{end}{Ending year of data record}
 \item{normals}{Whether climate normals are available for that station}
-}}
+}
+}
 \source{
-\url{http://climate.weather.gc.ca/index_e.html}
+\url{https://climate.weather.gc.ca/index_e.html}
 }
 \usage{
 stations

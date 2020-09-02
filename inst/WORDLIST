@@ -1,6 +1,7 @@
 10AM
 11AM
 12PM
+24hrs
 9AM
 AppVeyor
 Boreal
@@ -19,6 +20,7 @@ gc
 GitHub
 Hadley
 http
+https
 Humidex
 isn
 json
@@ -29,6 +31,7 @@ listcol
 listcols
 lon
 Manitoban
+memoise
 Meteoland
 midnights
 MUData
@@ -36,6 +39,7 @@ normals
 Normals
 popups
 readme
+readr
 RFID
 RMarkdown
 ropensci
@@ -47,7 +51,6 @@ svg
 Temperatureflag
 tibble
 tibbles
-tidyr
 tidyverse
 timeframe
 timezones
@@ -56,6 +59,9 @@ unformatted
 unnest
 unnesting
 v0
+v1
+v3
+vcr
 WGS84
 Wickham
 WMO

@@ -5,8 +5,13 @@
 \alias{stations_all}
 \title{Get available stations}
 \usage{
-stations_dl(url = NULL, normals_years = "1981-2010", skip = NULL,
-  verbose = FALSE, quiet = FALSE)
+stations_dl(
+  url = NULL,
+  normals_years = "1981-2010",
+  skip = NULL,
+  verbose = FALSE,
+  quiet = FALSE
+)
 }
 \arguments{
 \item{url}{DEPRECATED. To set a different url use \code{options()} (see details).}
@@ -45,11 +50,13 @@ stored in the option \code{weathercan.urls.normals}. To change this location use
 \examples{
 
 \donttest{
- # Update stations data frame
- s <- stations_dl()
+  # Update stations data frame
+  if(requireNamespace("lutz") && requireNamespace("sf")) {
+    s <- stations_dl()
 
- # Use new data frame to search for stations
- stations_search("Winnipeg", stn = s)
+    # Use new data frame to search for stations
+    stations_search("Winnipeg", stn = s)
+   }
 }
 
 }

@@ -4,6 +4,20 @@ author: "Steffi LaZerte"
 output: html_document
 ---
 
+# weathercan 0.4.0 (2020-08-26)
+
+## Bug fixes
+- Fixed odd bug where some Linux systems failed to download stations data
+
+## Features and potentially breaking changes
+- Added caching in memory with memoise (caches for 24hrs, can change this by restarting the R session)
+    - Caches individual downloaded files, so you may see a speed up even if you change the parameters of the download.
+- Some missing values in meta data previously were "" but are now explicitly NAs
+
+## Internal changes
+- Use readr for reading data
+- Use vcr for tests
+
 # weathercan 0.3.4 (2020-04-14)
 
 ## Small changes
@@ -93,7 +107,7 @@ output: html_document
 
 # weathercan 0.2.4 (2018-02-01)
 
-Now part of [ropensci.org](http://ropensci.org)!
+Now part of [ropensci.org](https://ropensci.org)!
 
 ## Changes
 - `sp` moved to suggests, users are now prompted to install sp if they want to search stations by coordinates

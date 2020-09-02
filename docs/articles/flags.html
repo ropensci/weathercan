@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">weathercan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -108,7 +108,7 @@
       <h1 data-toc-skip>The meanings of flags and codes</h1>
                         <h4 class="author">Steffi LaZerte</h4>
             
-            <h4 class="date">2020-04-08</h4>
+            <h4 class="date">2020-08-26</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/weathercan/blob/master/vignettes/flags.Rmd"><code>vignettes/flags.Rmd</code></a></small>
       <div class="hidden name"><code>flags.Rmd</code></div>
@@ -130,35 +130,35 @@
 <pre><code>## # A tibble: 12 x 6
 ##    station_name `Date/Time` `Total Precip (m… `Total Precip Fl… `Snow Grnd Last D… `Snow Grnd Last …
 ##    &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;             &lt;chr&gt;             &lt;chr&gt;              &lt;chr&gt;            
-##  1 MAGOG        2017-03     30.4              "^"               ""                 "M"              
-##  2 MAGOG        2017-04     114.0             "^"               "0"                ""               
-##  3 MAGOG        2017-05     78.8              "^"               "0"                ""               
-##  4 MAGOG        2017-06     140.7             "^"               "0"                ""               
-##  5 MAGOG        2017-07     80.7              ""                "0"                ""               
-##  6 MAGOG        2017-08     135.8             ""                "0"                ""               
-##  7 MAGOG        2017-09     63.0              "^"               "0"                ""               
-##  8 MAGOG        2017-10     140.8             "^"               "0"                ""               
-##  9 MAGOG        2017-11     70.0              "^"               "0"                ""               
-## 10 MAGOG        2017-12     45.7              "^"               "10"               ""               
-## 11 MAGOG        2018-01     34.6              "^"               "2"                ""               
-## 12 MAGOG        2018-02     77.2              "^"               "0"                ""</code></pre>
+##  1 MAGOG        2017-03     30.4              ^                 &lt;NA&gt;               M                
+##  2 MAGOG        2017-04     114.0             ^                 0                  &lt;NA&gt;             
+##  3 MAGOG        2017-05     78.8              ^                 0                  &lt;NA&gt;             
+##  4 MAGOG        2017-06     140.7             ^                 0                  &lt;NA&gt;             
+##  5 MAGOG        2017-07     80.7              &lt;NA&gt;              0                  &lt;NA&gt;             
+##  6 MAGOG        2017-08     135.8             &lt;NA&gt;              0                  &lt;NA&gt;             
+##  7 MAGOG        2017-09     63.0              ^                 0                  &lt;NA&gt;             
+##  8 MAGOG        2017-10     140.8             ^                 0                  &lt;NA&gt;             
+##  9 MAGOG        2017-11     70.0              ^                 0                  &lt;NA&gt;             
+## 10 MAGOG        2017-12     45.7              ^                 10                 &lt;NA&gt;             
+## 11 MAGOG        2018-01     34.6              ^                 2                  &lt;NA&gt;             
+## 12 MAGOG        2018-02     77.2              ^                 0                  &lt;NA&gt;</code></pre>
 <p>In this output, you can see two flags: <code><a href="https://rdrr.io/r/base/Arithmetic.html">^</a></code> in <code>Total Precip</code> and <code>M</code> in <code>Snow Grnd Last Day</code></p>
 <p>This same sample, formatted looks like:</p>
 <pre><code>## # A tibble: 12 x 5
 ##    date       total_precip total_precip_flag snow_grnd_last_day snow_grnd_last_day_flag
 ##    &lt;date&gt;            &lt;dbl&gt; &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;                  
-##  1 2017-03-01         30.4 "^"                               NA "M"                    
-##  2 2017-04-01        114   "^"                                0 ""                     
-##  3 2017-05-01         78.8 "^"                                0 ""                     
-##  4 2017-06-01        141.  "^"                                0 ""                     
-##  5 2017-07-01         80.7 ""                                 0 ""                     
-##  6 2017-08-01        136.  ""                                 0 ""                     
-##  7 2017-09-01         63   "^"                                0 ""                     
-##  8 2017-10-01        141.  "^"                                0 ""                     
-##  9 2017-11-01         70   "^"                                0 ""                     
-## 10 2017-12-01         45.7 "^"                               10 ""                     
-## 11 2018-01-01         34.6 "^"                                2 ""                     
-## 12 2018-02-01         77.2 "^"                                0 ""</code></pre>
+##  1 2017-03-01         30.4 ^                                 NA M                      
+##  2 2017-04-01        114   ^                                  0 &lt;NA&gt;                   
+##  3 2017-05-01         78.8 ^                                  0 &lt;NA&gt;                   
+##  4 2017-06-01        141.  ^                                  0 &lt;NA&gt;                   
+##  5 2017-07-01         80.7 &lt;NA&gt;                               0 &lt;NA&gt;                   
+##  6 2017-08-01        136.  &lt;NA&gt;                               0 &lt;NA&gt;                   
+##  7 2017-09-01         63   ^                                  0 &lt;NA&gt;                   
+##  8 2017-10-01        141.  ^                                  0 &lt;NA&gt;                   
+##  9 2017-11-01         70   ^                                  0 &lt;NA&gt;                   
+## 10 2017-12-01         45.7 ^                                 10 &lt;NA&gt;                   
+## 11 2018-01-01         34.6 ^                                  2 &lt;NA&gt;                   
+## 12 2018-02-01         77.2 ^                                  0 &lt;NA&gt;</code></pre>
 <p>As you can see, we still have the two flags, but the missing data flag (<code>M</code>) is now replaced with NA. The other flag <code><a href="https://rdrr.io/r/base/Arithmetic.html">^</a></code> is not, as it indicates that “The value displayed is based on incomplete data” (see below).</p>
 </div>
 <div id="flags---weather-data" class="section level3">
@@ -173,7 +173,7 @@
 <tbody>
 <tr class="odd">
 <td align="left">[empty]</td>
-<td align="left">No data available</td>
+<td align="left">Indicates an unobserved value</td>
 </tr>
 <tr class="even">
 <td align="left">†</td>

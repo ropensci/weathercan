@@ -2,7 +2,7 @@
 #'
 #' \code{weathercan} is an R package for simplifying the downloading of
 #' Historical Climate Data from the Environment and Climate Change Canada (ECCC)
-#' website (<http://climate.weather.gc.ca>)
+#' website (<https://climate.weather.gc.ca>)
 #'
 #' Bear in mind that these downloads can be fairly large and performing
 #' repeated, large downloads may use up Environment Canada's bandwidth
@@ -44,17 +44,17 @@
 #' [Online](https://docs.ropensci.org/weathercan/) we also have some
 #' advanced articles:
 #'
-#'  - Using `weathercan` with [tidyverse](http://tidyverse.org/)
+#'  - Using `weathercan` with [tidyverse](https://www.tidyverse.org/)
 #'  ([here](https://docs.ropensci.org/weathercan/articles/articles/use_with_tidyverse.html))
 #'  - Mapping weather data
 #'  ([here](https://docs.ropensci.org/weathercan/articles/articles/mapping.html))
 #'
 #' @references
-#' Environment and Climate Change Canada: <https://www.ec.gc.ca/>
+#' Environment and Climate Change Canada: <https://www.canada.ca/en/environment-climate-change.html>
 #'
-#' Glossary of terms <http://climate.weather.gc.ca/glossary_e.html>
+#' Glossary of terms <https://climate.weather.gc.ca/glossary_e.html>
 #'
-#' ECCC Historical Climate Data: <http://climate.weather.gc.ca/>
+#' ECCC Historical Climate Data: <https://climate.weather.gc.ca/>
 #'
 #'
 #' @docType package
@@ -70,7 +70,7 @@ NULL
                     pkgname = "weathercan"){
 
   options(weathercan.urls.weather =
-            "http://climate.weather.gc.ca/climate_data/bulk_data_e.html",
+            "https://climate.weather.gc.ca/climate_data/bulk_data_e.html",
           weathercan.urls.normals =
             "https://dd.meteo.gc.ca/climate/observations/normals/csv",
           weathercan.urls.stations =

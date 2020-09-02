@@ -3,7 +3,7 @@
 #' Downloads data from Environment and Climate Change Canada (ECCC) for one or
 #' more stations. For details and units, see the glossary vignette
 #' (`vignette("glossary", package = "weathercan")`) or the glossary online
-#' <http://climate.weather.gc.ca/glossary_e.html>.
+#' <https://climate.weather.gc.ca/glossary_e.html>.
 #'
 #' @details Data can be returned 'raw' (format = FALSE) or can be formatted.
 #'   Formatting transforms dates/times to date/time class, renames columns, and
@@ -398,7 +398,6 @@ weather_dl <- function(station_ids,
   dplyr::as_tibble(w_all)
 }
 
-
 weather_single <- function(date_range, s, interval, encoding) {
   w <- dplyr::tibble(date_range = date_range) %>%
     dplyr::mutate(html = purrr::map(.data$date_range,
@@ -420,16 +419,17 @@ weather_single <- function(date_range, s, interval, encoding) {
 
 
 get_html <- function(station_id,
-                         date = NULL,
-                         interval = "hour",
-                         format = "csv") {
+                     date = NULL,
+                     interval = "hour",
+                     format = "csv") {
 
   q <- list(format = format, stationID = station_id,
             timeframe = ifelse(interval == "hour", 1,
                                ifelse(interval == "day", 2,
                                       3)),
             submit = 'Download+Data')
-  if(format == "csv") {
+
+  if(format == "csv" & interval != "month") {
     q['Year'] <- format(date, "%Y")
     q['Month'] = format(date, "%m")
   }
@@ -440,17 +440,27 @@ get_html <- function(station_id,
   html
 }
 
+# Cache function results
+get_html <- memoise::memoise(get_html, ~memoise::timeout(24 * 60 * 60))
+
+
 weather_html <- function(station_id, date, interval = "hour") {
+  if(interval == "month") date <- NULL
   get_html(station_id, date, interval, format = "csv")
 }
 
 meta_html <- function(station_id, interval = "hour") {
-  get_html(station_id, interval, format = "txt")
+  get_html(station_id, date = NULL, interval, format = "txt")
+}
+
+remove_sym <- function(df) {
+  to_remove <- "\\u00BB|\\u00BF|\\u00EF|\\u00C2|\\u00B0"
+  dplyr::rename_all(df, ~stringr::str_remove_all(., to_remove))
 }
 
 
 weather_raw <- function(html, skip = 0,
-                        nrows = -1,
+                        nrows = Inf,
                         header = TRUE,
                         encoding = "UTF-8") {
 
@@ -463,15 +473,17 @@ weather_raw <- function(html, skip = 0,
     raw <- raw[4:length(raw)]
   }
 
-  w <- iconv(readBin(raw, character()),
-             from = "UTF-8", to = "UTF-8") %>%
-    utils::read.csv(text = .,
-                    nrows = nrows, strip.white = TRUE,
-                    skip = skip, header = header,
-                    colClasses = "character", check.names = FALSE)
+  # Get number of columns
+  ncols <- readr::read_csv(raw, n_max = 1, col_names = FALSE, col_types = readr::cols()) %>%
+    ncol()
+  suppressWarnings({ # when some data are missing, final columns not present
+    w <- readr::read_csv(raw, n_max = nrows, skip = skip,
+                         col_types = paste(rep("c", ncols), collapse = ""))})
+  # Get rid of special symbols right away
+  w <- remove_sym(w)
 
-    # For some reason the flags "^" are replaced with "I",
-    # change back to match flags on ECCC website
+  # For some reason the flags "^" are replaced with "I",
+  # change back to match flags on ECCC website
   if(utils::packageVersion("dplyr") > package_version("0.8.0")) {
     w <- dplyr::mutate_at(w, .vars = dplyr::vars(dplyr::ends_with("Flag")),
                           list(~gsub("^I$", "^", .)))
@@ -638,34 +650,37 @@ weather_list_cols <- function(w_all, interval, names) {
 }
 
 meta_raw <- function(html, encoding = "UTF-8", interval, return = "meta") {
-
   split <- httr::content(html, as = "text", encoding = encoding) %>%
     stringr::str_split("\n", simplify = TRUE) %>%
     stringr::str_subset("^\r$", negate = TRUE)
 
   if(return == "meta") {
     i <- stringr::str_which(split, "All times|Legend")[1] - 1
-    r <- utils::read.delim(text = httr::content(html, as = "text",
-                                                type = "text/csv",
-                                                encoding = encoding),
-                           nrows = i,
-                           header = FALSE, check.names = FALSE,
-                           colClasses = "character")
+
+    r <- httr::content(html, as = "text",
+                  type = "text/csv",
+                  encoding = encoding) %>%
+      stringr::str_replace_all("(\\t)+", "\\\t") %>%
+      readr::read_tsv(., n_max = i,
+                      col_names = FALSE,
+                      col_types = readr::cols())
 
     if(ncol(r) > 2) {
-      r <- dplyr::mutate(r, V2 = paste0(.data$V2, .data$V3)) %>%
-        dplyr::select("V1", "V2")
+      stop("Problems parsing metadata. Submit an issue at ",
+           "https://github.com/ropensci/weathercan/issues", call. = FALSE)
     }
   } else if(return == "legend") {
-    r <- utils::read.delim(text = httr::content(html, as = "text",
-                                                type = "text/csv",
-                                                encoding = encoding),
-                           skip = stringr::str_which(split, "Legend") + 1,
-                           strip.white = TRUE,
-                           header = FALSE, check.names = FALSE,
-                           colClasses = "character")
+    r <- httr::content(html, as = "text",
+                       type = "text/csv",
+                       encoding = encoding) %>%
+      stringr::str_replace_all("(\\t)+", "\\\t") %>%
+      stringr::str_remove("\\*https\\:\\/\\/climate.weather.gc.ca\\/FAQ_e.html#Q5") %>%
+      readr::read_tsv(., skip = stringr::str_which(split, "Legend") + 1,
+                      col_names = FALSE,
+                      col_types = readr::cols())
   }
-  r
+  # Get rid of any special symbols
+  remove_sym(r)
 }
 
 meta_format <- function(meta, s) {
@@ -673,9 +688,9 @@ meta_format <- function(meta, s) {
   m <- paste0("(", paste0(m_names, collapse = ")|("), ")")
 
   meta <- meta %>%
-    dplyr::mutate(V1 = stringr::str_extract(.data$V1, pattern = m)) %>%
-    dplyr::filter(!is.na(.data$V1)) %>%
-    tidyr::spread(.data$V1, .data$V2)
+    dplyr::mutate(X1 = stringr::str_extract(.data$X1, pattern = m)) %>%
+    dplyr::filter(!is.na(.data$X1)) %>%
+    tidyr::spread(.data$X1, .data$X2)
 
   m <- m_names[m_names %in% names(meta)]
 

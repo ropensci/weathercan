@@ -1,19 +1,19 @@
-## ---- include = FALSE----------------------------------------------------
+## ---- include = FALSE---------------------------------------------------------
 knitr::opts_chunk$set(cache = FALSE)
-options(tibble.max_extra_cols = 0)
+old <- options(tibble.max_extra_cols = 0)
 
-## ----pck, message = FALSE------------------------------------------------
+## ----pck, message = FALSE-----------------------------------------------------
 library(weathercan)
 library(ggplot2)
 library(dplyr)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 glimpse(kamloops)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 glimpse(finches)
 
-## ---- out.width = "100%", fig.width = 8, dpi = 200-----------------------
+## ---- out.width = "100%", fig.width = 8, dpi = 200----------------------------
 finches_temperature <- weather_interp(data = finches, weather = kamloops, cols = "temp")
 summary(finches_temperature)
 glimpse(finches_temperature)
@@ -24,7 +24,7 @@ ggplot(data = finches_temperature, aes(x = temp, fill = animal_id)) +
   geom_histogram(binwidth = 1) +
   labs(x = "Temperature (C)", y = "Activity Count", fill = "Finch ID")
 
-## ---- out.width = "100%", fig.width = 8, dpi = 200-----------------------
+## ---- out.width = "100%", fig.width = 8, dpi = 200----------------------------
 finches_temperature <- finches_temperature %>%
   group_by(date) %>%
   summarize(n = length(time),
@@ -39,7 +39,7 @@ ggplot(data = finches_temperature, aes(x = date, y = n)) +
   scale_shape_discrete(name = "") +
   scale_y_continuous(name = "Activity", sec.axis = sec_axis(~. / 100, name = "Temperature (C)"))
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 finches_temperature <- weather_interp(data = finches, weather = kamloops, 
                                       cols = "temp", na_gap = 1)
 summary(finches_temperature)
@@ -52,7 +52,7 @@ kamloops %>%
   select(time, temp) %>%
   filter(is.na(temp))
 
-## ---- out.width = "100%", fig.width = 8, dpi = 200-----------------------
+## ---- out.width = "100%", fig.width = 8, dpi = 200----------------------------
 finches_weather <- weather_interp(data = finches, weather = kamloops,
                                   cols = c("temp", "wind_spd"))
 summary(finches_weather)
@@ -73,4 +73,8 @@ ggplot(data = finches_weather, aes(x = date, y = n)) +
   geom_line(aes(y = wind_spd * 50, colour = "Wind Speed"), size = 2) +
   scale_colour_discrete(name = "") +
   scale_y_continuous(name = "Activity Counts", sec.axis = sec_axis(~. / 50, name = "Temperature (C) / Wind Speed (km/h)"))
+
+## ---- include = FALSE---------------------------------------------------------
+# Reset options
+options(old)
 

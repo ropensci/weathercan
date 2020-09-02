@@ -1,19 +1,22 @@
 context("Climate Normals")
 
 test_that("normals_url() correctly creates urls", {
-  if(on_CRAN()) mockery::stub(normals_url, "check_url", "")
+  vcr::use_cassette("normals_url_5010480", {
+    expect_equal(
+      normals_url(prov = "MB", climate_id = c("5010480", "5010480"),
+                  normals_years = "1981-2010"),
+      paste0("https://dd.meteo.gc.ca/climate/observations/normals/csv/1981-2010/",
+             "MB/climate_normals_MB_", c("5010480", "5010480"), "_1981-2010.csv"))
+  })
 
-  expect_equal(
-    normals_url(prov = "MB", climate_id = c("5010480", "5010480"),
-                normals_years = "1981-2010"),
-    paste0("https://dd.meteo.gc.ca/climate/observations/normals/csv/1981-2010/",
-           "MB/climate_normals_MB_", c("5010480", "5010480"), "_1981-2010.csv"))
-
-  expect_silent(normals_url(prov = "MB", climate_id = "5010480",
-                            normals_years = "1981-2010"))
+  vcr::use_cassette("normals_url_5010480", {
+    expect_silent(normals_url(prov = "MB", climate_id = "5010480",
+                              normals_years = "1981-2010"))
+  })
 
   skip_on_cran()
-  expect_error(normals_url(prov = "MB", climate_id = c("5010480", "5010480"),
+  skip_if_offline()
+  expect_error(normals_url(prov = "MB", climate_id = "5010480",
                            normals_years = "1971-2000"),
                "Failed to access climate normals for years 1971-2000",
                class = "http_404")
@@ -29,10 +32,14 @@ test_that("normals_url() correctly creates urls", {
 
 test_that("normals_raw() download normals as character", {
   skip_on_cran()
+  skip_if_offline()
+
   url <- paste0("https://dd.meteo.gc.ca/climate/observations/normals/csv/",
                 "1981-2010/MB/climate_normals_MB_5010480_1981-2010.csv")
+
   expect_silent(normals_raw(url)) %>%
     expect_is("character")
+
 
   expect_error(normals_raw("https://httpstat.us/404"),
                "Failed to access climate normals",
@@ -40,13 +47,13 @@ test_that("normals_raw() download normals as character", {
 })
 
 test_that("normals_extract() cleans up raw data", {
-  if(on_CRAN()) {
-    n <- tests$normals_raw_01
-  } else {
-    n <- paste0("https://dd.meteo.gc.ca/climate/observations/normals/csv/",
-                "1981-2010/MB/climate_normals_MB_5010480_1981-2010.csv") %>%
+  skip_on_cran()
+  skip_if_offline()
+
+  n <- paste0("https://dd.meteo.gc.ca/climate/observations/normals/csv/",
+              "1981-2010/MB/climate_normals_MB_5010480_1981-2010.csv") %>%
     normals_raw()
-  }
+
   expect_silent(n1 <- normals_extract(n)) %>%
     expect_is("character")
   expect_lt(length(n1), length(n))
@@ -54,13 +61,13 @@ test_that("normals_extract() cleans up raw data", {
 })
 
 test_that("data_extract() / frost_extract() extract data", {
-  if(on_CRAN()) {
-    n <- tests$normals_raw_01
-  } else {
-    n <- paste0("https://dd.meteo.gc.ca/climate/observations/normals/csv/",
-                "1981-2010/MB/climate_normals_MB_5010480_1981-2010.csv") %>%
+  skip_on_cran()
+  skip_if_offline()
+
+  n <- paste0("https://dd.meteo.gc.ca/climate/observations/normals/csv/",
+              "1981-2010/MB/climate_normals_MB_5010480_1981-2010.csv") %>%
     normals_raw()
-  }
+
   n <- normals_extract(n)
 
   expect_silent(data_extract(n, climate_id = "5010480")) %>%
@@ -70,13 +77,13 @@ test_that("data_extract() / frost_extract() extract data", {
 })
 
 test_that("normals_format()/frost_format() format data to correct class", {
-  if(on_CRAN()) {
-    n <- tests$normals_raw_01
-  } else {
-    n <- paste0("https://dd.meteo.gc.ca/climate/observations/normals/csv/",
-                "1981-2010/MB/climate_normals_MB_5010480_1981-2010.csv") %>%
-      normals_raw()
-  }
+  skip_on_cran()
+  skip_if_offline()
+
+  n <- paste0("https://dd.meteo.gc.ca/climate/observations/normals/csv/",
+              "1981-2010/MB/climate_normals_MB_5010480_1981-2010.csv") %>%
+    normals_raw()
+
   n <- normals_extract(n)
 
   f <- frost_extract(n, climate_id = "5010480")
@@ -96,8 +103,8 @@ test_that("normals_format()/frost_format() format data to correct class", {
 })
 
 test_that("normals_dl() downloads normals/frost dates as tibble", {
-
-  if(on_CRAN()) mockery::stub(normals_dl, "normals_raw", tests$normals_raw_01)
+  skip_on_cran()
+  skip_if_offline()
 
   expect_silent(normals_dl(climate_id = "5010480")) %>%
     expect_is("tbl_df")
@@ -106,6 +113,7 @@ test_that("normals_dl() downloads normals/frost dates as tibble", {
                                                "5010480",
                                                "1096450"))) %>%
     expect_is("tbl_df")
+
   expect_equal(nrow(n), 3)
   expect_is(tidyr::unnest(n, normals), "data.frame")
   expect_is(tidyr::unnest(n, frost), "data.frame")
@@ -116,3 +124,4 @@ test_that("normals_dl() downloads normals/frost dates as tibble", {
                   dplyr::pull(climate_id) %>%
                   unique(), 3)
 })
+

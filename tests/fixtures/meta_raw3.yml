@@ -1,0 +1,38 @@
+http_interactions:
+- request:
+    method: get
+    uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=txt&stationID=5401&timeframe=3&submit=Download%2BData
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json, text/xml, application/xml, */*
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      date: Sat, 22 Aug 2020 18:45:22 GMT
+      server: Apache
+      strict-transport-security: max-age=63072000; preload
+      expires: Mon, 26 Jul 1997 05:00:00 GMT
+      cache-control: private
+      pragma: public
+      content-disposition: attachment; filename="en_climate_monthly_metadata_QC_7024440.txt"
+      vary: Accept-Encoding
+      content-encoding: gzip
+      x-ua-compatible: IE=Edge
+      content-length: '267'
+      content-type: application/force-download
+    body:
+      encoding: UTF-8
+      file: no
+      string: "\uFEFFStation Name\t\tMAGOG\r\nProvince\t\tQUEBEC\r\nLatitude\t\t45.27\r\nLongitude\t\t-72.12\r\nElevation\t\t274.00\r\nClimate
+        Identifier\t7024440\r\nWMO Identifier\t\t\r\nTC Identifier\t\t\r\n\r\nLegend\r\nB\tMore
+        than one occurrence and estimated\r\nE\tEstimated\r\nM\tMissing\r\nS\tMore
+        than one occurrence\r\nT\tTrace\r\n[empty]\tIndicates an unobserved value\r\n^\tThe
+        value displayed is based on incomplete data"
+  recorded_at: 2020-08-22 18:44:58 GMT
+  recorded_with: vcr/0.5.4, webmockr/0.6.2

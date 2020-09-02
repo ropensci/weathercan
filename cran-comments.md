@@ -1,21 +1,34 @@
-## Release v.0.3.4
+## Release v.0.4.0
 
-* This patch (v0.3.4) fixes current problems with the tibble (v3.0.0) package and addresses upcoming issues for dplyr (v1.0.0) slated to be released in May.
+* Resubmission with requested changes from CRAN (Thank you!)
+* \dontrun replaced with \donttest (long running example in normals_dl)
+* Removed "quietly = TRUE" for requireNamespace() in examples
+* Reset user's options in Vignettes
 
 ## Test environments
-As of April 16th, 2020
+As of August 26th, 2020
 
 * Local - ubuntu 18.04 (R 3.6.3)
-* AppVeyor - Windows Server 2012 R2 64 (R 3.6.3, 3.6.3 Patched, 3.5.3)
-* Travis CI - ubuntu 14.04.5 (R 3.6.2, 3.5.3) (devel not available)
-* Travis CI - OSX 10.13.6 (R 3.6.2, 3.5.3) (devel not available)
+* AppVeyor - Windows Server 2012 R2 64 (R 4.0.2, 4.0.2 Patched, 3.6.3)
+* Travis CI - ubuntu 16.04.5 (R 4.0.0, 3.6.3, devel)
+* Travis CI - OSX 10.13.6 (R 4.0.2, 3.6.3) (devel not available)
 * win-builder (R oldrelease, release, devel)
-* rhub - windows-x86_64 (R oldrelease, release, devel)
-* rhub - Debian GCC (R devel)
+* rhub - Debian GCC (R release, R patched, R devel)
+* rhub - Fedora GCC (R devel)
+* rhub - Fedora CLANG (R devel)
+* rhub - Solaris (R patched)
 
 ## R CMD check results
 
-There were no ERRORs, no WARNINGs, and no NOTEs
+Generally, there were no ERRORs, no WARNINGs, and one NOTE:
+
+- "New submission
+   Package was archived on CRAN"
+
+Additionally, Solaris had one WARNING and one additional NOTE:
+
+- WARNING: "‘qpdf’ is needed for checks on size reduction of PDFs"
+- NOTE: "Files ‘README.md’ or ‘NEWS.md’ cannot be checked without ‘pandoc’ being installed."
 
 ## Downstream dependencies
 

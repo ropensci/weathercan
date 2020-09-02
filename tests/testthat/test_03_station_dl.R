@@ -5,6 +5,7 @@ context("stations_dl")
 test_that("stations_normals() gets normals info", {
   skip_on_cran()
   skip_on_travis()
+  skip_if_offline()
   expect_silent(n <- stations_normals(years = "1981-2010")) %>%
     expect_is("character")
   expect_gt(length(n), 1000)
@@ -14,6 +15,7 @@ test_that("stations_normals() gets normals info", {
 test_that("stations_dl() runs and returns data", {
   skip_on_cran()
   skip_on_travis()
+  skip_if_offline()
 
   if(getRversion() < "3.3.4") {
     expect_message(s <- stations_dl(),
@@ -96,7 +98,6 @@ test_that("stations_search 'coords' returns correct data", {
   expect_lt(max(stn$distance) - min(stn$distance), 10)
 
   ## Check with Kamloops
-  #ggmap::geocode("Kamloops")
   k <- c(50.67452, -120.3273)
   expect_equal(nrow(stn <- stations_search(coords = k)), 26)
   expect_lt(max(stn$distance), 10)

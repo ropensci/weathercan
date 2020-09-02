@@ -1,10 +1,10 @@
-## ---- include = FALSE, message = FALSE-----------------------------------
+## ---- include = FALSE, message = FALSE----------------------------------------
 library(weathercan)
 library(dplyr)
 library(tidyr)
 
 ## ---- echo = FALSE--------------------------------------------------------------------------------
-options(width = 100)
+old <- options(width = 100)
 w <- weather_dl(station_id = 5401, start =  "2017-01-01", 
                 interval = "month", format = FALSE)
 
@@ -28,4 +28,8 @@ select(n, period, contains("temp_daily"))
 
 ## ---- echo = FALSE--------------------------------------------------------------------------------
 knitr::kable(codes)
+
+## ---- include = FALSE---------------------------------------------------------
+# Reset options
+options(old)
 

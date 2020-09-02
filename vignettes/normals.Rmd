@@ -11,7 +11,7 @@ vignette: >
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(cache = TRUE)
-options(tibble.max_extra_cols = 0, width = 90)
+old <- options(tibble.max_extra_cols = 0, width = 90)
 ```
 
 ## Downloading Climate Normals
@@ -42,7 +42,7 @@ n
 
 Because there are two different types of climate normals (weather measurements and first/last frost dates), the data are nested as two different datasets. We can see that the Airport (Richardson Int'l) has the most data with 197 average weather measurements as well as first/last frost dates. The other two weather stations have fewer weather measurements and no frost data available. 
 
-We can also see that only one of the three stations has data quality sufficient to meet the WMO standards for temperature and precipitation (i.e. both these measurements have code >= A). See the [ECCC calculations document](http://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf) for more details.
+We can also see that only one of the three stations has data quality sufficient to meet the WMO standards for temperature and precipitation (i.e. both these measurements have code >= A). See the [ECCC calculations document](https://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf) for more details.
 
 To extract either data set we can use the `unnest()` function from the `tidyr` package.
 
@@ -96,7 +96,13 @@ normals_measurements %>%
 
 The measurements contained in the climate normals are very specific. To better understand how they are calculated please explore the following resources:
 
-- [ECCC Climate Normals Calculations](http://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf)
+- [ECCC Climate Normals Calculations](https://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf)
     - [`weathercan` Climate Normals Codes](flags.html)
 - [ECCC Climate Normals Technical Documentation](https://www.canada.ca/en/environment-climate-change/services/climate-change/canadian-centre-climate-services/display-download/technical-documentation-climate-normals.html)
     - [`weathercan` Climate Normals Glossary](glossary_normals.html)
+
+
+```{r, include = FALSE}
+# Reset options
+options(old)
+```

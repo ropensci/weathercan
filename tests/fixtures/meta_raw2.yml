@@ -1,0 +1,41 @@
+http_interactions:
+- request:
+    method: get
+    uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=txt&stationID=51423&timeframe=2&submit=Download%2BData
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json, text/xml, application/xml, */*
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      date: Sat, 22 Aug 2020 18:45:22 GMT
+      server: Apache
+      strict-transport-security: max-age=63072000; preload
+      expires: Mon, 26 Jul 1997 05:00:00 GMT
+      cache-control: private
+      pragma: public
+      content-disposition: attachment; filename="en_climate_daily_metadata_BC_1163781.txt"
+      vary: Accept-Encoding
+      content-encoding: gzip
+      x-ua-compatible: IE=Edge
+      content-length: '427'
+      content-type: application/force-download
+    body:
+      encoding: UTF-8
+      file: no
+      string: "\uFEFFStation Name\t\tKAMLOOPS A\r\nProvince\t\tBRITISH COLUMBIA\r\nLatitude\t\t50.70\r\nLongitude\t\t-120.45\r\nElevation\t\t345.30\r\nClimate
+        Identifier\t1163781\r\nWMO Identifier\t\t71887\r\nTC Identifier\t\tYKA\r\n\r\nLegend\r\nA\tAccumulated\r\nC\tPrecipitation
+        occurred, amount uncertain\r\nE\tEstimated\r\nF\tAccumulated and estimated\r\nL\tPrecipitation
+        may or may not have occurred\r\nM\tMissing\r\nN\tTemperature missing but known
+        to be > 0\r\nS\tMore than one occurrence\r\nT\tTrace\r\nY\tTemperature missing
+        but known to be < 0\r\n[empty]\tIndicates an unobserved value\r\n^\tThe value
+        displayed is based on incomplete data\r\n†\tData that is not subject to review
+        by the National Climate Archives"
+  recorded_at: 2020-08-22 18:44:57 GMT
+  recorded_with: vcr/0.5.4, webmockr/0.6.2

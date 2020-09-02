@@ -1,0 +1,95 @@
+http_interactions:
+- request:
+    method: get
+    uri: https://dd.meteo.gc.ca/climate/observations/normals/csv
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json, text/xml, application/xml, */*
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      date: Sat, 22 Aug 2020 18:46:51 GMT
+      server: Apache
+      strict-transport-security: max-age=63072000; preload
+      vary: Accept-Encoding
+      content-encoding: gzip
+      x-ua-compatible: IE=Edge
+      content-length: '358'
+      connection: close
+      content-type: text/html;charset=UTF-8
+    body:
+      encoding: UTF-8
+      file: no
+      string: "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 3.2 Final//EN\">\n<html>\n
+        <head>\n  <title>Index of /climate/observations/normals/csv</title>\n </head>\n
+        <body>\n<h1>Index of /climate/observations/normals/csv</h1>\n<pre><img src=\"/icons/blank.gif\"
+        alt=\"Icon \"> <a href=\"?C=N;O=D\">Name</a>                           <a
+        href=\"?C=M;O=A\">Last modified</a>      <a href=\"?C=S;O=A\">Size</a>  <a
+        href=\"?C=D;O=A\">Description</a><hr><img src=\"/icons/back.gif\" alt=\"[PARENTDIR]\">
+        <a href=\"/climate/observations/normals/\">Parent Directory</a>                                    -
+        \  \n<img src=\"/icons/folder.gif\" alt=\"[DIR]\"> <a href=\"1981-2010/\">1981-2010/</a>
+        \                    2019-06-13 06:58    -   \n<hr></pre>\n</body></html>\n"
+  recorded_at: 2020-08-22 18:46:12 GMT
+  recorded_with: vcr/0.5.4, webmockr/0.6.2
+- request:
+    method: get
+    uri: https://dd.meteo.gc.ca/climate/observations/normals/csv/1981-2010
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json, text/xml, application/xml, */*
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      date: Sat, 22 Aug 2020 18:46:51 GMT
+      server: Apache
+      strict-transport-security: max-age=63072000; preload
+      vary: Accept-Encoding
+      content-encoding: gzip
+      x-ua-compatible: IE=Edge
+      content-length: '455'
+      connection: close
+      content-type: text/html;charset=UTF-8
+    body:
+      encoding: UTF-8
+      file: no
+      string: "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 3.2 Final//EN\">\n<html>\n
+        <head>\n  <title>Index of /climate/observations/normals/csv/1981-2010</title>\n
+        </head>\n <body>\n<h1>Index of /climate/observations/normals/csv/1981-2010</h1>\n<pre><img
+        src=\"/icons/blank.gif\" alt=\"Icon \"> <a href=\"?C=N;O=D\">Name</a>                               <a
+        href=\"?C=M;O=A\">Last modified</a>      <a href=\"?C=S;O=A\">Size</a>  <a
+        href=\"?C=D;O=A\">Description</a><hr><img src=\"/icons/back.gif\" alt=\"[PARENTDIR]\">
+        <a href=\"/climate/observations/normals/csv/\">Parent Directory</a>                                        -
+        \  \n<img src=\"/icons/folder.gif\" alt=\"[DIR]\"> <a href=\"AB/\">AB/</a>
+        \                               2019-06-13 06:58    -   \n<img src=\"/icons/folder.gif\"
+        alt=\"[DIR]\"> <a href=\"BC/\">BC/</a>                                2019-06-13
+        06:58    -   \n<img src=\"/icons/folder.gif\" alt=\"[DIR]\"> <a href=\"MB/\">MB/</a>
+        \                               2019-06-13 06:58    -   \n<img src=\"/icons/folder.gif\"
+        alt=\"[DIR]\"> <a href=\"NB/\">NB/</a>                                2019-06-13
+        06:59    -   \n<img src=\"/icons/folder.gif\" alt=\"[DIR]\"> <a href=\"NL/\">NL/</a>
+        \                               2019-06-13 06:59    -   \n<img src=\"/icons/folder.gif\"
+        alt=\"[DIR]\"> <a href=\"NS/\">NS/</a>                                2019-06-13
+        06:58    -   \n<img src=\"/icons/folder.gif\" alt=\"[DIR]\"> <a href=\"NT/\">NT/</a>
+        \                               2019-06-13 06:58    -   \n<img src=\"/icons/folder.gif\"
+        alt=\"[DIR]\"> <a href=\"NU/\">NU/</a>                                2019-06-13
+        06:59    -   \n<img src=\"/icons/folder.gif\" alt=\"[DIR]\"> <a href=\"ON/\">ON/</a>
+        \                               2019-06-13 06:58    -   \n<img src=\"/icons/folder.gif\"
+        alt=\"[DIR]\"> <a href=\"PE/\">PE/</a>                                2019-06-13
+        06:58    -   \n<img src=\"/icons/folder.gif\" alt=\"[DIR]\"> <a href=\"QC/\">QC/</a>
+        \                               2019-06-13 06:59    -   \n<img src=\"/icons/folder.gif\"
+        alt=\"[DIR]\"> <a href=\"SK/\">SK/</a>                                2019-06-13
+        06:58    -   \n<img src=\"/icons/folder.gif\" alt=\"[DIR]\"> <a href=\"YT/\">YT/</a>
+        \                               2019-06-13 06:59    -   \n<hr></pre>\n</body></html>\n"
+  recorded_at: 2020-08-22 18:46:12 GMT
+  recorded_with: vcr/0.5.4, webmockr/0.6.2

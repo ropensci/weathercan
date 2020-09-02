@@ -5,11 +5,23 @@
 \alias{weather}
 \title{Download weather data from Environment and Climate Change Canada}
 \usage{
-weather_dl(station_ids, start = NULL, end = NULL, interval = "hour",
-  trim = TRUE, format = TRUE, string_as = NA, time_disp = "none",
-  tz_disp = NULL, stn = weathercan::stations, url = NULL,
-  encoding = "UTF-8", list_col = FALSE, verbose = FALSE,
-  quiet = FALSE)
+weather_dl(
+  station_ids,
+  start = NULL,
+  end = NULL,
+  interval = "hour",
+  trim = TRUE,
+  format = TRUE,
+  string_as = NA,
+  time_disp = "none",
+  tz_disp = NULL,
+  stn = weathercan::stations,
+  url = NULL,
+  encoding = "UTF-8",
+  list_col = FALSE,
+  verbose = FALSE,
+  quiet = FALSE
+)
 }
 \arguments{
 \item{station_ids}{Numeric/Character. A vector containing the ID(s) of the
@@ -62,7 +74,7 @@ A tibble with station ID, name and weather data.
 Downloads data from Environment and Climate Change Canada (ECCC) for one or
 more stations. For details and units, see the glossary vignette
 (\code{vignette("glossary", package = "weathercan")}) or the glossary online
-\url{http://climate.weather.gc.ca/glossary_e.html}.
+\url{https://climate.weather.gc.ca/glossary_e.html}.
 }
 \details{
 Data can be returned 'raw' (format = FALSE) or can be formatted.

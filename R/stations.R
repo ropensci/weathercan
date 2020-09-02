@@ -31,11 +31,13 @@
 #' @examples
 #'
 #' \donttest{
-#'  # Update stations data frame
-#'  s <- stations_dl()
+#'   # Update stations data frame
+#'   if(requireNamespace("lutz") && requireNamespace("sf")) {
+#'     s <- stations_dl()
 #'
-#'  # Use new data frame to search for stations
-#'  stations_search("Winnipeg", stn = s)
+#'     # Use new data frame to search for stations
+#'     stations_search("Winnipeg", stn = s)
+#'    }
 #' }
 #'
 #' @aliases stations_all
@@ -75,11 +77,11 @@ stations_dl <- function(url = NULL, normals_years = "1981-2010",
     stop("Cannot reach ECCC ftp site, please try again later", call. = FALSE)
   }
 
-  headings <- try(readLines(getOption("weathercan.urls.stations"), n = 5),
+  headings <- try(readr::read_lines(getOption("weathercan.urls.stations"), n_max = 5),
                   silent = TRUE)
   if("try-error" %in% class(headings)) {
-    stop("`options(\"weathercan.urls.stations\")` must point to a ",
-         "csv file either local or online", call. = FALSE)
+    message("Can't access ", getOption("weathercan.urls.stations"), " right now.")
+    return()
   }
 
   if(is.null(skip)) {
@@ -95,24 +97,23 @@ stations_dl <- function(url = NULL, normals_years = "1981-2010",
 
   if(verbose) message("Downloading stations data frame")
 
-  s <- utils::read.csv(file = getOption("weathercan.urls.stations"),
-                       skip = skip,
-                       strip.white = TRUE) %>%
+  s <- readr::read_csv(file = getOption("weathercan.urls.stations"),
+                       skip = skip, col_types = readr::cols()) %>%
     dplyr::select(prov = "Province",
                   station_name = "Name",
-                  station_id = "Station.ID",
-                  climate_id = "Climate.ID",
-                  hour_start = dplyr::matches("HLY.First"),
-                  hour_end = dplyr::matches("HLY.Last"),
-                  day_start = dplyr::matches("DLY.First"),
-                  day_end = dplyr::matches("DLY.Last"),
-                  month_start = dplyr::matches("MLY.First"),
-                  month_end = dplyr::matches("MLY.Last"),
-                  WMO_id = "WMO.ID",
-                  TC_id = "TC.ID",
-                  lat = dplyr::matches("Latitude..Decimal"),
-                  lon = dplyr::matches("Longitude..Decimal"),
-                  elev = dplyr::starts_with("Elevation..m."))
+                  station_id = "Station ID",
+                  climate_id = "Climate ID",
+                  hour_start = dplyr::matches("HLY First"),
+                  hour_end = dplyr::matches("HLY Last"),
+                  day_start = dplyr::matches("DLY First"),
+                  day_end = dplyr::matches("DLY Last"),
+                  month_start = dplyr::matches("MLY First"),
+                  month_end = dplyr::matches("MLY Last"),
+                  WMO_id = "WMO ID",
+                  TC_id = "TC ID",
+                  lat = dplyr::matches("Latitude \\(Decimal"),
+                  lon = dplyr::matches("Longitude \\(Decimal"),
+                  elev = dplyr::starts_with("Elevation"))
 
   # Calculate Timezones
   station_tz <- dplyr::select(s, "prov", "station_id", "lat", "lon") %>%
@@ -151,7 +152,7 @@ stations_dl <- function(url = NULL, normals_years = "1981-2010",
     tidyr::spread(.data$type, .data$date) %>%
     dplyr::arrange(.data$prov, .data$station_id, .data$interval) %>%
     dplyr::mutate(normals = FALSE) %>%
-    dplyr::tbl_df()
+    dplyr::as_tibble()
 
   s$normals[s$climate_id %in% normals] <- TRUE
 
@@ -187,7 +188,7 @@ stations_dl <- function(url = NULL, normals_years = "1981-2010",
 #'   missing data, etc.)
 #'
 #' @details To search by coordinates, users must make sure they have the
-#'  \code{\link[sp]{sp}} package installed.
+#'  [sp](https://cran.r-project.org/package=sp) package installed.
 #'
 #' @return Returns a subset of the stations data frame which match the search
 #'   parameters. If the search was by location, an extra column 'distance' shows
@@ -199,8 +200,11 @@ stations_dl <- function(url = NULL, normals_years = "1981-2010",
 #' stations_search(name = "Kamloops")
 #' stations_search(name = "Kamloops", interval = "hour")
 #'
-#' stations_search(coords = c(53.915495, -122.739379))
 #' stations_search(name='Ottawa', starts_latest=1950, ends_earliest=2010)
+#'
+#' if(requireNamespace("sp")) {
+#'   stations_search(coords = c(53.915495, -122.739379))
+#' }
 #'
 #' @export
 
@@ -217,6 +221,11 @@ stations_search <- function(name = NULL,
   if(all(is.null(name), is.null(coords)) |
      all(!is.null(name), !is.null(coords))) {
     stop("Need a search name OR search coordinate")
+  }
+
+  if(is.null(stn)) {
+    stn <- weathercan::stations
+    message("No valid stn data frame supplied, using built-in")
   }
 
   if(!is.null(coords)) {
