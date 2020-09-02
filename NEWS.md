@@ -1,9 +1,3 @@
----
-title: "News"
-author: "Steffi LaZerte"
-output: html_document
----
-
 # weathercan 0.4.0 (2020-08-26)
 
 ## Bug fixes
