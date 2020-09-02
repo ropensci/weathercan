@@ -18,6 +18,10 @@ addons:
       - libgeos-dev
       - libv8-3.14-dev
 
+env:
+  global:
+  - VCR_TURN_OFF=true
+
 matrix:
   include:
     - os: linux
