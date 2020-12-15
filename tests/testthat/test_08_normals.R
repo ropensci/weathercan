@@ -125,3 +125,13 @@ test_that("normals_dl() downloads normals/frost dates as tibble", {
                   unique(), 3)
 })
 
+# Fix issue #106 - Added (C) to extreme wind chill
+
+test_that("normals_dl() gets extreme wind chill correctly", {
+  skip_on_cran()
+  skip_if_offline()
+
+  expect_silent(n <- normals_dl(climate_ids = 2100517)) %>%
+    expect_is("tbl_df")
+
+})
