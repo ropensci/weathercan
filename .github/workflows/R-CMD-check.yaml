@@ -80,6 +80,11 @@ jobs:
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
 
+      - name: Set Options
+        run: |
+          options(rmarkdown.html_vignette.check_title = FALSE)
+        shell: Rscript {0}
+
       - name: Session info
         run: |
           options(width = 100)
