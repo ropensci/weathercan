@@ -71,7 +71,7 @@ glossary <- tibble(interval = c(rep("hour", length(w_names$hour)),
 usethis::use_data(glossary, overwrite = TRUE)
 
 
-codes <- normals_raw(loc = normals_url("AB", "301C3D4",
+codes <- normals_raw(loc = normals_url("AB", "3011240",
                                        normals_years = "1981-2010")) %>%
   .[8:11] %>%
   str_replace_all("\"\"", "'") %>%
