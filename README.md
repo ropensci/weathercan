@@ -5,6 +5,7 @@
 Status](https://travis-ci.org/ropensci/weathercan.svg?branch=master)](https://travis-ci.org/ropensci/weathercan)
 [![AppVeyor Build
 status](https://ci.appveyor.com/api/projects/status/q3krwk18df3qnly7/branch/master?svg=true)](https://ci.appveyor.com/project/steffilazerte/weathercan/branch/master)
+[![R-CMD-check](https://github.com/ropensci/weathercan/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/weathercan/actions)
 [![codecov](https://codecov.io/gh/ropensci/weathercan/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/weathercan)
 
 [![](https://badges.ropensci.org/160_status.svg)](https://github.com/ropensci/onboarding/issues/160)
@@ -71,34 +72,34 @@ head(stations)
     ## # A tibble: 6 x 14
     ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval start   end
     ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr> <chr>    <dbl> <dbl>
-    ## 1 AB    DAYSLAND           1795 301AR54        NA <NA>   52.9 -112.  689. Etc/… day       1908  1922
-    ## 2 AB    DAYSLAND           1795 301AR54        NA <NA>   52.9 -112.  689. Etc/… hour        NA    NA
-    ## 3 AB    DAYSLAND           1795 301AR54        NA <NA>   52.9 -112.  689. Etc/… month     1908  1922
-    ## 4 AB    EDMONTON CO…       1796 301BK03        NA <NA>   53.6 -114.  671. Etc/… day       1978  1979
-    ## 5 AB    EDMONTON CO…       1796 301BK03        NA <NA>   53.6 -114.  671. Etc/… hour        NA    NA
-    ## 6 AB    EDMONTON CO…       1796 301BK03        NA <NA>   53.6 -114.  671. Etc/… month     1978  1979
-    ## # … with 1 more variable: normals <lgl>
+    ## 1 AB    DAYSLAND           1795 301AR54        NA <NA>   52.9 -112.  689. Etc/~ day       1908  1922
+    ## 2 AB    DAYSLAND           1795 301AR54        NA <NA>   52.9 -112.  689. Etc/~ hour        NA    NA
+    ## 3 AB    DAYSLAND           1795 301AR54        NA <NA>   52.9 -112.  689. Etc/~ month     1908  1922
+    ## 4 AB    EDMONTON CO~       1796 301BK03        NA <NA>   53.6 -114.  671. Etc/~ day       1978  1979
+    ## 5 AB    EDMONTON CO~       1796 301BK03        NA <NA>   53.6 -114.  671. Etc/~ hour        NA    NA
+    ## 6 AB    EDMONTON CO~       1796 301BK03        NA <NA>   53.6 -114.  671. Etc/~ month     1978  1979
+    ## # ... with 1 more variable: normals <lgl>
 
 ``` r
 glimpse(stations)
 ```
 
-    ## Rows: 26,301
+    ## Rows: 26,316
     ## Columns: 14
-    ## $ prov         <chr> "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB"…
-    ## $ station_name <chr> "DAYSLAND", "DAYSLAND", "DAYSLAND", "EDMONTON CORONATION", "EDMONTON CORONAT…
-    ## $ station_id   <dbl> 1795, 1795, 1795, 1796, 1796, 1796, 1797, 1797, 1797, 1798, 1798, 1798, 1799…
-    ## $ climate_id   <chr> "301AR54", "301AR54", "301AR54", "301BK03", "301BK03", "301BK03", "301B6L0",…
-    ## $ WMO_id       <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
-    ## $ TC_id        <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
-    ## $ lat          <dbl> 52.87, 52.87, 52.87, 53.57, 53.57, 53.57, 52.15, 52.15, 52.15, 53.20, 53.20,…
-    ## $ lon          <dbl> -112.28, -112.28, -112.28, -113.57, -113.57, -113.57, -111.73, -111.73, -111…
-    ## $ elev         <dbl> 688.8, 688.8, 688.8, 670.6, 670.6, 670.6, 838.2, 838.2, 838.2, 640.0, 640.0,…
-    ## $ tz           <chr> "Etc/GMT+7", "Etc/GMT+7", "Etc/GMT+7", "Etc/GMT+7", "Etc/GMT+7", "Etc/GMT+7"…
-    ## $ interval     <chr> "day", "hour", "month", "day", "hour", "month", "day", "hour", "month", "day…
-    ## $ start        <dbl> 1908, NA, 1908, 1978, NA, 1978, 1987, NA, 1987, 1987, NA, 1987, 1980, NA, 19…
-    ## $ end          <dbl> 1922, NA, 1922, 1979, NA, 1979, 1990, NA, 1990, 1998, NA, 1998, 2009, NA, 20…
-    ## $ normals      <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,…
+    ## $ prov         <chr> "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "A...
+    ## $ station_name <chr> "DAYSLAND", "DAYSLAND", "DAYSLAND", "EDMONTON CORONATION", "EDMONTON CORON...
+    ## $ station_id   <dbl> 1795, 1795, 1795, 1796, 1796, 1796, 1797, 1797, 1797, 1798, 1798, 1798, 17...
+    ## $ climate_id   <chr> "301AR54", "301AR54", "301AR54", "301BK03", "301BK03", "301BK03", "301B6L0...
+    ## $ WMO_id       <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+    ## $ TC_id        <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+    ## $ lat          <dbl> 52.87, 52.87, 52.87, 53.57, 53.57, 53.57, 52.15, 52.15, 52.15, 53.20, 53.2...
+    ## $ lon          <dbl> -112.28, -112.28, -112.28, -113.57, -113.57, -113.57, -111.73, -111.73, -1...
+    ## $ elev         <dbl> 688.8, 688.8, 688.8, 670.6, 670.6, 670.6, 838.2, 838.2, 838.2, 640.0, 640....
+    ## $ tz           <chr> "Etc/GMT+7", "Etc/GMT+7", "Etc/GMT+7", "Etc/GMT+7", "Etc/GMT+7", "Etc/GMT+...
+    ## $ interval     <chr> "day", "hour", "month", "day", "hour", "month", "day", "hour", "month", "d...
+    ## $ start        <dbl> 1908, NA, 1908, 1978, NA, 1978, 1987, NA, 1987, 1987, NA, 1987, 1980, NA, ...
+    ## $ end          <dbl> 1922, NA, 1922, 1979, NA, 1979, 1990, NA, 1990, 1998, NA, 1998, 2009, NA, ...
+    ## $ normals      <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALS...
 
 You can look through this data frame directly, or you can use the
 `stations_search` function:
@@ -110,10 +111,10 @@ stations_search("Kamloops", interval = "hour")
     ## # A tibble: 3 x 14
     ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval start   end
     ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr> <chr>    <dbl> <dbl>
-    ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/… hour      1953  2013
-    ## 2 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/… hour      2013  2020
-    ## 3 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/… hour      2006  2020
-    ## # … with 1 more variable: normals <lgl>
+    ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/~ hour      1953  2013
+    ## 2 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/~ hour      2013  2020
+    ## 3 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/~ hour      2006  2020
+    ## # ... with 1 more variable: normals <lgl>
 
 Time frame must be one of “hour”, “day”, or “month”.
 
@@ -126,10 +127,10 @@ stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour"
     ## # A tibble: 3 x 15
     ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval start   end
     ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr> <chr>    <dbl> <dbl>
-    ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/… hour      1953  2013
-    ## 2 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/… hour      2006  2020
-    ## 3 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/… hour      2013  2020
-    ## # … with 2 more variables: normals <lgl>, distance <dbl>
+    ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/~ hour      1953  2013
+    ## 2 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/~ hour      2006  2020
+    ## 3 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/~ hour      2013  2020
+    ## # ... with 2 more variables: normals <lgl>, distance <dbl>
 
 ### Weather
 
@@ -137,6 +138,13 @@ Once you have your `station_id`(s) you can download weather data:
 
 ``` r
 kam <- weather_dl(station_ids = 51423, start = "2018-02-01", end = "2018-04-15")
+```
+
+    ## As of weathercan v0.3.0 time display is either local time or UTC
+    ## See Details under ?weather_dl for more information.
+    ## This message is shown once per session
+
+``` r
 kam
 ```
 
@@ -153,7 +161,7 @@ kam
     ##  8 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  
     ##  9 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  
     ## 10 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  
-    ## # … with 1,766 more rows, and 25 more variables
+    ## # ... with 1,766 more rows, and 25 more variables
 
 You can also download data from multiple stations at once:
 
@@ -182,12 +190,10 @@ associated with the station you’re interested in.
 stations_search("Winnipeg", normals_only = TRUE)
 ```
 
-    ## # A tibble: 3 x 11
+    ## # A tibble: 1 x 11
     ##   prov  station_name            station_id climate_id WMO_id TC_id   lat   lon  elev tz      normals
     ##   <chr> <chr>                        <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>   <lgl>  
-    ## 1 MB    WINNIPEG A CS                27174 502S001     71849 XWG    49.9 -97.2  239. Etc/GM… TRUE   
-    ## 2 MB    WINNIPEG RICHARDSON IN…       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/GM… TRUE   
-    ## 3 MB    WINNIPEG THE FORKS           28051 5023262     71579 XWN    49.9 -97.1  230  Etc/GM… TRUE
+    ## 1 MB    WINNIPEG RICHARDSON IN~       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/GM~ TRUE
 
 Then you can download the climate normals with the `normals_dl()`
 function.
@@ -205,22 +211,22 @@ unnest(n, normals)
 ```
 
     ## # A tibble: 13 x 202
-    ##    prov  station_name climate_id meets_wmo period temp_daily_aver… temp_daily_aver… temp_sd
+    ##    prov  station_name climate_id meets_wmo period temp_daily_aver~ temp_daily_aver~ temp_sd
     ##    <chr> <chr>        <chr>      <lgl>     <fct>             <dbl> <chr>              <dbl>
-    ##  1 MB    WINNIPEG RI… 5023222    TRUE      Jan               -16.4 A                    4.1
-    ##  2 MB    WINNIPEG RI… 5023222    TRUE      Feb               -13.2 A                    4.2
-    ##  3 MB    WINNIPEG RI… 5023222    TRUE      Mar                -5.8 A                    3.1
-    ##  4 MB    WINNIPEG RI… 5023222    TRUE      Apr                 4.4 A                    2.7
-    ##  5 MB    WINNIPEG RI… 5023222    TRUE      May                11.6 A                    2.1
-    ##  6 MB    WINNIPEG RI… 5023222    TRUE      Jun                17   A                    2  
-    ##  7 MB    WINNIPEG RI… 5023222    TRUE      Jul                19.7 A                    1.4
-    ##  8 MB    WINNIPEG RI… 5023222    TRUE      Aug                18.8 A                    1.9
-    ##  9 MB    WINNIPEG RI… 5023222    TRUE      Sep                12.7 A                    1.3
-    ## 10 MB    WINNIPEG RI… 5023222    TRUE      Oct                 5   A                    1.8
-    ## 11 MB    WINNIPEG RI… 5023222    TRUE      Nov                -4.9 A                    3.6
-    ## 12 MB    WINNIPEG RI… 5023222    TRUE      Dec               -13.2 A                    4.4
-    ## 13 MB    WINNIPEG RI… 5023222    TRUE      Year                3   A                    1.2
-    ## # … with 194 more variables: temp_sd_code <chr>, temp_daily_max <dbl>, temp_daily_max_code <chr>,
+    ##  1 MB    WINNIPEG RI~ 5023222    TRUE      Jan               -16.4 A                    4.1
+    ##  2 MB    WINNIPEG RI~ 5023222    TRUE      Feb               -13.2 A                    4.2
+    ##  3 MB    WINNIPEG RI~ 5023222    TRUE      Mar                -5.8 A                    3.1
+    ##  4 MB    WINNIPEG RI~ 5023222    TRUE      Apr                 4.4 A                    2.7
+    ##  5 MB    WINNIPEG RI~ 5023222    TRUE      May                11.6 A                    2.1
+    ##  6 MB    WINNIPEG RI~ 5023222    TRUE      Jun                17   A                    2  
+    ##  7 MB    WINNIPEG RI~ 5023222    TRUE      Jul                19.7 A                    1.4
+    ##  8 MB    WINNIPEG RI~ 5023222    TRUE      Aug                18.8 A                    1.9
+    ##  9 MB    WINNIPEG RI~ 5023222    TRUE      Sep                12.7 A                    1.3
+    ## 10 MB    WINNIPEG RI~ 5023222    TRUE      Oct                 5   A                    1.8
+    ## 11 MB    WINNIPEG RI~ 5023222    TRUE      Nov                -4.9 A                    3.6
+    ## 12 MB    WINNIPEG RI~ 5023222    TRUE      Dec               -13.2 A                    4.4
+    ## 13 MB    WINNIPEG RI~ 5023222    TRUE      Year                3   A                    1.2
+    ## # ... with 194 more variables: temp_sd_code <chr>, temp_daily_max <dbl>, temp_daily_max_code <chr>,
     ## #   temp_daily_min <dbl>, temp_daily_min_code <chr>, temp_extreme_max <dbl>,
     ## #   temp_extreme_max_code <chr>, temp_extreme_max_date <date>, temp_extreme_max_date_code <chr>,
     ## #   temp_extreme_min <dbl>, temp_extreme_min_code <chr>, temp_extreme_min_date <date>,
@@ -253,23 +259,23 @@ unnest(n, normals)
     ## #   `precip_days_>=25_code` <chr>, `snow_depth_days_>=1` <dbl>, `snow_depth_days_>=1_code` <chr>,
     ## #   `snow_depth_days_>=5` <dbl>, `snow_depth_days_>=5_code` <chr>, `snow_depth_days_>=10` <dbl>,
     ## #   `snow_depth_days_>=10_code` <chr>, `snow_depth_days_>=20` <dbl>,
-    ## #   `snow_depth_days_>=20_code` <chr>, wind_speed <dbl>, …
+    ## #   `snow_depth_days_>=20_code` <chr>, wind_speed <dbl>, ...
 
 ``` r
 unnest(n, frost)
 ```
 
     ## # A tibble: 7 x 13
-    ##   prov  station_name climate_id meets_wmo normals frost_code date_first_fall… date_last_sprin…
+    ##   prov  station_name climate_id meets_wmo normals frost_code date_first_fall~ date_last_sprin~
     ##   <chr> <chr>        <chr>      <lgl>     <list>  <chr>                 <dbl>            <dbl>
-    ## 1 MB    WINNIPEG RI… 5023222    TRUE      <tibbl… A                       265              143
-    ## 2 MB    WINNIPEG RI… 5023222    TRUE      <tibbl… A                       265              143
-    ## 3 MB    WINNIPEG RI… 5023222    TRUE      <tibbl… A                       265              143
-    ## 4 MB    WINNIPEG RI… 5023222    TRUE      <tibbl… A                       265              143
-    ## 5 MB    WINNIPEG RI… 5023222    TRUE      <tibbl… A                       265              143
-    ## 6 MB    WINNIPEG RI… 5023222    TRUE      <tibbl… A                       265              143
-    ## 7 MB    WINNIPEG RI… 5023222    TRUE      <tibbl… A                       265              143
-    ## # … with 5 more variables: length_frost_free <dbl>, prob <fct>,
+    ## 1 MB    WINNIPEG RI~ 5023222    TRUE      <tibbl~ A                       265              143
+    ## 2 MB    WINNIPEG RI~ 5023222    TRUE      <tibbl~ A                       265              143
+    ## 3 MB    WINNIPEG RI~ 5023222    TRUE      <tibbl~ A                       265              143
+    ## 4 MB    WINNIPEG RI~ 5023222    TRUE      <tibbl~ A                       265              143
+    ## 5 MB    WINNIPEG RI~ 5023222    TRUE      <tibbl~ A                       265              143
+    ## 6 MB    WINNIPEG RI~ 5023222    TRUE      <tibbl~ A                       265              143
+    ## 7 MB    WINNIPEG RI~ 5023222    TRUE      <tibbl~ A                       265              143
+    ## # ... with 5 more variables: length_frost_free <dbl>, prob <chr>,
     ## #   prob_first_fall_temp_below_0_on_date <dbl>, prob_length_frost_free <dbl>,
     ## #   prob_last_spring_temp_below_0_on_date <dbl>
 
