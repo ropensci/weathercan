@@ -1,3 +1,9 @@
+# weathercan 0.4.0.9000 (2020-12-17)
+
+## Bug fixes
+- Updated normals column values (fixes #106)
+- Updated stations 
+
 # weathercan 0.4.0 (2020-08-26)
 
 ## Bug fixes
