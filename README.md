@@ -5,6 +5,7 @@
 Status](https://travis-ci.org/ropensci/weathercan.svg?branch=master)](https://travis-ci.org/ropensci/weathercan)
 [![AppVeyor Build
 status](https://ci.appveyor.com/api/projects/status/q3krwk18df3qnly7/branch/master?svg=true)](https://ci.appveyor.com/project/steffilazerte/weathercan/branch/master)
+[![R-CMD-check](https://github.com/ropensci/weathercan/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/weathercan/actions)
 [![codecov](https://codecov.io/gh/ropensci/weathercan/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/weathercan)
 
 [![](https://badges.ropensci.org/160_status.svg)](https://github.com/ropensci/onboarding/issues/160)
@@ -137,6 +138,13 @@ Once you have your `station_id`(s) you can download weather data:
 
 ``` r
 kam <- weather_dl(station_ids = 51423, start = "2018-02-01", end = "2018-04-15")
+```
+
+    ## As of weathercan v0.3.0 time display is either local time or UTC
+    ## See Details under ?weather_dl for more information.
+    ## This message is shown once per session
+
+``` r
 kam
 ```
 
