@@ -23,9 +23,13 @@ cchn_pkg_rule_list()
 ## Check if version is appropriate
 # http://shiny.andyteucher.ca/shinyapps/rver-deps/
 
+## Update dependencies
+remotes::package_deps("weathercan", dependencies = TRUE) %>%
+  update()
+
 ## Internal data files
-source("data-raw/data-raw.R")
 source("data-raw/data-index.R")
+source("data-raw/data-raw.R")
 source("data-raw/metadata.R")
 
 ## Documentation
@@ -36,17 +40,7 @@ source("data-raw/metadata.R")
 # Compile README.md
 # REBUILD!
 rmarkdown::render("README.Rmd")
-file.remove("README.html")
-
-## Build site (so website uses newest version)
-## Update website
-## BUILD PACKAGE FIRST!
-pkgdown::build_articles(lazy = FALSE)
-pkgdown::build_home()
-pkgdown::build_news()
-pkgdown::build_reference()
-pkgdown::build_site(lazy = TRUE)
-unlink("./vignettes/normals_cache/", recursive = TRUE)
+unlink("README.html")
 
 # Update cran-comments
 
@@ -56,16 +50,18 @@ devtools::spell_check()
 spelling::update_wordlist()
 
 ## Checks
-devtools::check()     # Local
 devtools::check(run_dont_test = TRUE)     # Local
 
+## Local Tests with vcr turned off, run in terminal
+#VCR_TURN_OFF=true Rscript -e "devtools::test()"
+
 # Win builder
-devtools::check_win_release() #   <------------
+devtools::check_win_release()
 devtools::check_win_devel()
 devtools::check_win_oldrelease()
 
 # Build package to check on Rhub and locally
-v <- "0.4.0"
+v <- "0.4.1"
 system("cd ..; R CMD build weathercan")
 system(paste0("cd ..; R CMD check weathercan_", v, ".tar.gz --as-cran --run-donttest")) # Local
 
@@ -106,8 +102,18 @@ rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
 # Re-try (skip tests for speed)
 #system("cd ..; R CMD check weathercan_0.3.0.tar.gz --as-cran --no-tests")
 
+## Build site (so website uses newest version)
+## Update website
+## BUILD PACKAGE FIRST!
+pkgdown::build_articles(lazy = FALSE)
+pkgdown::build_home()
+pkgdown::build_news()
+pkgdown::build_reference()
+pkgdown::build_site(lazy = TRUE)
+unlink("./vignettes/normals_cache/", recursive = TRUE)
+
 ## Push to github
-## Check travis / appveyor
+## Check travis / appveyor / GA
 
 ## Check Reverse Dependencies (are there any?)
 tools::dependsOnPkgs("weathercan")
