@@ -17,6 +17,7 @@ addons:
       - libudunits2-dev
       - libgeos-dev
       - libv8-3.14-dev
+      - libgit2-dev
 
 env:
   global:
