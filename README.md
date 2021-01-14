@@ -83,7 +83,7 @@ head(stations)
 glimpse(stations)
 ```
 
-    ## Rows: 26,301
+    ## Rows: 26,316
     ## Columns: 14
     ## $ prov         <chr> "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB"…
     ## $ station_name <chr> "DAYSLAND", "DAYSLAND", "DAYSLAND", "EDMONTON CORONATION", "EDMONTON CORONAT…
@@ -182,12 +182,10 @@ associated with the station you’re interested in.
 stations_search("Winnipeg", normals_only = TRUE)
 ```
 
-    ## # A tibble: 3 x 11
+    ## # A tibble: 1 x 11
     ##   prov  station_name            station_id climate_id WMO_id TC_id   lat   lon  elev tz      normals
     ##   <chr> <chr>                        <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>   <lgl>  
-    ## 1 MB    WINNIPEG A CS                27174 502S001     71849 XWG    49.9 -97.2  239. Etc/GM… TRUE   
-    ## 2 MB    WINNIPEG RICHARDSON IN…       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/GM… TRUE   
-    ## 3 MB    WINNIPEG THE FORKS           28051 5023262     71579 XWN    49.9 -97.1  230  Etc/GM… TRUE
+    ## 1 MB    WINNIPEG RICHARDSON IN…       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/GM… TRUE
 
 Then you can download the climate normals with the `normals_dl()`
 function.
@@ -269,7 +267,7 @@ unnest(n, frost)
     ## 5 MB    WINNIPEG RI… 5023222    TRUE      <tibbl… A                       265              143
     ## 6 MB    WINNIPEG RI… 5023222    TRUE      <tibbl… A                       265              143
     ## 7 MB    WINNIPEG RI… 5023222    TRUE      <tibbl… A                       265              143
-    ## # … with 5 more variables: length_frost_free <dbl>, prob <fct>,
+    ## # … with 5 more variables: length_frost_free <dbl>, prob <chr>,
     ## #   prob_first_fall_temp_below_0_on_date <dbl>, prob_length_frost_free <dbl>,
     ## #   prob_last_spring_temp_below_0_on_date <dbl>
 
