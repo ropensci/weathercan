@@ -27,7 +27,7 @@ library(weathercan)
 `weathercan` includes a data frame called `stations` which lists available stations and their details (including `station_id`.
 
 ```{r}
-head(stations)
+stations
 ```
 
 You can look through this data frame directly, or you can use the `stations_search` function:
@@ -85,7 +85,6 @@ Once you have your `station_id`(s) you can download weather data:
 
 ```{r}
 kam <- weather_dl(station_ids = 51423, start = "2016-01-01", end = "2016-02-15")
-                    
 kam
 ```
 
