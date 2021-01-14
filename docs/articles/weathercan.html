@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">weathercan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
       </span>
     </div>
 
@@ -40,7 +40,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
   </a>
 </li>
@@ -88,7 +88,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/ropensci/weathercan">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -102,13 +102,13 @@
 
       
 
-      </header><div class="row">
+      </header><script src="weathercan_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>General Usage</h1>
                         <h4 class="author">Steffi LaZerte</h4>
             
-            <h4 class="date">2020-08-26</h4>
+            <h4 class="date">2021-01-14</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/weathercan/blob/master/vignettes/weathercan.Rmd"><code>vignettes/weathercan.Rmd</code></a></small>
       <div class="hidden name"><code>weathercan.Rmd</code></div>
@@ -117,26 +117,33 @@
 
     
     
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">weathercan</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/weathercan/">weathercan</a></span><span class="op">)</span></pre></div>
 <div id="stations" class="section level2">
 <h2 class="hasAnchor">
 <a href="#stations" class="anchor"></a>Stations</h2>
 <p><code>weathercan</code> includes a data frame called <code>stations</code> which lists available stations and their details (including <code>station_id</code>.</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">stations</span>)</pre></body></html></div>
-<pre><code>## # A tibble: 6 x 14
-##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval
-##   &lt;chr&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   
-## 1 AB    DAYSLAND           1795 301AR54        NA &lt;NA&gt;   52.9 -112.  689. Etc/… day     
-## 2 AB    DAYSLAND           1795 301AR54        NA &lt;NA&gt;   52.9 -112.  689. Etc/… hour    
-## 3 AB    DAYSLAND           1795 301AR54        NA &lt;NA&gt;   52.9 -112.  689. Etc/… month   
-## 4 AB    EDMONTON CO…       1796 301BK03        NA &lt;NA&gt;   53.6 -114.  671. Etc/… day     
-## 5 AB    EDMONTON CO…       1796 301BK03        NA &lt;NA&gt;   53.6 -114.  671. Etc/… hour    
-## 6 AB    EDMONTON CO…       1796 301BK03        NA &lt;NA&gt;   53.6 -114.  671. Etc/… month   
-## # … with 3 more variables</code></pre>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="va">stations</span></pre></div>
+<pre><code>## # A tibble: 26,316 x 14
+##    prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval
+##    &lt;chr&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   
+##  1 AB    DAYSLAND           1795 301AR54        NA &lt;NA&gt;   52.9 -112.  689. Etc/… day     
+##  2 AB    DAYSLAND           1795 301AR54        NA &lt;NA&gt;   52.9 -112.  689. Etc/… hour    
+##  3 AB    DAYSLAND           1795 301AR54        NA &lt;NA&gt;   52.9 -112.  689. Etc/… month   
+##  4 AB    EDMONTON CO…       1796 301BK03        NA &lt;NA&gt;   53.6 -114.  671. Etc/… day     
+##  5 AB    EDMONTON CO…       1796 301BK03        NA &lt;NA&gt;   53.6 -114.  671. Etc/… hour    
+##  6 AB    EDMONTON CO…       1796 301BK03        NA &lt;NA&gt;   53.6 -114.  671. Etc/… month   
+##  7 AB    FLEET              1797 301B6L0        NA &lt;NA&gt;   52.2 -112.  838. Etc/… day     
+##  8 AB    FLEET              1797 301B6L0        NA &lt;NA&gt;   52.2 -112.  838. Etc/… hour    
+##  9 AB    FLEET              1797 301B6L0        NA &lt;NA&gt;   52.2 -112.  838. Etc/… month   
+## 10 AB    GOLDEN VALL…       1798 301B8LR        NA &lt;NA&gt;   53.2 -110.  640  Etc/… day     
+## # … with 26,306 more rows, and 3 more variables</code></pre>
 <p>You can look through this data frame directly, or you can use the <code>stations_search</code> function:</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="../reference/stations_search.html">stations_search</a></span>(<span class="st">"Kamloops"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="fu"><a href="../reference/stations_search.html">stations_search</a></span><span class="op">(</span><span class="st">"Kamloops"</span><span class="op">)</span></pre></div>
 <pre><code>## # A tibble: 40 x 14
 ##    prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval
 ##    &lt;chr&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   
@@ -152,7 +159,8 @@
 ## 10 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/… day     
 ## # … with 30 more rows, and 3 more variables</code></pre>
 <p>You can narrow down your search by specifying time intervals (options are “hour”, “day”, or “month”):</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="../reference/stations_search.html">stations_search</a></span>(<span class="st">"Kamloops"</span>, <span class="kw">interval</span> <span class="kw">=</span> <span class="st">"hour"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="fu"><a href="../reference/stations_search.html">stations_search</a></span><span class="op">(</span><span class="st">"Kamloops"</span>, interval <span class="op">=</span> <span class="st">"hour"</span><span class="op">)</span></pre></div>
 <pre><code>## # A tibble: 3 x 14
 ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval
 ##   &lt;chr&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   
@@ -161,7 +169,8 @@
 ## 3 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/… hour    
 ## # … with 3 more variables</code></pre>
 <p>You can specify more than one interval:</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="../reference/stations_search.html">stations_search</a></span>(<span class="st">"Kamloops"</span>, <span class="kw">interval</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"hour"</span>, <span class="st">"month"</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb8"><pre class="downlit">
+<span class="fu"><a href="../reference/stations_search.html">stations_search</a></span><span class="op">(</span><span class="st">"Kamloops"</span>, interval <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"hour"</span>, <span class="st">"month"</span><span class="op">)</span><span class="op">)</span></pre></div>
 <pre><code>## # A tibble: 21 x 14
 ##    prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval
 ##    &lt;chr&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   
@@ -177,7 +186,8 @@
 ## 10 BC    KAMLOOPS CH…       1279 1163815        NA &lt;NA&gt;   50.6 -121.  701  Etc/… month   
 ## # … with 11 more rows, and 3 more variables</code></pre>
 <p>You can also search by proximity. These results include a new column <code>distance</code> specifying the distance in km from the coordinates:</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="../reference/stations_search.html">stations_search</a></span>(<span class="kw">coords</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">50.667492</span>, -<span class="fl">120.329049</span>), <span class="kw">dist</span> <span class="kw">=</span> <span class="fl">20</span>, <span class="kw">interval</span> <span class="kw">=</span> <span class="st">"hour"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb10"><pre class="downlit">
+<span class="fu"><a href="../reference/stations_search.html">stations_search</a></span><span class="op">(</span>coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">50.667492</span>, <span class="op">-</span><span class="fl">120.329049</span><span class="op">)</span>, dist <span class="op">=</span> <span class="fl">20</span>, interval <span class="op">=</span> <span class="st">"hour"</span><span class="op">)</span></pre></div>
 <pre><code>## # A tibble: 3 x 15
 ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval
 ##   &lt;chr&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   
@@ -186,14 +196,15 @@
 ## 3 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/… hour    
 ## # … with 4 more variables</code></pre>
 <p>We can also perform more complex searches using <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> function from the <code>dplyr</code> package:</p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">BCstations</span> <span class="kw">&lt;-</span> <span class="no">stations</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">prov</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"BC"</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">interval</span> <span class="kw">==</span> <span class="st">"hour"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">lat</span> <span class="kw">&gt;</span> <span class="fl">49</span> <span class="kw">&amp;</span> <span class="no">lat</span> <span class="kw">&lt;</span> <span class="fl">49.5</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">lon</span> <span class="kw">&gt;</span> -<span class="fl">119</span> <span class="kw">&amp;</span> <span class="no">lon</span> <span class="kw">&lt;</span> -<span class="fl">116</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">start</span> <span class="kw">&lt;=</span> <span class="fl">2002</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">end</span> <span class="kw">&gt;=</span> <span class="fl">2016</span>)
-<span class="no">BCstations</span></pre></body></html></div>
+<div class="sourceCode" id="cb12"><pre class="downlit">
+<span class="va">BCstations</span> <span class="op">&lt;-</span> <span class="va">stations</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">prov</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"BC"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">interval</span> <span class="op">==</span> <span class="st">"hour"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">lat</span> <span class="op">&gt;</span> <span class="fl">49</span> <span class="op">&amp;</span> <span class="va">lat</span> <span class="op">&lt;</span> <span class="fl">49.5</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">lon</span> <span class="op">&gt;</span> <span class="op">-</span><span class="fl">119</span> <span class="op">&amp;</span> <span class="va">lon</span> <span class="op">&lt;</span> <span class="op">-</span><span class="fl">116</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">start</span> <span class="op">&lt;=</span> <span class="fl">2002</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">end</span> <span class="op">&gt;=</span> <span class="fl">2016</span><span class="op">)</span>
+<span class="va">BCstations</span></pre></div>
 <pre><code>## # A tibble: 3 x 14
 ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval
 ##   &lt;chr&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   
@@ -201,24 +212,28 @@
 ## 2 BC    NELSON CS          6839 1145M29     71776 WNM    49.5 -117.  535. Etc/… hour    
 ## 3 BC    WARFIELD RCS      31067 1148705     71401 XWF    49.1 -118.  567. Etc/… hour    
 ## # … with 3 more variables</code></pre>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="co">## weather_dl() accepts numbers so we can create a vector to input into weather:</span>
-<span class="no">stn_vector</span> <span class="kw">&lt;-</span> <span class="no">BCstations</span>$<span class="no">station_id</span>
-<span class="no">stn_vector</span></pre></body></html></div>
+<div class="sourceCode" id="cb14"><pre class="downlit">
+<span class="co">## weather_dl() accepts numbers so we can create a vector to input into weather:</span>
+<span class="va">stn_vector</span> <span class="op">&lt;-</span> <span class="va">BCstations</span><span class="op">$</span><span class="va">station_id</span> 
+<span class="va">stn_vector</span></pre></div>
 <pre><code>## [1]  6838  6839 31067</code></pre>
 <p>Searching a bleeding edge updated list of stations:</p>
-<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="no">s</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/stations_dl.html">stations_dl</a></span>() <span class="co"># Download complete stations list</span>
-<span class="fu"><a href="../reference/stations_search.html">stations_search</a></span>(<span class="st">"Saskatoon"</span>, <span class="kw">stn</span> <span class="kw">=</span> <span class="no">s</span>) <span class="co"># Specify the new stations list to search</span></pre></body></html></div>
+<div class="sourceCode" id="cb16"><pre class="downlit">
+<span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/stations_dl.html">stations_dl</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Download complete stations list</span>
+<span class="fu"><a href="../reference/stations_search.html">stations_search</a></span><span class="op">(</span><span class="st">"Saskatoon"</span>, stn <span class="op">=</span> <span class="va">s</span><span class="op">)</span> <span class="co"># Specify the new stations list to search</span></pre></div>
 </div>
 <div id="weather" class="section level2">
 <h2 class="hasAnchor">
 <a href="#weather" class="anchor"></a>Weather</h2>
 <p>Once you have your <code>station_id</code>(s) you can download weather data:</p>
-<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="no">kam</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/weather_dl.html">weather_dl</a></span>(<span class="kw">station_ids</span> <span class="kw">=</span> <span class="fl">51423</span>, <span class="kw">start</span> <span class="kw">=</span> <span class="st">"2016-01-01"</span>, <span class="kw">end</span> <span class="kw">=</span> <span class="st">"2016-02-15"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb17"><pre class="downlit">
+<span class="va">kam</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/weather_dl.html">weather_dl</a></span><span class="op">(</span>station_ids <span class="op">=</span> <span class="fl">51423</span>, start <span class="op">=</span> <span class="st">"2016-01-01"</span>, end <span class="op">=</span> <span class="st">"2016-02-15"</span><span class="op">)</span></pre></div>
 <pre><code>## As of weathercan v0.3.0 time display is either local time or UTC
 ## See Details under ?weather_dl for more information.
 ## This message is shown once per session</code></pre>
-<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="no">kam</span></pre></body></html></div>
-<pre><code>## # A tibble: 1,104 x 35
+<div class="sourceCode" id="cb19"><pre class="downlit">
+<span class="va">kam</span></pre></div>
+<pre><code>## # A tibble: 1,104 x 37
 ##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id
 ##    &lt;chr&gt;             &lt;dbl&gt; &lt;lgl&gt;            &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt; 
 ##  1 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887 
@@ -231,12 +246,13 @@
 ##  8 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887 
 ##  9 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887 
 ## 10 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887 
-## # … with 1,094 more rows, and 26 more variables</code></pre>
+## # … with 1,094 more rows, and 28 more variables</code></pre>
 <p>You can also download data from multiple stations at once:</p>
-<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="no">kam.pg</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/weather_dl.html">weather_dl</a></span>(<span class="kw">station_ids</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">48248</span>, <span class="fl">51423</span>), <span class="kw">start</span> <span class="kw">=</span> <span class="st">"2016-01-01"</span>, <span class="kw">end</span> <span class="kw">=</span> <span class="st">"2016-02-15"</span>)
-
-<span class="no">kam.pg</span></pre></body></html></div>
-<pre><code>## # A tibble: 2,208 x 35
+<div class="sourceCode" id="cb21"><pre class="downlit">
+<span class="va">kam.pg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/weather_dl.html">weather_dl</a></span><span class="op">(</span>station_ids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">48248</span>, <span class="fl">51423</span><span class="op">)</span>, start <span class="op">=</span> <span class="st">"2016-01-01"</span>, end <span class="op">=</span> <span class="st">"2016-02-15"</span><span class="op">)</span>
+                    
+<span class="va">kam.pg</span></pre></div>
+<pre><code>## # A tibble: 2,208 x 37
 ##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id
 ##    &lt;chr&gt;             &lt;dbl&gt; &lt;lgl&gt;            &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt; 
 ##  1 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302 
@@ -249,18 +265,20 @@
 ##  8 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302 
 ##  9 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302 
 ## 10 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302 
-## # … with 2,198 more rows, and 26 more variables</code></pre>
+## # … with 2,198 more rows, and 28 more variables</code></pre>
 <p>And plot it:</p>
-<div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">kam.pg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">time</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">temp</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">station_name</span>, <span class="kw">colour</span> <span class="kw">=</span> <span class="no">station_name</span>)) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="kw">legend.position</span> <span class="kw">=</span> <span class="st">"top"</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span>()</pre></body></html></div>
+<div class="sourceCode" id="cb23"><pre class="downlit">
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">kam.pg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">time</span>, y <span class="op">=</span> <span class="va">temp</span>, group <span class="op">=</span> <span class="va">station_name</span>, colour <span class="op">=</span> <span class="va">station_name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"top"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></pre></div>
 <p><img src="weathercan_files/figure-html/unnamed-chunk-11-1.png" width="1152"></p>
 <p>Or you can use the vector created above:</p>
-<div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="no">stn_vec_df</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/weather_dl.html">weather_dl</a></span>(<span class="kw">station_ids</span> <span class="kw">=</span> <span class="no">stn_vector</span>, <span class="kw">start</span> <span class="kw">=</span> <span class="st">"2016-01-01"</span>, <span class="kw">end</span> <span class="kw">=</span> <span class="st">"2016-02-15"</span>)
+<div class="sourceCode" id="cb24"><pre class="downlit">
+<span class="va">stn_vec_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/weather_dl.html">weather_dl</a></span><span class="op">(</span>station_ids <span class="op">=</span> <span class="va">stn_vector</span>, start <span class="op">=</span> <span class="st">"2016-01-01"</span>, end <span class="op">=</span> <span class="st">"2016-02-15"</span><span class="op">)</span>
 
-<span class="no">stn_vec_df</span></pre></body></html></div>
-<pre><code>## # A tibble: 3,312 x 35
+<span class="va">stn_vec_df</span></pre></div>
+<pre><code>## # A tibble: 3,312 x 37
 ##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id
 ##    &lt;chr&gt;             &lt;dbl&gt; &lt;lgl&gt;            &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt; 
 ##  1 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770 
@@ -273,7 +291,7 @@
 ##  8 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770 
 ##  9 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770 
 ## 10 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770 
-## # … with 3,302 more rows, and 26 more variables</code></pre>
+## # … with 3,302 more rows, and 28 more variables</code></pre>
 <p>For more information on the data flags, see the <a href="flags.html">Flags vignette</a>, for more information on units and terms, see the <a href="glossary.html">Terms and Units vignette</a>.</p>
 </div>
   </div>
@@ -293,7 +311,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

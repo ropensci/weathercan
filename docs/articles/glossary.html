@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">weathercan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
       </span>
     </div>
 
@@ -40,7 +40,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
   </a>
 </li>
@@ -88,7 +88,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/ropensci/weathercan">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -102,13 +102,13 @@
 
       
 
-      </header><div class="row">
+      </header><script src="glossary_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Weather: Terms and Units</h1>
                         <h4 class="author">Steffi LaZerte</h4>
             
-            <h4 class="date">2020-08-26</h4>
+            <h4 class="date">2021-01-14</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/weathercan/blob/master/vignettes/glossary.Rmd"><code>vignettes/glossary.Rmd</code></a></small>
       <div class="hidden name"><code>glossary.Rmd</code></div>
@@ -120,6 +120,13 @@
 <p>This table shows details regarding original column (measurement) names and units of all weather measurements. It further provides links back to the ECCC glossary for more details.</p>
 <p>For details on climate normals measurements, see the <code>glossary_normals</code> vignette.</p>
 <table class="table">
+<colgroup>
+<col width="5%">
+<col width="16%">
+<col width="16%">
+<col width="8%">
+<col width="52%">
+</colgroup>
 <thead><tr class="header">
 <th align="left">Interval</th>
 <th align="left">ECCC Name</th>
@@ -130,7 +137,7 @@
 <tbody>
 <tr class="odd">
 <td align="left">hour</td>
-<td align="left">Date/Time</td>
+<td align="left">Date/Time (LST)</td>
 <td align="left">time</td>
 <td align="left">ISO date/time</td>
 <td align="left">NA</td>
@@ -158,7 +165,7 @@
 </tr>
 <tr class="odd">
 <td align="left">hour</td>
-<td align="left">Time</td>
+<td align="left">Time (LST)</td>
 <td align="left">hour</td>
 <td align="left">hour</td>
 <td align="left"><a href="https://climate.weather.gc.ca/glossary_e.html#dataInt">ECCC glossary page</a></td>
@@ -209,6 +216,20 @@
 <td align="left">hour</td>
 <td align="left">Rel Hum Flag</td>
 <td align="left">rel_hum_flag</td>
+<td align="left">note</td>
+<td align="left"><a href="flags.html">See the ‘flags’ vignette</a></td>
+</tr>
+<tr class="odd">
+<td align="left">hour</td>
+<td align="left">Precip. Amount (mm)</td>
+<td align="left">precip_amt</td>
+<td align="left">mm</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">hour</td>
+<td align="left">Precip. Amount Flag</td>
+<td align="left">precip_amt_flag</td>
 <td align="left">note</td>
 <td align="left"><a href="flags.html">See the ‘flags’ vignette</a></td>
 </tr>
@@ -684,7 +705,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

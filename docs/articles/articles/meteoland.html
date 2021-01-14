@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">weathercan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
       </span>
     </div>
 
@@ -40,7 +40,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
   </a>
 </li>
@@ -88,7 +88,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/ropensci/weathercan">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -102,13 +102,13 @@
 
       
 
-      </header><div class="row">
+      </header><script src="meteoland_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Meteoland</h1>
                         <h4 class="author">Steffi LaZerte</h4>
             
-            <h4 class="date">2020-08-26</h4>
+            <h4 class="date">2021-01-14</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/weathercan/blob/master/vignettes/articles/meteoland.Rmd"><code>vignettes/articles/meteoland.Rmd</code></a></small>
       <div class="hidden name"><code>meteoland.Rmd</code></div>
@@ -122,10 +122,12 @@
 <h2 class="hasAnchor">
 <a href="#setup" class="anchor"></a>Setup</h2>
 <p>First we’ll load the packages and find the stations we’re interested in and</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">meteoland</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://vegmod.ctfc.cat/software/meteoland/">meteoland</a></span><span class="op">)</span></pre></div>
 <pre><code>## Loading required package: sp</code></pre>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">weathercan</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/weathercan/">weathercan</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></pre></div>
 <pre><code>## 
 ## Attaching package: 'dplyr'</code></pre>
 <pre><code>## The following objects are masked from 'package:stats':
@@ -134,46 +136,50 @@
 <pre><code>## The following objects are masked from 'package:base':
 ## 
 ##     intersect, setdiff, setequal, union</code></pre>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyr</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">sf</span>)</pre></body></html></div>
-<pre><code>## Linking to GEOS 3.6.2, GDAL 2.2.3, PROJ 4.9.3</code></pre>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">rnaturalearth</span>)
+<div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span></pre></div>
+<pre><code>## Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1</code></pre>
+<div class="sourceCode" id="cb9"><pre class="downlit">
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ropenscilabs/rnaturalearth">rnaturalearth</a></span><span class="op">)</span>
 
-<span class="no">s</span> <span class="kw">&lt;-</span> <span class="no">stations</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">prov</span> <span class="kw">==</span> <span class="st">"MB"</span>, <span class="no">interval</span> <span class="kw">!=</span> <span class="st">"month"</span>, <span class="no">start</span> <span class="kw">&lt;=</span> <span class="fl">2015</span>, <span class="no">end</span> <span class="kw">&gt;=</span> <span class="fl">2015</span>, !<span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(<span class="no">elev</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">station_id</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">n</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">interval</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">n</span> <span class="kw">==</span> <span class="fl">2</span>)
+<span class="va">s</span> <span class="op">&lt;-</span> <span class="va">stations</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">prov</span> <span class="op">==</span> <span class="st">"MB"</span>, <span class="va">interval</span> <span class="op">!=</span> <span class="st">"month"</span>, <span class="va">start</span> <span class="op">&lt;=</span> <span class="fl">2015</span>, <span class="va">end</span> <span class="op">&gt;=</span> <span class="fl">2015</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">elev</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">station_id</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">interval</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">==</span> <span class="fl">2</span><span class="op">)</span>
 
-<span class="no">s_map</span> <span class="kw">&lt;-</span> <span class="no">s</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_as_sf.html">st_as_sf</a></span>(<span class="kw">coords</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"lon"</span>, <span class="st">"lat"</span>), <span class="kw">crs</span> <span class="kw">=</span> <span class="fl">4326</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_transform.html">st_transform</a></span>(<span class="fl">3347</span>)
+<span class="va">s_map</span> <span class="op">&lt;-</span> <span class="va">s</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op">(</span>coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lon"</span>, <span class="st">"lat"</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html">st_transform</a></span><span class="op">(</span><span class="fl">3347</span><span class="op">)</span>
 
-<span class="no">mb</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rnaturalearth/man/ne_states.html">ne_states</a></span>(<span class="kw">country</span> <span class="kw">=</span> <span class="st">"Canada"</span>, <span class="kw">returnclass</span> <span class="kw">=</span> <span class="st">"sf"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">name</span> <span class="kw">==</span> <span class="st">"Manitoba"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_transform.html">st_transform</a></span>(<span class="fl">3347</span>)
+<span class="va">mb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rnaturalearth/man/ne_states.html">ne_states</a></span><span class="op">(</span>country <span class="op">=</span> <span class="st">"Canada"</span>, returnclass <span class="op">=</span> <span class="st">"sf"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">name</span> <span class="op">==</span> <span class="st">"Manitoba"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html">st_transform</a></span><span class="op">(</span><span class="fl">3347</span><span class="op">)</span>
 
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>() +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">mb</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">s_map</span>)</pre></body></html></div>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mb</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">s_map</span><span class="op">)</span></pre></div>
 <p><img src="meteoland_files/figure-html/unnamed-chunk-1-1.png" width="700"></p>
 <p>Let’s focus on northern Manitoba</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">s</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">s</span>, <span class="no">lat</span> <span class="kw">&gt;</span> <span class="fl">55</span>)
-<span class="no">s_map</span> <span class="kw">&lt;-</span> <span class="no">s</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_as_sf.html">st_as_sf</a></span>(<span class="kw">coords</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"lon"</span>, <span class="st">"lat"</span>), <span class="kw">crs</span> <span class="kw">=</span> <span class="fl">4326</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_transform.html">st_transform</a></span>(<span class="fl">3347</span>)
+<div class="sourceCode" id="cb10"><pre class="downlit">
+<span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">s</span>, <span class="va">lat</span> <span class="op">&gt;</span> <span class="fl">55</span><span class="op">)</span>
+<span class="va">s_map</span> <span class="op">&lt;-</span> <span class="va">s</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op">(</span>coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lon"</span>, <span class="st">"lat"</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html">st_transform</a></span><span class="op">(</span><span class="fl">3347</span><span class="op">)</span>
 
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>() +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">mb</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">s_map</span>)</pre></body></html></div>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mb</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">s_map</span><span class="op">)</span></pre></div>
 <p><img src="meteoland_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
 </div>
 <div id="download-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#download-data" class="anchor"></a>Download data</h2>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">mb_hr</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../../reference/weather_dl.html">weather_dl</a></span>(<span class="kw">station_id</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">s</span>$<span class="no">station_id</span>), <span class="kw">interval</span> <span class="kw">=</span> <span class="st">"hour"</span>,
-                    <span class="kw">start</span> <span class="kw">=</span> <span class="st">"2015-01-01"</span>, <span class="kw">end</span> <span class="kw">=</span> <span class="st">"2015-12-31"</span>, <span class="kw">verbose</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb11"><pre class="downlit">
+<span class="va">mb_hr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/weather_dl.html">weather_dl</a></span><span class="op">(</span>station_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">s</span><span class="op">$</span><span class="va">station_id</span><span class="op">)</span>, interval <span class="op">=</span> <span class="st">"hour"</span>,
+                    start <span class="op">=</span> <span class="st">"2015-01-01"</span>, end <span class="op">=</span> <span class="st">"2015-12-31"</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
 <pre><code>## Getting station: 10217</code></pre>
 <pre><code>## Formatting station data: 10217</code></pre>
 <pre><code>## Adding header data: 10217</code></pre>
@@ -208,8 +214,9 @@
 <pre><code>## As of weathercan v0.3.0 time display is either local time or UTC
 ## See Details under ?weather_dl for more information.
 ## This message is shown once per session</code></pre>
-<div class="sourceCode" id="cb44"><html><body><pre class="r"><span class="no">mb_day</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../../reference/weather_dl.html">weather_dl</a></span>(<span class="kw">station_id</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">s</span>$<span class="no">station_id</span>), <span class="kw">interval</span> <span class="kw">=</span> <span class="st">"day"</span>,
-                     <span class="kw">start</span> <span class="kw">=</span> <span class="st">"2015-01-01"</span>, <span class="kw">end</span> <span class="kw">=</span> <span class="st">"2015-12-31"</span>, <span class="kw">verbose</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb44"><pre class="downlit">
+<span class="va">mb_day</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/weather_dl.html">weather_dl</a></span><span class="op">(</span>station_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">s</span><span class="op">$</span><span class="va">station_id</span><span class="op">)</span>, interval <span class="op">=</span> <span class="st">"day"</span>,
+                     start <span class="op">=</span> <span class="st">"2015-01-01"</span>, end <span class="op">=</span> <span class="st">"2015-12-31"</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
 <pre><code>## Getting station: 10217</code></pre>
 <pre><code>## Formatting station data: 10217</code></pre>
 <pre><code>## No data for station 10217</code></pre>
@@ -274,7 +281,8 @@
 <a href="#pass-to-meteoland" class="anchor"></a>Pass to <code>meteoland</code>
 </h2>
 <p>First we’ll reshape our hourly and daily data into a <code>meteoland</code> interpolations data object.</p>
-<div class="sourceCode" id="cb81"><html><body><pre class="r"><span class="no">mb_north</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/meteoland/man/reshapeworldmet.html">reshapeweathercan</a></span>(<span class="no">mb_hr</span>, <span class="no">mb_day</span>, <span class="kw">output</span> <span class="kw">=</span> <span class="st">"MeteorologyInterpolationData"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb81"><pre class="downlit">
+<span class="va">mb_north</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/meteoland/man/reshapeworldmet.html">reshapeweathercan</a></span><span class="op">(</span><span class="va">mb_hr</span>, <span class="va">mb_day</span>, output <span class="op">=</span> <span class="st">"MeteorologyInterpolationData"</span><span class="op">)</span></pre></div>
 <pre><code>## 
 ## Parsing hourly data...
 ## 
@@ -323,25 +331,21 @@
   |                                                                            
   |======================================================================| 100%</code></pre>
 <p>We can get a sense of the data coverage (number of dates with data per station per variable).</p>
-<div class="sourceCode" id="cb83"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/meteoland/man/interpolation.coverage.html">interpolation.coverage</a></span>(<span class="no">mb_north</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">'spatial'</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>()</pre></body></html></div>
-<pre><code>##            coordinates MinTemperature MaxTemperature Precipitation
-## 10217   (-94.7, 56.36)            365            365             0
-## 29533  (-96.51, 56.04)            328            328           312
-## 30475   (-98.5, 58.72)            316            316           310
-## 44244  (-94.07, 58.73)            365            365           361
-## 48588 (-101.08, 56.86)            364            364           328
-## 48728 (-101.07, 56.85)            349            349           335
-##       RelativeHumidity Radiation WindSpeed WindDirection
-## 10217              365       365       365           365
-## 29533              328       328       328           327
-## 30475              316       316       316           316
-## 44244              365       365       365           365
-## 48588              364       364       355           355
-## 48728              349       349       349           349</code></pre>
+<div class="sourceCode" id="cb83"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/pkg/meteoland/man/interpolation.coverage.html">interpolation.coverage</a></span><span class="op">(</span><span class="va">mb_north</span>, type <span class="op">=</span> <span class="st">'spatial'</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+<pre><code>## class       : SpatialPointsDataFrame 
+## features    : 6 
+## extent      : -101.08, -94.07, 56.04, 58.73  (xmin, xmax, ymin, ymax)
+## crs         : +proj=longlat +datum=WGS84 +no_defs 
+## variables   : 7
+## names       : MinTemperature, MaxTemperature, Precipitation, RelativeHumidity, Radiation, WindSpeed, WindDirection 
+## min values  :            316,            316,             0,              316,       316,       316,           316 
+## max values  :            365,            365,           361,              365,       365,       365,           365</code></pre>
 <p>Or the number of stations with data per date per variable.</p>
-<div class="sourceCode" id="cb85"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/meteoland/man/interpolation.coverage.html">interpolation.coverage</a></span>(<span class="no">mb_north</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">'temporal'</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>()</pre></body></html></div>
+<div class="sourceCode" id="cb85"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/pkg/meteoland/man/interpolation.coverage.html">interpolation.coverage</a></span><span class="op">(</span><span class="va">mb_north</span>, type <span class="op">=</span> <span class="st">'temporal'</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></pre></div>
 <pre><code>##            MinTemperature MaxTemperature Precipitation RelativeHumidity
 ## 2015-01-01             10             10             9               10
 ## 2015-01-02             10             10             9               10
@@ -357,10 +361,11 @@
 ## 2015-01-05        10        10            10
 ## 2015-01-06        10        10            10</code></pre>
 <p>Next we have to calibrate the variable we’re interested in (here <code>Tmin</code>)</p>
-<div class="sourceCode" id="cb87"><html><body><pre class="r"><span class="no">tmin</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/meteoland/man/interpolation.cv.html">interpolation.calibration</a></span>(<span class="no">mb_north</span>, <span class="kw">variable</span> <span class="kw">=</span> <span class="st">"Tmin"</span>,
-                                  <span class="kw">N_seq</span> <span class="kw">=</span> <span class="fl">20</span>,
-                                  <span class="kw">alpha_seq</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">5</span>, <span class="fl">10</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fl">1</span>),
-                                  <span class="kw">verbose</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb87"><pre class="downlit">
+<span class="va">tmin</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/meteoland/man/interpolation.cv.html">interpolation.calibration</a></span><span class="op">(</span><span class="va">mb_north</span>, variable <span class="op">=</span> <span class="st">"Tmin"</span>,
+                                  N_seq <span class="op">=</span> <span class="fl">20</span>,
+                                  alpha_seq <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">10</span>, by <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
+                                  verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
 <pre><code>## Total number of stations: 10
 ## Number of stations with available data: 10
 ## Number of stations used for MAE: 10
@@ -375,10 +380,12 @@
 ##    N: 20 alpha: 10 MAE = 1.21666437558774
 ## 
 ## Minimum MAE value: 1.21666437558774 N: 20 alpha: 10</code></pre>
-<div class="sourceCode" id="cb89"><html><body><pre class="r"><span class="no">mb_north</span>@<span class="kw">params</span>$<span class="no">N_MinTemperature</span> <span class="kw">=</span> <span class="no">tmin</span>$<span class="no">N</span>
-<span class="no">mb_north</span>@<span class="kw">params</span>$<span class="no">alpha_MinTemperature</span> <span class="kw">=</span> <span class="no">tmin</span>$<span class="no">alpha</span></pre></body></html></div>
+<div class="sourceCode" id="cb89"><pre class="downlit">
+<span class="va">mb_north</span><span class="op">@</span><span class="va">params</span><span class="op">$</span><span class="va">N_MinTemperature</span> <span class="op">=</span> <span class="va">tmin</span><span class="op">$</span><span class="va">N</span>
+<span class="va">mb_north</span><span class="op">@</span><span class="va">params</span><span class="op">$</span><span class="va">alpha_MinTemperature</span> <span class="op">=</span> <span class="va">tmin</span><span class="op">$</span><span class="va">alpha</span></pre></div>
 <p>Next we cross-validate the data</p>
-<div class="sourceCode" id="cb90"><html><body><pre class="r"><span class="no">cv</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/meteoland/man/interpolation.cv.html">interpolation.cv</a></span>(<span class="no">mb_north</span>, <span class="kw">verbose</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb90"><pre class="downlit">
+<span class="va">cv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/meteoland/man/interpolation.cv.html">interpolation.cv</a></span><span class="op">(</span><span class="va">mb_north</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
 <pre><code>## Station #1 10217
 ## Station #2 29533
 ## Station #3 30475
@@ -389,7 +396,8 @@
 ## Station #8 48972
 ## Station #9 52758
 ## Station #10 53118</code></pre>
-<div class="sourceCode" id="cb92"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">cv</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb92"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">cv</span><span class="op">)</span></pre></div>
 <pre><code>##                               n           r         MAE sd.station.MAE
 ## MinTemperature             3526  0.99292438   1.2166644      0.5385937
 ## MaxTemperature             3526  0.98253144   2.1149947      0.6620170
@@ -433,15 +441,21 @@
 ## Date.precstations              0.5663581
 ## Date.precstations.relative    18.9795617</code></pre>
 <p>We create a dummy <code>SpatialPointsTopography</code> object representing the points (in this case) that we wish to interpolate over. Note that here I’m using a mean elevation as a placeholder as I don’t have actual elevation values. If you have slope and aspect, even better. Remember, interpolation is only as good as the data you give it!</p>
-<div class="sourceCode" id="cb94"><html><body><pre class="r"><span class="no">interp</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid</a></span>(<span class="kw">lat</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">56</span>, <span class="fl">58.5</span>, <span class="fl">0.25</span>),
-                      <span class="kw">lon</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(-<span class="fl">101</span>, -<span class="fl">95</span>, <span class="fl">0.25</span>),
-                      <span class="kw">elev</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">s_map</span>$<span class="no">elev</span>))
+<div class="sourceCode" id="cb94"><pre class="downlit">
+<span class="va">interp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid</a></span><span class="op">(</span>lat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">56</span>, <span class="fl">58.5</span>, <span class="fl">0.25</span><span class="op">)</span>,
+                      lon <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">101</span>, <span class="op">-</span><span class="fl">95</span>, <span class="fl">0.25</span><span class="op">)</span>, 
+                      elev <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">s_map</span><span class="op">$</span><span class="va">elev</span><span class="op">)</span><span class="op">)</span>
 
-<span class="no">interp</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/meteoland/man/SpatialPointsTopography.html">SpatialPointsTopography</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(<span class="no">interp</span>[, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"lon"</span>, <span class="st">"lat"</span>)]),
-                                  <span class="kw">elevation</span> <span class="kw">=</span> <span class="no">interp</span>$<span class="no">elev</span>,
-                                  <span class="kw">proj4string</span> <span class="kw">=</span> <span class="fu">CRS</span>(<span class="st">"+proj=longlat +ellps=WGS84"</span>))</pre></body></html></div>
+<span class="va">interp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/meteoland/man/SpatialPointsTopography.html">SpatialPointsTopography</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">interp</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lon"</span>, <span class="st">"lat"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>,
+                                  elevation <span class="op">=</span> <span class="va">interp</span><span class="op">$</span><span class="va">elev</span>,
+                                  proj4string <span class="op">=</span> <span class="fu">CRS</span><span class="op">(</span><span class="st">"+proj=longlat +ellps=WGS84"</span><span class="op">)</span><span class="op">)</span></pre></div>
+<pre><code>## Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
+## datum Unknown based on WGS84 ellipsoid in CRS definition</code></pre>
 <p>Now for the actual interpolation. Here we interpolate over all dates in the range of the original data.</p>
-<div class="sourceCode" id="cb95"><html><body><pre class="r"><span class="no">new_interp</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/meteoland/man/interpolationpoints.html">interpolationpoints</a></span>(<span class="no">mb_north</span>, <span class="no">interp</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb96"><pre class="downlit">
+<span class="va">new_interp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/meteoland/man/interpolationpoints.html">interpolationpoints</a></span><span class="op">(</span><span class="va">mb_north</span>, <span class="va">interp</span><span class="op">)</span></pre></div>
+<pre><code>## Warning in interpolationpoints(mb_north, interp): CRS projection of 'points'
+## adapted to that of 'object'.</code></pre>
 <pre><code>## Processing point '1' (1/275) - done.
 ## Processing point '2' (2/275) - done.
 ## Processing point '3' (3/275) - done.
@@ -718,7 +732,8 @@
 ## Processing point '274' (274/275) - done.
 ## Processing point '275' (275/275) - done.</code></pre>
 <p>We can summarize and plot our interpolations</p>
-<div class="sourceCode" id="cb97"><html><body><pre class="r"><span class="no">map</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/meteoland/man/summarypoints.html">summarypoints</a></span>(<span class="no">new_interp</span>, <span class="kw">var</span> <span class="kw">=</span> <span class="st">"MinTemperature"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb99"><pre class="downlit">
+<span class="va">map</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/meteoland/man/summarypoints.html">summarypoints</a></span><span class="op">(</span><span class="va">new_interp</span>, var <span class="op">=</span> <span class="st">"MinTemperature"</span><span class="op">)</span></pre></div>
 <pre><code>##   Summarizing MinTemperature in 275 points...
 ## 
   |                                                                            
@@ -1287,24 +1302,26 @@
   |===================================================================== |  99%
   |                                                                            
   |======================================================================| 100%</code></pre>
-<div class="sourceCode" id="cb99"><html><body><pre class="r"><span class="no">mb_interp</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_as_sf.html">st_as_sf</a></span>(<span class="no">map</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select_all.html">rename_at</a></span>(<span class="kw">.vars</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/vars.html">vars</a></span>(<span class="fu"><a href="https://tidyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"matrix"</span>)), ~<span class="st">"min_temp"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">station_id</span> <span class="kw">=</span> <span class="fl">NA</span>, <span class="kw">interp</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<div class="sourceCode" id="cb101"><pre class="downlit">
+<span class="va">mb_interp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op">(</span><span class="va">map</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select_all.html">rename_at</a></span><span class="op">(</span>.vars <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"matrix"</span><span class="op">)</span><span class="op">)</span>, <span class="op">~</span><span class="st">"min_temp"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>station_id <span class="op">=</span> <span class="cn">NA</span>, interp <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
-<span class="no">mb_stations</span> <span class="kw">&lt;-</span> <span class="no">mb_day</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">station_id</span>, <span class="no">lat</span>, <span class="no">lon</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span>(<span class="kw">min_temp</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">min_temp</span>, <span class="kw">na.rm</span> <span class="kw">=</span> <span class="fl">TRUE</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_as_sf.html">st_as_sf</a></span>(<span class="kw">coords</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"lon"</span>, <span class="st">"lat"</span>), <span class="kw">crs</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_crs.html">st_crs</a></span>(<span class="no">mb_interp</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">interp</span> <span class="kw">=</span> <span class="fl">FALSE</span>)</pre></body></html></div>
+<span class="va">mb_stations</span> <span class="op">&lt;-</span> <span class="va">mb_day</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">station_id</span>, <span class="va">lat</span>, <span class="va">lon</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>min_temp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">min_temp</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op">(</span>coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lon"</span>, <span class="st">"lat"</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs</a></span><span class="op">(</span><span class="va">mb_interp</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>interp <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></pre></div>
 <pre><code>## `summarise()` regrouping output by 'station_id', 'lat' (override with `.groups` argument)</code></pre>
-<div class="sourceCode" id="cb101"><html><body><pre class="r"><span class="no">map_sf</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(<span class="no">mb_interp</span>, <span class="no">mb_stations</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">interp</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="no">interp</span>, <span class="kw">levels</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"TRUE"</span>, <span class="st">"FALSE"</span>)))
+<div class="sourceCode" id="cb103"><pre class="downlit">
+<span class="va">map_sf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">mb_interp</span>, <span class="va">mb_stations</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>interp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">interp</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"TRUE"</span>, <span class="st">"FALSE"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>() +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">mb</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">map_sf</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">fill</span> <span class="kw">=</span> <span class="no">min_temp</span>, <span class="kw">shape</span> <span class="kw">=</span> <span class="no">interp</span>, <span class="kw">colour</span> <span class="kw">=</span> <span class="no">interp</span>), <span class="kw">size</span> <span class="kw">=</span> <span class="fl">4</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_shape_manual</a></span>(<span class="kw">values</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">21</span>,<span class="fl">23</span>)) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">coord_sf</a></span>(<span class="kw">ylim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2100000</span>, <span class="fl">2550000</span>))</pre></body></html></div>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mb</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">map_sf</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">min_temp</span>, shape <span class="op">=</span> <span class="va">interp</span>, colour <span class="op">=</span> <span class="va">interp</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_shape_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">21</span>,<span class="fl">23</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">coord_sf</a></span><span class="op">(</span>ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2100000</span>, <span class="fl">2550000</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p><img src="meteoland_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 </div>
   </div>
@@ -1324,7 +1341,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
