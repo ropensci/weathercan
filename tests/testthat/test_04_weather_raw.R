@@ -16,9 +16,9 @@ test_that("weather_html/raw (hour) download a data frame", {
 
   ## Basics
   expect_is(wd, "data.frame")
-  expect_length(wd, 28)
+  expect_length(wd, 30)
   expect_equal(nrow(wd), 744)
-  expect_is(dplyr::pull(wd, "Date/Time"), "character")
+  expect_is(dplyr::pull(wd, "Date/Time (LST)"), "character")
   expect_lt(length(data.frame(wd)[is.na(data.frame(wd))]),
             length(data.frame(wd)[!is.na(data.frame(wd))]))
   #expect_true(stringi::stri_escape_unicode(wd[, "Data Quality"][1]) %in%

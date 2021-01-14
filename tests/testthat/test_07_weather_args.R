@@ -9,7 +9,7 @@ test_that("weather_dl() hour format = FALSE", {
 
   ## Basics
   expect_is(w, "data.frame")
-  expect_length(w, 38)
+  expect_length(w, 40)
   expect_equal(nrow(w), 744)
   expect_is(w$prov, "character")
 
@@ -21,7 +21,7 @@ test_that("weather_dl() hour format = FALSE", {
   expect_equal(w$station_name[1], "KAMLOOPS A")
   expect_equal(w$prov[1], "BC")
 
-  expect_equal(w$`Date/Time`[1], "2014-01-01 00:00")
+  expect_equal(w$`Date/Time (LST)`[1], "2014-01-01 00:00")
   #expect_equal(w$`Data Quality`[1], "\u2021")
 })
 

@@ -23,7 +23,7 @@ test_that("weather (hour) returns a data frame", {
 
   ## Basics
   expect_is(w, "data.frame")
-  expect_length(w, 35)
+  expect_length(w, length(kamloops))
   expect_equal(nrow(w), 744)
   expect_is(w$station_name, "character")
   expect_is(w$prov, "character")
@@ -104,7 +104,7 @@ test_that("weather (hour) gets all", {
                                   interval = "hour", trim = FALSE))
   })
   expect_is(w, "data.frame")
-  expect_length(w, 35)
+  expect_length(w, length(kamloops))
   expect_equal(nrow(w), 48)
   expect_equal(w$date[1], as.Date("2018-01-01"))
   expect_equal(w$date[nrow(w)], as.Date("2018-01-02"))
@@ -139,7 +139,7 @@ test_that("weather (hour) no data fails nicely", {
   expect_length(w0, 0)
   expect_equal(nrow(w0), 0)
   expect_is(w1, "data.frame")
-  expect_length(w1, 35)
+  expect_length(w1, length(kamloops))
   expect_equal(nrow(w1), 720)
 
   vcr::use_cassette("weather_hour_1275_1001_2017-01", {
@@ -200,7 +200,7 @@ test_that("weather (hour) skips with message if end date < start date", {
                  "The end date ")
 
   vcr::use_cassette("weather_hour_42203_49909_2006-04", {
-    expect_message({w <- weather_dl(c(42203, 49909), end = "2006-04-20")},
+    expect_message({w <- weather_dl(c(42203, 49909), end = "2007-04-20")},
                    "End date earlier")
   })
   expect_true(nrow(w) > 0)

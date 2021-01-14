@@ -498,7 +498,8 @@ weather_raw <- function(html, skip = 0,
 weather_format <- function(w, stn, meta, interval = "hour", s.start, s.end,
                            string_as = "NA", time_disp = NULL, quiet = FALSE) {
 
-  w <- dplyr::select(w, -"Station Name", -"Climate ID",
+  w <- dplyr::select(w,
+                     -dplyr::any_of(c("Station Name", "Climate ID")),
                      -dplyr::contains("Latitude"),
                      -dplyr::contains("Longitude"))
 
@@ -655,7 +656,7 @@ meta_raw <- function(html, encoding = "UTF-8", interval, return = "meta") {
     stringr::str_subset("^\r$", negate = TRUE)
 
   if(return == "meta") {
-    i <- stringr::str_which(split, "All times|Legend")[1] - 1
+    i <- stringr::str_which(split, "If Local Standard Time|Legend")[1] - 1
 
     r <- httr::content(html, as = "text",
                   type = "text/csv",

@@ -23,13 +23,14 @@ m_names <- c("station_name" = "Station Name", "station_id" = "ID",
              "WMO_id" = "WMO Identifier", "TC_id" = "TC Identifier")
 
 w_names <- list(
-  "hour" = c("time" = "Date/Time", "year" = "Year", "month" = "Month",
-             "day" = "Day", "hour" = "Time",
+  "hour" = c("time" = "Date/Time (LST)", "year" = "Year", "month" = "Month",
+             "day" = "Day", "hour" = "Time (LST)",
              "qual" = "Data Quality",
              "temp" = "Temp (C)", "temp_flag" = "Temp Flag",
              "temp_dew" = "Dew Point Temp (C)",
              "temp_dew_flag" = "Dew Point Temp Flag",
              "rel_hum" = "Rel Hum (%)", "rel_hum_flag" = "Rel Hum Flag",
+             "precip_amt" = "Precip. Amount (mm)", "precip_amt_flag" = "Precip. Amount Flag",
              "wind_dir" = "Wind Dir (10s deg)",
              "wind_dir_flag" = "Wind Dir Flag",
              "wind_spd" = "Wind Spd (km/h)", "wind_spd_flag" = "Wind Spd Flag",
@@ -270,9 +271,11 @@ n_formats <- select(n_names, "new_var") %>%
   mutate(format = case_when(
     stringr::str_detect(new_var, "date") ~ "date",
     stringr::str_detect(new_var, "dir") ~ "character",
-    TRUE ~ "numeric")) %>%
-  bind_rows(tibble(new_var = paste0(n_formats[["new_var"]], "_code"),
-                   format = "character"))
+    TRUE ~ "numeric"))
+
+n_formats <- bind_rows(n_formats,
+                       tibble(new_var = paste0(n_formats[["new_var"]], "_code"),
+                              format = "character"))
 
 f_formats <- select(f_names, "new_var") %>%
   mutate(format = case_when(
