@@ -41,7 +41,6 @@ jobs:
       VCR_TURN_OFF: true
       RSPM: ${{ matrix.config.rspm }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      VCR_TURN_OFF: true
 
     steps:
       - uses: actions/checkout@v2
