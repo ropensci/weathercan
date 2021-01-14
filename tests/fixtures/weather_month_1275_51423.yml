@@ -14,8 +14,8 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Sat, 22 Aug 2020 18:46:19 GMT
-      server: Apache
+      date: Thu, 14 Jan 2021 22:37:35 GMT
+      server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
       cache-control: private
@@ -23,7 +23,6 @@ http_interactions:
       content-disposition: attachment; filename="en_climate_monthly_BC_1163780_1951-2013_P1M.csv"
       vary: Accept-Encoding
       content-encoding: gzip
-      x-ua-compatible: IE=Edge
       content-length: '20582'
       content-type: application/force-download
     body:
@@ -787,8 +786,8 @@ http_interactions:
         A\",\"1163780\",\"2013-04\",\"2013\",\"04\",\"15.5\",\"\",\"3.4\",\"\",\"9.5\",\"\",\"23.8\",\"\",\"-2.7\",\"\",\"21.6\",\"\",\"0.2\",\"\",\"21.8\",\"\",\"0\",\"\",\"22\",\"\",\"67\",\"\"\r\n\"-120.44\",\"50.70\",\"KAMLOOPS
         A\",\"1163780\",\"2013-05\",\"2013\",\"05\",\"22.5\",\"\",\"8.3\",\"\",\"15.4\",\"\",\"32.3\",\"\",\"-1.9\",\"\",\"49.4\",\"\",\"0.0\",\"\",\"49.4\",\"\",\"0\",\"\",\"20\",\"\",\"67\",\"\"\r\n\"-120.44\",\"50.70\",\"KAMLOOPS
         A\",\"1163780\",\"2013-06\",\"2013\",\"06\",\"24.6\",\"I\",\"10.5\",\"I\",\"17.5\",\"I\",\"30.5\",\"I\",\"7.2\",\"I\",\"11.0\",\"I\",\"0.0\",\"I\",\"11.0\",\"I\",\"\",\"\",\"3\",\"I\",\"52\",\"I\"\r\n"
-  recorded_at: 2020-08-22 18:45:55 GMT
-  recorded_with: vcr/0.5.4, webmockr/0.6.2
+  recorded_at: 2021-01-14 22:37:35 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.7.4
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=txt&stationID=1275&timeframe=3&submit=Download%2BData
@@ -804,8 +803,8 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Sat, 22 Aug 2020 18:46:20 GMT
-      server: Apache
+      date: Thu, 14 Jan 2021 22:37:35 GMT
+      server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
       cache-control: private
@@ -813,7 +812,6 @@ http_interactions:
       content-disposition: attachment; filename="en_climate_monthly_metadata_BC_1163780.txt"
       vary: Accept-Encoding
       content-encoding: gzip
-      x-ua-compatible: IE=Edge
       content-length: '287'
       content-type: application/force-download
     body:
@@ -824,5 +822,5 @@ http_interactions:
         than one occurrence and estimated\r\nE\tEstimated\r\nM\tMissing\r\nS\tMore
         than one occurrence\r\nT\tTrace\r\n[empty]\tIndicates an unobserved value\r\n^\tThe
         value displayed is based on incomplete data"
-  recorded_at: 2020-08-22 18:45:55 GMT
-  recorded_with: vcr/0.5.4, webmockr/0.6.2
+  recorded_at: 2021-01-14 22:37:35 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.7.4

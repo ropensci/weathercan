@@ -111,8 +111,8 @@ stations_search("Kamloops", interval = "hour")
     ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval start   end
     ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr> <chr>    <dbl> <dbl>
     ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/… hour      1953  2013
-    ## 2 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/… hour      2013  2020
-    ## 3 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/… hour      2006  2020
+    ## 2 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/… hour      2013  2021
+    ## 3 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/… hour      2006  2021
     ## # … with 1 more variable: normals <lgl>
 
 Time frame must be one of “hour”, “day”, or “month”.
@@ -127,8 +127,8 @@ stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour"
     ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval start   end
     ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr> <chr>    <dbl> <dbl>
     ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/… hour      1953  2013
-    ## 2 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/… hour      2006  2020
-    ## 3 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/… hour      2013  2020
+    ## 2 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/… hour      2006  2021
+    ## 3 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/… hour      2013  2021
     ## # … with 2 more variables: normals <lgl>, distance <dbl>
 
 ### Weather
@@ -140,7 +140,7 @@ kam <- weather_dl(station_ids = 51423, start = "2018-02-01", end = "2018-04-15")
 kam
 ```
 
-    ## # A tibble: 1,776 x 35
+    ## # A tibble: 1,776 x 37
     ##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id
     ##    <chr>             <dbl> <lgl>            <chr> <dbl> <dbl> <dbl> <chr>      <chr>  <chr>
     ##  1 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  
@@ -153,7 +153,7 @@ kam
     ##  8 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  
     ##  9 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  
     ## 10 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  
-    ## # … with 1,766 more rows, and 25 more variables
+    ## # … with 1,766 more rows, and 27 more variables
 
 You can also download data from multiple stations at once:
 

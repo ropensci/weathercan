@@ -14,8 +14,8 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Sat, 22 Aug 2020 18:45:25 GMT
-      server: Apache
+      date: Thu, 14 Jan 2021 22:35:55 GMT
+      server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
       cache-control: private
@@ -23,19 +23,19 @@ http_interactions:
       content-disposition: attachment; filename="en_climate_hourly_NL_8400100_001-1965_P1H.csv"
       vary: Accept-Encoding
       content-encoding: gzip
-      x-ua-compatible: IE=Edge
-      content-length: '13947'
+      content-length: '13956'
       content-type: application/force-download
     body:
       encoding: UTF-8
       file: no
       string: "\uFEFF\"Longitude (x)\",\"Latitude (y)\",\"Station Name\",\"Climate
-        ID\",\"Date/Time\",\"Year\",\"Month\",\"Day\",\"Time\",\"Temp (°C)\",\"Temp
-        Flag\",\"Dew Point Temp (°C)\",\"Dew Point Temp Flag\",\"Rel Hum (%)\",\"Rel
-        Hum Flag\",\"Wind Dir (10s deg)\",\"Wind Dir Flag\",\"Wind Spd (km/h)\",\"Wind
-        Spd Flag\",\"Visibility (km)\",\"Visibility Flag\",\"Stn Press (kPa)\",\"Stn
-        Press Flag\",\"Hmdx\",\"Hmdx Flag\",\"Wind Chill\",\"Wind Chill Flag\",\"Weather\"\r\n\"-54.00\",\"47.30\",\"ARGENTIA
-        A\",\"8400100\",\"1965-01-01 00:30\",\"1965\",\"01\",\"01\",\"00:30\",\"0.6\",\"\",\"0.6\",\"\",\"100\",\"\",\"2\",\"\",\"60\",\"\",\"6.4\",\"\",\"99.26\",\"\",\"\",\"\",\"\",\"\",\"Rain\"\r\n\"-54.00\",\"47.30\",\"ARGENTIA
+        ID\",\"Date/Time (LST)\",\"Year\",\"Month\",\"Day\",\"Time (LST)\",\"Temp
+        (°C)\",\"Temp Flag\",\"Dew Point Temp (°C)\",\"Dew Point Temp Flag\",\"Rel
+        Hum (%)\",\"Rel Hum Flag\",\"Wind Dir (10s deg)\",\"Wind Dir Flag\",\"Wind
+        Spd (km/h)\",\"Wind Spd Flag\",\"Visibility (km)\",\"Visibility Flag\",\"Stn
+        Press (kPa)\",\"Stn Press Flag\",\"Hmdx\",\"Hmdx Flag\",\"Wind Chill\",\"Wind
+        Chill Flag\",\"Weather\"\r\n\"-54.00\",\"47.30\",\"ARGENTIA A\",\"8400100\",\"1965-01-01
+        00:30\",\"1965\",\"01\",\"01\",\"00:30\",\"0.6\",\"\",\"0.6\",\"\",\"100\",\"\",\"2\",\"\",\"60\",\"\",\"6.4\",\"\",\"99.26\",\"\",\"\",\"\",\"\",\"\",\"Rain\"\r\n\"-54.00\",\"47.30\",\"ARGENTIA
         A\",\"8400100\",\"1965-01-01 01:30\",\"1965\",\"01\",\"01\",\"01:30\",\"0.6\",\"\",\"0.6\",\"\",\"100\",\"\",\"2\",\"\",\"58\",\"\",\"9.7\",\"\",\"99.09\",\"\",\"\",\"\",\"\",\"\",\"Rain\"\r\n\"-54.00\",\"47.30\",\"ARGENTIA
         A\",\"8400100\",\"1965-01-01 02:30\",\"1965\",\"01\",\"01\",\"02:30\",\"1.7\",\"\",\"1.1\",\"\",\"96\",\"\",\"2\",\"\",\"51\",\"\",\"11.3\",\"\",\"99.02\",\"\",\"\",\"\",\"\",\"\",\"Rain\"\r\n\"-54.00\",\"47.30\",\"ARGENTIA
         A\",\"8400100\",\"1965-01-01 03:30\",\"1965\",\"01\",\"01\",\"03:30\",\"1.7\",\"\",\"1.1\",\"\",\"96\",\"\",\"2\",\"\",\"64\",\"\",\"9.7\",\"\",\"98.85\",\"\",\"\",\"\",\"\",\"\",\"Rain\"\r\n\"-54.00\",\"47.30\",\"ARGENTIA
@@ -836,8 +836,8 @@ http_interactions:
         A\",\"8400100\",\"1965-01-31 21:30\",\"1965\",\"01\",\"31\",\"21:30\",\"-2.8\",\"\",\"-5.0\",\"\",\"85\",\"\",\"5\",\"\",\"19\",\"\",\"11.3\",\"\",\"100.41\",\"\",\"\",\"\",\"-9\",\"\",\"Cloudy\"\r\n\"-54.00\",\"47.30\",\"ARGENTIA
         A\",\"8400100\",\"1965-01-31 22:30\",\"1965\",\"01\",\"31\",\"22:30\",\"-2.8\",\"\",\"-5.6\",\"\",\"81\",\"\",\"7\",\"\",\"23\",\"\",\"11.3\",\"\",\"100.31\",\"\",\"\",\"\",\"-9\",\"\",\"Cloudy\"\r\n\"-54.00\",\"47.30\",\"ARGENTIA
         A\",\"8400100\",\"1965-01-31 23:30\",\"1965\",\"01\",\"31\",\"23:30\",\"-3.3\",\"\",\"-5.6\",\"\",\"85\",\"\",\"5\",\"\",\"32\",\"\",\"11.3\",\"\",\"100.17\",\"\",\"\",\"\",\"-11\",\"\",\"Cloudy\"\r\n"
-  recorded_at: 2020-08-22 18:45:02 GMT
-  recorded_with: vcr/0.5.4, webmockr/0.6.2
+  recorded_at: 2021-01-14 22:35:58 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.7.4
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=txt&stationID=6556&timeframe=1&submit=Download%2BData
@@ -853,8 +853,8 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Sat, 22 Aug 2020 18:45:26 GMT
-      server: Apache
+      date: Thu, 14 Jan 2021 22:35:58 GMT
+      server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
       cache-control: private
@@ -862,16 +862,15 @@ http_interactions:
       content-disposition: attachment; filename="en_climate_hourly_metadata_NL_8400100.txt"
       vary: Accept-Encoding
       content-encoding: gzip
-      x-ua-compatible: IE=Edge
-      content-length: '339'
+      content-length: '337'
       content-type: application/force-download
     body:
       encoding: UTF-8
       file: no
       string: "\uFEFFStation Name\t\tARGENTIA A\r\nProvince\t\tNEWFOUNDLAND\r\nLatitude\t\t47.30\r\nLongitude\t\t-54.00\r\nElevation\t\t13.70\r\nClimate
-        Identifier\t8400100\r\nWMO Identifier\t\t\r\nTC Identifier\t\t\r\nAll times
-        are specified in Local Standard Time (LST). Add 1 hour to adjust for Daylight
-        Saving Time where and when it is observed.\r\n\r\nLegend\r\nE\tEstimated\r\nM\tMissing\r\nNA\tNot
+        Identifier\t8400100\r\nWMO Identifier\t\t\r\nTC Identifier\t\t\r\n\"If Local
+        Standard Time (LST) was selected, add 1 hour to adjust for Daylight Saving
+        Time where and when it is observed.\"\r\n\r\nLegend\r\nE\tEstimated\r\nM\tMissing\r\nNA\tNot
         Available*\r\n[empty]\tIndicates an unobserved value\r\n\r\n*https://climate.weather.gc.ca/FAQ_e.html#Q5"
-  recorded_at: 2020-08-22 18:45:02 GMT
-  recorded_with: vcr/0.5.4, webmockr/0.6.2
+  recorded_at: 2021-01-14 22:35:58 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.7.4
