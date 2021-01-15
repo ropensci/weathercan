@@ -1,4 +1,4 @@
-# weathercan 0.5 (2020-01-14)
+# weathercan 0.5.0 (2020-01-14)
 
 ## Small changes
 - Internal changes to address change in formatting of historical weather data provided by ECCC 

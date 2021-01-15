@@ -10,14 +10,13 @@
   "codeRepository": "https://github.com/ropensci/weathercan/",
   "issueTracker": "https://github.com/ropensci/weathercan/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.6.3",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.6.3 (2020-02-29)",
+  "runtimePlatform": "R version 4.0.3 (2020-10-10)",
   "author": [
     {
       "@type": "Person",
@@ -383,7 +382,7 @@
   ],
   "releaseNotes": "https://github.com/ropensci/weathercan/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/weathercan/blob/master/README.md",
-  "contIntegration": "https://travis-ci.org/ropensci/weathercan",
+  "contIntegration": ["https://travis-ci.org/ropensci/weathercan", "https://ci.appveyor.com/project/steffilazerte/weathercan/branch/master", "https://codecov.io/gh/ropensci/weathercan"],
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -402,7 +401,7 @@
       ],
       "name": "{weathercan}: {D}ownload and format weather data from Environment and Climate Change Canada",
       "url": "https://joss.theoj.org/papers/10.21105/joss.00571",
-      "paginiation": "571",
+      "pagination": "571",
       "isPartOf": {
         "@type": "PublicationIssue",
         "issueNumber": "22",
@@ -423,8 +422,8 @@
   },
   "review": {
     "@type": "Review",
-    "url": "https://github.com/ropensci/onboarding/issues/160",
-    "provider": "http://ropensci.org"
+    "url": "https://github.com/ropensci/software-review/issues/160",
+    "provider": "https://ropensci.org"
   },
   "keywords": [
     "weather-data",
@@ -441,5 +440,6 @@
     "https://docs.ropensci.org/weathercan/"
   ],
   "copyrightHolder": {},
-  "funder": {}
+  "funder": {},
+  "fileSize": "46512.421KB"
 }

@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">weathercan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -156,7 +156,7 @@
 <span id="cb5-9"><a href="#cb5-9"></a><span class="co">## 6 AB    EDMONTON CO…       1796 301BK03        NA &lt;NA&gt;   53.6 -114.  671. Etc/… month     1978  1979</span></span>
 <span id="cb5-10"><a href="#cb5-10"></a><span class="co">## # … with 1 more variable: normals &lt;lgl&gt;</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="fu">glimpse</span><span class="op">(</span><span class="va">stations</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://tibble.tidyverse.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">stations</span><span class="op">)</span></pre></div>
 <div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">## Rows: 26,316</span></span>
 <span id="cb7-2"><a href="#cb7-2"></a><span class="co">## Columns: 14</span></span>
 <span id="cb7-3"><a href="#cb7-3"></a><span class="co">## $ prov         &lt;chr&gt; "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB"…</span></span>
@@ -200,27 +200,31 @@
 <a href="#weather" class="anchor"></a>Weather</h3>
 <p>Once you have your <code>station_id</code>(s) you can download weather data:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="va">kam</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/weather_dl.html">weather_dl</a></span><span class="op">(</span>station_ids <span class="op">=</span> <span class="fl">51423</span>, start <span class="op">=</span> <span class="st">"2018-02-01"</span>, end <span class="op">=</span> <span class="st">"2018-04-15"</span><span class="op">)</span>
-<span class="va">kam</span></pre></div>
-<div class="sourceCode" id="cb13"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co">## # A tibble: 1,776 x 37</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="co">##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id</span></span>
-<span id="cb13-3"><a href="#cb13-3"></a><span class="co">##    &lt;chr&gt;             &lt;dbl&gt; &lt;lgl&gt;            &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;</span></span>
-<span id="cb13-4"><a href="#cb13-4"></a><span class="co">##  1 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  </span></span>
-<span id="cb13-5"><a href="#cb13-5"></a><span class="co">##  2 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  </span></span>
-<span id="cb13-6"><a href="#cb13-6"></a><span class="co">##  3 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  </span></span>
-<span id="cb13-7"><a href="#cb13-7"></a><span class="co">##  4 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  </span></span>
-<span id="cb13-8"><a href="#cb13-8"></a><span class="co">##  5 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  </span></span>
-<span id="cb13-9"><a href="#cb13-9"></a><span class="co">##  6 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  </span></span>
-<span id="cb13-10"><a href="#cb13-10"></a><span class="co">##  7 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  </span></span>
-<span id="cb13-11"><a href="#cb13-11"></a><span class="co">##  8 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  </span></span>
-<span id="cb13-12"><a href="#cb13-12"></a><span class="co">##  9 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  </span></span>
-<span id="cb13-13"><a href="#cb13-13"></a><span class="co">## 10 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  </span></span>
-<span id="cb13-14"><a href="#cb13-14"></a><span class="co">## # … with 1,766 more rows, and 27 more variables</span></span></code></pre></div>
-<p>You can also download data from multiple stations at once:</p>
+<span class="va">kam</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/weather_dl.html">weather_dl</a></span><span class="op">(</span>station_ids <span class="op">=</span> <span class="fl">51423</span>, start <span class="op">=</span> <span class="st">"2018-02-01"</span>, end <span class="op">=</span> <span class="st">"2018-04-15"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co">## As of weathercan v0.3.0 time display is either local time or UTC</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="co">## See Details under ?weather_dl for more information.</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="co">## This message is shown once per session</span></span></code></pre></div>
 <div class="sourceCode" id="cb14"><pre class="downlit">
+<span class="va">kam</span></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co">## # A tibble: 1,776 x 37</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="co">##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id</span></span>
+<span id="cb15-3"><a href="#cb15-3"></a><span class="co">##    &lt;chr&gt;             &lt;dbl&gt; &lt;lgl&gt;            &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;</span></span>
+<span id="cb15-4"><a href="#cb15-4"></a><span class="co">##  1 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  </span></span>
+<span id="cb15-5"><a href="#cb15-5"></a><span class="co">##  2 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  </span></span>
+<span id="cb15-6"><a href="#cb15-6"></a><span class="co">##  3 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  </span></span>
+<span id="cb15-7"><a href="#cb15-7"></a><span class="co">##  4 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  </span></span>
+<span id="cb15-8"><a href="#cb15-8"></a><span class="co">##  5 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  </span></span>
+<span id="cb15-9"><a href="#cb15-9"></a><span class="co">##  6 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  </span></span>
+<span id="cb15-10"><a href="#cb15-10"></a><span class="co">##  7 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  </span></span>
+<span id="cb15-11"><a href="#cb15-11"></a><span class="co">##  8 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  </span></span>
+<span id="cb15-12"><a href="#cb15-12"></a><span class="co">##  9 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  </span></span>
+<span id="cb15-13"><a href="#cb15-13"></a><span class="co">## 10 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA  </span></span>
+<span id="cb15-14"><a href="#cb15-14"></a><span class="co">## # … with 1,766 more rows, and 27 more variables</span></span></code></pre></div>
+<p>You can also download data from multiple stations at once:</p>
+<div class="sourceCode" id="cb16"><pre class="downlit">
 <span class="va">kam_pg</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/weather_dl.html">weather_dl</a></span><span class="op">(</span>station_ids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">48248</span>, <span class="fl">51423</span><span class="op">)</span>, start <span class="op">=</span> <span class="st">"2018-02-01"</span>, end <span class="op">=</span> <span class="st">"2018-04-15"</span><span class="op">)</span></pre></div>
 <p>And plot it:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit">
+<div class="sourceCode" id="cb17"><pre class="downlit">
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">kam_pg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">time</span>, y <span class="op">=</span> <span class="va">temp</span>, group <span class="op">=</span> <span class="va">station_name</span>, colour <span class="op">=</span> <span class="va">station_name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
@@ -233,109 +237,109 @@
 <h2 class="hasAnchor">
 <a href="#climate-normals" class="anchor"></a>Climate Normals</h2>
 <p>To access climate normals, you first need to know the <code>climate_id</code> associated with the station you’re interested in.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit">
-<span class="fu"><a href="reference/stations_search.html">stations_search</a></span><span class="op">(</span><span class="st">"Winnipeg"</span>, normals_only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
-<div class="sourceCode" id="cb17"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co">## # A tibble: 1 x 11</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a><span class="co">##   prov  station_name            station_id climate_id WMO_id TC_id   lat   lon  elev tz      normals</span></span>
-<span id="cb17-3"><a href="#cb17-3"></a><span class="co">##   &lt;chr&gt; &lt;chr&gt;                        &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;lgl&gt;  </span></span>
-<span id="cb17-4"><a href="#cb17-4"></a><span class="co">## 1 MB    WINNIPEG RICHARDSON IN…       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/GM… TRUE</span></span></code></pre></div>
-<p>Then you can download the climate normals with the <code><a href="reference/normals_dl.html">normals_dl()</a></code> function.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit">
+<span class="fu"><a href="reference/stations_search.html">stations_search</a></span><span class="op">(</span><span class="st">"Winnipeg"</span>, normals_only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co">## # A tibble: 1 x 11</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="co">##   prov  station_name            station_id climate_id WMO_id TC_id   lat   lon  elev tz      normals</span></span>
+<span id="cb19-3"><a href="#cb19-3"></a><span class="co">##   &lt;chr&gt; &lt;chr&gt;                        &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;lgl&gt;  </span></span>
+<span id="cb19-4"><a href="#cb19-4"></a><span class="co">## 1 MB    WINNIPEG RICHARDSON IN…       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/GM… TRUE</span></span></code></pre></div>
+<p>Then you can download the climate normals with the <code><a href="reference/normals_dl.html">normals_dl()</a></code> function.</p>
+<div class="sourceCode" id="cb20"><pre class="downlit">
 <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/normals_dl.html">normals_dl</a></span><span class="op">(</span><span class="st">"5023222"</span><span class="op">)</span></pre></div>
 <p>There are two parts to the normals data, average weather measurements and average frost dates.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit">
+<div class="sourceCode" id="cb21"><pre class="downlit">
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span>
 <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">normals</span><span class="op">)</span></pre></div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co">## # A tibble: 13 x 202</span></span>
-<span id="cb20-2"><a href="#cb20-2"></a><span class="co">##    prov  station_name climate_id meets_wmo period temp_daily_aver… temp_daily_aver… temp_sd</span></span>
-<span id="cb20-3"><a href="#cb20-3"></a><span class="co">##    &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;      &lt;lgl&gt;     &lt;fct&gt;             &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt;</span></span>
-<span id="cb20-4"><a href="#cb20-4"></a><span class="co">##  1 MB    WINNIPEG RI… 5023222    TRUE      Jan               -16.4 A                    4.1</span></span>
-<span id="cb20-5"><a href="#cb20-5"></a><span class="co">##  2 MB    WINNIPEG RI… 5023222    TRUE      Feb               -13.2 A                    4.2</span></span>
-<span id="cb20-6"><a href="#cb20-6"></a><span class="co">##  3 MB    WINNIPEG RI… 5023222    TRUE      Mar                -5.8 A                    3.1</span></span>
-<span id="cb20-7"><a href="#cb20-7"></a><span class="co">##  4 MB    WINNIPEG RI… 5023222    TRUE      Apr                 4.4 A                    2.7</span></span>
-<span id="cb20-8"><a href="#cb20-8"></a><span class="co">##  5 MB    WINNIPEG RI… 5023222    TRUE      May                11.6 A                    2.1</span></span>
-<span id="cb20-9"><a href="#cb20-9"></a><span class="co">##  6 MB    WINNIPEG RI… 5023222    TRUE      Jun                17   A                    2  </span></span>
-<span id="cb20-10"><a href="#cb20-10"></a><span class="co">##  7 MB    WINNIPEG RI… 5023222    TRUE      Jul                19.7 A                    1.4</span></span>
-<span id="cb20-11"><a href="#cb20-11"></a><span class="co">##  8 MB    WINNIPEG RI… 5023222    TRUE      Aug                18.8 A                    1.9</span></span>
-<span id="cb20-12"><a href="#cb20-12"></a><span class="co">##  9 MB    WINNIPEG RI… 5023222    TRUE      Sep                12.7 A                    1.3</span></span>
-<span id="cb20-13"><a href="#cb20-13"></a><span class="co">## 10 MB    WINNIPEG RI… 5023222    TRUE      Oct                 5   A                    1.8</span></span>
-<span id="cb20-14"><a href="#cb20-14"></a><span class="co">## 11 MB    WINNIPEG RI… 5023222    TRUE      Nov                -4.9 A                    3.6</span></span>
-<span id="cb20-15"><a href="#cb20-15"></a><span class="co">## 12 MB    WINNIPEG RI… 5023222    TRUE      Dec               -13.2 A                    4.4</span></span>
-<span id="cb20-16"><a href="#cb20-16"></a><span class="co">## 13 MB    WINNIPEG RI… 5023222    TRUE      Year                3   A                    1.2</span></span>
-<span id="cb20-17"><a href="#cb20-17"></a><span class="co">## # … with 194 more variables: temp_sd_code &lt;chr&gt;, temp_daily_max &lt;dbl&gt;, temp_daily_max_code &lt;chr&gt;,</span></span>
-<span id="cb20-18"><a href="#cb20-18"></a><span class="co">## #   temp_daily_min &lt;dbl&gt;, temp_daily_min_code &lt;chr&gt;, temp_extreme_max &lt;dbl&gt;,</span></span>
-<span id="cb20-19"><a href="#cb20-19"></a><span class="co">## #   temp_extreme_max_code &lt;chr&gt;, temp_extreme_max_date &lt;date&gt;, temp_extreme_max_date_code &lt;chr&gt;,</span></span>
-<span id="cb20-20"><a href="#cb20-20"></a><span class="co">## #   temp_extreme_min &lt;dbl&gt;, temp_extreme_min_code &lt;chr&gt;, temp_extreme_min_date &lt;date&gt;,</span></span>
-<span id="cb20-21"><a href="#cb20-21"></a><span class="co">## #   temp_extreme_min_date_code &lt;chr&gt;, rain &lt;dbl&gt;, rain_code &lt;chr&gt;, snow &lt;dbl&gt;, snow_code &lt;chr&gt;,</span></span>
-<span id="cb20-22"><a href="#cb20-22"></a><span class="co">## #   precip &lt;dbl&gt;, precip_code &lt;chr&gt;, snow_mean_depth &lt;dbl&gt;, snow_mean_depth_code &lt;chr&gt;,</span></span>
-<span id="cb20-23"><a href="#cb20-23"></a><span class="co">## #   snow_median_depth &lt;dbl&gt;, snow_median_depth_code &lt;chr&gt;, snow_depth_month_end &lt;dbl&gt;,</span></span>
-<span id="cb20-24"><a href="#cb20-24"></a><span class="co">## #   snow_depth_month_end_code &lt;chr&gt;, rain_extreme_daily &lt;dbl&gt;, rain_extreme_daily_code &lt;chr&gt;,</span></span>
-<span id="cb20-25"><a href="#cb20-25"></a><span class="co">## #   rain_extreme_daily_date &lt;date&gt;, rain_extreme_daily_date_code &lt;chr&gt;, snow_extreme_daily &lt;dbl&gt;,</span></span>
-<span id="cb20-26"><a href="#cb20-26"></a><span class="co">## #   snow_extreme_daily_code &lt;chr&gt;, snow_extreme_daily_date &lt;date&gt;,</span></span>
-<span id="cb20-27"><a href="#cb20-27"></a><span class="co">## #   snow_extreme_daily_date_code &lt;chr&gt;, precip_extreme_daily &lt;dbl&gt;,</span></span>
-<span id="cb20-28"><a href="#cb20-28"></a><span class="co">## #   precip_extreme_daily_code &lt;chr&gt;, precip_extreme_daily_date &lt;date&gt;,</span></span>
-<span id="cb20-29"><a href="#cb20-29"></a><span class="co">## #   precip_extreme_daily_date_code &lt;chr&gt;, snow_extreme_depth &lt;dbl&gt;, snow_extreme_depth_code &lt;chr&gt;,</span></span>
-<span id="cb20-30"><a href="#cb20-30"></a><span class="co">## #   snow_extreme_depth_date &lt;date&gt;, snow_extreme_depth_date_code &lt;chr&gt;, `temp_max_days_&lt;=0` &lt;dbl&gt;,</span></span>
-<span id="cb20-31"><a href="#cb20-31"></a><span class="co">## #   `temp_max_days_&lt;=0_code` &lt;chr&gt;, `temp_max_days_&gt;0` &lt;dbl&gt;, `temp_max_days_&gt;0_code` &lt;chr&gt;,</span></span>
-<span id="cb20-32"><a href="#cb20-32"></a><span class="co">## #   `temp_max_days_&gt;10` &lt;dbl&gt;, `temp_max_days_&gt;10_code` &lt;chr&gt;, `temp_max_days_&gt;20` &lt;dbl&gt;,</span></span>
-<span id="cb20-33"><a href="#cb20-33"></a><span class="co">## #   `temp_max_days_&gt;20_code` &lt;chr&gt;, `temp_max_days_&gt;30` &lt;dbl&gt;, `temp_max_days_&gt;30_code` &lt;chr&gt;,</span></span>
-<span id="cb20-34"><a href="#cb20-34"></a><span class="co">## #   `temp_max_days_&gt;35` &lt;dbl&gt;, `temp_max_days_&gt;35_code` &lt;chr&gt;, `temp_min_days_&gt;0` &lt;dbl&gt;,</span></span>
-<span id="cb20-35"><a href="#cb20-35"></a><span class="co">## #   `temp_min_days_&gt;0_code` &lt;chr&gt;, `temp_min_days_&lt;=2` &lt;dbl&gt;, `temp_min_days_&lt;=2_code` &lt;chr&gt;,</span></span>
-<span id="cb20-36"><a href="#cb20-36"></a><span class="co">## #   `temp_min_days_&lt;=0` &lt;dbl&gt;, `temp_min_days_&lt;=0_code` &lt;chr&gt;, `temp_min_days_&lt;-2` &lt;dbl&gt;,</span></span>
-<span id="cb20-37"><a href="#cb20-37"></a><span class="co">## #   `temp_min_days_&lt;-2_code` &lt;chr&gt;, `temp_min_days_&lt;-10` &lt;dbl&gt;, `temp_min_days_&lt;-10_code` &lt;chr&gt;,</span></span>
-<span id="cb20-38"><a href="#cb20-38"></a><span class="co">## #   `temp_min_days_&lt;-20` &lt;dbl&gt;, `temp_min_days_&lt;-20_code` &lt;chr&gt;, `temp_min_days_&lt;-30` &lt;dbl&gt;,</span></span>
-<span id="cb20-39"><a href="#cb20-39"></a><span class="co">## #   `temp_min_days_&lt;-30_code` &lt;chr&gt;, `rain_days_&gt;=0.2` &lt;dbl&gt;, `rain_days_&gt;=0.2_code` &lt;chr&gt;,</span></span>
-<span id="cb20-40"><a href="#cb20-40"></a><span class="co">## #   `rain_days_&gt;=5` &lt;dbl&gt;, `rain_days_&gt;=5_code` &lt;chr&gt;, `rain_days_&gt;=10` &lt;dbl&gt;,</span></span>
-<span id="cb20-41"><a href="#cb20-41"></a><span class="co">## #   `rain_days_&gt;=10_code` &lt;chr&gt;, `rain_days_&gt;=25` &lt;dbl&gt;, `rain_days_&gt;=25_code` &lt;chr&gt;,</span></span>
-<span id="cb20-42"><a href="#cb20-42"></a><span class="co">## #   `snow_days_&gt;=0.2` &lt;dbl&gt;, `snow_days_&gt;=0.2_code` &lt;chr&gt;, `snow_days_&gt;=5` &lt;dbl&gt;,</span></span>
-<span id="cb20-43"><a href="#cb20-43"></a><span class="co">## #   `snow_days_&gt;=5_code` &lt;chr&gt;, `snow_days_&gt;=10` &lt;dbl&gt;, `snow_days_&gt;=10_code` &lt;chr&gt;,</span></span>
-<span id="cb20-44"><a href="#cb20-44"></a><span class="co">## #   `snow_days_&gt;=25` &lt;dbl&gt;, `snow_days_&gt;=25_code` &lt;chr&gt;, `precip_days_&gt;=0.2` &lt;dbl&gt;,</span></span>
-<span id="cb20-45"><a href="#cb20-45"></a><span class="co">## #   `precip_days_&gt;=0.2_code` &lt;chr&gt;, `precip_days_&gt;=5` &lt;dbl&gt;, `precip_days_&gt;=5_code` &lt;chr&gt;,</span></span>
-<span id="cb20-46"><a href="#cb20-46"></a><span class="co">## #   `precip_days_&gt;=10` &lt;dbl&gt;, `precip_days_&gt;=10_code` &lt;chr&gt;, `precip_days_&gt;=25` &lt;dbl&gt;,</span></span>
-<span id="cb20-47"><a href="#cb20-47"></a><span class="co">## #   `precip_days_&gt;=25_code` &lt;chr&gt;, `snow_depth_days_&gt;=1` &lt;dbl&gt;, `snow_depth_days_&gt;=1_code` &lt;chr&gt;,</span></span>
-<span id="cb20-48"><a href="#cb20-48"></a><span class="co">## #   `snow_depth_days_&gt;=5` &lt;dbl&gt;, `snow_depth_days_&gt;=5_code` &lt;chr&gt;, `snow_depth_days_&gt;=10` &lt;dbl&gt;,</span></span>
-<span id="cb20-49"><a href="#cb20-49"></a><span class="co">## #   `snow_depth_days_&gt;=10_code` &lt;chr&gt;, `snow_depth_days_&gt;=20` &lt;dbl&gt;,</span></span>
-<span id="cb20-50"><a href="#cb20-50"></a><span class="co">## #   `snow_depth_days_&gt;=20_code` &lt;chr&gt;, wind_speed &lt;dbl&gt;, …</span></span></code></pre></div>
-<div class="sourceCode" id="cb21"><pre class="downlit">
+<div class="sourceCode" id="cb22"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="co">## # A tibble: 13 x 202</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="co">##    prov  station_name climate_id meets_wmo period temp_daily_aver… temp_daily_aver… temp_sd</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a><span class="co">##    &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;      &lt;lgl&gt;     &lt;fct&gt;             &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt;</span></span>
+<span id="cb22-4"><a href="#cb22-4"></a><span class="co">##  1 MB    WINNIPEG RI… 5023222    TRUE      Jan               -16.4 A                    4.1</span></span>
+<span id="cb22-5"><a href="#cb22-5"></a><span class="co">##  2 MB    WINNIPEG RI… 5023222    TRUE      Feb               -13.2 A                    4.2</span></span>
+<span id="cb22-6"><a href="#cb22-6"></a><span class="co">##  3 MB    WINNIPEG RI… 5023222    TRUE      Mar                -5.8 A                    3.1</span></span>
+<span id="cb22-7"><a href="#cb22-7"></a><span class="co">##  4 MB    WINNIPEG RI… 5023222    TRUE      Apr                 4.4 A                    2.7</span></span>
+<span id="cb22-8"><a href="#cb22-8"></a><span class="co">##  5 MB    WINNIPEG RI… 5023222    TRUE      May                11.6 A                    2.1</span></span>
+<span id="cb22-9"><a href="#cb22-9"></a><span class="co">##  6 MB    WINNIPEG RI… 5023222    TRUE      Jun                17   A                    2  </span></span>
+<span id="cb22-10"><a href="#cb22-10"></a><span class="co">##  7 MB    WINNIPEG RI… 5023222    TRUE      Jul                19.7 A                    1.4</span></span>
+<span id="cb22-11"><a href="#cb22-11"></a><span class="co">##  8 MB    WINNIPEG RI… 5023222    TRUE      Aug                18.8 A                    1.9</span></span>
+<span id="cb22-12"><a href="#cb22-12"></a><span class="co">##  9 MB    WINNIPEG RI… 5023222    TRUE      Sep                12.7 A                    1.3</span></span>
+<span id="cb22-13"><a href="#cb22-13"></a><span class="co">## 10 MB    WINNIPEG RI… 5023222    TRUE      Oct                 5   A                    1.8</span></span>
+<span id="cb22-14"><a href="#cb22-14"></a><span class="co">## 11 MB    WINNIPEG RI… 5023222    TRUE      Nov                -4.9 A                    3.6</span></span>
+<span id="cb22-15"><a href="#cb22-15"></a><span class="co">## 12 MB    WINNIPEG RI… 5023222    TRUE      Dec               -13.2 A                    4.4</span></span>
+<span id="cb22-16"><a href="#cb22-16"></a><span class="co">## 13 MB    WINNIPEG RI… 5023222    TRUE      Year                3   A                    1.2</span></span>
+<span id="cb22-17"><a href="#cb22-17"></a><span class="co">## # … with 194 more variables: temp_sd_code &lt;chr&gt;, temp_daily_max &lt;dbl&gt;, temp_daily_max_code &lt;chr&gt;,</span></span>
+<span id="cb22-18"><a href="#cb22-18"></a><span class="co">## #   temp_daily_min &lt;dbl&gt;, temp_daily_min_code &lt;chr&gt;, temp_extreme_max &lt;dbl&gt;,</span></span>
+<span id="cb22-19"><a href="#cb22-19"></a><span class="co">## #   temp_extreme_max_code &lt;chr&gt;, temp_extreme_max_date &lt;date&gt;, temp_extreme_max_date_code &lt;chr&gt;,</span></span>
+<span id="cb22-20"><a href="#cb22-20"></a><span class="co">## #   temp_extreme_min &lt;dbl&gt;, temp_extreme_min_code &lt;chr&gt;, temp_extreme_min_date &lt;date&gt;,</span></span>
+<span id="cb22-21"><a href="#cb22-21"></a><span class="co">## #   temp_extreme_min_date_code &lt;chr&gt;, rain &lt;dbl&gt;, rain_code &lt;chr&gt;, snow &lt;dbl&gt;, snow_code &lt;chr&gt;,</span></span>
+<span id="cb22-22"><a href="#cb22-22"></a><span class="co">## #   precip &lt;dbl&gt;, precip_code &lt;chr&gt;, snow_mean_depth &lt;dbl&gt;, snow_mean_depth_code &lt;chr&gt;,</span></span>
+<span id="cb22-23"><a href="#cb22-23"></a><span class="co">## #   snow_median_depth &lt;dbl&gt;, snow_median_depth_code &lt;chr&gt;, snow_depth_month_end &lt;dbl&gt;,</span></span>
+<span id="cb22-24"><a href="#cb22-24"></a><span class="co">## #   snow_depth_month_end_code &lt;chr&gt;, rain_extreme_daily &lt;dbl&gt;, rain_extreme_daily_code &lt;chr&gt;,</span></span>
+<span id="cb22-25"><a href="#cb22-25"></a><span class="co">## #   rain_extreme_daily_date &lt;date&gt;, rain_extreme_daily_date_code &lt;chr&gt;, snow_extreme_daily &lt;dbl&gt;,</span></span>
+<span id="cb22-26"><a href="#cb22-26"></a><span class="co">## #   snow_extreme_daily_code &lt;chr&gt;, snow_extreme_daily_date &lt;date&gt;,</span></span>
+<span id="cb22-27"><a href="#cb22-27"></a><span class="co">## #   snow_extreme_daily_date_code &lt;chr&gt;, precip_extreme_daily &lt;dbl&gt;,</span></span>
+<span id="cb22-28"><a href="#cb22-28"></a><span class="co">## #   precip_extreme_daily_code &lt;chr&gt;, precip_extreme_daily_date &lt;date&gt;,</span></span>
+<span id="cb22-29"><a href="#cb22-29"></a><span class="co">## #   precip_extreme_daily_date_code &lt;chr&gt;, snow_extreme_depth &lt;dbl&gt;, snow_extreme_depth_code &lt;chr&gt;,</span></span>
+<span id="cb22-30"><a href="#cb22-30"></a><span class="co">## #   snow_extreme_depth_date &lt;date&gt;, snow_extreme_depth_date_code &lt;chr&gt;, `temp_max_days_&lt;=0` &lt;dbl&gt;,</span></span>
+<span id="cb22-31"><a href="#cb22-31"></a><span class="co">## #   `temp_max_days_&lt;=0_code` &lt;chr&gt;, `temp_max_days_&gt;0` &lt;dbl&gt;, `temp_max_days_&gt;0_code` &lt;chr&gt;,</span></span>
+<span id="cb22-32"><a href="#cb22-32"></a><span class="co">## #   `temp_max_days_&gt;10` &lt;dbl&gt;, `temp_max_days_&gt;10_code` &lt;chr&gt;, `temp_max_days_&gt;20` &lt;dbl&gt;,</span></span>
+<span id="cb22-33"><a href="#cb22-33"></a><span class="co">## #   `temp_max_days_&gt;20_code` &lt;chr&gt;, `temp_max_days_&gt;30` &lt;dbl&gt;, `temp_max_days_&gt;30_code` &lt;chr&gt;,</span></span>
+<span id="cb22-34"><a href="#cb22-34"></a><span class="co">## #   `temp_max_days_&gt;35` &lt;dbl&gt;, `temp_max_days_&gt;35_code` &lt;chr&gt;, `temp_min_days_&gt;0` &lt;dbl&gt;,</span></span>
+<span id="cb22-35"><a href="#cb22-35"></a><span class="co">## #   `temp_min_days_&gt;0_code` &lt;chr&gt;, `temp_min_days_&lt;=2` &lt;dbl&gt;, `temp_min_days_&lt;=2_code` &lt;chr&gt;,</span></span>
+<span id="cb22-36"><a href="#cb22-36"></a><span class="co">## #   `temp_min_days_&lt;=0` &lt;dbl&gt;, `temp_min_days_&lt;=0_code` &lt;chr&gt;, `temp_min_days_&lt;-2` &lt;dbl&gt;,</span></span>
+<span id="cb22-37"><a href="#cb22-37"></a><span class="co">## #   `temp_min_days_&lt;-2_code` &lt;chr&gt;, `temp_min_days_&lt;-10` &lt;dbl&gt;, `temp_min_days_&lt;-10_code` &lt;chr&gt;,</span></span>
+<span id="cb22-38"><a href="#cb22-38"></a><span class="co">## #   `temp_min_days_&lt;-20` &lt;dbl&gt;, `temp_min_days_&lt;-20_code` &lt;chr&gt;, `temp_min_days_&lt;-30` &lt;dbl&gt;,</span></span>
+<span id="cb22-39"><a href="#cb22-39"></a><span class="co">## #   `temp_min_days_&lt;-30_code` &lt;chr&gt;, `rain_days_&gt;=0.2` &lt;dbl&gt;, `rain_days_&gt;=0.2_code` &lt;chr&gt;,</span></span>
+<span id="cb22-40"><a href="#cb22-40"></a><span class="co">## #   `rain_days_&gt;=5` &lt;dbl&gt;, `rain_days_&gt;=5_code` &lt;chr&gt;, `rain_days_&gt;=10` &lt;dbl&gt;,</span></span>
+<span id="cb22-41"><a href="#cb22-41"></a><span class="co">## #   `rain_days_&gt;=10_code` &lt;chr&gt;, `rain_days_&gt;=25` &lt;dbl&gt;, `rain_days_&gt;=25_code` &lt;chr&gt;,</span></span>
+<span id="cb22-42"><a href="#cb22-42"></a><span class="co">## #   `snow_days_&gt;=0.2` &lt;dbl&gt;, `snow_days_&gt;=0.2_code` &lt;chr&gt;, `snow_days_&gt;=5` &lt;dbl&gt;,</span></span>
+<span id="cb22-43"><a href="#cb22-43"></a><span class="co">## #   `snow_days_&gt;=5_code` &lt;chr&gt;, `snow_days_&gt;=10` &lt;dbl&gt;, `snow_days_&gt;=10_code` &lt;chr&gt;,</span></span>
+<span id="cb22-44"><a href="#cb22-44"></a><span class="co">## #   `snow_days_&gt;=25` &lt;dbl&gt;, `snow_days_&gt;=25_code` &lt;chr&gt;, `precip_days_&gt;=0.2` &lt;dbl&gt;,</span></span>
+<span id="cb22-45"><a href="#cb22-45"></a><span class="co">## #   `precip_days_&gt;=0.2_code` &lt;chr&gt;, `precip_days_&gt;=5` &lt;dbl&gt;, `precip_days_&gt;=5_code` &lt;chr&gt;,</span></span>
+<span id="cb22-46"><a href="#cb22-46"></a><span class="co">## #   `precip_days_&gt;=10` &lt;dbl&gt;, `precip_days_&gt;=10_code` &lt;chr&gt;, `precip_days_&gt;=25` &lt;dbl&gt;,</span></span>
+<span id="cb22-47"><a href="#cb22-47"></a><span class="co">## #   `precip_days_&gt;=25_code` &lt;chr&gt;, `snow_depth_days_&gt;=1` &lt;dbl&gt;, `snow_depth_days_&gt;=1_code` &lt;chr&gt;,</span></span>
+<span id="cb22-48"><a href="#cb22-48"></a><span class="co">## #   `snow_depth_days_&gt;=5` &lt;dbl&gt;, `snow_depth_days_&gt;=5_code` &lt;chr&gt;, `snow_depth_days_&gt;=10` &lt;dbl&gt;,</span></span>
+<span id="cb22-49"><a href="#cb22-49"></a><span class="co">## #   `snow_depth_days_&gt;=10_code` &lt;chr&gt;, `snow_depth_days_&gt;=20` &lt;dbl&gt;,</span></span>
+<span id="cb22-50"><a href="#cb22-50"></a><span class="co">## #   `snow_depth_days_&gt;=20_code` &lt;chr&gt;, wind_speed &lt;dbl&gt;, …</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="downlit">
 <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">frost</span><span class="op">)</span></pre></div>
-<div class="sourceCode" id="cb22"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="co">## # A tibble: 7 x 13</span></span>
-<span id="cb22-2"><a href="#cb22-2"></a><span class="co">##   prov  station_name climate_id meets_wmo normals frost_code date_first_fall… date_last_sprin…</span></span>
-<span id="cb22-3"><a href="#cb22-3"></a><span class="co">##   &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;      &lt;lgl&gt;     &lt;list&gt;  &lt;chr&gt;                 &lt;dbl&gt;            &lt;dbl&gt;</span></span>
-<span id="cb22-4"><a href="#cb22-4"></a><span class="co">## 1 MB    WINNIPEG RI… 5023222    TRUE      &lt;tibbl… A                       265              143</span></span>
-<span id="cb22-5"><a href="#cb22-5"></a><span class="co">## 2 MB    WINNIPEG RI… 5023222    TRUE      &lt;tibbl… A                       265              143</span></span>
-<span id="cb22-6"><a href="#cb22-6"></a><span class="co">## 3 MB    WINNIPEG RI… 5023222    TRUE      &lt;tibbl… A                       265              143</span></span>
-<span id="cb22-7"><a href="#cb22-7"></a><span class="co">## 4 MB    WINNIPEG RI… 5023222    TRUE      &lt;tibbl… A                       265              143</span></span>
-<span id="cb22-8"><a href="#cb22-8"></a><span class="co">## 5 MB    WINNIPEG RI… 5023222    TRUE      &lt;tibbl… A                       265              143</span></span>
-<span id="cb22-9"><a href="#cb22-9"></a><span class="co">## 6 MB    WINNIPEG RI… 5023222    TRUE      &lt;tibbl… A                       265              143</span></span>
-<span id="cb22-10"><a href="#cb22-10"></a><span class="co">## 7 MB    WINNIPEG RI… 5023222    TRUE      &lt;tibbl… A                       265              143</span></span>
-<span id="cb22-11"><a href="#cb22-11"></a><span class="co">## # … with 5 more variables: length_frost_free &lt;dbl&gt;, prob &lt;chr&gt;,</span></span>
-<span id="cb22-12"><a href="#cb22-12"></a><span class="co">## #   prob_first_fall_temp_below_0_on_date &lt;dbl&gt;, prob_length_frost_free &lt;dbl&gt;,</span></span>
-<span id="cb22-13"><a href="#cb22-13"></a><span class="co">## #   prob_last_spring_temp_below_0_on_date &lt;dbl&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co">## # A tibble: 7 x 13</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="co">##   prov  station_name climate_id meets_wmo normals frost_code date_first_fall… date_last_sprin…</span></span>
+<span id="cb24-3"><a href="#cb24-3"></a><span class="co">##   &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;      &lt;lgl&gt;     &lt;list&gt;  &lt;chr&gt;                 &lt;dbl&gt;            &lt;dbl&gt;</span></span>
+<span id="cb24-4"><a href="#cb24-4"></a><span class="co">## 1 MB    WINNIPEG RI… 5023222    TRUE      &lt;tibbl… A                       265              143</span></span>
+<span id="cb24-5"><a href="#cb24-5"></a><span class="co">## 2 MB    WINNIPEG RI… 5023222    TRUE      &lt;tibbl… A                       265              143</span></span>
+<span id="cb24-6"><a href="#cb24-6"></a><span class="co">## 3 MB    WINNIPEG RI… 5023222    TRUE      &lt;tibbl… A                       265              143</span></span>
+<span id="cb24-7"><a href="#cb24-7"></a><span class="co">## 4 MB    WINNIPEG RI… 5023222    TRUE      &lt;tibbl… A                       265              143</span></span>
+<span id="cb24-8"><a href="#cb24-8"></a><span class="co">## 5 MB    WINNIPEG RI… 5023222    TRUE      &lt;tibbl… A                       265              143</span></span>
+<span id="cb24-9"><a href="#cb24-9"></a><span class="co">## 6 MB    WINNIPEG RI… 5023222    TRUE      &lt;tibbl… A                       265              143</span></span>
+<span id="cb24-10"><a href="#cb24-10"></a><span class="co">## 7 MB    WINNIPEG RI… 5023222    TRUE      &lt;tibbl… A                       265              143</span></span>
+<span id="cb24-11"><a href="#cb24-11"></a><span class="co">## # … with 5 more variables: length_frost_free &lt;dbl&gt;, prob &lt;chr&gt;,</span></span>
+<span id="cb24-12"><a href="#cb24-12"></a><span class="co">## #   prob_first_fall_temp_below_0_on_date &lt;dbl&gt;, prob_length_frost_free &lt;dbl&gt;,</span></span>
+<span id="cb24-13"><a href="#cb24-13"></a><span class="co">## #   prob_last_spring_temp_below_0_on_date &lt;dbl&gt;</span></span></code></pre></div>
 </div>
 <div id="citation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#citation" class="anchor"></a>Citation</h2>
-<div class="sourceCode" id="cb23"><pre class="downlit">
+<div class="sourceCode" id="cb25"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/utils/citation.html">citation</a></span><span class="op">(</span><span class="st">"weathercan"</span><span class="op">)</span></pre></div>
-<div class="sourceCode" id="cb24"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co">## </span></span>
-<span id="cb24-2"><a href="#cb24-2"></a><span class="co">## To cite 'weathercan' in publications, please use:</span></span>
-<span id="cb24-3"><a href="#cb24-3"></a><span class="co">## </span></span>
-<span id="cb24-4"><a href="#cb24-4"></a><span class="co">##   LaZerte, Stefanie E and Sam Albers (2018). weathercan: Download and format weather data</span></span>
-<span id="cb24-5"><a href="#cb24-5"></a><span class="co">##   from Environment and Climate Change Canada. The Journal of Open Source Software</span></span>
-<span id="cb24-6"><a href="#cb24-6"></a><span class="co">##   3(22):571. doi:10.21105/joss.00571.</span></span>
-<span id="cb24-7"><a href="#cb24-7"></a><span class="co">## </span></span>
-<span id="cb24-8"><a href="#cb24-8"></a><span class="co">## A BibTeX entry for LaTeX users is</span></span>
-<span id="cb24-9"><a href="#cb24-9"></a><span class="co">## </span></span>
-<span id="cb24-10"><a href="#cb24-10"></a><span class="co">##   @Article{,</span></span>
-<span id="cb24-11"><a href="#cb24-11"></a><span class="co">##     title = {{weathercan}: {D}ownload and format weather data from Environment and Climate Change Canada},</span></span>
-<span id="cb24-12"><a href="#cb24-12"></a><span class="co">##     author = {Stefanie E LaZerte and Sam Albers},</span></span>
-<span id="cb24-13"><a href="#cb24-13"></a><span class="co">##     journal = {The Journal of Open Source Software},</span></span>
-<span id="cb24-14"><a href="#cb24-14"></a><span class="co">##     volume = {3},</span></span>
-<span id="cb24-15"><a href="#cb24-15"></a><span class="co">##     number = {22},</span></span>
-<span id="cb24-16"><a href="#cb24-16"></a><span class="co">##     pages = {571},</span></span>
-<span id="cb24-17"><a href="#cb24-17"></a><span class="co">##     year = {2018},</span></span>
-<span id="cb24-18"><a href="#cb24-18"></a><span class="co">##     url = {https://joss.theoj.org/papers/10.21105/joss.00571},</span></span>
-<span id="cb24-19"><a href="#cb24-19"></a><span class="co">##   }</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="co">## </span></span>
+<span id="cb26-2"><a href="#cb26-2"></a><span class="co">## To cite 'weathercan' in publications, please use:</span></span>
+<span id="cb26-3"><a href="#cb26-3"></a><span class="co">## </span></span>
+<span id="cb26-4"><a href="#cb26-4"></a><span class="co">##   LaZerte, Stefanie E and Sam Albers (2018). weathercan: Download and format weather data</span></span>
+<span id="cb26-5"><a href="#cb26-5"></a><span class="co">##   from Environment and Climate Change Canada. The Journal of Open Source Software</span></span>
+<span id="cb26-6"><a href="#cb26-6"></a><span class="co">##   3(22):571. doi:10.21105/joss.00571.</span></span>
+<span id="cb26-7"><a href="#cb26-7"></a><span class="co">## </span></span>
+<span id="cb26-8"><a href="#cb26-8"></a><span class="co">## A BibTeX entry for LaTeX users is</span></span>
+<span id="cb26-9"><a href="#cb26-9"></a><span class="co">## </span></span>
+<span id="cb26-10"><a href="#cb26-10"></a><span class="co">##   @Article{,</span></span>
+<span id="cb26-11"><a href="#cb26-11"></a><span class="co">##     title = {{weathercan}: {D}ownload and format weather data from Environment and Climate Change Canada},</span></span>
+<span id="cb26-12"><a href="#cb26-12"></a><span class="co">##     author = {Stefanie E LaZerte and Sam Albers},</span></span>
+<span id="cb26-13"><a href="#cb26-13"></a><span class="co">##     journal = {The Journal of Open Source Software},</span></span>
+<span id="cb26-14"><a href="#cb26-14"></a><span class="co">##     volume = {3},</span></span>
+<span id="cb26-15"><a href="#cb26-15"></a><span class="co">##     number = {22},</span></span>
+<span id="cb26-16"><a href="#cb26-16"></a><span class="co">##     pages = {571},</span></span>
+<span id="cb26-17"><a href="#cb26-17"></a><span class="co">##     year = {2018},</span></span>
+<span id="cb26-18"><a href="#cb26-18"></a><span class="co">##     url = {https://joss.theoj.org/papers/10.21105/joss.00571},</span></span>
+<span id="cb26-19"><a href="#cb26-19"></a><span class="co">##   }</span></span></code></pre></div>
 </div>
 <div id="license" class="section level2">
 <h2 class="hasAnchor">
@@ -409,6 +413,7 @@
 <ul class="list-unstyled">
 <li><a href="https://travis-ci.org/ropensci/weathercan"><img src="https://travis-ci.org/ropensci/weathercan.svg?branch=master" alt="Build Status"></a></li>
 <li><a href="https://ci.appveyor.com/project/steffilazerte/weathercan/branch/master"><img src="https://ci.appveyor.com/api/projects/status/q3krwk18df3qnly7/branch/master?svg=true" alt="AppVeyor Build status"></a></li>
+<li><a href="https://github.com/ropensci/weathercan/actions"><img src="https://github.com/ropensci/weathercan/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://codecov.io/gh/ropensci/weathercan"><img src="https://codecov.io/gh/ropensci/weathercan/branch/master/graph/badge.svg" alt="codecov"></a></li>
 </ul>
 </div>

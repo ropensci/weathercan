@@ -61,7 +61,7 @@ devtools::check_win_devel()
 devtools::check_win_oldrelease()
 
 # Build package to check on Rhub and locally
-v <- "0.4.1"
+v <- "0.5.0"
 system("cd ..; R CMD build weathercan")
 system(paste0("cd ..; R CMD check weathercan_", v, ".tar.gz --as-cran --run-donttest")) # Local
 
@@ -112,6 +112,9 @@ pkgdown::build_reference()
 pkgdown::build_site(lazy = TRUE)
 unlink("./vignettes/normals_cache/", recursive = TRUE)
 
+## Update codemeta
+codemetar::write_codemeta()
+
 ## Push to github
 ## Check travis / appveyor / GA
 
@@ -125,9 +128,6 @@ pkgs <- rownames(db)
 deps <- tools::package_dependencies(pkgs, db, which = 'all', reverse = TRUE)
 deps$weathercan
 options(old)
-
-## Update codemeta
-codemetar::write_codemeta()
 
 
 ## Build site (so website uses newest version)
@@ -148,5 +148,5 @@ unlink("./vignettes/normals_cache/", recursive = TRUE)
 devtools::release()
 
 ## Once it is released (Accepted by CRAN) create signed release on github
-system("git tag -s v0.4.0 -m 'v0.4.0'")
+system("git tag -s v0.5.0 -m 'v0.5.0'")
 system("git push --tags")
