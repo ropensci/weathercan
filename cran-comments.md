@@ -38,4 +38,4 @@ Solaris had two NOTEs:
 
 ## Downstream dependencies
 
-* RavenR suggests weathercan, no problems
+* RavenR suggests weathercan, I checked and found no problems
