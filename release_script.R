@@ -149,3 +149,6 @@ devtools::release()
 
 ## Once it is released (Accepted by CRAN) create signed release on github
 usethis::use_github_release()
+
+# Prep for next
+usethis::use_version(which = 4)
