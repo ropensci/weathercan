@@ -148,5 +148,4 @@ unlink("./vignettes/normals_cache/", recursive = TRUE)
 devtools::release()
 
 ## Once it is released (Accepted by CRAN) create signed release on github
-system("git tag -s v0.5.0 -m 'v0.5.0'")
-system("git push --tags")
+usethis::use_github_release()
