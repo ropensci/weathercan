@@ -29,11 +29,13 @@ Other
 
 Generally, there were no ERRORs, no WARNINGs, no NOTEs:
 
-Solaris had one WARNING and one NOTE:
+Fedora had one NOTEs:
+* Package suggested but not available for checking: ‘sf’
 
-- WARNING: "‘qpdf’ is needed for checks on size reduction of PDFs"
-- NOTE: "Files ‘README.md’ or ‘NEWS.md’ cannot be checked without ‘pandoc’ being installed."
+Solaris had two NOTEs:
+* Packages suggested but not available for checking: 'devtools', 'sf'
+* Files ‘README.md’ or ‘NEWS.md’ cannot be checked without ‘pandoc’ being installed.
 
 ## Downstream dependencies
 
-There are no downstream dependencies
+* RavenR suggests weathercan, no problems
