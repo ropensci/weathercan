@@ -28,6 +28,10 @@ stick to what you need.
 For more details and tutorials checkout the [weathercan
 website](https://docs.ropensci.org/weathercan)
 
+> Check out the Demo weathercan shiny dashboard
+> ([html](https://steffilazerte.shinyapps.io/weathercan_shiny/);
+> [source](https://github.com/steffilazerte/weathercan_shiny))
+
 ## Installation
 
 You can install `weathercan` directly from CRAN:
@@ -52,8 +56,8 @@ devtools::install_github("ropensci/weathercan", build_vignettes = TRUE)
 
 View the available vignettes with `vignette(package = "weathercan")`
 
-View a particular vignette with, for example, `vignette("weathercan",
-package = "weathercan")`
+View a particular vignette with, for example,
+`vignette("weathercan", package = "weathercan")`
 
 ## General usage
 
@@ -315,7 +319,7 @@ Canada](http://open.canada.ca/en/open-government-licence-canada)).
 
 ## Similar packages
 
-1)  [`rclimateca`](https://cran.rstudio.com/web/packages/rclimateca/index.html)
+1.  [`rclimateca`](https://cran.rstudio.com/web/packages/rclimateca/index.html)
 
 `weathercan` and `rclimateca` were developed at roughly the same time
 and as a result, both present up-to-date methods for accessing and
@@ -325,12 +329,12 @@ weather data and directly integrating it into other data sources. b)
 `weathercan` actively seeks to apply tidy data principles in R and
 integrates well with the tidyverse including using tibbles and nested
 listcols. c) `rclimateca` contains arguments for specifying short
-vs. long data formats. d) `rclimateca` has the option of formatting
-data in the MUData format using the
+vs. long data formats. d) `rclimateca` has the option of formatting data
+in the MUData format using the
 [`mudata2`](https://cran.r-project.org/web/packages/mudata2/index.html)
 package by the same author.
 
-2)  [`CHCN`](https://cran.rstudio.com/web/packages/CHCN/index.html)
+1.  [`CHCN`](https://cran.rstudio.com/web/packages/CHCN/index.html)
 
 `CHCN` is an older package last updated in 2012. Unfortunately, ECCC
 updated their services within the last couple of years which caused a
@@ -341,8 +345,8 @@ and so is currently broken.
 
 ## Contributions
 
-We welcome any and all contributions\! To make the process as painless
-as possible for all involved, please see our [guide to
+We welcome any and all contributions! To make the process as painless as
+possible for all involved, please see our [guide to
 contributing](CONTRIBUTING.md)
 
 ## Code of Conduct

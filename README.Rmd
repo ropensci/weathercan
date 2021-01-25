@@ -29,6 +29,8 @@ Bear in mind that these downloads can be fairly large and performing multiple do
 
 For more details and tutorials checkout the [weathercan website](https://docs.ropensci.org/weathercan)
 
+> Check out the Demo weathercan shiny dashboard ([html](https://steffilazerte.shinyapps.io/weathercan_shiny/); [source](https://github.com/steffilazerte/weathercan_shiny))
+
 ## Installation
 
 You can install `weathercan` directly from CRAN:
