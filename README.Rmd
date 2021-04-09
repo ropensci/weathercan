@@ -54,7 +54,7 @@ devtools::install_github("ropensci/weathercan", build_vignettes = TRUE)
 ```
 
 View the available vignettes with `vignette(package = "weathercan")`  
-
+ 
 View a particular vignette with, for example, `vignette("weathercan", package = "weathercan")`
 
 ## General usage
