@@ -3,43 +3,38 @@
 context("stations_dl")
 
 test_that("stations_normals() gets normals info", {
-  skip_on_cran()
-  skip_on_travis()
-  skip_if_offline()
-  expect_silent(n <- stations_normals(years = "1981-2010")) %>%
-    expect_is("character")
-  expect_gt(length(n), 500)
-  expect_true(all(nchar(n) == 7))
+  vcr::use_cassette("stations_normals", {
+    expect_silent(n <- stations_normals()) %>%
+      expect_is("data.frame")
+  })
+
+  expect_gt(nrow(n), 1500)
+  expect_named(n, c("station_name", "climate_id",
+                    "normals_1981_2010", "normals_1971_2000"))
 })
 
 test_that("stations_dl() runs and returns data", {
-  skip_on_cran()
-  skip_on_travis()
-  skip_if_offline()
 
-  if(getRversion() < "3.3.4") {
-    expect_message(s <- stations_dl(),
-                   paste0("Need R version 3.3.4 or greater to update the ",
-                          "stations data"))
-  } else if(getRversion() >= "3.3.4") {
-    # If get message about not reachable, try again
-    expect_error({s <- stations_dl()}, regexp = NA)
-    expect_warning(stations_dl(url = "test.csv"))
-    expect_is(s, "data.frame")
-    expect_length(s, 14)
-    expect_lt(length(data.frame(s)[is.na(data.frame(s))]),
-              length(data.frame(s)[!is.na(data.frame(s))]))
-    expect_is(s$prov, "character")
-    expect_is(s$station_name, "character")
-    expect_gt(nrow(s), 10)
-    expect_equal(unique(s$interval), c("day", "hour", "month"))
+  vcr::use_cassette("stations_dl_good", {
+    expect_error(s <- stations_dl(), NA) %>%
+      expect_is("data.frame")
+  })
 
-    # Check content
-    expect_equal(nrow(s[is.na(s$station_name),]), 0)
-    expect_equal(nrow(s[is.na(s$station_id),]), 0)
-    expect_equal(nrow(s[is.na(s$prov),]), 0)
-    expect_true(all(table(s$station_id) == 3)) # One row per time interval type
-  }
+  expect_is(s, "data.frame")
+  expect_length(s, 16)
+  expect_lt(length(data.frame(s)[is.na(data.frame(s))]),
+            length(data.frame(s)[!is.na(data.frame(s))]))
+  expect_is(s$prov, "character")
+  expect_is(s$station_name, "character")
+  expect_gt(nrow(s), 10)
+  expect_equal(unique(s$interval), c("day", "hour", "month"))
+
+  # Check content
+  expect_equal(nrow(s[is.na(s$station_name),]), 0)
+  expect_equal(nrow(s[is.na(s$station_id),]), 0)
+  expect_equal(nrow(s[is.na(s$prov),]), 0)
+  expect_true(all(table(s$station_id) == 3)) # One row per time interval type
+
 })
 
 

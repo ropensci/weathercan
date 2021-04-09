@@ -9,3 +9,4 @@ data-raw/normals/*
 doc
 Meta
 inst/doc
+devtests.R

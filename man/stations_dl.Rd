@@ -5,20 +5,9 @@
 \alias{stations_all}
 \title{Get available stations}
 \usage{
-stations_dl(
-  url = NULL,
-  normals_years = "1981-2010",
-  skip = NULL,
-  verbose = FALSE,
-  quiet = FALSE
-)
+stations_dl(skip = NULL, verbose = FALSE, quiet = FALSE)
 }
 \arguments{
-\item{url}{DEPRECATED. To set a different url use \code{options()} (see details).}
-
-\item{normals_years}{Character. The year range for which you want climate
-normals. Default "1981-2010".}
-
 \item{skip}{Numeric. Number of lines to skip at the beginning of the csv. If
 NULL, automatically derived.}
 

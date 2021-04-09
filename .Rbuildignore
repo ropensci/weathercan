@@ -26,3 +26,4 @@
 ^doc$
 ^Meta$
 ^LICENSE\.md$
+^devtests.R$

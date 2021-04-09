@@ -14,9 +14,7 @@ weather_dl(
   format = TRUE,
   string_as = NA,
   time_disp = "none",
-  tz_disp = NULL,
   stn = weathercan::stations,
-  url = NULL,
   encoding = "UTF-8",
   list_col = FALSE,
   verbose = FALSE,
@@ -50,12 +48,8 @@ numeric measurement with. See Details.}
 
 \item{time_disp}{Character. Either "none" (default) or "UTC". See details.}
 
-\item{tz_disp}{DEPRECATED. See details}
-
 \item{stn}{Data frame. The \code{stations} data frame to use. Will use the
 one included in the package unless otherwise specified.}
-
-\item{url}{DEPRECATED. To set a different url use \code{options()} (see details).}
 
 \item{encoding}{Character. Text encoding for download.}
 

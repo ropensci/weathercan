@@ -206,12 +206,3 @@ approx_na_rm <- function(x, y, xout, na_gap = NULL) {
 
   new
 }
-
-#' @export
-add_weather <- function(data, weather,
-                           cols = "all",
-                           interval = "hour",
-                           na_gap = 2,
-                           quiet = FALSE) {
-  .Deprecated("weather_interp")
-}

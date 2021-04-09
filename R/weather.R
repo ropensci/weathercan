@@ -62,10 +62,8 @@
 #' @param string_as Character. What value to replace character strings in a
 #'   numeric measurement with. See Details.
 #' @param time_disp Character. Either "none" (default) or "UTC". See details.
-#' @param tz_disp DEPRECATED. See details
 #' @param stn Data frame. The \code{stations} data frame to use. Will use the
 #'   one included in the package unless otherwise specified.
-#' @param url DEPRECATED. To set a different url use `options()` (see details).
 #' @param encoding Character. Text encoding for download.
 #' @param list_col Logical. Return data as nested data set? Defaults to FALSE.
 #'   Only applies if `format = TRUE`
@@ -106,23 +104,11 @@ weather_dl <- function(station_ids,
                        format = TRUE,
                        string_as = NA,
                        time_disp = "none",
-                       tz_disp = NULL,
                        stn = weathercan::stations,
-                       url = NULL,
                        encoding = "UTF-8",
                        list_col = FALSE,
                        verbose = FALSE,
                        quiet = FALSE) {
-
-  if(!is.null(url)) {
-    warning("'url' is deprecated, use ",
-            "`options(weathercan.urls.weather = \"your_new_url\")` instead",
-            .call = FALSE)
-  }
-
-  if(!is.null(tz_disp)) {
-    warning("'tz_disp' is deprecated, see Details under ?weather_dl", .call = FALSE)
-  }
 
   # Address as.POSIXct...
   if((!is.null(start) &

@@ -21,7 +21,8 @@
 #'   month for a variety of measurements as well as data relating to the
 #'   frost-free period. Because these two data sources are quite different, we
 #'   return them as nested data so the user can extract them as they wish. See
-#'   examples for how to use the `unnest()` function from the [`tidyr`](https://tidyr.tidyverse.org/)
+#'   examples for how to use the `unnest()` function from the
+#'   [`tidyr`](https://tidyr.tidyverse.org/)
 #'   package to extract the two different datasets.
 #'
 #'   The data also returns a column called `meets_wmo` this reflects whether or

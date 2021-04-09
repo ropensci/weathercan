@@ -49,7 +49,8 @@ Climate normals from ECCC include two types of data, averages by
 month for a variety of measurements as well as data relating to the
 frost-free period. Because these two data sources are quite different, we
 return them as nested data so the user can extract them as they wish. See
-examples for how to use the \code{unnest()} function from the \href{https://tidyr.tidyverse.org/}{\code{tidyr}}
+examples for how to use the \code{unnest()} function from the
+\href{https://tidyr.tidyverse.org/}{\code{tidyr}}
 package to extract the two different datasets.
 
 The data also returns a column called \code{meets_wmo} this reflects whether or

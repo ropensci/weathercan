@@ -16,14 +16,11 @@
 #' stored in the option `weathercan.urls.normals`. To change this location use
 #' `options(weathercan.urls.normals = "your_new_url")`.
 #'
-#' @param url DEPRECATED. To set a different url use `options()` (see details).
 #' @param skip Numeric. Number of lines to skip at the beginning of the csv. If
 #'   NULL, automatically derived.
 #' @param verbose Logical. Include progress messages
 #' @param quiet Logical. Suppress all messages (including messages regarding
 #'   missing data, etc.)
-#'
-#' @inheritParams normals_dl
 #'
 #' @return A tibble containing station names, station ID codes, dates of
 #'   operation, as well as whether or not there are data on climate normals.
@@ -44,18 +41,11 @@
 #'
 #' @export
 
-stations_dl <- function(url = NULL, normals_years = "1981-2010",
-                        skip = NULL, verbose = FALSE, quiet = FALSE) {
+stations_dl <- function(skip = NULL, verbose = FALSE, quiet = FALSE) {
 
   if(getRversion() <= "3.3.3") {
     message("Need R version 3.3.4 or greater to update the stations data")
     return()
-  }
-
-  if(!is.null(url)) {
-    warning("'url' is deprecated, use ",
-            "`options(weathercan.urls.stations = \"your_new_url\")` instead",
-            .call = FALSE)
   }
 
   if(!requireNamespace("lutz", quietly = TRUE) |
@@ -67,7 +57,7 @@ stations_dl <- function(url = NULL, normals_years = "1981-2010",
   }
 
   # Get normals data
-  normals <- stations_normals(years = normals_years)
+  normals <- stations_normals()
 
   if(verbose) message("Trying to access stations data frame")
 
@@ -91,9 +81,12 @@ stations_dl <- function(url = NULL, normals_years = "1981-2010",
 
   if(!quiet) message("According to Environment Canada, ",
                      grep("Modified Date", headings, value = TRUE))
-  if(!quiet) message("Environment Canada Disclaimers:\n",
-                     paste0(grep("Disclaimer", headings, value = TRUE),
-                            collapse = "\n"))
+  if(!quiet) {
+    disclaimer <- paste0(grep("Disclaimer", headings, value = TRUE),
+                         collapse = "\n")
+    if(nchar(disclaimer) > 0) message("Environment Canada Disclaimers:\n",
+                                      disclaimer)
+  }
 
   if(verbose) message("Downloading stations data frame")
 
