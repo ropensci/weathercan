@@ -14,7 +14,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:36:12 GMT
+      date: Fri, 09 Apr 2021 16:58:22 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -779,7 +779,7 @@ http_interactions:
         ISLAND RCS\",\"1054503\",\"2017-08-31 21:00\",\"2017\",\"08\",\"31\",\"21:00\"\r\n\"-133.06\",\"54.26\",\"LANGARA
         ISLAND RCS\",\"1054503\",\"2017-08-31 22:00\",\"2017\",\"08\",\"31\",\"22:00\"\r\n\"-133.06\",\"54.26\",\"LANGARA
         ISLAND RCS\",\"1054503\",\"2017-08-31 23:00\",\"2017\",\"08\",\"31\",\"23:00\"\r\n"
-  recorded_at: 2021-01-14 22:36:18 GMT
+  recorded_at: 2021-04-09 16:58:28 GMT
   recorded_with: vcr/0.6.0, webmockr/0.7.4
 - request:
     method: get
@@ -796,7 +796,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:36:16 GMT
+      date: Fri, 09 Apr 2021 16:58:27 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -1537,7 +1537,7 @@ http_interactions:
         ISLAND RCS\",\"1054503\",\"2017-09-30 21:00\",\"2017\",\"09\",\"30\",\"21:00\"\r\n\"-133.06\",\"54.26\",\"LANGARA
         ISLAND RCS\",\"1054503\",\"2017-09-30 22:00\",\"2017\",\"09\",\"30\",\"22:00\"\r\n\"-133.06\",\"54.26\",\"LANGARA
         ISLAND RCS\",\"1054503\",\"2017-09-30 23:00\",\"2017\",\"09\",\"30\",\"23:00\"\r\n"
-  recorded_at: 2021-01-14 22:36:18 GMT
+  recorded_at: 2021-04-09 16:58:28 GMT
   recorded_with: vcr/0.6.0, webmockr/0.7.4
 - request:
     method: get
@@ -1554,7 +1554,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:36:17 GMT
+      date: Fri, 09 Apr 2021 16:58:27 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -1573,5 +1573,5 @@ http_interactions:
         Local Standard Time (LST) was selected, add 1 hour to adjust for Daylight
         Saving Time where and when it is observed.\"\r\n\r\nLegend\r\nE\tEstimated\r\nM\tMissing\r\nNA\tNot
         Available*\r\n[empty]\tIndicates an unobserved value\r\n\r\n*https://climate.weather.gc.ca/FAQ_e.html#Q5"
-  recorded_at: 2021-01-14 22:36:18 GMT
+  recorded_at: 2021-04-09 16:58:28 GMT
   recorded_with: vcr/0.6.0, webmockr/0.7.4
