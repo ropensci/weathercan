@@ -14,13 +14,13 @@ old <- options(width = 100)
 # weathercan <img src="https://github.com/ropensci/weathercan/raw/master/inst/assets/weathercan_logo.png" align = "right" width = 110/>
 
 
-[![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/q3krwk18df3qnly7/branch/master?svg=true)](https://ci.appveyor.com/project/steffilazerte/weathercan/branch/master)   [![R-CMD-check](https://github.com/ropensci/weathercan/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/weathercan/actions)
+[![R-CMD-check](https://github.com/ropensci/weathercan/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/weathercan/actions)
 [![codecov](https://codecov.io/gh/ropensci/weathercan/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/weathercan)
 
 [![](https://badges.ropensci.org/160_status.svg)](https://github.com/ropensci/onboarding/issues/160) [![DOI](https://zenodo.org/badge/60650396.svg)](https://zenodo.org/badge/latestdoi/60650396) [![DOI](http://joss.theoj.org/papers/10.21105/joss.00571/status.svg)](https://doi.org/10.21105/joss.00571)
 
 
-[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/weathercan)](https://cran.r-project.org/package=weathercan) [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/grand-total/weathercan)](https://CRAN.R-project.org/package=weathercan)
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/weathercan)](https://cran.r-project.org/package=weathercan) [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/grand-total/weathercan)](https://CRAN.R-project.org/package=weathercan) [![](https://cranlogs.r-pkg.org/badges/weathercan)](https://cran.r-project.org/package=weathercan)
 
 
 This package makes it easier to search for and download multiple months/years of historical weather data from [Environment and Climate Change Canada (ECCC) website](https://climate.weather.gc.ca/historical_data/search_historic_data_e.html).
