@@ -15,6 +15,8 @@ test_that("stations_normals() gets normals info", {
 
 test_that("stations_dl() runs and returns data", {
 
+  skip_if_not_installed("sf")
+  skip_if_not_installed("lutz")
   vcr::use_cassette("stations_dl_good", {
     expect_error(s <- stations_dl(), NA) %>%
       expect_is("data.frame")
@@ -77,6 +79,7 @@ test_that("stations_search 'name' returns correct data", {
 
 
 test_that("stations_search 'coords' returns correct format", {
+  skip_if_not_installed("sf")
   expect_error(stations_search(coords = c("Hi")))
   expect_error(stations_search(coords = 44))
   expect_message(stn <- stations_search(coords = c(54, -122)))
