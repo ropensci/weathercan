@@ -13,8 +13,15 @@
 #' `options(weathercan.urls.stations = "your_new_url")`.
 #'
 #' The list of which stations have climate normals is downloaded from the url
-#' stored in the option `weathercan.urls.normals`. To change this location use
-#' `options(weathercan.urls.normals = "your_new_url")`.
+#' stored in the option `weathercan.urls.stations.normals`. To change this
+#' location use `options(weathercan.urls.normals = "your_new_url")`.
+#'
+#' Currently there are two sets of climate normals available: 1981-2010 and
+#' 1971-2000. Whether a station has climate normals for a given year range is
+#' specified in `normals_1981_2010` and `normals_1971_2000`, respectively.
+#'
+#' The column `normals` represents the most current year range of climate
+#' normals (i.e. currently 1981-2010)
 #'
 #' @param skip Numeric. Number of lines to skip at the beginning of the csv. If
 #'   NULL, automatically derived.
@@ -144,12 +151,14 @@ stations_dl <- function(skip = NULL, verbose = FALSE, quiet = FALSE) {
                   prov = as.character(.data$prov)) %>%
     tidyr::spread(.data$type, .data$date) %>%
     dplyr::arrange(.data$prov, .data$station_id, .data$interval) %>%
-    dplyr::mutate(normals = FALSE) %>%
     dplyr::as_tibble()
 
-  s$normals[s$climate_id %in% normals] <- TRUE
-
-  s
+  s %>%
+    dplyr::left_join(normals, by = c("station_name", "climate_id")) %>%
+    dplyr::mutate(dplyr::across(dplyr::contains("normals"),
+                                ~tidyr::replace_na(., FALSE)),
+                  normals = .data$normals_1981_2010) %>%
+    dplyr::relocate(dplyr::contains("normals_"), .after = dplyr::last_col())
 }
 
 #' Search for stations by name or location
@@ -169,7 +178,13 @@ stations_dl <- function(skip = NULL, verbose = FALSE, quiet = FALSE) {
 #'   \code{coords}.
 #' @param interval Character. Return only stations with data at these intervals.
 #'   Must be any of "hour", "day", "month".
-#' @param normals_only Logical. Return only stations with climate normals?
+#' @param normals_only DEPRECATED. Logical. Return only stations with climate
+#'   normals?
+#' @param normals_years Character. One of `NULL` (default), `current`,
+#'   `1981-2010`, or `1971-2000`. `current` returns only stations from most
+#'   recent normals year range. Default `NULL` does not filter by climate
+#'   normals. Specific year ranges return stations with normals in that period.
+#'   See Details for more specifics.
 #' @param stn Data frame. The \code{stations} data frame to use. Will use the
 #'   one included in the package unless otherwise specified.
 #' @param starts_latest Numeric. Restrict results to stations with data collection
@@ -183,6 +198,8 @@ stations_dl <- function(skip = NULL, verbose = FALSE, quiet = FALSE) {
 #' @details To search by coordinates, users must make sure they have the
 #'  [sp](https://cran.r-project.org/package=sp) package installed.
 #'
+#'  The `current`, most recent, climate normals year range is `1981-2010`.
+#'
 #' @return Returns a subset of the stations data frame which match the search
 #'   parameters. If the search was by location, an extra column 'distance' shows
 #'   the distance in kilometres from the location to the station. If no stations
@@ -193,7 +210,11 @@ stations_dl <- function(skip = NULL, verbose = FALSE, quiet = FALSE) {
 #' stations_search(name = "Kamloops")
 #' stations_search(name = "Kamloops", interval = "hour")
 #'
-#' stations_search(name='Ottawa', starts_latest=1950, ends_earliest=2010)
+#' stations_search(name = "Ottawa", starts_latest = 1950, ends_earliest = 2010)
+#'
+#' stations_search(name = "Ottawa", normals_years = "current")   # 1981-2010
+#' stations_search(name = "Ottawa", normals_years = "1981-2010") # Same as above
+#' stations_search(name = "Ottawa", normals_years = "1971-2000") # 1971-2010
 #'
 #' if(requireNamespace("sp")) {
 #'   stations_search(coords = c(53.915495, -122.739379))
@@ -205,12 +226,25 @@ stations_search <- function(name = NULL,
                             coords = NULL,
                             dist = 10,
                             interval = c("hour", "day", "month"),
-                            normals_only = FALSE,
+                            normals_years = NULL,
+                            normals_only = NULL,
                             stn = weathercan::stations,
                             starts_latest = NULL,
                             ends_earliest = NULL,
                             verbose = FALSE,
                             quiet = FALSE) {
+
+  if(!is.null(normals_only)) {
+    warning("`normals_only` is deprecated, use ",
+            "`normals_years` instead",
+            .call = FALSE)
+  }
+  if(!is.null(normals_years) &&
+     !normals_years %in% c("current", "1981-2010", "1971-2000")) {
+    stop("`normals_years` must either be `NULL` (don't filter by normals),",
+         "'1981-2010' or '1971-2000'", call. = FALSE)
+  }
+
   if(all(is.null(name), is.null(coords)) |
      all(!is.null(name), !is.null(coords))) {
     stop("Need a search name OR search coordinate")
@@ -241,8 +275,12 @@ stations_search <- function(name = NULL,
 
   stn <- dplyr::filter(stn, .data$interval %in% !! interval, !is.na(.data$start))
 
-  if(normals_only) {
-    stn <- dplyr::filter(stn, .data$normals == TRUE)
+  if(!is.null(normals_years)) {
+    yr <- "normals"
+    if(normals_years != "current") {
+      yr <- paste0(yr, "_", stringr::str_replace(normals_years, "-", "_"))
+    }
+    stn <- dplyr::filter(stn, .data[[yr]])
   } else {
 
     if (!is.null(starts_latest)){
@@ -314,7 +352,7 @@ stations_search <- function(name = NULL,
                                              .data$station_name,
                                              .data$station_id,
                                              .data$interval)
-  if(normals_only) {
+  if(!is.null(normals_years)) {
     stn <- dplyr::select(stn, -"interval", -"start", -"end") %>%
       dplyr::distinct()
   }
@@ -322,17 +360,25 @@ stations_search <- function(name = NULL,
 }
 
 
-stations_normals <- function(years = "1981-2010") {
+normals_stn_list <- function(yr) {
+  httr::GET(getOption("weathercan.urls.stations.normals"),
+            query = list(yr = yr)) %>%
+    httr::content(type = "text/csv", col_types = readr::cols(),
+                  encoding = "Latin1") %>%
+    dplyr::rename_with(tolower) %>%
+    dplyr::select(dplyr::any_of(c("station_name", "climate_id")))
+}
 
-  check_normals(years)
-
-  dplyr::tibble(prov = province,
-                loc = file.path(getOption("weathercan.urls.normals"),
-                                years, province)) %>%
-    dplyr::mutate(climate_id = purrr::map(.data$loc,
-                                          ~stations_extract_normals(.))) %>%
-    dplyr::pull(.data$climate_id) %>%
-    unlist()
+stations_normals <- function() {
+  dplyr::tibble(years = c("1981-2010", "1971-2000")) %>%
+    dplyr::mutate(yr = stringr::str_extract(.data$years, "^[0-9]{4}"),
+                  stns = purrr::map(.data$yr, normals_stn_list)) %>%
+    tidyr::unnest("stns") %>%
+    dplyr::select(-"yr") %>%
+    dplyr::mutate(normals = TRUE,
+                  years = stringr::str_replace(.data$years, "-", "_"),
+                  years = paste0("normals_", years)) %>%
+    tidyr::pivot_wider(names_from = "years", values_from = "normals")
 }
 
 stations_extract_normals <- function(loc) {

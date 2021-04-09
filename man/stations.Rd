@@ -21,7 +21,9 @@ downloading station data.}
 \item{interval}{Interval of the data measurements ('hour', 'day', 'month')}
 \item{start}{Starting year of data record}
 \item{end}{Ending year of data record}
-\item{normals}{Whether climate normals are available for that station}
+\item{normals}{Whether current climate normals are available for that station}
+\item{normals_1981_2010}{Whether 1981-2010 climate normals are available for that station}
+\item{normals_1971_2000}{Whether 1981-2010 climate normals are available for that station}
 }
 }
 \source{

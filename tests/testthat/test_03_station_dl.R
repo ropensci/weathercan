@@ -45,7 +45,7 @@ test_that("stations_search 'name' returns correct format", {
   expect_error(stations_search())
   expect_error(stations_search(name = mean()))
   expect_is(stations_search("XXX"), "data.frame")
-  expect_length(stations_search("XXX"), 14)
+  expect_length(stations_search("XXX"), 16)
 
 })
 
@@ -81,7 +81,7 @@ test_that("stations_search 'coords' returns correct format", {
   expect_error(stations_search(coords = 44))
   expect_message(stn <- stations_search(coords = c(54, -122)))
   expect_is(stn, "data.frame")
-  expect_length(stn, 15)
+  expect_length(stn, 17)
   expect_gt(nrow(stn), 0)
 })
 
@@ -174,8 +174,18 @@ test_that("stations_search 'starts_latest' and 'ends_earliest' together", {
 })
 
 test_that("stations_search returns normals only", {
-  expect_silent(s <- stations_search("Brandon", normals_only = TRUE))
+  expect_warning(s <- stations_search("Brandon", normals_only = TRUE))
+  expect_silent(s <- stations_search("Brandon", normals_years = "current"))
   expect_gt(nrow(stations), nrow(s))
   expect_true(all(s$normals))
   expect_equal(unique(s$station_id), s$station_id)
+
+  expect_silent(s1 <- stations_search("Brandon", normals_years = "1981-2010"))
+  expect_gt(nrow(stations), nrow(s1))
+  expect_equal(s$station_id, s1$station_id)
+
+  expect_silent(s2 <- stations_search("Brandon", normals_years = "1971-2000"))
+  expect_gt(nrow(stations), nrow(s2))
+  expect_equal(s$station_id, s1$station_id)
+
 })

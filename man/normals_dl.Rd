@@ -57,7 +57,8 @@ The data also returns a column called \code{meets_wmo} this reflects whether or
 not the climate normals for this station met the WMO standards for
 temperature and precipitation (i.e. both have code >= A). Each measurement
 column has a corresponding \verb{_code} column which reflects the data quality
-of that measurement (see the \href{https://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf}{ECCC calculations document}
+of that measurement (see the \href{https://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf}{1981-2010 ECCC calculations document}
+or the \href{https://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1971_2000_Calculation_Information.pdf}{1971-2000 ECCC calculations document}
 for more details)
 
 Climate normals are downloaded from the url stored in option
@@ -69,33 +70,37 @@ Climate normals are downloaded from the url stored in option
 \donttest{
 
 # Find the climate_id
-stations_search("Brandon A", normals_only = TRUE)
+stations_search("Brandon A", normals_years = "current")
 
-# Download climate normals
+# Download climate normals 1981-2010
 n <- normals_dl(climate_ids = "5010480")
+n
 
 # Pull out last frost data
 library(tidyr)
 f <- unnest(n, frost)
+f
 
 # Pull out normals
 nm <- unnest(n, normals)
+nm
 
-# Download multiple stations
-n <- normals_dl(climate_ids = c("3010234", "3010410", "3010815"))
+# Download climate normals 1971-2000
+n <- normals_dl(climate_ids = "5010480", normals_years = "1971-2000")
 n
 
-# Note that some have files online but no data
-n$normals[2]
+# Note that some do not have last frost dates
+n$frost
 
-# Some have no last frost data
-n$frost[3]
+# Download multiple stations for 1981-2010,
+n <- normals_dl(climate_ids = c("301C3D4", "301FFNJ", "301N49A"))
+n
 
 # Note, putting both into the same data set can be done but makes for
 # a very unweildly dataset (there is lots of repetition)
 nm <- unnest(n, normals)
 f <- unnest(n, frost)
 both <- dplyr::full_join(nm, f)
-
+both
 }
 }

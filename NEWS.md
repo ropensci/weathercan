@@ -1,7 +1,18 @@
 # weathercan (development version)
 
+## Big changes
+- Download climate normals from climate.weather.gc.ca
+  - More stations available
+  - More year ranges available (1981-2010 and 1971-2000; 
+    Note that while climate normals from 1961-1990 are available, they
+    don't have climate ids making it tricky to download reliably)
+    
+## Small changes
+- Remove old deprecated function arguments
+
 ## Bug fixes
 - Download stations data frame from google drive rather than FTP site
+- Update dependency versions
 
 # weathercan 0.5.0 (2020-01-14)
 

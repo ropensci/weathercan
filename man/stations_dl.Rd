@@ -33,8 +33,15 @@ The stations list is downloaded from the url stored in the option
 \code{options(weathercan.urls.stations = "your_new_url")}.
 
 The list of which stations have climate normals is downloaded from the url
-stored in the option \code{weathercan.urls.normals}. To change this location use
-\code{options(weathercan.urls.normals = "your_new_url")}.
+stored in the option \code{weathercan.urls.stations.normals}. To change this
+location use \code{options(weathercan.urls.normals = "your_new_url")}.
+
+Currently there are two sets of climate normals available: 1981-2010 and
+1971-2000. Whether a station has climate normals for a given year range is
+specified in \code{normals_1981_2010} and \code{normals_1971_2000}, respectively.
+
+The column \code{normals} represents the most current year range of climate
+normals (i.e. currently 1981-2010)
 }
 \examples{
 

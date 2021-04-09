@@ -29,8 +29,9 @@
 #'   not the climate normals for this station met the WMO standards for
 #'   temperature and precipitation (i.e. both have code >= A). Each measurement
 #'   column has a corresponding `_code` column which reflects the data quality
-#'   of that measurement (see the [ECCC calculations
+#'   of that measurement (see the [1981-2010 ECCC calculations
 #'   document](https://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf)
+#'   or the [1971-2000 ECCC calculations document](https://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1971_2000_Calculation_Information.pdf)
 #'   for more details)
 #'
 #'   Climate normals are downloaded from the url stored in option
@@ -44,34 +45,38 @@
 #' \donttest{
 #'
 #' # Find the climate_id
-#' stations_search("Brandon A", normals_only = TRUE)
+#' stations_search("Brandon A", normals_years = "current")
 #'
-#' # Download climate normals
+#' # Download climate normals 1981-2010
 #' n <- normals_dl(climate_ids = "5010480")
+#' n
 #'
 #' # Pull out last frost data
 #' library(tidyr)
 #' f <- unnest(n, frost)
+#' f
 #'
 #' # Pull out normals
 #' nm <- unnest(n, normals)
+#' nm
 #'
-#' # Download multiple stations
-#' n <- normals_dl(climate_ids = c("3010234", "3010410", "3010815"))
+#' # Download climate normals 1971-2000
+#' n <- normals_dl(climate_ids = "5010480", normals_years = "1971-2000")
 #' n
 #'
-#' # Note that some have files online but no data
-#' n$normals[2]
+#' # Note that some do not have last frost dates
+#' n$frost
 #'
-#' # Some have no last frost data
-#' n$frost[3]
+#' # Download multiple stations for 1981-2010,
+#' n <- normals_dl(climate_ids = c("301C3D4", "301FFNJ", "301N49A"))
+#' n
 #'
 #' # Note, putting both into the same data set can be done but makes for
 #' # a very unweildly dataset (there is lots of repetition)
 #' nm <- unnest(n, normals)
 #' f <- unnest(n, frost)
 #' both <- dplyr::full_join(nm, f)
-#'
+#' both
 #' }
 #' @export
 
@@ -82,9 +87,12 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
   check_ids(climate_ids, stn, type = "climate_id")
   check_normals(normals_years)
 
+  yrs <- paste0("normals_", stringr::str_replace(normals_years, "-", "_"))
+
   n <- dplyr::filter(stn, .data$climate_id %in% climate_ids) %>%
     dplyr::select(.data$prov, .data$station_name, .data$station_id,
-                  .data$climate_id, .data$normals) %>%
+                  .data$climate_id,
+                  normals = .data[[yrs]]) %>%
     dplyr::distinct() %>%
     dplyr::mutate(climate_id = as.character(.data$climate_id))
 
@@ -123,6 +131,7 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
 
   # Format dates etc.
   n <- dplyr::mutate(n,
+                     normals_years = !!normals_years,
                      normals = purrr::map2(.data$normals,
                                            .data$climate_id,
                                            data_format),
@@ -130,7 +139,7 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
                                          .data$climate_id,
                                          frost_format))
 
-  dplyr::select(n, "prov", "station_name", "climate_id",
+  dplyr::select(n, "prov", "station_name", "climate_id", "normals_years",
                 "meets_wmo", "normals", "frost")
 }
 
