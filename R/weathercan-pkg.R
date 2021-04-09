@@ -72,7 +72,7 @@ NULL
   options(weathercan.urls.weather =
             "https://climate.weather.gc.ca/climate_data/bulk_data_e.html",
           weathercan.urls.normals =
-            "https://dd.meteo.gc.ca/climate/observations/normals/csv",
+            "https://climate.weather.gc.ca/climate_normals/bulk_data_e.html",
           weathercan.urls.stations =
             paste0("https://drive.google.com/uc?authuser=0&id=",
                    "1egfzGgzUb0RFu_EE5AYFZtsyXPfZ11y2&export=download"),

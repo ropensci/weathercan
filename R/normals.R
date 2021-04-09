@@ -82,7 +82,7 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
   check_normals(normals_years)
 
   n <- dplyr::filter(stn, .data$climate_id %in% climate_ids) %>%
-    dplyr::select(.data$prov, .data$station_name,
+    dplyr::select(.data$prov, .data$station_name, .data$station_id,
                   .data$climate_id, .data$normals) %>%
     dplyr::distinct() %>%
     dplyr::mutate(climate_id = as.character(.data$climate_id))
@@ -94,27 +94,26 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
   } else if(any(n$normals == FALSE)) {
     message("Not all stations have climate normals available (climate ids: ",
             paste0(n$climate_id[!n$normals], collapse = ", "), ")")
-    n <- dplyr::filter(n, .data$normals == TRUE)
+    n <- dplyr::filter(n, .data$normals == TRUE) %>%
+      dplyr::select(-"normals")
   }
 
-  n <- dplyr::mutate(n,
-                     loc = normals_url(.data$prov,
-                                       .data$climate_id,
-                                       normals_years)) %>%
-    dplyr::select(-"normals")
 
   # Download data
-  n <- dplyr::mutate(n,
-                     normals = purrr::map(.data$loc, normals_raw),
-                     meets_wmo = purrr::map_lgl(.data$normals, meets_wmo),
-                     normals = purrr::map(.data$normals, normals_extract),
-                     frost = purrr::map(.data$normals, frost_find),
-                     normals = purrr::map2(.data$normals, .data$climate_id,
-                                        ~ data_extract(.x, climate_id = .y)),
-                     frost = purrr::map2(.data$frost, .data$climate_id,
-                                         ~ frost_extract(.x, climate_id = .y)),
-                     n_data = purrr::map_dbl(.data$normals, nrow),
-                     n_frost = purrr::map_dbl(.data$frost, nrow))
+  n <- n %>%
+    dplyr::mutate(
+      html = purrr::pmap(list(.data$prov, .data$station_id, .data$climate_id),
+                         ~normals_html(..1, ..2, ..3, normals_years)),
+      normals = purrr::map(.data$html, normals_raw),
+      meets_wmo = purrr::map_lgl(.data$normals, meets_wmo),
+      normals = purrr::map(.data$normals, normals_extract),
+      frost = purrr::map(.data$normals, frost_find),
+      normals = purrr::map2(.data$normals, .data$climate_id,
+                            ~ data_extract(.x, climate_id = .y)),
+      frost = purrr::map2(.data$frost, .data$climate_id,
+                          ~ frost_extract(.x, climate_id = .y)),
+      n_data = purrr::map_dbl(.data$normals, nrow),
+      n_frost = purrr::map_dbl(.data$frost, nrow))
 
   if(any(no_data <- n$n_data + n$n_frost == 0)) {
     message("All climate normals missing for some stations (climate_ids: ",
@@ -134,36 +133,29 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
                 "meets_wmo", "normals", "frost")
 }
 
-normals_url <- function(prov, climate_id, normals_years) {
+normals_html <- function(prov, station_id, climate_id, normals_years) {
+  yrs <- stringr::str_extract(normals_years, "^[0-9]{4}")
+  q <- list(format = "csv", lang = "e", prov = tolower(prov), yr = yrs,
+            stnID = station_id, climateID = climate_id,
+            submit = "Download Data")
 
-  check_url(getOption("weathercan.urls.normals"))
-
-  loc <- paste0(getOption("weathercan.urls.normals"), "/", normals_years)
-
-  # Check if year-range present
-  check_url(loc, task = paste0("access climate normals for years ", normals_years))
-
-  paste0(loc, "/", prov,
-         "/climate_normals_", prov, "_", climate_id, "_", normals_years, ".csv")
+  html <- httr::GET(url = getOption("weathercan.urls.normals"),
+                    query = q)
+  httr::stop_for_status(html, paste0("access climate normals for this ",
+                                     "station (climate id: " ,
+                                     stringr::str_extract(climate_id, "[0-9A-Z]{7}"),
+                                     ")"))
+  html
 }
 
-normals_raw <- function(loc,
-                        nrows = -1) {
-  # Check if file present
-  status <- httr::GET(loc)
-  httr::stop_for_status(status,
-                        paste0("access climate normals for this ",
-                               "station (climate id: " ,
-                               stringr::str_extract(loc, "[0-9A-Z]{7}"),
-                               ")"))
-
-  # Download file
-  status %>%
+normals_raw <- function(html, nrows = -1) {
+  # Extract file
+  html %>%
     httr::content(as = "text", encoding = "latin1") %>%
-    # Get rid of degree symbols right away
-    stringr::str_remove_all("\\u00B0") %>%
+    # Get rid of degree symbols right away and extra
     stringr::str_split(pattern = "\n") %>%
-    unlist()
+    unlist() %>%
+    stringr::str_remove_all("(\\u00B0)|(\\u00C2)|(\\u00EF)|(\\u00BB)|(\\u00BF)")
 }
 
 normals_raw <- memoise::memoise(normals_raw, ~memoise::timeout(24 * 60 * 60))

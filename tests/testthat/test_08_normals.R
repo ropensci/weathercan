@@ -1,58 +1,51 @@
 context("Climate Normals")
 
-test_that("normals_url() correctly creates urls", {
-  vcr::use_cassette("normals_url_5010480", {
-    expect_equal(
-      normals_url(prov = "MB", climate_id = c("5010480", "5010480"),
-                  normals_years = "1981-2010"),
-      paste0("https://dd.meteo.gc.ca/climate/observations/normals/csv/1981-2010/",
-             "MB/climate_normals_MB_", c("5010480", "5010480"), "_1981-2010.csv"))
+test_that("normals_html correctly retrieves request", {
+
+  vcr::use_cassette("normals_html_5010480", {
+    expect_silent(nd <- normals_html(station_id = 3471, climate_id = "5010480",
+                                     normals_years = "1981-2010", prov = "MB"))
   })
 
-  vcr::use_cassette("normals_url_5010480", {
-    expect_silent(normals_url(prov = "MB", climate_id = "5010480",
-                              normals_years = "1981-2010"))
-  })
+  ## Basics
+  expect_is(nd, "response")
+  expect_false(httr::http_error(nd))
+  expect_gt(length(nd$content), 10000)
+
 
   skip_on_cran()
   skip_if_offline()
-  expect_error(normals_url(prov = "MB", climate_id = "5010480",
-                           normals_years = "1971-2000"),
-               "Failed to access climate normals for years 1971-2000",
-               class = "http_404")
 
   bkup <- getOption("weathercan.urls.normals")
   options(weathercan.urls.normals = "https://httpstat.us/404")
-  expect_error(normals_url(prov = "MB", climate_id = "5010480",
-                           normals_years = "1981-2010"),
+  expect_error(normals_html(prov = "MB", station_id = 3471,
+                            climate_id = "5010480",
+                            normals_years = "1981-2010"),
                "Failed to access",
                class = "http_error")
   options(weathercan.urls.normals = bkup)
 })
 
-test_that("normals_raw() download normals as character", {
-  skip_on_cran()
-  skip_if_offline()
+test_that("normals_raw() extracts normals as character", {
 
-  url <- paste0("https://dd.meteo.gc.ca/climate/observations/normals/csv/",
-                "1981-2010/MB/climate_normals_MB_5010480_1981-2010.csv")
+  vcr::use_cassette("normals_html_5010480", {
+    expect_silent(nd <- normals_html(station_id = 3471, climate_id = "5010480",
+                                     normals_years = "1981-2010", prov = "MB"))
+  })
 
-  expect_silent(normals_raw(url)) %>%
+  expect_silent(nd <- normals_raw(nd)) %>%
     expect_is("character")
+  expect_false(any(stringr::str_detect(nd, "[^\001-\177]")))
 
-
-  expect_error(normals_raw("https://httpstat.us/404"),
-               "Failed to access climate normals",
-               class = "http_error")
 })
 
 test_that("normals_extract() cleans up raw data", {
-  skip_on_cran()
-  skip_if_offline()
+  vcr::use_cassette("normals_html_5010480", {
+    expect_silent(nd <- normals_html(station_id = 3471, climate_id = "5010480",
+                                     normals_years = "1981-2010", prov = "MB"))
+  })
 
-  n <- paste0("https://dd.meteo.gc.ca/climate/observations/normals/csv/",
-              "1981-2010/MB/climate_normals_MB_5010480_1981-2010.csv") %>%
-    normals_raw()
+  n <- normals_raw(nd)
 
   expect_silent(n1 <- normals_extract(n)) %>%
     expect_is("character")
@@ -61,14 +54,14 @@ test_that("normals_extract() cleans up raw data", {
 })
 
 test_that("data_extract() / frost_extract() extract data", {
-  skip_on_cran()
-  skip_if_offline()
+  vcr::use_cassette("normals_html_5010480", {
+    expect_silent(nd <- normals_html(station_id = 3471, climate_id = "5010480",
+                                     normals_years = "1981-2010", prov = "MB"))
+  })
 
-  n <- paste0("https://dd.meteo.gc.ca/climate/observations/normals/csv/",
-              "1981-2010/MB/climate_normals_MB_5010480_1981-2010.csv") %>%
-    normals_raw()
-
-  n <- normals_extract(n)
+  n <- nd %>%
+    normals_raw() %>%
+    normals_extract()
 
   expect_silent(data_extract(n, climate_id = "5010480")) %>%
     expect_is("data.frame")
@@ -77,17 +70,18 @@ test_that("data_extract() / frost_extract() extract data", {
 })
 
 test_that("normals_format()/frost_format() format data to correct class", {
-  skip_on_cran()
-  skip_if_offline()
 
-  n <- paste0("https://dd.meteo.gc.ca/climate/observations/normals/csv/",
-              "1981-2010/MB/climate_normals_MB_5010480_1981-2010.csv") %>%
-    normals_raw()
+  vcr::use_cassette("normals_html_5010480", {
+    expect_silent(nd <- normals_html(station_id = 3471, climate_id = "5010480",
+                                     normals_years = "1981-2010", prov = "MB"))
+  })
 
-  n <- normals_extract(n)
+  n <- nd %>%
+    normals_raw() %>%
+    normals_extract()
 
-  f <- frost_extract(n, climate_id = "5010480")
-  n <- data_extract(n, climate_id = "5010480")
+  expect_silent(f <- frost_extract(n, climate_id = "5010480"))
+  expect_silent(n <- data_extract(n, climate_id = "5010480"))
 
   expect_silent(n_fmt <- data_format(n)) %>%
     expect_is("data.frame")
@@ -103,24 +97,27 @@ test_that("normals_format()/frost_format() format data to correct class", {
 })
 
 test_that("normals_dl() downloads normals/frost dates as tibble", {
-  skip_on_cran()
-  skip_if_offline()
 
-  expect_silent(normals_dl(climate_id = "5010480")) %>%
-    expect_is("tbl_df")
+  vcr::use_cassette("normals_dl_5010480", {
+    expect_silent(nd <- normals_dl(climate_id = "5010480")) %>%
+      expect_is("tbl_df")
+  })
 
-  expect_silent(n <- normals_dl(climate_id = c("2403500",
-                                               "5010480",
-                                               "1096450"))) %>%
-    expect_is("tbl_df")
 
-  expect_equal(nrow(n), 3)
-  expect_is(tidyr::unnest(n, normals), "data.frame")
-  expect_is(tidyr::unnest(n, frost), "data.frame")
-  expect_length(tidyr::unnest(n, normals) %>%
+  vcr::use_cassette("normals_dl_1096450_2403500_5010480", {
+    expect_silent(nd <- normals_dl(climate_id = c("2403500", "5010480",
+                                                  "1096450"))) %>%
+      expect_is("tbl_df")
+  })
+
+
+  expect_equal(nrow(nd), 3)
+  expect_is(tidyr::unnest(nd, normals), "data.frame")
+  expect_is(tidyr::unnest(nd, frost), "data.frame")
+  expect_length(tidyr::unnest(nd, normals) %>%
                   dplyr::pull(climate_id) %>%
                   unique(), 3)
-  expect_length(tidyr::unnest(n, frost) %>%
+  expect_length(tidyr::unnest(nd, frost) %>%
                   dplyr::pull(climate_id) %>%
                   unique(), 3)
 })
@@ -128,10 +125,8 @@ test_that("normals_dl() downloads normals/frost dates as tibble", {
 # Fix issue #106 - Added (C) to extreme wind chill
 
 test_that("normals_dl() gets extreme wind chill correctly", {
-  skip_on_cran()
-  skip_if_offline()
-
-  expect_silent(n <- normals_dl(climate_ids = 2100517)) %>%
-    expect_is("tbl_df")
-
+  vcr::use_cassette("normals_dl_2100517", {
+    expect_silent(nd <- normals_dl(climate_id = "2100517")) %>%
+      expect_is("tbl_df")
+  })
 })
