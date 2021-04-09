@@ -377,7 +377,7 @@ stations_normals <- function() {
     dplyr::select(-"yr") %>%
     dplyr::mutate(normals = TRUE,
                   years = stringr::str_replace(.data$years, "-", "_"),
-                  years = paste0("normals_", years)) %>%
+                  years = paste0("normals_", .data$years)) %>%
     tidyr::pivot_wider(names_from = "years", values_from = "normals")
 }
 
