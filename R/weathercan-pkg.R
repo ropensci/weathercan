@@ -74,9 +74,8 @@ NULL
           weathercan.urls.normals =
             "https://dd.meteo.gc.ca/climate/observations/normals/csv",
           weathercan.urls.stations =
-            paste0("ftp://client_climate@ftp.tor.ec.gc.ca/",
-                   "Pub/Get_More_Data_Plus_de_donnees/",
-                   "Station%20Inventory%20EN.csv"),
+            paste0("https://drive.google.com/uc?authuser=0&id=",
+                   "1egfzGgzUb0RFu_EE5AYFZtsyXPfZ11y2&export=download"),
           weathercan.time.message = FALSE)
 
   # CRAN Note avoidance

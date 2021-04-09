@@ -1,5 +1,8 @@
 # weathercan (development version)
 
+## Bug fixes
+- Download stations data frame from google drive rather than FTP site
+
 # weathercan 0.5.0 (2020-01-14)
 
 ## Small changes
