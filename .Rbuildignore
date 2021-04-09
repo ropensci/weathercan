@@ -5,7 +5,6 @@
 ^inst/blog_draft$
 ^data-raw$
 ^Readme
-^\.travis\.yml$
 ^appveyor\.yml$
 ^.*\.Rproj$
 ^cran-comments.md$
