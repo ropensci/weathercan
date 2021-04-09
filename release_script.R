@@ -36,6 +36,11 @@ source("data-raw/metadata.R")
 
 # Update NEWS
 
+# Check spelling
+dict <- hunspell::dictionary('en_CA')
+devtools::spell_check()
+spelling::update_wordlist()
+
 # Update README.Rmd
 # Compile README.md
 # REBUILD!
@@ -44,10 +49,6 @@ unlink("README.html")
 
 # Update cran-comments
 
-# Check spelling
-dict <- hunspell::dictionary('en_CA')
-devtools::spell_check()
-spelling::update_wordlist()
 
 ## Checks
 devtools::check(run_dont_test = TRUE)     # Local
@@ -61,7 +62,7 @@ devtools::check_win_devel()
 devtools::check_win_oldrelease()
 
 # Build package to check on Rhub and locally
-v <- "0.5.0"
+v <- "0.6.0"
 system("cd ..; R CMD build weathercan")
 system(paste0("cd ..; R CMD check weathercan_", v, ".tar.gz --as-cran --run-donttest")) # Local
 
