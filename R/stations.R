@@ -67,18 +67,19 @@ stations_dl <- function(skip = NULL, verbose = FALSE, quiet = FALSE) {
   normals <- stations_normals()
 
   if(verbose) message("Trying to access stations data frame")
+  resp <- httr::GET(getOption("weathercan.urls.stations"))
 
-  u <- httr::parse_url(getOption("weathercan.urls.stations"))
-  u$path <- NULL
-  if(httr::http_error(httr::build_url(u))) {
-    stop("Cannot reach ECCC ftp site, please try again later", call. = FALSE)
+  if(httr::http_error(resp)) {
+    stop("Cannot reach ECCC stations list, please try again later (",
+         getOption("weathercan.urls.stations"), ")", call. = FALSE)
   }
 
-  headings <- try(readr::read_lines(getOption("weathercan.urls.stations"), n_max = 5),
-                  silent = TRUE)
-  if("try-error" %in% class(headings)) {
-    message("Can't access ", getOption("weathercan.urls.stations"), " right now.")
-    return()
+  headings <- readr::read_lines(httr::content(resp, as = "text",
+                                              encoding = "Latin1"),
+                                n_max = 5)
+  if(!any(stringr::str_detect(headings, "Climate ID"))){
+    stop("Could not read stations list (",
+         getOption("weathercan.urls.stations"), ")", call. = FALSE)
   }
 
   if(is.null(skip)) {
@@ -97,8 +98,8 @@ stations_dl <- function(skip = NULL, verbose = FALSE, quiet = FALSE) {
 
   if(verbose) message("Downloading stations data frame")
 
-  s <- readr::read_csv(file = getOption("weathercan.urls.stations"),
-                       skip = skip, col_types = readr::cols()) %>%
+  s <- httr::content(resp, type = "text/csv", encoding = "Latin1",
+                     skip = skip, col_types = readr::cols()) %>%
     dplyr::select(prov = "Province",
                   station_name = "Name",
                   station_id = "Station ID",
