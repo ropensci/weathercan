@@ -14,20 +14,17 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
+      date: Wed, 14 Apr 2021 22:23:04 GMT
+      server: Apache/2.4.29 (Ubuntu)
+      strict-transport-security: max-age=63072000; preload
+      expires: '0'
       cache-control: no-store, no-cache, must-revalidate
+      pragma: no-cache
       content-disposition: attachment; filename=normals-2100517-1981-2010.csv
+      vary: Accept-Encoding
       content-encoding: gzip
       content-length: '3041'
       content-type: text/csv;charset=UTF-8
-      date: Fri, 09 Apr 2021 19:32:11 GMT
-      expires: '0'
-      pragma: no-cache
-      server: Apache/2.4.29 (Ubuntu)
-      set-cookie:
-      - PHPSESSID=651869ffaba49bb2a34427ec8ef0b106; path=/
-      - jsenabled=0; expires=Fri, 09-Apr-2021 20:32:11 GMT; Max-Age=3600; path=/
-      strict-transport-security: max-age=63072000; preload
-      vary: Accept-Encoding
     body:
       encoding: UTF-8
       file: no
@@ -119,5 +116,5 @@ http_interactions:
         of first temperature in fall of 0 °C or lower on or before indicated dates\",\"10%\",\"25%\",\"33%\",\"50%\",\"66%\",\"75%\",\"90%\"\n\"Date\",\"Aug
         07\",\"Aug 20\",\"Aug 22\",\"Aug 25\",\"Aug 31\",\"Sep 02\",\"Sep 06\"\n\"Probability
         of frost-free period equal to or less than indicated period (Days)\",\"10%\",\"25%\",\"33%\",\"50%\",\"66%\",\"75%\",\"90%\"\n\"Days\",\"59\",\"74\",\"80\",\"92\",\"98\",\"101\",\"108\"\n"
-  recorded_at: 2021-04-09 19:32:11 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-14 22:23:05 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0

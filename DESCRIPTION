@@ -42,6 +42,7 @@ Suggests:
     knitr,
     leaflet,
     lutz,
+    mockery,
     naniar,
     rmarkdown,
     sf,

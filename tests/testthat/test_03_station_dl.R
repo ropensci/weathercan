@@ -2,6 +2,28 @@
 # stations_dl ------------------------------------------------------------
 context("stations_dl")
 
+test_that("stations_dl() requires R 3.3.4", {
+  mockery::stub(stations_dl, 'getRversion', package_version("3.3.3"))
+  expect_message(s <- stations_dl())
+  expect_equal(s, NULL)
+})
+
+test_that("stations_dl() requires lutz and sf", {
+  mockery::stub(stations_dl, 'requireNamespace', FALSE)
+  expect_error(stations_dl(), "Package 'lutz' and its dependency, 'sf'")
+})
+
+test_that("stations_dl() errors appropriately", {
+  bkup <- getOption("weathercan.urls.stations")
+
+  options(weathercan.urls.stations = "https://httpstat.us/404")
+  vcr::use_cassette("stations_http404", {
+    expect_error(stations_dl(), "Cannot reach")
+  })
+
+  options(weathercan.urls.stations = bkup)
+})
+
 test_that("stations_normals() gets normals info", {
   vcr::use_cassette("stations_normals", {
     expect_silent(n <- stations_normals()) %>%
@@ -13,14 +35,15 @@ test_that("stations_normals() gets normals info", {
                     "normals_1981_2010", "normals_1971_2000"))
 })
 
-test_that("stations_dl() runs and returns data", {
 
+test_that("stations_dl() runs and returns data", {
   skip_if_not_installed("sf")
   skip_if_not_installed("lutz")
-  vcr::use_cassette("stations_dl_good", {
-    expect_error(s <- stations_dl(), NA) %>%
+  skip_on_cran()
+  #vcr::use_cassette("stations_dl_good", {  # Don't use vcr until deal with url redirects
+    expect_message(s <- stations_dl()) %>%
       expect_is("data.frame")
-  })
+  #})
 
   expect_is(s, "data.frame")
   expect_length(s, 16)
@@ -36,7 +59,6 @@ test_that("stations_dl() runs and returns data", {
   expect_equal(nrow(s[is.na(s$station_id),]), 0)
   expect_equal(nrow(s[is.na(s$prov),]), 0)
   expect_true(all(table(s$station_id) == 3)) # One row per time interval type
-
 })
 
 

@@ -14,17 +14,20 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 15 Apr 2021 19:44:36 GMT
-      server: Apache/2.4.29 (Ubuntu)
-      strict-transport-security: max-age=63072000; preload
-      expires: '0'
       cache-control: no-store, no-cache, must-revalidate
-      pragma: no-cache
       content-disposition: attachment; filename=Canadian_Climate_Normals_1981_2010_station_inventory.csv
-      vary: Accept-Encoding
       content-encoding: gzip
       content-length: '26628'
       content-type: text/csv;charset=UTF-8
+      date: Wed, 14 Apr 2021 21:24:35 GMT
+      expires: '0'
+      pragma: no-cache
+      server: Apache/2.4.29 (Ubuntu)
+      set-cookie:
+      - PHPSESSID=35c21c223a0254c99a5d6ce60f8b7765; path=/
+      - jsenabled=0; expires=Wed, 14-Apr-2021 22:24:35 GMT; Max-Age=3600; path=/
+      strict-transport-security: max-age=63072000; preload
+      vary: Accept-Encoding
     body:
       encoding: UTF-8
       file: no
@@ -1075,7 +1078,7 @@ http_interactions:
         LAKE A\",\"YUKON TERRITORY\",\"CARS\",\"71953\",\"YQH\",\"60.12\",\"-128.82\",\"687.4\",\"A\"\n\"2101300\",\"WHITEHORSE
         A\",\"YUKON TERRITORY\",\"FSS\",\"71964\",\"YXY\",\"60.71\",\"-135.07\",\"706.2\",\"C\"\n\"2101400\",\"WHITEHORSE
         RIVERDALE\",\"YUKON TERRITORY\",\"DAILY CLIMATE\",\"\",\"\",\"60.71\",\"-135.03\",\"640.1\",\"D\"\n"
-  recorded_at: 2021-04-15 19:44:37 GMT
+  recorded_at: 2021-04-14 21:24:36 GMT
   recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
@@ -1092,7 +1095,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 15 Apr 2021 19:44:37 GMT
+      date: Wed, 14 Apr 2021 21:24:35 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: '0'
@@ -1101,7 +1104,7 @@ http_interactions:
       content-disposition: attachment; filename=Canadian_Climate_Normals_1971_2000_station_inventory.csv
       vary: Accept-Encoding
       content-encoding: gzip
-      content-length: '34084'
+      content-length: '34081'
       content-type: text/csv;charset=UTF-8
     body:
       encoding: UTF-8
@@ -1584,8 +1587,8 @@ http_interactions:
         LAKE A\",\"MANITOBA\",\"\",\"\",\"\",\"56.86\",\"-101.08\",\"356.6\",\"A\"\n\"5041670\",\"MACDONALD\",\"MANITOBA\",\"DAILY
         CLIMATE\",\"\",\"\",\"50.17\",\"-98.50\",\"249.9\",\"A\"\n\"5021687\",\"MANITOU
         STRANGE\",\"MANITOBA\",\"DAILY CLIMATE\",\"\",\"\",\"49.25\",\"-98.52\",\"487.7\",\"D\"\n\"5021695\",\"MARQUETTE\",\"MANITOBA\",\"DAILY
-        CLIMATE\",\"\",\"\",\"50.01\",\"-97.81\",\"243.8\",\"A\"\n\"5043158\",\"MCCREARY\",\"MANITOBA\",\"AU8\",\"71149\",\"WOO\",\"50.71\",\"-99.53\",\"351.0\",\"A\"\n\"5041707\",\"MCCREARY\",\"MANITOBA\",\"DAILY
-        CLIMATE\",\"\",\"\",\"50.73\",\"-99.42\",\"297.2\",\"D\"\n\"5021736\",\"MIAMI
+        CLIMATE\",\"\",\"\",\"50.01\",\"-97.81\",\"243.8\",\"A\"\n\"5041707\",\"MCCREARY\",\"MANITOBA\",\"DAILY
+        CLIMATE\",\"\",\"\",\"50.73\",\"-99.42\",\"297.2\",\"D\"\n\"5043158\",\"MCCREARY\",\"MANITOBA\",\"AU8\",\"71149\",\"WOO\",\"50.71\",\"-99.53\",\"351.0\",\"A\"\n\"5021736\",\"MIAMI
         ORCHARD\",\"MANITOBA\",\"DAILY CLIMATE\",\"\",\"\",\"49.37\",\"-98.28\",\"329.8\",\"A\"\n\"5011760\",\"MINNEDOSA\",\"MANITOBA\",\"DAILY
         CLIMATE\",\"\",\"\",\"50.27\",\"-99.83\",\"521.2\",\"A\"\n\"5021848\",\"MORDEN
         CDA\",\"MANITOBA\",\"DAILY CLIMATE\",\"\",\"\",\"49.18\",\"-98.08\",\"297.5\",\"A\"\n\"5021965\",\"MORRIS
@@ -2407,5 +2410,5 @@ http_interactions:
         LAKE A\",\"YUKON TERRITORY\",\"CARS\",\"71953\",\"YQH\",\"60.12\",\"-128.82\",\"687.4\",\"A\"\n\"2101300\",\"WHITEHORSE
         A\",\"YUKON TERRITORY\",\"FSS\",\"71964\",\"YXY\",\"60.71\",\"-135.07\",\"706.2\",\"A\"\n\"2101400\",\"WHITEHORSE
         RIVERDALE\",\"YUKON TERRITORY\",\"DAILY CLIMATE\",\"\",\"\",\"60.71\",\"-135.03\",\"640.1\",\"C\"\n"
-  recorded_at: 2021-04-15 19:44:37 GMT
+  recorded_at: 2021-04-14 21:24:36 GMT
   recorded_with: vcr/0.6.0, webmockr/0.8.0

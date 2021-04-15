@@ -14,7 +14,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Fri, 09 Apr 2021 19:34:33 GMT
+      date: Wed, 14 Apr 2021 21:24:36 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: '0'
@@ -1075,8 +1075,8 @@ http_interactions:
         LAKE A\",\"YUKON TERRITORY\",\"CARS\",\"71953\",\"YQH\",\"60.12\",\"-128.82\",\"687.4\",\"A\"\n\"2101300\",\"WHITEHORSE
         A\",\"YUKON TERRITORY\",\"FSS\",\"71964\",\"YXY\",\"60.71\",\"-135.07\",\"706.2\",\"C\"\n\"2101400\",\"WHITEHORSE
         RIVERDALE\",\"YUKON TERRITORY\",\"DAILY CLIMATE\",\"\",\"\",\"60.71\",\"-135.03\",\"640.1\",\"D\"\n"
-  recorded_at: 2021-04-09 19:34:41 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-14 21:24:36 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_normals/station_inventory_e.html?yr=1971
@@ -1092,7 +1092,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Fri, 09 Apr 2021 19:34:33 GMT
+      date: Wed, 14 Apr 2021 21:24:36 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: '0'
@@ -2407,43 +2407,5 @@ http_interactions:
         LAKE A\",\"YUKON TERRITORY\",\"CARS\",\"71953\",\"YQH\",\"60.12\",\"-128.82\",\"687.4\",\"A\"\n\"2101300\",\"WHITEHORSE
         A\",\"YUKON TERRITORY\",\"FSS\",\"71964\",\"YXY\",\"60.71\",\"-135.07\",\"706.2\",\"A\"\n\"2101400\",\"WHITEHORSE
         RIVERDALE\",\"YUKON TERRITORY\",\"DAILY CLIMATE\",\"\",\"\",\"60.71\",\"-135.03\",\"640.1\",\"C\"\n"
-  recorded_at: 2021-04-09 19:34:41 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
-- request:
-    method: head
-    uri: https://drive.google.com/?authuser=0&id=1egfzGgzUb0RFu_EE5AYFZtsyXPfZ11y2&export=download
-    body:
-      encoding: ''
-      string: ''
-    headers:
-      Accept: application/json, text/xml, application/xml, */*
-  response:
-    status:
-      status_code: 200
-      category: Success
-      reason: OK
-      message: 'Success: (200) OK'
-    headers:
-      content-type: text/html; charset=UTF-8
-      x-frame-options: DENY
-      x-auto-login: realm=com.google&args=service%3Dwise%26continue%3Dhttps%253A%252F%252Fdrive.google.com%252F%253Fauthuser%253D0%2526id%253D1egfzGgzUb0RFu_EE5AYFZtsyXPfZ11y2%2526export%253Ddownload
-      cache-control: no-cache, no-store, max-age=0, must-revalidate
-      pragma: no-cache
-      expires: Mon, 01 Jan 1990 00:00:00 GMT
-      date: Fri, 09 Apr 2021 19:34:34 GMT
-      content-length: '81447'
-      strict-transport-security: max-age=31536000; includeSubDomains
-      x-content-type-options: nosniff
-      x-xss-protection: 1; mode=block
-      server: GSE
-      set-cookie: __Host-GAPS=1:jM-y1Nkue1_gTZig__d8KON_jg1UqQ:F6lKvpA1zwgHWv3h;Path=/;Expires=Sun,
-        09-Apr-2023 19:34:34 GMT;Secure;HttpOnly;Priority=HIGH
-      alt-svc: h3-29=":443"; ma=2592000,h3-T051=":443"; ma=2592000,h3-Q050=":443";
-        ma=2592000,h3-Q046=":443"; ma=2592000,h3-Q043=":443"; ma=2592000,quic=":443";
-        ma=2592000; v="46,43"
-    body:
-      encoding: UTF-8
-      file: no
-      string: ''
-  recorded_at: 2021-04-09 19:34:41 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-14 21:24:36 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0

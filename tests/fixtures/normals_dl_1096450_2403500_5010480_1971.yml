@@ -14,7 +14,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Fri, 09 Apr 2021 19:32:01 GMT
+      date: Wed, 14 Apr 2021 22:23:03 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: '0'
@@ -138,8 +138,8 @@ http_interactions:
         Amount (hours with)\"\n\"0 to 2 tenths\",\"104.8\",\"116.3\",\"149.6\",\"151.3\",\"136.8\",\"106.4\",\"160.7\",\"189.0\",\"157.4\",\"130.3\",\"95.2\",\"108.5\",\"1606.3\",\"C\"\n\"3
         to 7 tenths\",\"103.7\",\"106.2\",\"150.3\",\"172.0\",\"185.8\",\"202.1\",\"225.4\",\"205.7\",\"155.3\",\"138.3\",\"100.9\",\"104.9\",\"1850.6\",\"C\"\n\"8
         to 10 tenths\",\"535.5\",\"456.2\",\"444.1\",\"396.6\",\"421.4\",\"411.5\",\"358.0\",\"349.3\",\"407.3\",\"475.4\",\"523.9\",\"530.6\",\"5309.9\",\"C\"\n"
-  recorded_at: 2021-04-09 19:32:03 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-14 22:23:04 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_normals/bulk_data_e.html?format=csv&lang=e&prov=mb&yr=1971&stnID=3471&climateID=5010480&submit=Download%20Data
@@ -155,7 +155,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Fri, 09 Apr 2021 19:32:02 GMT
+      date: Wed, 14 Apr 2021 22:23:03 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: '0'
@@ -272,8 +272,8 @@ http_interactions:
         Amount (hours with)\"\n\"0 to 2 tenths\",\"239.5\",\"198.6\",\"222.5\",\"225.0\",\"194.9\",\"177.6\",\"234.5\",\"246.6\",\"223.2\",\"227.0\",\"180.9\",\"223.3\",\"2593.5\",\"B\"\n\"3
         to 7 tenths\",\"138.3\",\"130.3\",\"149.8\",\"174.0\",\"207.9\",\"230.3\",\"251.3\",\"234.7\",\"178.3\",\"164.3\",\"132.4\",\"132.9\",\"2124.6\",\"B\"\n\"8
         to 10 tenths\",\"366.2\",\"349.3\",\"371.7\",\"321.0\",\"341.3\",\"312.1\",\"258.2\",\"262.7\",\"318.5\",\"352.8\",\"406.6\",\"387.8\",\"4048.1\",\"B\"\n"
-  recorded_at: 2021-04-09 19:32:03 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-14 22:23:04 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_normals/bulk_data_e.html?format=csv&lang=e&prov=nu&yr=1971&stnID=1776&climateID=2403500&submit=Download%20Data
@@ -289,7 +289,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Fri, 09 Apr 2021 19:32:02 GMT
+      date: Wed, 14 Apr 2021 22:23:03 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: '0'
@@ -422,5 +422,5 @@ http_interactions:
         Amount (hours with)\"\n\"0 to 2 tenths\",\"403.3\",\"343.6\",\"356.9\",\"348.8\",\"179.6\",\"116.6\",\"107.1\",\"67.5\",\"71.4\",\"179.7\",\"294.6\",\"393.8\",\"2862.9\",\"C\"\n\"3
         to 7 tenths\",\"157.9\",\"145.5\",\"154.4\",\"127.8\",\"114.9\",\"116.2\",\"136.1\",\"103.3\",\"85.2\",\"121.5\",\"147.9\",\"146.9\",\"1557.4\",\"C\"\n\"8
         to 10 tenths\",\"182.9\",\"189.2\",\"232.8\",\"243.4\",\"449.4\",\"487.2\",\"500.8\",\"573.2\",\"563.4\",\"442.8\",\"277.5\",\"203.4\",\"4346.0\",\"C\"\n"
-  recorded_at: 2021-04-09 19:32:03 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-14 22:23:04 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0

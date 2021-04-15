@@ -21,19 +21,19 @@ http_interactions:
       alt-svc: h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400
       cache-control: private
       cf-cache-status: DYNAMIC
-      cf-ray: 63d6289dbc94c627-MSP
-      cf-request-id: 0959b7b6940000c627a8aa5000000001
+      cf-ray: 64005603bcddb665-YWG
+      cf-request-id: 09741416540000b665729a3000000001
       content-length: '41'
       content-type: application/json; charset=utf-8
-      date: Fri, 09 Apr 2021 19:31:57 GMT
+      date: Wed, 14 Apr 2021 22:22:59 GMT
       expect-ct: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
       nel: '{"max_age":604800,"report_to":"cf-nel"}'
-      report-to: '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report?s=%2BpA6BzwzbAIPlzzzAVTOve3G%2BRAbLEtCcfZI8wrXWwMi7RrKdccr%2FTJASiLYYkNNifBUekqhXU1qINKfcMr%2Bf4BSzkzUHrc9dVMb%2Fw%3D%3D"}],"max_age":604800,"group":"cf-nel"}'
+      report-to: '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report?s=v8mP1fMTGr7CbPFthGF3RrFas5TtEm41SOp7N16GxGiU%2F12jgBYAuI1KyXDPHbNuHFh5zzvZtAh3Hv9H11G%2FWWoGzErkCaB9Ip28ng%3D%3D"}],"max_age":604800,"group":"cf-nel"}'
       request-context: appId=cid-v1:7585021b-2db7-4da6-abff-2cf23005f0a9
       server: cloudflare
       set-cookie:
-      - __cfduid=d03a2a72d55e5c0c350e2b5cc0edd32a61617996717; expires=Sun, 09-May-21
-        19:31:57 GMT; path=/; domain=.httpstat.us; HttpOnly; SameSite=Lax
+      - __cfduid=d274eb7d7fd2a4c619d2347aa17f08c481618438979; expires=Fri, 14-May-21
+        22:22:59 GMT; path=/; domain=.httpstat.us; HttpOnly; SameSite=Lax
       - ARRAffinity=474390354ba4d900b0ccc527728f5a28d7c5b02635f8ed49c7106f56434ee578;Path=/;HttpOnly;Domain=httpstat.us
       x-aspnet-version: 4.0.30319
       x-aspnetmvc-version: '5.1'
@@ -42,5 +42,5 @@ http_interactions:
       encoding: UTF-8
       file: no
       string: '{"code": 404, "description": "Not Found"}'
-  recorded_at: 2021-04-09 19:31:57 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-14 22:22:59 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
