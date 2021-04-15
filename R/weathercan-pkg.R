@@ -69,6 +69,10 @@ NULL
 .onLoad <- function(libname = find.package("weathercan"),
                     pkgname = "weathercan"){
 
+  # Add caching for functions
+  get_html <<- memoise::memoise(get_html, ~memoise::timeout(24 * 60 * 60))
+  normals_html <<- memoise::memoise(normals_html, ~memoise::timeout(24 * 60 * 60))
+
   options(weathercan.urls.weather =
             "https://climate.weather.gc.ca/climate_data/bulk_data_e.html",
           weathercan.urls.normals =

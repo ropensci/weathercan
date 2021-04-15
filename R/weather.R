@@ -426,10 +426,6 @@ get_html <- function(station_id,
   html
 }
 
-# Cache function results
-get_html <- memoise::memoise(get_html, ~memoise::timeout(24 * 60 * 60))
-
-
 weather_html <- function(station_id, date, interval = "hour") {
   if(interval == "month") date <- NULL
   get_html(station_id, date, interval, format = "csv")

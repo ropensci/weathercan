@@ -169,9 +169,6 @@ normals_raw <- function(html, nrows = -1) {
       "(\\uFEFF)|(\\u00B0)|(\\u00C2)|(\\u00EF)|(\\u00BB)|(\\u00BF)")
 }
 
-normals_raw <- memoise::memoise(normals_raw, ~memoise::timeout(24 * 60 * 60))
-
-
 normals_extract <- function(n, return = "data") {
   wmo <- find_line(n, cols = "meets WMO standards")
   skip <- find_line(n, cols = c("Jan", "Feb", "Mar"))
