@@ -8,7 +8,7 @@ library(dplyr)
 library(tibble)
 knitr::opts_chunk$set(cache = FALSE,
                       fig.path = "tools/readme/")
-old <- options(width = 100)
+old <- options(width = 160)
 ```
 
 # weathercan <img src="https://github.com/ropensci/weathercan/raw/master/inst/assets/weathercan_logo.png" align = "right" width = 110/>
@@ -17,7 +17,7 @@ old <- options(width = 100)
 [![R-CMD-check](https://github.com/ropensci/weathercan/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/weathercan/actions)
 [![codecov](https://codecov.io/gh/ropensci/weathercan/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/weathercan)
 
-[![](https://badges.ropensci.org/160_status.svg)](https://github.com/ropensci/onboarding/issues/160) [![DOI](https://zenodo.org/badge/60650396.svg)](https://zenodo.org/badge/latestdoi/60650396) [![DOI](http://joss.theoj.org/papers/10.21105/joss.00571/status.svg)](https://doi.org/10.21105/joss.00571)
+[![](https://badges.ropensci.org/160_status.svg)](https://github.com/ropensci/software-review/issues/160) [![DOI](https://zenodo.org/badge/60650396.svg)](https://zenodo.org/badge/latestdoi/60650396) [![DOI](http://joss.theoj.org/papers/10.21105/joss.00571/status.svg)](https://doi.org/10.21105/joss.00571)
 
 
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/weathercan)](https://cran.r-project.org/package=weathercan) [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/grand-total/weathercan)](https://CRAN.R-project.org/package=weathercan) [![](https://cranlogs.r-pkg.org/badges/weathercan)](https://cran.r-project.org/package=weathercan)
@@ -27,7 +27,7 @@ This package makes it easier to search for and download multiple months/years of
 
 Bear in mind that these downloads can be fairly large and performing multiple downloads may use up ECCC's bandwidth unnecessarily. Try to stick to what you need.
 
-For more details and tutorials checkout the [weathercan website](https://docs.ropensci.org/weathercan)
+For more details and tutorials checkout the [weathercan website](https://docs.ropensci.org/weathercan/)
 
 > Check out the Demo weathercan shiny dashboard ([html](https://steffilazerte.shinyapps.io/weathercan_shiny/); [source](https://github.com/steffilazerte/weathercan_shiny))
 
@@ -99,22 +99,12 @@ You can also download data from multiple stations at once:
 kam_pg <- weather_dl(station_ids = c(48248, 51423), start = "2018-02-01", end = "2018-04-15")
 ```
 
-And plot it:
-
-```{r kam_plt, fig.height=6, fig.width=12}
-library(ggplot2)
-
-ggplot(data = kam_pg, aes(x = time, y = temp, group = station_name, colour = station_name)) +
-  theme_minimal() + 
-  geom_line()
-```
-
 ## Climate Normals
 
 To access climate normals, you first need to know the `climate_id` associated with the station you're interested in.
 
 ```{r}
-stations_search("Winnipeg", normals_only = TRUE)
+stations_search("Winnipeg", normals_years = "current")
 ```
 
 Then you can download the climate normals with the `normals_dl()` function.
@@ -123,13 +113,8 @@ Then you can download the climate normals with the `normals_dl()` function.
 n <- normals_dl("5023222")
 ```
 
-There are two parts to the normals data, average weather measurements and average frost dates.
-
-```{r, message = FALSE}
-library(tidyr)
-unnest(n, normals)
-unnest(n, frost)
-```
+See the [Getting Started](https://docs.ropensci.org/weathercan/articles/weathercan.html) 
+vignette for more details. 
 
 
 ## Citation
@@ -144,13 +129,13 @@ The data and the code in this repository are licensed under multiple licences. A
 
 ## Similar packages
 
-1) [`rclimateca`](https://cran.rstudio.com/web/packages/rclimateca/index.html)
+**[`rclimateca`](https://github.com/paleolimbot/rclimateca)**
 
-`weathercan` and `rclimateca` were developed at roughly the same time and as a result, both present up-to-date methods for accessing and downloading data from ECCC. The largest differences between the two packages are: a) `weathercan` includes functions for interpolating weather data and directly integrating it into other data sources. b) `weathercan` actively seeks to apply tidy data principles in R and integrates well with the tidyverse including using tibbles and nested listcols. c) `rclimateca` contains arguments for specifying short vs. long data formats. d) `rclimateca` has the option of formatting data in the MUData format using the [`mudata2`](https://cran.r-project.org/web/packages/mudata2/index.html) package by the same author.
+`weathercan` and `rclimateca` were developed at roughly the same time and as a result, both present up-to-date methods for accessing and downloading data from ECCC. The largest differences between the two packages are: a) `weathercan` includes functions for interpolating weather data and directly integrating it into other data sources. b) `weathercan` actively seeks to apply tidy data principles in R and integrates well with the tidyverse including using tibbles and nested listcols. c) `rclimateca` contains arguments for specifying short vs. long data formats. d) `rclimateca` has the option of formatting data in the MUData format using the [`mudata2`](https://cran.r-project.org/package=mudata2) package by the same author.
 
-2) [`CHCN`](https://cran.rstudio.com/web/packages/CHCN/index.html)
+**[`CHCN`](https://cran.r-project.org/package=CHCN)**
 
-`CHCN` is an older package last updated in 2012. Unfortunately, ECCC updated their services within the last couple of years which caused a great many of the previous web scrapers to fail. `CHCN` relies on one of these [older web-scrapers](https://classic.scraperwiki.com/scrapers/can-weather-stations/) and so is currently broken. 
+`CHCN` is an older package last updated in 2012. Unfortunately, ECCC updated their services within the last couple of years which caused a great many of the previous web scrapers to fail. `CHCN` relies on a decommisioned [older web-scraper](https://quickcode.io/) and so is currently broken. 
 
 ## Contributions
 
