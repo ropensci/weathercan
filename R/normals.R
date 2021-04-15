@@ -165,7 +165,8 @@ normals_raw <- function(html, nrows = -1) {
     # Get rid of degree symbols right away and extra
     stringr::str_split(pattern = "\n") %>%
     unlist() %>%
-    stringr::str_remove_all("(\\u00B0)|(\\u00C2)|(\\u00EF)|(\\u00BB)|(\\u00BF)")
+    stringr::str_remove_all(
+      "(\\uFEFF)|(\\u00B0)|(\\u00C2)|(\\u00EF)|(\\u00BB)|(\\u00BF)")
 }
 
 normals_raw <- memoise::memoise(normals_raw, ~memoise::timeout(24 * 60 * 60))
