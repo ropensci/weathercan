@@ -18,10 +18,6 @@ reference:
       - weather_interp
       - normals_dl
       - weathercan-package
-  - title: "Utility functions"
-    contents:
-      - tz_calc
-      - get_tz
   - title: "Reference Data"
     contents:
       - stations
@@ -61,28 +57,10 @@ navbar:
       href: index.html
     - text: "Getting Started"
       href: articles/weathercan.html
-    - text: "Presentations"
-      href: "http://steffilazerte.github.io/Presentations/#weathercan"
     - text: "Reference"
       href: reference/index.html
     - text: "Articles"
-      menu:
-        - text: "All Articles"
-          href: articles/index.html
-        - text: "--------"
-        - text: "Tutorials"
-        - text: "Interpolating"
-          href: articles/interpolate_data.html
-        - text: "Using weathercan with the tidyverse"
-          href: articles/articles/use_with_tidyverse.html
-        - text: "Mapping weather data"
-          href: articles/articles/mapping.html
-        - text: "---------"
-        - text: "Reference vignetts"
-        - text: "Data flags"
-          href: articles/flags.html
-        - text: "Glossary of units and measurements"
-          href: articles/glossary.html
+      href: articles/index.html
   right:
     - icon: fa-github fa-lg
       href: https://github.com/ropensci/weathercan
