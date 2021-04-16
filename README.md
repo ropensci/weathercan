@@ -63,11 +63,11 @@ with the station you’re interested in.
 
 ### Stations
 
-`weathercan` includes a data frame called `stations` which includes a
-list of stations and their details (including `station_id`.
+`weathercan` includes the function `stations()` which returns a list of
+stations and their details (including `station_id`).
 
 ``` r
-head(stations)
+head(stations())
 ```
 
     ## # A tibble: 6 x 16
@@ -81,7 +81,7 @@ head(stations)
     ## 6 AB    EDMONTON CORONATION       1796 301BK03        NA <NA>   53.6 -114.  671. Etc/GMT+7 month     1978  1979 FALSE   FALSE             FALSE
 
 ``` r
-glimpse(stations)
+glimpse(stations())
 ```
 
     ## Rows: 26,322
@@ -131,6 +131,33 @@ stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour"
     ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE                  8.64
     ## 2 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2021 FALSE   FALSE             FALSE                 8.64
     ## 3 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2021 FALSE   FALSE             FALSE                 9.28
+
+You can update this list of stations with
+
+``` r
+stations_dl()
+```
+
+    ## According to Environment Canada, Modified Date: 2021-03-31 23:34 UTC
+
+    ## Stations data saved...
+    ## Use `stations()` to access most recent version and `stations_meta()` to see when this was last updated
+
+And check when it was last updated with
+
+``` r
+stations_meta()
+```
+
+    ## $ECCC_modified
+    ## [1] "2021-03-31 23:34:00 UTC"
+    ## 
+    ## $weathercan_modified
+    ## [1] "2021-04-16"
+
+**Note:** For reproducibility, if you are using the stations list to
+gather your data, it can be a good idea to take note of the ECCC date of
+modification and include it in your reports/manuscripts.
 
 ### Weather
 
@@ -249,7 +276,7 @@ same author.
 `CHCN` is an older package last updated in 2012. Unfortunately, ECCC
 updated their services within the last couple of years which caused a
 great many of the previous web scrapers to fail. `CHCN` relies on a
-decommisioned [older web-scraper](https://quickcode.io/) and so is
+decommissioned [older web-scraper](https://quickcode.io/) and so is
 currently broken.
 
 ## Contributions

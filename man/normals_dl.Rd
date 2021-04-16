@@ -8,7 +8,7 @@ normals_dl(
   climate_ids,
   normals_years = "1981-2010",
   format = TRUE,
-  stn = weathercan::stations,
+  stn = NULL,
   verbose = FALSE,
   quiet = FALSE
 )
@@ -27,8 +27,8 @@ date accordingly. Unlike \code{weather_dl()}, \code{normals_dl()} will always fo
 column headings as normals data from ECCC cannot be directly made into a
 data frame without doing so.}
 
-\item{stn}{Data frame. The \code{stations} data frame to use. Will use the
-one included in the package unless otherwise specified.}
+\item{stn}{DEFUNCT. Now use \code{stations_dl()} to update internal data and
+\code{stations_meta()} to check the date it was last updated.}
 
 \item{verbose}{Logical. Include progress messages}
 

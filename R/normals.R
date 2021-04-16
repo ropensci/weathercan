@@ -81,8 +81,15 @@
 #' @export
 
 normals_dl <- function(climate_ids, normals_years = "1981-2010",
-                       format = TRUE, stn = weathercan::stations,
+                       format = TRUE, stn = NULL,
                        verbose = FALSE, quiet = FALSE) {
+
+  if(!is.null(stn)){
+    stop("`stn` is defunct, to use an updated stations data frame ",
+         "use `stations_dl()` to update the internal data, and ",
+         "`stations_meta()` to check when it was last updated", call. = FALSE)
+  }
+  stn <- stations()
 
   check_ids(climate_ids, stn, type = "climate_id")
   check_normals(normals_years)

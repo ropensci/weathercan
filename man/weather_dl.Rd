@@ -14,7 +14,7 @@ weather_dl(
   format = TRUE,
   string_as = NA,
   time_disp = "none",
-  stn = weathercan::stations,
+  stn = NULL,
   encoding = "UTF-8",
   list_col = FALSE,
   verbose = FALSE,
@@ -48,8 +48,8 @@ numeric measurement with. See Details.}
 
 \item{time_disp}{Character. Either "none" (default) or "UTC". See details.}
 
-\item{stn}{Data frame. The \code{stations} data frame to use. Will use the
-one included in the package unless otherwise specified.}
+\item{stn}{DEFUNCT. Now use \code{stations_dl()} to update internal data and
+\code{stations_meta()} to check the date it was last updated.}
 
 \item{encoding}{Character. Text encoding for download.}
 

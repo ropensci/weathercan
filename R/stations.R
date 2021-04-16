@@ -1,3 +1,81 @@
+
+#' Access Station data downloaded from Environment and Climate Change Canada
+#'
+#' This function access the built-in stations data frame. You can update this
+#' data frame with `stations_dl()` which will update the locally stored data.
+#'
+#' You can check when this was last updated with `stations_meta()`.
+#'
+#' @details
+#'
+#' A dataset containing station information downloaded from Environment and
+#' Climate Change Canada. Note that a station may have several station IDs,
+#' depending on how the data collection has changed over the years. Station
+#' information can be updated by running `stations_dl()`.
+#'
+#' @format A data frame:
+#' \describe{
+#'   \item{prov}{Province}
+#'   \item{station_name}{Station name}
+#'   \item{station_id}{Environment Canada's station ID number. Required for
+#'   downloading station data.}
+#'   \item{climate_id}{Climate ID number}
+#'   \item{WMO_id}{Climate ID number}
+#'   \item{TC_id}{Climate ID number}
+#'   \item{lat}{Latitude of station location in degree decimal format}
+#'   \item{lon}{Longitude of station location in degree decimal format}
+#'   \item{elev}{Elevation of station location in metres}
+#'   \item{tz}{Local timezone excluding any Daylight Savings}
+#'   \item{interval}{Interval of the data measurements ('hour', 'day', 'month')}
+#'   \item{start}{Starting year of data record}
+#'   \item{end}{Ending year of data record}
+#'   \item{normals}{Whether current climate normals are available for that station}
+#'   \item{normals_1981_2010}{Whether 1981-2010 climate normals are available for that station}
+#'   \item{normals_1971_2000}{Whether 1981-2010 climate normals are available for that station}
+#' }
+#' @source \url{https://climate.weather.gc.ca/index_e.html}
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#'
+#' stations()
+#' stations_meta()
+#'
+#' library(dplyr)
+#' filter(stations(), interval == "hour", normals == TRUE, province = "MB")
+#'
+
+#'
+stations <- function() {
+
+  if(abs(difftime(stations_meta()$weathercan_modified,
+                  Sys.Date(), units = "days")) > 28) {
+    message("The stations data frame hasn't been updated in over 4 weeks. ",
+            "Consider running `stations_dl()` to update it so you have the ",
+            "most recent stations list available")
+  }
+
+  stations_read()$stn
+}
+
+#' Show stations list meta data
+#'
+#' Date of ECCC update and date downloaded via weathercan.
+#'
+#' @export
+#'
+#' @examples
+#' stations_meta()
+stations_meta <- function() {
+  stations_read()$meta
+}
+
+stations_read <- function() {
+  readr::read_rds(system.file("extdata", "stations.rds", package = "weathercan"))
+}
+
 #' Get available stations
 #'
 #' This function can be used to download a Station Inventory CSV file from
@@ -49,8 +127,16 @@
 #' @export
 
 stations_dl <- function(skip = NULL, verbose = FALSE, quiet = FALSE) {
+  stations_dl_internal(skip = skip, verbose = verbose, quiet = quiet,
+                       loc = system.file("extdata", package = "weathercan"))
+}
 
-  if(getRversion() <= "3.3.3") {
+stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
+                                 loc = NULL) {
+
+  # If called internally use inst
+  if(is.null(loc)) loc <- system.file("inst", "extdata", package = "weathercan")
+  if(getRversion() < "3.3.4") {
     message("Need R version 3.3.4 or greater to update the stations data")
     return()
   }
@@ -88,7 +174,13 @@ stations_dl <- function(skip = NULL, verbose = FALSE, quiet = FALSE) {
   }
 
   if(!quiet) message("According to Environment Canada, ",
-                     grep("Modified Date", headings, value = TRUE))
+                     stringr::str_subset(headings, "Modified Date") %>%
+                       stringr::str_remove_all("[^\001-\177]"))
+
+  eccc_meta <- stringr::str_subset(headings, "Modified Date") %>%
+    stringr::str_remove(stringr::regex("Modified Date:", ignore_case = TRUE)) %>%
+    lubridate::ymd_hms(truncated = 3)
+
   if(!quiet) {
     disclaimer <- paste0(grep("Disclaimer", headings, value = TRUE),
                          collapse = "\n")
@@ -154,12 +246,25 @@ stations_dl <- function(skip = NULL, verbose = FALSE, quiet = FALSE) {
     dplyr::arrange(.data$prov, .data$station_id, .data$interval) %>%
     dplyr::as_tibble()
 
-  s %>%
+  s <- s %>%
     dplyr::left_join(normals, by = c("station_name", "climate_id")) %>%
     dplyr::mutate(dplyr::across(dplyr::contains("normals"),
                                 ~tidyr::replace_na(., FALSE)),
                   normals = .data$normals_1981_2010) %>%
     dplyr::relocate(dplyr::contains("normals_"), .after = dplyr::last_col())
+
+
+  stn <- list(stn = s,
+              meta = list(ECCC_modified = eccc_meta,
+                          weathercan_modified = Sys.Date()))
+
+  f <- file.path(loc, "stations.rds")
+  if(verbose) message("Saving stations data to ", f)
+  readr::write_rds(x = stn, file = f, compress = "gz")
+
+  if(!quiet) message("Stations data saved...\n",
+                     "Use `stations()` to access most recent version and ",
+                     "`stations_meta()` to see when this was last updated")
 }
 
 #' Search for stations by name or location
@@ -186,15 +291,15 @@ stations_dl <- function(skip = NULL, verbose = FALSE, quiet = FALSE) {
 #'   recent normals year range. Default `NULL` does not filter by climate
 #'   normals. Specific year ranges return stations with normals in that period.
 #'   See Details for more specifics.
-#' @param stn Data frame. The \code{stations} data frame to use. Will use the
-#'   one included in the package unless otherwise specified.
-#' @param starts_latest Numeric. Restrict results to stations with data collection
-#' beginning in or before the specified year.
-#' @param ends_earliest Numeric. Restrict results to stations with data collection
-#' ending in or after the specified year.
+#' @param starts_latest Numeric. Restrict results to stations with data
+#'   collection beginning in or before the specified year.
+#' @param ends_earliest Numeric. Restrict results to stations with data
+#'   collection ending in or after the specified year.
 #' @param verbose Logical. Include progress messages
 #' @param quiet Logical. Suppress all messages (including messages regarding
 #'   missing data, etc.)
+#' @param stn DEFUNCT. Now use `stations_dl()` to update internal data and
+#'   `stations_meta()` to check the date it was last updated.
 #'
 #' @details To search by coordinates, users must make sure they have the
 #'  [sp](https://cran.r-project.org/package=sp) package installed.
@@ -229,21 +334,21 @@ stations_search <- function(name = NULL,
                             interval = c("hour", "day", "month"),
                             normals_years = NULL,
                             normals_only = NULL,
-                            stn = weathercan::stations,
+                            stn = NULL,
                             starts_latest = NULL,
                             ends_earliest = NULL,
                             verbose = FALSE,
                             quiet = FALSE) {
 
   if(!is.null(normals_only)) {
-    warning("`normals_only` is deprecated, use ",
-            "`normals_years` instead",
-            .call = FALSE)
+    warning("`normals_only` is deprecated, switching to ",
+            "`normals_years = 'current'`", .call = FALSE)
+    normals_years <- "current"
   }
   if(!is.null(normals_years) &&
      !normals_years %in% c("current", "1981-2010", "1971-2000")) {
     stop("`normals_years` must either be `NULL` (don't filter by normals),",
-         "'1981-2010' or '1971-2000'", call. = FALSE)
+         "'current', '1981-2010' or '1971-2000'", call. = FALSE)
   }
 
   if(all(is.null(name), is.null(coords)) |
@@ -251,10 +356,12 @@ stations_search <- function(name = NULL,
     stop("Need a search name OR search coordinate")
   }
 
-  if(is.null(stn)) {
-    stn <- weathercan::stations
-    message("No valid stn data frame supplied, using built-in")
+  if(!is.null(stn)){
+    stop("`stn` is defunct, to use an updated stations data frame ",
+         "use `stations_dl()` to update the internal data, and ",
+         "`stations_meta()` to check when it was last updated", call. = FALSE)
   }
+  stn <- stations()
 
   if(!is.null(coords)) {
     suppressWarnings({
@@ -274,7 +381,8 @@ stations_search <- function(name = NULL,
 
   check_int(interval)
 
-  stn <- dplyr::filter(stn, .data$interval %in% !! interval, !is.na(.data$start))
+  stn <- dplyr::filter(stations(),
+                       .data$interval %in% !! interval, !is.na(.data$start))
 
   if(!is.null(normals_years)) {
     yr <- "normals"

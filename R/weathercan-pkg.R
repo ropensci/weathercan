@@ -1,3 +1,11 @@
+.onAttach <- function(libname, pkgname) {
+  packageStartupMessage(
+    "weathercan v", utils::packageVersion("weathercan"), "\n",
+    "The included data `stations` has been ",
+    "deprecated in favour of the function `stations()`.\n",
+    "See ?stations for more details.")
+}
+
 #' Easy downloading of weather data from Environment and Climate Change Canada
 #'
 #' \code{weathercan} is an R package for simplifying the downloading of

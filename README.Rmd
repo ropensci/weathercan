@@ -63,11 +63,11 @@ To download data, you first need to know the `station_id` associated with the st
 
 ### Stations
 
-`weathercan` includes a data frame called `stations` which includes a list of stations and their details (including `station_id`.
+`weathercan` includes the function `stations()` which returns a list of stations and their details (including `station_id`).
 
 ```{r}
-head(stations)
-glimpse(stations)
+head(stations())
+glimpse(stations())
 ```
 
 You can look through this data frame directly, or you can use the `stations_search` function:
@@ -83,6 +83,21 @@ You can also search by proximity:
 ```{r}
 stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour")
 ```
+
+You can update this list of stations with 
+
+```{r}
+stations_dl()
+```
+
+And check when it was last updated with
+```{r}
+stations_meta()
+```
+
+**Note:** For reproducibility, if you are using the stations list to gather your
+data, it can be a good idea to take note of the ECCC date of modification and 
+include it in your reports/manuscripts.
 
 ### Weather
 
@@ -135,7 +150,7 @@ The data and the code in this repository are licensed under multiple licences. A
 
 **[`CHCN`](https://cran.r-project.org/package=CHCN)**
 
-`CHCN` is an older package last updated in 2012. Unfortunately, ECCC updated their services within the last couple of years which caused a great many of the previous web scrapers to fail. `CHCN` relies on a decommisioned [older web-scraper](https://quickcode.io/) and so is currently broken. 
+`CHCN` is an older package last updated in 2012. Unfortunately, ECCC updated their services within the last couple of years which caused a great many of the previous web scrapers to fail. `CHCN` relies on a decommissioned [older web-scraper](https://quickcode.io/) and so is currently broken. 
 
 ## Contributions
 

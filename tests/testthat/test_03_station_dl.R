@@ -1,16 +1,17 @@
 
-# stations_dl ------------------------------------------------------------
-context("stations_dl")
+# stations_dl() ------------------------------------------------------------
+context("stations_dl()")
 
 test_that("stations_dl() requires R 3.3.4", {
-  mockery::stub(stations_dl, 'getRversion', package_version("3.3.3"))
-  expect_message(s <- stations_dl())
-  expect_equal(s, NULL)
+  # Can't test stations_dl because requires depth = 2 which creates problems:
+  # https://github.com/r-lib/mockery/issues
+  stub(stations_dl_internal, 'getRversion', package_version("3.3.3"))
+  expect_message(stations_dl_internal(), "Need R version")
 })
 
 test_that("stations_dl() requires lutz and sf", {
-  mockery::stub(stations_dl, 'requireNamespace', FALSE)
-  expect_error(stations_dl(), "Package 'lutz' and its dependency, 'sf'")
+  stub(stations_dl_internal, 'requireNamespace', mock(FALSE, FALSE))
+  expect_error(stations_dl_internal(), "Package 'lutz' and its dependency, 'sf'")
 })
 
 test_that("stations_dl() errors appropriately", {
@@ -36,16 +37,39 @@ test_that("stations_normals() gets normals info", {
 })
 
 
-test_that("stations_dl() runs and returns data", {
+test_that("stations_dl() runs and updates data", {
   skip_if_not_installed("sf")
   skip_if_not_installed("lutz")
   skip_on_cran()
-  #vcr::use_cassette("stations_dl_good", {  # Don't use vcr until deal with url redirects
-    expect_message(s <- stations_dl()) %>%
-      expect_is("data.frame")
-  #})
 
-  expect_is(s, "data.frame")
+  #vcr::use_cassette("stations_dl_good", {  # Don't use vcr until deal with url redirects
+  #})
+  stub(stations_dl_internal, "Sys.Date", as.Date("2000-01-01"))
+  stations_dl_internal()
+  expect_equal(stations_meta()$weathercan_modified, as.Date("2000-01-01"))
+
+  stub(stations_dl_internal, "Sys.Date", Sys.Date())
+  expect_message(stations_dl_internal(), "Stations data saved")
+  expect_equal(stations_meta()$weathercan_modified, Sys.Date())
+})
+
+
+# stations() --------------------------------------------------------------
+test_that("stations() /stations_meta() return data",{
+ expect_silent(s <- stations()) %>%
+    expect_s3_class("data.frame")
+
+  expect_silent(stations_meta()) %>%
+    expect_type("list")
+
+  expect_named(stations_meta(), c("ECCC_modified", "weathercan_modified"))
+
+  mockery::stub(stations, "stations_meta",
+                list(weathercan_modified = as.Date("2000-01-01")))
+  expect_message(stations(),
+                 "The stations data frame hasn't been updated in over 4 weeks.")
+
+
   expect_length(s, 16)
   expect_lt(length(data.frame(s)[is.na(data.frame(s))]),
             length(data.frame(s)[!is.na(data.frame(s))]))
@@ -59,11 +83,12 @@ test_that("stations_dl() runs and returns data", {
   expect_equal(nrow(s[is.na(s$station_id),]), 0)
   expect_equal(nrow(s[is.na(s$prov),]), 0)
   expect_true(all(table(s$station_id) == 3)) # One row per time interval type
+
 })
 
 
-# stations_search ---------------------------------------------------------
-context("stations_search")
+# stations_search() ---------------------------------------------------------
+context("stations_search()")
 
 test_that("stations_search 'name' returns correct format", {
   expect_error(stations_search())
@@ -199,18 +224,19 @@ test_that("stations_search 'starts_latest' and 'ends_earliest' together", {
 })
 
 test_that("stations_search returns normals only", {
-  expect_warning(s <- stations_search("Brandon", normals_only = TRUE))
+  expect_warning(s <- stations_search("Brandon", normals_only = TRUE),
+                 "`normals_only` is deprecated")
   expect_silent(s <- stations_search("Brandon", normals_years = "current"))
-  expect_gt(nrow(stations), nrow(s))
+  expect_gt(nrow(stations()), nrow(s))
   expect_true(all(s$normals))
   expect_equal(unique(s$station_id), s$station_id)
 
   expect_silent(s1 <- stations_search("Brandon", normals_years = "1981-2010"))
-  expect_gt(nrow(stations), nrow(s1))
+  expect_gt(nrow(stations()), nrow(s1))
   expect_equal(s$station_id, s1$station_id)
 
   expect_silent(s2 <- stations_search("Brandon", normals_years = "1971-2000"))
-  expect_gt(nrow(stations), nrow(s2))
+  expect_gt(nrow(stations()), nrow(s2))
   expect_equal(s$station_id, s1$station_id)
 
 })

@@ -11,7 +11,7 @@ stations_search(
   interval = c("hour", "day", "month"),
   normals_years = NULL,
   normals_only = NULL,
-  stn = weathercan::stations,
+  stn = NULL,
   starts_latest = NULL,
   ends_earliest = NULL,
   verbose = FALSE,
@@ -43,14 +43,14 @@ See Details for more specifics.}
 \item{normals_only}{DEPRECATED. Logical. Return only stations with climate
 normals?}
 
-\item{stn}{Data frame. The \code{stations} data frame to use. Will use the
-one included in the package unless otherwise specified.}
+\item{stn}{DEFUNCT. Now use \code{stations_dl()} to update internal data and
+\code{stations_meta()} to check the date it was last updated.}
 
-\item{starts_latest}{Numeric. Restrict results to stations with data collection
-beginning in or before the specified year.}
+\item{starts_latest}{Numeric. Restrict results to stations with data
+collection beginning in or before the specified year.}
 
-\item{ends_earliest}{Numeric. Restrict results to stations with data collection
-ending in or after the specified year.}
+\item{ends_earliest}{Numeric. Restrict results to stations with data
+collection ending in or after the specified year.}
 
 \item{verbose}{Logical. Include progress messages}
 
