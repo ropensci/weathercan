@@ -52,7 +52,7 @@ stations()
 stations_meta()
 
 library(dplyr)
-filter(stations(), interval == "hour", normals == TRUE, province = "MB")
+filter(stations(), interval == "hour", normals == TRUE, prov == "MB")
 
 
 }

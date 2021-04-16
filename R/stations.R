@@ -1,4 +1,3 @@
-
 #' Access Station data downloaded from Environment and Climate Change Canada
 #'
 #' This function access the built-in stations data frame. You can update this
@@ -35,7 +34,6 @@
 #' }
 #' @source \url{https://climate.weather.gc.ca/index_e.html}
 #'
-#' @return
 #' @export
 #'
 #' @examples
@@ -44,7 +42,7 @@
 #' stations_meta()
 #'
 #' library(dplyr)
-#' filter(stations(), interval == "hour", normals == TRUE, province = "MB")
+#' filter(stations(), interval == "hour", normals == TRUE, prov == "MB")
 #'
 
 #'
