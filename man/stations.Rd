@@ -31,9 +31,6 @@ downloading station data.}
 \usage{
 stations()
 }
-\value{
-
-}
 \description{
 This function access the built-in stations data frame. You can update this
 data frame with \code{stations_dl()} which will update the locally stored data.

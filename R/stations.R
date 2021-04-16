@@ -44,7 +44,6 @@
 #' library(dplyr)
 #' filter(stations(), interval == "hour", normals == TRUE, prov == "MB")
 #'
-
 #'
 stations <- function() {
 
