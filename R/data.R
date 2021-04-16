@@ -217,11 +217,12 @@
 #' A data frame listing the climate normals measurements available for each
 #' station.
 #'
-#' @format A data frame with 113,325 rows and 4 variables:
+#' @format A data frame with 113,325 rows and 5 variables:
 #' \describe{
 #'   \item{prov}{Province}
 #'   \item{station_name}{Station Name}
 #'   \item{climate_id}{Climate ID}
+#'   \item{normals}{Year range of climate normals}
 #'   \item{measurement}{Climate normals measurement available for this station}
 #' }
 "normals_measurements"
