@@ -19,7 +19,7 @@ test_that("stations_dl() errors appropriately", {
 
   options(weathercan.urls.stations = "https://httpstat.us/404")
   vcr::use_cassette("stations_http404", {
-    expect_error(stations_dl(), "Cannot reach")
+    expect_error(stations_dl(), "Not Found (HTTP 404).", fixed = TRUE)
   })
 
   options(weathercan.urls.stations = bkup)

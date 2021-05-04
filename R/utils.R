@@ -52,3 +52,11 @@ na_tibble <- function(cols) {
 tibble_to_list <- function(tbl) {
   stats::setNames(tbl[[2]], tbl[[1]])
 }
+
+get_check <- function(..., task = NULL) {
+  req <- httr::GET(...)
+  httr::stop_for_status(req, task = task)
+  if (grepl("^https://climate.weather.gc.ca/error", req$url)) {
+    stop("Service is currently down!")
+  } else req
+} 

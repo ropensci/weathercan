@@ -149,10 +149,10 @@ stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
 
   # Get normals data
   normals <- stations_normals()
-
+  
   if(verbose) message("Trying to access stations data frame")
-  resp <- httr::GET(getOption("weathercan.urls.stations"))
 
+  resp <- get_check(getOption("weathercan.urls.stations"))
   if(httr::http_error(resp)) {
     stop("Cannot reach ECCC stations list, please try again later (",
          getOption("weathercan.urls.stations"), ")", call. = FALSE)
@@ -278,7 +278,7 @@ stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
 #' @param coords Numeric. A vector of length 2 with latitude and longitude of a
 #'   place to match against. Overrides \code{lat} and \code{lon} if also
 #'   provided.
-#' @param dist Numeric. Match all stations within this many kilometres of the
+#' @param dist Numeric. Match all stations within this many kilometers of the
 #'   \code{coords}.
 #' @param interval Character. Return only stations with data at these intervals.
 #'   Must be any of "hour", "day", "month".
@@ -468,7 +468,7 @@ stations_search <- function(name = NULL,
 
 
 normals_stn_list <- function(yr) {
-  httr::GET(getOption("weathercan.urls.stations.normals"),
+  get_check(getOption("weathercan.urls.stations.normals"),
             query = list(yr = yr)) %>%
     httr::content(type = "text/csv", col_types = readr::cols(),
                   encoding = "Latin1") %>%

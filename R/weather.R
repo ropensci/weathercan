@@ -428,9 +428,8 @@ get_html <- function(station_id,
     q['Month'] = format(date, "%m")
   }
 
-  html <- httr::GET(url = getOption("weathercan.urls.weather"),
+  html <- get_check(url = getOption("weathercan.urls.weather"),
                     query = q)
-  httr::stop_for_status(html)
   html
 }
 

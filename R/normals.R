@@ -156,12 +156,13 @@ normals_html <- function(prov, station_id, climate_id, normals_years) {
             stnID = station_id, climateID = climate_id,
             submit = "Download Data")
 
-  html <- httr::GET(url = getOption("weathercan.urls.normals"),
-                    query = q)
-  httr::stop_for_status(html, paste0("access climate normals for this ",
-                                     "station (climate id: " ,
-                                     stringr::str_extract(climate_id, "[0-9A-Z]{7}"),
-                                     ")"))
+  html <- get_check(url = getOption("weathercan.urls.normals"),
+                    query = q, 
+                    task = paste0("access climate normals for this ",
+                                  "station (climate id: " ,
+                                  stringr::str_extract(climate_id, 
+                                                       "[0-9A-Z]{7}"),
+                                  ")"))
   html
 }
 

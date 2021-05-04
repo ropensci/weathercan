@@ -28,7 +28,7 @@ text.}
 place to match against. Overrides \code{lat} and \code{lon} if also
 provided.}
 
-\item{dist}{Numeric. Match all stations within this many kilometres of the
+\item{dist}{Numeric. Match all stations within this many kilometers of the
 \code{coords}.}
 
 \item{interval}{Character. Return only stations with data at these intervals.
