@@ -37,12 +37,12 @@ You can install `weathercan` directly from CRAN:
 install.packages("weathercan")
 ```
 
-Use the `devtools` package to install the developmental package from
+Use the `remotes` package to install the developmental package from
 GitHub:
 
 ``` r
-install.packages("devtools") # If not already installed
-devtools::install_github("ropensci/weathercan") 
+install.packages("remotes") # If not already installed
+remotes::install_github("ropensci/weathercan") 
 ```
 
 To build the developmental vignettes (tutorials) locally, use:
@@ -84,7 +84,7 @@ head(stations())
 glimpse(stations())
 ```
 
-    ## Rows: 26,322
+    ## Rows: 26,325
     ## Columns: 16
     ## $ prov              <chr> "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", …
     ## $ station_name      <chr> "DAYSLAND", "DAYSLAND", "DAYSLAND", "EDMONTON CORONATION", "EDMONTON CORONATION", "EDMONTON CORONATION", "FLEET", "FLEET", "FLEET", …
@@ -138,7 +138,7 @@ You can update this list of stations with
 stations_dl()
 ```
 
-    ## According to Environment Canada, Modified Date: 2021-03-31 23:34 UTC
+    ## According to Environment Canada, Modified Date: 2021-05-02 23:31 UTC
 
     ## Stations data saved...
     ## Use `stations()` to access most recent version and `stations_meta()` to see when this was last updated
@@ -150,10 +150,10 @@ stations_meta()
 ```
 
     ## $ECCC_modified
-    ## [1] "2021-03-31 23:34:00 UTC"
+    ## [1] "2021-05-02 23:31:00 UTC"
     ## 
     ## $weathercan_modified
-    ## [1] "2021-04-16"
+    ## [1] "2021-05-11"
 
 **Note:** For reproducibility, if you are using the stations list to
 gather your data, it can be a good idea to take note of the ECCC date of
@@ -253,6 +253,21 @@ licences. All code is licensed
 [GPL-3](https://www.gnu.org/licenses/gpl-3.0.en.html). All weather data
 is licensed under the ([Open Government License -
 Canada](http://open.canada.ca/en/open-government-licence-canada)).
+
+## `weathercan` in the wild!
+
+-   Browse [`weathercan` use cases](https://ropensci.org/usecases/) on
+    rOpenSci.org
+-   Checkout the [`weathercan` Shiny
+    App](https://nickrongkp.shinyapps.io/WeatherCan/) by Nick Rong
+    (@nickyrong) and Nathan Smith (@WraySmith)
+-   R package
+    [`RavenR`](https://github.com/rchlumsk/RavenR/tree/master/R) has
+    functions for converting ECCC data downloaded by `weathercan` to the
+    .rvt format for Raven.
+-   R package [`meteoland`](https://github.com/emf-creaf/meteoland) has
+    functions for converting ECCC data downloaded by `weathercan` to the
+    format required for use in `meteoland`.
 
 ## Similar packages
 

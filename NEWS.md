@@ -3,20 +3,22 @@
 ## Big changes
 - Move from data frame `stations` to function `stations()`. Returns same data
   but is updateable with `stations_dl()` and you can check download dates
-  version with `stations_meta()`
-- Download climate normals from climate.weather.gc.ca
+  version with `stations_meta()` (fixes #10)
+- Download climate normals from climate.weather.gc.ca (fixes #88)
   - More stations available (more than 2x as many!)
   - More year ranges available (1981-2010 and 1971-2000; 
-    Note that while climate normals from 1961-1990 are available, they
+    Note that while climate normals from 1961-1990 are available from ECCC, they
     don't have climate ids making it tricky to download reliably)
     
 ## Small changes
 - Remove old deprecated function arguments
-- Add more test coverage
+- Better test coverage (#81)
+- Better handling of http errors (#101, #119; Thanks @KevCaz!)
 
 ## Bug fixes
-- Download stations data frame from google drive rather than FTP site
-- Update dependency versions
+- Download stations data frame from ECCC Google drive rather than ECCC FTP site
+- Update dependency versions (#111, #112, #118)
+- 
 
 # weathercan 0.5.0 (2020-01-14)
 
