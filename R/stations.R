@@ -148,15 +148,12 @@ stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
 
   # Get normals data
   normals <- stations_normals()
-
+  
   if(verbose) message("Trying to access stations data frame")
-  resp <- httr::GET(getOption("weathercan.urls.stations"))
 
-  if(httr::http_error(resp)) {
-    stop("Cannot reach ECCC stations list, please try again later (",
-         getOption("weathercan.urls.stations"), ")", call. = FALSE)
-  }
-
+  resp <- get_check(getOption("weathercan.urls.stations"), 
+                    task = "access stations list")
+                    
   headings <- readr::read_lines(httr::content(resp, as = "text",
                                               encoding = "Latin1"),
                                 n_max = 5)
@@ -467,7 +464,7 @@ stations_search <- function(name = NULL,
 
 
 normals_stn_list <- function(yr) {
-  httr::GET(getOption("weathercan.urls.stations.normals"),
+  get_check(getOption("weathercan.urls.stations.normals"),
             query = list(yr = yr)) %>%
     httr::content(type = "text/csv", col_types = readr::cols(),
                   encoding = "Latin1") %>%
