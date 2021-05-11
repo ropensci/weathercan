@@ -22,7 +22,7 @@ Imports:
     dplyr (>= 1.0.0),
     httr (>= 1.4.2),
     lubridate (>= 1.7.1),
-    memoise (>= 1.1.0),
+    memoise (>= 2.0.0),
     methods (>= 3.2.2),
     purrr (>= 0.3.4),
     rlang (>= 0.1.4),
