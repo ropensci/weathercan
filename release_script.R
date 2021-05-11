@@ -127,6 +127,8 @@ rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
 # Update cran-comments
 
 
+## Update codemeta
+codemetar::write_codemeta()
 
 ## Build site (so website uses newest version)
 ## Update website
@@ -139,14 +141,15 @@ pkgdown::build_site(lazy = TRUE)
 pkgdown::build_articles(lazy = FALSE)
 unlink("./vignettes/normals_cache/", recursive = TRUE)
 
-## Update codemeta
-codemetar::write_codemeta()
+
 
 ## Push to github
 ## Check GitHub Actions
 
 ## Check Reverse Dependencies (are there any?)
 tools::dependsOnPkgs("weathercan")
+
+revdepcheck::revdep_check(num_workers = 4)
 
 ## Double check
 old <- options(repos = c(CRAN = 'http://cran.rstudio.com'))
@@ -157,19 +160,7 @@ deps$weathercan
 options(old)
 
 
-## Build site (so website uses newest version)
-## Update website
-## BUILD PACKAGE FIRST!
-pkgdown::build_articles(lazy = FALSE)
-pkgdown::build_home()
-pkgdown::build_news()
-pkgdown::build_reference()
-pkgdown::build_site(lazy = TRUE)
-unlink("./vignettes/normals_cache/", recursive = TRUE)
 ## Push to github
-
-## CHECK FOR SECURITY VULNERABILITIES!
-
 
 ## Actually release it (SEND TO CRAN!)
 devtools::release()
@@ -178,4 +169,4 @@ devtools::release()
 usethis::use_github_release()
 
 # Prep for next
-usethis::use_version(which = 4)
+usethis::use_dev_version()

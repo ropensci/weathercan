@@ -1,40 +1,45 @@
-## Release v.0.5.0
+## Release v.0.6.0
 
-* Internal fixes for changes made to ECCC weather and normals data
+* Download climate normals from new location (more stations, more year ranges)
+* Update dependency versions
+* Switch from stations data frame to stations() function
+* Bug fixes
+* Ensure all examples fail silently (no error) if the ECCC connection if unavailable
 
 ## Test environments
-As of Jan 14th, 2021
+As of May 11th, 2021
 
 ubuntu
-* 18.04 - Local (R 4.0.3)
-* 16.04.6 - Travis CI (R 4.0.4, 3.6.3, devel)
+* 18.04 - Local (4.0.3)
+* 16.04 - GitHub Actions (devel, release, old release)
 
 OSX
-* 10.13.6 - Travis CI (R 4.0.2, 3.6.3)
-* 10.15.7 - GitHub Actions (R 4.0.3)
+* 10.15.7 - GitHub Actions (release)
 
 Windows 
-* Windows Server 2012 r2 64 - AppVeyor (R 4.0.3, 4.0.3 Patched, 3.6.3)
-* Windows Server x64 - GitHub Actions (R 4.0.3)
-* Windows Server x64 - GitHub Actions (R 3.6.3)
-* win-builder (R oldrelease, release, devel)
+* Windows Server 2019 x64 - GitHub Actions (release, old release)
+* Windows Server 2008 x64 - win-builder (devel, release, old release)
 
 Other
-* Debian GCC - rhub (R release, R patched, R devel)
-* Fedora GCC - rhub (R devel)
-* Fedora CLANG - rhub (R devel)
-* Solaris - rhub (R patched)
+* Debian GCC - rhub (release, patched, devel)
+* Debian CLANG - rhub (devel)
+* Fedora GCC - rhub (devel)
+* Fedora CLANG - rhub (devel)
+* Solaris - rhub (release)
 
 ## R CMD check results
 
-Generally, there were no ERRORs, no WARNINGs, no NOTEs:
+There were no ERRORs and no WARNINGs
 
-Fedora had one NOTEs:
-* Package suggested but not available for checking: ‘sf’
+2 NOTEs:
 
-Solaris had two NOTEs:
-* Packages suggested but not available for checking: 'devtools', 'sf'
-* Files ‘README.md’ or ‘NEWS.md’ cannot be checked without ‘pandoc’ being installed.
+Debian GCC (patched and devel) had one NOTE:
+* checking for future file timestamps ... NOTE
+  unable to verify current time
+
+Solaris had one NOTEs:
+* checking top-level files ... NOTE
+  Files ‘README.md’ or ‘NEWS.md’ cannot be checked without ‘pandoc’ being installed.
 
 ## Downstream dependencies
 
