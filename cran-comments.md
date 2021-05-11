@@ -4,7 +4,7 @@
 * Update dependency versions
 * Switch from stations data frame to stations() function
 * Bug fixes
-* Ensure all examples fail silently (no error) if the ECCC connection if unavailable
+* Ensure all examples fail silently (no error) if the ECCC connection is unavailable
 
 ## Test environments
 As of May 11th, 2021
