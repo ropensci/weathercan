@@ -428,10 +428,8 @@ get_html <- function(station_id,
     q['Month'] = format(date, "%m")
   }
 
-  html <- httr::GET(url = getOption("weathercan.urls.weather"),
-                    query = q)
-  httr::stop_for_status(html)
-  html
+  get_check(url = getOption("weathercan.urls.weather"),
+            query = q, task = "access historical weather data")
 }
 
 weather_html <- function(station_id, date, interval = "hour") {

@@ -21,6 +21,7 @@ Climate Normals and Averages describe the average climate conditions specific to
 First we'll load the `weathercan` package for downloading the data and the `tidyr` package for unnesting the data (see below).
 
 ```{r setup, message = FALSE}
+options(rmarkdown.html_vignette.check_title = FALSE)
 library(weathercan)
 library(tidyr)
 library(dplyr)
