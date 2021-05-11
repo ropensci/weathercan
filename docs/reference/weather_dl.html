@@ -77,7 +77,7 @@ https://climate.weather.gc.ca/glossary_e.html." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">weathercan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -85,7 +85,7 @@ https://climate.weather.gc.ca/glossary_e.html." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
   </a>
 </li>
@@ -93,47 +93,16 @@ https://climate.weather.gc.ca/glossary_e.html." />
   <a href="../articles/weathercan.html">Getting Started</a>
 </li>
 <li>
-  <a href="http://steffilazerte.github.io/Presentations/#weathercan">Presentations</a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/index.html">All Articles</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Tutorials</li>
-    <li>
-      <a href="../articles/interpolate_data.html">Interpolating</a>
-    </li>
-    <li>
-      <a href="../articles/articles/use_with_tidyverse.html">Using weathercan with the tidyverse</a>
-    </li>
-    <li>
-      <a href="../articles/articles/mapping.html">Mapping weather data</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Reference vignetts</li>
-    <li>
-      <a href="../articles/flags.html">Data flags</a>
-    </li>
-    <li>
-      <a href="../articles/glossary.html">Glossary of units and measurements</a>
-    </li>
-  </ul>
+<li>
+  <a href="../articles/index.html">Articles</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/ropensci/weathercan">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -162,23 +131,21 @@ more stations. For details and units, see the glossary vignette
 <a href='https://climate.weather.gc.ca/glossary_e.html'>https://climate.weather.gc.ca/glossary_e.html</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>weather_dl</span>(
-  <span class='no'>station_ids</span>,
-  <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>interval</span> <span class='kw'>=</span> <span class='st'>"hour"</span>,
-  <span class='kw'>trim</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>format</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>string_as</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>time_disp</span> <span class='kw'>=</span> <span class='st'>"none"</span>,
-  <span class='kw'>tz_disp</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>stn</span> <span class='kw'>=</span> <span class='kw pkg'>weathercan</span><span class='kw ns'>::</span><span class='no'><a href='stations.html'>stations</a></span>,
-  <span class='kw'>url</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>encoding</span> <span class='kw'>=</span> <span class='st'>"UTF-8"</span>,
-  <span class='kw'>list_col</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>weather_dl</span><span class='op'>(</span>
+  <span class='va'>station_ids</span>,
+  start <span class='op'>=</span> <span class='cn'>NULL</span>,
+  end <span class='op'>=</span> <span class='cn'>NULL</span>,
+  interval <span class='op'>=</span> <span class='st'>"hour"</span>,
+  trim <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  format <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  string_as <span class='op'>=</span> <span class='cn'>NA</span>,
+  time_disp <span class='op'>=</span> <span class='st'>"none"</span>,
+  stn <span class='op'>=</span> <span class='cn'>NULL</span>,
+  encoding <span class='op'>=</span> <span class='st'>"UTF-8"</span>,
+  list_col <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  verbose <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -226,17 +193,9 @@ numeric measurement with. See Details.</p></td>
       <td><p>Character. Either "none" (default) or "UTC". See details.</p></td>
     </tr>
     <tr>
-      <th>tz_disp</th>
-      <td><p>DEPRECATED. See details</p></td>
-    </tr>
-    <tr>
       <th>stn</th>
-      <td><p>Data frame. The <code>stations</code> data frame to use. Will use the
-one included in the package unless otherwise specified.</p></td>
-    </tr>
-    <tr>
-      <th>url</th>
-      <td><p>DEPRECATED. To set a different url use <code><a href='https://rdrr.io/r/base/options.html'>options()</a></code> (see details).</p></td>
+      <td><p>DEFUNCT. Now use <code><a href='stations_dl.html'>stations_dl()</a></code> to update internal data and
+<code><a href='stations_meta.html'>stations_meta()</a></code> to check the date it was last updated.</p></td>
     </tr>
     <tr>
       <th>encoding</th>
@@ -298,36 +257,48 @@ was added as of April 1st 2018, so will be in all data which includes dates
 on or after April 2018).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
+    <pre class="examples">weather_dl,Download weather data from Environment and Climate Change Canada,Download weather data from Environment and Climate Change Canada — weather_dl,Source: <a href='https://github.com/ropensci/weathercan/blob/master/R/weather.R'><code>R/weather.R</code></a>,weather_dl.Rd,character(0),c("weather_dl", "weather"),character(0),list(title = "Description", contents = "<p>Downloads data from Environment and Climate Change Canada (ECCC) for one or\nmore stations. For details and units, see the glossary vignette\n(<code><a href='../articles/glossary.html'>vignette(\"glossary\", package = \"weathercan\")</a></code>) or the glossary online\n<a href='https://climate.weather.gc.ca/glossary_e.html'>https://climate.weather.gc.ca/glossary_e.html</a>.</p>"),list(description = "Downloads data from Environment and Climate Change Canada (ECCC) for one or\nmore stations. For details and units, see the glossary vignette\n(vignette(\"glossary\", package = \"weathercan\")) or the glossary online\nhttps://climate.weather.gc.ca/glossary_e.html."),<span class='fu'>weather_dl</span><span class='op'>(</span>
+  <span class='va'>station_ids</span>,
+  start <span class='op'>=</span> <span class='cn'>NULL</span>,
+  end <span class='op'>=</span> <span class='cn'>NULL</span>,
+  interval <span class='op'>=</span> <span class='st'>"hour"</span>,
+  trim <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  format <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  string_as <span class='op'>=</span> <span class='cn'>NA</span>,
+  time_disp <span class='op'>=</span> <span class='st'>"none"</span>,
+  stn <span class='op'>=</span> <span class='cn'>NULL</span>,
+  encoding <span class='op'>=</span> <span class='st'>"UTF-8"</span>,
+  list_col <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  verbose <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span>,list(list(name = "station_ids", description = "<p>Numeric/Character. A vector containing the ID(s) of the\nstation(s) you wish to download data from. See the <code><a href='stations.html'>stations</a></code>\ndata frame or the <code><a href='stations_search.html'>stations_search</a></code> function to find IDs.</p>"), list(name = "start", description = "<p>Date/Character. The start date of the data in YYYY-MM-DD format\n(applies to all stations_ids). Defaults to start of range.</p>"), list(name = "end", 
+    description = "<p>Date/Character. The end date of the data in YYYY-MM-DD format\n(applies to all station_ids). Defaults to end of range.</p>"), list(name = "interval", description = "<p>Character. Interval of the data, one of \"hour\", \"day\",\n\"month\".</p>"), list(name = "trim", description = "<p>Logical. Trim missing values from the start and end of the\nweather dataframe. Only applies if <code>format = TRUE</code></p>"), list(name = "format", description = "<p>Logical. If TRUE, formats data for immediate use. If FALSE,\nreturns data exactly as downloaded from Environment and Climate Change\nCanada. Useful for dealing with changes by Environment Canada to the format\nof data downloads.</p>"), 
+    list(name = "string_as", description = "<p>Character. What value to replace character strings in a\nnumeric measurement with. See Details.</p>"), list(name = "time_disp", description = "<p>Character. Either \"none\" (default) or \"UTC\". See details.</p>"), list(name = "stn", description = "<p>DEFUNCT. Now use <code><a href='stations_dl.html'>stations_dl()</a></code> to update internal data and\n<code><a href='stations_meta.html'>stations_meta()</a></code> to check the date it was last updated.</p>"), 
+    list(name = "encoding", description = "<p>Character. Text encoding for download.</p>"), list(name = "list_col", description = "<p>Logical. Return data as nested data set? Defaults to FALSE.\nOnly applies if <code>format = TRUE</code></p>"), list(name = "verbose", description = "<p>Logical. Include progress messages</p>"), list(name = "quiet", description = "<p>Logical. Suppress all messages (including messages regarding\nmissing data, etc.)</p>")),TRUE,<div class='input'>
 <span class='co'># \donttest{</span>
-<span class='no'>kam</span> <span class='kw'>&lt;-</span> <span class='fu'>weather_dl</span>(<span class='kw'>station_ids</span> <span class='kw'>=</span> <span class='fl'>51423</span>,
-                  <span class='kw'>start</span> <span class='kw'>=</span> <span class='st'>"2016-01-01"</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='st'>"2016-02-15"</span>)</div><div class='output co'>#&gt; <span class='message'>As of weathercan v0.3.0 time display is either local time or UTC</span>
+<span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='check_eccc.html'>check_eccc</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>  <span class='co'># Make sure ECCC is available</span>
+
+  <span class='va'>kam</span> <span class='op'>&lt;-</span> <span class='fu'>weather_dl</span><span class='op'>(</span>station_ids <span class='op'>=</span> <span class='fl'>51423</span>,
+                    start <span class='op'>=</span> <span class='st'>"2016-01-01"</span>, end <span class='op'>=</span> <span class='st'>"2016-02-15"</span><span class='op'>)</span>
+
+  <span class='fu'><a href='stations_search.html'>stations_search</a></span><span class='op'>(</span><span class='st'>"Kamloops A$"</span>, interval <span class='op'>=</span> <span class='st'>"hour"</span><span class='op'>)</span>
+  <span class='fu'><a href='stations_search.html'>stations_search</a></span><span class='op'>(</span><span class='st'>"Prince George Airport"</span>, interval <span class='op'>=</span> <span class='st'>"hour"</span><span class='op'>)</span>
+
+  <span class='va'>kam.pg</span> <span class='op'>&lt;-</span> <span class='fu'>weather_dl</span><span class='op'>(</span>station_ids <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>48248</span>, <span class='fl'>51423</span><span class='op'>)</span>,
+                       start <span class='op'>=</span> <span class='st'>"2016-01-01"</span>, end <span class='op'>=</span> <span class='st'>"2016-02-15"</span><span class='op'>)</span>
+
+  <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>kam.pg</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>time</span>, y <span class='op'>=</span> <span class='va'>temp</span>,
+                            group <span class='op'>=</span> <span class='va'>station_name</span>,
+                            colour <span class='op'>=</span> <span class='va'>station_name</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+         <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='op'>)</span>
+ <span class='op'>}</span><span class='co'># }</span>
+</div><div class='output co'>#&gt; <span class='message'>As of weathercan v0.3.0 time display is either local time or UTC</span>
 #&gt; <span class='message'>See Details under ?weather_dl for more information.</span>
-#&gt; <span class='message'>This message is shown once per session</span></div><div class='input'><span class='co'># }</span>
-
-<span class='fu'><a href='stations_search.html'>stations_search</a></span>(<span class='st'>"Kamloops A$"</span>, <span class='kw'>interval</span> <span class='kw'>=</span> <span class='st'>"hour"</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 x 14</span><span>
-#&gt;   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz   
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> BC    KAMLOOPS A         </span><span style='text-decoration: underline;'>1</span><span>275 1163780     </span><span style='text-decoration: underline;'>71</span><span>887 YKA    50.7 -</span><span style='color: #BB0000;'>120.</span><span>  345. Etc/…
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> BC    KAMLOOPS A        </span><span style='text-decoration: underline;'>51</span><span>423 1163781     </span><span style='text-decoration: underline;'>71</span><span>887 YKA    50.7 -</span><span style='color: #BB0000;'>120.</span><span>  345. Etc/…
-#&gt; </span><span style='color: #949494;'># … with 4 more variables: interval </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span style='color: #949494;'>, start </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>, end </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>,</span><span>
-#&gt; </span><span style='color: #949494;'>#   normals </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span></div><div class='input'><span class='fu'><a href='stations_search.html'>stations_search</a></span>(<span class='st'>"Prince George Airport"</span>, <span class='kw'>interval</span> <span class='kw'>=</span> <span class='st'>"hour"</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 14</span><span>
-#&gt;   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz   
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> BC    PRINCE GEOR…      </span><span style='text-decoration: underline;'>48</span><span>248 1096453     </span><span style='text-decoration: underline;'>71</span><span>302 VXS    53.9 -</span><span style='color: #BB0000;'>123.</span><span>   680 Etc/…
-#&gt; </span><span style='color: #949494;'># … with 4 more variables: interval </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span style='color: #949494;'>, start </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>, end </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>,</span><span>
-#&gt; </span><span style='color: #949494;'>#   normals </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span></div><div class='input'><span class='co'># \donttest{</span>
-<span class='no'>kam.pg</span> <span class='kw'>&lt;-</span> <span class='fu'>weather_dl</span>(<span class='kw'>station_ids</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>48248</span>, <span class='fl'>51423</span>),
-                     <span class='kw'>start</span> <span class='kw'>=</span> <span class='st'>"2016-01-01"</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='st'>"2016-02-15"</span>)
-
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)</div><div class='output co'>#&gt; <span class='message'>Want to understand how all the pieces fit together? Read R for Data</span>
-#&gt; <span class='message'>Science: https://r4ds.had.co.nz/</span></div><div class='input'>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>kam.pg</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>time</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>temp</span>,
-                          <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>station_name</span>,
-                          <span class='kw'>colour</span> <span class='kw'>=</span> <span class='no'>station_name</span>)) +
-       <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span>()</div><div class='img'><img src='weather_dl-1.png' alt='' width='700' height='433' /></div><div class='input'># }
-
-</div></span></pre>
+#&gt; <span class='message'>This message is shown once per session</span></div><div class='img'><img src='weather_dl-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div>,list(list(title = "Value", contents = "<p>A tibble with station ID, name and weather data.</p>", slug = "value"), list(title = "Details", contents = "<p>Data can be returned 'raw' (format = FALSE) or can be formatted.\nFormatting transforms dates/times to date/time class, renames columns, and\nconverts data to numeric where possible. If character strings are contained\nin traditionally numeric fields (e.g., weather speed may have values such\nas \"&lt; 30\"), they can be replaced with a character specified by <code>string_as</code>.\nThe default is NA. Formatting also replaces data associated with certain\nflags with NA (M = Missing).</p>\n<p>Start and end date can be specified, but if not, it will default to the\nstart and end date of the range (this could result in downloading a lot of\ndata!).</p>\n<p>For hourly data, timezones are always \"UTC\", but the actual times are\neither local time (default; <code>time_disp = \"none\"</code>), or UTC (<code>time_disp = \"UTC\"</code>). When <code>time_disp = \"none\"</code>, times reflect the local time without\ndaylight savings. This means that relative measures of time, such as\n\"nighttime\", \"daytime\", \"dawn\", and \"dusk\" are comparable among stations in\ndifferent timezones. This is useful for comparing daily cycles. When\n<code>time_disp = \"UTC\"</code> the times are transformed into UTC timezone. Thus\nmidnight in Kamloops would register as 08:00:00 (Pacific time is 8 hours\nbehind UTC). This is useful for tracking weather events through time, but\nwill result in odd 'daily' measures of weather (e.g., data collected in the\nafternoon on Sept 1 in Kamloops will be recorded as being collected on Sept\n2 in UTC).</p>\n<p>Files are downloaded from the url stored in\n<code><a href='https://rdrr.io/r/base/options.html'>getOption(\"weathercan.urls.weather\")</a></code>. To change this location use\n<code><a href='https://rdrr.io/r/base/options.html'>options(weathercan.urls.weather = \"your_new_url\")</a></code>.</p>\n<p>Data is downloaded from ECCC as a series of files which are then bound\ntogether. Each file corresponds to a different month, or year, depending on\nthe interval. Metadata (station name, lat, lon, elevation, etc.) is\nextracted from the start of the most recent file (i.e. most recent dates)\nfor a given station. Note that important data (i.e. station name, lat, lon)\nis unlikely to change between files (i.e. dates), but some data may or may\nnot be available depending on the date of the file (e.g., station operator\nwas added as of April 1st 2018, so will be in all data which includes dates\non or after April 2018).</p>", 
+    slug = "details")),2021,list(name = "weathercan", version = "0.6.0", authors = "Steffi LaZerte"),list(destination = "dev", mode = "release", version_label = "default", version_tooltip = "Released version", in_dev = FALSE),list(root = "../", title = "weathercan"),list(css = "/home/steffi/Projects/weathercan/pkgdown/extra.css"),list(type = "inverse", left = "<li>\n  <a href=\"../index.html\">\n    <span class=\"fas fa-home\"></span>\n     \n  </a>\n</li>\n<li>\n  <a href=\"../articles/weathercan.html\">Getting Started</a>\n</li>\n<li>\n  <a href=\"../reference/index.html\">Reference</a>\n</li>\n<li>\n  <a href=\"../articles/index.html\">Articles</a>\n</li>", right = "<li>\n  <a href=\"https://github.com/ropensci/weathercan\">\n    <span class=\"fas fa-github fa-lg\"></span>\n     \n  </a>\n</li>"),list(.present = TRUE),list(version = "1.6.1"),FALSE</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -343,7 +314,7 @@ on or after April 2018).</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

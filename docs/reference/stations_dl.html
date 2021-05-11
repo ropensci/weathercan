@@ -78,7 +78,7 @@ compiled. This function may take a few minutes to run." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">weathercan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -86,7 +86,7 @@ compiled. This function may take a few minutes to run." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
   </a>
 </li>
@@ -94,47 +94,16 @@ compiled. This function may take a few minutes to run." />
   <a href="../articles/weathercan.html">Getting Started</a>
 </li>
 <li>
-  <a href="http://steffilazerte.github.io/Presentations/#weathercan">Presentations</a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/index.html">All Articles</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Tutorials</li>
-    <li>
-      <a href="../articles/interpolate_data.html">Interpolating</a>
-    </li>
-    <li>
-      <a href="../articles/articles/use_with_tidyverse.html">Using weathercan with the tidyverse</a>
-    </li>
-    <li>
-      <a href="../articles/articles/mapping.html">Mapping weather data</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Reference vignetts</li>
-    <li>
-      <a href="../articles/flags.html">Data flags</a>
-    </li>
-    <li>
-      <a href="../articles/glossary.html">Glossary of units and measurements</a>
-    </li>
-  </ul>
+<li>
+  <a href="../articles/index.html">Articles</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/ropensci/weathercan">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -164,26 +133,11 @@ in this package contains station data downloaded when the package was last
 compiled. This function may take a few minutes to run.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>stations_dl</span>(
-  <span class='kw'>url</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>normals_years</span> <span class='kw'>=</span> <span class='st'>"1981-2010"</span>,
-  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>stations_dl</span><span class='op'>(</span>skip <span class='op'>=</span> <span class='cn'>NULL</span>, verbose <span class='op'>=</span> <span class='cn'>FALSE</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>url</th>
-      <td><p>DEPRECATED. To set a different url use <code><a href='https://rdrr.io/r/base/options.html'>options()</a></code> (see details).</p></td>
-    </tr>
-    <tr>
-      <th>normals_years</th>
-      <td><p>Character. The year range for which you want climate
-normals. Default "1981-2010".</p></td>
-    </tr>
     <tr>
       <th>skip</th>
       <td><p>Numeric. Number of lines to skip at the beginning of the csv. If
@@ -210,21 +164,26 @@ operation, as well as whether or not there are data on climate normals.</p>
 <code>weathercan.urls.stations</code>. To change this location use
 <code><a href='https://rdrr.io/r/base/options.html'>options(weathercan.urls.stations = "your_new_url")</a></code>.</p>
 <p>The list of which stations have climate normals is downloaded from the url
-stored in the option <code>weathercan.urls.normals</code>. To change this location use
-<code><a href='https://rdrr.io/r/base/options.html'>options(weathercan.urls.normals = "your_new_url")</a></code>.</p>
+stored in the option <code>weathercan.urls.stations.normals</code>. To change this
+location use <code><a href='https://rdrr.io/r/base/options.html'>options(weathercan.urls.normals = "your_new_url")</a></code>.</p>
+<p>Currently there are two sets of climate normals available: 1981-2010 and
+1971-2000. Whether a station has climate normals for a given year range is
+specified in <code>normals_1981_2010</code> and <code>normals_1971_2000</code>, respectively.</p>
+<p>The column <code>normals</code> represents the most current year range of climate
+normals (i.e. currently 1981-2010)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
+    <pre class="examples">stations_dl,Get available stations,Get available stations — stations_dl,Source: <a href='https://github.com/ropensci/weathercan/blob/master/R/stations.R'><code>R/stations.R</code></a>,stations_dl.Rd,character(0),stations_dl,character(0),list(title = "Description", contents = "<p>This function can be used to download a Station Inventory CSV file from\nEnvironment and Climate Change Canada. This is only necessary if the station\nyou're interested was only recently added. The 'stations' data set included\nin this package contains station data downloaded when the package was last\ncompiled. This function may take a few minutes to run.</p>"),list(description = "This function can be used to download a Station Inventory CSV file from\nEnvironment and Climate Change Canada. This is only necessary if the station\nyou're interested was only recently added. The 'stations' data set included\nin this package contains station data downloaded when the package was last\ncompiled. This function may take a few minutes to run."),<span class='fu'>stations_dl</span><span class='op'>(</span>skip <span class='op'>=</span> <span class='cn'>NULL</span>, verbose <span class='op'>=</span> <span class='cn'>FALSE</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>,list(list(name = "skip", description = "<p>Numeric. Number of lines to skip at the beginning of the csv. If\nNULL, automatically derived.</p>"), list(name = "verbose", description = "<p>Logical. Include progress messages</p>"), list(name = "quiet", description = "<p>Logical. Suppress all messages (including messages regarding\nmissing data, etc.)</p>")),TRUE,<div class='input'>
 <span class='co'># \donttest{</span>
+<span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='check_eccc.html'>check_eccc</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='co'># Update stations data frame</span>
-  <span class='kw'>if</span>(<span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"lutz"</span>) <span class='kw'>&amp;&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"sf"</span>)) {
-    <span class='no'>s</span> <span class='kw'>&lt;-</span> <span class='fu'>stations_dl</span>()
+  <span class='fu'>stations_dl</span><span class='op'>(</span><span class='op'>)</span>
 
-    <span class='co'># Use new data frame to search for stations</span>
-    <span class='fu'><a href='stations_search.html'>stations_search</a></span>(<span class='st'>"Winnipeg"</span>, <span class='kw'>stn</span> <span class='kw'>=</span> <span class='no'>s</span>)
-   }</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: sf</span></div><div class='output co'>#&gt; <span class='message'>According to Environment Canada, Modified Date: 2020-08-31 23:30 UTC</span></div><div class='output co'>#&gt; <span class='message'>Environment Canada Disclaimers:</span>
-#&gt; <span class='message'>"Station Inventory Disclaimer: Please note that this inventory list is a snapshot of stations on our website as of the modified date, and may be subject to change without notice."</span>
-#&gt; <span class='message'>"Station ID Disclaimer: Station IDs are an internal index numbering system and may be subject to change without notice."</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 85 x 14</span><span>
+  <span class='co'># Updated stations data frame is now automatically used</span>
+  <span class='fu'><a href='stations_search.html'>stations_search</a></span><span class='op'>(</span><span class='st'>"Winnipeg"</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div><div class='output co'>#&gt; <span class='message'>According to Environment Canada, Modified Date: 2021-05-02 23:31 UTC</span></div><div class='output co'>#&gt; <span class='message'>Stations data saved...</span>
+#&gt; <span class='message'>Use `stations()` to access most recent version and `stations_meta()` to see when this was last updated</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 85 x 16</span><span>
 #&gt;    prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz   
 #&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>
 #&gt; </span><span style='color: #BCBCBC;'> 1</span><span> MB    WINNIPEG A …      </span><span style='text-decoration: underline;'>27</span><span>174 502S001     </span><span style='text-decoration: underline;'>71</span><span>849 XWG    49.9 -</span><span style='color: #BB0000;'>97.2</span><span>  239. Etc/…
@@ -237,10 +196,12 @@ stored in the option <code>weathercan.urls.normals</code>. To change this locati
 #&gt; </span><span style='color: #BCBCBC;'> 8</span><span> MB    WINNIPEG AS…       </span><span style='text-decoration: underline;'>3</span><span>690 5023174        </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>     49.9 -</span><span style='color: #BB0000;'>97.2</span><span>  229. Etc/…
 #&gt; </span><span style='color: #BCBCBC;'> 9</span><span> MB    WINNIPEG AS…       </span><span style='text-decoration: underline;'>3</span><span>690 5023174        </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>     49.9 -</span><span style='color: #BB0000;'>97.2</span><span>  229. Etc/…
 #&gt; </span><span style='color: #BCBCBC;'>10</span><span> MB    WINNIPEG BL…       </span><span style='text-decoration: underline;'>3</span><span>691 5023178        </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>     49.9 -</span><span style='color: #BB0000;'>97.4</span><span>  236. Etc/…
-#&gt; </span><span style='color: #949494;'># … with 75 more rows, and 4 more variables: interval </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span style='color: #949494;'>, start </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>,</span><span>
-#&gt; </span><span style='color: #949494;'>#   end </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>, normals </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span></div><div class='input'># }
+#&gt; </span><span style='color: #949494;'># … with 75 more rows, and 6 more variables: interval &lt;chr&gt;, start &lt;dbl&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   end &lt;dbl&gt;, normals &lt;lgl&gt;, normals_1981_2010 &lt;lgl&gt;, normals_1971_2000 &lt;lgl&gt;</span><span></div><div class='input'><span class='co'># }</span>
 
-</div></span></pre>
+
+</div></span>,list(list(title = "Value", contents = "<p>A tibble containing station names, station ID codes, dates of\noperation, as well as whether or not there are data on climate normals.</p>", slug = "value"), list(title = "Details", contents = "<p>The stations list is downloaded from the url stored in the option\n<code>weathercan.urls.stations</code>. To change this location use\n<code><a href='https://rdrr.io/r/base/options.html'>options(weathercan.urls.stations = \"your_new_url\")</a></code>.</p>\n<p>The list of which stations have climate normals is downloaded from the url\nstored in the option <code>weathercan.urls.stations.normals</code>. To change this\nlocation use <code><a href='https://rdrr.io/r/base/options.html'>options(weathercan.urls.normals = \"your_new_url\")</a></code>.</p>\n<p>Currently there are two sets of climate normals available: 1981-2010 and\n1971-2000. Whether a station has climate normals for a given year range is\nspecified in <code>normals_1981_2010</code> and <code>normals_1971_2000</code>, respectively.</p>\n<p>The column <code>normals</code> represents the most current year range of climate\nnormals (i.e. currently 1981-2010)</p>", 
+    slug = "details")),2021,list(name = "weathercan", version = "0.6.0", authors = "Steffi LaZerte"),list(destination = "dev", mode = "release", version_label = "default", version_tooltip = "Released version", in_dev = FALSE),list(root = "../", title = "weathercan"),list(css = "/home/steffi/Projects/weathercan/pkgdown/extra.css"),list(type = "inverse", left = "<li>\n  <a href=\"../index.html\">\n    <span class=\"fas fa-home\"></span>\n     \n  </a>\n</li>\n<li>\n  <a href=\"../articles/weathercan.html\">Getting Started</a>\n</li>\n<li>\n  <a href=\"../reference/index.html\">Reference</a>\n</li>\n<li>\n  <a href=\"../articles/index.html\">Articles</a>\n</li>", right = "<li>\n  <a href=\"https://github.com/ropensci/weathercan\">\n    <span class=\"fas fa-github fa-lg\"></span>\n     \n  </a>\n</li>"),list(.present = TRUE),list(version = "1.6.1"),FALSE</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -256,7 +217,7 @@ stored in the option <code>weathercan.urls.normals</code>. To change this locati
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

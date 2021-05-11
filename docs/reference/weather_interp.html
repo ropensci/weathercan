@@ -77,7 +77,7 @@ weather for more details)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">weathercan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -85,7 +85,7 @@ weather for more details)." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
   </a>
 </li>
@@ -93,47 +93,16 @@ weather for more details)." />
   <a href="../articles/weathercan.html">Getting Started</a>
 </li>
 <li>
-  <a href="http://steffilazerte.github.io/Presentations/#weathercan">Presentations</a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/index.html">All Articles</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Tutorials</li>
-    <li>
-      <a href="../articles/interpolate_data.html">Interpolating</a>
-    </li>
-    <li>
-      <a href="../articles/articles/use_with_tidyverse.html">Using weathercan with the tidyverse</a>
-    </li>
-    <li>
-      <a href="../articles/articles/mapping.html">Mapping weather data</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Reference vignetts</li>
-    <li>
-      <a href="../articles/flags.html">Data flags</a>
-    </li>
-    <li>
-      <a href="../articles/glossary.html">Glossary of units and measurements</a>
-    </li>
-  </ul>
+<li>
+  <a href="../articles/index.html">Articles</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/ropensci/weathercan">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -162,14 +131,14 @@ into the provided dataset. Only applies to numerical weather columns (see
 <code>weather</code> for more details).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>weather_interp</span>(
-  <span class='no'>data</span>,
-  <span class='no'>weather</span>,
-  <span class='kw'>cols</span> <span class='kw'>=</span> <span class='st'>"all"</span>,
-  <span class='kw'>interval</span> <span class='kw'>=</span> <span class='st'>"hour"</span>,
-  <span class='kw'>na_gap</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>weather_interp</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  <span class='va'>weather</span>,
+  cols <span class='op'>=</span> <span class='st'>"all"</span>,
+  interval <span class='op'>=</span> <span class='st'>"hour"</span>,
+  na_gap <span class='op'>=</span> <span class='fl'>2</span>,
+  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -218,9 +187,18 @@ data between 9AM and 11AM will be interpolated. If, however, you have 9AM and
 and 12PM will be returned as NA.)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
+    <pre class="examples">weather_interp,Interpolate and add weather data to a dataframe,Interpolate and add weather data to a dataframe — weather_interp,Source: <a href='https://github.com/ropensci/weathercan/blob/master/R/interpolate.R'><code>R/interpolate.R</code></a>,weather_interp.Rd,character(0),c("weather_interp", "add_weather"),character(0),list(title = "Description", contents = "<p>When data and the weather measurements do not perfectly line up, perform a\nlinear interpolation between two weather measurements and merge the results\ninto the provided dataset. Only applies to numerical weather columns (see\n<code>weather</code> for more details).</p>"),list(description = "When data and the weather measurements do not perfectly line up, perform a\nlinear interpolation between two weather measurements and merge the results\ninto the provided dataset. Only applies to numerical weather columns (see\nweather for more details)."),<span class='fu'>weather_interp</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  <span class='va'>weather</span>,
+  cols <span class='op'>=</span> <span class='st'>"all"</span>,
+  interval <span class='op'>=</span> <span class='st'>"hour"</span>,
+  na_gap <span class='op'>=</span> <span class='fl'>2</span>,
+  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span>,list(list(name = "data", description = "<p>Dataframe. Data with dates or times to which weather data should\nbe added.</p>"), list(name = "weather", description = "<p>Dataframe. Weather data downloaded with <code><a href='weather_dl.html'>weather</a></code>\nwhich should be interpolated and added to <code>data</code>.</p>"), list(name = "cols", description = "<p>Character. Vector containing the weather columns to add or 'all'\nfor all relevant columns. Note that some measure are omitted because they\ncannot be linearly interpolated (e.g., wind direction).</p>"), 
+    list(name = "interval", description = "<p>What interval is the weather data recorded at? \"hour\" or\n\"day\".</p>"), list(name = "na_gap", description = "<p>How many hours or days (depending on the interval) is it\nacceptable to skip over when interpolating over NAs (see details).</p>"), list(name = "quiet", description = "<p>Logical. Suppress all messages (including messages regarding\nmissing data, etc.)</p>")),TRUE,<div class='input'>
 <span class='co'># Weather data only</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>kamloops</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 6 x 35</span><span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>kamloops</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 6 x 37</span><span>
 #&gt;   station_name station_id station_operator prov    lat   lon  elev climate_id
 #&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>            </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     
 #&gt; </span><span style='color: #BCBCBC;'>1</span><span> KAMLOOPS A        </span><span style='text-decoration: underline;'>51</span><span>423 </span><span style='color: #BB0000;'>NA</span><span>               BC     50.7 -</span><span style='color: #BB0000;'>120.</span><span>  345. 1163781   
@@ -229,30 +207,33 @@ and 12PM will be returned as NA.)</p>
 #&gt; </span><span style='color: #BCBCBC;'>4</span><span> KAMLOOPS A        </span><span style='text-decoration: underline;'>51</span><span>423 </span><span style='color: #BB0000;'>NA</span><span>               BC     50.7 -</span><span style='color: #BB0000;'>120.</span><span>  345. 1163781   
 #&gt; </span><span style='color: #BCBCBC;'>5</span><span> KAMLOOPS A        </span><span style='text-decoration: underline;'>51</span><span>423 </span><span style='color: #BB0000;'>NA</span><span>               BC     50.7 -</span><span style='color: #BB0000;'>120.</span><span>  345. 1163781   
 #&gt; </span><span style='color: #BCBCBC;'>6</span><span> KAMLOOPS A        </span><span style='text-decoration: underline;'>51</span><span>423 </span><span style='color: #BB0000;'>NA</span><span>               BC     50.7 -</span><span style='color: #BB0000;'>120.</span><span>  345. 1163781   
-#&gt; </span><span style='color: #949494;'># … with 27 more variables: WMO_id </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span style='color: #949494;'>, TC_id </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span style='color: #949494;'>, date </span><span style='color: #949494;font-style: italic;'>&lt;date&gt;</span><span style='color: #949494;'>,</span><span>
-#&gt; </span><span style='color: #949494;'>#   time </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span style='color: #949494;'>, year </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span style='color: #949494;'>, month </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span style='color: #949494;'>, day </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span style='color: #949494;'>, hour </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span style='color: #949494;'>, weather </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span style='color: #949494;'>,</span><span>
-#&gt; </span><span style='color: #949494;'>#   hmdx </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>, hmdx_flag </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span style='color: #949494;'>, pressure </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>, pressure_flag </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span style='color: #949494;'>,</span><span>
-#&gt; </span><span style='color: #949494;'>#   rel_hum </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>, rel_hum_flag </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span style='color: #949494;'>, temp </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>, temp_dew </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>,</span><span>
-#&gt; </span><span style='color: #949494;'>#   temp_dew_flag </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span style='color: #949494;'>, temp_flag </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span style='color: #949494;'>, visib </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>, visib_flag </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span style='color: #949494;'>,</span><span>
-#&gt; </span><span style='color: #949494;'>#   wind_chill </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>, wind_chill_flag </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span style='color: #949494;'>, wind_dir </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>,</span><span>
-#&gt; </span><span style='color: #949494;'>#   wind_dir_flag </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span style='color: #949494;'>, wind_spd </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>, wind_spd_flag </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'>
+#&gt; </span><span style='color: #949494;'># … with 29 more variables: WMO_id &lt;chr&gt;, TC_id &lt;chr&gt;, date &lt;date&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   time &lt;dttm&gt;, year &lt;chr&gt;, month &lt;chr&gt;, day &lt;chr&gt;, hour &lt;chr&gt;, weather &lt;chr&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   hmdx &lt;dbl&gt;, hmdx_flag &lt;chr&gt;, precip_amt &lt;dbl&gt;, precip_amt_flag &lt;chr&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   pressure &lt;dbl&gt;, pressure_flag &lt;chr&gt;, rel_hum &lt;dbl&gt;, rel_hum_flag &lt;chr&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   temp &lt;dbl&gt;, temp_dew &lt;dbl&gt;, temp_dew_flag &lt;chr&gt;, temp_flag &lt;chr&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   visib &lt;dbl&gt;, visib_flag &lt;chr&gt;, wind_chill &lt;dbl&gt;, wind_chill_flag &lt;chr&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   wind_dir &lt;dbl&gt;, wind_dir_flag &lt;chr&gt;, wind_spd &lt;dbl&gt;, wind_spd_flag &lt;chr&gt;</span><span></div><div class='input'>
 <span class='co'># Data about finch observations at RFID feeders in Kamloops, BC</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>finches</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 6 x 10</span><span>
-#&gt;   animal_id date       time                logger_id species age   sex  
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 041868FF… 2016-03-01 2016-03-01 </span><span style='color: #949494;'>06:57:42</span><span> 2300      Mounta… AHY   U    
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 041868FF… 2016-03-01 2016-03-01 </span><span style='color: #949494;'>06:58:41</span><span> 2300      Mounta… AHY   U    
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> 041868FF… 2016-03-01 2016-03-01 </span><span style='color: #949494;'>07:07:21</span><span> 2300      Mounta… AHY   U    
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> 06200003… 2016-03-01 2016-03-01 </span><span style='color: #949494;'>07:32:34</span><span> 2400      House … SY    M    
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> 06200003… 2016-03-01 2016-03-01 </span><span style='color: #949494;'>07:32:35</span><span> 2400      House … SY    M    
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> 06200003… 2016-03-01 2016-03-01 </span><span style='color: #949494;'>07:32:36</span><span> 2400      House … SY    M    
-#&gt; </span><span style='color: #949494;'># … with 3 more variables: site_name </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span style='color: #949494;'>, lon </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>, lat </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>finches</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 6 x 10</span><span>
+#&gt;   animal_id  date       time                logger_id species        age   sex  
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 041868FF93 2016-03-01 2016-03-01 </span><span style='color: #949494;'>06:57:42</span><span> 2300      Mountain Chic… AHY   U    
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 041868FF93 2016-03-01 2016-03-01 </span><span style='color: #949494;'>06:58:41</span><span> 2300      Mountain Chic… AHY   U    
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> 041868FF93 2016-03-01 2016-03-01 </span><span style='color: #949494;'>07:07:21</span><span> 2300      Mountain Chic… AHY   U    
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> 06200003BB 2016-03-01 2016-03-01 </span><span style='color: #949494;'>07:32:34</span><span> 2400      House Finch    SY    M    
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> 06200003BB 2016-03-01 2016-03-01 </span><span style='color: #949494;'>07:32:35</span><span> 2400      House Finch    SY    M    
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> 06200003BB 2016-03-01 2016-03-01 </span><span style='color: #949494;'>07:32:36</span><span> 2400      House Finch    SY    M    
+#&gt; </span><span style='color: #949494;'># … with 3 more variables: site_name &lt;chr&gt;, lon &lt;dbl&gt;, lat &lt;dbl&gt;</span><span></div><div class='input'>
 <span class='co'># Match weather to finches</span>
 <span class='co'># \donttest{</span>
 <span class='co'>## Not run</span>
-<span class='no'>finch_weather</span> <span class='kw'>&lt;-</span> <span class='fu'>weather_interp</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>finches</span>, <span class='kw'>weather</span> <span class='kw'>=</span> <span class='no'>kamloops</span>)</div><div class='output co'>#&gt; <span class='message'>temp is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='output co'>#&gt; <span class='message'>temp_dew is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='output co'>#&gt; <span class='message'>rel_hum is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='output co'>#&gt; <span class='message'>wind_spd is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='output co'>#&gt; <span class='message'>visib is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='output co'>#&gt; <span class='message'>pressure is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='output co'>#&gt; <span class='message'>hmdx is missing 4163 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='output co'>#&gt; <span class='message'>wind_chill is missing 3810 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='input'># }
+<span class='va'>finch_weather</span> <span class='op'>&lt;-</span> <span class='fu'>weather_interp</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>finches</span>, weather <span class='op'>=</span> <span class='va'>kamloops</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>temp is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='output co'>#&gt; <span class='message'>temp_dew is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='output co'>#&gt; <span class='message'>rel_hum is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='output co'>#&gt; <span class='message'>precip_amt does not have at least 2 points of non-missing data, skipping...</span></div><div class='output co'>#&gt; <span class='message'>wind_spd is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='output co'>#&gt; <span class='message'>visib is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='output co'>#&gt; <span class='message'>pressure is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='output co'>#&gt; <span class='message'>hmdx is missing 4163 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='output co'>#&gt; <span class='message'>wind_chill is missing 3810 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='input'><span class='co'># }</span>
 
-</div></span></pre>
+</div></span>,list(list(title = "Details", contents = "<p><strong>Dealing with NA values</strong> If there are NAs in the weather data,\n<code>na_gap</code> can be used to specify a tolerance. For example, a tolerance of\n2 with an interval of \"hour\", means that a two hour gap in data can be\ninterpolated over (i.e. if you have data for 9AM and 11AM, but not 10AM, the\ndata between 9AM and 11AM will be interpolated. If, however, you have 9AM and\n12PM, but not 10AM or 11AM, no interpolation will happen and data between 9AM\nand 12PM will be returned as NA.)</p>", 
+    slug = "details")),2021,list(name = "weathercan", version = "0.6.0", authors = "Steffi LaZerte"),list(destination = "dev", mode = "release", version_label = "default", version_tooltip = "Released version", in_dev = FALSE),list(root = "../", title = "weathercan"),list(css = "/home/steffi/Projects/weathercan/pkgdown/extra.css"),list(type = "inverse", left = "<li>\n  <a href=\"../index.html\">\n    <span class=\"fas fa-home\"></span>\n     \n  </a>\n</li>\n<li>\n  <a href=\"../articles/weathercan.html\">Getting Started</a>\n</li>\n<li>\n  <a href=\"../reference/index.html\">Reference</a>\n</li>\n<li>\n  <a href=\"../articles/index.html\">Articles</a>\n</li>", right = "<li>\n  <a href=\"https://github.com/ropensci/weathercan\">\n    <span class=\"fas fa-github fa-lg\"></span>\n     \n  </a>\n</li>"),list(.present = TRUE),list(version = "1.6.1"),FALSE</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -268,7 +249,7 @@ and 12PM will be returned as NA.)</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

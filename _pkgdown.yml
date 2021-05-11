@@ -14,9 +14,11 @@ reference:
     contents:
       - stations_search
       - stations_dl
+      - stations_meta
       - weather_dl
       - weather_interp
       - normals_dl
+      - check_eccc
       - weathercan-package
   - title: "Reference Data"
     contents:
