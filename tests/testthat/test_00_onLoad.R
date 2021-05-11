@@ -20,6 +20,7 @@ test_that("Functions cached correctly", {
   expect_true(memoise::is.memoised(normals_html))
 
   skip_on_cran()
+  skip_if_offline()
   t1 <- system.time(w <- weather_dl(station_ids = 51423, start = "2014-01-01",
                                     end = "2014-01-31"))
   t2 <- system.time(w <- weather_dl(station_ids = 51423, start = "2014-01-01",

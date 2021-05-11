@@ -2,8 +2,8 @@
 11AM
 12PM
 24hrs
+2x
 9AM
-AppVeyor
 Boreal
 CMD
 CRS
@@ -19,6 +19,7 @@ Normals
 RFID
 RMarkdown
 ROpenSci
+Reproducibility
 Temperatureflag
 Timezones
 WGS84
@@ -48,9 +49,9 @@ normals
 rOpenSci
 readme
 readr
+reproducibility
 ropensci
 sp
-stn
 svg
 tibble
 tibbles
@@ -60,6 +61,7 @@ timezones
 unformatted
 unnest
 unnesting
+updateable
 v0
 v1
 v3

@@ -41,6 +41,7 @@ test_that("stations_dl() runs and updates data", {
   skip_if_not_installed("sf")
   skip_if_not_installed("lutz")
   skip_on_cran()
+  skip_if_offline()
 
   #vcr::use_cassette("stations_dl_good", {  # Don't use vcr until deal with url redirects
   #})

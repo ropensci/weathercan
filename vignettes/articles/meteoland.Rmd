@@ -18,7 +18,7 @@ library(sf)
 library(ggplot2)
 library(rnaturalearth)
 
-s <- stations %>%
+s <- stations() %>%
   filter(prov == "MB", interval != "month", start <= 2015, end >= 2015, !is.na(elev)) %>%
   group_by(station_id) %>%
   mutate(n = length(interval)) %>%

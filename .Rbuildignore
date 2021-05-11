@@ -22,6 +22,7 @@
 ^release_test_dependencies.R$
 ^CRAN-RELEASE$
 ^vignettes/articles$
+^vigettes/normals_cache$
 ^doc$
 ^Meta$
 ^LICENSE\.md$

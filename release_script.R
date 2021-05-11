@@ -1,27 +1,34 @@
 # Steps/Commands to run before a CRAN release -----------------------------
 
-library(magrittr)
-library(cchecks)
-cch_pkgs_history("weathercan")$data$history %>%
-  dplyr::select(date_updated, "summary")
+v <- "0.6.0"
+#usethis::use_release_issue(version = v)
 
-cks <- cch_pkgs("weathercan")
+# Check existing errors
+# https://cran.rstudio.org/web/checks/check_results_weathercan.html
 
-cks$data$checks %>%
+hist <- cchecks::cch_pkgs_history("weathercan")$data$history
+dplyr::select(hist, date_updated, "summary")
+
+dplyr::bind_cols(dplyr::select(hist, date_updated, checks),
+                 hist$summary,
+                 hist$check_details) %>%
+  tidyr::unnest(checks) %>%
+  dplyr::filter(status %in% c("WARN", "ERROR")) %>%
+  dplyr::select(-version, -tinstall, -tcheck, -ttotal, -any, -ok, -note, -warn, -error, -fail) %>%
+  tidyr::unnest(details) %>%
+  tidyr::unnest(additional_issues) %>%
+  tidyr::unnest(donttest) %>%
+  dplyr::pull(donttest) %>%
+  unique()
+
+cchecks::cch_pkgs("weathercan")$data$checks %>%
   dplyr::filter(!status %in% c("OK", "NOTE"))
 
-cks$data$check_details$details %>%
+cchecks::cch_pkgs("weathercan")$data$check_details$details %>%
   dplyr::mutate(output = glue::glue("{flavors}\n{output}\n\n")) %>%
-  dplyr::pull(output) %>%
-  cat()
-
-cchn_pkg_rule_list()
-#cchn_pkg_rule_add(status = 'error', time = 2)
-#cchn_pkg_rule_add(status = 'warn', time = 2)
+  dplyr::pull(output)
 
 
-## Check if version is appropriate
-# http://shiny.andyteucher.ca/shinyapps/rver-deps/
 
 ## Update dependencies
 remotes::package_deps("weathercan", dependencies = TRUE) %>%
@@ -41,17 +48,27 @@ dict <- hunspell::dictionary('en_CA')
 devtools::spell_check()
 spelling::update_wordlist()
 
+# Check test coverage
+#covr::report()
+
 # Update README.Rmd
 # Compile README.md
 # REBUILD!
-rmarkdown::render("README.Rmd")
-unlink("README.html")
+devtools::build_readme()
 
-# Update cran-comments
+# Check/update URLS
+urlchecker::url_check()
 
 
 ## Checks
-devtools::check(run_dont_test = TRUE)     # Local
+unlink("./vignettes/normals_cache/", recursive = TRUE)
+
+# Run WITH and WITHOUT internet
+devtools::run_examples(run_donttest = TRUE)
+devtools::test()
+
+devtools::check(remote = TRUE, manual = TRUE, run_dont_test = TRUE)     # Local
+
 
 ## Local Tests with vcr turned off, run in terminal
 #VCR_TURN_OFF=true Rscript -e "devtools::test()"
@@ -62,9 +79,8 @@ devtools::check_win_devel()
 devtools::check_win_oldrelease()
 
 # Build package to check on Rhub and locally
-v <- "0.6.0"
 system("cd ..; R CMD build weathercan")
-system(paste0("cd ..; R CMD check weathercan_", v, ".tar.gz --as-cran --run-donttest")) # Local
+#system(paste0("cd ..; R CMD check weathercan_", v, ".tar.gz --as-cran --run-donttest")) # Local
 
 # Check Windows
 # rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
@@ -99,25 +115,35 @@ rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
                      env_vars = c("_R_CHECK_FORCE_SUGGESTS_" = "false"),
                      show_status = FALSE)
 
-# Problems with latex, open weathercan-manual.tex and compile to get actual errors
+
+# Problems with latex
+# - open weathercan-manual.tex and compile to get actual errors
+# - Missing `inconsolata.sty' - install.packages("tinytex"); tinytex::install_tinytex()
+
 # Re-try (skip tests for speed)
 #system("cd ..; R CMD check weathercan_0.3.0.tar.gz --as-cran --no-tests")
+
+
+# Update cran-comments
+
+
 
 ## Build site (so website uses newest version)
 ## Update website
 ## BUILD PACKAGE FIRST!
-pkgdown::build_articles(lazy = FALSE)
-pkgdown::build_home()
-pkgdown::build_news()
-pkgdown::build_reference()
+#pkgdown::build_articles(lazy = TRUE)
+# pkgdown::build_home()
+# pkgdown::build_news()
+# pkgdown::build_reference()
 pkgdown::build_site(lazy = TRUE)
+pkgdown::build_articles(lazy = FALSE)
 unlink("./vignettes/normals_cache/", recursive = TRUE)
 
 ## Update codemeta
 codemetar::write_codemeta()
 
 ## Push to github
-## Check travis / appveyor / GA
+## Check GitHub Actions
 
 ## Check Reverse Dependencies (are there any?)
 tools::dependsOnPkgs("weathercan")

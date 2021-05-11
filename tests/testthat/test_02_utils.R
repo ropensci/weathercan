@@ -35,7 +35,8 @@ test_that("check_normals() as expected", {
 })
 
 test_that("get_check() as expected", {
-  expect_error(get_check("https://climate.weather.gc.ca/error/dbdown_e.html"), 
+  skip_if_offline()
+  expect_error(get_check("https://climate.weather.gc.ca/error/dbdown_e.html"),
               "Service is currently down!")
   expect_error(get_check("http://httpbin.org/status/404", task = "test"),
               "Not Found (HTTP 404). Failed to test.", fixed = TRUE)
