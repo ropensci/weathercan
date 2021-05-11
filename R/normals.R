@@ -21,15 +21,17 @@
 #'   month for a variety of measurements as well as data relating to the
 #'   frost-free period. Because these two data sources are quite different, we
 #'   return them as nested data so the user can extract them as they wish. See
-#'   examples for how to use the `unnest()` function from the [`tidyr`](https://tidyr.tidyverse.org/)
+#'   examples for how to use the `unnest()` function from the
+#'   [`tidyr`](https://tidyr.tidyverse.org/)
 #'   package to extract the two different datasets.
 #'
 #'   The data also returns a column called `meets_wmo` this reflects whether or
 #'   not the climate normals for this station met the WMO standards for
 #'   temperature and precipitation (i.e. both have code >= A). Each measurement
 #'   column has a corresponding `_code` column which reflects the data quality
-#'   of that measurement (see the [ECCC calculations
+#'   of that measurement (see the [1981-2010 ECCC calculations
 #'   document](https://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf)
+#'   or the [1971-2000 ECCC calculations document](https://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1971_2000_Calculation_Information.pdf)
 #'   for more details)
 #'
 #'   Climate normals are downloaded from the url stored in option
@@ -40,50 +42,64 @@
 #'
 #' @examples
 #'
-#' \donttest{
+#' if(check_eccc()) {
 #'
-#' # Find the climate_id
-#' stations_search("Brandon A", normals_only = TRUE)
+#'   # Find the climate_id
+#'   stations_search("Brandon A", normals_years = "current")
 #'
-#' # Download climate normals
-#' n <- normals_dl(climate_ids = "5010480")
+#'   # Download climate normals 1981-2010
+#'   n <- normals_dl(climate_ids = "5010480")
+#'   n
 #'
-#' # Pull out last frost data
-#' library(tidyr)
-#' f <- unnest(n, frost)
+#'   # Pull out last frost data
+#'   library(tidyr)
+#'   f <- unnest(n, frost)
+#'   f
 #'
-#' # Pull out normals
-#' nm <- unnest(n, normals)
+#'   # Pull out normals
+#'   nm <- unnest(n, normals)
+#'   nm
 #'
-#' # Download multiple stations
-#' n <- normals_dl(climate_ids = c("3010234", "3010410", "3010815"))
-#' n
+#'   # Download climate normals 1971-2000
+#'   n <- normals_dl(climate_ids = "5010480", normals_years = "1971-2000")
+#'   n
 #'
-#' # Note that some have files online but no data
-#' n$normals[2]
+#'   # Note that some do not have last frost dates
+#'   n$frost
 #'
-#' # Some have no last frost data
-#' n$frost[3]
+#'   # Download multiple stations for 1981-2010,
+#'   n <- normals_dl(climate_ids = c("301C3D4", "301FFNJ", "301N49A"))
+#'   n
 #'
-#' # Note, putting both into the same data set can be done but makes for
-#' # a very unweildly dataset (there is lots of repetition)
-#' nm <- unnest(n, normals)
-#' f <- unnest(n, frost)
-#' both <- dplyr::full_join(nm, f)
-#'
+#'   # Note, putting both into the same data set can be done but makes for
+#'   # a very unweildly dataset (there is lots of repetition)
+#'   nm <- unnest(n, normals)
+#'   f <- unnest(n, frost)
+#'   both <- dplyr::full_join(nm, f)
+#'   both
 #' }
 #' @export
 
 normals_dl <- function(climate_ids, normals_years = "1981-2010",
-                       format = TRUE, stn = weathercan::stations,
+                       format = TRUE, stn = NULL,
                        verbose = FALSE, quiet = FALSE) {
+
+  if(!is.null(stn)){
+    stop("`stn` is defunct, to use an updated stations data frame ",
+         "use `stations_dl()` to update the internal data, and ",
+         "`stations_meta()` to check when it was last updated", call. = FALSE)
+  }
+  stn <- stations()
 
   check_ids(climate_ids, stn, type = "climate_id")
   check_normals(normals_years)
 
+  yrs <- paste0("normals_", stringr::str_replace(normals_years, "-", "_"))
+
   n <- dplyr::filter(stn, .data$climate_id %in% climate_ids) %>%
-    dplyr::select(.data$prov, .data$station_name,
-                  .data$climate_id, .data$normals) %>%
+    dplyr::select(.data$prov, .data$station_name, .data$station_id,
+                  .data$climate_id,
+                  normals = .data[[yrs]]) %>%
     dplyr::distinct() %>%
     dplyr::mutate(climate_id = as.character(.data$climate_id))
 
@@ -94,27 +110,26 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
   } else if(any(n$normals == FALSE)) {
     message("Not all stations have climate normals available (climate ids: ",
             paste0(n$climate_id[!n$normals], collapse = ", "), ")")
-    n <- dplyr::filter(n, .data$normals == TRUE)
+    n <- dplyr::filter(n, .data$normals == TRUE) %>%
+      dplyr::select(-"normals")
   }
 
-  n <- dplyr::mutate(n,
-                     loc = normals_url(.data$prov,
-                                       .data$climate_id,
-                                       normals_years)) %>%
-    dplyr::select(-"normals")
 
   # Download data
-  n <- dplyr::mutate(n,
-                     normals = purrr::map(.data$loc, normals_raw),
-                     meets_wmo = purrr::map_lgl(.data$normals, meets_wmo),
-                     normals = purrr::map(.data$normals, normals_extract),
-                     frost = purrr::map(.data$normals, frost_find),
-                     normals = purrr::map2(.data$normals, .data$climate_id,
-                                        ~ data_extract(.x, climate_id = .y)),
-                     frost = purrr::map2(.data$frost, .data$climate_id,
-                                         ~ frost_extract(.x, climate_id = .y)),
-                     n_data = purrr::map_dbl(.data$normals, nrow),
-                     n_frost = purrr::map_dbl(.data$frost, nrow))
+  n <- n %>%
+    dplyr::mutate(
+      html = purrr::pmap(list(.data$prov, .data$station_id, .data$climate_id),
+                         ~normals_html(..1, ..2, ..3, normals_years)),
+      normals = purrr::map(.data$html, normals_raw),
+      meets_wmo = purrr::map_lgl(.data$normals, meets_wmo),
+      normals = purrr::map(.data$normals, normals_extract),
+      frost = purrr::map(.data$normals, frost_find),
+      normals = purrr::map2(.data$normals, .data$climate_id,
+                            ~ data_extract(.x, climate_id = .y)),
+      frost = purrr::map2(.data$frost, .data$climate_id,
+                          ~ frost_extract(.x, climate_id = .y)),
+      n_data = purrr::map_dbl(.data$normals, nrow),
+      n_frost = purrr::map_dbl(.data$frost, nrow))
 
   if(any(no_data <- n$n_data + n$n_frost == 0)) {
     message("All climate normals missing for some stations (climate_ids: ",
@@ -123,6 +138,7 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
 
   # Format dates etc.
   n <- dplyr::mutate(n,
+                     normals_years = !!normals_years,
                      normals = purrr::map2(.data$normals,
                                            .data$climate_id,
                                            data_format),
@@ -130,44 +146,29 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
                                          .data$climate_id,
                                          frost_format))
 
-  dplyr::select(n, "prov", "station_name", "climate_id",
+  dplyr::select(n, "prov", "station_name", "climate_id", "normals_years",
                 "meets_wmo", "normals", "frost")
 }
 
-normals_url <- function(prov, climate_id, normals_years) {
+normals_html <- function(prov, station_id, climate_id, normals_years) {
+  yrs <- stringr::str_extract(normals_years, "^[0-9]{4}")
+  q <- list(format = "csv", lang = "e", prov = tolower(prov), yr = yrs,
+            stnID = station_id, climateID = climate_id,
+            submit = "Download Data")
 
-  check_url(getOption("weathercan.urls.normals"))
-
-  loc <- paste0(getOption("weathercan.urls.normals"), "/", normals_years)
-
-  # Check if year-range present
-  check_url(loc, task = paste0("access climate normals for years ", normals_years))
-
-  paste0(loc, "/", prov,
-         "/climate_normals_", prov, "_", climate_id, "_", normals_years, ".csv")
+  get_check(url = getOption("weathercan.urls.normals"), query = q,
+            task = "access climate normals")
 }
 
-normals_raw <- function(loc,
-                        nrows = -1) {
-  # Check if file present
-  status <- httr::GET(loc)
-  httr::stop_for_status(status,
-                        paste0("access climate normals for this ",
-                               "station (climate id: " ,
-                               stringr::str_extract(loc, "[0-9A-Z]{7}"),
-                               ")"))
-
-  # Download file
-  status %>%
+normals_raw <- function(html, nrows = -1) {
+  # Extract file
+  html %>%
     httr::content(as = "text", encoding = "latin1") %>%
-    # Get rid of degree symbols right away
-    stringr::str_remove_all("\\u00B0") %>%
     stringr::str_split(pattern = "\n") %>%
-    unlist()
+    unlist() %>%
+    # Get rid of all special symbols
+    stringr::str_remove_all("[^\001-\177]")
 }
-
-normals_raw <- memoise::memoise(normals_raw, ~memoise::timeout(24 * 60 * 60))
-
 
 normals_extract <- function(n, return = "data") {
   wmo <- find_line(n, cols = "meets WMO standards")

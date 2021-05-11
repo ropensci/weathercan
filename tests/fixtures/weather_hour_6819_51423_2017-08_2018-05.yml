@@ -14,7 +14,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:36:46 GMT
+      date: Thu, 15 Apr 2021 19:46:37 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -779,8 +779,8 @@ http_interactions:
         ISLAND RCS\",\"1054503\",\"2017-10-31 21:00\",\"2017\",\"10\",\"31\",\"21:00\"\r\n\"-133.06\",\"54.26\",\"LANGARA
         ISLAND RCS\",\"1054503\",\"2017-10-31 22:00\",\"2017\",\"10\",\"31\",\"22:00\"\r\n\"-133.06\",\"54.26\",\"LANGARA
         ISLAND RCS\",\"1054503\",\"2017-10-31 23:00\",\"2017\",\"10\",\"31\",\"23:00\"\r\n"
-  recorded_at: 2021-01-14 22:37:03 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:46:55 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=6819&timeframe=1&submit=Download%2BData&Year=2017&Month=11
@@ -796,7 +796,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:36:46 GMT
+      date: Thu, 15 Apr 2021 19:46:37 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -1537,8 +1537,8 @@ http_interactions:
         ISLAND RCS\",\"1054503\",\"2017-11-30 21:00\",\"2017\",\"11\",\"30\",\"21:00\"\r\n\"-133.06\",\"54.26\",\"LANGARA
         ISLAND RCS\",\"1054503\",\"2017-11-30 22:00\",\"2017\",\"11\",\"30\",\"22:00\"\r\n\"-133.06\",\"54.26\",\"LANGARA
         ISLAND RCS\",\"1054503\",\"2017-11-30 23:00\",\"2017\",\"11\",\"30\",\"23:00\"\r\n"
-  recorded_at: 2021-01-14 22:37:03 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:46:55 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=6819&timeframe=1&submit=Download%2BData&Year=2017&Month=12
@@ -1554,7 +1554,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:36:47 GMT
+      date: Thu, 15 Apr 2021 19:46:37 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -2319,8 +2319,8 @@ http_interactions:
         ISLAND RCS\",\"1054503\",\"2017-12-31 21:00\",\"2017\",\"12\",\"31\",\"21:00\"\r\n\"-133.06\",\"54.26\",\"LANGARA
         ISLAND RCS\",\"1054503\",\"2017-12-31 22:00\",\"2017\",\"12\",\"31\",\"22:00\"\r\n\"-133.06\",\"54.26\",\"LANGARA
         ISLAND RCS\",\"1054503\",\"2017-12-31 23:00\",\"2017\",\"12\",\"31\",\"23:00\"\r\n"
-  recorded_at: 2021-01-14 22:37:03 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:46:55 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=6819&timeframe=1&submit=Download%2BData&Year=2018&Month=01
@@ -2336,7 +2336,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:36:47 GMT
+      date: Thu, 15 Apr 2021 19:46:38 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -3101,8 +3101,8 @@ http_interactions:
         ISLAND RCS\",\"1054503\",\"2018-01-31 21:00\",\"2018\",\"01\",\"31\",\"21:00\"\r\n\"-133.06\",\"54.26\",\"LANGARA
         ISLAND RCS\",\"1054503\",\"2018-01-31 22:00\",\"2018\",\"01\",\"31\",\"22:00\"\r\n\"-133.06\",\"54.26\",\"LANGARA
         ISLAND RCS\",\"1054503\",\"2018-01-31 23:00\",\"2018\",\"01\",\"31\",\"23:00\"\r\n"
-  recorded_at: 2021-01-14 22:37:03 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:46:55 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=6819&timeframe=1&submit=Download%2BData&Year=2018&Month=02
@@ -3118,7 +3118,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:36:48 GMT
+      date: Thu, 15 Apr 2021 19:46:38 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -3811,8 +3811,8 @@ http_interactions:
         ISLAND RCS\",\"1054503\",\"2018-02-28 21:00\",\"2018\",\"02\",\"28\",\"21:00\"\r\n\"-133.06\",\"54.26\",\"LANGARA
         ISLAND RCS\",\"1054503\",\"2018-02-28 22:00\",\"2018\",\"02\",\"28\",\"22:00\"\r\n\"-133.06\",\"54.26\",\"LANGARA
         ISLAND RCS\",\"1054503\",\"2018-02-28 23:00\",\"2018\",\"02\",\"28\",\"23:00\"\r\n"
-  recorded_at: 2021-01-14 22:37:03 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:46:55 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=6819&timeframe=1&submit=Download%2BData&Year=2018&Month=03
@@ -3828,7 +3828,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:36:48 GMT
+      date: Thu, 15 Apr 2021 19:46:39 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -4593,8 +4593,8 @@ http_interactions:
         ISLAND RCS\",\"1054503\",\"2018-03-31 21:00\",\"2018\",\"03\",\"31\",\"21:00\"\r\n\"-133.06\",\"54.26\",\"LANGARA
         ISLAND RCS\",\"1054503\",\"2018-03-31 22:00\",\"2018\",\"03\",\"31\",\"22:00\"\r\n\"-133.06\",\"54.26\",\"LANGARA
         ISLAND RCS\",\"1054503\",\"2018-03-31 23:00\",\"2018\",\"03\",\"31\",\"23:00\"\r\n"
-  recorded_at: 2021-01-14 22:37:03 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:46:55 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=6819&timeframe=1&submit=Download%2BData&Year=2018&Month=04
@@ -4610,7 +4610,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:36:48 GMT
+      date: Thu, 15 Apr 2021 19:46:39 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -5351,8 +5351,8 @@ http_interactions:
         ISLAND RCS\",\"1054503\",\"2018-04-30 21:00\",\"2018\",\"04\",\"30\",\"21:00\"\r\n\"-133.06\",\"54.26\",\"LANGARA
         ISLAND RCS\",\"1054503\",\"2018-04-30 22:00\",\"2018\",\"04\",\"30\",\"22:00\"\r\n\"-133.06\",\"54.26\",\"LANGARA
         ISLAND RCS\",\"1054503\",\"2018-04-30 23:00\",\"2018\",\"04\",\"30\",\"23:00\"\r\n"
-  recorded_at: 2021-01-14 22:37:03 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:46:55 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=6819&timeframe=1&submit=Download%2BData&Year=2018&Month=05
@@ -5368,7 +5368,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:36:49 GMT
+      date: Thu, 15 Apr 2021 19:46:40 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -6133,8 +6133,8 @@ http_interactions:
         ISLAND RCS\",\"1054503\",\"2018-05-31 21:00\",\"2018\",\"05\",\"31\",\"21:00\"\r\n\"-133.06\",\"54.26\",\"LANGARA
         ISLAND RCS\",\"1054503\",\"2018-05-31 22:00\",\"2018\",\"05\",\"31\",\"22:00\"\r\n\"-133.06\",\"54.26\",\"LANGARA
         ISLAND RCS\",\"1054503\",\"2018-05-31 23:00\",\"2018\",\"05\",\"31\",\"23:00\"\r\n"
-  recorded_at: 2021-01-14 22:37:03 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:46:55 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=51423&timeframe=1&submit=Download%2BData&Year=2017&Month=08
@@ -6150,7 +6150,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:36:53 GMT
+      date: Thu, 15 Apr 2021 19:46:44 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -6970,8 +6970,8 @@ http_interactions:
         A\",\"1163781\",\"2017-08-31 21:00\",\"2017\",\"08\",\"31\",\"21:00\",\"22.3\",\"\",\"7.2\",\"\",\"37\",\"\",\"\",\"\",\"12\",\"\",\"7\",\"\",\"8.1\",\"\",\"97.55\",\"\",\"\",\"\",\"\",\"\",\"Smoke\"\r\n\"-120.45\",\"50.70\",\"KAMLOOPS
         A\",\"1163781\",\"2017-08-31 22:00\",\"2017\",\"08\",\"31\",\"22:00\",\"19.5\",\"\",\"7.0\",\"\",\"44\",\"\",\"\",\"\",\"10\",\"\",\"6\",\"\",\"8.1\",\"\",\"97.59\",\"\",\"\",\"\",\"\",\"\",\"Smoke\"\r\n\"-120.45\",\"50.70\",\"KAMLOOPS
         A\",\"1163781\",\"2017-08-31 23:00\",\"2017\",\"08\",\"31\",\"23:00\",\"18.8\",\"\",\"7.1\",\"\",\"46\",\"\",\"\",\"\",\"7\",\"\",\"9\",\"\",\"8.1\",\"\",\"97.55\",\"\",\"\",\"\",\"\",\"\",\"Smoke\"\r\n"
-  recorded_at: 2021-01-14 22:37:03 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:46:55 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=51423&timeframe=1&submit=Download%2BData&Year=2017&Month=09
@@ -6987,7 +6987,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:36:54 GMT
+      date: Thu, 15 Apr 2021 19:46:45 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -7831,8 +7831,8 @@ http_interactions:
         A\",\"1163781\",\"2017-09-30 22:00\",\"2017\",\"09\",\"30\",\"22:00\",\"8.9\",\"\",\"5.3\",\"\",\"78\",\"\",\"\",\"\",\"24\",\"\",\"15\",\"\",\"64.4\",\"\",\"97.51\",\"\",\"\",\"\",\"\",\"\",\"Mostly
         Cloudy\"\r\n\"-120.45\",\"50.70\",\"KAMLOOPS A\",\"1163781\",\"2017-09-30
         23:00\",\"2017\",\"09\",\"30\",\"23:00\",\"9.2\",\"\",\"4.7\",\"\",\"73\",\"\",\"\",\"\",\"24\",\"\",\"13\",\"\",\"64.4\",\"\",\"97.53\",\"\",\"\",\"\",\"\",\"\",\"NA\"\r\n"
-  recorded_at: 2021-01-14 22:37:03 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:46:55 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=51423&timeframe=1&submit=Download%2BData&Year=2017&Month=10
@@ -7848,7 +7848,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:36:55 GMT
+      date: Thu, 15 Apr 2021 19:46:46 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -8730,8 +8730,8 @@ http_interactions:
         A\",\"1163781\",\"2017-10-31 21:00\",\"2017\",\"10\",\"31\",\"21:00\",\"3.2\",\"\",\"1.1\",\"\",\"86\",\"\",\"\",\"\",\"32\",\"\",\"4\",\"\",\"64.4\",\"\",\"96.46\",\"\",\"\",\"\",\"\",\"\",\"NA\"\r\n\"-120.45\",\"50.70\",\"KAMLOOPS
         A\",\"1163781\",\"2017-10-31 22:00\",\"2017\",\"10\",\"31\",\"22:00\",\"2.4\",\"\",\"1.4\",\"\",\"93\",\"\",\"\",\"\",\"31\",\"\",\"4\",\"\",\"64.4\",\"\",\"96.39\",\"\",\"\",\"\",\"\",\"\",\"Cloudy\"\r\n\"-120.45\",\"50.70\",\"KAMLOOPS
         A\",\"1163781\",\"2017-10-31 23:00\",\"2017\",\"10\",\"31\",\"23:00\",\"2.4\",\"\",\"1.3\",\"\",\"93\",\"\",\"\",\"\",\"36\",\"\",\"2\",\"\",\"64.4\",\"\",\"96.35\",\"\",\"\",\"\",\"\",\"\",\"NA\"\r\n"
-  recorded_at: 2021-01-14 22:37:03 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:46:55 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=51423&timeframe=1&submit=Download%2BData&Year=2017&Month=11
@@ -8747,7 +8747,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:36:55 GMT
+      date: Thu, 15 Apr 2021 19:46:46 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -9592,8 +9592,8 @@ http_interactions:
         A\",\"1163781\",\"2017-11-30 21:00\",\"2017\",\"11\",\"30\",\"21:00\",\"2.7\",\"\",\"0.7\",\"\",\"87\",\"\",\"\",\"\",\"13\",\"\",\"12\",\"\",\"64.4\",\"\",\"97.41\",\"\",\"\",\"\",\"\",\"\",\"NA\"\r\n\"-120.45\",\"50.70\",\"KAMLOOPS
         A\",\"1163781\",\"2017-11-30 22:00\",\"2017\",\"11\",\"30\",\"22:00\",\"1.6\",\"\",\"0.0\",\"\",\"89\",\"\",\"\",\"\",\"7\",\"\",\"10\",\"\",\"64.4\",\"\",\"97.40\",\"\",\"\",\"\",\"\",\"\",\"Cloudy\"\r\n\"-120.45\",\"50.70\",\"KAMLOOPS
         A\",\"1163781\",\"2017-11-30 23:00\",\"2017\",\"11\",\"30\",\"23:00\",\"1.7\",\"\",\"0.0\",\"\",\"88\",\"\",\"\",\"\",\"8\",\"\",\"11\",\"\",\"64.4\",\"\",\"97.41\",\"\",\"\",\"\",\"\",\"\",\"NA\"\r\n"
-  recorded_at: 2021-01-14 22:37:03 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:46:55 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=51423&timeframe=1&submit=Download%2BData&Year=2017&Month=12
@@ -9609,7 +9609,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:36:56 GMT
+      date: Thu, 15 Apr 2021 19:46:47 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -10455,8 +10455,8 @@ http_interactions:
         A\",\"1163781\",\"2017-12-31 22:00\",\"2017\",\"12\",\"31\",\"22:00\",\"-16.1\",\"\",\"-19.4\",\"\",\"76\",\"\",\"\",\"\",\"10\",\"\",\"18\",\"\",\"64.4\",\"\",\"99.37\",\"\",\"\",\"\",\"-25\",\"\",\"Mostly
         Cloudy\"\r\n\"-120.45\",\"50.70\",\"KAMLOOPS A\",\"1163781\",\"2017-12-31
         23:00\",\"2017\",\"12\",\"31\",\"23:00\",\"-16.4\",\"\",\"-19.7\",\"\",\"76\",\"\",\"\",\"\",\"10\",\"\",\"19\",\"\",\"64.4\",\"\",\"99.43\",\"\",\"\",\"\",\"-26\",\"\",\"NA\"\r\n"
-  recorded_at: 2021-01-14 22:37:03 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:46:55 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=51423&timeframe=1&submit=Download%2BData&Year=2018&Month=01
@@ -10472,7 +10472,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:36:56 GMT
+      date: Thu, 15 Apr 2021 19:46:48 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -11327,8 +11327,8 @@ http_interactions:
         A\",\"1163781\",\"2018-01-31 21:00\",\"2018\",\"01\",\"31\",\"21:00\",\"0.0\",\"\",\"-4.5\",\"\",\"72\",\"\",\"\",\"\",\"11\",\"\",\"16\",\"\",\"64.4\",\"\",\"97.87\",\"\",\"\",\"\",\"-5\",\"\",\"NA\"\r\n\"-120.45\",\"50.70\",\"KAMLOOPS
         A\",\"1163781\",\"2018-01-31 22:00\",\"2018\",\"01\",\"31\",\"22:00\",\"-0.2\",\"\",\"-4.4\",\"\",\"74\",\"\",\"\",\"\",\"11\",\"\",\"17\",\"\",\"64.4\",\"\",\"97.87\",\"\",\"\",\"\",\"-5\",\"\",\"Cloudy\"\r\n\"-120.45\",\"50.70\",\"KAMLOOPS
         A\",\"1163781\",\"2018-01-31 23:00\",\"2018\",\"01\",\"31\",\"23:00\",\"0.0\",\"\",\"-4.2\",\"\",\"73\",\"\",\"\",\"\",\"11\",\"\",\"17\",\"\",\"64.4\",\"\",\"97.89\",\"\",\"\",\"\",\"-5\",\"\",\"NA\"\r\n"
-  recorded_at: 2021-01-14 22:37:03 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:46:55 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=51423&timeframe=1&submit=Download%2BData&Year=2018&Month=02
@@ -11344,7 +11344,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:36:57 GMT
+      date: Thu, 15 Apr 2021 19:46:48 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -12112,8 +12112,8 @@ http_interactions:
         A\",\"1163781\",\"2018-02-28 21:00\",\"2018\",\"02\",\"28\",\"21:00\",\"3.3\",\"\",\"-2.0\",\"\",\"68\",\"\",\"\",\"\",\"9\",\"\",\"34\",\"\",\"64.4\",\"\",\"96.25\",\"\",\"\",\"\",\"\",\"\",\"NA\"\r\n\"-120.45\",\"50.70\",\"KAMLOOPS
         A\",\"1163781\",\"2018-02-28 22:00\",\"2018\",\"02\",\"28\",\"22:00\",\"2.6\",\"\",\"-1.1\",\"\",\"76\",\"\",\"\",\"\",\"10\",\"\",\"34\",\"\",\"64.4\",\"\",\"96.22\",\"\",\"\",\"\",\"\",\"\",\"Cloudy\"\r\n\"-120.45\",\"50.70\",\"KAMLOOPS
         A\",\"1163781\",\"2018-02-28 23:00\",\"2018\",\"02\",\"28\",\"23:00\",\"2.6\",\"\",\"-1.5\",\"\",\"74\",\"\",\"\",\"\",\"10\",\"\",\"31\",\"\",\"64.4\",\"\",\"96.17\",\"\",\"\",\"\",\"\",\"\",\"NA\"\r\n"
-  recorded_at: 2021-01-14 22:37:03 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:46:55 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=51423&timeframe=1&submit=Download%2BData&Year=2018&Month=03
@@ -12129,7 +12129,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:36:57 GMT
+      date: Thu, 15 Apr 2021 19:46:49 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -12995,8 +12995,8 @@ http_interactions:
         A\",\"1163781\",\"2018-03-31 22:00\",\"2018\",\"03\",\"31\",\"22:00\",\"3.9\",\"\",\"-10.2\",\"\",\"35\",\"\",\"\",\"\",\"8\",\"\",\"16\",\"\",\"32.2\",\"\",\"\",\"M\",\"\",\"\",\"\",\"\",\"Mostly
         Cloudy\"\r\n\"-120.45\",\"50.70\",\"KAMLOOPS A\",\"1163781\",\"2018-03-31
         23:00\",\"2018\",\"03\",\"31\",\"23:00\",\"3.2\",\"\",\"-8.5\",\"\",\"42\",\"\",\"\",\"\",\"11\",\"\",\"20\",\"\",\"32.2\",\"\",\"\",\"M\",\"\",\"\",\"\",\"\",\"NA\"\r\n"
-  recorded_at: 2021-01-14 22:37:03 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:46:55 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=51423&timeframe=1&submit=Download%2BData&Year=2018&Month=04
@@ -13012,7 +13012,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:36:58 GMT
+      date: Thu, 15 Apr 2021 19:46:50 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -13852,8 +13852,8 @@ http_interactions:
         A\",\"1163781\",\"2018-04-30 22:00\",\"2018\",\"04\",\"30\",\"22:00\",\"12.4\",\"\",\"4.5\",\"\",\"58\",\"\",\"\",\"\",\"11\",\"\",\"5\",\"\",\"32.2\",\"\",\"97.02\",\"\",\"\",\"\",\"\",\"\",\"Mostly
         Cloudy\"\r\n\"-120.45\",\"50.70\",\"KAMLOOPS A\",\"1163781\",\"2018-04-30
         23:00\",\"2018\",\"04\",\"30\",\"23:00\",\"11.6\",\"\",\"5.2\",\"\",\"65\",\"\",\"\",\"\",\"10\",\"\",\"8\",\"\",\"32.2\",\"\",\"97.06\",\"\",\"\",\"\",\"\",\"\",\"NA\"\r\n"
-  recorded_at: 2021-01-14 22:37:03 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:46:55 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=51423&timeframe=1&submit=Download%2BData&Year=2018&Month=05
@@ -13869,7 +13869,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:36:59 GMT
+      date: Thu, 15 Apr 2021 19:46:51 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -14740,5 +14740,5 @@ http_interactions:
         A\",\"1163781\",\"2018-05-31 21:00\",\"2018\",\"05\",\"31\",\"21:00\",\"14.9\",\"\",\"3.1\",\"\",\"45\",\"\",\"\",\"\",\"25\",\"\",\"14\",\"\",\"64.4\",\"\",\"96.85\",\"\",\"\",\"\",\"\",\"\",\"NA\"\r\n\"-120.45\",\"50.70\",\"KAMLOOPS
         A\",\"1163781\",\"2018-05-31 22:00\",\"2018\",\"05\",\"31\",\"22:00\",\"13.4\",\"\",\"3.5\",\"\",\"51\",\"\",\"\",\"\",\"26\",\"\",\"10\",\"\",\"64.4\",\"\",\"96.89\",\"\",\"\",\"\",\"\",\"\",\"Mainly
         Clear\"\r\n\"-120.45\",\"50.70\",\"KAMLOOPS A\",\"1163781\",\"2018-05-31 23:00\",\"2018\",\"05\",\"31\",\"23:00\",\"12.5\",\"\",\"3.0\",\"\",\"52\",\"\",\"\",\"\",\"24\",\"\",\"11\",\"\",\"64.4\",\"\",\"96.95\",\"\",\"\",\"\",\"\",\"\",\"NA\"\r\n"
-  recorded_at: 2021-01-14 22:37:03 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:46:55 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0

@@ -14,7 +14,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:37:38 GMT
+      date: Thu, 15 Apr 2021 19:47:24 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -494,8 +494,8 @@ http_interactions:
         PRIME\",\"7067658\",\"2017-12\",\"2017\",\"12\",\"-9.8\",\"\",\"-19.4\",\"\",\"-14.6\",\"\",\"5.2\",\"\",\"-31.1\",\"S\",\"3.6\",\"\",\"48.0\",\"I\",\"48.0\",\"I\",\"13\",\"\",\"\",\"\",\"\",\"\"\r\n\"-72.42\",\"48.62\",\"ST
         PRIME\",\"7067658\",\"2018-01\",\"2018\",\"01\",\"-10.0\",\"\",\"-21.6\",\"\",\"-15.8\",\"\",\"7.6\",\"\",\"-34.7\",\"\",\"4.0\",\"\",\"60.0\",\"I\",\"64.0\",\"I\",\"14\",\"\",\"\",\"\",\"\",\"\"\r\n\"-72.42\",\"48.62\",\"ST
         PRIME\",\"7067658\",\"2018-02\",\"2018\",\"02\",\"-4.9\",\"E\",\"-19.1\",\"\",\"-12.0\",\"E\",\"5.0\",\"\",\"-33.1\",\"\",\"1.0\",\"\",\"45.0\",\"\",\"46.0\",\"\",\"21\",\"\",\"\",\"\",\"\",\"\"\r\n"
-  recorded_at: 2021-01-14 22:37:38 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:47:24 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=txt&stationID=5940&timeframe=3&submit=Download%2BData
@@ -511,7 +511,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:37:38 GMT
+      date: Thu, 15 Apr 2021 19:47:24 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -530,5 +530,5 @@ http_interactions:
         than one occurrence and estimated\r\nE\tEstimated\r\nM\tMissing\r\nS\tMore
         than one occurrence\r\nT\tTrace\r\n[empty]\tIndicates an unobserved value\r\n^\tThe
         value displayed is based on incomplete data"
-  recorded_at: 2021-01-14 22:37:38 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:47:24 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0

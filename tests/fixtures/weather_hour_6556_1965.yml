@@ -14,7 +14,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:35:55 GMT
+      date: Thu, 15 Apr 2021 19:46:07 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -836,8 +836,8 @@ http_interactions:
         A\",\"8400100\",\"1965-01-31 21:30\",\"1965\",\"01\",\"31\",\"21:30\",\"-2.8\",\"\",\"-5.0\",\"\",\"85\",\"\",\"5\",\"\",\"19\",\"\",\"11.3\",\"\",\"100.41\",\"\",\"\",\"\",\"-9\",\"\",\"Cloudy\"\r\n\"-54.00\",\"47.30\",\"ARGENTIA
         A\",\"8400100\",\"1965-01-31 22:30\",\"1965\",\"01\",\"31\",\"22:30\",\"-2.8\",\"\",\"-5.6\",\"\",\"81\",\"\",\"7\",\"\",\"23\",\"\",\"11.3\",\"\",\"100.31\",\"\",\"\",\"\",\"-9\",\"\",\"Cloudy\"\r\n\"-54.00\",\"47.30\",\"ARGENTIA
         A\",\"8400100\",\"1965-01-31 23:30\",\"1965\",\"01\",\"31\",\"23:30\",\"-3.3\",\"\",\"-5.6\",\"\",\"85\",\"\",\"5\",\"\",\"32\",\"\",\"11.3\",\"\",\"100.17\",\"\",\"\",\"\",\"-11\",\"\",\"Cloudy\"\r\n"
-  recorded_at: 2021-01-14 22:35:58 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:46:10 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=txt&stationID=6556&timeframe=1&submit=Download%2BData
@@ -853,7 +853,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:35:58 GMT
+      date: Thu, 15 Apr 2021 19:46:10 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -872,5 +872,5 @@ http_interactions:
         Standard Time (LST) was selected, add 1 hour to adjust for Daylight Saving
         Time where and when it is observed.\"\r\n\r\nLegend\r\nE\tEstimated\r\nM\tMissing\r\nNA\tNot
         Available*\r\n[empty]\tIndicates an unobserved value\r\n\r\n*https://climate.weather.gc.ca/FAQ_e.html#Q5"
-  recorded_at: 2021-01-14 22:35:58 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:46:10 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0

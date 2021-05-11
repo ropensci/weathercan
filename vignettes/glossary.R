@@ -1,8 +1,8 @@
-## ---- include = FALSE----------------------------------------------------
+## ---- include = FALSE---------------------------------------------------------
 library(weathercan)
 library(dplyr)
 
-## ---- asis = TRUE, echo = FALSE------------------------------------------
+## ---- asis = TRUE, echo = FALSE-----------------------------------------------
 temp <- glossary %>%
   mutate(http = stringr::str_detect(ECCC_ref, "http"),
          ECCC_ref = replace(ECCC_ref, http & !is.na(http), paste0("[ECCC glossary page](", ECCC_ref[http & !is.na(http)], ")")),

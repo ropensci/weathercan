@@ -14,7 +14,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:36:18 GMT
+      date: Thu, 15 Apr 2021 19:46:22 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -1049,8 +1049,8 @@ http_interactions:
         Cloudy\"\r\n\"-120.44\",\"50.70\",\"KAMLOOPS A\",\"1163780\",\"2012-11-30
         22:00\",\"2012\",\"11\",\"30\",\"22:00\",\"6.6\",\"\",\"3.4\",\"\",\"80\",\"\",\"\",\"\",\"3\",\"\",\"6\",\"\",\"64.4\",\"\",\"95.62\",\"\",\"\",\"\",\"\",\"\",\"Cloudy\"\r\n\"-120.44\",\"50.70\",\"KAMLOOPS
         A\",\"1163780\",\"2012-11-30 23:00\",\"2012\",\"11\",\"30\",\"23:00\",\"6.4\",\"\",\"3.4\",\"\",\"81\",\"\",\"\",\"\",\"8\",\"\",\"13\",\"\",\"64.4\",\"\",\"95.58\",\"\",\"\",\"\",\"\",\"\",\"Cloudy\"\r\n"
-  recorded_at: 2021-01-14 22:36:32 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:46:24 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=txt&stationID=1275&timeframe=1&submit=Download%2BData
@@ -1066,7 +1066,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:36:32 GMT
+      date: Thu, 15 Apr 2021 19:46:24 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -1085,5 +1085,5 @@ http_interactions:
         Local Standard Time (LST) was selected, add 1 hour to adjust for Daylight
         Saving Time where and when it is observed.\"\r\n\r\nLegend\r\nE\tEstimated\r\nM\tMissing\r\nNA\tNot
         Available*\r\n[empty]\tIndicates an unobserved value\r\n\r\n*https://climate.weather.gc.ca/FAQ_e.html#Q5"
-  recorded_at: 2021-01-14 22:36:32 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:46:24 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0

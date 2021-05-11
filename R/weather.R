@@ -62,39 +62,38 @@
 #' @param string_as Character. What value to replace character strings in a
 #'   numeric measurement with. See Details.
 #' @param time_disp Character. Either "none" (default) or "UTC". See details.
-#' @param tz_disp DEPRECATED. See details
-#' @param stn Data frame. The \code{stations} data frame to use. Will use the
-#'   one included in the package unless otherwise specified.
-#' @param url DEPRECATED. To set a different url use `options()` (see details).
 #' @param encoding Character. Text encoding for download.
 #' @param list_col Logical. Return data as nested data set? Defaults to FALSE.
 #'   Only applies if `format = TRUE`
 #' @param verbose Logical. Include progress messages
 #' @param quiet Logical. Suppress all messages (including messages regarding
 #'   missing data, etc.)
+#' @param stn DEFUNCT. Now use `stations_dl()` to update internal data and
+#'   `stations_meta()` to check the date it was last updated.
 #'
 #' @return A tibble with station ID, name and weather data.
 #'
 #' @examples
 #'
 #' \donttest{
-#' kam <- weather_dl(station_ids = 51423,
-#'                   start = "2016-01-01", end = "2016-02-15")
-#' }
+#' if(check_eccc()) {  # Make sure ECCC is available
 #'
-#' stations_search("Kamloops A$", interval = "hour")
-#' stations_search("Prince George Airport", interval = "hour")
-#'\donttest{
-#' kam.pg <- weather_dl(station_ids = c(48248, 51423),
-#'                      start = "2016-01-01", end = "2016-02-15")
+#'   kam <- weather_dl(station_ids = 51423,
+#'                     start = "2016-01-01", end = "2016-02-15")
 #'
-#' library(ggplot2)
+#'   stations_search("Kamloops A$", interval = "hour")
+#'   stations_search("Prince George Airport", interval = "hour")
 #'
-#' ggplot(data = kam.pg, aes(x = time, y = temp,
-#'                           group = station_name,
-#'                           colour = station_name)) +
-#'        geom_line()
-#'}
+#'   kam.pg <- weather_dl(station_ids = c(48248, 51423),
+#'                        start = "2016-01-01", end = "2016-02-15")
+#'
+#'   library(ggplot2)
+#'
+#'   ggplot(data = kam.pg, aes(x = time, y = temp,
+#'                             group = station_name,
+#'                             colour = station_name)) +
+#'          geom_line()
+#'  }}
 #'
 #' @aliases weather
 #'
@@ -106,23 +105,11 @@ weather_dl <- function(station_ids,
                        format = TRUE,
                        string_as = NA,
                        time_disp = "none",
-                       tz_disp = NULL,
-                       stn = weathercan::stations,
-                       url = NULL,
+                       stn = NULL,
                        encoding = "UTF-8",
                        list_col = FALSE,
                        verbose = FALSE,
                        quiet = FALSE) {
-
-  if(!is.null(url)) {
-    warning("'url' is deprecated, use ",
-            "`options(weathercan.urls.weather = \"your_new_url\")` instead",
-            .call = FALSE)
-  }
-
-  if(!is.null(tz_disp)) {
-    warning("'tz_disp' is deprecated, see Details under ?weather_dl", .call = FALSE)
-  }
 
   # Address as.POSIXct...
   if((!is.null(start) &
@@ -136,6 +123,13 @@ weather_dl <- function(station_ids,
   if(length(interval) > 1) {
     stop("'interval' must be either 'hour', 'day', OR 'month'")
   }
+
+  if(!is.null(stn)){
+    stop("`stn` is defunct, to use an updated stations data frame ",
+         "use `stations_dl()` to update the internal data, and ",
+         "`stations_meta()` to check when it was last updated", call. = FALSE)
+  }
+  stn <- stations()
 
   check_int(interval)
 
@@ -434,15 +428,9 @@ get_html <- function(station_id,
     q['Month'] = format(date, "%m")
   }
 
-  html <- httr::GET(url = getOption("weathercan.urls.weather"),
-                    query = q)
-  httr::stop_for_status(html)
-  html
+  get_check(url = getOption("weathercan.urls.weather"),
+            query = q, task = "access historical weather data")
 }
-
-# Cache function results
-get_html <- memoise::memoise(get_html, ~memoise::timeout(24 * 60 * 60))
-
 
 weather_html <- function(station_id, date, interval = "hour") {
   if(interval == "month") date <- NULL

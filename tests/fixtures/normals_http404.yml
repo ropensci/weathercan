@@ -1,0 +1,46 @@
+http_interactions:
+- request:
+    method: get
+    uri: https://httpstat.us/404?format=csv&lang=e&prov=mb&yr=1981&stnID=3471&climateID=5010480&submit=Download%20Data
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json, text/xml, application/xml, */*
+  response:
+    status:
+      status_code: 404
+      category: Client error
+      reason: Not Found
+      message: 'Client error: (404) Not Found'
+    headers:
+      access-control-allow-origin: '*'
+      access-control-expose-headers:
+      - Link, Content-Range, Location, WWW-Authenticate, Proxy-Authenticate, Retry-After
+      - Request-Context
+      alt-svc: h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400
+      cache-control: private
+      cf-cache-status: DYNAMIC
+      cf-ray: 64005603bcddb665-YWG
+      cf-request-id: 09741416540000b665729a3000000001
+      content-length: '41'
+      content-type: application/json; charset=utf-8
+      date: Wed, 14 Apr 2021 22:22:59 GMT
+      expect-ct: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      nel: '{"max_age":604800,"report_to":"cf-nel"}'
+      report-to: '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report?s=v8mP1fMTGr7CbPFthGF3RrFas5TtEm41SOp7N16GxGiU%2F12jgBYAuI1KyXDPHbNuHFh5zzvZtAh3Hv9H11G%2FWWoGzErkCaB9Ip28ng%3D%3D"}],"max_age":604800,"group":"cf-nel"}'
+      request-context: appId=cid-v1:7585021b-2db7-4da6-abff-2cf23005f0a9
+      server: cloudflare
+      set-cookie:
+      - __cfduid=d274eb7d7fd2a4c619d2347aa17f08c481618438979; expires=Fri, 14-May-21
+        22:22:59 GMT; path=/; domain=.httpstat.us; HttpOnly; SameSite=Lax
+      - ARRAffinity=474390354ba4d900b0ccc527728f5a28d7c5b02635f8ed49c7106f56434ee578;Path=/;HttpOnly;Domain=httpstat.us
+      x-aspnet-version: 4.0.30319
+      x-aspnetmvc-version: '5.1'
+      x-powered-by: ASP.NET
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"code": 404, "description": "Not Found"}'
+  recorded_at: 2021-04-14 22:22:59 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0

@@ -2,23 +2,11 @@
 % Please edit documentation in R/stations.R
 \name{stations_dl}
 \alias{stations_dl}
-\alias{stations_all}
 \title{Get available stations}
 \usage{
-stations_dl(
-  url = NULL,
-  normals_years = "1981-2010",
-  skip = NULL,
-  verbose = FALSE,
-  quiet = FALSE
-)
+stations_dl(skip = NULL, verbose = FALSE, quiet = FALSE)
 }
 \arguments{
-\item{url}{DEPRECATED. To set a different url use \code{options()} (see details).}
-
-\item{normals_years}{Character. The year range for which you want climate
-normals. Default "1981-2010".}
-
 \item{skip}{Numeric. Number of lines to skip at the beginning of the csv. If
 NULL, automatically derived.}
 
@@ -44,19 +32,27 @@ The stations list is downloaded from the url stored in the option
 \code{options(weathercan.urls.stations = "your_new_url")}.
 
 The list of which stations have climate normals is downloaded from the url
-stored in the option \code{weathercan.urls.normals}. To change this location use
-\code{options(weathercan.urls.normals = "your_new_url")}.
+stored in the option \code{weathercan.urls.stations.normals}. To change this
+location use \code{options(weathercan.urls.normals = "your_new_url")}.
+
+Currently there are two sets of climate normals available: 1981-2010 and
+1971-2000. Whether a station has climate normals for a given year range is
+specified in \code{normals_1981_2010} and \code{normals_1971_2000}, respectively.
+
+The column \code{normals} represents the most current year range of climate
+normals (i.e. currently 1981-2010)
 }
 \examples{
 
 \donttest{
+if(check_eccc()) {
   # Update stations data frame
-  if(requireNamespace("lutz") && requireNamespace("sf")) {
-    s <- stations_dl()
+  stations_dl()
 
-    # Use new data frame to search for stations
-    stations_search("Winnipeg", stn = s)
-   }
+  # Updated stations data frame is now automatically used
+  stations_search("Winnipeg")
 }
+}
+
 
 }

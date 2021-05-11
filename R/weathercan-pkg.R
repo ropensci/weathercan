@@ -1,3 +1,11 @@
+.onAttach <- function(libname, pkgname) {
+  packageStartupMessage(
+    "weathercan v", utils::packageVersion("weathercan"), "\n",
+    "The included data `stations` has been ",
+    "deprecated in favour of the function `stations()`.\n",
+    "See ?stations for more details.")
+}
+
 #' Easy downloading of weather data from Environment and Climate Change Canada
 #'
 #' \code{weathercan} is an R package for simplifying the downloading of
@@ -69,13 +77,19 @@ NULL
 .onLoad <- function(libname = find.package("weathercan"),
                     pkgname = "weathercan"){
 
+  # Add caching for functions
+  get_html <<- memoise::memoise(get_html, ~memoise::timeout(24 * 60 * 60))
+  normals_html <<- memoise::memoise(normals_html, ~memoise::timeout(24 * 60 * 60))
+
   options(weathercan.urls.weather =
             "https://climate.weather.gc.ca/climate_data/bulk_data_e.html",
           weathercan.urls.normals =
-            "https://dd.meteo.gc.ca/climate/observations/normals/csv",
+            "https://climate.weather.gc.ca/climate_normals/bulk_data_e.html",
           weathercan.urls.stations =
             paste0("https://drive.google.com/uc?authuser=0&id=",
                    "1egfzGgzUb0RFu_EE5AYFZtsyXPfZ11y2&export=download"),
+          weathercan.urls.stations.normals =
+          "https://climate.weather.gc.ca/climate_normals/station_inventory_e.html",
           weathercan.time.message = FALSE)
 
   # CRAN Note avoidance

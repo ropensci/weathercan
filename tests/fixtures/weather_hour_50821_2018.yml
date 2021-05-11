@@ -14,7 +14,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:36:08 GMT
+      date: Thu, 15 Apr 2021 19:46:17 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -791,8 +791,8 @@ http_interactions:
         A\",\"5010481\",\"2018-01-31 21:00\",\"2018\",\"01\",\"31\",\"21:00\",\"-20.1\",\"\",\"-24.7\",\"\",\"68\",\"\",\"\",\"\",\"32\",\"\",\"26\",\"\",\"24.1\",\"\",\"97.11\",\"\",\"\",\"\",\"-32\",\"\",\"Mostly
         Cloudy\"\r\n\"-99.95\",\"49.91\",\"BRANDON A\",\"5010481\",\"2018-01-31 22:00\",\"2018\",\"01\",\"31\",\"22:00\",\"-20.9\",\"\",\"-25.3\",\"\",\"69\",\"\",\"\",\"\",\"33\",\"\",\"21\",\"\",\"24.1\",\"\",\"97.25\",\"\",\"\",\"\",\"-32\",\"\",\"NA\"\r\n\"-99.95\",\"49.91\",\"BRANDON
         A\",\"5010481\",\"2018-01-31 23:00\",\"2018\",\"01\",\"31\",\"23:00\",\"-21.6\",\"\",\"-26.5\",\"\",\"65\",\"\",\"\",\"\",\"35\",\"\",\"17\",\"\",\"24.1\",\"\",\"97.33\",\"\",\"\",\"\",\"-32\",\"\",\"NA\"\r\n"
-  recorded_at: 2021-01-14 22:36:12 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:46:19 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=txt&stationID=50821&timeframe=1&submit=Download%2BData
@@ -808,7 +808,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:36:11 GMT
+      date: Thu, 15 Apr 2021 19:46:19 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -827,5 +827,5 @@ http_interactions:
         Local Standard Time (LST) was selected, add 1 hour to adjust for Daylight
         Saving Time where and when it is observed.\"\r\n\r\nLegend\r\nE\tEstimated\r\nM\tMissing\r\nNA\tNot
         Available*\r\n[empty]\tIndicates an unobserved value\r\n\r\n*https://climate.weather.gc.ca/FAQ_e.html#Q5"
-  recorded_at: 2021-01-14 22:36:12 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:46:19 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0

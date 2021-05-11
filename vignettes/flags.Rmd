@@ -1,10 +1,10 @@
 ---
-title: "The meanings of flags and codes"
+title: "Flags and codes"
 author: "Steffi LaZerte"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{flags}
+  %\VignetteIndexEntry{Flags and codes}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

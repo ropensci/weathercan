@@ -14,7 +14,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:37:26 GMT
+      date: Thu, 15 Apr 2021 19:47:12 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -402,8 +402,8 @@ http_interactions:
         SNOW\",\"6115526\",\"2016-12-29\",\"2016\",\"12\",\"29\",\"†\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.0\",\"\",\"7.0\",\"\",\"7.0\",\"\",\"51\",\"\",\"\",\"\",\"\",\"\"\r\n\"-79.05\",\"44.98\",\"MUSKOKA
         SNOW\",\"6115526\",\"2016-12-30\",\"2016\",\"12\",\"30\",\"†\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.0\",\"\",\"4.0\",\"\",\"2.4\",\"\",\"55\",\"\",\"\",\"\",\"\",\"\"\r\n\"-79.05\",\"44.98\",\"MUSKOKA
         SNOW\",\"6115526\",\"2016-12-31\",\"2016\",\"12\",\"31\",\"†\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.0\",\"\",\"23.0\",\"\",\"19.4\",\"\",\"56\",\"\",\"\",\"\",\"\",\"\"\r\n"
-  recorded_at: 2021-01-14 22:37:26 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:47:13 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=54398&timeframe=2&submit=Download%2BData&Year=2017&Month=01
@@ -419,7 +419,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:37:26 GMT
+      date: Thu, 15 Apr 2021 19:47:12 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -806,8 +806,8 @@ http_interactions:
         SNOW\",\"6115526\",\"2017-12-29\",\"2017\",\"12\",\"29\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\"\r\n\"-79.05\",\"44.98\",\"MUSKOKA
         SNOW\",\"6115526\",\"2017-12-30\",\"2017\",\"12\",\"30\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\"\r\n\"-79.05\",\"44.98\",\"MUSKOKA
         SNOW\",\"6115526\",\"2017-12-31\",\"2017\",\"12\",\"31\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\"\r\n"
-  recorded_at: 2021-01-14 22:37:26 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:47:13 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=txt&stationID=54398&timeframe=2&submit=Download%2BData
@@ -823,7 +823,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:37:26 GMT
+      date: Thu, 15 Apr 2021 19:47:13 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -845,5 +845,5 @@ http_interactions:
         but known to be < 0\r\n[empty]\tIndicates an unobserved value\r\n^\tThe value
         displayed is based on incomplete data\r\n†\tData that is not subject to review
         by the National Climate Archives"
-  recorded_at: 2021-01-14 22:37:26 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:47:13 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0

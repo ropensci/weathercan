@@ -27,10 +27,10 @@ library(purrr)
 
 ## Using weathercan to load in data
 
-Your first decision that you need to make when analyzing data from weather stations across canada is to determine for which stations you'd like to query from Environment and Climate Change Canada. In this example, to keep processing time low, we will query two stations with very long records that happen to be far apart. To make that choice we can use (tidyverse)[http://tidyverse.org/] tools and the included `stations` data frame in this package:
+Your first decision that you need to make when analyzing data from weather stations across canada is to determine for which stations you'd like to query from Environment and Climate Change Canada. In this example, to keep processing time low, we will query two stations with very long records that happen to be far apart. To make that choice we can use (tidyverse)[http://tidyverse.org/] tools and the included `stations()` function to access the data frame of stations in this package:
 
 ```{R stn_pick, echo = TRUE}
-stations %>%
+stations() %>%
   filter(station_id %in% c(707, 4859, 6693,5397, 2315),
          interval == "day") %>%
   select(prov, station_name, station_id, start, end)

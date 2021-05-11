@@ -9,8 +9,9 @@ stations_search(
   coords = NULL,
   dist = 10,
   interval = c("hour", "day", "month"),
-  normals_only = FALSE,
-  stn = weathercan::stations,
+  normals_years = NULL,
+  normals_only = NULL,
+  stn = NULL,
   starts_latest = NULL,
   ends_earliest = NULL,
   verbose = FALSE,
@@ -33,16 +34,23 @@ provided.}
 \item{interval}{Character. Return only stations with data at these intervals.
 Must be any of "hour", "day", "month".}
 
-\item{normals_only}{Logical. Return only stations with climate normals?}
+\item{normals_years}{Character. One of \code{NULL} (default), \code{current},
+\code{1981-2010}, or \code{1971-2000}. \code{current} returns only stations from most
+recent normals year range. Default \code{NULL} does not filter by climate
+normals. Specific year ranges return stations with normals in that period.
+See Details for more specifics.}
 
-\item{stn}{Data frame. The \code{stations} data frame to use. Will use the
-one included in the package unless otherwise specified.}
+\item{normals_only}{DEPRECATED. Logical. Return only stations with climate
+normals?}
 
-\item{starts_latest}{Numeric. Restrict results to stations with data collection
-beginning in or before the specified year.}
+\item{stn}{DEFUNCT. Now use \code{stations_dl()} to update internal data and
+\code{stations_meta()} to check the date it was last updated.}
 
-\item{ends_earliest}{Numeric. Restrict results to stations with data collection
-ending in or after the specified year.}
+\item{starts_latest}{Numeric. Restrict results to stations with data
+collection beginning in or before the specified year.}
+
+\item{ends_earliest}{Numeric. Restrict results to stations with data
+collection ending in or after the specified year.}
 
 \item{verbose}{Logical. Include progress messages}
 
@@ -63,13 +71,19 @@ information with which to decide which station to then get weather data from.
 \details{
 To search by coordinates, users must make sure they have the
 \href{https://cran.r-project.org/package=sp}{sp} package installed.
+
+The \code{current}, most recent, climate normals year range is \code{1981-2010}.
 }
 \examples{
 
 stations_search(name = "Kamloops")
 stations_search(name = "Kamloops", interval = "hour")
 
-stations_search(name='Ottawa', starts_latest=1950, ends_earliest=2010)
+stations_search(name = "Ottawa", starts_latest = 1950, ends_earliest = 2010)
+
+stations_search(name = "Ottawa", normals_years = "current")   # 1981-2010
+stations_search(name = "Ottawa", normals_years = "1981-2010") # Same as above
+stations_search(name = "Ottawa", normals_years = "1971-2000") # 1971-2010
 
 if(requireNamespace("sp")) {
   stations_search(coords = c(53.915495, -122.739379))

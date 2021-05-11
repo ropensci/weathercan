@@ -1,31 +1,3 @@
-#' Station data downloaded from Environment and Climate Change Canada
-#'
-#' A dataset containing station information downloaded from Environment and
-#' Climate Change Canada. Note that a station may have several station IDs,
-#' depending on how the data collection has changed over the years. Station
-#' information can be updated by running \code{stations_new <-  stations_dl()}
-#' and then by specifying stn = stations_new in most functions.
-#'
-#' @format A data frame with 26211 rows and 12 variables:
-#' \describe{
-#'   \item{prov}{Province}
-#'   \item{station_name}{Station name}
-#'   \item{station_id}{Environment Canada's station ID number. Required for
-#'   downloading station data.}
-#'   \item{climate_id}{Climate ID number}
-#'   \item{WMO_id}{Climate ID number}
-#'   \item{TC_id}{Climate ID number}
-#'   \item{lat}{Latitude of station location in degree decimal format}
-#'   \item{lon}{Longitude of station location in degree decimal format}
-#'   \item{elev}{Elevation of station location in metres}
-#'   \item{tz}{Local timezone excluding any Daylight Savings}
-#'   \item{interval}{Interval of the data measurements ('hour', 'day', 'month')}
-#'   \item{start}{Starting year of data record}
-#'   \item{end}{Ending year of data record}
-#'   \item{normals}{Whether climate normals are available for that station}
-#' }
-#' @source \url{https://climate.weather.gc.ca/index_e.html}
-"stations"
 
 #' Hourly weather data for Kamloops
 #'
@@ -245,11 +217,12 @@
 #' A data frame listing the climate normals measurements available for each
 #' station.
 #'
-#' @format A data frame with 113,325 rows and 4 variables:
+#' @format A data frame with 113,325 rows and 5 variables:
 #' \describe{
 #'   \item{prov}{Province}
 #'   \item{station_name}{Station Name}
 #'   \item{climate_id}{Climate ID}
+#'   \item{normals}{Year range of climate normals}
 #'   \item{measurement}{Climate normals measurement available for this station}
 #' }
 "normals_measurements"

@@ -14,7 +14,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:35:53 GMT
+      date: Thu, 15 Apr 2021 19:46:04 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -36,5 +36,5 @@ http_interactions:
         but known to be < 0\r\n[empty]\tIndicates an unobserved value\r\n^\tThe value
         displayed is based on incomplete data\r\n†\tData that is not subject to review
         by the National Climate Archives"
-  recorded_at: 2021-01-14 22:35:53 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:46:04 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0

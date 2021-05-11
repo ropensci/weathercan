@@ -13,10 +13,6 @@ tz_hours <- function(tz) {
   as.numeric(stringr::str_extract(tz, "[0-9+-.]{1,4}"))
 }
 
-check_url <- function(url, task = paste0("access ", url)) {
-  httr::stop_for_status(httr::GET(url), task = task)
-}
-
 check_int <- function(interval) {
   if(!all(interval %in% c("hour", "day", "month"))) {
     stop("'interval' can only be 'hour', 'day', or 'month'")
@@ -57,21 +53,27 @@ tibble_to_list <- function(tbl) {
   stats::setNames(tbl[[2]], tbl[[1]])
 }
 
-#' DEFUNCT: Get timezone from lat/lon
-#'
-#' Accessed Google API to determine local timezone from coordinates. Defunct
-#' as the API is no longer accessible without a Key.
-#'
-#' @export
-tz_calc <- function(){
-  stop("'tz_calc()' has been removed (it relied on a Google API that is ",
-       "no longer accesible without a key)", call. = FALSE)
+get_check <- function(..., task = NULL) {
+  req <- httr::GET(...)
+  httr::stop_for_status(req, task = task)
+  if (grepl("^https://climate.weather.gc.ca/error", req$url)) {
+    stop("Service is currently down!")
+  } else req
 }
 
 
-#' DEFUNCT: Get timezone from lat/lon
+#' Check access to ECCC
 #'
+#' Checks if <https://climate.weather.gc.ca> is available and accessible.
+#'
+#' @return FALSE if not, TRUE if so
 #' @export
-get_tz <- function(){
-  stop("'get_tz()' has been removed", call. = FALSE)
+#'
+#' @examples
+#'
+#' check_eccc()
+#'
+check_eccc <- function() {
+  t <- try(get_check("https://climate.weather.gc.ca"), silent = TRUE)
+  !"try-error" %in% class(t)
 }

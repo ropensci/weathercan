@@ -14,7 +14,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:37:19 GMT
+      date: Thu, 15 Apr 2021 19:47:08 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -779,8 +779,8 @@ http_interactions:
         CS\",\"6104027\",\"2001-12-31 21:00\",\"2001\",\"12\",\"31\",\"21:00\",\"-7.6\",\"\",\"-11.2\",\"\",\"75\",\"\",\"\",\"\",\"24\",\"\",\"11\",\"\",\"\",\"M\",\"\",\"M\",\"\",\"\",\"-13\",\"\",\"NA\"\r\n\"-75.63\",\"45.00\",\"KEMPTVILLE
         CS\",\"6104027\",\"2001-12-31 22:00\",\"2001\",\"12\",\"31\",\"22:00\",\"-7.6\",\"\",\"-11.2\",\"\",\"75\",\"\",\"\",\"\",\"26\",\"\",\"7\",\"\",\"\",\"M\",\"\",\"M\",\"\",\"\",\"-11\",\"\",\"NA\"\r\n\"-75.63\",\"45.00\",\"KEMPTVILLE
         CS\",\"6104027\",\"2001-12-31 23:00\",\"2001\",\"12\",\"31\",\"23:00\",\"-8.5\",\"\",\"-11.3\",\"\",\"80\",\"\",\"\",\"\",\"26\",\"\",\"9\",\"\",\"\",\"M\",\"\",\"M\",\"\",\"\",\"-13\",\"\",\"NA\"\r\n"
-  recorded_at: 2021-01-14 22:37:25 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:47:12 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=27534&timeframe=1&submit=Download%2BData&Year=2002&Month=01
@@ -796,7 +796,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:37:24 GMT
+      date: Thu, 15 Apr 2021 19:47:11 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -1561,8 +1561,8 @@ http_interactions:
         CS\",\"6104027\",\"2002-01-31 21:00\",\"2002\",\"01\",\"31\",\"21:00\",\"-13.2\",\"\",\"-14.0\",\"\",\"94\",\"\",\"\",\"\",\"6\",\"\",\"11\",\"\",\"\",\"M\",\"\",\"M\",\"\",\"\",\"-19\",\"\",\"NA\"\r\n\"-75.63\",\"45.00\",\"KEMPTVILLE
         CS\",\"6104027\",\"2002-01-31 22:00\",\"2002\",\"01\",\"31\",\"22:00\",\"-12.9\",\"\",\"-13.5\",\"\",\"95\",\"\",\"\",\"\",\"6\",\"\",\"17\",\"\",\"\",\"M\",\"\",\"M\",\"\",\"\",\"-21\",\"\",\"NA\"\r\n\"-75.63\",\"45.00\",\"KEMPTVILLE
         CS\",\"6104027\",\"2002-01-31 23:00\",\"2002\",\"01\",\"31\",\"23:00\",\"-12.8\",\"\",\"-13.4\",\"\",\"95\",\"\",\"\",\"\",\"6\",\"\",\"13\",\"\",\"\",\"M\",\"\",\"M\",\"\",\"\",\"-20\",\"\",\"NA\"\r\n"
-  recorded_at: 2021-01-14 22:37:25 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:47:12 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=txt&stationID=27534&timeframe=1&submit=Download%2BData
@@ -1578,7 +1578,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:37:25 GMT
+      date: Thu, 15 Apr 2021 19:47:11 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -1597,5 +1597,5 @@ http_interactions:
         Local Standard Time (LST) was selected, add 1 hour to adjust for Daylight
         Saving Time where and when it is observed.\"\r\n\r\nLegend\r\nE\tEstimated\r\nM\tMissing\r\nNA\tNot
         Available*\r\n[empty]\tIndicates an unobserved value\r\n\r\n*https://climate.weather.gc.ca/FAQ_e.html#Q5"
-  recorded_at: 2021-01-14 22:37:25 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:47:12 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0

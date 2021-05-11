@@ -14,20 +14,17 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
+      date: Thu, 15 Apr 2021 19:46:02 GMT
+      server: Apache/2.4.29 (Ubuntu)
+      strict-transport-security: max-age=63072000; preload
+      expires: Mon, 26 Jul 1997 05:00:00 GMT
       cache-control: private
+      pragma: public
       content-disposition: attachment; filename="en_climate_hourly_BC_1163781_001-2014_P1H.csv"
+      vary: Accept-Encoding
       content-encoding: gzip
       content-length: '15437'
       content-type: application/force-download
-      date: Thu, 14 Jan 2021 22:35:51 GMT
-      expires: Mon, 26 Jul 1997 05:00:00 GMT
-      pragma: public
-      server: Apache/2.4.29 (Ubuntu)
-      set-cookie:
-      - PHPSESSID=af593c83de2bd8a5b7910c5c979b2630; path=/
-      - jsenabled=0; expires=Thu, 14-Jan-2021 23:35:51 GMT; Max-Age=3600; path=/
-      strict-transport-security: max-age=63072000; preload
-      vary: Accept-Encoding
     body:
       encoding: UTF-8
       file: no
@@ -850,5 +847,5 @@ http_interactions:
         A\",\"1163781\",\"2014-01-31 21:00\",\"2014\",\"01\",\"31\",\"21:00\",\"-11.8\",\"\",\"-16.4\",\"\",\"69\",\"\",\"\",\"\",\"2\",\"\",\"5\",\"\",\"64.4\",\"\",\"98.42\",\"\",\"\",\"\",\"-15\",\"\",\"NA\"\r\n\"-120.45\",\"50.70\",\"KAMLOOPS
         A\",\"1163781\",\"2014-01-31 22:00\",\"2014\",\"01\",\"31\",\"22:00\",\"-12.5\",\"\",\"-16.9\",\"\",\"70\",\"\",\"\",\"\",\"8\",\"\",\"7\",\"\",\"64.4\",\"\",\"98.45\",\"\",\"\",\"\",\"-17\",\"\",\"Clear\"\r\n\"-120.45\",\"50.70\",\"KAMLOOPS
         A\",\"1163781\",\"2014-01-31 23:00\",\"2014\",\"01\",\"31\",\"23:00\",\"-13.8\",\"\",\"-17.3\",\"\",\"75\",\"\",\"\",\"\",\"10\",\"\",\"7\",\"\",\"64.4\",\"\",\"98.46\",\"\",\"\",\"\",\"-18\",\"\",\"NA\"\r\n"
-  recorded_at: 2021-01-14 22:35:52 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:46:03 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0

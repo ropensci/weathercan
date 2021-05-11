@@ -1,17 +1,17 @@
 ---
-title: "General Usage"
+title: "Getting Started"
 author: "Steffi LaZerte"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{weathercan}
+  %\VignetteIndexEntry{Getting Started}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(cache = FALSE)
-old <- options(tibble.max_extra_cols = 0, width = 90)
+old <- options(width = 160)
 ```
 
 
@@ -24,10 +24,11 @@ library(weathercan)
 
 ## Stations
 
-`weathercan` includes a data frame called `stations` which lists available stations and their details (including `station_id`.
+`weathercan` includes the function `stations()` which returns a list of stations and their details (including `station_id`).
 
 ```{r}
-stations
+head(stations())
+glimpse(stations())
 ```
 
 You can look through this data frame directly, or you can use the `stations_search` function:
@@ -55,9 +56,11 @@ You can also search by proximity. These results include a new column `distance` 
 stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour")
 ```
 
-We can also perform more complex searches using `filter()` function from the `dplyr` package:
+We can also perform more complex searches using `filter()` function from the `dplyr` package
+direction on the data returned by stations():
+
 ```{r search_crit}
-BCstations <- stations %>%
+BCstations <- stations() %>%
   filter(prov %in% c("BC")) %>%
   filter(interval == "hour") %>%
   filter(lat > 49 & lat < 49.5) %>%
@@ -71,11 +74,15 @@ stn_vector <- BCstations$station_id
 stn_vector
 ```
 
-Searching a bleeding edge updated list of stations:
+You can update this list of stations with 
 
-```{r, eval = FALSE}
-s <- stations_dl() # Download complete stations list
-stations_search("Saskatoon", stn = s) # Specify the new stations list to search
+```{r}
+stations_dl()
+```
+
+And check when it was last updated with
+```{r}
+stations_meta()
 ```
 
 
@@ -116,8 +123,51 @@ stn_vec_df
 
 For more information on the data flags, see the [Flags vignette](flags.html), for more information on units and terms, see the [Terms and Units vignette](glossary.html).
 
+## Climate Normals
+
+To access climate normals, you first need to know the `climate_id` associated with the station you're interested in.
+
+```{r}
+stations_search("Winnipeg", normals_years = "current")
+```
+
+The current year range is 1981-2010, but you can also search for stations in the
+previous year range:
+
+```{r}
+stations_search("Winnipeg", normals_years = "1971-2000")
+```
+
+Note that the Winnipeg station has normals for both year ranges.
+
+Then you can download the climate normals with the `normals_dl()` function.
+
+```{r}
+n <- normals_dl("5023222")
+```
+
+There are two parts to the normals data, average weather measurements and average frost dates.
+
+```{r, message = FALSE}
+library(tidyr)
+unnest(n, normals)
+unnest(n, frost)
+```
+
+
+Alternatively, download the 1971-2000 normals:
+
+```{r}
+n <- normals_dl("5023222", normals_years = "1971-2000")
+unnest(n, normals)
+unnest(n, frost)
+```
+
+
+
+
+
 ```{r, include = FALSE}
 # Reset options
 options(old)
 ```
-

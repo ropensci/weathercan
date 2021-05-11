@@ -14,9 +14,7 @@ weather_dl(
   format = TRUE,
   string_as = NA,
   time_disp = "none",
-  tz_disp = NULL,
-  stn = weathercan::stations,
-  url = NULL,
+  stn = NULL,
   encoding = "UTF-8",
   list_col = FALSE,
   verbose = FALSE,
@@ -50,12 +48,8 @@ numeric measurement with. See Details.}
 
 \item{time_disp}{Character. Either "none" (default) or "UTC". See details.}
 
-\item{tz_disp}{DEPRECATED. See details}
-
-\item{stn}{Data frame. The \code{stations} data frame to use. Will use the
-one included in the package unless otherwise specified.}
-
-\item{url}{DEPRECATED. To set a different url use \code{options()} (see details).}
+\item{stn}{DEFUNCT. Now use \code{stations_dl()} to update internal data and
+\code{stations_meta()} to check the date it was last updated.}
 
 \item{encoding}{Character. Text encoding for download.}
 
@@ -118,22 +112,23 @@ on or after April 2018).
 \examples{
 
 \donttest{
-kam <- weather_dl(station_ids = 51423,
-                  start = "2016-01-01", end = "2016-02-15")
-}
+if(check_eccc()) {  # Make sure ECCC is available
 
-stations_search("Kamloops A$", interval = "hour")
-stations_search("Prince George Airport", interval = "hour")
-\donttest{
-kam.pg <- weather_dl(station_ids = c(48248, 51423),
-                     start = "2016-01-01", end = "2016-02-15")
+  kam <- weather_dl(station_ids = 51423,
+                    start = "2016-01-01", end = "2016-02-15")
 
-library(ggplot2)
+  stations_search("Kamloops A$", interval = "hour")
+  stations_search("Prince George Airport", interval = "hour")
 
-ggplot(data = kam.pg, aes(x = time, y = temp,
-                          group = station_name,
-                          colour = station_name)) +
-       geom_line()
-}
+  kam.pg <- weather_dl(station_ids = c(48248, 51423),
+                       start = "2016-01-01", end = "2016-02-15")
+
+  library(ggplot2)
+
+  ggplot(data = kam.pg, aes(x = time, y = temp,
+                            group = station_name,
+                            colour = station_name)) +
+         geom_line()
+ }}
 
 }

@@ -1,0 +1,49 @@
+---
+title: "Reproducibility"
+author: "Steffi LaZerte"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Reproducibility}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+library(weathercan)
+```
+
+When using data from external sources it's a good idea to take note of when data
+was downloaded, which version (if possible) and with what. 
+
+Reproducibility with `weathercan` can be achieved by taking note (or better yet, 
+compiling reports) with the following information:
+
+1. Your computer information (and date)
+    - R version
+2. Specific information on packages you're using
+    - Citations if presenting in papers/reports
+3. The stations list version
+
+For example:
+
+```{r, eval = FALSE}
+# Work
+library(weathercan)
+s <- stations_search("Winnipeg", normals_years = "current")
+w <- weather_dl(s, interval = "month", start = "2021-01-01")
+
+# Reproducibility
+stations_meta()
+citation('weathercan')
+devtools::session_info()
+```
+
+
+```{r, eval = TRUE, echo = FALSE, highlight=1}
+library(weathercan)
+# Reproducibility
+stations_meta()
+citation('weathercan')
+devtools::session_info()
+```

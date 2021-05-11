@@ -14,7 +14,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:36:12 GMT
+      date: Thu, 15 Apr 2021 19:46:19 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -779,8 +779,8 @@ http_interactions:
         ISLAND RCS\",\"1054503\",\"2017-08-31 21:00\",\"2017\",\"08\",\"31\",\"21:00\"\r\n\"-133.06\",\"54.26\",\"LANGARA
         ISLAND RCS\",\"1054503\",\"2017-08-31 22:00\",\"2017\",\"08\",\"31\",\"22:00\"\r\n\"-133.06\",\"54.26\",\"LANGARA
         ISLAND RCS\",\"1054503\",\"2017-08-31 23:00\",\"2017\",\"08\",\"31\",\"23:00\"\r\n"
-  recorded_at: 2021-01-14 22:36:18 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:46:21 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=6819&timeframe=1&submit=Download%2BData&Year=2017&Month=09
@@ -796,7 +796,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:36:16 GMT
+      date: Thu, 15 Apr 2021 19:46:20 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -1537,8 +1537,8 @@ http_interactions:
         ISLAND RCS\",\"1054503\",\"2017-09-30 21:00\",\"2017\",\"09\",\"30\",\"21:00\"\r\n\"-133.06\",\"54.26\",\"LANGARA
         ISLAND RCS\",\"1054503\",\"2017-09-30 22:00\",\"2017\",\"09\",\"30\",\"22:00\"\r\n\"-133.06\",\"54.26\",\"LANGARA
         ISLAND RCS\",\"1054503\",\"2017-09-30 23:00\",\"2017\",\"09\",\"30\",\"23:00\"\r\n"
-  recorded_at: 2021-01-14 22:36:18 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:46:21 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=txt&stationID=6819&timeframe=1&submit=Download%2BData
@@ -1554,7 +1554,7 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 14 Jan 2021 22:36:17 GMT
+      date: Thu, 15 Apr 2021 19:46:20 GMT
       server: Apache/2.4.29 (Ubuntu)
       strict-transport-security: max-age=63072000; preload
       expires: Mon, 26 Jul 1997 05:00:00 GMT
@@ -1573,5 +1573,5 @@ http_interactions:
         Local Standard Time (LST) was selected, add 1 hour to adjust for Daylight
         Saving Time where and when it is observed.\"\r\n\r\nLegend\r\nE\tEstimated\r\nM\tMissing\r\nNA\tNot
         Available*\r\n[empty]\tIndicates an unobserved value\r\n\r\n*https://climate.weather.gc.ca/FAQ_e.html#Q5"
-  recorded_at: 2021-01-14 22:36:18 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
+  recorded_at: 2021-04-15 19:46:21 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
