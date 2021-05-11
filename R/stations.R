@@ -152,12 +152,9 @@ stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
   
   if(verbose) message("Trying to access stations data frame")
 
-  resp <- get_check(getOption("weathercan.urls.stations"))
-  if(httr::http_error(resp)) {
-    stop("Cannot reach ECCC stations list, please try again later (",
-         getOption("weathercan.urls.stations"), ")", call. = FALSE)
-  }
-
+  resp <- get_check(getOption("weathercan.urls.stations"), 
+                    task = "access stations list")
+                    
   headings <- readr::read_lines(httr::content(resp, as = "text",
                                               encoding = "Latin1"),
                                 n_max = 5)
@@ -278,7 +275,7 @@ stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
 #' @param coords Numeric. A vector of length 2 with latitude and longitude of a
 #'   place to match against. Overrides \code{lat} and \code{lon} if also
 #'   provided.
-#' @param dist Numeric. Match all stations within this many kilometers of the
+#' @param dist Numeric. Match all stations within this many kilometres of the
 #'   \code{coords}.
 #' @param interval Character. Return only stations with data at these intervals.
 #'   Must be any of "hour", "day", "month".
