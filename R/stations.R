@@ -110,16 +110,15 @@ stations_read <- function() {
 #' @examples
 #'
 #' \donttest{
+#' if(check_eccc()) {
 #'   # Update stations data frame
-#'   if(requireNamespace("lutz") && requireNamespace("sf")) {
-#'     s <- stations_dl()
+#'   stations_dl()
 #'
-#'     # Use new data frame to search for stations
-#'     stations_search("Winnipeg", stn = s)
-#'    }
+#'   # Updated stations data frame is now automatically used
+#'   stations_search("Winnipeg")
+#' }
 #' }
 #'
-#' @aliases stations_all
 #'
 #' @export
 
@@ -148,12 +147,12 @@ stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
 
   # Get normals data
   normals <- stations_normals()
-  
+
   if(verbose) message("Trying to access stations data frame")
 
-  resp <- get_check(getOption("weathercan.urls.stations"), 
+  resp <- get_check(getOption("weathercan.urls.stations"),
                     task = "access stations list")
-                    
+
   headings <- readr::read_lines(httr::content(resp, as = "text",
                                               encoding = "Latin1"),
                                 n_max = 5)

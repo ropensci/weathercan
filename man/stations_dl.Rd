@@ -2,7 +2,6 @@
 % Please edit documentation in R/stations.R
 \name{stations_dl}
 \alias{stations_dl}
-\alias{stations_all}
 \title{Get available stations}
 \usage{
 stations_dl(skip = NULL, verbose = FALSE, quiet = FALSE)
@@ -46,13 +45,14 @@ normals (i.e. currently 1981-2010)
 \examples{
 
 \donttest{
+if(check_eccc()) {
   # Update stations data frame
-  if(requireNamespace("lutz") && requireNamespace("sf")) {
-    s <- stations_dl()
+  stations_dl()
 
-    # Use new data frame to search for stations
-    stations_search("Winnipeg", stn = s)
-   }
+  # Updated stations data frame is now automatically used
+  stations_search("Winnipeg")
 }
+}
+
 
 }

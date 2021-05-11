@@ -59,4 +59,21 @@ get_check <- function(..., task = NULL) {
   if (grepl("^https://climate.weather.gc.ca/error", req$url)) {
     stop("Service is currently down!")
   } else req
-} 
+}
+
+
+#' Check access to ECCC
+#'
+#' Checks if <https://climate.weather.gc.ca> is available and accessible.
+#'
+#' @return FALSE if not, TRUE if so
+#' @export
+#'
+#' @examples
+#'
+#' check_eccc()
+#'
+check_eccc <- function() {
+  t <- try(get_check("https://climate.weather.gc.ca"), silent = TRUE)
+  !"try-error" %in% class(t)
+}

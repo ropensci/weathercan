@@ -112,22 +112,23 @@ on or after April 2018).
 \examples{
 
 \donttest{
-kam <- weather_dl(station_ids = 51423,
-                  start = "2016-01-01", end = "2016-02-15")
-}
+if(check_eccc()) {  # Make sure ECCC is available
 
-stations_search("Kamloops A$", interval = "hour")
-stations_search("Prince George Airport", interval = "hour")
-\donttest{
-kam.pg <- weather_dl(station_ids = c(48248, 51423),
-                     start = "2016-01-01", end = "2016-02-15")
+  kam <- weather_dl(station_ids = 51423,
+                    start = "2016-01-01", end = "2016-02-15")
 
-library(ggplot2)
+  stations_search("Kamloops A$", interval = "hour")
+  stations_search("Prince George Airport", interval = "hour")
 
-ggplot(data = kam.pg, aes(x = time, y = temp,
-                          group = station_name,
-                          colour = station_name)) +
-       geom_line()
-}
+  kam.pg <- weather_dl(station_ids = c(48248, 51423),
+                       start = "2016-01-01", end = "2016-02-15")
+
+  library(ggplot2)
+
+  ggplot(data = kam.pg, aes(x = time, y = temp,
+                            group = station_name,
+                            colour = station_name)) +
+         geom_line()
+ }}
 
 }
