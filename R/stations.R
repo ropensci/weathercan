@@ -70,7 +70,15 @@ stations_meta <- function() {
 }
 
 stations_read <- function() {
-  readr::read_rds(system.file("extdata", "stations.rds", package = "weathercan"))
+  if(!file.exists(stations_file())) {
+    f <- system.file("extdata", "stations.rds", package = "weathercan")
+  } else f <- stations_file()
+
+  readr::read_rds(f)
+}
+
+stations_file <- function() {
+  file.path(rappdirs::user_data_dir("weathercan"), "stations.rds")
 }
 
 #' Get available stations
@@ -104,19 +112,15 @@ stations_read <- function() {
 #' @param quiet Logical. Suppress all messages (including messages regarding
 #'   missing data, etc.)
 #'
-#' @return A tibble containing station names, station ID codes, dates of
-#'   operation, as well as whether or not there are data on climate normals.
 #'
 #' @examples
 #'
-#' \donttest{
-#' if(check_eccc()) {
-#'   # Update stations data frame
+#' if(interactive()) {
+#'   # Update stations data frame (requires R >= 4.0.0)
 #'   stations_dl()
 #'
 #'   # Updated stations data frame is now automatically used
 #'   stations_search("Winnipeg")
-#' }
 #' }
 #'
 #'
@@ -124,17 +128,40 @@ stations_read <- function() {
 
 stations_dl <- function(skip = NULL, verbose = FALSE, quiet = FALSE) {
   stations_dl_internal(skip = skip, verbose = verbose, quiet = quiet,
-                       loc = system.file("extdata", package = "weathercan"))
+                       internal = FALSE)
 }
 
 stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
-                                 loc = NULL) {
+                                 internal = TRUE) {
+
+  if(getRversion() < "4.0.0") {
+    message("Need R version 4.0.0 or greater to update the stations data")
+    return(invisible())
+  }
 
   # If called internally use inst
-  if(is.null(loc)) loc <- system.file("inst", "extdata", package = "weathercan")
-  if(getRversion() < "3.3.4") {
-    message("Need R version 3.3.4 or greater to update the stations data")
-    return()
+  if(internal) {
+    d <- system.file("inst", "extdata", package = "weathercan")
+    f <- file.path(d, "stations.rds")
+  } else {
+    d <- dirname(stations_file())
+    f <- stations_file()
+  }
+
+  # Ask for permission to save data
+  if(!internal) {
+    if(!dir.exists(d) || !file.exists(f)) {
+      cont <- utils::askYesNo(
+        paste0("weathercan would like to store the updated stations ",
+               "data to: \n", f, "\nIs that okay?"))
+    } else cont <- TRUE
+
+    if(!cont) {
+      message("Not updating stations data")
+      return(invisible())
+    }
+
+    if(!dir.exists(d)) dir.create(d)
   }
 
   if(!requireNamespace("lutz", quietly = TRUE) |
@@ -251,13 +278,13 @@ stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
               meta = list(ECCC_modified = eccc_meta,
                           weathercan_modified = Sys.Date()))
 
-  f <- file.path(loc, "stations.rds")
   if(verbose) message("Saving stations data to ", f)
   readr::write_rds(x = stn, file = f, compress = "gz")
 
   if(!quiet) message("Stations data saved...\n",
                      "Use `stations()` to access most recent version and ",
                      "`stations_meta()` to see when this was last updated")
+
 }
 
 #' Search for stations by name or location

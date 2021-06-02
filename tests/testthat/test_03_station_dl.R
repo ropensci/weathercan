@@ -45,17 +45,8 @@ test_that("stations_dl() runs and updates data", {
 
   #vcr::use_cassette("stations_dl_good", {  # Don't use vcr until deal with url redirects
   #})
-  stub(stations_dl_internal, "Sys.Date", as.Date("2000-01-01"))
-  expect_message(
-    stations_dl_internal(loc = system.file("extdata", package = "weathercan")),
-    "Stations data saved")
-  expect_equal(stations_meta()$weathercan_modified, as.Date("2000-01-01"))
-
-  stub(stations_dl_internal, "Sys.Date", Sys.Date())
-  expect_message(
-    stations_dl_internal(loc = system.file("extdata", package = "weathercan")),
-    "Stations data saved")
-  expect_equal(stations_meta()$weathercan_modified, Sys.Date())
+  stub(stations_dl_internal, "askYesNo", TRUE)
+  expect_message(stations_dl_internal(internal = FALSE), "Stations data saved")
 })
 
 

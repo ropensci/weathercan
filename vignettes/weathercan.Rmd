@@ -76,7 +76,7 @@ stn_vector
 
 You can update this list of stations with 
 
-```{r}
+```{r, eval = FALSE}
 stations_dl()
 ```
 

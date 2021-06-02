@@ -15,10 +15,6 @@ NULL, automatically derived.}
 \item{quiet}{Logical. Suppress all messages (including messages regarding
 missing data, etc.)}
 }
-\value{
-A tibble containing station names, station ID codes, dates of
-operation, as well as whether or not there are data on climate normals.
-}
 \description{
 This function can be used to download a Station Inventory CSV file from
 Environment and Climate Change Canada. This is only necessary if the station
@@ -44,14 +40,12 @@ normals (i.e. currently 1981-2010)
 }
 \examples{
 
-\donttest{
-if(check_eccc()) {
-  # Update stations data frame
+if(interactive()) {
+  # Update stations data frame (requires R >= 4.0.0)
   stations_dl()
 
   # Updated stations data frame is now automatically used
   stations_search("Winnipeg")
-}
 }
 
 

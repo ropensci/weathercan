@@ -1,7 +1,7 @@
 Package: weathercan
 Type: Package
 Title: Download Weather Data from Environment and Climate Change Canada
-Version: 0.6.0
+Version: 0.6.1
 Authors@R: c(
      person("Steffi", "LaZerte", email = "steffi@steffi.ca", role = c("aut","cre"), comment = c(ORCID = "0000-0002-7690-8360")),
      person("Sam", "Albers", email = "sam.albers@gmail.com", role = c("ctb"), comment = c(ORCID = "0000-0002-9270-7884")),
@@ -33,7 +33,8 @@ Imports:
     stringr (>= 1.4.0),
     tidyr (>= 1.1.3),
     tidyselect (>= 1.0.0),
-    xml2 (>= 0.1.2)
+    xml2 (>= 0.1.2),
+    rappdirs (>= 0.3.3)
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
 Suggests:
@@ -49,6 +50,6 @@ Suggests:
     sf,
     sp,
     testthat,
-    vcr
+    vcr (>= 1.0.2)
 VignetteBuilder: knitr
 Encoding: UTF-8

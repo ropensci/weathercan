@@ -1,3 +1,8 @@
+# weathercan 0.6.1
+
+## Small changes
+- Save `stations()` data to local cache
+
 # weathercan 0.6.0
 
 ## Big changes
