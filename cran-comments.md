@@ -1,13 +1,10 @@
-## Release v.0.6.0
+## Release v.0.6.1
 
-* Download climate normals from new location (more stations, more year ranges)
-* Update dependency versions
-* Switch from stations data frame to stations() function
-* Bug fixes
-* Ensure all examples fail silently (no error) if the ECCC connection is unavailable
+* Switch from stations_dl() function asks users to store data in cache (doesn't run during tests or setup)
+* Don't test get_check() on CRAN because requires internet
 
 ## Test environments
-As of May 11th, 2021
+As of June 3rd, 2021
 
 ubuntu
 * 18.04 - Local (4.0.3)
