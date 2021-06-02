@@ -163,10 +163,10 @@ test_that("weather (day) no data fails nicely", {
 })
 
 test_that("weather (day) verbose and quiet", {
-  vcr::use_cassette("weather_day_51423_54398_2017", {
-    expect_message(weather_dl(c(51423, 54398), interval = "day",
-                              start = "2017-01-01", end = "2017-02-01"))
-  })
+
+  # Cached
+  expect_message(weather_dl(c(51423, 54398), interval = "day",
+                            start = "2017-01-01", end = "2017-02-01"))
 
   # Cached
   expect_silent(weather_dl(c(51423, 54398), interval = "day",
@@ -208,11 +208,9 @@ test_that("weather (day) skips with message if end date < start date", {
                    "The end date ")
   })
 
-  vcr::use_cassette("weather_day_51423_2012", {
-    expect_message({weather_dl(station_ids = 51423, end = "2012-01-01",
-                               interval = "day")},
-                   "The end date ")
-  })
+  expect_message({weather_dl(station_ids = 51423, end = "2012-01-01",
+                             interval = "day")},
+                 "The end date ")
 
   vcr::use_cassette("weather_day_4291_51423_1928", {
     expect_message({w <- weather_dl(c(4291, 51423), end = "1928-11-10",
