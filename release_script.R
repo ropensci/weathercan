@@ -1,6 +1,6 @@
 # Steps/Commands to run before a CRAN release -----------------------------
 
-v <- "0.6.0"
+v <- "0.6.1"
 #usethis::use_release_issue(version = v)
 
 # Check existing errors
@@ -12,13 +12,12 @@ dplyr::select(hist, date_updated, "summary")
 dplyr::bind_cols(dplyr::select(hist, date_updated, checks),
                  hist$summary,
                  hist$check_details) %>%
+  dplyr::filter(stringr::str_detect(date_updated, "2021-05-18")) %>%
   tidyr::unnest(checks) %>%
   dplyr::filter(status %in% c("WARN", "ERROR")) %>%
   dplyr::select(-version, -tinstall, -tcheck, -ttotal, -any, -ok, -note, -warn, -error, -fail) %>%
   tidyr::unnest(details) %>%
-  tidyr::unnest(additional_issues) %>%
-  tidyr::unnest(donttest) %>%
-  dplyr::pull(donttest) %>%
+  dplyr::pull(output) %>%
   unique()
 
 cchecks::cch_pkgs("weathercan")$data$checks %>%
