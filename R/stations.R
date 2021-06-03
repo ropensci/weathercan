@@ -116,7 +116,7 @@ stations_file <- function() {
 #' @examples
 #'
 #' if(interactive()) {
-#'   # Update stations data frame (requires R >= 4.0.0)
+#'   # Update stations data frame
 #'   stations_dl()
 #'
 #'   # Updated stations data frame is now automatically used
@@ -134,9 +134,9 @@ stations_dl <- function(skip = NULL, verbose = FALSE, quiet = FALSE) {
 stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
                                  internal = TRUE) {
 
-  if(getRversion() < "4.0.0") {
-    message("Need R version 4.0.0 or greater to update the stations data")
-    return(invisible())
+  if(getRversion() <= "3.3.3") {
+    message("Need R version 3.3.4 or greater to update the stations data")
+    return()
   }
 
   # If called internally use inst

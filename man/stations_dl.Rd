@@ -41,7 +41,7 @@ normals (i.e. currently 1981-2010)
 \examples{
 
 if(interactive()) {
-  # Update stations data frame (requires R >= 4.0.0)
+  # Update stations data frame
   stations_dl()
 
   # Updated stations data frame is now automatically used
