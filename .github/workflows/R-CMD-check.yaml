@@ -93,10 +93,10 @@ jobs:
 
       - name: Install dependencies
         run: |
+          install.packages("fs", "devtools")
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
           install.packages("stringi", type="source")
-          install.packages("devtools")
         shell: Rscript {0}
 
       - name: Set Options
