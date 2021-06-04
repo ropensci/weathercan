@@ -153,7 +153,7 @@ stations_meta()
     ## [1] "2021-05-02 23:31:00 UTC"
     ## 
     ## $weathercan_modified
-    ## [1] "2021-05-11"
+    ## [1] "2021-06-03"
 
 **Note:** For reproducibility, if you are using the stations list to
 gather your data, it can be a good idea to take note of the ECCC date of
@@ -303,7 +303,7 @@ contributing](CONTRIBUTING.md)
 ## Code of Conduct
 
 Please note that this project is released with a [Contributor Code of
-Conduct](https://ropensci.org/code-of-conduct/). By participating in this project you agree
-to abide by its terms.
+Conduct](https://ropensci.org/code-of-conduct/). By participating in
+this project you agree to abide by its terms.
 
 [![ropensci\_footer](http://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)

@@ -20,6 +20,7 @@ RFID
 RMarkdown
 ROpenSci
 Reproducibility
+Rong
 Temperatureflag
 Timezones
 WGS84
@@ -51,6 +52,7 @@ readme
 readr
 reproducibility
 ropensci
+rvt
 sp
 svg
 tibble

@@ -30,8 +30,7 @@ cchecks::cch_pkgs("weathercan")$data$check_details$details %>%
 
 
 ## Update dependencies
-remotes::package_deps("weathercan", dependencies = TRUE) %>%
-  update()
+update(remotes::package_deps("weathercan", dependencies = TRUE))
 
 ## Internal data files
 source("data-raw/data-index.R")
@@ -57,6 +56,7 @@ devtools::build_readme()
 
 # Check/update URLS
 urlchecker::url_check()
+
 
 
 ## Checks
@@ -87,8 +87,8 @@ system("cd ..; R CMD build weathercan")
 #                      platforms = c("windows-x86_64-oldrel",
 #                                    "windows-x86_64-devel",
 #                                    "windows-x86_64-release"),
-#                      show_status = FALSE,
-#                      env_vars=c(R_COMPILE_AND_INSTALL_PACKAGES = "always"))
+#                      show_status = FALSE)
+# ##                     env_vars=c(R_COMPILE_AND_INSTALL_PACKAGES = "always"))
 
 # Check debian
 rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
