@@ -2,22 +2,15 @@
 
 * Switch from stations_dl() function asks users to store data in cache (doesn't run during tests or setup)
 * Don't test get_check() on CRAN because requires internet
+* Uses vcr v1.0.2 to avoid test directory problems
 
 ## Test environments
-As of June 3rd, 2021
+As of June 4th, 2021
 
-ubuntu
-* 18.04 - Local (4.0.3)
-* 16.04 - GitHub Actions (devel, release, old release)
-
-OSX
-* 10.15.7 - GitHub Actions (release)
-
-Windows 
-* Windows Server 2019 x64 - GitHub Actions (release, old release)
-* Windows Server 2008 x64 - win-builder (devel, release, old release)
-
-Other
+* ubuntu 20.04 - Local (4.1.0)
+* ubuntu 16.04 - GitHub Actions (devel, release, old release)
+* OSX 10.15.7 - GitHub Actions (release)
+* Windows Server 2019 x64 - GitHub Actions (devel, release, old release)
 * Debian GCC - rhub (release, patched, devel)
 * Debian CLANG - rhub (devel)
 * Fedora GCC - rhub (devel)
