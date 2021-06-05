@@ -1,4 +1,4 @@
-pandoc: 2.11.2
+pandoc: 2.11.4
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
@@ -12,5 +12,5 @@ articles:
   normals: normals.html
   reproducibility: reproducibility.html
   weathercan: weathercan.html
-last_built: 2021-05-11T20:11Z
+last_built: 2021-06-05T03:13Z
 

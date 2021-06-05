@@ -78,7 +78,7 @@ compiled. This function may take a few minutes to run." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">weathercan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1</span>
       </span>
     </div>
 
@@ -154,10 +154,6 @@ missing data, etc.)</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A tibble containing station names, station ID codes, dates of
-operation, as well as whether or not there are data on climate normals.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The stations list is downloaded from the url stored in the option
@@ -173,35 +169,17 @@ specified in <code>normals_1981_2010</code> and <code>normals_1971_2000</code>, 
 normals (i.e. currently 1981-2010)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples">stations_dl,Get available stations,Get available stations — stations_dl,Source: <a href='https://github.com/ropensci/weathercan/blob/master/R/stations.R'><code>R/stations.R</code></a>,stations_dl.Rd,character(0),stations_dl,character(0),list(title = "Description", contents = "<p>This function can be used to download a Station Inventory CSV file from\nEnvironment and Climate Change Canada. This is only necessary if the station\nyou're interested was only recently added. The 'stations' data set included\nin this package contains station data downloaded when the package was last\ncompiled. This function may take a few minutes to run.</p>"),list(description = "This function can be used to download a Station Inventory CSV file from\nEnvironment and Climate Change Canada. This is only necessary if the station\nyou're interested was only recently added. The 'stations' data set included\nin this package contains station data downloaded when the package was last\ncompiled. This function may take a few minutes to run."),<span class='fu'>stations_dl</span><span class='op'>(</span>skip <span class='op'>=</span> <span class='cn'>NULL</span>, verbose <span class='op'>=</span> <span class='cn'>FALSE</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>,list(list(name = "skip", description = "<p>Numeric. Number of lines to skip at the beginning of the csv. If\nNULL, automatically derived.</p>"), list(name = "verbose", description = "<p>Logical. Include progress messages</p>"), list(name = "quiet", description = "<p>Logical. Suppress all messages (including messages regarding\nmissing data, etc.)</p>")),TRUE,<div class='input'>
-<span class='co'># \donttest{</span>
-<span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='check_eccc.html'>check_eccc</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+    <pre class="examples"><div class='input'>
+<span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='co'># Update stations data frame</span>
   <span class='fu'>stations_dl</span><span class='op'>(</span><span class='op'>)</span>
 
   <span class='co'># Updated stations data frame is now automatically used</span>
   <span class='fu'><a href='stations_search.html'>stations_search</a></span><span class='op'>(</span><span class='st'>"Winnipeg"</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'>According to Environment Canada, Modified Date: 2021-05-02 23:31 UTC</span></div><div class='output co'>#&gt; <span class='message'>Stations data saved...</span>
-#&gt; <span class='message'>Use `stations()` to access most recent version and `stations_meta()` to see when this was last updated</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 85 x 16</span><span>
-#&gt;    prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz   
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> MB    WINNIPEG A …      </span><span style='text-decoration: underline;'>27</span><span>174 502S001     </span><span style='text-decoration: underline;'>71</span><span>849 XWG    49.9 -</span><span style='color: #BB0000;'>97.2</span><span>  239. Etc/…
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> MB    WINNIPEG A …      </span><span style='text-decoration: underline;'>27</span><span>174 502S001     </span><span style='text-decoration: underline;'>71</span><span>849 XWG    49.9 -</span><span style='color: #BB0000;'>97.2</span><span>  239. Etc/…
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> MB    WINNIPEG A …      </span><span style='text-decoration: underline;'>27</span><span>174 502S001     </span><span style='text-decoration: underline;'>71</span><span>849 XWG    49.9 -</span><span style='color: #BB0000;'>97.2</span><span>  239. Etc/…
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> MB    WINNIPEG A …      </span><span style='text-decoration: underline;'>27</span><span>525 5023223        </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>     49.9 -</span><span style='color: #BB0000;'>97.2</span><span>  239. Etc/…
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> MB    WINNIPEG A …      </span><span style='text-decoration: underline;'>27</span><span>525 5023223        </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>     49.9 -</span><span style='color: #BB0000;'>97.2</span><span>  239. Etc/…
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> MB    WINNIPEG AN…       </span><span style='text-decoration: underline;'>3</span><span>689 5023170        </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>     49.9 -</span><span style='color: #BB0000;'>97.2</span><span>   </span><span style='color: #BB0000;'>NA</span><span>  Etc/…
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> MB    WINNIPEG AN…       </span><span style='text-decoration: underline;'>3</span><span>689 5023170        </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>     49.9 -</span><span style='color: #BB0000;'>97.2</span><span>   </span><span style='color: #BB0000;'>NA</span><span>  Etc/…
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> MB    WINNIPEG AS…       </span><span style='text-decoration: underline;'>3</span><span>690 5023174        </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>     49.9 -</span><span style='color: #BB0000;'>97.2</span><span>  229. Etc/…
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> MB    WINNIPEG AS…       </span><span style='text-decoration: underline;'>3</span><span>690 5023174        </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>     49.9 -</span><span style='color: #BB0000;'>97.2</span><span>  229. Etc/…
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> MB    WINNIPEG BL…       </span><span style='text-decoration: underline;'>3</span><span>691 5023178        </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>     49.9 -</span><span style='color: #BB0000;'>97.4</span><span>  236. Etc/…
-#&gt; </span><span style='color: #949494;'># … with 75 more rows, and 6 more variables: interval &lt;chr&gt;, start &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   end &lt;dbl&gt;, normals &lt;lgl&gt;, normals_1981_2010 &lt;lgl&gt;, normals_1971_2000 &lt;lgl&gt;</span><span></div><div class='input'><span class='co'># }</span>
 
 
-</div></span>,list(list(title = "Value", contents = "<p>A tibble containing station names, station ID codes, dates of\noperation, as well as whether or not there are data on climate normals.</p>", slug = "value"), list(title = "Details", contents = "<p>The stations list is downloaded from the url stored in the option\n<code>weathercan.urls.stations</code>. To change this location use\n<code><a href='https://rdrr.io/r/base/options.html'>options(weathercan.urls.stations = \"your_new_url\")</a></code>.</p>\n<p>The list of which stations have climate normals is downloaded from the url\nstored in the option <code>weathercan.urls.stations.normals</code>. To change this\nlocation use <code><a href='https://rdrr.io/r/base/options.html'>options(weathercan.urls.normals = \"your_new_url\")</a></code>.</p>\n<p>Currently there are two sets of climate normals available: 1981-2010 and\n1971-2000. Whether a station has climate normals for a given year range is\nspecified in <code>normals_1981_2010</code> and <code>normals_1971_2000</code>, respectively.</p>\n<p>The column <code>normals</code> represents the most current year range of climate\nnormals (i.e. currently 1981-2010)</p>", 
-    slug = "details")),2021,list(name = "weathercan", version = "0.6.0", authors = "Steffi LaZerte"),list(destination = "dev", mode = "release", version_label = "default", version_tooltip = "Released version", in_dev = FALSE),list(root = "../", title = "weathercan"),list(css = "/home/steffi/Projects/weathercan/pkgdown/extra.css"),list(type = "inverse", left = "<li>\n  <a href=\"../index.html\">\n    <span class=\"fas fa-home\"></span>\n     \n  </a>\n</li>\n<li>\n  <a href=\"../articles/weathercan.html\">Getting Started</a>\n</li>\n<li>\n  <a href=\"../reference/index.html\">Reference</a>\n</li>\n<li>\n  <a href=\"../articles/index.html\">Articles</a>\n</li>", right = "<li>\n  <a href=\"https://github.com/ropensci/weathercan\">\n    <span class=\"fas fa-github fa-lg\"></span>\n     \n  </a>\n</li>"),list(.present = TRUE),list(version = "1.6.1"),FALSE</pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

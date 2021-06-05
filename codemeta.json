@@ -10,13 +10,13 @@
   "codeRepository": "https://github.com/ropensci/weathercan/",
   "issueTracker": "https://github.com/ropensci/weathercan/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.0.3 (2020-10-10)",
+  "runtimePlatform": "R version 4.1.0 (2021-05-18)",
   "author": [
     {
       "@type": "Person",
@@ -207,6 +207,7 @@
       "@type": "SoftwareApplication",
       "identifier": "vcr",
       "name": "vcr",
+      "version": ">= 1.0.2",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -397,6 +398,19 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=xml2"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rappdirs",
+      "name": "rappdirs",
+      "version": ">= 0.3.3",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rappdirs"
     }
   ],
   "releaseNotes": "https://github.com/ropensci/weathercan/blob/master/NEWS.md",
@@ -460,5 +474,5 @@
   ],
   "copyrightHolder": {},
   "funder": {},
-  "fileSize": "81136.531KB"
+  "fileSize": "11772.102KB"
 }

@@ -77,7 +77,7 @@ vignette(&quot;glossary_normals&quot;, package = &quot;weathercan&quot;)" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">weathercan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1</span>
       </span>
     </div>
 
@@ -202,15 +202,7 @@ for more details)</p>
 <code><a href='https://rdrr.io/r/base/options.html'>options(weathercan.urls.normals = "your_new_url")</a></code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples">normals_dl,Download climate normals from Environment and Climate Change Canada,Download climate normals from Environment and Climate Change Canada — normals_dl,Source: <a href='https://github.com/ropensci/weathercan/blob/master/R/normals.R'><code>R/normals.R</code></a>,normals_dl.Rd,character(0),normals_dl,character(0),list(title = "Description", contents = "<p>Downloads climate normals from Environment and Climate Change Canada (ECCC)\nfor one or more stations (defined by <code>climate_id</code>s). For details and units,\nsee the <code><a href='glossary_normals.html'>glossary_normals</a></code> data frame or the <code>glossary_normals</code> vignette:\n<code><a href='../articles/glossary_normals.html'>vignette(\"glossary_normals\", package = \"weathercan\")</a></code></p>"),list(description = "Downloads climate normals from Environment and Climate Change Canada (ECCC)\nfor one or more stations (defined by climate_ids). For details and units,\nsee the glossary_normals data frame or the glossary_normals vignette:\nvignette(\"glossary_normals\", package = \"weathercan\")"),<span class='fu'>normals_dl</span><span class='op'>(</span>
-  <span class='va'>climate_ids</span>,
-  normals_years <span class='op'>=</span> <span class='st'>"1981-2010"</span>,
-  format <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  stn <span class='op'>=</span> <span class='cn'>NULL</span>,
-  verbose <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>
-<span class='op'>)</span>,list(list(name = "climate_ids", description = "<p>Character. A vector containing the Climate ID(s) of the\nstation(s) you wish to download data from. See the <code><a href='stations.html'>stations</a></code>\ndata frame or the <code><a href='stations_search.html'>stations_search</a></code> function to find Climate\nIDs.</p>"), list(name = "normals_years", description = "<p>Character. The year range for which you want climate\nnormals. Default \"1981-2010\".</p>"), list(name = "format", description = "<p>Logical. If TRUE (default) formats measurements to numeric and\ndate accordingly. Unlike <code><a href='weather_dl.html'>weather_dl()</a></code>, <code>normals_dl()</code> will always format\ncolumn headings as normals data from ECCC cannot be directly made into a\ndata frame without doing so.</p>"), 
-    list(name = "stn", description = "<p>DEFUNCT. Now use <code><a href='stations_dl.html'>stations_dl()</a></code> to update internal data and\n<code><a href='stations_meta.html'>stations_meta()</a></code> to check the date it was last updated.</p>"), list(name = "verbose", description = "<p>Logical. Include progress messages</p>"), list(name = "quiet", description = "<p>Logical. Suppress all messages (including messages regarding\nmissing data, etc.)</p>")),TRUE,<div class='input'>
+    <pre class="examples"><div class='input'>
 <span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='check_eccc.html'>check_eccc</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
 
   <span class='co'># Find the climate_id</span>
@@ -247,65 +239,64 @@ for more details)</p>
   <span class='va'>both</span> <span class='op'>&lt;-</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>full_join</a></span><span class='op'>(</span><span class='va'>nm</span>, <span class='va'>f</span><span class='op'>)</span>
   <span class='va'>both</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'>Joining, by = c("prov", "station_name", "climate_id", "normals_years", "meets_wmo")</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 819 x 137</span><span>
+</div><div class='output co'>#&gt; <span class='message'>Joining, by = c("prov", "station_name", "climate_id", "normals_years", "meets_wmo")</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 819 x 137</span>
 #&gt;    prov  station_name climate_id normals_years meets_wmo period temp_daily_aver…
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> AB    HORBURG      301C3D4    1981-2010     FALSE     Jan                -</span><span style='color: #BB0000;'>7.6</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> AB    HORBURG      301C3D4    1981-2010     FALSE     Jan                -</span><span style='color: #BB0000;'>7.6</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> AB    HORBURG      301C3D4    1981-2010     FALSE     Jan                -</span><span style='color: #BB0000;'>7.6</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> AB    HORBURG      301C3D4    1981-2010     FALSE     Jan                -</span><span style='color: #BB0000;'>7.6</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> AB    HORBURG      301C3D4    1981-2010     FALSE     Jan                -</span><span style='color: #BB0000;'>7.6</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> AB    HORBURG      301C3D4    1981-2010     FALSE     Jan                -</span><span style='color: #BB0000;'>7.6</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> AB    HORBURG      301C3D4    1981-2010     FALSE     Jan                -</span><span style='color: #BB0000;'>7.6</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> AB    HORBURG      301C3D4    1981-2010     FALSE     Jan                -</span><span style='color: #BB0000;'>7.6</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> AB    HORBURG      301C3D4    1981-2010     FALSE     Jan                -</span><span style='color: #BB0000;'>7.6</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> AB    HORBURG      301C3D4    1981-2010     FALSE     Jan                -</span><span style='color: #BB0000;'>7.6</span><span>
-#&gt; </span><span style='color: #949494;'># … with 809 more rows, and 130 more variables: temp_daily_average_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   temp_sd &lt;dbl&gt;, temp_sd_code &lt;chr&gt;, temp_daily_max &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   temp_daily_max_code &lt;chr&gt;, temp_daily_min &lt;dbl&gt;, temp_daily_min_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   temp_extreme_max &lt;dbl&gt;, temp_extreme_max_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   temp_extreme_max_date &lt;date&gt;, temp_extreme_max_date_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   temp_extreme_min &lt;dbl&gt;, temp_extreme_min_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   temp_extreme_min_date &lt;date&gt;, temp_extreme_min_date_code &lt;chr&gt;, rain &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   rain_code &lt;chr&gt;, snow &lt;dbl&gt;, snow_code &lt;chr&gt;, precip &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   precip_code &lt;chr&gt;, snow_mean_depth &lt;dbl&gt;, snow_mean_depth_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   snow_median_depth &lt;dbl&gt;, snow_median_depth_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   snow_depth_month_end &lt;dbl&gt;, snow_depth_month_end_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   rain_extreme_daily &lt;dbl&gt;, rain_extreme_daily_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   rain_extreme_daily_date &lt;date&gt;, rain_extreme_daily_date_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   snow_extreme_daily &lt;dbl&gt;, snow_extreme_daily_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   snow_extreme_daily_date &lt;date&gt;, snow_extreme_daily_date_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   precip_extreme_daily &lt;dbl&gt;, precip_extreme_daily_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   precip_extreme_daily_date &lt;date&gt;, precip_extreme_daily_date_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   snow_extreme_depth &lt;dbl&gt;, snow_extreme_depth_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   snow_extreme_depth_date &lt;date&gt;, snow_extreme_depth_date_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   temp_max_days_&lt;=0 &lt;dbl&gt;, temp_max_days_&lt;=0_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   temp_max_days_&gt;0 &lt;dbl&gt;, temp_max_days_&gt;0_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   temp_max_days_&gt;10 &lt;dbl&gt;, temp_max_days_&gt;10_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   temp_max_days_&gt;20 &lt;dbl&gt;, temp_max_days_&gt;20_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   temp_max_days_&gt;30 &lt;dbl&gt;, temp_max_days_&gt;30_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   temp_max_days_&gt;35 &lt;dbl&gt;, temp_max_days_&gt;35_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   temp_min_days_&gt;0 &lt;dbl&gt;, temp_min_days_&gt;0_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   temp_min_days_&lt;=2 &lt;dbl&gt;, temp_min_days_&lt;=2_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   temp_min_days_&lt;=0 &lt;dbl&gt;, temp_min_days_&lt;=0_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   temp_min_days_&lt;-2 &lt;dbl&gt;, temp_min_days_&lt;-2_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   temp_min_days_&lt;-10 &lt;dbl&gt;, temp_min_days_&lt;-10_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   temp_min_days_&lt;-20 &lt;dbl&gt;, temp_min_days_&lt;-20_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   temp_min_days_&lt;-30 &lt;dbl&gt;, temp_min_days_&lt;-30_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   rain_days_&gt;=0.2 &lt;dbl&gt;, rain_days_&gt;=0.2_code &lt;chr&gt;, rain_days_&gt;=5 &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   rain_days_&gt;=5_code &lt;chr&gt;, rain_days_&gt;=10 &lt;dbl&gt;, rain_days_&gt;=10_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   rain_days_&gt;=25 &lt;dbl&gt;, rain_days_&gt;=25_code &lt;chr&gt;, snow_days_&gt;=0.2 &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   snow_days_&gt;=0.2_code &lt;chr&gt;, snow_days_&gt;=5 &lt;dbl&gt;, snow_days_&gt;=5_code &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   snow_days_&gt;=10 &lt;dbl&gt;, snow_days_&gt;=10_code &lt;chr&gt;, snow_days_&gt;=25 &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   snow_days_&gt;=25_code &lt;chr&gt;, precip_days_&gt;=0.2 &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   precip_days_&gt;=0.2_code &lt;chr&gt;, precip_days_&gt;=5 &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   precip_days_&gt;=5_code &lt;chr&gt;, precip_days_&gt;=10 &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   precip_days_&gt;=10_code &lt;chr&gt;, precip_days_&gt;=25 &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   precip_days_&gt;=25_code &lt;chr&gt;, snow_depth_days_&gt;=1 &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   snow_depth_days_&gt;=1_code &lt;chr&gt;, snow_depth_days_&gt;=5 &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   snow_depth_days_&gt;=5_code &lt;chr&gt;, snow_depth_days_&gt;=10 &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   snow_depth_days_&gt;=10_code &lt;chr&gt;, snow_depth_days_&gt;=20 &lt;dbl&gt;, …</span><span></div></span>,list(list(title = "Value", contents = "<p>tibble with nested normals and first/last frost data</p>", slug = "value"), list(title = "Details", contents = "<p>Climate normals from ECCC include two types of data, averages by\nmonth for a variety of measurements as well as data relating to the\nfrost-free period. Because these two data sources are quite different, we\nreturn them as nested data so the user can extract them as they wish. See\nexamples for how to use the <code><a href='https://tidyr.tidyverse.org/reference/nest.html'>unnest()</a></code> function from the\n<a href='https://tidyr.tidyverse.org/'><code>tidyr</code></a>\npackage to extract the two different datasets.</p>\n<p>The data also returns a column called <code>meets_wmo</code> this reflects whether or\nnot the climate normals for this station met the WMO standards for\ntemperature and precipitation (i.e. both have code &gt;= A). Each measurement\ncolumn has a corresponding <code>_code</code> column which reflects the data quality\nof that measurement (see the <a href='https://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf'>1981-2010 ECCC calculations document</a>\nor the <a href='https://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1971_2000_Calculation_Information.pdf'>1971-2000 ECCC calculations document</a>\nfor more details)</p>\n<p>Climate normals are downloaded from the url stored in option\n<code>weathercan.urls.normals</code>. To change this location use:\n<code><a href='https://rdrr.io/r/base/options.html'>options(weathercan.urls.normals = \"your_new_url\")</a></code>.</p>", 
-    slug = "details")),2021,list(name = "weathercan", version = "0.6.0", authors = "Steffi LaZerte"),list(destination = "dev", mode = "release", version_label = "default", version_tooltip = "Released version", in_dev = FALSE),list(root = "../", title = "weathercan"),list(css = "/home/steffi/Projects/weathercan/pkgdown/extra.css"),list(type = "inverse", left = "<li>\n  <a href=\"../index.html\">\n    <span class=\"fas fa-home\"></span>\n     \n  </a>\n</li>\n<li>\n  <a href=\"../articles/weathercan.html\">Getting Started</a>\n</li>\n<li>\n  <a href=\"../reference/index.html\">Reference</a>\n</li>\n<li>\n  <a href=\"../articles/index.html\">Articles</a>\n</li>", right = "<li>\n  <a href=\"https://github.com/ropensci/weathercan\">\n    <span class=\"fas fa-github fa-lg\"></span>\n     \n  </a>\n</li>"),list(.present = TRUE),list(version = "1.6.1"),FALSE</pre>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> AB    HORBURG      301C3D4    1981-2010     FALSE     Jan                -<span style='color: #BB0000;'>7.6</span>
+#&gt; <span style='color: #BCBCBC;'> 2</span> AB    HORBURG      301C3D4    1981-2010     FALSE     Jan                -<span style='color: #BB0000;'>7.6</span>
+#&gt; <span style='color: #BCBCBC;'> 3</span> AB    HORBURG      301C3D4    1981-2010     FALSE     Jan                -<span style='color: #BB0000;'>7.6</span>
+#&gt; <span style='color: #BCBCBC;'> 4</span> AB    HORBURG      301C3D4    1981-2010     FALSE     Jan                -<span style='color: #BB0000;'>7.6</span>
+#&gt; <span style='color: #BCBCBC;'> 5</span> AB    HORBURG      301C3D4    1981-2010     FALSE     Jan                -<span style='color: #BB0000;'>7.6</span>
+#&gt; <span style='color: #BCBCBC;'> 6</span> AB    HORBURG      301C3D4    1981-2010     FALSE     Jan                -<span style='color: #BB0000;'>7.6</span>
+#&gt; <span style='color: #BCBCBC;'> 7</span> AB    HORBURG      301C3D4    1981-2010     FALSE     Jan                -<span style='color: #BB0000;'>7.6</span>
+#&gt; <span style='color: #BCBCBC;'> 8</span> AB    HORBURG      301C3D4    1981-2010     FALSE     Jan                -<span style='color: #BB0000;'>7.6</span>
+#&gt; <span style='color: #BCBCBC;'> 9</span> AB    HORBURG      301C3D4    1981-2010     FALSE     Jan                -<span style='color: #BB0000;'>7.6</span>
+#&gt; <span style='color: #BCBCBC;'>10</span> AB    HORBURG      301C3D4    1981-2010     FALSE     Jan                -<span style='color: #BB0000;'>7.6</span>
+#&gt; <span style='color: #949494;'># … with 809 more rows, and 130 more variables: temp_daily_average_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   temp_sd &lt;dbl&gt;, temp_sd_code &lt;chr&gt;, temp_daily_max &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   temp_daily_max_code &lt;chr&gt;, temp_daily_min &lt;dbl&gt;, temp_daily_min_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   temp_extreme_max &lt;dbl&gt;, temp_extreme_max_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   temp_extreme_max_date &lt;date&gt;, temp_extreme_max_date_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   temp_extreme_min &lt;dbl&gt;, temp_extreme_min_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   temp_extreme_min_date &lt;date&gt;, temp_extreme_min_date_code &lt;chr&gt;, rain &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   rain_code &lt;chr&gt;, snow &lt;dbl&gt;, snow_code &lt;chr&gt;, precip &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   precip_code &lt;chr&gt;, snow_mean_depth &lt;dbl&gt;, snow_mean_depth_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   snow_median_depth &lt;dbl&gt;, snow_median_depth_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   snow_depth_month_end &lt;dbl&gt;, snow_depth_month_end_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   rain_extreme_daily &lt;dbl&gt;, rain_extreme_daily_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   rain_extreme_daily_date &lt;date&gt;, rain_extreme_daily_date_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   snow_extreme_daily &lt;dbl&gt;, snow_extreme_daily_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   snow_extreme_daily_date &lt;date&gt;, snow_extreme_daily_date_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   precip_extreme_daily &lt;dbl&gt;, precip_extreme_daily_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   precip_extreme_daily_date &lt;date&gt;, precip_extreme_daily_date_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   snow_extreme_depth &lt;dbl&gt;, snow_extreme_depth_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   snow_extreme_depth_date &lt;date&gt;, snow_extreme_depth_date_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   temp_max_days_&lt;=0 &lt;dbl&gt;, temp_max_days_&lt;=0_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   temp_max_days_&gt;0 &lt;dbl&gt;, temp_max_days_&gt;0_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   temp_max_days_&gt;10 &lt;dbl&gt;, temp_max_days_&gt;10_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   temp_max_days_&gt;20 &lt;dbl&gt;, temp_max_days_&gt;20_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   temp_max_days_&gt;30 &lt;dbl&gt;, temp_max_days_&gt;30_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   temp_max_days_&gt;35 &lt;dbl&gt;, temp_max_days_&gt;35_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   temp_min_days_&gt;0 &lt;dbl&gt;, temp_min_days_&gt;0_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   temp_min_days_&lt;=2 &lt;dbl&gt;, temp_min_days_&lt;=2_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   temp_min_days_&lt;=0 &lt;dbl&gt;, temp_min_days_&lt;=0_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   temp_min_days_&lt;-2 &lt;dbl&gt;, temp_min_days_&lt;-2_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   temp_min_days_&lt;-10 &lt;dbl&gt;, temp_min_days_&lt;-10_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   temp_min_days_&lt;-20 &lt;dbl&gt;, temp_min_days_&lt;-20_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   temp_min_days_&lt;-30 &lt;dbl&gt;, temp_min_days_&lt;-30_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   rain_days_&gt;=0.2 &lt;dbl&gt;, rain_days_&gt;=0.2_code &lt;chr&gt;, rain_days_&gt;=5 &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   rain_days_&gt;=5_code &lt;chr&gt;, rain_days_&gt;=10 &lt;dbl&gt;, rain_days_&gt;=10_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   rain_days_&gt;=25 &lt;dbl&gt;, rain_days_&gt;=25_code &lt;chr&gt;, snow_days_&gt;=0.2 &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   snow_days_&gt;=0.2_code &lt;chr&gt;, snow_days_&gt;=5 &lt;dbl&gt;, snow_days_&gt;=5_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   snow_days_&gt;=10 &lt;dbl&gt;, snow_days_&gt;=10_code &lt;chr&gt;, snow_days_&gt;=25 &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   snow_days_&gt;=25_code &lt;chr&gt;, precip_days_&gt;=0.2 &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   precip_days_&gt;=0.2_code &lt;chr&gt;, precip_days_&gt;=5 &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   precip_days_&gt;=5_code &lt;chr&gt;, precip_days_&gt;=10 &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   precip_days_&gt;=10_code &lt;chr&gt;, precip_days_&gt;=25 &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   precip_days_&gt;=25_code &lt;chr&gt;, snow_depth_days_&gt;=1 &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   snow_depth_days_&gt;=1_code &lt;chr&gt;, snow_depth_days_&gt;=5 &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   snow_depth_days_&gt;=5_code &lt;chr&gt;, snow_depth_days_&gt;=10 &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   snow_depth_days_&gt;=10_code &lt;chr&gt;, snow_depth_days_&gt;=20 &lt;dbl&gt;, …</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

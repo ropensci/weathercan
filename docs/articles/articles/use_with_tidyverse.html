@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">weathercan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1</span>
       </span>
     </div>
 
@@ -77,7 +77,7 @@
       <h1 data-toc-skip>Using with the tidyverse</h1>
                         <h4 class="author">Sam Albers</h4>
             
-            <h4 class="date">2021-05-11</h4>
+            <h4 class="date">2021-06-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/weathercan/blob/master/vignettes/articles/use_with_tidyverse.Rmd"><code>vignettes/articles/use_with_tidyverse.Rmd</code></a></small>
       <div class="hidden name"><code>use_with_tidyverse.Rmd</code></div>
@@ -136,8 +136,8 @@
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">pancan_df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">mean_temp</span>, colour <span class="op">=</span> <span class="va">station_name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## Warning: Removed 28351 rows containing missing values (geom_point).</code></pre>
-<pre><code>## Warning: Removed 8631 row(s) containing missing values (geom_path).</code></pre>
+<pre><code>## Warning: Removed 28413 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: Removed 8679 row(s) containing missing values (geom_path).</code></pre>
 <p><img src="use_with_tidyverse_files/figure-html/raw_plt-1.png" width="960"></p>
 <p>This is quite a large dataset.</p>
 </div>
@@ -213,7 +213,7 @@
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">resids</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">pancan_df_nest</span>, <span class="va">resids</span><span class="op">)</span>
 <span class="va">resids</span></code></pre></div>
-<pre><code>## # A tibble: 185,105 x 14
+<pre><code>## # A tibble: 185,225 x 14
 ## # Groups:   station_name, station_id, prov, lat, lon, elev, climate_id, WMO_id,
 ## #   TC_id [5]
 ##    station_name station_id prov    lat   lon  elev climate_id WMO_id TC_id data 
@@ -228,7 +228,7 @@
 ##  8 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
 ##  9 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
 ## 10 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
-## # … with 185,095 more rows, and 4 more variables: model &lt;list&gt;,
+## # … with 185,215 more rows, and 4 more variables: model &lt;list&gt;,
 ## #   mean_temp &lt;dbl&gt;, date &lt;date&gt;, resid &lt;dbl&gt;</code></pre>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">resids</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">resid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
@@ -236,8 +236,8 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">station_name</span>, ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
-<pre><code>## Warning: Removed 8631 row(s) containing missing values (geom_path).</code></pre>
-<pre><code>## Warning: Removed 28351 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: Removed 8679 row(s) containing missing values (geom_path).</code></pre>
+<pre><code>## Warning: Removed 28413 rows containing missing values (geom_point).</code></pre>
 <p><img src="use_with_tidyverse_files/figure-html/resid-1.png" width="960"></p>
 </div>
 <div id="using-broom" class="section level3">
@@ -262,7 +262,7 @@
 <col width="16%">
 <col width="4%">
 <col width="9%">
-<col width="8%">
+<col width="9%">
 <col width="8%">
 </colgroup>
 <thead><tr class="header">
@@ -291,7 +291,7 @@
 <td align="left">AGASSIZ CDA</td>
 <td align="left">BC</td>
 <td align="right">0.0030139</td>
-<td align="right">0.000000</td>
+<td align="right">0.0000000</td>
 <td align="right">234152.1</td>
 </tr>
 <tr class="even">
@@ -304,9 +304,9 @@
 <td align="left">NA</td>
 <td align="left">BELLEVILLE</td>
 <td align="left">ON</td>
-<td align="right">0.0024585</td>
-<td align="right">0.000000</td>
-<td align="right">269825.2</td>
+<td align="right">0.0025268</td>
+<td align="right">0.0000000</td>
+<td align="right">269984.1</td>
 </tr>
 <tr class="odd">
 <td align="right">6693</td>
@@ -319,7 +319,7 @@
 <td align="left">PORT AUX BASQUES</td>
 <td align="left">NL</td>
 <td align="right">0.0041296</td>
-<td align="right">0.000000</td>
+<td align="right">0.0000000</td>
 <td align="right">178541.2</td>
 </tr>
 <tr class="even">
@@ -332,9 +332,9 @@
 <td align="left">WQH</td>
 <td align="left">LENNOXVILLE</td>
 <td align="left">QC</td>
-<td align="right">0.0009308</td>
-<td align="right">0.000000</td>
-<td align="right">283585.7</td>
+<td align="right">0.0009804</td>
+<td align="right">0.0000000</td>
+<td align="right">283763.0</td>
 </tr>
 <tr class="odd">
 <td align="right">2315</td>
@@ -346,9 +346,9 @@
 <td align="left">NA</td>
 <td align="left">TABER</td>
 <td align="left">AB</td>
-<td align="right">0.0002423</td>
-<td align="right">0.016594</td>
-<td align="right">183146.5</td>
+<td align="right">0.0002514</td>
+<td align="right">0.0146668</td>
+<td align="right">183229.6</td>
 </tr>
 </tbody>
 </table>
@@ -363,7 +363,7 @@
          preds <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">map2</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">model</span>, <span class="va">add_predictions</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">preds</span><span class="op">)</span>
 <span class="va">preds</span></code></pre></div>
-<pre><code>## # A tibble: 185,105 x 15
+<pre><code>## # A tibble: 185,225 x 15
 ## # Groups:   station_name, station_id, prov, lat, lon, elev, climate_id, WMO_id,
 ## #   TC_id [5]
 ##    station_name station_id prov    lat   lon  elev climate_id WMO_id TC_id data 
@@ -378,14 +378,14 @@
 ##  8 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
 ##  9 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
 ## 10 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
-## # … with 185,095 more rows, and 5 more variables: model &lt;list&gt;, resids &lt;list&gt;,
+## # … with 185,215 more rows, and 5 more variables: model &lt;list&gt;, resids &lt;list&gt;,
 ## #   mean_temp &lt;dbl&gt;, date &lt;date&gt;, pred &lt;dbl&gt;</code></pre>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">preds</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">mean_temp</span>, colour <span class="op">=</span> <span class="va">station_name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">pred</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">station_name</span>, scales <span class="op">=</span> <span class="st">"free_y"</span>, ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
-<pre><code>## Warning: Removed 28351 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: Removed 28413 rows containing missing values (geom_point).</code></pre>
 <p><img src="use_with_tidyverse_files/figure-html/pred-1.png" width="960"></p>
 </div>
   </div>
