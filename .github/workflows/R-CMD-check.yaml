@@ -93,7 +93,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          install.packages("fs", "devtools")
+          install.packages(c("fs", "devtools"))
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
           install.packages("stringi", type="source")
