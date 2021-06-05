@@ -16,7 +16,8 @@ test_that("stations_dl() requires lutz and sf", {
 
 test_that("stations_dl() errors appropriately", {
   skip_on_cran()
-  skip_if_offline()
+  skip_if_not_installed("sf")
+  skip_if_not_installed("lutz")
 
   bkup <- getOption("weathercan.urls.stations")
   options(weathercan.urls.stations = "https://httpstat.us/404")
