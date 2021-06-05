@@ -7,10 +7,9 @@
 ## Test environments
 As of June 4th, 2021
 
-* ubuntu 20.04 - Local (4.1.0)
-* ubuntu 16.04 - GitHub Actions (devel, release, old release)
+* ubuntu 20.04 - Local (4.1.0), GitHub Actions (devel, release, old release)
 * OSX 10.15.7 - GitHub Actions (release)
-* Windows Server 2019 x64 - GitHub Actions (devel, release, old release)
+* Windows Server - GitHub Actions (release, old release), winbuilder (devel)
 * Debian GCC - rhub (release, patched, devel)
 * Debian CLANG - rhub (devel)
 * Fedora GCC - rhub (devel)
