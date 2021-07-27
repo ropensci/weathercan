@@ -84,6 +84,9 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
                        format = TRUE, stn = NULL,
                        verbose = FALSE, quiet = FALSE) {
 
+  ## Change readr edition for this function because read_csv is relying on that old behaviour
+  readr::local_edition(1)
+
   if(!is.null(stn)){
     stop("`stn` is defunct, to use an updated stations data frame ",
          "use `stations_dl()` to update the internal data, and ",
