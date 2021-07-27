@@ -134,6 +134,7 @@ stations_dl <- function(skip = NULL, verbose = FALSE, quiet = FALSE) {
 stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
                                  internal = TRUE) {
 
+
   if(getRversion() <= "3.3.3") {
     message("Need R version 3.3.4 or greater to update the stations data")
     return()
@@ -161,7 +162,7 @@ stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
       return(invisible())
     }
 
-    if(!dir.exists(d)) dir.create(d)
+    if(!dir.exists(d)) dir.create(d, recursive = TRUE)
   }
 
   if(!requireNamespace("lutz", quietly = TRUE) |
