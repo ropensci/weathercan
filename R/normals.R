@@ -335,7 +335,7 @@ frost_extract <- function(f, climate_id) {
   if(length(frost_free) > 0) {
     if(length(frost_probs) == 0) last <- length(f) else last <- frost_probs - 1
 
-    local_edition(1)
+    readr::local_edition(1)
     f1 <- readr::read_csv(I(f[frost_free:last]),
                           col_names = c("variable", "value", "frost_code"),
                           col_types = readr::cols()) %>%
@@ -353,7 +353,7 @@ frost_extract <- function(f, climate_id) {
 
   # Frost free probabilities
   if(length(frost_probs) > 0) {
-    local_edition(1)
+    readr::local_edition(1)
     f2 <- readr::read_csv(I(f[frost_probs:length(f)]),
                           col_names = FALSE, col_types = readr::cols()) %>%
       as.data.frame()
