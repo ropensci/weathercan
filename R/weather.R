@@ -393,16 +393,16 @@ weather_dl <- function(station_ids,
 }
 
 weather_single <- function(date_range, s, interval, encoding) {
-  w <- dplyr::tibble(date_range = date_range) %>%
-    dplyr::mutate(html = purrr::map(.data$date_range,
+  w <- dplyr::tibble(date_range = date_range)
+  w <- dplyr::mutate(w, html = purrr::map(.data$date_range,
                                     ~ weather_html(station_id = s,
                                                    date = .x,
-                                                   interval = interval)),
-                  data = purrr::map(.data$html,
+                                                   interval = interval)))
+  w <- dplyr::mutate(w, data = purrr::map(.data$html,
                                     ~ weather_raw(.,
                                                   encoding = encoding,
-                                                  header = TRUE))) %>%
-    dplyr::select("data")
+                                                  header = TRUE)))
+  w <- dplyr::select(w, "data")
 
   if(utils::packageVersion("tidyr") > "0.8.99") {
     w <- tidyr::unnest(w, .data$data)
@@ -462,10 +462,11 @@ weather_raw <- function(html, skip = 0,
   }
 
   # Get number of columns
-  ncols <- readr::read_csv(raw, n_max = 1, col_names = FALSE, col_types = readr::cols()) %>%
+  ncols <- readr::read_csv(I(raw), n_max = 1, col_names = FALSE, col_types = readr::cols()) %>%
     ncol()
+  readr::local_edition(1)
   suppressWarnings({ # when some data are missing, final columns not present
-    w <- readr::read_csv(raw, n_max = nrows, skip = skip,
+    w <- readr::read_csv(I(raw), n_max = nrows, skip = skip,
                          col_types = paste(rep("c", ncols), collapse = ""))})
   # Get rid of special symbols right away
   w <- remove_sym(w)
