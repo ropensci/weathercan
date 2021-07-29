@@ -70,11 +70,19 @@ stations_meta <- function() {
 }
 
 stations_read <- function() {
-  if(!file.exists(stations_file())) {
-    f <- system.file("extdata", "stations.rds", package = "weathercan")
-  } else f <- stations_file()
+  pkg_file <- system.file("extdata", "stations.rds", package = "weathercan") %>%
+    readr::read_rds()
 
-  readr::read_rds(f)
+  local_file <- stations_file() %>%
+    readr::read_rds()
+
+  if(pkg_file$meta$ECCC_modified > local_file$meta$ECCC_modified) {
+    r <- pkg_file
+  } else {
+    r <- local_file
+  }
+
+  r
 }
 
 stations_file <- function() {
