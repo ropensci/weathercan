@@ -21,8 +21,9 @@
 ^release_script.R$
 ^release_test_dependencies.R$
 ^CRAN-RELEASE$
+^vignettes
 ^vignettes/articles$
-^vigettes/normals_cache$
+^vignettes/normals_cache$
 ^doc$
 ^Meta$
 ^LICENSE\.md$
