@@ -159,7 +159,7 @@ stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
 
   # Ask for permission to save data
   if(!internal) {
-    if(!dir.exists(d) || !file.exists(f)) {
+    if((!dir.exists(d) || !file.exists(f)) && interactive()) {
       cont <- utils::askYesNo(
         paste0("weathercan would like to store the updated stations ",
                "data to: \n", f, "\nIs that okay?"))
@@ -219,9 +219,10 @@ stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
 
   if(verbose) message("Downloading stations data frame")
 
-  s <- httr::content(resp, type = "text/csv", encoding = "Latin1",
-                     skip = skip, col_types = readr::cols()) %>%
-    dplyr::select(prov = "Province",
+  raw <- httr::content(resp, as = "text", encoding = "Latin1")
+
+  s <- readr::read_delim(raw, skip = skip, col_types = readr::cols())
+  s <- dplyr::select(s, prov = "Province",
                   station_name = "Name",
                   station_id = "Station ID",
                   climate_id = "Climate ID",
