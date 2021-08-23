@@ -465,7 +465,7 @@ weather_raw <- function(html, skip = 0,
   ncols <- readr::read_csv(I(raw), n_max = 1, col_names = FALSE,
                            col_types = readr::cols(), progress = FALSE) %>%
     ncol()
-  if(utils::packageVersion("readr") >= "2.0.0") readr::local_edition(1)
+  readr::local_edition(1)
   suppressWarnings({ # when some data are missing, final columns not present
     w <- readr::read_csv(I(raw), n_max = nrows, skip = skip,
                          col_types = paste(rep("c", ncols), collapse = ""))})
