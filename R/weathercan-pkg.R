@@ -1,7 +1,7 @@
 .onAttach <- function(libname, pkgname) {
   packageStartupMessage(
     "weathercan v", utils::packageVersion("weathercan"), "\n",
-    "The included data `stations` has been ",
+    "The internal `stations` data has been ",
     "deprecated in favour of the function `stations()`.\n",
     "See ?stations for more details.")
 }

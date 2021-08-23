@@ -70,11 +70,15 @@ stations_meta <- function() {
 }
 
 stations_read <- function() {
-  if(!file.exists(stations_file())) {
-    f <- system.file("extdata", "stations.rds", package = "weathercan")
-  } else f <- stations_file()
+  pkg_file <- system.file("extdata", "stations.rds", package = "weathercan") %>%
+    readr::read_rds()
 
-  readr::read_rds(f)
+  if (file.exists(stations_file())) {
+    local_file <- stations_file() %>%
+      readr::read_rds()
+    if(pkg_file$meta$ECCC_modified < local_file$meta$ECCC_modified) return(local_file)
+  }
+  pkg_file
 }
 
 stations_file <- function() {
@@ -134,6 +138,7 @@ stations_dl <- function(skip = NULL, verbose = FALSE, quiet = FALSE) {
 stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
                                  internal = TRUE) {
 
+
   if(getRversion() <= "3.3.3") {
     message("Need R version 3.3.4 or greater to update the stations data")
     return()
@@ -150,7 +155,7 @@ stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
 
   # Ask for permission to save data
   if(!internal) {
-    if(!dir.exists(d) || !file.exists(f)) {
+    if((!dir.exists(d) || !file.exists(f)) && interactive()) {
       cont <- utils::askYesNo(
         paste0("weathercan would like to store the updated stations ",
                "data to: \n", f, "\nIs that okay?"))
@@ -161,7 +166,7 @@ stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
       return(invisible())
     }
 
-    if(!dir.exists(d)) dir.create(d)
+    if(!dir.exists(d)) dir.create(d, recursive = TRUE)
   }
 
   if(!requireNamespace("lutz", quietly = TRUE) |
@@ -210,9 +215,10 @@ stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
 
   if(verbose) message("Downloading stations data frame")
 
-  s <- httr::content(resp, type = "text/csv", encoding = "Latin1",
-                     skip = skip, col_types = readr::cols()) %>%
-    dplyr::select(prov = "Province",
+  raw <- httr::content(resp, as = "text", encoding = "Latin1")
+
+  s <- readr::read_delim(raw, skip = skip, col_types = readr::cols())
+  s <- dplyr::select(s, prov = "Province",
                   station_name = "Name",
                   station_id = "Station ID",
                   climate_id = "Climate ID",

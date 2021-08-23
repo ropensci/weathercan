@@ -27,7 +27,7 @@ Imports:
     methods (>= 3.2.2),
     purrr (>= 0.3.4),
     rlang (>= 0.1.4),
-    readr (>= 1.4.0),
+    readr (>= 2.0.0),
     rvest (>= 0.3.4),
     stringi (>= 1.1.2),
     stringr (>= 1.4.0),
@@ -51,5 +51,6 @@ Suggests:
     sp,
     testthat,
     vcr (>= 1.0.2)
-VignetteBuilder: knitr
+VignetteBuilder: 
+    knitr
 Encoding: UTF-8
