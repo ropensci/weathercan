@@ -36,6 +36,15 @@ test_that("stations_normals() gets normals info", {
                     "normals_1981_2010", "normals_1971_2000"))
 })
 
+test_that("stations_meta() returns metadata", {
+  expect_type(stations_meta(), "list") %>%
+    expect_named(c("ECCC_modified", "weathercan_modified"))
+
+  expect_s3_class(stations_meta()$ECCC_modified, "POSIXct")
+  expect_s3_class(stations_meta()$weathercan_modified, "Date")
+})
+
+
 
 test_that("stations_dl() runs and updates data", {
   skip_if_not_installed("sf")
@@ -54,6 +63,16 @@ test_that("stations_dl() runs and updates data", {
   expect_gt(nrow(s$stn), 0)
   expect_type(s$meta, "list") %>%
     expect_length(2)
+
+  # stations_read() ----
+
+  # Without local file, use package file
+  expect_silent(s1 <- stations_read()$meta)
+  expect_lt(s1$weathercan_modified, Sys.Date())
+
+  stub(stations_read, "stations_file", file.path("stations.rds"))
+  expect_silent(s2 <- stations_read()$meta)
+  expect_gt(s2$weathercan_modified, s1$weathercan_modified)
 
   unlink("stations.rds")
 })
