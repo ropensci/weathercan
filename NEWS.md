@@ -1,5 +1,11 @@
 # weathercan (development version)
 
+- Create cache dir for stations data recursively
+- Fix choice of local vs. package version of stations data frame
+- Update to readr v2
+- Add flexibility for csv/tsv stations files (fixes #126)
+
+
 # weathercan 0.6.1
 
 ## Small changes
