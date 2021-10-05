@@ -116,7 +116,9 @@ ggplot(data = finches_weather, aes(x = date, y = n)) +
   geom_line(aes(y = temp * 50, colour = "Temperature"), size = 2) +
   geom_line(aes(y = wind_spd * 50, colour = "Wind Speed"), size = 2) +
   scale_colour_discrete(name = "") +
-  scale_y_continuous(name = "Activity Counts", sec.axis = sec_axis(~. / 50, name = "Temperature (C) / Wind Speed (km/h)"))
+  scale_y_continuous(
+    name = "Activity Counts", 
+    sec.axis = sec_axis(~. / 50, name = "Temperature (C) / Wind Speed (km/h)"))
 ```
 
 
