@@ -1,6 +1,6 @@
 # Steps/Commands to run before a CRAN release -----------------------------
 
-v <- "0.6.1"
+v <- "0.6.2"
 #usethis::use_release_issue(version = v)
 
 # Check existing errors
@@ -60,17 +60,18 @@ urlchecker::url_check()
 
 
 ## Checks
-unlink("./vignettes/normals_cache/", recursive = TRUE)
+
+# Precompile Vignettes
+source("vignettes/precompile.R")
 
 # Run WITH and WITHOUT internet
-devtools::run_examples(run_donttest = TRUE)
-devtools::test()
+#devtools::run_examples(run_donttest = TRUE)
+#devtools::test()
 
-devtools::check(remote = TRUE, manual = TRUE, run_dont_test = TRUE)     # Local
-
-
-## Local Tests with vcr turned off, run in terminal
-#VCR_TURN_OFF=true Rscript -e "devtools::test()"
+# Local tests, as CRAN and not as CRAN
+devtools::check(remote = TRUE, manual = TRUE, run_dont_test = TRUE,
+                env_vars = list("NOT_CRAN" = ""))
+devtools::check(remote = TRUE, manual = TRUE, run_dont_test = TRUE)
 
 # Win builder
 devtools::check_win_release()
@@ -136,8 +137,9 @@ codemetar::write_codemeta()
 # pkgdown::build_home()
 # pkgdown::build_news()
 # pkgdown::build_reference()
-pkgdown::build_site(lazy = TRUE)
-pkgdown::build_articles(lazy = FALSE)
+#pkgdown::build_articles(lazy = FALSE)
+
+pkgdown::build_site()
 unlink("./vignettes/normals_cache/", recursive = TRUE)
 
 
