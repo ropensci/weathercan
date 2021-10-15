@@ -35,7 +35,7 @@ Imports:
     tidyselect (>= 1.0.0),
     xml2 (>= 0.1.2),
     rappdirs (>= 0.3.3)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 Suggests:
     devtools,

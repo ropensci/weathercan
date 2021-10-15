@@ -10,7 +10,9 @@ check_eccc()
 FALSE if not, TRUE if so
 }
 \description{
-Checks if \url{https://climate.weather.gc.ca} is available and accessible.
+Checks if whether there is internet access, weather data, normals data,
+and eccc sites are available and accessible, and whether we're NOT running
+on cran
 }
 \examples{
 

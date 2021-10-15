@@ -44,6 +44,7 @@ depending on how the data collection has changed over the years. Station
 information can be updated by running \code{stations_dl()}.
 }
 \examples{
+\dontshow{if (check_eccc()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 
 stations()
 stations_meta()
@@ -51,5 +52,5 @@ stations_meta()
 library(dplyr)
 filter(stations(), interval == "hour", normals == TRUE, prov == "MB")
 
-
+\dontshow{\}) # examplesIf}
 }

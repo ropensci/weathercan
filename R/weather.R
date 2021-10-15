@@ -73,27 +73,23 @@
 #'
 #' @return A tibble with station ID, name and weather data.
 #'
-#' @examples
+#' @examplesIf check_eccc()
 #'
-#' \donttest{
-#' if(check_eccc()) {  # Make sure ECCC is available
+#' kam <- weather_dl(station_ids = 51423,
+#'                   start = "2016-01-01", end = "2016-02-15")
 #'
-#'   kam <- weather_dl(station_ids = 51423,
-#'                     start = "2016-01-01", end = "2016-02-15")
+#' stations_search("Kamloops A$", interval = "hour")
+#' stations_search("Prince George Airport", interval = "hour")
 #'
-#'   stations_search("Kamloops A$", interval = "hour")
-#'   stations_search("Prince George Airport", interval = "hour")
+#' kam.pg <- weather_dl(station_ids = c(48248, 51423),
+#'                      start = "2016-01-01", end = "2016-02-15")
 #'
-#'   kam.pg <- weather_dl(station_ids = c(48248, 51423),
-#'                        start = "2016-01-01", end = "2016-02-15")
+#' library(ggplot2)
 #'
-#'   library(ggplot2)
-#'
-#'   ggplot(data = kam.pg, aes(x = time, y = temp,
-#'                             group = station_name,
-#'                             colour = station_name)) +
-#'          geom_line()
-#'  }}
+#' ggplot(data = kam.pg, aes(x = time, y = temp,
+#'                           group = station_name,
+#'                           colour = station_name)) +
+#'        geom_line()
 #'
 #' @aliases weather
 #'

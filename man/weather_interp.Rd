@@ -50,6 +50,7 @@ data between 9AM and 11AM will be interpolated. If, however, you have 9AM and
 and 12PM will be returned as NA.)
 }
 \examples{
+\dontshow{if (check_eccc()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 
 # Weather data only
 head(kamloops)
@@ -58,9 +59,6 @@ head(kamloops)
 head(finches)
 
 # Match weather to finches
-\donttest{
-## Not run
 finch_weather <- weather_interp(data = finches, weather = kamloops)
-}
-
+\dontshow{\}) # examplesIf}
 }
