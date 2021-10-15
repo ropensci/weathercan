@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">weathercan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.2</span>
       </span>
     </div>
 
@@ -40,7 +40,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa-home"></span>
+    <span class="fa fa-home"></span>
      
   </a>
 </li>
@@ -57,7 +57,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/ropensci/weathercan">
-    <span class="fas fa-github fa-lg"></span>
+    <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -71,13 +71,13 @@
 
       
 
-      </header><script src="normals_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
+      </header><script src="normals_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Climate Normals</h1>
                         <h4 class="author">Steffi LaZerte</h4>
             
-            <h4 class="date">2021-06-04</h4>
+            <h4 class="date">2021-10-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/weathercan/blob/master/vignettes/normals.Rmd"><code>vignettes/normals.Rmd</code></a></small>
       <div class="hidden name"><code>normals.Rmd</code></div>
@@ -99,7 +99,7 @@
 <p>To download climate normals, we’ll first find the stations we’re interested in using the <code><a href="../reference/stations_search.html">stations_search()</a></code> function. We’ll use the <code>normals_years = "current"</code> argument to filter to only stations with available climate normals for the <code>1981-2010</code> year range.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/stations_search.html">stations_search</a></span><span class="op">(</span><span class="st">"Winnipeg"</span>, normals_years <span class="op">=</span> <span class="st">"current"</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 1 x 13
+<pre><code>## # A tibble: 1 × 13
 ##   prov  station_name    station_id climate_id WMO_id TC_id   lat   lon  elev tz    normals
 ##   &lt;chr&gt; &lt;chr&gt;                &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;lgl&gt;  
 ## 1 MB    WINNIPEG RICHA…       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… TRUE</code></pre>
@@ -107,10 +107,10 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/normals_dl.html">normals_dl</a></span><span class="op">(</span>climate_ids <span class="op">=</span> <span class="st">"5023222"</span><span class="op">)</span>
 <span class="va">n</span></code></pre></div>
-<pre><code>## # A tibble: 1 x 7
-##   prov  station_name          climate_id normals_years meets_wmo normals       frost      
-##   &lt;chr&gt; &lt;chr&gt;                 &lt;chr&gt;      &lt;chr&gt;         &lt;lgl&gt;     &lt;list&gt;        &lt;list&gt;     
-## 1 MB    WINNIPEG RICHARDSON … 5023222    1981-2010     TRUE      &lt;tibble [13 … &lt;tibble [7…</code></pre>
+<pre><code>## # A tibble: 1 × 7
+##   prov  station_name                climate_id normals_years meets_wmo normals     frost  
+##   &lt;chr&gt; &lt;chr&gt;                       &lt;chr&gt;      &lt;chr&gt;         &lt;lgl&gt;     &lt;list&gt;      &lt;list&gt; 
+## 1 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      &lt;tibble [1… &lt;tibbl…</code></pre>
 <p>Because there are two different types of climate normals (weather measurements and first/last frost dates), the data are nested as two different datasets. We can see that the Airport (Richardson Int’l) has 197 average weather measurements/codes as well as first/last frost dates.</p>
 <p>We can also see that this station has data quality sufficient to meet the WMO standards for temperature and precipitation (i.e. both these measurements have code &gt;= A). See the <a href="https://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf">ECCC calculations document</a> for more details.</p>
 <p>To extract either data set we can use the <code><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest()</a></code> function from the <code>tidyr</code> package.</p>
@@ -120,22 +120,22 @@
 <p>Note that this extracts the measurements for all three stations (in the case of the <code>normals</code> data frame), but not all measurements are available for each station</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">normals</span></code></pre></div>
-<pre><code>## # A tibble: 13 x 203
-##    prov  station_name          climate_id normals_years meets_wmo period temp_daily_avera…
-##    &lt;chr&gt; &lt;chr&gt;                 &lt;chr&gt;      &lt;chr&gt;         &lt;lgl&gt;     &lt;fct&gt;              &lt;dbl&gt;
-##  1 MB    WINNIPEG RICHARDSON … 5023222    1981-2010     TRUE      Jan                -16.4
-##  2 MB    WINNIPEG RICHARDSON … 5023222    1981-2010     TRUE      Feb                -13.2
-##  3 MB    WINNIPEG RICHARDSON … 5023222    1981-2010     TRUE      Mar                 -5.8
-##  4 MB    WINNIPEG RICHARDSON … 5023222    1981-2010     TRUE      Apr                  4.4
-##  5 MB    WINNIPEG RICHARDSON … 5023222    1981-2010     TRUE      May                 11.6
-##  6 MB    WINNIPEG RICHARDSON … 5023222    1981-2010     TRUE      Jun                 17  
-##  7 MB    WINNIPEG RICHARDSON … 5023222    1981-2010     TRUE      Jul                 19.7
-##  8 MB    WINNIPEG RICHARDSON … 5023222    1981-2010     TRUE      Aug                 18.8
-##  9 MB    WINNIPEG RICHARDSON … 5023222    1981-2010     TRUE      Sep                 12.7
-## 10 MB    WINNIPEG RICHARDSON … 5023222    1981-2010     TRUE      Oct                  5  
-## 11 MB    WINNIPEG RICHARDSON … 5023222    1981-2010     TRUE      Nov                 -4.9
-## 12 MB    WINNIPEG RICHARDSON … 5023222    1981-2010     TRUE      Dec                -13.2
-## 13 MB    WINNIPEG RICHARDSON … 5023222    1981-2010     TRUE      Year                 3</code></pre>
+<pre><code>## # A tibble: 13 × 203
+##    prov  station_name                climate_id normals_years meets_wmo period temp_daily_aver…
+##    &lt;chr&gt; &lt;chr&gt;                       &lt;chr&gt;      &lt;chr&gt;         &lt;lgl&gt;     &lt;fct&gt;             &lt;dbl&gt;
+##  1 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Jan               -16.4
+##  2 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Feb               -13.2
+##  3 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Mar                -5.8
+##  4 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Apr                 4.4
+##  5 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      May                11.6
+##  6 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Jun                17  
+##  7 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Jul                19.7
+##  8 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Aug                18.8
+##  9 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Sep                12.7
+## 10 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Oct                 5  
+## 11 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Nov                -4.9
+## 12 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Dec               -13.2
+## 13 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Year                3</code></pre>
 <p>To visualize missing data we can use the <code><a href="https://rdrr.io/pkg/naniar/man/gg_miss_var.html">gg_miss_var()</a></code> function from the <code>naniar</code> package.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">normals</span>, <span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"_code"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="co"># Remove '_code' columns</span>
@@ -143,7 +143,7 @@
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span><span class="op">(</span><span class="op">{</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">normals</span>, <span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"_code"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="co"># Remove '_code' columns</span>
     <span class="fu"><a href="https://rdrr.io/pkg/naniar/man/gg_miss_var.html">gg_miss_var</a></span><span class="op">(</span>facet <span class="op">=</span> <span class="va">station_name</span><span class="op">)</span><span class="op">}</span><span class="op">)</span></code></pre></div>
-<p><img src="normals_files/figure-html/unnamed-chunk-7-1.png" width="100%"></p>
+<p><img src="unnamed-chunk-7-1.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" width="100%" style="display: block; margin: auto;"></p>
 <p>Let’s take a look at the frost data.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="st">"normals"</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">frost</span><span class="op">)</span><span class="op">)</span> <span class="va">frost</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">frost</span>, <span class="op">-</span><span class="va">normals</span><span class="op">)</span> <span class="co"># tidyr v1</span>
@@ -169,7 +169,7 @@
 <p>The include data frame, <code>normals_measurements</code> contains a list of stations with their corresponding measurements. Be aware that this data might be out of date!</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">normals_measurements</span></code></pre></div>
-<pre><code>## # A tibble: 307,891 x 5
+<pre><code>## # A tibble: 307,891 × 5
 ##    prov  station_name climate_id normals   measurement            
 ##    &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;                  
 ##  1 AB    HORBURG      301C3D4    1981-2010 temp_daily_average     
@@ -186,7 +186,7 @@
 <p>For example, if you wanted all <code>climate_id</code>s for stations that have data on soil temperature for 1981-2010 normals:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">normals_measurements</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">measurement</span>, <span class="st">"soil"</span><span class="op">)</span>,
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/stringr/man/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">measurement</span>, <span class="st">"soil"</span><span class="op">)</span>,
          <span class="va">normals</span> <span class="op">==</span> <span class="st">"1981-2010"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">climate_id</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>

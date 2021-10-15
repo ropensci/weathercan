@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">weathercan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.2</span>
       </span>
     </div>
 
@@ -40,7 +40,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../../index.html">
-    <span class="fas fa-home"></span>
+    <span class="fa fa-home"></span>
      
   </a>
 </li>
@@ -57,7 +57,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/ropensci/weathercan">
-    <span class="fas fa-github fa-lg"></span>
+    <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -71,13 +71,13 @@
 
       
 
-      </header><script src="meteoland_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
+      </header><script src="meteoland_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Meteoland</h1>
                         <h4 class="author">Steffi LaZerte</h4>
             
-            <h4 class="date">2021-06-04</h4>
+            <h4 class="date">2021-10-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/weathercan/blob/master/vignettes/articles/meteoland.Rmd"><code>vignettes/articles/meteoland.Rmd</code></a></small>
       <div class="hidden name"><code>meteoland.Rmd</code></div>
@@ -96,8 +96,8 @@
 <pre><code>## Loading required package: sp</code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/weathercan/">weathercan</a></span><span class="op">)</span></code></pre></div>
-<pre><code>## weathercan v0.6.1
-## The included data `stations` has been deprecated in favour of the function `stations()`.
+<pre><code>## weathercan v0.6.2
+## The internal `stations` data has been deprecated in favour of the function `stations()`.
 ## See ?stations for more details.</code></pre>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></code></pre></div>
@@ -223,7 +223,7 @@
 <pre><code>## Trimming missing values before and after</code></pre>
 <pre><code>## There are no data for some stations (10217), in this time range (2015-01-01 to 2015-12-31), for this interval (day)
 ## Available Station Data:
-## # A tibble: 3 x 16
+## # A tibble: 3 × 16
 ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz    
 ##   &lt;chr&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; 
 ## 1 MB    GILLAM            10217 5060999        NA WGX    56.4 -94.7  145. Etc/G…
@@ -234,7 +234,7 @@
 <pre><code>## Some variables have non-numeric values (spd_max_gust), for stations: 53118, 52758, 48972, 48969, 48728, 48588, 44244, 30475, 29533</code></pre>
 <pre><code>##   Replaced all non-numeric entries with NA. Use 'string_as = NULL' to keep as characters (see ?weather_dl).</code></pre>
 <pre><code>##   Examples:</code></pre>
-<pre><code>##   # A tibble: 180 x 6
+<pre><code>##   # A tibble: 180 × 6
 ##      station_id date       year  month day   spd_max_gust
 ##           &lt;dbl&gt; &lt;date&gt;     &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       
 ##    1      53118 2015-01-03 2015  01    03    &lt;31         

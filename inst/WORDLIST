@@ -30,10 +30,13 @@ YYYY
 canada
 codecov
 coords
+cran
 css
 csv
+dir
 doesn
 dplyr
+eccc
 envirocan
 gc
 http
@@ -60,11 +63,13 @@ tibbles
 tidyverse
 timeframe
 timezones
+tsv
 unformatted
 unnest
 unnesting
 updateable
 v0
 v1
+v2
 v3
 vcr

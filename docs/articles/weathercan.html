@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">weathercan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.2</span>
       </span>
     </div>
 
@@ -40,7 +40,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa-home"></span>
+    <span class="fa fa-home"></span>
      
   </a>
 </li>
@@ -57,7 +57,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/ropensci/weathercan">
-    <span class="fas fa-github fa-lg"></span>
+    <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -71,13 +71,13 @@
 
       
 
-      </header><script src="weathercan_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
+      </header><script src="weathercan_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Getting Started</h1>
                         <h4 class="author">Steffi LaZerte</h4>
             
-            <h4 class="date">2021-06-04</h4>
+            <h4 class="date">2021-10-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/weathercan/blob/master/vignettes/weathercan.Rmd"><code>vignettes/weathercan.Rmd</code></a></small>
       <div class="hidden name"><code>weathercan.Rmd</code></div>
@@ -96,7 +96,7 @@
 <p><code>weathercan</code> includes the function <code><a href="../reference/stations.html">stations()</a></code> which returns a list of stations and their details (including <code>station_id</code>).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/stations.html">stations</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 16
+<pre><code>## # A tibble: 6 × 16
 ##   prov  station_name        station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_2010 normals_1971_2000
 ##   &lt;chr&gt; &lt;chr&gt;                    &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;   &lt;lgl&gt;             &lt;lgl&gt;            
 ## 1 AB    DAYSLAND                  1795 301AR54        NA &lt;NA&gt;   52.9 -112.  689. Etc/GMT+7 day       1908  1922 FALSE   FALSE             FALSE            
@@ -107,7 +107,7 @@
 ## 6 AB    EDMONTON CORONATION       1796 301BK03        NA &lt;NA&gt;   53.6 -114.  671. Etc/GMT+7 month     1978  1979 FALSE   FALSE             FALSE</code></pre>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="fu"><a href="../reference/stations.html">stations</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## Rows: 26,325
+<pre><code>## Rows: 26,328
 ## Columns: 16
 ## $ prov              &lt;chr&gt; "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", …
 ## $ station_name      &lt;chr&gt; "DAYSLAND", "DAYSLAND", "DAYSLAND", "EDMONTON CORONATION", "EDMONTON CORONATION", "EDMONTON CORONATION", "FLEET", "FLEET", "FLEET", …
@@ -128,7 +128,7 @@
 <p>You can look through this data frame directly, or you can use the <code>stations_search</code> function:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/stations_search.html">stations_search</a></span><span class="op">(</span><span class="st">"Kamloops"</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 40 x 16
+<pre><code>## # A tibble: 40 × 16
 ##    prov  station_name         station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_2010 normals_1971_2000
 ##    &lt;chr&gt; &lt;chr&gt;                     &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;   &lt;lgl&gt;             &lt;lgl&gt;            
 ##  1 BC    KAMLOOPS                   1274 1163779        NA &lt;NA&gt;   50.7 -120.  379. Etc/GMT+8 day       1878  1982 FALSE   FALSE             FALSE            
@@ -145,7 +145,7 @@
 <p>You can narrow down your search by specifying time intervals (options are “hour”, “day”, or “month”):</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/stations_search.html">stations_search</a></span><span class="op">(</span><span class="st">"Kamloops"</span>, interval <span class="op">=</span> <span class="st">"hour"</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 3 x 16
+<pre><code>## # A tibble: 3 × 16
 ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_2010 normals_1971_2000
 ##   &lt;chr&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;   &lt;lgl&gt;             &lt;lgl&gt;            
 ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE             
@@ -154,7 +154,7 @@
 <p>You can specify more than one interval:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/stations_search.html">stations_search</a></span><span class="op">(</span><span class="st">"Kamloops"</span>, interval <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"hour"</span>, <span class="st">"month"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 21 x 16
+<pre><code>## # A tibble: 21 × 16
 ##    prov  station_name            station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_2010 normals_1971_2000
 ##    &lt;chr&gt; &lt;chr&gt;                        &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;   &lt;lgl&gt;             &lt;lgl&gt;            
 ##  1 BC    KAMLOOPS                      1274 1163779        NA &lt;NA&gt;   50.7 -120.  379. Etc/GMT+8 month     1878  1982 FALSE   FALSE             FALSE            
@@ -171,7 +171,7 @@
 <p>You can also search by proximity. These results include a new column <code>distance</code> specifying the distance in km from the coordinates:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/stations_search.html">stations_search</a></span><span class="op">(</span>coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">50.667492</span>, <span class="op">-</span><span class="fl">120.329049</span><span class="op">)</span>, dist <span class="op">=</span> <span class="fl">20</span>, interval <span class="op">=</span> <span class="st">"hour"</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 3 x 17
+<pre><code>## # A tibble: 3 × 17
 ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_2010 normals_1971_2000 distance
 ##   &lt;chr&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;   &lt;lgl&gt;             &lt;lgl&gt;                &lt;dbl&gt;
 ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE                  8.64
@@ -187,15 +187,15 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">start</span> <span class="op">&lt;=</span> <span class="fl">2002</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">end</span> <span class="op">&gt;=</span> <span class="fl">2016</span><span class="op">)</span>
 <span class="va">BCstations</span></code></pre></div>
-<pre><code>## # A tibble: 3 x 16
-##   prov  station_name              station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_2010 normals_1971_20…
-##   &lt;chr&gt; &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;   &lt;lgl&gt;             &lt;lgl&gt;           
-## 1 BC    CRESTON CAMPBELL SCIENTI…       6838 114B1F0     71770 WJR    49.1 -116.  641. Etc/GMT+7 hour      1994  2021 FALSE   FALSE             FALSE           
-## 2 BC    NELSON CS                       6839 1145M29     71776 WNM    49.5 -117.  535. Etc/GMT+8 hour      1994  2021 FALSE   FALSE             FALSE           
-## 3 BC    WARFIELD RCS                   31067 1148705     71401 XWF    49.1 -118.  567. Etc/GMT+8 hour      2001  2021 FALSE   FALSE             FALSE</code></pre>
+<pre><code>## # A tibble: 3 × 16
+##   prov  station_name                station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_20… normals_1971_20…
+##   &lt;chr&gt; &lt;chr&gt;                            &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;   &lt;lgl&gt;            &lt;lgl&gt;           
+## 1 BC    CRESTON CAMPBELL SCIENTIFIC       6838 114B1F0     71770 WJR    49.1 -116.  641. Etc/GMT+7 hour      1994  2021 FALSE   FALSE            FALSE           
+## 2 BC    NELSON CS                         6839 1145M29     71776 WNM    49.5 -117.  535. Etc/GMT+8 hour      1994  2021 FALSE   FALSE            FALSE           
+## 3 BC    WARFIELD RCS                     31067 1148705     71401 XWF    49.1 -118.  567. Etc/GMT+8 hour      2001  2021 FALSE   FALSE            FALSE</code></pre>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## weather_dl() accepts numbers so we can create a vector to input into weather:</span>
-<span class="va">stn_vector</span> <span class="op">&lt;-</span> <span class="va">BCstations</span><span class="op">$</span><span class="va">station_id</span> 
+<span class="va">stn_vector</span> <span class="op">&lt;-</span> <span class="va">BCstations</span><span class="op">$</span><span class="va">station_id</span>
 <span class="va">stn_vector</span></code></pre></div>
 <pre><code>## [1]  6838  6839 31067</code></pre>
 <p>You can update this list of stations with</p>
@@ -205,10 +205,10 @@
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/stations_meta.html">stations_meta</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## $ECCC_modified
-## [1] "2021-05-02 23:31:00 UTC"
+## [1] "2021-08-30 23:34:00 UTC"
 ## 
 ## $weathercan_modified
-## [1] "2021-06-03"</code></pre>
+## [1] "2021-10-04"</code></pre>
 </div>
 <div id="weather" class="section level2">
 <h2 class="hasAnchor">
@@ -221,7 +221,7 @@
 ## This message is shown once per session</code></pre>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">kam</span></code></pre></div>
-<pre><code>## # A tibble: 1,104 x 37
+<pre><code>## # A tibble: 1,104 × 37
 ##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id date       time                year  month day   hour  weather  hmdx
 ##    &lt;chr&gt;             &lt;dbl&gt; &lt;lgl&gt;            &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt; &lt;date&gt;     &lt;dttm&gt;              &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;
 ##  1 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 00:00:00 2016  01    01    00:00 &lt;NA&gt;       NA
@@ -240,9 +240,9 @@
 <p>You can also download data from multiple stations at once:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">kam.pg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/weather_dl.html">weather_dl</a></span><span class="op">(</span>station_ids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">48248</span>, <span class="fl">51423</span><span class="op">)</span>, start <span class="op">=</span> <span class="st">"2016-01-01"</span>, end <span class="op">=</span> <span class="st">"2016-02-15"</span><span class="op">)</span>
-                    
+
 <span class="va">kam.pg</span></code></pre></div>
-<pre><code>## # A tibble: 2,208 x 37
+<pre><code>## # A tibble: 2,208 × 37
 ##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id date       time                year  month day   hour  weather  hmdx
 ##    &lt;chr&gt;             &lt;dbl&gt; &lt;lgl&gt;            &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt; &lt;date&gt;     &lt;dttm&gt;              &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;
 ##  1 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 00:00:00 2016  01    01    00:00 &lt;NA&gt;       NA
@@ -264,13 +264,13 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"top"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="weathercan_files/figure-html/unnamed-chunk-12-1.png" width="1152"></p>
+<p><img src="unnamed-chunk-12-1.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" style="display: block; margin: auto;"></p>
 <p>Or you can use the vector created above:</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">stn_vec_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/weather_dl.html">weather_dl</a></span><span class="op">(</span>station_ids <span class="op">=</span> <span class="va">stn_vector</span>, start <span class="op">=</span> <span class="st">"2016-01-01"</span>, end <span class="op">=</span> <span class="st">"2016-02-15"</span><span class="op">)</span>
 
 <span class="va">stn_vec_df</span></code></pre></div>
-<pre><code>## # A tibble: 3,312 x 37
+<pre><code>## # A tibble: 3,312 × 37
 ##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id date       time                year  month day   hour  weather  hmdx
 ##    &lt;chr&gt;             &lt;dbl&gt; &lt;lgl&gt;            &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt; &lt;date&gt;     &lt;dttm&gt;              &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;
 ##  1 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 00:00:00 2016  01    01    00:00 &lt;NA&gt;       NA
@@ -294,14 +294,14 @@
 <p>To access climate normals, you first need to know the <code>climate_id</code> associated with the station you’re interested in.</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/stations_search.html">stations_search</a></span><span class="op">(</span><span class="st">"Winnipeg"</span>, normals_years <span class="op">=</span> <span class="st">"current"</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 1 x 13
+<pre><code>## # A tibble: 1 × 13
 ##   prov  station_name                station_id climate_id WMO_id TC_id   lat   lon  elev tz        normals normals_1981_2010 normals_1971_2000
 ##   &lt;chr&gt; &lt;chr&gt;                            &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;lgl&gt;   &lt;lgl&gt;             &lt;lgl&gt;            
 ## 1 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/GMT+6 TRUE    TRUE              TRUE</code></pre>
 <p>The current year range is 1981-2010, but you can also search for stations in the previous year range:</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/stations_search.html">stations_search</a></span><span class="op">(</span><span class="st">"Winnipeg"</span>, normals_years <span class="op">=</span> <span class="st">"1971-2000"</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 1 x 13
+<pre><code>## # A tibble: 1 × 13
 ##   prov  station_name                station_id climate_id WMO_id TC_id   lat   lon  elev tz        normals normals_1981_2010 normals_1971_2000
 ##   &lt;chr&gt; &lt;chr&gt;                            &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;lgl&gt;   &lt;lgl&gt;             &lt;lgl&gt;            
 ## 1 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/GMT+6 TRUE    TRUE              TRUE</code></pre>
@@ -313,98 +313,72 @@
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span>
 <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">normals</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 13 x 203
-##    prov  station_name       climate_id normals_years meets_wmo period temp_daily_avera… temp_daily_averag… temp_sd temp_sd_code temp_daily_max temp_daily_max_c…
-##    &lt;chr&gt; &lt;chr&gt;              &lt;chr&gt;      &lt;chr&gt;         &lt;lgl&gt;     &lt;fct&gt;              &lt;dbl&gt; &lt;chr&gt;                &lt;dbl&gt; &lt;chr&gt;                 &lt;dbl&gt; &lt;chr&gt;            
-##  1 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Jan                -16.4 A                      4.1 A                     -11.3 A                
-##  2 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Feb                -13.2 A                      4.2 A                      -8.1 A                
-##  3 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Mar                 -5.8 A                      3.1 A                      -0.8 A                
-##  4 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Apr                  4.4 A                      2.7 A                      10.9 A                
-##  5 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      May                 11.6 A                      2.1 A                      18.6 A                
-##  6 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Jun                 17   A                      2   A                      23.2 A                
-##  7 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Jul                 19.7 A                      1.4 A                      25.9 A                
-##  8 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Aug                 18.8 A                      1.9 A                      25.4 A                
-##  9 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Sep                 12.7 A                      1.3 A                      19   A                
-## 10 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Oct                  5   A                      1.8 A                      10.5 A                
-## 11 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Nov                 -4.9 A                      3.6 A                      -0.5 A                
-## 12 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Dec                -13.2 A                      4.4 A                      -8.5 A                
-## 13 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Year                 3   A                      1.2 A                       8.7 A                
+<pre><code>## # A tibble: 13 × 203
+##    prov  station_name                climate_id normals_years meets_wmo period temp_daily_aver… temp_daily_aver… temp_sd temp_sd_code temp_daily_max temp_daily_max_…
+##    &lt;chr&gt; &lt;chr&gt;                       &lt;chr&gt;      &lt;chr&gt;         &lt;lgl&gt;     &lt;fct&gt;             &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;                 &lt;dbl&gt; &lt;chr&gt;           
+##  1 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Jan               -16.4 A                    4.1 A                     -11.3 A               
+##  2 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Feb               -13.2 A                    4.2 A                      -8.1 A               
+##  3 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Mar                -5.8 A                    3.1 A                      -0.8 A               
+##  4 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Apr                 4.4 A                    2.7 A                      10.9 A               
+##  5 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      May                11.6 A                    2.1 A                      18.6 A               
+##  6 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Jun                17   A                    2   A                      23.2 A               
+##  7 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Jul                19.7 A                    1.4 A                      25.9 A               
+##  8 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Aug                18.8 A                    1.9 A                      25.4 A               
+##  9 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Sep                12.7 A                    1.3 A                      19   A               
+## 10 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Oct                 5   A                    1.8 A                      10.5 A               
+## 11 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Nov                -4.9 A                    3.6 A                      -0.5 A               
+## 12 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Dec               -13.2 A                    4.4 A                      -8.5 A               
+## 13 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Year                3   A                    1.2 A                       8.7 A               
 ## # … with 191 more variables: temp_daily_min &lt;dbl&gt;, temp_daily_min_code &lt;chr&gt;, temp_extreme_max &lt;dbl&gt;, temp_extreme_max_code &lt;chr&gt;,
 ## #   temp_extreme_max_date &lt;date&gt;, temp_extreme_max_date_code &lt;chr&gt;, temp_extreme_min &lt;dbl&gt;, temp_extreme_min_code &lt;chr&gt;, temp_extreme_min_date &lt;date&gt;,
 ## #   temp_extreme_min_date_code &lt;chr&gt;, rain &lt;dbl&gt;, rain_code &lt;chr&gt;, snow &lt;dbl&gt;, snow_code &lt;chr&gt;, precip &lt;dbl&gt;, precip_code &lt;chr&gt;, snow_mean_depth &lt;dbl&gt;,
 ## #   snow_mean_depth_code &lt;chr&gt;, snow_median_depth &lt;dbl&gt;, snow_median_depth_code &lt;chr&gt;, snow_depth_month_end &lt;dbl&gt;, snow_depth_month_end_code &lt;chr&gt;,
 ## #   rain_extreme_daily &lt;dbl&gt;, rain_extreme_daily_code &lt;chr&gt;, rain_extreme_daily_date &lt;date&gt;, rain_extreme_daily_date_code &lt;chr&gt;, snow_extreme_daily &lt;dbl&gt;,
 ## #   snow_extreme_daily_code &lt;chr&gt;, snow_extreme_daily_date &lt;date&gt;, snow_extreme_daily_date_code &lt;chr&gt;, precip_extreme_daily &lt;dbl&gt;,
-## #   precip_extreme_daily_code &lt;chr&gt;, precip_extreme_daily_date &lt;date&gt;, precip_extreme_daily_date_code &lt;chr&gt;, snow_extreme_depth &lt;dbl&gt;,
-## #   snow_extreme_depth_code &lt;chr&gt;, snow_extreme_depth_date &lt;date&gt;, snow_extreme_depth_date_code &lt;chr&gt;, temp_max_days_&lt;=0 &lt;dbl&gt;, temp_max_days_&lt;=0_code &lt;chr&gt;,
-## #   temp_max_days_&gt;0 &lt;dbl&gt;, temp_max_days_&gt;0_code &lt;chr&gt;, temp_max_days_&gt;10 &lt;dbl&gt;, temp_max_days_&gt;10_code &lt;chr&gt;, temp_max_days_&gt;20 &lt;dbl&gt;,
-## #   temp_max_days_&gt;20_code &lt;chr&gt;, temp_max_days_&gt;30 &lt;dbl&gt;, temp_max_days_&gt;30_code &lt;chr&gt;, temp_max_days_&gt;35 &lt;dbl&gt;, temp_max_days_&gt;35_code &lt;chr&gt;,
-## #   temp_min_days_&gt;0 &lt;dbl&gt;, temp_min_days_&gt;0_code &lt;chr&gt;, temp_min_days_&lt;=2 &lt;dbl&gt;, temp_min_days_&lt;=2_code &lt;chr&gt;, temp_min_days_&lt;=0 &lt;dbl&gt;,
-## #   temp_min_days_&lt;=0_code &lt;chr&gt;, temp_min_days_&lt;-2 &lt;dbl&gt;, temp_min_days_&lt;-2_code &lt;chr&gt;, temp_min_days_&lt;-10 &lt;dbl&gt;, temp_min_days_&lt;-10_code &lt;chr&gt;,
-## #   temp_min_days_&lt;-20 &lt;dbl&gt;, temp_min_days_&lt;-20_code &lt;chr&gt;, temp_min_days_&lt;-30 &lt;dbl&gt;, temp_min_days_&lt;-30_code &lt;chr&gt;, rain_days_&gt;=0.2 &lt;dbl&gt;,
-## #   rain_days_&gt;=0.2_code &lt;chr&gt;, rain_days_&gt;=5 &lt;dbl&gt;, rain_days_&gt;=5_code &lt;chr&gt;, rain_days_&gt;=10 &lt;dbl&gt;, rain_days_&gt;=10_code &lt;chr&gt;, rain_days_&gt;=25 &lt;dbl&gt;,
-## #   rain_days_&gt;=25_code &lt;chr&gt;, snow_days_&gt;=0.2 &lt;dbl&gt;, snow_days_&gt;=0.2_code &lt;chr&gt;, snow_days_&gt;=5 &lt;dbl&gt;, snow_days_&gt;=5_code &lt;chr&gt;, snow_days_&gt;=10 &lt;dbl&gt;,
-## #   snow_days_&gt;=10_code &lt;chr&gt;, snow_days_&gt;=25 &lt;dbl&gt;, snow_days_&gt;=25_code &lt;chr&gt;, precip_days_&gt;=0.2 &lt;dbl&gt;, precip_days_&gt;=0.2_code &lt;chr&gt;, precip_days_&gt;=5 &lt;dbl&gt;,
-## #   precip_days_&gt;=5_code &lt;chr&gt;, precip_days_&gt;=10 &lt;dbl&gt;, precip_days_&gt;=10_code &lt;chr&gt;, precip_days_&gt;=25 &lt;dbl&gt;, precip_days_&gt;=25_code &lt;chr&gt;,
-## #   snow_depth_days_&gt;=1 &lt;dbl&gt;, snow_depth_days_&gt;=1_code &lt;chr&gt;, snow_depth_days_&gt;=5 &lt;dbl&gt;, snow_depth_days_&gt;=5_code &lt;chr&gt;, snow_depth_days_&gt;=10 &lt;dbl&gt;,
-## #   snow_depth_days_&gt;=10_code &lt;chr&gt;, snow_depth_days_&gt;=20 &lt;dbl&gt;, snow_depth_days_&gt;=20_code &lt;chr&gt;, wind_speed &lt;dbl&gt;, wind_speed_code &lt;chr&gt;, wind_dir &lt;chr&gt;,
-## #   wind_dir_code &lt;chr&gt;, …</code></pre>
+## #   precip_extreme_daily_code &lt;chr&gt;, precip_extreme_daily_date &lt;date&gt;, precip_extreme_daily_date_code &lt;chr&gt;, snow_extreme_depth &lt;dbl&gt;, …</code></pre>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">frost</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 7 x 14
-##   prov  station_name     climate_id normals_years meets_wmo normals   frost_code date_first_fall_… date_last_spring… length_frost_fr… prob  prob_first_fall_tem…
-##   &lt;chr&gt; &lt;chr&gt;            &lt;chr&gt;      &lt;chr&gt;         &lt;lgl&gt;     &lt;list&gt;    &lt;chr&gt;                  &lt;dbl&gt;             &lt;dbl&gt;            &lt;dbl&gt; &lt;chr&gt;                &lt;dbl&gt;
-## 1 MB    WINNIPEG RICHAR… 5023222    1981-2010     TRUE      &lt;tibble … A                        265               143              121 10%                    255
-## 2 MB    WINNIPEG RICHAR… 5023222    1981-2010     TRUE      &lt;tibble … A                        265               143              121 25%                    259
-## 3 MB    WINNIPEG RICHAR… 5023222    1981-2010     TRUE      &lt;tibble … A                        265               143              121 33%                    261
-## 4 MB    WINNIPEG RICHAR… 5023222    1981-2010     TRUE      &lt;tibble … A                        265               143              121 50%                    265
-## 5 MB    WINNIPEG RICHAR… 5023222    1981-2010     TRUE      &lt;tibble … A                        265               143              121 66%                    268
-## 6 MB    WINNIPEG RICHAR… 5023222    1981-2010     TRUE      &lt;tibble … A                        265               143              121 75%                    270
-## 7 MB    WINNIPEG RICHAR… 5023222    1981-2010     TRUE      &lt;tibble … A                        265               143              121 90%                    276
+<pre><code>## # A tibble: 7 × 14
+##   prov  station_name                climate_id normals_years meets_wmo normals frost_code date_first_fall… date_last_sprin… length_frost_fr… prob  prob_first_fall…
+##   &lt;chr&gt; &lt;chr&gt;                       &lt;chr&gt;      &lt;chr&gt;         &lt;lgl&gt;     &lt;list&gt;  &lt;chr&gt;                 &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt; &lt;chr&gt;            &lt;dbl&gt;
+## 1 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      &lt;tibbl… A                       265              143              121 10%                255
+## 2 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      &lt;tibbl… A                       265              143              121 25%                259
+## 3 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      &lt;tibbl… A                       265              143              121 33%                261
+## 4 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      &lt;tibbl… A                       265              143              121 50%                265
+## 5 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      &lt;tibbl… A                       265              143              121 66%                268
+## 6 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      &lt;tibbl… A                       265              143              121 75%                270
+## 7 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      &lt;tibbl… A                       265              143              121 90%                276
 ## # … with 2 more variables: prob_length_frost_free &lt;dbl&gt;, prob_last_spring_temp_below_0_on_date &lt;dbl&gt;</code></pre>
 <p>Alternatively, download the 1971-2000 normals:</p>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/normals_dl.html">normals_dl</a></span><span class="op">(</span><span class="st">"5023222"</span>, normals_years <span class="op">=</span> <span class="st">"1971-2000"</span><span class="op">)</span>
 <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">normals</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 13 x 229
-##    prov  station_name       climate_id normals_years meets_wmo period temp_daily_avera… temp_daily_averag… temp_sd temp_sd_code temp_daily_max temp_daily_max_c…
-##    &lt;chr&gt; &lt;chr&gt;              &lt;chr&gt;      &lt;chr&gt;         &lt;lgl&gt;     &lt;fct&gt;              &lt;dbl&gt; &lt;chr&gt;                &lt;dbl&gt; &lt;chr&gt;                 &lt;dbl&gt; &lt;chr&gt;            
-##  1 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Jan                -17.8 A                      3.9 A                     -12.7 A                
-##  2 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Feb                -13.6 A                      4.2 A                      -8.5 A                
-##  3 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Mar                 -6.1 A                      3.5 A                      -1.1 A                
-##  4 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Apr                  4   A                      2.7 A                      10.3 A                
-##  5 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      May                 12   A                      2.5 A                      19.2 A                
-##  6 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Jun                 17   A                      1.8 A                      23.3 A                
-##  7 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Jul                 19.5 A                      1.5 A                      25.8 A                
-##  8 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Aug                 18.5 A                      1.8 A                      25   A                
-##  9 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Sep                 12.3 A                      1.4 A                      18.6 A                
-## 10 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Oct                  5.3 A                      1.6 A                      10.8 A                
-## 11 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Nov                 -5.3 A                      3.3 A                      -0.9 A                
-## 12 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Dec                -14.4 A                      4.2 A                      -9.7 A                
-## 13 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Year                 2.6 A                      1.3 A                       8.3 A                
+<pre><code>## # A tibble: 13 × 229
+##    prov  station_name                climate_id normals_years meets_wmo period temp_daily_aver… temp_daily_aver… temp_sd temp_sd_code temp_daily_max temp_daily_max_…
+##    &lt;chr&gt; &lt;chr&gt;                       &lt;chr&gt;      &lt;chr&gt;         &lt;lgl&gt;     &lt;fct&gt;             &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;                 &lt;dbl&gt; &lt;chr&gt;           
+##  1 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Jan               -17.8 A                    3.9 A                     -12.7 A               
+##  2 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Feb               -13.6 A                    4.2 A                      -8.5 A               
+##  3 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Mar                -6.1 A                    3.5 A                      -1.1 A               
+##  4 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Apr                 4   A                    2.7 A                      10.3 A               
+##  5 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      May                12   A                    2.5 A                      19.2 A               
+##  6 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Jun                17   A                    1.8 A                      23.3 A               
+##  7 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Jul                19.5 A                    1.5 A                      25.8 A               
+##  8 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Aug                18.5 A                    1.8 A                      25   A               
+##  9 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Sep                12.3 A                    1.4 A                      18.6 A               
+## 10 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Oct                 5.3 A                    1.6 A                      10.8 A               
+## 11 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Nov                -5.3 A                    3.3 A                      -0.9 A               
+## 12 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Dec               -14.4 A                    4.2 A                      -9.7 A               
+## 13 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Year                2.6 A                    1.3 A                       8.3 A               
 ## # … with 217 more variables: temp_daily_min &lt;dbl&gt;, temp_daily_min_code &lt;chr&gt;, temp_extreme_max &lt;dbl&gt;, temp_extreme_max_code &lt;chr&gt;,
 ## #   temp_extreme_max_date &lt;date&gt;, temp_extreme_max_date_code &lt;chr&gt;, temp_extreme_min &lt;dbl&gt;, temp_extreme_min_code &lt;chr&gt;, temp_extreme_min_date &lt;date&gt;,
 ## #   temp_extreme_min_date_code &lt;chr&gt;, rain &lt;dbl&gt;, rain_code &lt;chr&gt;, snow &lt;dbl&gt;, snow_code &lt;chr&gt;, precip &lt;dbl&gt;, precip_code &lt;chr&gt;, snow_mean_depth &lt;dbl&gt;,
 ## #   snow_mean_depth_code &lt;chr&gt;, snow_median_depth &lt;dbl&gt;, snow_median_depth_code &lt;chr&gt;, snow_depth_month_end &lt;dbl&gt;, snow_depth_month_end_code &lt;chr&gt;,
 ## #   rain_extreme_daily &lt;dbl&gt;, rain_extreme_daily_code &lt;chr&gt;, rain_extreme_daily_date &lt;date&gt;, rain_extreme_daily_date_code &lt;chr&gt;, snow_extreme_daily &lt;dbl&gt;,
 ## #   snow_extreme_daily_code &lt;chr&gt;, snow_extreme_daily_date &lt;date&gt;, snow_extreme_daily_date_code &lt;chr&gt;, precip_extreme_daily &lt;dbl&gt;,
-## #   precip_extreme_daily_code &lt;chr&gt;, precip_extreme_daily_date &lt;date&gt;, precip_extreme_daily_date_code &lt;chr&gt;, snow_extreme_depth &lt;dbl&gt;,
-## #   snow_extreme_depth_code &lt;chr&gt;, snow_extreme_depth_date &lt;date&gt;, snow_extreme_depth_date_code &lt;chr&gt;, temp_max_days_&lt;=0 &lt;dbl&gt;, temp_max_days_&lt;=0_code &lt;chr&gt;,
-## #   temp_max_days_&gt;0 &lt;dbl&gt;, temp_max_days_&gt;0_code &lt;chr&gt;, temp_max_days_&gt;10 &lt;dbl&gt;, temp_max_days_&gt;10_code &lt;chr&gt;, temp_max_days_&gt;20 &lt;dbl&gt;,
-## #   temp_max_days_&gt;20_code &lt;chr&gt;, temp_max_days_&gt;30 &lt;dbl&gt;, temp_max_days_&gt;30_code &lt;chr&gt;, temp_max_days_&gt;35 &lt;dbl&gt;, temp_max_days_&gt;35_code &lt;chr&gt;,
-## #   temp_min_days_&gt;0 &lt;dbl&gt;, temp_min_days_&gt;0_code &lt;chr&gt;, temp_min_days_&lt;=2 &lt;dbl&gt;, temp_min_days_&lt;=2_code &lt;chr&gt;, temp_min_days_&lt;=0 &lt;dbl&gt;,
-## #   temp_min_days_&lt;=0_code &lt;chr&gt;, temp_min_days_&lt;-2 &lt;dbl&gt;, temp_min_days_&lt;-2_code &lt;chr&gt;, temp_min_days_&lt;-10 &lt;dbl&gt;, temp_min_days_&lt;-10_code &lt;chr&gt;,
-## #   temp_min_days_&lt;-20 &lt;dbl&gt;, temp_min_days_&lt;-20_code &lt;chr&gt;, temp_min_days_&lt;-30 &lt;dbl&gt;, temp_min_days_&lt;-30_code &lt;chr&gt;, rain_days_&gt;=0.2 &lt;dbl&gt;,
-## #   rain_days_&gt;=0.2_code &lt;chr&gt;, rain_days_&gt;=5 &lt;dbl&gt;, rain_days_&gt;=5_code &lt;chr&gt;, rain_days_&gt;=10 &lt;dbl&gt;, rain_days_&gt;=10_code &lt;chr&gt;, rain_days_&gt;=25 &lt;dbl&gt;,
-## #   rain_days_&gt;=25_code &lt;chr&gt;, snow_days_&gt;=0.2 &lt;dbl&gt;, snow_days_&gt;=0.2_code &lt;chr&gt;, snow_days_&gt;=5 &lt;dbl&gt;, snow_days_&gt;=5_code &lt;chr&gt;, snow_days_&gt;=10 &lt;dbl&gt;,
-## #   snow_days_&gt;=10_code &lt;chr&gt;, snow_days_&gt;=25 &lt;dbl&gt;, snow_days_&gt;=25_code &lt;chr&gt;, precip_days_&gt;=0.2 &lt;dbl&gt;, precip_days_&gt;=0.2_code &lt;chr&gt;, precip_days_&gt;=5 &lt;dbl&gt;,
-## #   precip_days_&gt;=5_code &lt;chr&gt;, precip_days_&gt;=10 &lt;dbl&gt;, precip_days_&gt;=10_code &lt;chr&gt;, precip_days_&gt;=25 &lt;dbl&gt;, precip_days_&gt;=25_code &lt;chr&gt;,
-## #   snow_depth_days_&gt;=1 &lt;dbl&gt;, snow_depth_days_&gt;=1_code &lt;chr&gt;, snow_depth_days_&gt;=5 &lt;dbl&gt;, snow_depth_days_&gt;=5_code &lt;chr&gt;, snow_depth_days_&gt;=10 &lt;dbl&gt;,
-## #   snow_depth_days_&gt;=10_code &lt;chr&gt;, snow_depth_days_&gt;=20 &lt;dbl&gt;, snow_depth_days_&gt;=20_code &lt;chr&gt;, wind_speed &lt;dbl&gt;, wind_speed_code &lt;chr&gt;, wind_dir &lt;chr&gt;,
-## #   wind_dir_code &lt;chr&gt;, …</code></pre>
+## #   precip_extreme_daily_code &lt;chr&gt;, precip_extreme_daily_date &lt;date&gt;, precip_extreme_daily_date_code &lt;chr&gt;, snow_extreme_depth &lt;dbl&gt;, …</code></pre>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">frost</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 0 x 6
+<pre><code>## # A tibble: 0 × 6
 ## # … with 6 variables: prov &lt;chr&gt;, station_name &lt;chr&gt;, climate_id &lt;chr&gt;, normals_years &lt;chr&gt;, meets_wmo &lt;lgl&gt;, normals &lt;list&gt;</code></pre>
 </div>
   </div>
