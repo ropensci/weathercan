@@ -30,6 +30,7 @@ jobs:
 
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       VCR_TURN_OFF: true
+      NOT_CRAN: true
       RSPM: ${{ matrix.config.rspm }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       _R_CHECK_FORCE_SUGGESTS_: false
