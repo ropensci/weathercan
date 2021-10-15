@@ -2,7 +2,7 @@
 # weathercan <img src="https://github.com/ropensci/weathercan/raw/master/inst/assets/weathercan_logo.png" align = "right" width = 110/>
 
 [![R-CMD-check](https://github.com/ropensci/weathercan/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/weathercan/actions)
-[![codecov](https://codecov.io/gh/ropensci/weathercan/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/weathercan)
+[![codecov](https://codecov.io/gh/ropensci/weathercan/branch/master/graph/badge.svg)](https://app.codecov.io/gh/ropensci/weathercan)
 
 [![](https://badges.ropensci.org/160_status.svg)](https://github.com/ropensci/software-review/issues/160)
 [![DOI](https://zenodo.org/badge/60650396.svg)](https://zenodo.org/badge/latestdoi/60650396)
@@ -70,7 +70,7 @@ stations and their details (including `station_id`).
 head(stations())
 ```
 
-    ## # A tibble: 6 x 16
+    ## # A tibble: 6 × 16
     ##   prov  station_name        station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_2010 normals_1971_2000
     ##   <chr> <chr>                    <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
     ## 1 AB    DAYSLAND                  1795 301AR54        NA <NA>   52.9 -112.  689. Etc/GMT+7 day       1908  1922 FALSE   FALSE             FALSE            
@@ -84,7 +84,7 @@ head(stations())
 glimpse(stations())
 ```
 
-    ## Rows: 26,325
+    ## Rows: 26,328
     ## Columns: 16
     ## $ prov              <chr> "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", …
     ## $ station_name      <chr> "DAYSLAND", "DAYSLAND", "DAYSLAND", "EDMONTON CORONATION", "EDMONTON CORONATION", "EDMONTON CORONATION", "FLEET", "FLEET", "FLEET", …
@@ -110,7 +110,7 @@ You can look through this data frame directly, or you can use the
 stations_search("Kamloops", interval = "hour")
 ```
 
-    ## # A tibble: 3 x 16
+    ## # A tibble: 3 × 16
     ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_2010 normals_1971_2000
     ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
     ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE             
@@ -125,7 +125,7 @@ You can also search by proximity:
 stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour")
 ```
 
-    ## # A tibble: 3 x 17
+    ## # A tibble: 3 × 17
     ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_2010 normals_1971_2000 distance
     ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>                <dbl>
     ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE                  8.64
@@ -138,7 +138,7 @@ You can update this list of stations with
 stations_dl()
 ```
 
-    ## According to Environment Canada, Modified Date: 2021-05-02 23:31 UTC
+    ## According to Environment Canada, Modified Date: 2021-08-30 23:34 UTC
 
     ## Stations data saved...
     ## Use `stations()` to access most recent version and `stations_meta()` to see when this was last updated
@@ -150,10 +150,10 @@ stations_meta()
 ```
 
     ## $ECCC_modified
-    ## [1] "2021-05-02 23:31:00 UTC"
+    ## [1] "2021-08-30 23:34:00 UTC"
     ## 
     ## $weathercan_modified
-    ## [1] "2021-06-03"
+    ## [1] "2021-10-04"
 
 **Note:** For reproducibility, if you are using the stations list to
 gather your data, it can be a good idea to take note of the ECCC date of
@@ -175,7 +175,7 @@ kam <- weather_dl(station_ids = 51423, start = "2018-02-01", end = "2018-04-15")
 kam
 ```
 
-    ## # A tibble: 1,776 x 37
+    ## # A tibble: 1,776 × 37
     ##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id date       time                year  month day   hour  weather  hmdx
     ##    <chr>             <dbl> <lgl>            <chr> <dbl> <dbl> <dbl> <chr>      <chr>  <chr> <date>     <dttm>              <chr> <chr> <chr> <chr> <chr>   <dbl>
     ##  1 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 00:00:00 2018  02    01    00:00 <NA>       NA
@@ -205,7 +205,7 @@ associated with the station you’re interested in.
 stations_search("Winnipeg", normals_years = "current")
 ```
 
-    ## # A tibble: 1 x 13
+    ## # A tibble: 1 × 13
     ##   prov  station_name                station_id climate_id WMO_id TC_id   lat   lon  elev tz        normals normals_1981_2010 normals_1971_2000
     ##   <chr> <chr>                            <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <lgl>   <lgl>             <lgl>            
     ## 1 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/GMT+6 TRUE    TRUE              TRUE
