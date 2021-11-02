@@ -72,9 +72,9 @@ test_that("stations_dl() runs and updates data", {
 
   # Without local file, use package file
   expect_silent(s1 <- stations_read()$meta)
-  expect_lt(s1$weathercan_modified, Sys.Date())
+  expect_lte(s1$weathercan_modified, Sys.Date())
 
-  expect_gt(s$meta$weathercan_modified, s1$weathercan_modified)
+  expect_gte(s$meta$weathercan_modified, s1$weathercan_modified)
 
   unlink("stations.rds")
 })
