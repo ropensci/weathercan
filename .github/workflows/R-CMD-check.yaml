@@ -82,7 +82,8 @@ jobs:
             libudunits2-dev \
             libgdal-dev \
             libgeos-dev \
-            libproj-dev
+            libproj-dev \
+            gdal-bin
 
       - name: Install system dependencies
         if: runner.os == 'Linux'
