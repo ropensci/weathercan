@@ -29,10 +29,9 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: MacOS dependencies
-        if: runner.os == macOS
+        if: runner.os == 'macOS'
         run: |
-          brew install pkg-config
-          brew install gdal
+          brew install pkg-config gdal
 
       - uses: r-lib/actions/setup-pandoc@v1
 
