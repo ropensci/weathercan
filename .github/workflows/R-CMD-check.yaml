@@ -22,12 +22,17 @@ jobs:
 
     env:
       VCR_TURN_OFF: true
-      NOT_CRAN: true
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: MacOS dependencies
+        if: runner.os == "macOS"
+        run: |
+          brew install pkg-config
+          brew install gdal
 
       - uses: r-lib/actions/setup-pandoc@v1
 
