@@ -1,6 +1,10 @@
 
 # weathercan <img src="https://github.com/ropensci/weathercan/raw/master/inst/assets/weathercan_logo.png" align = "right" width = 110/>
 
+[![:name status
+badge](https://ropensci.r-universe.dev/badges/:name)](https://ropensci.r-universe.dev)
+[![weathercan status
+badge](https://ropensci.r-universe.dev/badges/weathercan)](https://ropensci.r-universe.dev)
 [![R-CMD-check](https://github.com/ropensci/weathercan/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/weathercan/actions)
 [![codecov](https://codecov.io/gh/ropensci/weathercan/branch/master/graph/badge.svg)](https://app.codecov.io/gh/ropensci/weathercan)
 
@@ -11,7 +15,6 @@
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/weathercan)](https://cran.r-project.org/package=weathercan)
 [![CRAN
 Downloads](http://cranlogs.r-pkg.org/badges/grand-total/weathercan)](https://CRAN.R-project.org/package=weathercan)
-[![](https://cranlogs.r-pkg.org/badges/weathercan)](https://cran.r-project.org/package=weathercan)
 
 This package makes it easier to search for and download multiple
 months/years of historical weather data from [Environment and Climate
@@ -37,18 +40,10 @@ You can install `weathercan` directly from CRAN:
 install.packages("weathercan")
 ```
 
-Use the `remotes` package to install the developmental package from
-GitHub:
+Or you can install from the rOpenSci R-Universe:
 
 ``` r
-install.packages("remotes") # If not already installed
-remotes::install_github("ropensci/weathercan") 
-```
-
-To build the developmental vignettes (tutorials) locally, use:
-
-``` r
-devtools::install_github("ropensci/weathercan", build_vignettes = TRUE) 
+install.packages("weathercan", repos = "https://ropensci.r-universe.dev")
 ```
 
 View the available vignettes with `vignette(package = "weathercan")`
@@ -84,7 +79,7 @@ head(stations())
 glimpse(stations())
 ```
 
-    ## Rows: 26,328
+    ## Rows: 26,337
     ## Columns: 16
     ## $ prov              <chr> "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", …
     ## $ station_name      <chr> "DAYSLAND", "DAYSLAND", "DAYSLAND", "EDMONTON CORONATION", "EDMONTON CORONATION", "EDMONTON CORONATION", "FLEET", "FLEET", "FLEET", …
@@ -138,7 +133,7 @@ You can update this list of stations with
 stations_dl()
 ```
 
-    ## According to Environment Canada, Modified Date: 2021-08-30 23:34 UTC
+    ## According to Environment Canada, Modified Date: 2021-10-31 23:34 UTC
 
     ## Stations data saved...
     ## Use `stations()` to access most recent version and `stations_meta()` to see when this was last updated
@@ -150,10 +145,10 @@ stations_meta()
 ```
 
     ## $ECCC_modified
-    ## [1] "2021-08-30 23:34:00 UTC"
+    ## [1] "2021-10-31 23:34:00 UTC"
     ## 
     ## $weathercan_modified
-    ## [1] "2021-10-04"
+    ## [1] "2021-11-22"
 
 **Note:** For reproducibility, if you are using the stations list to
 gather your data, it can be a good idea to take note of the ECCC date of

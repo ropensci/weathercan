@@ -4,6 +4,7 @@ pkgdown_sha: ~
 articles:
   articles/mapping: mapping.html
   articles/meteoland: meteoland.html
+  articles/tidyhydat: tidyhydat.html
   articles/use_with_tidyverse: use_with_tidyverse.html
   flags: flags.html
   glossary: glossary.html
@@ -12,5 +13,5 @@ articles:
   normals: normals.html
   reproducibility: reproducibility.html
   weathercan: weathercan.html
-last_built: 2021-10-15T23:11Z
+last_built: 2021-11-22T20:16Z
 

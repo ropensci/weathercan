@@ -1,6 +1,6 @@
 # Steps/Commands to run before a CRAN release -----------------------------
 
-v <- "0.6.2"
+version <- "0.6.2"
 #usethis::use_release_issue(version = v)
 
 # Check existing errors
@@ -80,19 +80,19 @@ devtools::check_win_oldrelease()
 
 # Build package to check on Rhub and locally
 system("cd ..; R CMD build weathercan")
-#system(paste0("cd ..; R CMD check weathercan_", v, ".tar.gz --as-cran --run-donttest")) # Local
+#system(paste0("cd ..; R CMD check weathercan_", version, ".tar.gz --as-cran --run-donttest")) # Local
 
 # Check Windows
-# rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
-#                      check_args = "--as-cran --run-donttest",
-#                      platforms = c("windows-x86_64-oldrel",
-#                                    "windows-x86_64-devel",
-#                                    "windows-x86_64-release"),
-#                      show_status = FALSE)
-# ##                     env_vars=c(R_COMPILE_AND_INSTALL_PACKAGES = "always"))
+rhub::check_for_cran(path = paste0("../weathercan_", version, ".tar.gz"),
+                     check_args = "--as-cran --run-donttest",
+                     platforms = c("windows-x86_64-oldrel",
+                                   "windows-x86_64-devel",
+                                   "windows-x86_64-release"),
+                     show_status = FALSE)
+##                     env_vars=c(R_COMPILE_AND_INSTALL_PACKAGES = "always"))
 
 # Check debian
-rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
+rhub::check_for_cran(path = paste0("../weathercan_", version, ".tar.gz"),
                      check_args = "--as-cran --run-donttest",
                      platforms = c("debian-clang-devel",
                                    "debian-gcc-devel", # CRAN = r-devel-linux-x86_64-debian-gcc
@@ -101,7 +101,7 @@ rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
                      show_status = FALSE)
 
 # Check fedora
-rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
+rhub::check_for_cran(path = paste0("../weathercan_", version, ".tar.gz"),
                      check_args = "--as-cran",
                      platforms = c("fedora-clang-devel",
                                    "fedora-gcc-devel"), # CRAN = r-devel-linux-x86_64-fedora-gc
@@ -109,7 +109,7 @@ rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
                      show_status = FALSE)
 
 # Check solaris
-rhub::check_for_cran(path = paste0("../weathercan_", v, ".tar.gz"),
+rhub::check_for_cran(path = paste0("../weathercan_", version, ".tar.gz"),
                      check_args = "--as-cran",
                      platforms = "solaris-x86-patched",   # CRAN = r-patched-solaris-x86
                      env_vars = c("_R_CHECK_FORCE_SUGGESTS_" = "false"),
@@ -139,9 +139,10 @@ codemetar::write_codemeta()
 # pkgdown::build_reference()
 #pkgdown::build_articles(lazy = FALSE)
 
-pkgdown::build_site()
+pkgdown::build_site(lazy = TRUE)
 unlink("./vignettes/normals_cache/", recursive = TRUE)
 
+pkgdown::build_article(name = "articles/tidyhydat")
 
 
 ## Push to github

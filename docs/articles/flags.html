@@ -71,13 +71,13 @@
 
       
 
-      </header><script src="flags_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
+      </header><script src="flags_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Flags and codes</h1>
                         <h4 class="author">Steffi LaZerte</h4>
             
-            <h4 class="date">2021-10-15</h4>
+            <h4 class="date">2021-11-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/weathercan/blob/master/vignettes/flags.Rmd"><code>vignettes/flags.Rmd</code></a></small>
       <div class="hidden name"><code>flags.Rmd</code></div>
@@ -111,7 +111,7 @@
 ## 10 MAGOG        2017-12     45.7                ^                 10                &lt;NA&gt;            
 ## 11 MAGOG        2018-01     34.6                ^                 2                 &lt;NA&gt;            
 ## 12 MAGOG        2018-02     77.2                ^                 0                 &lt;NA&gt;</code></pre>
-<p>In this output, you can see two flags: <code><a href="https://rdrr.io/r/base/Arithmetic.html">^</a></code> in <code>Total Precip</code> and <code>M</code> in <code>Snow Grnd Last Day</code></p>
+<p>In this output, you can see two flags: <code>^</code> in <code>Total Precip</code> and <code>M</code> in <code>Snow Grnd Last Day</code></p>
 <p>This same sample, formatted looks like:</p>
 <pre><code>## # A tibble: 12 × 5
 ##    date       total_precip total_precip_flag snow_grnd_last_day snow_grnd_last_day_flag
@@ -128,7 +128,7 @@
 ## 10 2017-12-01         45.7 ^                                 10 &lt;NA&gt;                   
 ## 11 2018-01-01         34.6 ^                                  2 &lt;NA&gt;                   
 ## 12 2018-02-01         77.2 ^                                  0 &lt;NA&gt;</code></pre>
-<p>As you can see, we still have the two flags, but the missing data flag (<code>M</code>) is now replaced with NA. The other flag <code><a href="https://rdrr.io/r/base/Arithmetic.html">^</a></code> is not, as it indicates that “The value displayed is based on incomplete data” (see below).</p>
+<p>As you can see, we still have the two flags, but the missing data flag (<code>M</code>) is now replaced with NA. The other flag <code>^</code> is not, as it indicates that “The value displayed is based on incomplete data” (see below).</p>
 </div>
 <div id="flags---weather-data" class="section level3">
 <h3 class="hasAnchor">

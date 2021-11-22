@@ -1,7 +1,7 @@
 ---
 title: "Getting Started"
 author: "Steffi LaZerte"
-date: "2021-10-15"
+date: "2021-11-22"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Getting Started}
@@ -46,7 +46,7 @@ glimpse(stations())
 ```
 
 ```
-## Rows: 26,328
+## Rows: 26,337
 ## Columns: 16
 ## $ prov              <chr> "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", …
 ## $ station_name      <chr> "DAYSLAND", "DAYSLAND", "DAYSLAND", "EDMONTON CORONATION", "EDMONTON CORONATION", "EDMONTON CORONATION", "FLEET", "FLEET", "FLEET", …
@@ -164,11 +164,11 @@ BCstations
 
 ```
 ## # A tibble: 3 × 16
-##   prov  station_name                station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_20… normals_1971_20…
-##   <chr> <chr>                            <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>            <lgl>           
-## 1 BC    CRESTON CAMPBELL SCIENTIFIC       6838 114B1F0     71770 WJR    49.1 -116.  641. Etc/GMT+7 hour      1994  2021 FALSE   FALSE            FALSE           
-## 2 BC    NELSON CS                         6839 1145M29     71776 WNM    49.5 -117.  535. Etc/GMT+8 hour      1994  2021 FALSE   FALSE            FALSE           
-## 3 BC    WARFIELD RCS                     31067 1148705     71401 XWF    49.1 -118.  567. Etc/GMT+8 hour      2001  2021 FALSE   FALSE            FALSE
+##   prov  station_name                station_id climate_id WMO_id TC_id   lat   lon  elev tz      interval start   end normals normals_1981_2010 normals_1971_20…
+##   <chr> <chr>                            <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>   <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>           
+## 1 BC    CRESTON CAMPBELL SCIENTIFIC       6838 114B1F0     71770 WJR    49.1 -116.  641. Etc/GM… hour      1994  2021 FALSE   FALSE             FALSE           
+## 2 BC    NELSON CS                         6839 1145M29     71776 WNM    49.5 -117.  535. Etc/GM… hour      1994  2021 FALSE   FALSE             FALSE           
+## 3 BC    WARFIELD RCS                     31067 1148705     71401 XWF    49.1 -118.  567. Etc/GM… hour      2001  2021 FALSE   FALSE             FALSE
 ```
 
 ```r
@@ -196,10 +196,10 @@ stations_meta()
 
 ```
 ## $ECCC_modified
-## [1] "2021-08-30 23:34:00 UTC"
+## [1] "2021-10-31 23:34:00 UTC"
 ## 
 ## $weathercan_modified
-## [1] "2021-10-04"
+## [1] "2021-11-22"
 ```
 
 
@@ -362,21 +362,21 @@ unnest(n, normals)
 
 ```
 ## # A tibble: 13 × 203
-##    prov  station_name                climate_id normals_years meets_wmo period temp_daily_aver… temp_daily_aver… temp_sd temp_sd_code temp_daily_max temp_daily_max_…
-##    <chr> <chr>                       <chr>      <chr>         <lgl>     <fct>             <dbl> <chr>              <dbl> <chr>                 <dbl> <chr>           
-##  1 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Jan               -16.4 A                    4.1 A                     -11.3 A               
-##  2 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Feb               -13.2 A                    4.2 A                      -8.1 A               
-##  3 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Mar                -5.8 A                    3.1 A                      -0.8 A               
-##  4 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Apr                 4.4 A                    2.7 A                      10.9 A               
-##  5 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      May                11.6 A                    2.1 A                      18.6 A               
-##  6 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Jun                17   A                    2   A                      23.2 A               
-##  7 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Jul                19.7 A                    1.4 A                      25.9 A               
-##  8 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Aug                18.8 A                    1.9 A                      25.4 A               
-##  9 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Sep                12.7 A                    1.3 A                      19   A               
-## 10 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Oct                 5   A                    1.8 A                      10.5 A               
-## 11 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Nov                -4.9 A                    3.6 A                      -0.5 A               
-## 12 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Dec               -13.2 A                    4.4 A                      -8.5 A               
-## 13 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Year                3   A                    1.2 A                       8.7 A               
+##    prov  station_name       climate_id normals_years meets_wmo period temp_daily_avera… temp_daily_averag… temp_sd temp_sd_code temp_daily_max temp_daily_max_c…
+##    <chr> <chr>              <chr>      <chr>         <lgl>     <fct>              <dbl> <chr>                <dbl> <chr>                 <dbl> <chr>            
+##  1 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Jan                -16.4 A                      4.1 A                     -11.3 A                
+##  2 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Feb                -13.2 A                      4.2 A                      -8.1 A                
+##  3 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Mar                 -5.8 A                      3.1 A                      -0.8 A                
+##  4 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Apr                  4.4 A                      2.7 A                      10.9 A                
+##  5 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      May                 11.6 A                      2.1 A                      18.6 A                
+##  6 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Jun                 17   A                      2   A                      23.2 A                
+##  7 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Jul                 19.7 A                      1.4 A                      25.9 A                
+##  8 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Aug                 18.8 A                      1.9 A                      25.4 A                
+##  9 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Sep                 12.7 A                      1.3 A                      19   A                
+## 10 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Oct                  5   A                      1.8 A                      10.5 A                
+## 11 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Nov                 -4.9 A                      3.6 A                      -0.5 A                
+## 12 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Dec                -13.2 A                      4.4 A                      -8.5 A                
+## 13 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Year                 3   A                      1.2 A                       8.7 A                
 ## # … with 191 more variables: temp_daily_min <dbl>, temp_daily_min_code <chr>, temp_extreme_max <dbl>, temp_extreme_max_code <chr>,
 ## #   temp_extreme_max_date <date>, temp_extreme_max_date_code <chr>, temp_extreme_min <dbl>, temp_extreme_min_code <chr>, temp_extreme_min_date <date>,
 ## #   temp_extreme_min_date_code <chr>, rain <dbl>, rain_code <chr>, snow <dbl>, snow_code <chr>, precip <dbl>, precip_code <chr>, snow_mean_depth <dbl>,
@@ -392,15 +392,15 @@ unnest(n, frost)
 
 ```
 ## # A tibble: 7 × 14
-##   prov  station_name                climate_id normals_years meets_wmo normals frost_code date_first_fall… date_last_sprin… length_frost_fr… prob  prob_first_fall…
-##   <chr> <chr>                       <chr>      <chr>         <lgl>     <list>  <chr>                 <dbl>            <dbl>            <dbl> <chr>            <dbl>
-## 1 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibbl… A                       265              143              121 10%                255
-## 2 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibbl… A                       265              143              121 25%                259
-## 3 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibbl… A                       265              143              121 33%                261
-## 4 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibbl… A                       265              143              121 50%                265
-## 5 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibbl… A                       265              143              121 66%                268
-## 6 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibbl… A                       265              143              121 75%                270
-## 7 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibbl… A                       265              143              121 90%                276
+##   prov  station_name     climate_id normals_years meets_wmo normals   frost_code date_first_fall_… date_last_spring… length_frost_fr… prob  prob_first_fall_tem…
+##   <chr> <chr>            <chr>      <chr>         <lgl>     <list>    <chr>                  <dbl>             <dbl>            <dbl> <chr>                <dbl>
+## 1 MB    WINNIPEG RICHAR… 5023222    1981-2010     TRUE      <tibble … A                        265               143              121 10%                    255
+## 2 MB    WINNIPEG RICHAR… 5023222    1981-2010     TRUE      <tibble … A                        265               143              121 25%                    259
+## 3 MB    WINNIPEG RICHAR… 5023222    1981-2010     TRUE      <tibble … A                        265               143              121 33%                    261
+## 4 MB    WINNIPEG RICHAR… 5023222    1981-2010     TRUE      <tibble … A                        265               143              121 50%                    265
+## 5 MB    WINNIPEG RICHAR… 5023222    1981-2010     TRUE      <tibble … A                        265               143              121 66%                    268
+## 6 MB    WINNIPEG RICHAR… 5023222    1981-2010     TRUE      <tibble … A                        265               143              121 75%                    270
+## 7 MB    WINNIPEG RICHAR… 5023222    1981-2010     TRUE      <tibble … A                        265               143              121 90%                    276
 ## # … with 2 more variables: prob_length_frost_free <dbl>, prob_last_spring_temp_below_0_on_date <dbl>
 ```
 
@@ -415,21 +415,21 @@ unnest(n, normals)
 
 ```
 ## # A tibble: 13 × 229
-##    prov  station_name                climate_id normals_years meets_wmo period temp_daily_aver… temp_daily_aver… temp_sd temp_sd_code temp_daily_max temp_daily_max_…
-##    <chr> <chr>                       <chr>      <chr>         <lgl>     <fct>             <dbl> <chr>              <dbl> <chr>                 <dbl> <chr>           
-##  1 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Jan               -17.8 A                    3.9 A                     -12.7 A               
-##  2 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Feb               -13.6 A                    4.2 A                      -8.5 A               
-##  3 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Mar                -6.1 A                    3.5 A                      -1.1 A               
-##  4 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Apr                 4   A                    2.7 A                      10.3 A               
-##  5 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      May                12   A                    2.5 A                      19.2 A               
-##  6 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Jun                17   A                    1.8 A                      23.3 A               
-##  7 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Jul                19.5 A                    1.5 A                      25.8 A               
-##  8 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Aug                18.5 A                    1.8 A                      25   A               
-##  9 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Sep                12.3 A                    1.4 A                      18.6 A               
-## 10 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Oct                 5.3 A                    1.6 A                      10.8 A               
-## 11 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Nov                -5.3 A                    3.3 A                      -0.9 A               
-## 12 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Dec               -14.4 A                    4.2 A                      -9.7 A               
-## 13 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Year                2.6 A                    1.3 A                       8.3 A               
+##    prov  station_name       climate_id normals_years meets_wmo period temp_daily_avera… temp_daily_averag… temp_sd temp_sd_code temp_daily_max temp_daily_max_c…
+##    <chr> <chr>              <chr>      <chr>         <lgl>     <fct>              <dbl> <chr>                <dbl> <chr>                 <dbl> <chr>            
+##  1 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Jan                -17.8 A                      3.9 A                     -12.7 A                
+##  2 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Feb                -13.6 A                      4.2 A                      -8.5 A                
+##  3 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Mar                 -6.1 A                      3.5 A                      -1.1 A                
+##  4 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Apr                  4   A                      2.7 A                      10.3 A                
+##  5 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      May                 12   A                      2.5 A                      19.2 A                
+##  6 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Jun                 17   A                      1.8 A                      23.3 A                
+##  7 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Jul                 19.5 A                      1.5 A                      25.8 A                
+##  8 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Aug                 18.5 A                      1.8 A                      25   A                
+##  9 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Sep                 12.3 A                      1.4 A                      18.6 A                
+## 10 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Oct                  5.3 A                      1.6 A                      10.8 A                
+## 11 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Nov                 -5.3 A                      3.3 A                      -0.9 A                
+## 12 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Dec                -14.4 A                      4.2 A                      -9.7 A                
+## 13 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Year                 2.6 A                      1.3 A                       8.3 A                
 ## # … with 217 more variables: temp_daily_min <dbl>, temp_daily_min_code <chr>, temp_extreme_max <dbl>, temp_extreme_max_code <chr>,
 ## #   temp_extreme_max_date <date>, temp_extreme_max_date_code <chr>, temp_extreme_min <dbl>, temp_extreme_min_code <chr>, temp_extreme_min_date <date>,
 ## #   temp_extreme_min_date_code <chr>, rain <dbl>, rain_code <chr>, snow <dbl>, snow_code <chr>, precip <dbl>, precip_code <chr>, snow_mean_depth <dbl>,

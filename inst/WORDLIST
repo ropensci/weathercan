@@ -1,14 +1,17 @@
+05MH001
 10AM
 11AM
 12PM
 24hrs
 2x
 9AM
+Assiniboine
 Boreal
 CMD
 CRS
 DOI
 ECCC
+HYDAT
 Hadley
 Humidex
 Kamloops
@@ -16,6 +19,7 @@ MUData
 Manitoban
 Meteoland
 Normals
+Ploting
 RFID
 RMarkdown
 ROpenSci
@@ -40,6 +44,7 @@ eccc
 envirocan
 gc
 http
+hydrometric
 isn
 json
 kPa
@@ -60,6 +65,7 @@ sp
 svg
 tibble
 tibbles
+tidyhydat
 tidyverse
 timeframe
 timezones

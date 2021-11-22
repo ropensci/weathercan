@@ -16,7 +16,7 @@
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.1.1 (2021-08-10)",
+  "runtimePlatform": "R version 4.1.2 (2021-11-01)",
   "author": [
     {
       "@type": "Person",
@@ -474,5 +474,5 @@
   ],
   "copyrightHolder": {},
   "funder": {},
-  "fileSize": "11074.075KB"
+  "fileSize": "11074.841KB"
 }

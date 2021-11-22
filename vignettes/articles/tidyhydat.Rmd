@@ -17,7 +17,7 @@ HYDAT contains lots of data including stream flow (historical and real-time), wa
 station metrics and information on data types and codes. 
 
 Here we'll go through a brief example of how hydrology data from `tidyhydat` 
-can compliment climate data from `weathercan` (and vice versa). 
+can compliment weather data from `weathercan` (and vice versa). 
 
 ## Setup
 
@@ -43,10 +43,10 @@ download_hydat()
 ```
 
 
-## Exploring climate and hydraulogy
+## Exploring climate and hydrology
 
 In the summer of 2020, my region (Brandon, Manitoba) experienced an incredibly 
-heavy rain fall. Our downspout was ripped off the gutter and many people in the
+heavy rain fall event. Our downspout was ripped off the gutter and many people in the
 area experienced flooding as rain poured into their basements. 
 
 Let's take a look at how this event was captured by weather and hydrometric stations 
@@ -134,10 +134,12 @@ g <- ggplot() +
 g
 ```
 
-Interesting, looks like there's a bit of a lag between the rain event and the 
-dramatic increase in water flow in the Assiniboine (unsurprisingly). 
 
-Let's add a bit of information about this lag.
+Interesting, looks like there's a bit of a lag between the rain event and the 
+dramatic increase in water flow in the Assiniboine (unsurprisingly, this is
+called "lag to peak"). 
+
+Let's add a bit of information about this lag to peak.
 
 ```{r}
 d <- data.frame(dates = c(rain$date[which.max(rain$total_precip)],
@@ -152,6 +154,10 @@ g +
            y = d$y[1] + 10,
            label = glue("{d$dates[2] - d$dates[1]}-day delay"))
 ```
+
+We can expect a lag like this because much of the flow being captured by the Brandon HYDAT
+station is from precipitation in the upstream catchment area (not only from 
+local contributions), which takes time to travel.
 
 
 ### Ploting rain and water level
@@ -196,7 +202,7 @@ Looks like the flow and water level match up, perhaps we should take a closer lo
 ```{r}
 ggplot() +
   theme_bw() +
-  theme(legend.position = c(0.9, 0.9)) +
+  theme(legend.position = c(0.9, 0.8)) +
   geom_line(data = flow, aes(x = Date, y = Value, colour = "Flow"),
             size = 2) +
   geom_line(data = level, size = 1,

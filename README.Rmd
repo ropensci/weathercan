@@ -13,14 +13,15 @@ old <- options(width = 160)
 
 # weathercan <img src="https://github.com/ropensci/weathercan/raw/master/inst/assets/weathercan_logo.png" align = "right" width = 110/>
 
-
+[![:name status badge](https://ropensci.r-universe.dev/badges/:name)](https://ropensci.r-universe.dev)
+[![weathercan status badge](https://ropensci.r-universe.dev/badges/weathercan)](https://ropensci.r-universe.dev)
 [![R-CMD-check](https://github.com/ropensci/weathercan/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/weathercan/actions)
 [![codecov](https://codecov.io/gh/ropensci/weathercan/branch/master/graph/badge.svg)](https://app.codecov.io/gh/ropensci/weathercan)
 
 [![](https://badges.ropensci.org/160_status.svg)](https://github.com/ropensci/software-review/issues/160) [![DOI](https://zenodo.org/badge/60650396.svg)](https://zenodo.org/badge/latestdoi/60650396) [![DOI](http://joss.theoj.org/papers/10.21105/joss.00571/status.svg)](https://doi.org/10.21105/joss.00571)
 
 
-[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/weathercan)](https://cran.r-project.org/package=weathercan) [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/grand-total/weathercan)](https://CRAN.R-project.org/package=weathercan) [![](https://cranlogs.r-pkg.org/badges/weathercan)](https://cran.r-project.org/package=weathercan)
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/weathercan)](https://cran.r-project.org/package=weathercan) [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/grand-total/weathercan)](https://CRAN.R-project.org/package=weathercan)
 
 
 This package makes it easier to search for and download multiple months/years of historical weather data from [Environment and Climate Change Canada (ECCC) website](https://climate.weather.gc.ca/historical_data/search_historic_data_e.html).
@@ -40,18 +41,12 @@ install.packages("weathercan")
 ```
 
 
-Use the `remotes` package to install the developmental package from GitHub:
+Or you can install from the rOpenSci R-Universe:
 
 ```{r, eval = FALSE}
-install.packages("remotes") # If not already installed
-remotes::install_github("ropensci/weathercan") 
+install.packages("weathercan", repos = "https://ropensci.r-universe.dev")
 ```
 
-To build the developmental vignettes (tutorials) locally, use:
-
-```{r, eval = FALSE}
-devtools::install_github("ropensci/weathercan", build_vignettes = TRUE) 
-```
 
 View the available vignettes with `vignette(package = "weathercan")`  
  

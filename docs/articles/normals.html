@@ -71,13 +71,13 @@
 
       
 
-      </header><script src="normals_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
+      </header><script src="normals_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Climate Normals</h1>
                         <h4 class="author">Steffi LaZerte</h4>
             
-            <h4 class="date">2021-10-15</h4>
+            <h4 class="date">2021-11-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/weathercan/blob/master/vignettes/normals.Rmd"><code>vignettes/normals.Rmd</code></a></small>
       <div class="hidden name"><code>normals.Rmd</code></div>
@@ -121,32 +121,32 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">normals</span></code></pre></div>
 <pre><code>## # A tibble: 13 × 203
-##    prov  station_name                climate_id normals_years meets_wmo period temp_daily_aver…
-##    &lt;chr&gt; &lt;chr&gt;                       &lt;chr&gt;      &lt;chr&gt;         &lt;lgl&gt;     &lt;fct&gt;             &lt;dbl&gt;
-##  1 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Jan               -16.4
-##  2 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Feb               -13.2
-##  3 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Mar                -5.8
-##  4 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Apr                 4.4
-##  5 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      May                11.6
-##  6 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Jun                17  
-##  7 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Jul                19.7
-##  8 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Aug                18.8
-##  9 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Sep                12.7
-## 10 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Oct                 5  
-## 11 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Nov                -4.9
-## 12 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Dec               -13.2
-## 13 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Year                3</code></pre>
+##    prov  station_name          climate_id normals_years meets_wmo period temp_daily_avera…
+##    &lt;chr&gt; &lt;chr&gt;                 &lt;chr&gt;      &lt;chr&gt;         &lt;lgl&gt;     &lt;fct&gt;              &lt;dbl&gt;
+##  1 MB    WINNIPEG RICHARDSON … 5023222    1981-2010     TRUE      Jan                -16.4
+##  2 MB    WINNIPEG RICHARDSON … 5023222    1981-2010     TRUE      Feb                -13.2
+##  3 MB    WINNIPEG RICHARDSON … 5023222    1981-2010     TRUE      Mar                 -5.8
+##  4 MB    WINNIPEG RICHARDSON … 5023222    1981-2010     TRUE      Apr                  4.4
+##  5 MB    WINNIPEG RICHARDSON … 5023222    1981-2010     TRUE      May                 11.6
+##  6 MB    WINNIPEG RICHARDSON … 5023222    1981-2010     TRUE      Jun                 17  
+##  7 MB    WINNIPEG RICHARDSON … 5023222    1981-2010     TRUE      Jul                 19.7
+##  8 MB    WINNIPEG RICHARDSON … 5023222    1981-2010     TRUE      Aug                 18.8
+##  9 MB    WINNIPEG RICHARDSON … 5023222    1981-2010     TRUE      Sep                 12.7
+## 10 MB    WINNIPEG RICHARDSON … 5023222    1981-2010     TRUE      Oct                  5  
+## 11 MB    WINNIPEG RICHARDSON … 5023222    1981-2010     TRUE      Nov                 -4.9
+## 12 MB    WINNIPEG RICHARDSON … 5023222    1981-2010     TRUE      Dec                -13.2
+## 13 MB    WINNIPEG RICHARDSON … 5023222    1981-2010     TRUE      Year                 3</code></pre>
 <p>To visualize missing data we can use the <code><a href="https://rdrr.io/pkg/naniar/man/gg_miss_var.html">gg_miss_var()</a></code> function from the <code>naniar</code> package.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">normals</span>, <span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"_code"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="co"># Remove '_code' columns</span>
+<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">normals</span>, <span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"_code"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="co"># Remove '_code' columns</span>
   <span class="fu"><a href="https://rdrr.io/pkg/naniar/man/gg_miss_var.html">gg_miss_var</a></span><span class="op">(</span>facet <span class="op">=</span> <span class="va">station_name</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span><span class="op">(</span><span class="op">{</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">normals</span>, <span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"_code"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="co"># Remove '_code' columns</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span><span class="op">(</span><span class="op">{</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">normals</span>, <span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"_code"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="co"># Remove '_code' columns</span>
     <span class="fu"><a href="https://rdrr.io/pkg/naniar/man/gg_miss_var.html">gg_miss_var</a></span><span class="op">(</span>facet <span class="op">=</span> <span class="va">station_name</span><span class="op">)</span><span class="op">}</span><span class="op">)</span></code></pre></div>
 <p><img src="unnamed-chunk-7-1.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" width="100%" style="display: block; margin: auto;"></p>
 <p>Let’s take a look at the frost data.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="st">"normals"</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">frost</span><span class="op">)</span><span class="op">)</span> <span class="va">frost</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">frost</span>, <span class="op">-</span><span class="va">normals</span><span class="op">)</span> <span class="co"># tidyr v1</span>
+<code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="st">"normals"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">frost</span><span class="op">)</span><span class="op">)</span> <span class="va">frost</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">frost</span>, <span class="op">-</span><span class="va">normals</span><span class="op">)</span> <span class="co"># tidyr v1</span>
 <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">frost</span><span class="op">)</span></code></pre></div>
 <pre><code>## Rows: 7
 ## Columns: 13
@@ -185,10 +185,10 @@
 ## # … with 307,881 more rows</code></pre>
 <p>For example, if you wanted all <code>climate_id</code>s for stations that have data on soil temperature for 1981-2010 normals:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">normals_measurements</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/stringr/man/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">measurement</span>, <span class="st">"soil"</span><span class="op">)</span>,
-         <span class="va">normals</span> <span class="op">==</span> <span class="st">"1981-2010"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">climate_id</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<code class="sourceCode R"><span class="va">normals_measurements</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">measurement</span>, <span class="st">"soil"</span><span class="op">)</span>,
+         <span class="va">normals</span> <span class="op">==</span> <span class="st">"1981-2010"</span><span class="op">)</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">climate_id</span><span class="op">)</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>##  [1] "3070560" "1100119" "112G8L1" "5021054" "5021848" "8102234" "8403600" "8501900"
 ##  [9] "8502800" "8202800" "8205990" "2403500" "6073960" "6104025" "6105976" "7040440"
