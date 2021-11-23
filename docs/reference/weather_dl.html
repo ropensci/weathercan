@@ -77,7 +77,7 @@ https://climate.weather.gc.ca/glossary_e.html." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">weathercan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.2</span>
       </span>
     </div>
 
@@ -85,7 +85,7 @@ https://climate.weather.gc.ca/glossary_e.html." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa-home"></span>
+    <span class="fa fa-home"></span>
      
   </a>
 </li>
@@ -102,7 +102,7 @@ https://climate.weather.gc.ca/glossary_e.html." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/ropensci/weathercan">
-    <span class="fas fa-github fa-lg"></span>
+    <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -258,29 +258,35 @@ on or after April 2018).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='co'># \donttest{</span>
-<span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='check_eccc.html'>check_eccc</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>  <span class='co'># Make sure ECCC is available</span>
-
-  <span class='va'>kam</span> <span class='op'>&lt;-</span> <span class='fu'>weather_dl</span><span class='op'>(</span>station_ids <span class='op'>=</span> <span class='fl'>51423</span>,
-                    start <span class='op'>=</span> <span class='st'>"2016-01-01"</span>, end <span class='op'>=</span> <span class='st'>"2016-02-15"</span><span class='op'>)</span>
-
-  <span class='fu'><a href='stations_search.html'>stations_search</a></span><span class='op'>(</span><span class='st'>"Kamloops A$"</span>, interval <span class='op'>=</span> <span class='st'>"hour"</span><span class='op'>)</span>
-  <span class='fu'><a href='stations_search.html'>stations_search</a></span><span class='op'>(</span><span class='st'>"Prince George Airport"</span>, interval <span class='op'>=</span> <span class='st'>"hour"</span><span class='op'>)</span>
-
-  <span class='va'>kam.pg</span> <span class='op'>&lt;-</span> <span class='fu'>weather_dl</span><span class='op'>(</span>station_ids <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>48248</span>, <span class='fl'>51423</span><span class='op'>)</span>,
-                       start <span class='op'>=</span> <span class='st'>"2016-01-01"</span>, end <span class='op'>=</span> <span class='st'>"2016-02-15"</span><span class='op'>)</span>
-
-  <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
-
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>kam.pg</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>time</span>, y <span class='op'>=</span> <span class='va'>temp</span>,
-                            group <span class='op'>=</span> <span class='va'>station_name</span>,
-                            colour <span class='op'>=</span> <span class='va'>station_name</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-         <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='op'>)</span>
- <span class='op'>}</span><span class='co'># }</span>
+<span class='va'>kam</span> <span class='op'>&lt;-</span> <span class='fu'>weather_dl</span><span class='op'>(</span>station_ids <span class='op'>=</span> <span class='fl'>51423</span>,
+                  start <span class='op'>=</span> <span class='st'>"2016-01-01"</span>, end <span class='op'>=</span> <span class='st'>"2016-02-15"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>As of weathercan v0.3.0 time display is either local time or UTC</span>
 #&gt; <span class='message'>See Details under ?weather_dl for more information.</span>
-#&gt; <span class='message'>This message is shown once per session</span></div><div class='img'><img src='weather_dl-1.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
+#&gt; <span class='message'>This message is shown once per session</span></div><div class='input'>
+<span class='fu'><a href='stations_search.html'>stations_search</a></span><span class='op'>(</span><span class='st'>"Kamloops A$"</span>, interval <span class='op'>=</span> <span class='st'>"hour"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 × 16</span>
+#&gt;   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz    
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> 
+#&gt; <span style='color: #BCBCBC;'>1</span> BC    KAMLOOPS A         <span style='text-decoration: underline;'>1</span>275 1163780     <span style='text-decoration: underline;'>71</span>887 YKA    50.7 -<span style='color: #BB0000;'>120.</span>  345. Etc/G…
+#&gt; <span style='color: #BCBCBC;'>2</span> BC    KAMLOOPS A        <span style='text-decoration: underline;'>51</span>423 1163781     <span style='text-decoration: underline;'>71</span>887 YKA    50.7 -<span style='color: #BB0000;'>120.</span>  345. Etc/G…
+#&gt; <span style='color: #949494;'># … with 6 more variables: interval &lt;chr&gt;, start &lt;dbl&gt;, end &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   normals &lt;lgl&gt;, normals_1981_2010 &lt;lgl&gt;, normals_1971_2000 &lt;lgl&gt;</span></div><div class='input'><span class='fu'><a href='stations_search.html'>stations_search</a></span><span class='op'>(</span><span class='st'>"Prince George Airport"</span>, interval <span class='op'>=</span> <span class='st'>"hour"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 × 16</span>
+#&gt;   prov  station_name  station_id climate_id WMO_id TC_id   lat   lon  elev tz   
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> BC    PRINCE GEORG…      <span style='text-decoration: underline;'>48</span>248 1096453     <span style='text-decoration: underline;'>71</span>302 VXS    53.9 -<span style='color: #BB0000;'>123.</span>   680 Etc/…
+#&gt; <span style='color: #949494;'># … with 6 more variables: interval &lt;chr&gt;, start &lt;dbl&gt;, end &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   normals &lt;lgl&gt;, normals_1981_2010 &lt;lgl&gt;, normals_1971_2000 &lt;lgl&gt;</span></div><div class='input'>
+<span class='va'>kam.pg</span> <span class='op'>&lt;-</span> <span class='fu'>weather_dl</span><span class='op'>(</span>station_ids <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>48248</span>, <span class='fl'>51423</span><span class='op'>)</span>,
+                     start <span class='op'>=</span> <span class='st'>"2016-01-01"</span>, end <span class='op'>=</span> <span class='st'>"2016-02-15"</span><span class='op'>)</span>
+
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>kam.pg</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>time</span>, y <span class='op'>=</span> <span class='va'>temp</span>,
+                          group <span class='op'>=</span> <span class='va'>station_name</span>,
+                          colour <span class='op'>=</span> <span class='va'>station_name</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+       <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='img'><img src='weather_dl-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

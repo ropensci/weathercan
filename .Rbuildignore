@@ -27,3 +27,7 @@
 ^Meta$
 ^LICENSE\.md$
 ^devtests.R$
+^vignettes/reproducibility\.Rmd\.orig$
+^vignettes/weathercan\.Rmd\.orig$
+^vignettes/normals\.Rmd\.orig$
+^vignettes/flags\.Rmd\.orig$

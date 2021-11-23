@@ -2,6 +2,7 @@
 context("weather_dl() arguments")
 
 test_that("weather_dl() hour format = FALSE", {
+  skip_on_cran()
   vcr::use_cassette("weather_hour_51423_2014-01", {
     w <- weather_dl(station_ids = 51423, start = "2014-01-01", end = "2014-01-31",
                     format = FALSE)
@@ -26,6 +27,7 @@ test_that("weather_dl() hour format = FALSE", {
 })
 
 test_that("weather_dl() day format = FALSE", {
+  skip_on_cran()
   vcr::use_cassette("weather_day_51423_2014", {
     w <- weather_dl(station_ids = 51423, start = "2014-01-01", end = "2014-03-01",
                     interval = "day", format = FALSE)
@@ -52,6 +54,7 @@ test_that("weather_dl() day format = FALSE", {
 })
 
 test_that("weather_dl() month format = FALSE", {
+  skip_on_cran()
   vcr::use_cassette("weather_month_5401", {
     expect_silent(w <- weather_dl(station_ids = 5401,
                                   start = "2017-01-01", end = "2017-05-01",
@@ -77,8 +80,8 @@ test_that("weather_dl() month format = FALSE", {
   expect_true(is.na(w$TC_id[1]))
 })
 
-
 test_that("weather_dl() month string_as = NULL", {
+  skip_on_cran()
   vcr::use_cassette("weather_month_5410", {
     expect_warning(expect_message(w <- weather_dl(station_id = 5410,
                                                   interval = "month",

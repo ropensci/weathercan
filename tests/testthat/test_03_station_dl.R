@@ -5,11 +5,13 @@ context("stations_dl()")
 test_that("stations_dl() requires R 3.3.4", {
   # Can't test stations_dl because requires depth = 2 which creates problems:
   # https://github.com/r-lib/mockery/issues
+  skip_on_cran()
   stub(stations_dl_internal, 'getRversion', package_version("3.3.3"))
   expect_message(stations_dl_internal(), "Need R version")
 })
 
 test_that("stations_dl() requires lutz and sf", {
+  skip_on_cran()
   stub(stations_dl_internal, 'requireNamespace', mock(FALSE, FALSE))
   expect_error(stations_dl_internal(), "Package 'lutz' and its dependency, 'sf'")
 })
@@ -26,6 +28,7 @@ test_that("stations_dl() errors appropriately", {
 })
 
 test_that("stations_normals() gets normals info", {
+  skip_on_cran()
   vcr::use_cassette("stations_normals", {
     expect_silent(n <- stations_normals()) %>%
       expect_is("data.frame")
@@ -37,6 +40,7 @@ test_that("stations_normals() gets normals info", {
 })
 
 test_that("stations_meta() returns metadata", {
+  skip_on_cran()
   expect_type(stations_meta(), "list") %>%
     expect_named(c("ECCC_modified", "weathercan_modified"))
 
@@ -68,19 +72,18 @@ test_that("stations_dl() runs and updates data", {
 
   # Without local file, use package file
   expect_silent(s1 <- stations_read()$meta)
-  expect_lt(s1$weathercan_modified, Sys.Date())
+  expect_lte(s1$weathercan_modified, Sys.Date())
 
-  stub(stations_read, "stations_file", file.path("stations.rds"))
-  expect_silent(s2 <- stations_read()$meta)
-  expect_gt(s2$weathercan_modified, s1$weathercan_modified)
+  expect_gte(s$meta$weathercan_modified, s1$weathercan_modified)
 
   unlink("stations.rds")
 })
 
 
 # stations() --------------------------------------------------------------
-test_that("stations() /stations_meta() return data",{
- expect_silent(s <- stations()) %>%
+test_that("stations() /stations_meta() return data", {
+
+  expect_silent(s <- stations()) %>%
     expect_s3_class("data.frame")
 
   expect_silent(stations_meta()) %>%

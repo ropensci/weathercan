@@ -1,7 +1,7 @@
 ---
 title: "Flags and codes"
 author: "Steffi LaZerte"
-date: "`r Sys.Date()`"
+date: "2021-11-22"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Flags and codes}
@@ -9,11 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE, message = FALSE}
-library(weathercan)
-library(dplyr)
-library(tidyr)
-```
+
 
 
 ## What are flags/codes
@@ -28,25 +24,46 @@ In the `weather_dl()` function if `format = TRUE` (the default), data correspond
 
 For example, a sample of unformatted data from Magog station in Quebec looks like:
 
-```{r, echo = FALSE}
-old <- options(width = 100)
-w <- weather_dl(station_id = 5401, start =  "2017-01-01", 
-                interval = "month", format = FALSE)
 
-dplyr::select(w, station_name, `Date/Time`, 
-              `Total Precip (mm)`, `Total Precip Flag`,
-              `Snow Grnd Last Day (cm)`, `Snow Grnd Last Day Flag`) %>% 
-  tail(n = 12)
+```
+## # A tibble: 12 × 6
+##    station_name `Date/Time` `Total Precip (mm)` `Total Precip Fl… `Snow Grnd Last … `Snow Grnd Last…
+##    <chr>        <chr>       <chr>               <chr>             <chr>             <chr>           
+##  1 MAGOG        2017-03     30.4                ^                 <NA>              M               
+##  2 MAGOG        2017-04     114.0               ^                 0                 <NA>            
+##  3 MAGOG        2017-05     78.8                ^                 0                 <NA>            
+##  4 MAGOG        2017-06     140.7               ^                 0                 <NA>            
+##  5 MAGOG        2017-07     80.7                <NA>              0                 <NA>            
+##  6 MAGOG        2017-08     135.8               <NA>              0                 <NA>            
+##  7 MAGOG        2017-09     63.0                ^                 0                 <NA>            
+##  8 MAGOG        2017-10     140.8               ^                 0                 <NA>            
+##  9 MAGOG        2017-11     70.0                ^                 0                 <NA>            
+## 10 MAGOG        2017-12     45.7                ^                 10                <NA>            
+## 11 MAGOG        2018-01     34.6                ^                 2                 <NA>            
+## 12 MAGOG        2018-02     77.2                ^                 0                 <NA>
 ```
 
 In this output, you can see two flags: `^` in `Total Precip` and `M` in `Snow Grnd Last Day`
 
 This same sample, formatted looks like:
 
-```{r, echo = FALSE}
-weather_dl(station_id = 5401, start =  "2017-01-01", interval = "month") %>%
-  dplyr::select(date, total_precip, total_precip_flag, snow_grnd_last_day, snow_grnd_last_day_flag) %>%
-  tail(n = 12)
+
+```
+## # A tibble: 12 × 5
+##    date       total_precip total_precip_flag snow_grnd_last_day snow_grnd_last_day_flag
+##    <date>            <dbl> <chr>                          <dbl> <chr>                  
+##  1 2017-03-01         30.4 ^                                 NA M                      
+##  2 2017-04-01        114   ^                                  0 <NA>                   
+##  3 2017-05-01         78.8 ^                                  0 <NA>                   
+##  4 2017-06-01        141.  ^                                  0 <NA>                   
+##  5 2017-07-01         80.7 <NA>                               0 <NA>                   
+##  6 2017-08-01        136.  <NA>                               0 <NA>                   
+##  7 2017-09-01         63   ^                                  0 <NA>                   
+##  8 2017-10-01        141.  ^                                  0 <NA>                   
+##  9 2017-11-01         70   ^                                  0 <NA>                   
+## 10 2017-12-01         45.7 ^                                 10 <NA>                   
+## 11 2018-01-01         34.6 ^                                  2 <NA>                   
+## 12 2018-02-01         77.2 ^                                  0 <NA>
 ```
 
 As you can see, we still have the two flags, but the missing data flag (`M`) is now replaced with NA. The other flag `^` is not, as it indicates that "The value displayed is based on incomplete data" (see below).
@@ -55,17 +72,47 @@ As you can see, we still have the two flags, but the missing data flag (`M`) is 
 
 The flags index can be accessed through the built in data frame: `flags`
 
-```{r, echo = FALSE}
-knitr::kable(flags)
-```
+
+|code    |meaning                                                             |
+|:-------|:-------------------------------------------------------------------|
+|[empty] |Indicates an unobserved value                                       |
+|†       |Data that is not subject to review by the National Climate Archives |
+|^       |The value displayed is based on incomplete data                     |
+|A       |Accumulated                                                         |
+|B       |More than one occurrence and estimated                              |
+|C       |Precipitation occurred, amount uncertain                            |
+|E       |Estimated                                                           |
+|F       |Accumulated and estimated                                           |
+|L       |Precipitation may or may not have occurred                          |
+|M       |Missing                                                             |
+|N       |Temperature missing but known to be > 0                             |
+|S       |More than one occurrence                                            |
+|T       |Trace                                                               |
+|Y       |Temperature missing but known to be < 0                             |
+|NA      |Not Available                                                       |
 
 ### Codes
 In the `normals_dl`() function, codes are associated with each variable:
 
-```{r, echo = FALSE}
-n <- normals_dl(climate_ids = "5010480") %>%
-  unnest(normals)
-select(n, period, contains("temp_daily"))
+
+```
+## # A tibble: 13 × 7
+##    period temp_daily_average temp_daily_average_code temp_daily_max temp_daily_max_c… temp_daily_min
+##    <fct>               <dbl> <chr>                            <dbl> <chr>                      <dbl>
+##  1 Jan                 -16.6 A                                -11.1 A                          -21.9
+##  2 Feb                 -13.6 A                                 -8.1 A                          -19  
+##  3 Mar                  -6.2 A                                 -1   A                          -11.4
+##  4 Apr                   4   A                                 10.5 A                           -2.6
+##  5 May                  10.6 A                                 17.8 A                            3.4
+##  6 Jun                  15.9 A                                 22.4 A                            9.3
+##  7 Jul                  18.5 A                                 25.2 A                           11.7
+##  8 Aug                  17.7 A                                 24.9 A                           10.4
+##  9 Sep                  11.8 A                                 18.9 A                            4.7
+## 10 Oct                   4.1 A                                 10.4 A                           -2.2
+## 11 Nov                  -5.6 A                                 -0.5 A                          -10.6
+## 12 Dec                 -14   A                                 -9   A                          -19  
+## 13 Year                  2.2 A                                  8.4 A                           -3.9
+## # … with 1 more variable: temp_daily_min_code <chr>
 ```
 
 For example, here, the code indicates that these temperature variables meet the WMO '3 and 5 rule' (no more than 3 consecutive and no more than 5 total missing for either temperature or precipitation).                                                                   
@@ -75,13 +122,14 @@ For example, here, the code indicates that these temperature variables meet the 
 
 The codes index for climate normals can be accessed through the built-in data frame: `codes`
 
-```{r, echo = FALSE}
-knitr::kable(codes)
-```
+
+|code |meaning                                                                                                                       |
+|:----|:-----------------------------------------------------------------------------------------------------------------------------|
+|A    |WMO '3 and 5 rule' (i.e. no more than 3 consecutive and no more than 5 total missing for either temperature or precipitation) |
+|B    |At least 25 years                                                                                                             |
+|C    |At least 20 years                                                                                                             |
+|D    |At least 15 years                                                                                                             |
 
 
-```{r, include = FALSE}
-# Reset options
-options(old)
-```
+
 

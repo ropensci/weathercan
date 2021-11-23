@@ -39,14 +39,12 @@ The column \code{normals} represents the most current year range of climate
 normals (i.e. currently 1981-2010)
 }
 \examples{
+\dontshow{if (check_eccc()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 
-if(interactive()) {
-  # Update stations data frame
-  stations_dl()
+# Update stations data frame
+stations_dl()
 
-  # Updated stations data frame is now automatically used
-  stations_search("Winnipeg")
-}
-
-
+# Updated stations data frame is now automatically used
+stations_search("Winnipeg")
+\dontshow{\}) # examplesIf}
 }

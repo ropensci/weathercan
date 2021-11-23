@@ -36,7 +36,7 @@
 #'
 #' @export
 #'
-#' @examples
+#' @examplesIf check_eccc()
 #'
 #' stations()
 #' stations_meta()
@@ -63,7 +63,7 @@ stations <- function() {
 #'
 #' @export
 #'
-#' @examples
+#' @examplesIf check_eccc()
 #' stations_meta()
 stations_meta <- function() {
   stations_read()$meta
@@ -117,16 +117,13 @@ stations_file <- function() {
 #'   missing data, etc.)
 #'
 #'
-#' @examples
+#' @examplesIf check_eccc()
 #'
-#' if(interactive()) {
-#'   # Update stations data frame
-#'   stations_dl()
+#' # Update stations data frame
+#' stations_dl()
 #'
-#'   # Updated stations data frame is now automatically used
-#'   stations_search("Winnipeg")
-#' }
-#'
+#' # Updated stations data frame is now automatically used
+#' stations_search("Winnipeg")
 #'
 #' @export
 
@@ -337,7 +334,7 @@ stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
 #'   the distance in kilometres from the location to the station. If no stations
 #'   are found withing `dist`, the closest 10 stations are returned.
 #'
-#' @examples
+#' @examplesIf check_eccc()
 #'
 #' stations_search(name = "Kamloops")
 #' stations_search(name = "Kamloops", interval = "hour")

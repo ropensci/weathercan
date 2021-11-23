@@ -110,25 +110,22 @@ was added as of April 1st 2018, so will be in all data which includes dates
 on or after April 2018).
 }
 \examples{
+\dontshow{if (check_eccc()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 
-\donttest{
-if(check_eccc()) {  # Make sure ECCC is available
+kam <- weather_dl(station_ids = 51423,
+                  start = "2016-01-01", end = "2016-02-15")
 
-  kam <- weather_dl(station_ids = 51423,
-                    start = "2016-01-01", end = "2016-02-15")
+stations_search("Kamloops A$", interval = "hour")
+stations_search("Prince George Airport", interval = "hour")
 
-  stations_search("Kamloops A$", interval = "hour")
-  stations_search("Prince George Airport", interval = "hour")
+kam.pg <- weather_dl(station_ids = c(48248, 51423),
+                     start = "2016-01-01", end = "2016-02-15")
 
-  kam.pg <- weather_dl(station_ids = c(48248, 51423),
-                       start = "2016-01-01", end = "2016-02-15")
+library(ggplot2)
 
-  library(ggplot2)
-
-  ggplot(data = kam.pg, aes(x = time, y = temp,
-                            group = station_name,
-                            colour = station_name)) +
-         geom_line()
- }}
-
+ggplot(data = kam.pg, aes(x = time, y = temp,
+                          group = station_name,
+                          colour = station_name)) +
+       geom_line()
+\dontshow{\}) # examplesIf}
 }

@@ -3,6 +3,7 @@
 context("weather by day")
 
 test_that("weather (day) returns a data frame", {
+  skip_on_cran()
   vcr::use_cassette("weather_day_51423_2014", {
     expect_message({weather_dl(station_ids = 51423,
                                start = "2014-01-01",
@@ -39,6 +40,7 @@ test_that("weather (day) returns a data frame", {
 })
 
 test_that("weather (day) gets all, one year", {
+  skip_on_cran()
 
   vcr::use_cassette("weather_day_54398_2016_2017", {
     expect_silent(w <- weather_dl(station_ids = 54398,
@@ -74,8 +76,8 @@ test_that("weather (day) gets all, one year", {
 
 })
 
-
 test_that("weather (day) crosses the year line", {
+  skip_on_cran()
   # Cached
   expect_silent(w <- weather_dl(station_id = 54398, interval = "day",
                                 start = "2016-11-18", end = "2017-04-05"))
@@ -85,6 +87,7 @@ test_that("weather (day) crosses the year line", {
 })
 
 test_that("weather (day) trims NAs", {
+  skip_on_cran()
   # Cached
   expect_silent(w1 <- weather_dl(station_ids = 54398, interval = "day",
                                  start = "2016-01-01", end = "2016-12-31",
@@ -99,6 +102,7 @@ test_that("weather (day) trims NAs", {
 })
 
 test_that("weather (day) mutliple stations", {
+  skip_on_cran()
   vcr::use_cassette("weather_day_51423_54398_2016", {
     expect_message(w <- weather_dl(station_ids = c(51423, 54398),
                                    start = "2016-03-01", end = "2016-04-01",
@@ -111,6 +115,7 @@ test_that("weather (day) mutliple stations", {
 })
 
 test_that("weather (day) no data fails nicely", {
+  skip_on_cran()
   vcr::use_cassette("weather_day_42013_51423_2017", {
     expect_silent(
       expect_message(w1 <- weather_dl(station_ids = c(42013, 51423),
@@ -163,6 +168,7 @@ test_that("weather (day) no data fails nicely", {
 })
 
 test_that("weather (day) verbose and quiet", {
+  skip_on_cran()
 
   # Cached
   expect_message(weather_dl(c(51423, 54398), interval = "day",
@@ -181,6 +187,7 @@ test_that("weather (day) verbose and quiet", {
 })
 
 test_that("weather (day) handles data with different numbers of columns", {
+  skip_on_cran()
   vcr::use_cassette("weather_day_51423_2018", {
     expect_error(expect_message(d <- weather_dl(station_ids = 51423,
                                                 start = "2018-03-20",
@@ -201,7 +208,7 @@ test_that("weather (day) handles data with different numbers of columns", {
 })
 
 test_that("weather (day) skips with message if end date < start date", {
-
+  skip_on_cran()
   vcr::use_cassette("weather_day_51423_2014", {
     expect_message({weather_dl(station_ids = 51423, start = "2014-01-31",
                                end = "2014-01-01", interval = "day")},

@@ -64,7 +64,9 @@ get_check <- function(..., task = NULL) {
 
 #' Check access to ECCC
 #'
-#' Checks if <https://climate.weather.gc.ca> is available and accessible.
+#' Checks if whether there is internet access, weather data, normals data,
+#' and eccc sites are available and accessible, and whether we're NOT running
+#' on cran
 #'
 #' @return FALSE if not, TRUE if so
 #' @export
@@ -74,6 +76,14 @@ get_check <- function(..., task = NULL) {
 #' check_eccc()
 #'
 check_eccc <- function() {
-  t <- try(get_check("https://climate.weather.gc.ca"), silent = TRUE)
-  !"try-error" %in% class(t)
+
+  if(!Sys.getenv("NOT_CRAN") == TRUE) return(FALSE)
+  if(is_error(httr::HEAD("r-project.org"))) return(FALSE)
+  if(is_error(httr::HEAD(getOption("weathercan.urls.weather")))) return(FALSE)
+  if(is_error(httr::HEAD(getOption("weathercan.urls.normals")))) return(FALSE)
+  if(is_error(httr::HEAD("https://climate.weather.gc.ca"))) return(FALSE)
+
+  TRUE
 }
+
+is_error <- function(x) "try-error" %in% class(try(x, silent = TRUE))

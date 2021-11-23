@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">weathercan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.2</span>
       </span>
     </div>
 
@@ -40,7 +40,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa-home"></span>
+    <span class="fa fa-home"></span>
      
   </a>
 </li>
@@ -57,7 +57,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/ropensci/weathercan">
-    <span class="fas fa-github fa-lg"></span>
+    <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -71,13 +71,13 @@
 
       
 
-      </header><script src="flags_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
+      </header><script src="flags_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Flags and codes</h1>
                         <h4 class="author">Steffi LaZerte</h4>
             
-            <h4 class="date">2021-06-04</h4>
+            <h4 class="date">2021-11-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/weathercan/blob/master/vignettes/flags.Rmd"><code>vignettes/flags.Rmd</code></a></small>
       <div class="hidden name"><code>flags.Rmd</code></div>
@@ -96,24 +96,24 @@
 <a href="#flags" class="anchor"></a>Flags</h3>
 <p>In the <code><a href="../reference/weather_dl.html">weather_dl()</a></code> function if <code>format = TRUE</code> (the default), data corresponding to flags <code>M</code>, <code>NA</code>, <code>[empty]</code> and <code>L</code> are all replaced with <code>NA</code>.</p>
 <p>For example, a sample of unformatted data from Magog station in Quebec looks like:</p>
-<pre><code>## # A tibble: 12 x 6
-##    station_name `Date/Time` `Total Precip (m… `Total Precip Fl… `Snow Grnd Last D… `Snow Grnd Last …
-##    &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;             &lt;chr&gt;             &lt;chr&gt;              &lt;chr&gt;            
-##  1 MAGOG        2017-03     30.4              ^                 &lt;NA&gt;               M                
-##  2 MAGOG        2017-04     114.0             ^                 0                  &lt;NA&gt;             
-##  3 MAGOG        2017-05     78.8              ^                 0                  &lt;NA&gt;             
-##  4 MAGOG        2017-06     140.7             ^                 0                  &lt;NA&gt;             
-##  5 MAGOG        2017-07     80.7              &lt;NA&gt;              0                  &lt;NA&gt;             
-##  6 MAGOG        2017-08     135.8             &lt;NA&gt;              0                  &lt;NA&gt;             
-##  7 MAGOG        2017-09     63.0              ^                 0                  &lt;NA&gt;             
-##  8 MAGOG        2017-10     140.8             ^                 0                  &lt;NA&gt;             
-##  9 MAGOG        2017-11     70.0              ^                 0                  &lt;NA&gt;             
-## 10 MAGOG        2017-12     45.7              ^                 10                 &lt;NA&gt;             
-## 11 MAGOG        2018-01     34.6              ^                 2                  &lt;NA&gt;             
-## 12 MAGOG        2018-02     77.2              ^                 0                  &lt;NA&gt;</code></pre>
-<p>In this output, you can see two flags: <code><a href="https://rdrr.io/r/base/Arithmetic.html">^</a></code> in <code>Total Precip</code> and <code>M</code> in <code>Snow Grnd Last Day</code></p>
+<pre><code>## # A tibble: 12 × 6
+##    station_name `Date/Time` `Total Precip (mm)` `Total Precip Fl… `Snow Grnd Last … `Snow Grnd Last…
+##    &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;               &lt;chr&gt;             &lt;chr&gt;             &lt;chr&gt;           
+##  1 MAGOG        2017-03     30.4                ^                 &lt;NA&gt;              M               
+##  2 MAGOG        2017-04     114.0               ^                 0                 &lt;NA&gt;            
+##  3 MAGOG        2017-05     78.8                ^                 0                 &lt;NA&gt;            
+##  4 MAGOG        2017-06     140.7               ^                 0                 &lt;NA&gt;            
+##  5 MAGOG        2017-07     80.7                &lt;NA&gt;              0                 &lt;NA&gt;            
+##  6 MAGOG        2017-08     135.8               &lt;NA&gt;              0                 &lt;NA&gt;            
+##  7 MAGOG        2017-09     63.0                ^                 0                 &lt;NA&gt;            
+##  8 MAGOG        2017-10     140.8               ^                 0                 &lt;NA&gt;            
+##  9 MAGOG        2017-11     70.0                ^                 0                 &lt;NA&gt;            
+## 10 MAGOG        2017-12     45.7                ^                 10                &lt;NA&gt;            
+## 11 MAGOG        2018-01     34.6                ^                 2                 &lt;NA&gt;            
+## 12 MAGOG        2018-02     77.2                ^                 0                 &lt;NA&gt;</code></pre>
+<p>In this output, you can see two flags: <code>^</code> in <code>Total Precip</code> and <code>M</code> in <code>Snow Grnd Last Day</code></p>
 <p>This same sample, formatted looks like:</p>
-<pre><code>## # A tibble: 12 x 5
+<pre><code>## # A tibble: 12 × 5
 ##    date       total_precip total_precip_flag snow_grnd_last_day snow_grnd_last_day_flag
 ##    &lt;date&gt;            &lt;dbl&gt; &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;                  
 ##  1 2017-03-01         30.4 ^                                 NA M                      
@@ -128,7 +128,7 @@
 ## 10 2017-12-01         45.7 ^                                 10 &lt;NA&gt;                   
 ## 11 2018-01-01         34.6 ^                                  2 &lt;NA&gt;                   
 ## 12 2018-02-01         77.2 ^                                  0 &lt;NA&gt;</code></pre>
-<p>As you can see, we still have the two flags, but the missing data flag (<code>M</code>) is now replaced with NA. The other flag <code><a href="https://rdrr.io/r/base/Arithmetic.html">^</a></code> is not, as it indicates that “The value displayed is based on incomplete data” (see below).</p>
+<p>As you can see, we still have the two flags, but the missing data flag (<code>M</code>) is now replaced with NA. The other flag <code>^</code> is not, as it indicates that “The value displayed is based on incomplete data” (see below).</p>
 </div>
 <div id="flags---weather-data" class="section level3">
 <h3 class="hasAnchor">
@@ -207,22 +207,22 @@
 <h3 class="hasAnchor">
 <a href="#codes" class="anchor"></a>Codes</h3>
 <p>In the <code>normals_dl</code>() function, codes are associated with each variable:</p>
-<pre><code>## # A tibble: 13 x 7
-##    period temp_daily_average temp_daily_average_co… temp_daily_max temp_daily_max_co… temp_daily_min
-##    &lt;fct&gt;               &lt;dbl&gt; &lt;chr&gt;                           &lt;dbl&gt; &lt;chr&gt;                       &lt;dbl&gt;
-##  1 Jan                 -16.6 A                               -11.1 A                           -21.9
-##  2 Feb                 -13.6 A                                -8.1 A                           -19  
-##  3 Mar                  -6.2 A                                -1   A                           -11.4
-##  4 Apr                   4   A                                10.5 A                            -2.6
-##  5 May                  10.6 A                                17.8 A                             3.4
-##  6 Jun                  15.9 A                                22.4 A                             9.3
-##  7 Jul                  18.5 A                                25.2 A                            11.7
-##  8 Aug                  17.7 A                                24.9 A                            10.4
-##  9 Sep                  11.8 A                                18.9 A                             4.7
-## 10 Oct                   4.1 A                                10.4 A                            -2.2
-## 11 Nov                  -5.6 A                                -0.5 A                           -10.6
-## 12 Dec                 -14   A                                -9   A                           -19  
-## 13 Year                  2.2 A                                 8.4 A                            -3.9
+<pre><code>## # A tibble: 13 × 7
+##    period temp_daily_average temp_daily_average_code temp_daily_max temp_daily_max_c… temp_daily_min
+##    &lt;fct&gt;               &lt;dbl&gt; &lt;chr&gt;                            &lt;dbl&gt; &lt;chr&gt;                      &lt;dbl&gt;
+##  1 Jan                 -16.6 A                                -11.1 A                          -21.9
+##  2 Feb                 -13.6 A                                 -8.1 A                          -19  
+##  3 Mar                  -6.2 A                                 -1   A                          -11.4
+##  4 Apr                   4   A                                 10.5 A                           -2.6
+##  5 May                  10.6 A                                 17.8 A                            3.4
+##  6 Jun                  15.9 A                                 22.4 A                            9.3
+##  7 Jul                  18.5 A                                 25.2 A                           11.7
+##  8 Aug                  17.7 A                                 24.9 A                           10.4
+##  9 Sep                  11.8 A                                 18.9 A                            4.7
+## 10 Oct                   4.1 A                                 10.4 A                           -2.2
+## 11 Nov                  -5.6 A                                 -0.5 A                          -10.6
+## 12 Dec                 -14   A                                 -9   A                          -19  
+## 13 Year                  2.2 A                                  8.4 A                           -3.9
 ## # … with 1 more variable: temp_daily_min_code &lt;chr&gt;</code></pre>
 <p>For example, here, the code indicates that these temperature variables meet the WMO ‘3 and 5 rule’ (no more than 3 consecutive and no more than 5 total missing for either temperature or precipitation).</p>
 </div>

@@ -85,12 +85,14 @@ NULL
             "https://climate.weather.gc.ca/climate_data/bulk_data_e.html",
           weathercan.urls.normals =
             "https://climate.weather.gc.ca/climate_normals/bulk_data_e.html",
+          # Download from google drive: https://stackoverflow.com/a/50533232/3362144
           weathercan.urls.stations =
-            paste0("https://drive.google.com/uc?authuser=0&id=",
-                   "1egfzGgzUb0RFu_EE5AYFZtsyXPfZ11y2&export=download"),
+            paste0("https://drive.google.com/uc?export=download&id=",
+                   "1HDRnj41YBWpMioLPwAFiLlK4SK8NV72C"),
           weathercan.urls.stations.normals =
           "https://climate.weather.gc.ca/climate_normals/station_inventory_e.html",
           weathercan.time.message = FALSE)
+
 
   # CRAN Note avoidance
   if(getRversion() >= "2.15.1")

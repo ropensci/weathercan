@@ -77,7 +77,7 @@ vignette(&quot;glossary_normals&quot;, package = &quot;weathercan&quot;)" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">weathercan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.2</span>
       </span>
     </div>
 
@@ -85,7 +85,7 @@ vignette(&quot;glossary_normals&quot;, package = &quot;weathercan&quot;)" />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa-home"></span>
+    <span class="fa fa-home"></span>
      
   </a>
 </li>
@@ -102,7 +102,7 @@ vignette(&quot;glossary_normals&quot;, package = &quot;weathercan&quot;)" />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/ropensci/weathercan">
-    <span class="fas fa-github fa-lg"></span>
+    <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -203,43 +203,93 @@ for more details)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='check_eccc.html'>check_eccc</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-
-  <span class='co'># Find the climate_id</span>
-  <span class='fu'><a href='stations_search.html'>stations_search</a></span><span class='op'>(</span><span class='st'>"Brandon A"</span>, normals_years <span class='op'>=</span> <span class='st'>"current"</span><span class='op'>)</span>
-
-  <span class='co'># Download climate normals 1981-2010</span>
-  <span class='va'>n</span> <span class='op'>&lt;-</span> <span class='fu'>normals_dl</span><span class='op'>(</span>climate_ids <span class='op'>=</span> <span class='st'>"5010480"</span><span class='op'>)</span>
-  <span class='va'>n</span>
-
-  <span class='co'># Pull out last frost data</span>
-  <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyr.tidyverse.org'>tidyr</a></span><span class='op'>)</span>
-  <span class='va'>f</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>unnest</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='va'>frost</span><span class='op'>)</span>
-  <span class='va'>f</span>
-
-  <span class='co'># Pull out normals</span>
-  <span class='va'>nm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>unnest</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='va'>normals</span><span class='op'>)</span>
-  <span class='va'>nm</span>
-
-  <span class='co'># Download climate normals 1971-2000</span>
-  <span class='va'>n</span> <span class='op'>&lt;-</span> <span class='fu'>normals_dl</span><span class='op'>(</span>climate_ids <span class='op'>=</span> <span class='st'>"5010480"</span>, normals_years <span class='op'>=</span> <span class='st'>"1971-2000"</span><span class='op'>)</span>
-  <span class='va'>n</span>
-
-  <span class='co'># Note that some do not have last frost dates</span>
-  <span class='va'>n</span><span class='op'>$</span><span class='va'>frost</span>
-
-  <span class='co'># Download multiple stations for 1981-2010,</span>
-  <span class='va'>n</span> <span class='op'>&lt;-</span> <span class='fu'>normals_dl</span><span class='op'>(</span>climate_ids <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"301C3D4"</span>, <span class='st'>"301FFNJ"</span>, <span class='st'>"301N49A"</span><span class='op'>)</span><span class='op'>)</span>
-  <span class='va'>n</span>
-
-  <span class='co'># Note, putting both into the same data set can be done but makes for</span>
-  <span class='co'># a very unweildly dataset (there is lots of repetition)</span>
-  <span class='va'>nm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>unnest</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='va'>normals</span><span class='op'>)</span>
-  <span class='va'>f</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>unnest</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='va'>frost</span><span class='op'>)</span>
-  <span class='va'>both</span> <span class='op'>&lt;-</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>full_join</a></span><span class='op'>(</span><span class='va'>nm</span>, <span class='va'>f</span><span class='op'>)</span>
-  <span class='va'>both</span>
-<span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'>Joining, by = c("prov", "station_name", "climate_id", "normals_years", "meets_wmo")</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 819 x 137</span>
+<span class='co'># Find the climate_id</span>
+<span class='fu'><a href='stations_search.html'>stations_search</a></span><span class='op'>(</span><span class='st'>"Brandon A"</span>, normals_years <span class='op'>=</span> <span class='st'>"current"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 × 13</span>
+#&gt;   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz    
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> 
+#&gt; <span style='color: #BCBCBC;'>1</span> MB    BRANDON A          <span style='text-decoration: underline;'>3</span>471 5010480     <span style='text-decoration: underline;'>71</span>140 YBR    49.9 -<span style='color: #BB0000;'>100.</span>  409. Etc/G…
+#&gt; <span style='color: #949494;'># … with 3 more variables: normals &lt;lgl&gt;, normals_1981_2010 &lt;lgl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   normals_1971_2000 &lt;lgl&gt;</span></div><div class='input'>
+<span class='co'># Download climate normals 1981-2010</span>
+<span class='va'>n</span> <span class='op'>&lt;-</span> <span class='fu'>normals_dl</span><span class='op'>(</span>climate_ids <span class='op'>=</span> <span class='st'>"5010480"</span><span class='op'>)</span>
+<span class='va'>n</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 × 7</span>
+#&gt;   prov  station_name climate_id normals_years meets_wmo normals       frost     
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>    
+#&gt; <span style='color: #BCBCBC;'>1</span> MB    BRANDON A    5010480    1981-2010     TRUE      <span style='color: #949494;'>&lt;tibble [13 </span>… <span style='color: #949494;'>&lt;tibble [</span>…</div><div class='input'>
+<span class='co'># Pull out last frost data</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyr.tidyverse.org'>tidyr</a></span><span class='op'>)</span>
+<span class='va'>f</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>unnest</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='va'>frost</span><span class='op'>)</span>
+<span class='va'>f</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 7 × 14</span>
+#&gt;   prov  station_name climate_id normals_years meets_wmo normals       frost_code
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     
+#&gt; <span style='color: #BCBCBC;'>1</span> MB    BRANDON A    5010480    1981-2010     TRUE      <span style='color: #949494;'>&lt;tibble [13 </span>… C         
+#&gt; <span style='color: #BCBCBC;'>2</span> MB    BRANDON A    5010480    1981-2010     TRUE      <span style='color: #949494;'>&lt;tibble [13 </span>… C         
+#&gt; <span style='color: #BCBCBC;'>3</span> MB    BRANDON A    5010480    1981-2010     TRUE      <span style='color: #949494;'>&lt;tibble [13 </span>… C         
+#&gt; <span style='color: #BCBCBC;'>4</span> MB    BRANDON A    5010480    1981-2010     TRUE      <span style='color: #949494;'>&lt;tibble [13 </span>… C         
+#&gt; <span style='color: #BCBCBC;'>5</span> MB    BRANDON A    5010480    1981-2010     TRUE      <span style='color: #949494;'>&lt;tibble [13 </span>… C         
+#&gt; <span style='color: #BCBCBC;'>6</span> MB    BRANDON A    5010480    1981-2010     TRUE      <span style='color: #949494;'>&lt;tibble [13 </span>… C         
+#&gt; <span style='color: #BCBCBC;'>7</span> MB    BRANDON A    5010480    1981-2010     TRUE      <span style='color: #949494;'>&lt;tibble [13 </span>… C         
+#&gt; <span style='color: #949494;'># … with 7 more variables: date_first_fall_frost &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   date_last_spring_frost &lt;dbl&gt;, length_frost_free &lt;dbl&gt;, prob &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   prob_first_fall_temp_below_0_on_date &lt;dbl&gt;, prob_length_frost_free &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   prob_last_spring_temp_below_0_on_date &lt;dbl&gt;</span></div><div class='input'>
+<span class='co'># Pull out normals</span>
+<span class='va'>nm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>unnest</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='va'>normals</span><span class='op'>)</span>
+<span class='va'>nm</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 13 × 203</span>
+#&gt;    prov  station_name climate_id normals_years meets_wmo period temp_daily_aver…
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> MB    BRANDON A    5010480    1981-2010     TRUE      Jan               -<span style='color: #BB0000;'>16.6</span>
+#&gt; <span style='color: #BCBCBC;'> 2</span> MB    BRANDON A    5010480    1981-2010     TRUE      Feb               -<span style='color: #BB0000;'>13.6</span>
+#&gt; <span style='color: #BCBCBC;'> 3</span> MB    BRANDON A    5010480    1981-2010     TRUE      Mar                -<span style='color: #BB0000;'>6.2</span>
+#&gt; <span style='color: #BCBCBC;'> 4</span> MB    BRANDON A    5010480    1981-2010     TRUE      Apr                 4  
+#&gt; <span style='color: #BCBCBC;'> 5</span> MB    BRANDON A    5010480    1981-2010     TRUE      May                10.6
+#&gt; <span style='color: #BCBCBC;'> 6</span> MB    BRANDON A    5010480    1981-2010     TRUE      Jun                15.9
+#&gt; <span style='color: #BCBCBC;'> 7</span> MB    BRANDON A    5010480    1981-2010     TRUE      Jul                18.5
+#&gt; <span style='color: #BCBCBC;'> 8</span> MB    BRANDON A    5010480    1981-2010     TRUE      Aug                17.7
+#&gt; <span style='color: #BCBCBC;'> 9</span> MB    BRANDON A    5010480    1981-2010     TRUE      Sep                11.8
+#&gt; <span style='color: #BCBCBC;'>10</span> MB    BRANDON A    5010480    1981-2010     TRUE      Oct                 4.1
+#&gt; <span style='color: #BCBCBC;'>11</span> MB    BRANDON A    5010480    1981-2010     TRUE      Nov                -<span style='color: #BB0000;'>5.6</span>
+#&gt; <span style='color: #BCBCBC;'>12</span> MB    BRANDON A    5010480    1981-2010     TRUE      Dec               -<span style='color: #BB0000;'>14</span>  
+#&gt; <span style='color: #BCBCBC;'>13</span> MB    BRANDON A    5010480    1981-2010     TRUE      Year                2.2
+#&gt; <span style='color: #949494;'># … with 196 more variables: temp_daily_average_code &lt;chr&gt;, temp_sd &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   temp_sd_code &lt;chr&gt;, temp_daily_max &lt;dbl&gt;, temp_daily_max_code &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   temp_daily_min &lt;dbl&gt;, temp_daily_min_code &lt;chr&gt;, temp_extreme_max &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   temp_extreme_max_code &lt;chr&gt;, temp_extreme_max_date &lt;date&gt;,</span>
+#&gt; <span style='color: #949494;'>#   temp_extreme_max_date_code &lt;chr&gt;, temp_extreme_min &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   temp_extreme_min_code &lt;chr&gt;, temp_extreme_min_date &lt;date&gt;,</span>
+#&gt; <span style='color: #949494;'>#   temp_extreme_min_date_code &lt;chr&gt;, rain &lt;dbl&gt;, rain_code &lt;chr&gt;, …</span></div><div class='input'>
+<span class='co'># Download climate normals 1971-2000</span>
+<span class='va'>n</span> <span class='op'>&lt;-</span> <span class='fu'>normals_dl</span><span class='op'>(</span>climate_ids <span class='op'>=</span> <span class='st'>"5010480"</span>, normals_years <span class='op'>=</span> <span class='st'>"1971-2000"</span><span class='op'>)</span>
+<span class='va'>n</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 × 7</span>
+#&gt;   prov  station_name climate_id normals_years meets_wmo normals       frost     
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>    
+#&gt; <span style='color: #BCBCBC;'>1</span> MB    BRANDON A    5010480    1971-2000     TRUE      <span style='color: #949494;'>&lt;tibble [13 </span>… <span style='color: #949494;'>&lt;tibble [</span>…</div><div class='input'>
+<span class='co'># Note that some do not have last frost dates</span>
+<span class='va'>n</span><span class='op'>$</span><span class='va'>frost</span>
+</div><div class='output co'>#&gt; [[1]]
+#&gt; <span style='color: #949494;'># A tibble: 0 × 0</span>
+#&gt; </div><div class='input'>
+<span class='co'># Download multiple stations for 1981-2010,</span>
+<span class='va'>n</span> <span class='op'>&lt;-</span> <span class='fu'>normals_dl</span><span class='op'>(</span>climate_ids <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"301C3D4"</span>, <span class='st'>"301FFNJ"</span>, <span class='st'>"301N49A"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>n</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 3 × 7</span>
+#&gt;   prov  station_name       climate_id normals_years meets_wmo normals    frost  
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span> 
+#&gt; <span style='color: #BCBCBC;'>1</span> AB    HORBURG            301C3D4    1981-2010     FALSE     <span style='color: #949494;'>&lt;tibble [</span>… <span style='color: #949494;'>&lt;tibbl</span>…
+#&gt; <span style='color: #BCBCBC;'>2</span> AB    UNIVERSITY OF ALB… 301FFNJ    1981-2010     FALSE     <span style='color: #949494;'>&lt;tibble [</span>… <span style='color: #949494;'>&lt;tibbl</span>…
+#&gt; <span style='color: #BCBCBC;'>3</span> AB    REDWATER           301N49A    1981-2010     FALSE     <span style='color: #949494;'>&lt;tibble [</span>… <span style='color: #949494;'>&lt;tibbl</span>…</div><div class='input'>
+<span class='co'># Note, putting both into the same data set can be done but makes for</span>
+<span class='co'># a very unweildly dataset (there is lots of repetition)</span>
+<span class='va'>nm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>unnest</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='va'>normals</span><span class='op'>)</span>
+<span class='va'>f</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>unnest</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='va'>frost</span><span class='op'>)</span>
+<span class='va'>both</span> <span class='op'>&lt;-</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>full_join</a></span><span class='op'>(</span><span class='va'>nm</span>, <span class='va'>f</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Joining, by = c("prov", "station_name", "climate_id", "normals_years", "meets_wmo")</span></div><div class='input'><span class='va'>both</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 819 × 137</span>
 #&gt;    prov  station_name climate_id normals_years meets_wmo period temp_daily_aver…
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> AB    HORBURG      301C3D4    1981-2010     FALSE     Jan                -<span style='color: #BB0000;'>7.6</span>
@@ -258,45 +308,7 @@ for more details)</p>
 #&gt; <span style='color: #949494;'>#   temp_extreme_max &lt;dbl&gt;, temp_extreme_max_code &lt;chr&gt;,</span>
 #&gt; <span style='color: #949494;'>#   temp_extreme_max_date &lt;date&gt;, temp_extreme_max_date_code &lt;chr&gt;,</span>
 #&gt; <span style='color: #949494;'>#   temp_extreme_min &lt;dbl&gt;, temp_extreme_min_code &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   temp_extreme_min_date &lt;date&gt;, temp_extreme_min_date_code &lt;chr&gt;, rain &lt;dbl&gt;,</span>
-#&gt; <span style='color: #949494;'>#   rain_code &lt;chr&gt;, snow &lt;dbl&gt;, snow_code &lt;chr&gt;, precip &lt;dbl&gt;,</span>
-#&gt; <span style='color: #949494;'>#   precip_code &lt;chr&gt;, snow_mean_depth &lt;dbl&gt;, snow_mean_depth_code &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   snow_median_depth &lt;dbl&gt;, snow_median_depth_code &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   snow_depth_month_end &lt;dbl&gt;, snow_depth_month_end_code &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   rain_extreme_daily &lt;dbl&gt;, rain_extreme_daily_code &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   rain_extreme_daily_date &lt;date&gt;, rain_extreme_daily_date_code &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   snow_extreme_daily &lt;dbl&gt;, snow_extreme_daily_code &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   snow_extreme_daily_date &lt;date&gt;, snow_extreme_daily_date_code &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   precip_extreme_daily &lt;dbl&gt;, precip_extreme_daily_code &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   precip_extreme_daily_date &lt;date&gt;, precip_extreme_daily_date_code &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   snow_extreme_depth &lt;dbl&gt;, snow_extreme_depth_code &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   snow_extreme_depth_date &lt;date&gt;, snow_extreme_depth_date_code &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   temp_max_days_&lt;=0 &lt;dbl&gt;, temp_max_days_&lt;=0_code &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   temp_max_days_&gt;0 &lt;dbl&gt;, temp_max_days_&gt;0_code &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   temp_max_days_&gt;10 &lt;dbl&gt;, temp_max_days_&gt;10_code &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   temp_max_days_&gt;20 &lt;dbl&gt;, temp_max_days_&gt;20_code &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   temp_max_days_&gt;30 &lt;dbl&gt;, temp_max_days_&gt;30_code &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   temp_max_days_&gt;35 &lt;dbl&gt;, temp_max_days_&gt;35_code &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   temp_min_days_&gt;0 &lt;dbl&gt;, temp_min_days_&gt;0_code &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   temp_min_days_&lt;=2 &lt;dbl&gt;, temp_min_days_&lt;=2_code &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   temp_min_days_&lt;=0 &lt;dbl&gt;, temp_min_days_&lt;=0_code &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   temp_min_days_&lt;-2 &lt;dbl&gt;, temp_min_days_&lt;-2_code &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   temp_min_days_&lt;-10 &lt;dbl&gt;, temp_min_days_&lt;-10_code &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   temp_min_days_&lt;-20 &lt;dbl&gt;, temp_min_days_&lt;-20_code &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   temp_min_days_&lt;-30 &lt;dbl&gt;, temp_min_days_&lt;-30_code &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   rain_days_&gt;=0.2 &lt;dbl&gt;, rain_days_&gt;=0.2_code &lt;chr&gt;, rain_days_&gt;=5 &lt;dbl&gt;,</span>
-#&gt; <span style='color: #949494;'>#   rain_days_&gt;=5_code &lt;chr&gt;, rain_days_&gt;=10 &lt;dbl&gt;, rain_days_&gt;=10_code &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   rain_days_&gt;=25 &lt;dbl&gt;, rain_days_&gt;=25_code &lt;chr&gt;, snow_days_&gt;=0.2 &lt;dbl&gt;,</span>
-#&gt; <span style='color: #949494;'>#   snow_days_&gt;=0.2_code &lt;chr&gt;, snow_days_&gt;=5 &lt;dbl&gt;, snow_days_&gt;=5_code &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   snow_days_&gt;=10 &lt;dbl&gt;, snow_days_&gt;=10_code &lt;chr&gt;, snow_days_&gt;=25 &lt;dbl&gt;,</span>
-#&gt; <span style='color: #949494;'>#   snow_days_&gt;=25_code &lt;chr&gt;, precip_days_&gt;=0.2 &lt;dbl&gt;,</span>
-#&gt; <span style='color: #949494;'>#   precip_days_&gt;=0.2_code &lt;chr&gt;, precip_days_&gt;=5 &lt;dbl&gt;,</span>
-#&gt; <span style='color: #949494;'>#   precip_days_&gt;=5_code &lt;chr&gt;, precip_days_&gt;=10 &lt;dbl&gt;,</span>
-#&gt; <span style='color: #949494;'>#   precip_days_&gt;=10_code &lt;chr&gt;, precip_days_&gt;=25 &lt;dbl&gt;,</span>
-#&gt; <span style='color: #949494;'>#   precip_days_&gt;=25_code &lt;chr&gt;, snow_depth_days_&gt;=1 &lt;dbl&gt;,</span>
-#&gt; <span style='color: #949494;'>#   snow_depth_days_&gt;=1_code &lt;chr&gt;, snow_depth_days_&gt;=5 &lt;dbl&gt;,</span>
-#&gt; <span style='color: #949494;'>#   snow_depth_days_&gt;=5_code &lt;chr&gt;, snow_depth_days_&gt;=10 &lt;dbl&gt;,</span>
-#&gt; <span style='color: #949494;'>#   snow_depth_days_&gt;=10_code &lt;chr&gt;, snow_depth_days_&gt;=20 &lt;dbl&gt;, …</span></div></pre>
+#&gt; <span style='color: #949494;'>#   temp_extreme_min_date &lt;date&gt;, temp_extreme_min_date_code &lt;chr&gt;, …</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

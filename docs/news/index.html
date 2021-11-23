@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">weathercan</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.2</span>
       </span>
     </div>
 
@@ -81,7 +81,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa-home"></span>
+    <span class="fa fa-home"></span>
      
   </a>
 </li>
@@ -98,7 +98,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/ropensci/weathercan">
-    <span class="fas fa-github fa-lg"></span>
+    <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -119,9 +119,22 @@
       <small>Source: <a href='https://github.com/ropensci/weathercan/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="weathercan-062" class="section level1">
+<h1 class="page-header" data-toc-text="0.6.2">
+<a href="#weathercan-062" class="anchor"></a>weathercan 0.6.2<small> Unreleased </small>
+</h1>
+<ul>
+<li>Create cache dir for stations data recursively</li>
+<li>Fix choice of local vs. package version of stations data frame</li>
+<li>Update to readr v2</li>
+<li>Add flexibility for csv/tsv stations files (fixes <a href='https://github.com/ropensci/weathercan/issues/126'>#126</a>)</li>
+<li>Update stations url</li>
+<li>Make examples and tests robust to internet issues</li>
+</ul>
+</div>
     <div id="weathercan-061" class="section level1">
 <h1 class="page-header" data-toc-text="0.6.1">
-<a href="#weathercan-061" class="anchor"></a>weathercan 0.6.1<small> Unreleased </small>
+<a href="#weathercan-061" class="anchor"></a>weathercan 0.6.1<small> 2021-06-05 </small>
 </h1>
 <div id="small-changes" class="section level2">
 <h2 class="hasAnchor">
@@ -163,8 +176,6 @@
 <ul>
 <li>Download stations data frame from ECCC Google drive rather than ECCC FTP site</li>
 <li>Update dependency versions (<a href='https://github.com/ropensci/weathercan/issues/111'>#111</a>, <a href='https://github.com/ropensci/weathercan/issues/112'>#112</a>, <a href='https://github.com/ropensci/weathercan/issues/118'>#118</a>)</li>
-<li>
-</li>
 </ul>
 </div>
 </div>
@@ -451,7 +462,7 @@
 <a href="#bug-fixes-8" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
-<code><a href="../reference/weather_dl.html">weather(format = FALSE)</a></code> properly returns data</li>
+<code>weather(format = FALSE)</code> properly returns data</li>
 <li>updated <code><a href="../reference/weather_dl.html">weather()</a></code> to work with <code>lubridate</code> 1.7.1</li>
 </ul>
 </div>

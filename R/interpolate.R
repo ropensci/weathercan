@@ -27,7 +27,7 @@
 #' @param quiet Logical. Suppress all messages (including messages regarding
 #'   missing data, etc.)
 #'
-#' @examples
+#' @examplesIf check_eccc()
 #'
 #' # Weather data only
 #' head(kamloops)
@@ -36,10 +36,7 @@
 #' head(finches)
 #'
 #' # Match weather to finches
-#' \donttest{
-#' ## Not run
 #' finch_weather <- weather_interp(data = finches, weather = kamloops)
-#' }
 #'
 #' @aliases add_weather
 #'

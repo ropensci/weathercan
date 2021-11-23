@@ -45,6 +45,7 @@ articles:
     - reproducibility
     - articles/use_with_tidyverse
     - articles/mapping
+    - articles/tidyhydat
     - articles/meteoland
   - title: References
     desc: Information on weather data measurements

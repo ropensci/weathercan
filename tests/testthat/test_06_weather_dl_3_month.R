@@ -3,6 +3,7 @@
 context("weather by month")
 
 test_that("weather (month) returns a data frame", {
+  skip_on_cran()
   vcr::use_cassette("weather_month_5401", {
     expect_silent(w <- weather_dl(station_ids = 5401, start = "2014-01-01",
                                   end = "2014-05-01", interval = "month"))
@@ -31,6 +32,7 @@ test_that("weather (month) returns a data frame", {
 })
 
 test_that("weather (month) no data fails nicely", {
+  skip_on_cran()
   vcr::use_cassette("weather_month_1275_51423", {
     expect_silent(
       expect_message(w1 <- weather_dl(station_ids = c(1275, 51423),
@@ -83,6 +85,7 @@ test_that("weather (month) no data fails nicely", {
 })
 
 test_that("weather (month) multiple stations", {
+  skip_on_cran()
   vcr::use_cassette("weather_month_5401_5940", {
     expect_silent(w <- weather_dl(station_ids = c(5401, 5940),
                                   start = "2014-01-01",
@@ -95,6 +98,7 @@ test_that("weather (month) multiple stations", {
 })
 
 test_that("weather (month) multiple stations (one NA)", {
+  skip_on_cran()
   # Cached
   expect_message(expect_error(w <- weather_dl(station_ids = c(5401, 51423),
                                               start = "2014-01-01",
@@ -104,6 +108,7 @@ test_that("weather (month) multiple stations (one NA)", {
 })
 
 test_that("weather (month) verbose and quiet", {
+  skip_on_cran()
   # Cached
   expect_message(weather_dl(c(5401, 51423), interval = "month",
                             start = "2017-01-01", end = "2017-02-01"))
@@ -119,7 +124,7 @@ test_that("weather (month) verbose and quiet", {
 })
 
 test_that("weather (month) handles data with different numbers of columns", {
-
+  skip_on_cran()
   vcr::use_cassette("weather_month_5217", {
     expect_silent(d <- weather_dl(station_ids = 5217,
                                   start = "2016-01-01",
@@ -142,6 +147,7 @@ test_that("weather (month) handles data with different numbers of columns", {
 })
 
 test_that("weather (month) skips with message if end date < start date", {
+  skip_on_cran()
   # Cached
   expect_message({weather_dl(station_ids = 27534, start = "2005-01-31",
                              end = "2005-01-01", interval = "month")},
@@ -155,8 +161,8 @@ test_that("weather (month) skips with message if end date < start date", {
   expect_true(nrow(w) > 0)
 })
 
-
 test_that("weather (month) crosses the year line", {
+  skip_on_cran()
   # Cached
   expect_silent(w <- weather_dl(station_id = 5401, interval = "month",
                                 start = "1999-11-01", end = "2000-03-05"))
@@ -166,12 +172,12 @@ test_that("weather (month) crosses the year line", {
 })
 
 
-
 # list_cols ---------------------------------------------------------------
 
 context("Generating list_col")
 
 test_that("list_col=TRUE and interval=hour groups on the right level", {
+  skip_on_cran()
   # Cached
   if(packageVersion("tidyr") > "0.8.99") {
     expect_equal(ncol(weather_dl(station_ids = 51423, start = "2014-01-01",
@@ -192,6 +198,7 @@ test_that("list_col=TRUE and interval=hour groups on the right level", {
 })
 
 test_that("list_col=TRUE and interval=day groups on the right level", {
+  skip_on_cran()
   if(packageVersion("tidyr") > "0.8.99") {
     expect_equal(ncol(weather_dl(station_ids = 51423, start = "2014-01-01",
                                  end = "2014-01-15", interval = "day") %>%
@@ -213,6 +220,7 @@ test_that("list_col=TRUE and interval=day groups on the right level", {
 })
 
 test_that("list_col=TRUE and interval=month groups on the right level", {
+  skip_on_cran()
   if(packageVersion("tidyr") > "0.8.99") {
     expect_equal(ncol(weather_dl(station_ids = 5401, start = "2017-01-01",
                                  end = "2017-01-15", interval = "month") %>%

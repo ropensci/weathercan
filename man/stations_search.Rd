@@ -75,6 +75,7 @@ To search by coordinates, users must make sure they have the
 The \code{current}, most recent, climate normals year range is \code{1981-2010}.
 }
 \examples{
+\dontshow{if (check_eccc()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 
 stations_search(name = "Kamloops")
 stations_search(name = "Kamloops", interval = "hour")
@@ -88,5 +89,5 @@ stations_search(name = "Ottawa", normals_years = "1971-2000") # 1971-2010
 if(requireNamespace("sp")) {
   stations_search(coords = c(53.915495, -122.739379))
 }
-
+\dontshow{\}) # examplesIf}
 }

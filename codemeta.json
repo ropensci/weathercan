@@ -10,13 +10,13 @@
   "codeRepository": "https://github.com/ropensci/weathercan/",
   "issueTracker": "https://github.com/ropensci/weathercan/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.1.0 (2021-05-18)",
+  "runtimePlatform": "R version 4.1.2 (2021-11-01)",
   "author": [
     {
       "@type": "Person",
@@ -312,7 +312,7 @@
       "@type": "SoftwareApplication",
       "identifier": "readr",
       "name": "readr",
-      "version": ">= 1.4.0",
+      "version": ">= 2.0.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -415,7 +415,7 @@
   ],
   "releaseNotes": "https://github.com/ropensci/weathercan/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/weathercan/blob/master/README.md",
-  "contIntegration": "https://codecov.io/gh/ropensci/weathercan",
+  "contIntegration": "https://app.codecov.io/gh/ropensci/weathercan",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -474,5 +474,5 @@
   ],
   "copyrightHolder": {},
   "funder": {},
-  "fileSize": "11772.102KB"
+  "fileSize": "11074.841KB"
 }

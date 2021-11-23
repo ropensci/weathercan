@@ -66,41 +66,40 @@ Climate normals are downloaded from the url stored in option
 \code{options(weathercan.urls.normals = "your_new_url")}.
 }
 \examples{
+\dontshow{if (check_eccc()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 
-if(check_eccc()) {
+# Find the climate_id
+stations_search("Brandon A", normals_years = "current")
 
-  # Find the climate_id
-  stations_search("Brandon A", normals_years = "current")
+# Download climate normals 1981-2010
+n <- normals_dl(climate_ids = "5010480")
+n
 
-  # Download climate normals 1981-2010
-  n <- normals_dl(climate_ids = "5010480")
-  n
+# Pull out last frost data
+library(tidyr)
+f <- unnest(n, frost)
+f
 
-  # Pull out last frost data
-  library(tidyr)
-  f <- unnest(n, frost)
-  f
+# Pull out normals
+nm <- unnest(n, normals)
+nm
 
-  # Pull out normals
-  nm <- unnest(n, normals)
-  nm
+# Download climate normals 1971-2000
+n <- normals_dl(climate_ids = "5010480", normals_years = "1971-2000")
+n
 
-  # Download climate normals 1971-2000
-  n <- normals_dl(climate_ids = "5010480", normals_years = "1971-2000")
-  n
+# Note that some do not have last frost dates
+n$frost
 
-  # Note that some do not have last frost dates
-  n$frost
+# Download multiple stations for 1981-2010,
+n <- normals_dl(climate_ids = c("301C3D4", "301FFNJ", "301N49A"))
+n
 
-  # Download multiple stations for 1981-2010,
-  n <- normals_dl(climate_ids = c("301C3D4", "301FFNJ", "301N49A"))
-  n
-
-  # Note, putting both into the same data set can be done but makes for
-  # a very unweildly dataset (there is lots of repetition)
-  nm <- unnest(n, normals)
-  f <- unnest(n, frost)
-  both <- dplyr::full_join(nm, f)
-  both
-}
+# Note, putting both into the same data set can be done but makes for
+# a very unweildly dataset (there is lots of repetition)
+nm <- unnest(n, normals)
+f <- unnest(n, frost)
+both <- dplyr::full_join(nm, f)
+both
+\dontshow{\}) # examplesIf}
 }
