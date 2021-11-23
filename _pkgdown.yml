@@ -8,6 +8,7 @@ extra_packages:
   - rnaturalearth
   - rnaturalearthhires
   - rgeos
+  - tidyhydat
 
 reference:
   - title: "Using weathercan"
