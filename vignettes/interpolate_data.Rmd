@@ -1,7 +1,7 @@
 ---
 title: "Interpolating"
 author: "Steffi LaZerte"
-date: "`r Sys.Date()`"
+date: "2021-11-24"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Interpolating}
@@ -10,16 +10,14 @@ vignette: >
 ---
 
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(cache = FALSE)
-old <- options(tibble.max_extra_cols = 0)
-```
+
 
 ## Packages
 
 You'll need several packages from the **tidyverse** in addition to **`weathercan`** to complete the following analysis.
 
-```{R pck, message = FALSE}
+
+```r
 library(weathercan)
 library(ggplot2)
 library(dplyr)
@@ -30,33 +28,143 @@ You can merge weather data with other data frames by linearly interpolating betw
 
 For example, here we have a dataset of weather data from Kamloops
 
-```{r}
+
+```r
 glimpse(kamloops)
 ```
 
+```
+## Rows: 4,368
+## Columns: 37
+## $ station_name     <chr> "KAMLOOPS A", "KAMLOOPS A", "KAMLOOPS A", "KAMLOOPS A", "KAMLOOPS A", "KAMLOOPS A", "KAMLOOPS A", "KAMLOOPS A", "KAMLOOPS A", "KAMLOO…
+## $ station_id       <dbl> 51423, 51423, 51423, 51423, 51423, 51423, 51423, 51423, 51423, 51423, 51423, 51423, 51423, 51423, 51423, 51423, 51423, 51423, 51423, …
+## $ station_operator <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ prov             <chr> "BC", "BC", "BC", "BC", "BC", "BC", "BC", "BC", "BC", "BC", "BC", "BC", "BC", "BC", "BC", "BC", "BC", "BC", "BC", "BC", "BC", "BC", "…
+## $ lat              <dbl> 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 5…
+## $ lon              <dbl> -120.45, -120.45, -120.45, -120.45, -120.45, -120.45, -120.45, -120.45, -120.45, -120.45, -120.45, -120.45, -120.45, -120.45, -120.45…
+## $ elev             <dbl> 345.3, 345.3, 345.3, 345.3, 345.3, 345.3, 345.3, 345.3, 345.3, 345.3, 345.3, 345.3, 345.3, 345.3, 345.3, 345.3, 345.3, 345.3, 345.3, …
+## $ climate_id       <chr> "1163781", "1163781", "1163781", "1163781", "1163781", "1163781", "1163781", "1163781", "1163781", "1163781", "1163781", "1163781", "…
+## $ WMO_id           <chr> "71887", "71887", "71887", "71887", "71887", "71887", "71887", "71887", "71887", "71887", "71887", "71887", "71887", "71887", "71887"…
+## $ TC_id            <chr> "YKA", "YKA", "YKA", "YKA", "YKA", "YKA", "YKA", "YKA", "YKA", "YKA", "YKA", "YKA", "YKA", "YKA", "YKA", "YKA", "YKA", "YKA", "YKA", …
+## $ date             <date> 2016-01-01, 2016-01-01, 2016-01-01, 2016-01-01, 2016-01-01, 2016-01-01, 2016-01-01, 2016-01-01, 2016-01-01, 2016-01-01, 2016-01-01, …
+## $ time             <dttm> 2016-01-01 00:00:00, 2016-01-01 01:00:00, 2016-01-01 02:00:00, 2016-01-01 03:00:00, 2016-01-01 04:00:00, 2016-01-01 05:00:00, 2016-0…
+## $ year             <chr> "2016", "2016", "2016", "2016", "2016", "2016", "2016", "2016", "2016", "2016", "2016", "2016", "2016", "2016", "2016", "2016", "2016…
+## $ month            <chr> "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "…
+## $ day              <chr> "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "…
+## $ hour             <chr> "00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00"…
+## $ weather          <chr> NA, "Mostly Cloudy", NA, NA, "Cloudy", NA, NA, "Cloudy", NA, "Snow", "Snow", "Snow", "Snow", "Snow", "Snow", "Snow", "Snow", "Snow", …
+## $ hmdx             <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ hmdx_flag        <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ precip_amt       <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ precip_amt_flag  <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ pressure         <dbl> 99.95, 99.93, 99.92, 99.90, 99.86, 99.82, 99.80, 99.78, 99.77, 99.78, 99.79, 99.74, 99.69, 99.62, 99.56, 99.54, 99.51, 99.49, 99.45, …
+## $ pressure_flag    <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ rel_hum          <dbl> 74, 76, 74, 73, 70, 71, 69, 69, 71, 71, 71, 70, 69, 70, 68, 68, 70, 74, 73, 74, 74, 74, 77, 72, 72, 73, 74, 75, 75, 74, 75, 74, 77, 7…
+## $ rel_hum_flag     <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ temp             <dbl> -9.1, -9.6, -9.9, -9.5, -9.4, -9.8, -10.0, -10.2, -10.1, -9.7, -9.4, -9.0, -8.6, -8.2, -8.1, -7.7, -8.1, -8.5, -8.4, -8.5, -8.6, -8.6…
+## $ temp_dew         <dbl> -12.9, -13.1, -13.7, -13.5, -13.9, -14.1, -14.7, -14.9, -14.4, -14.0, -13.7, -13.5, -13.3, -12.8, -13.0, -12.6, -12.7, -12.3, -12.4, …
+## $ temp_dew_flag    <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ temp_flag        <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ visib            <dbl> 64.4, 64.4, 64.4, 64.4, 64.4, 64.4, 64.4, 64.4, 48.3, 48.3, 48.3, 48.3, 48.3, 48.3, 48.3, 48.3, 24.1, 48.3, 48.3, 48.3, 48.3, 40.2, 4…
+## $ visib_flag       <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ wind_chill       <dbl> -17, -17, -18, -17, -17, -17, -18, -17, -17, -16, -15, -14, -14, -13, -13, -13, -13, -14, -13, -14, -14, -12, -12, -11, -10, -11, -14…
+## $ wind_chill_flag  <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ wind_dir         <dbl> 13, 11, 11, 11, 11, 10, 9, 7, 7, 10, 11, 10, 10, 13, 11, 10, 10, 9, 12, 10, 13, 12, 10, 12, 36, 32, 26, 26, 27, 27, 25, 29, 23, 6, 8,…
+## $ wind_dir_flag    <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ wind_spd         <dbl> 19, 20, 20, 18, 18, 16, 23, 15, 14, 15, 12, 11, 12, 9, 10, 12, 11, 12, 10, 11, 11, 6, 6, 4, 2, 4, 9, 10, 8, 7, 7, 9, 3, 10, 8, 5, 4, …
+## $ wind_spd_flag    <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+```
+
 As well as a data set of finch visits to an RFID feeder
-```{r}
+
+```r
 glimpse(finches)
+```
+
+```
+## Rows: 16,886
+## Columns: 10
+## $ animal_id <fct> 041868FF93, 041868FF93, 041868FF93, 06200003BB, 06200003BB, 06200003BB, 06200003BB, 06200003BB, 041868BED6, 041868BED6, 041868BED6, 041868BE…
+## $ date      <date> 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03…
+## $ time      <dttm> 2016-03-01 06:57:42, 2016-03-01 06:58:41, 2016-03-01 07:07:21, 2016-03-01 07:32:34, 2016-03-01 07:32:35, 2016-03-01 07:32:36, 2016-03-01 07…
+## $ logger_id <fct> 2300, 2300, 2300, 2400, 2400, 2400, 2400, 2400, 2300, 2300, 2300, 2300, 2300, 2400, 2300, 2400, 2400, 2400, 2400, 2400, 2300, 2400, 2400, 24…
+## $ species   <chr> "Mountain Chickadee", "Mountain Chickadee", "Mountain Chickadee", "House Finch", "House Finch", "House Finch", "House Finch", "House Finch",…
+## $ age       <chr> "AHY", "AHY", "AHY", "SY", "SY", "SY", "SY", "SY", "AHY", "AHY", "AHY", "AHY", "AHY", "SY", "AHY", "SY", "SY", "SY", "SY", "SY", "AHY", "SY"…
+## $ sex       <chr> "U", "U", "U", "M", "M", "M", "M", "M", "F", "F", "F", "F", "F", "M", "F", "M", "M", "M", "M", "M", "F", "M", "M", "M", "F", "M", "M", "M", …
+## $ site_name <chr> "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, B…
+## $ lon       <dbl> -120.3622, -120.3622, -120.3622, -120.3635, -120.3635, -120.3635, -120.3635, -120.3635, -120.3622, -120.3622, -120.3622, -120.3622, -120.362…
+## $ lat       <dbl> 50.66967, 50.66967, 50.66967, 50.66938, 50.66938, 50.66938, 50.66938, 50.66938, 50.66967, 50.66967, 50.66967, 50.66967, 50.66967, 50.66938, …
 ```
 
 Although the times in the weather data do not exactly match those in the finch data, we can merge them together through linear [interpolation](https://en.wikipedia.org/wiki/Linear_interpolation). This function uses the `approx` function from the `stats` package under the hood.
 
 Here we specify that we only want the temperature (`temp`) column:
 
-```{r, out.width = "100%", fig.width = 8, dpi = 200}
-finches_temperature <- weather_interp(data = finches, weather = kamloops, cols = "temp")
-summary(finches_temperature)
-glimpse(finches_temperature)
 
+```r
+finches_temperature <- weather_interp(data = finches, weather = kamloops, cols = "temp")
+```
+
+```
+## temp is missing 4 out of 4368 data, interpolation may be less accurate as a result.
+```
+
+```r
+summary(finches_temperature)
+```
+
+```
+##       animal_id         date                 time                     logger_id     species              age                sex             site_name        
+##  0620000513:7624   Min.   :2016-03-01   Min.   :2016-03-01 06:57:42   1500:6370   Length:16886       Length:16886       Length:16886       Length:16886      
+##  041868D861:2767   1st Qu.:2016-03-05   1st Qu.:2016-03-05 13:54:13   2100: 968   Class :character   Class :character   Class :character   Class :character  
+##  0620000514:1844   Median :2016-03-09   Median :2016-03-09 16:54:47   2200:2266   Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+##  06200004F8:1386   Mean   :2016-03-08   Mean   :2016-03-09 07:45:58   2300:3531                                                                              
+##  041868BED6: 944   3rd Qu.:2016-03-13   3rd Qu.:2016-03-13 08:24:58   2400:1477                                                                              
+##  06200003BB: 708   Max.   :2016-03-16   Max.   :2016-03-16 16:39:30   2700:2274                                                                              
+##  (Other)   :1613                                                                                                                                             
+##       lon              lat             temp        
+##  Min.   :-120.4   Min.   :50.67   Min.   :-0.2317  
+##  1st Qu.:-120.4   1st Qu.:50.67   1st Qu.: 5.0561  
+##  Median :-120.4   Median :50.67   Median : 7.1651  
+##  Mean   :-120.4   Mean   :50.67   Mean   : 7.4349  
+##  3rd Qu.:-120.4   3rd Qu.:50.67   3rd Qu.: 9.3319  
+##  Max.   :-120.4   Max.   :50.67   Max.   :16.3712  
+## 
+```
+
+```r
+glimpse(finches_temperature)
+```
+
+```
+## Rows: 16,886
+## Columns: 11
+## $ animal_id <fct> 041868FF93, 041868FF93, 041868FF93, 06200003BB, 06200003BB, 06200003BB, 06200003BB, 06200003BB, 041868BED6, 041868BED6, 041868BED6, 041868BE…
+## $ date      <date> 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03…
+## $ time      <dttm> 2016-03-01 06:57:42, 2016-03-01 06:58:41, 2016-03-01 07:07:21, 2016-03-01 07:32:34, 2016-03-01 07:32:35, 2016-03-01 07:32:36, 2016-03-01 07…
+## $ logger_id <fct> 2300, 2300, 2300, 2400, 2400, 2400, 2400, 2400, 2300, 2300, 2300, 2300, 2300, 2400, 2300, 2400, 2400, 2400, 2400, 2400, 2300, 2400, 2400, 24…
+## $ species   <chr> "Mountain Chickadee", "Mountain Chickadee", "Mountain Chickadee", "House Finch", "House Finch", "House Finch", "House Finch", "House Finch",…
+## $ age       <chr> "AHY", "AHY", "AHY", "SY", "SY", "SY", "SY", "SY", "AHY", "AHY", "AHY", "AHY", "AHY", "SY", "AHY", "SY", "SY", "SY", "SY", "SY", "AHY", "SY"…
+## $ sex       <chr> "U", "U", "U", "M", "M", "M", "M", "M", "F", "F", "F", "F", "F", "M", "F", "M", "M", "M", "M", "M", "F", "M", "M", "M", "F", "M", "M", "M", …
+## $ site_name <chr> "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, B…
+## $ lon       <dbl> -120.3622, -120.3622, -120.3622, -120.3635, -120.3635, -120.3635, -120.3635, -120.3635, -120.3622, -120.3622, -120.3622, -120.3622, -120.362…
+## $ lat       <dbl> 50.66967, 50.66967, 50.66967, 50.66938, 50.66938, 50.66938, 50.66938, 50.66938, 50.66967, 50.66967, 50.66967, 50.66967, 50.66967, 50.66938, …
+## $ temp      <dbl> 3.984667, 3.991222, 4.036750, 4.162833, 4.162917, 4.163000, 4.163083, 4.163167, 4.180417, 4.180750, 4.184000, 4.184333, 4.184667, 4.184917, …
+```
+
+```r
 ggplot(data = finches_temperature, aes(x = temp, fill = animal_id)) +
   theme_bw() +
-  theme(legend.position = "none") + 
+  theme(legend.position = "none") +
   geom_histogram(binwidth = 1) +
   labs(x = "Temperature (C)", y = "Activity Count", fill = "Finch ID")
 ```
 
+<img src="interp-unnamed-chunk-4-1.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" width="100%" style="display: block; margin: auto;" />
+
 Or summarized:
-```{r, out.width = "100%", fig.width = 8, dpi = 200}
+
+```r
 finches_temperature <- finches_temperature %>%
   group_by(date) %>%
   summarize(n = length(time),
@@ -72,37 +180,149 @@ ggplot(data = finches_temperature, aes(x = date, y = n)) +
   scale_y_continuous(name = "Activity", sec.axis = sec_axis(~. / 100, name = "Temperature (C)"))
 ```
 
+<img src="interp-unnamed-chunk-5-1.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" width="100%" style="display: block; margin: auto;" />
+
 ## Data gaps
 
 By default, gaps of 2 hours (or 2 days, with a daily scale) will be interpolated over (i.e. they will be filled with values interpolated from either side of the gap), but longer gaps will be skipped and filled with `NA`s. You can adjust this behaviour with `na_gap`. Note that as Environment and Climate Change Canada data is downloaded on an hourly scale, it makes no sense to apply `na_gap` values of less than 1.
 
 In this example, note the larger number of `NA`s in `temp` and how it corresponds to the missing variables in the weather dataset:
 
-```{r}
-finches_temperature <- weather_interp(data = finches, weather = kamloops, 
-                                      cols = "temp", na_gap = 1)
-summary(finches_temperature)
 
-finches_temperature %>% 
+```r
+finches_temperature <- weather_interp(data = finches, weather = kamloops,
+                                      cols = "temp", na_gap = 1)
+```
+
+```
+## temp is missing 4 out of 4368 data, interpolation may be less accurate as a result.
+```
+
+```r
+summary(finches_temperature)
+```
+
+```
+##       animal_id         date                 time                     logger_id     species              age                sex             site_name        
+##  0620000513:7624   Min.   :2016-03-01   Min.   :2016-03-01 06:57:42   1500:6370   Length:16886       Length:16886       Length:16886       Length:16886      
+##  041868D861:2767   1st Qu.:2016-03-05   1st Qu.:2016-03-05 13:54:13   2100: 968   Class :character   Class :character   Class :character   Class :character  
+##  0620000514:1844   Median :2016-03-09   Median :2016-03-09 16:54:47   2200:2266   Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+##  06200004F8:1386   Mean   :2016-03-08   Mean   :2016-03-09 07:45:58   2300:3531                                                                              
+##  041868BED6: 944   3rd Qu.:2016-03-13   3rd Qu.:2016-03-13 08:24:58   2400:1477                                                                              
+##  06200003BB: 708   Max.   :2016-03-16   Max.   :2016-03-16 16:39:30   2700:2274                                                                              
+##  (Other)   :1613                                                                                                                                             
+##       lon              lat             temp        
+##  Min.   :-120.4   Min.   :50.67   Min.   :-0.2317  
+##  1st Qu.:-120.4   1st Qu.:50.67   1st Qu.: 5.0746  
+##  Median :-120.4   Median :50.67   Median : 7.1668  
+##  Mean   :-120.4   Mean   :50.67   Mean   : 7.4433  
+##  3rd Qu.:-120.4   3rd Qu.:50.67   3rd Qu.: 9.3458  
+##  Max.   :-120.4   Max.   :50.67   Max.   :16.3712  
+##                                   NA's   :84
+```
+
+```r
+finches_temperature %>%
   select(date, time, temp) %>%
   filter(is.na(temp))
+```
 
+```
+## # A tibble: 84 × 3
+##    date       time                 temp
+##    <date>     <dttm>              <dbl>
+##  1 2016-03-10 2016-03-10 16:00:12    NA
+##  2 2016-03-10 2016-03-10 16:00:33    NA
+##  3 2016-03-10 2016-03-10 16:00:36    NA
+##  4 2016-03-10 2016-03-10 16:00:39    NA
+##  5 2016-03-10 2016-03-10 16:00:42    NA
+##  6 2016-03-10 2016-03-10 16:00:45    NA
+##  7 2016-03-10 2016-03-10 16:00:48    NA
+##  8 2016-03-10 2016-03-10 16:00:51    NA
+##  9 2016-03-10 2016-03-10 16:00:54    NA
+## 10 2016-03-10 2016-03-10 16:00:57    NA
+## # … with 74 more rows
+```
+
+```r
 kamloops %>%
   select(time, temp) %>%
   filter(is.na(temp))
+```
+
+```
+## # A tibble: 4 × 2
+##   time                 temp
+##   <dttm>              <dbl>
+## 1 2016-02-11 19:00:00    NA
+## 2 2016-03-08 13:00:00    NA
+## 3 2016-03-11 01:00:00    NA
+## 4 2016-04-09 00:00:00    NA
 ```
 
 ## Multiple weather columns
 
 We could also add in more than one column at a time:
 
-```{r, out.width = "100%", fig.width = 8, dpi = 200}
+
+```r
 finches_weather <- weather_interp(data = finches, weather = kamloops,
                                   cols = c("temp", "wind_spd"))
+```
+
+```
+## temp is missing 4 out of 4368 data, interpolation may be less accurate as a result.
+```
+
+```
+## wind_spd is missing 4 out of 4368 data, interpolation may be less accurate as a result.
+```
+
+```r
 summary(finches_weather)
+```
+
+```
+##       animal_id         date                 time                     logger_id     species              age                sex             site_name        
+##  0620000513:7624   Min.   :2016-03-01   Min.   :2016-03-01 06:57:42   1500:6370   Length:16886       Length:16886       Length:16886       Length:16886      
+##  041868D861:2767   1st Qu.:2016-03-05   1st Qu.:2016-03-05 13:54:13   2100: 968   Class :character   Class :character   Class :character   Class :character  
+##  0620000514:1844   Median :2016-03-09   Median :2016-03-09 16:54:47   2200:2266   Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+##  06200004F8:1386   Mean   :2016-03-08   Mean   :2016-03-09 07:45:58   2300:3531                                                                              
+##  041868BED6: 944   3rd Qu.:2016-03-13   3rd Qu.:2016-03-13 08:24:58   2400:1477                                                                              
+##  06200003BB: 708   Max.   :2016-03-16   Max.   :2016-03-16 16:39:30   2700:2274                                                                              
+##  (Other)   :1613                                                                                                                                             
+##       lon              lat             temp            wind_spd     
+##  Min.   :-120.4   Min.   :50.67   Min.   :-0.2317   Min.   : 1.000  
+##  1st Qu.:-120.4   1st Qu.:50.67   1st Qu.: 5.0561   1st Qu.: 7.634  
+##  Median :-120.4   Median :50.67   Median : 7.1651   Median :13.738  
+##  Mean   :-120.4   Mean   :50.67   Mean   : 7.4349   Mean   :14.443  
+##  3rd Qu.:-120.4   3rd Qu.:50.67   3rd Qu.: 9.3319   3rd Qu.:19.907  
+##  Max.   :-120.4   Max.   :50.67   Max.   :16.3712   Max.   :44.939  
+## 
+```
+
+```r
 glimpse(finches_weather)
+```
 
+```
+## Rows: 16,886
+## Columns: 12
+## $ animal_id <fct> 041868FF93, 041868FF93, 041868FF93, 06200003BB, 06200003BB, 06200003BB, 06200003BB, 06200003BB, 041868BED6, 041868BED6, 041868BED6, 041868BE…
+## $ date      <date> 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03…
+## $ time      <dttm> 2016-03-01 06:57:42, 2016-03-01 06:58:41, 2016-03-01 07:07:21, 2016-03-01 07:32:34, 2016-03-01 07:32:35, 2016-03-01 07:32:36, 2016-03-01 07…
+## $ logger_id <fct> 2300, 2300, 2300, 2400, 2400, 2400, 2400, 2400, 2300, 2300, 2300, 2300, 2300, 2400, 2300, 2400, 2400, 2400, 2400, 2400, 2300, 2400, 2400, 24…
+## $ species   <chr> "Mountain Chickadee", "Mountain Chickadee", "Mountain Chickadee", "House Finch", "House Finch", "House Finch", "House Finch", "House Finch",…
+## $ age       <chr> "AHY", "AHY", "AHY", "SY", "SY", "SY", "SY", "SY", "AHY", "AHY", "AHY", "AHY", "AHY", "SY", "AHY", "SY", "SY", "SY", "SY", "SY", "AHY", "SY"…
+## $ sex       <chr> "U", "U", "U", "M", "M", "M", "M", "M", "F", "F", "F", "F", "F", "M", "F", "M", "M", "M", "M", "M", "F", "M", "M", "M", "F", "M", "M", "M", …
+## $ site_name <chr> "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, B…
+## $ lon       <dbl> -120.3622, -120.3622, -120.3622, -120.3635, -120.3635, -120.3635, -120.3635, -120.3635, -120.3622, -120.3622, -120.3622, -120.3622, -120.362…
+## $ lat       <dbl> 50.66967, 50.66967, 50.66967, 50.66938, 50.66938, 50.66938, 50.66938, 50.66938, 50.66967, 50.66967, 50.66967, 50.66967, 50.66967, 50.66938, …
+## $ temp      <dbl> 3.984667, 3.991222, 4.036750, 4.162833, 4.162917, 4.163000, 4.163083, 4.163167, 4.180417, 4.180750, 4.184000, 4.184333, 4.184667, 4.184917, …
+## $ wind_spd  <dbl> 22.88500, 22.93417, 22.26500, 19.74333, 19.74167, 19.74000, 19.73833, 19.73667, 19.39167, 19.38500, 19.32000, 19.31333, 19.30667, 19.30167, …
+```
 
+```r
 finches_weather <- finches_weather %>%
   group_by(date) %>%
   summarize(n = length(time),
@@ -117,13 +337,12 @@ ggplot(data = finches_weather, aes(x = date, y = n)) +
   geom_line(aes(y = wind_spd * 50, colour = "Wind Speed"), size = 2) +
   scale_colour_discrete(name = "") +
   scale_y_continuous(
-    name = "Activity Counts", 
+    name = "Activity Counts",
     sec.axis = sec_axis(~. / 50, name = "Temperature (C) / Wind Speed (km/h)"))
 ```
 
+<img src="interp-unnamed-chunk-7-1.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" width="100%" style="display: block; margin: auto;" />
 
-```{r, include = FALSE}
-# Reset options
-options(old)
-```
+
+
 
