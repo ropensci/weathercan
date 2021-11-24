@@ -9,13 +9,13 @@ output: rmarkdown::html_document
 
 [`tidyhydat`](https://docs.ropensci.org/tidyhydat) is another R package for accessing
 data from ECCC. In this case, `tidyhydat` gives access to the [National Water Data Archive
-(HYDAT)](https://www.canada.ca/en/environment-climate-change/services/water-overview/quantity/monitoring/survey/data-products-services/national-archive-hydat.html).
+(HYDAT)](https://www.canada.ca/en/environment-climate-change/services/water-overview/quantity/monitoring/survey/data-products-services/national-archive-hydat.html). 
 
 HYDAT contains lots of data including stream flow (historical and real-time), water levels,
-station metrics and information on data types and codes.
+station metrics and information on data types and codes. 
 
-Here we'll go through a brief example of how hydrology data from `tidyhydat`
-can compliment weather data from `weathercan` (and vice versa).
+Here we'll go through a brief example of how hydrology data from `tidyhydat` 
+can compliment weather data from `weathercan` (and vice versa). 
 
 ## Setup
 
@@ -34,7 +34,7 @@ library(glue)
 
 ### Prep HYDAT data
 
-`tidyhydat` data needs to be downloaded and cached locally in order to be used
+`tidyhydat` data needs to be downloaded and cached locally in order to be used 
 (Note, this can take a while!)
 
 
@@ -45,11 +45,11 @@ download_hydat()
 
 ## Exploring climate and hydrology
 
-In the summer of 2020, my region (Brandon, Manitoba) experienced an incredibly
+In the summer of 2020, my region (Brandon, Manitoba) experienced an incredibly 
 heavy rain fall event. Our downspout was ripped off the gutter and many people in the
-area experienced flooding as rain poured into their basements.
+area experienced flooding as rain poured into their basements. 
 
-Let's take a look at how this event was captured by weather and hydrometric stations
+Let's take a look at how this event was captured by weather and hydrometric stations 
 monitored by ECCC.
 
 The event occurred in late June/early July, so let's give ourselves a two-month
@@ -69,17 +69,18 @@ stations_search("brandon", interval = "day",
 
 ```
 ## # A tibble: 2 × 16
-##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_2010 normals_1971_2000
-##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
-## 1 MB    BRANDON A         50821 5010481     71140 YBR    49.9 -100.  409. Etc/GMT+6 day       2012  2021 FALSE   FALSE             FALSE            
-## 2 MB    BRANDON RCS       49909 5010490     71136 PBO    49.9 -100.  409. Etc/GMT+6 day       2012  2021 FALSE   FALSE             FALSE
+##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals
+##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>  
+## 1 MB    BRANDON A         50821 5010481     71140 YBR    49.9 -100.  409. Etc/GMT+6 day       2012  2021 FALSE  
+## 2 MB    BRANDON RCS       49909 5010490     71136 PBO    49.9 -100.  409. Etc/GMT+6 day       2012  2021 FALSE  
+## # … with 2 more variables: normals_1981_2010 <lgl>, normals_1971_2000 <lgl>
 ```
 
 In this case "A" is for "Airport", let's go with that!
 
 
 ```r
-rain <- weather_dl(station_ids = 50821, interval = "day", start = dates[1], end = dates[2])
+rain <- weather_dl(station_ids = 50821, interval = "day", start = dates[1], end = dates[2]) 
 ```
 
 Take a quick look:
@@ -92,7 +93,7 @@ ggplot(data = rain, aes(x = date, y = total_rain)) +
   scale_y_continuous(name = "Total Rain (mm)", expand = c(0,0))
 ```
 
-<img src="unnamed-chunk-7-1.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" width="80%" style="display: block; margin: auto;" />
+![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png)
 
 Yikes! You can see why my downspout came off!
 
@@ -113,7 +114,7 @@ search_stn_name("brandon")
 ## 4 05MH013        ASSINIBOINE RIVER NEAR BRANDON              MB                      49.9    -100.
 ```
 
-There are a couple of options, but whoops, one's from Quebec! Let's filter this
+There are a couple of options, but whoops, one's from Quebec! Let's filter this 
 to only Manitoba and only stations with 2020 data with the `hy_stn_data_range()`
 function.
 
@@ -155,14 +156,14 @@ filter(hy_data_types, DATA_TYPE %in% c("H", "Q"))
 ## 2 Q         Flow         Debit
 ```
 
-Great! We have both flow and water level data for a station number "05MH001",
-"Assiniboine River at Brandon".
+Great! We have both flow and water level data for a station number "05MH001", 
+"Assiniboine River at Brandon". 
 
 
-Let's grab the flow and water level data for this station.
+Let's grab the flow and water level data for this station. 
 
 ```r
-flow <- hy_daily_flows(station_number = "05MH001",
+flow <- hy_daily_flows(station_number = "05MH001", 
                        start_date = dates[1], end_date = dates[2])
 level <- hy_daily_levels(station_number = "05MH001",
                          start_date = dates[1], end_date = dates[2])
@@ -175,7 +176,7 @@ level <- hy_daily_levels(station_number = "05MH001",
 g <- ggplot() +
   theme_bw() +
   theme(axis.title.x = element_blank()) +
-  geom_bar(data = rain, aes(x = date, y = (total_rain * 2)), stat = "identity",
+  geom_bar(data = rain, aes(x = date, y = (total_rain * 2)), stat = "identity", 
            alpha = 0.7, fill = "cornflowerblue") +
   geom_line(data = flow, aes(x = Date, y = Value)) +
   scale_y_continuous(name = bquote(Total~Flow~(m^3/s)), expand = c(0, 0),
@@ -184,12 +185,12 @@ g <- ggplot() +
 g
 ```
 
-<img src="unnamed-chunk-12-1.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" width="80%" style="display: block; margin: auto;" />
+![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12-1.png)
 
 
-Interesting, looks like there's a bit of a lag between the rain event and the
+Interesting, looks like there's a bit of a lag between the rain event and the 
 dramatic increase in water flow in the Assiniboine (unsurprisingly, this is
-called "lag to peak").
+called "lag to peak"). 
 
 Let's add a bit of information about this lag to peak.
 
@@ -199,19 +200,19 @@ d <- data.frame(dates = c(rain$date[which.max(rain$total_precip)],
                           flow$Date[which.max(flow$Value)]),
                 y = max(flow$Value) + 5)
 
-g +
-  geom_path(data = d, aes(x = dates, y = y),
+g + 
+  geom_path(data = d, aes(x = dates, y = y), 
               arrow = arrow(length = unit(0.25, "lines"), ends = "both", type = "closed")) +
   annotate(geom = "text",
-           x = d$dates[1] + (d$dates[2] - d$dates[1])/2,
+           x = d$dates[1] + (d$dates[2] - d$dates[1])/2, 
            y = d$y[1] + 10,
            label = glue("{d$dates[2] - d$dates[1]}-day delay"))
 ```
 
-<img src="unnamed-chunk-13-1.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" width="80%" style="display: block; margin: auto;" />
+![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-1.png)
 
 We can expect a lag like this because much of the flow being captured by the Brandon HYDAT
-station is from precipitation in the upstream catchment area (not only from
+station is from precipitation in the upstream catchment area (not only from 
 local contributions), which takes time to travel.
 
 
@@ -222,18 +223,18 @@ local contributions), which takes time to travel.
 g <- ggplot() +
   theme_bw() +
   theme(axis.title.x = element_blank()) +
-  geom_bar(data = rain,
-           aes(x = date, y = (total_rain/65) + min(level$Value)),
+  geom_bar(data = rain, 
+           aes(x = date, y = (total_rain/65) + min(level$Value)), 
            stat = "identity", alpha = 0.7, fill = "cornflowerblue") +
   geom_line(data = level, aes(x = Date, y = Value)) +
   scale_y_continuous(name = "Water Level (m)", expand = c(0, 0),
-                     sec.axis = sec_axis(trans = ~ (. - min(level$Value)) * 65,
+                     sec.axis = sec_axis(trans = ~ (. - min(level$Value)) * 65, 
                                          name = "Total Rain (mm)")) +
   coord_cartesian(ylim = c(min(level$Value), max(level$Value)*1.001))
 g
 ```
 
-<img src="unnamed-chunk-14-1.png" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" width="80%" style="display: block; margin: auto;" />
+![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-1.png)
 
 Again there looks to be a lag, let's see if it's the same as before.
 
@@ -243,16 +244,16 @@ d <- data.frame(dates = c(rain$date[which.max(rain$total_precip)],
                           level$Date[which.max(level$Value)]),
                 y = max(level$Value)*1.00025)
 
-g +
-  geom_path(data = d, aes(x = dates, y = y),
+g + 
+  geom_path(data = d, aes(x = dates, y = y), 
               arrow = arrow(length = unit(0.25, "lines"), ends = "both", type = "closed")) +
   annotate(geom = "text",
-           x = d$dates[1] + (d$dates[2] - d$dates[1])/2,
+           x = d$dates[1] + (d$dates[2] - d$dates[1])/2, 
            y = d$y[1] * 1.0002,
            label = glue("{d$dates[2] - d$dates[1]}-day delay"))
 ```
 
-<img src="unnamed-chunk-15-1.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" width="80%" style="display: block; margin: auto;" />
+![plot of chunk unnamed-chunk-15](figure/unnamed-chunk-15-1.png)
 
 
 ### Ploting flow and water level
@@ -263,26 +264,26 @@ Looks like the flow and water level match up, perhaps we should take a closer lo
 ```r
 ggplot() +
   theme_bw() +
-  theme(legend.position = c(0.8, 0.8)) +
+  theme(legend.position = c(0.9, 0.8)) +
   geom_line(data = flow, aes(x = Date, y = Value, colour = "Flow"),
             size = 2) +
   geom_line(data = level, size = 1,
             aes(x = Date, y = (Value - min(Value) + 0.1) * 130, colour = "Level")) +
   scale_y_continuous(bquote(Total~Flow~(m^3/s)), expand = c(0, 0),
-                     sec.axis = sec_axis(trans = ~ ./130 + min(level$Value) - 0.1,
+                     sec.axis = sec_axis(trans = ~ ./130 + min(level$Value) - 0.1, 
                                          name = "Water Level (m)")) +
-  scale_colour_manual(name = "Type",
-                      values = c("Flow" = "cornflowerblue",
+  scale_colour_manual(name = "Type", 
+                      values = c("Flow" = "cornflowerblue", 
                                  "Level" = "grey30"))
 ```
 
-<img src="unnamed-chunk-16-1.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" width="80%" style="display: block; margin: auto;" />
+![plot of chunk unnamed-chunk-16](figure/unnamed-chunk-16-1.png)
 
-Almost a perfect match between water level and flow (which makes sense).
+Almost a perfect match between water level and flow (which makes sense). 
 
 
 > Hopefully this short article gives you a sense of how you might combine different
-> types of ECCC data gathered via different R packages for a more comprehensive
+> types of ECCC data gathered via different R packages for a more comprehensive 
 > look at the world around.
 
 

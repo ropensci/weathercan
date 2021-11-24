@@ -1,11 +1,18 @@
 ---
 title: "weathercan and tidyhydat"
 author: "Steffi LaZerte"
-date: "2021-11-24"
+date: "`r Sys.Date()`"
 output: rmarkdown::html_document
 ---
 
-
+```{r, include = FALSE}
+knitr::opts_chunk$set(cache = FALSE,
+                      fig.align = "center",
+                      fig.path = "vignettes/articles/",
+                      dpi = 200,
+                      fig.asp = 0.65, fig.width = 5,
+                      out.width = "80%")
+```
 
 [`tidyhydat`](https://docs.ropensci.org/tidyhydat) is another R package for accessing
 data from ECCC. In this case, `tidyhydat` gives access to the [National Water Data Archive
@@ -21,8 +28,7 @@ can compliment weather data from `weathercan` (and vice versa).
 
 ### Loading packages
 
-
-```r
+```{r, message = FALSE}
 library(weathercan)
 library(tidyhydat)
 
@@ -37,8 +43,7 @@ library(glue)
 `tidyhydat` data needs to be downloaded and cached locally in order to be used
 (Note, this can take a while!)
 
-
-```r
+```{r, eval = FALSE}
 download_hydat()
 ```
 
@@ -55,70 +60,44 @@ monitored by ECCC.
 The event occurred in late June/early July, so let's give ourselves a two-month
 range.
 
-
-```r
+```{r}
 dates <- c("2020-06-01", "2020-08-01")
 ```
 
 We'll find a local Brandon weather station that has daily data for this range
-
-```r
+```{r}
 stations_search("brandon", interval = "day",
                 starts_latest = 2020, ends_earliest = 2020)
 ```
 
-```
-## # A tibble: 2 × 16
-##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_2010 normals_1971_2000
-##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
-## 1 MB    BRANDON A         50821 5010481     71140 YBR    49.9 -100.  409. Etc/GMT+6 day       2012  2021 FALSE   FALSE             FALSE            
-## 2 MB    BRANDON RCS       49909 5010490     71136 PBO    49.9 -100.  409. Etc/GMT+6 day       2012  2021 FALSE   FALSE             FALSE
-```
-
 In this case "A" is for "Airport", let's go with that!
 
-
-```r
+```{r}
 rain <- weather_dl(station_ids = 50821, interval = "day", start = dates[1], end = dates[2])
 ```
 
 Take a quick look:
 
-
-```r
+```{r}
 ggplot(data = rain, aes(x = date, y = total_rain)) +
   theme_bw() +
   geom_bar(stat = "identity") +
   scale_y_continuous(name = "Total Rain (mm)", expand = c(0,0))
 ```
 
-<img src="unnamed-chunk-7-1.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" width="80%" style="display: block; margin: auto;" />
-
 Yikes! You can see why my downspout came off!
 
 Now let's get some HYDAT data to compare. First we'll find a local station
 
-
-```r
+```{r}
 search_stn_name("brandon")
-```
-
-```
-## # A tibble: 4 × 5
-##   STATION_NUMBER STATION_NAME                                PROV_TERR_STATE_LOC LATITUDE LONGITUDE
-##   <chr>          <chr>                                       <chr>                  <dbl>     <dbl>
-## 1 05MH001        ASSINIBOINE RIVER AT BRANDON                MB                      49.9    -100. 
-## 2 05MH006        LITTLE SOURIS RIVER NEAR BRANDON            MB                      49.7     -99.8
-## 3 02OC007        MASKINONGE (LAC) A SAINT GABRIEL DE BRANDON QC                      46.3     -73.4
-## 4 05MH013        ASSINIBOINE RIVER NEAR BRANDON              MB                      49.9    -100.
 ```
 
 There are a couple of options, but whoops, one's from Quebec! Let's filter this
 to only Manitoba and only stations with 2020 data with the `hy_stn_data_range()`
 function.
 
-
-```r
+```{r}
 search_stn_name("brandon") %>%
   filter(PROV_TERR_STATE_LOC == "MB") %>%
   pull(STATION_NUMBER) %>%
@@ -126,33 +105,11 @@ search_stn_name("brandon") %>%
   filter(Year_from <= 2020, Year_to >= 2020)
 ```
 
-```
-##   Queried from version of HYDAT released on 2021-10-19
-##    Observations:                      2
-##    Station(s) returned:               1
-##    Stations requested but not returned: 
-##     All stations returned.
-## # A tibble: 2 × 6
-##   STATION_NUMBER DATA_TYPE SED_DATA_TYPE Year_from Year_to RECORD_LENGTH
-##   <chr>          <chr>     <chr>             <int>   <int>         <int>
-## 1 05MH001        H         <NA>               2014    2020             7
-## 2 05MH001        Q         <NA>               1906    2020            75
-```
-
 Hmm, let's see what kind of data is available by looking at the included
 `hy_data_types` data frame.
 
-
-```r
+```{r}
 filter(hy_data_types, DATA_TYPE %in% c("H", "Q"))
-```
-
-```
-## # A tibble: 2 × 3
-##   DATA_TYPE DATA_TYPE_EN DATA_TYPE_FR 
-##   <chr>     <chr>        <chr>        
-## 1 H         Water Level  Niveaux d'eau
-## 2 Q         Flow         Debit
 ```
 
 Great! We have both flow and water level data for a station number "05MH001",
@@ -160,8 +117,7 @@ Great! We have both flow and water level data for a station number "05MH001",
 
 
 Let's grab the flow and water level data for this station.
-
-```r
+```{r}
 flow <- hy_daily_flows(station_number = "05MH001",
                        start_date = dates[1], end_date = dates[2])
 level <- hy_daily_levels(station_number = "05MH001",
@@ -170,8 +126,7 @@ level <- hy_daily_levels(station_number = "05MH001",
 
 ### Ploting rain and flow
 
-
-```r
+```{r}
 g <- ggplot() +
   theme_bw() +
   theme(axis.title.x = element_blank()) +
@@ -184,8 +139,6 @@ g <- ggplot() +
 g
 ```
 
-<img src="unnamed-chunk-12-1.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" width="80%" style="display: block; margin: auto;" />
-
 
 Interesting, looks like there's a bit of a lag between the rain event and the
 dramatic increase in water flow in the Assiniboine (unsurprisingly, this is
@@ -193,8 +146,7 @@ called "lag to peak").
 
 Let's add a bit of information about this lag to peak.
 
-
-```r
+```{r}
 d <- data.frame(dates = c(rain$date[which.max(rain$total_precip)],
                           flow$Date[which.max(flow$Value)]),
                 y = max(flow$Value) + 5)
@@ -208,8 +160,6 @@ g +
            label = glue("{d$dates[2] - d$dates[1]}-day delay"))
 ```
 
-<img src="unnamed-chunk-13-1.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" width="80%" style="display: block; margin: auto;" />
-
 We can expect a lag like this because much of the flow being captured by the Brandon HYDAT
 station is from precipitation in the upstream catchment area (not only from
 local contributions), which takes time to travel.
@@ -217,8 +167,7 @@ local contributions), which takes time to travel.
 
 ### Ploting rain and water level
 
-
-```r
+```{r}
 g <- ggplot() +
   theme_bw() +
   theme(axis.title.x = element_blank()) +
@@ -231,14 +180,12 @@ g <- ggplot() +
                                          name = "Total Rain (mm)")) +
   coord_cartesian(ylim = c(min(level$Value), max(level$Value)*1.001))
 g
-```
 
-<img src="unnamed-chunk-14-1.png" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" width="80%" style="display: block; margin: auto;" />
+```
 
 Again there looks to be a lag, let's see if it's the same as before.
 
-
-```r
+```{r}
 d <- data.frame(dates = c(rain$date[which.max(rain$total_precip)],
                           level$Date[which.max(level$Value)]),
                 y = max(level$Value)*1.00025)
@@ -252,15 +199,12 @@ g +
            label = glue("{d$dates[2] - d$dates[1]}-day delay"))
 ```
 
-<img src="unnamed-chunk-15-1.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" width="80%" style="display: block; margin: auto;" />
-
 
 ### Ploting flow and water level
 
 Looks like the flow and water level match up, perhaps we should take a closer look.
 
-
-```r
+```{r}
 ggplot() +
   theme_bw() +
   theme(legend.position = c(0.8, 0.8)) +
@@ -275,8 +219,6 @@ ggplot() +
                       values = c("Flow" = "cornflowerblue",
                                  "Level" = "grey30"))
 ```
-
-<img src="unnamed-chunk-16-1.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" width="80%" style="display: block; margin: auto;" />
 
 Almost a perfect match between water level and flow (which makes sense).
 

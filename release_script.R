@@ -141,6 +141,7 @@ codemetar::write_codemeta()
 
 pkgdown::build_site(lazy = TRUE)
 unlink("./vignettes/normals_cache/", recursive = TRUE)
+unlink("./vignettes/articles/tidyhydat_cache/", recursive = TRUE)
 
 pkgdown::build_article(name = "articles/tidyhydat")
 

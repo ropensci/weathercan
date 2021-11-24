@@ -187,40 +187,18 @@ data between 9AM and 11AM will be interpolated. If, however, you have 9AM and
 and 12PM will be returned as NA.)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'># Weather data only</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>kamloops</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 6 × 37</span>
-#&gt;   station_name station_id station_operator prov    lat   lon  elev climate_id
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     
-#&gt; <span style='color: #BCBCBC;'>1</span> KAMLOOPS A        <span style='text-decoration: underline;'>51</span>423 <span style='color: #BB0000;'>NA</span>               BC     50.7 -<span style='color: #BB0000;'>120.</span>  345. 1163781   
-#&gt; <span style='color: #BCBCBC;'>2</span> KAMLOOPS A        <span style='text-decoration: underline;'>51</span>423 <span style='color: #BB0000;'>NA</span>               BC     50.7 -<span style='color: #BB0000;'>120.</span>  345. 1163781   
-#&gt; <span style='color: #BCBCBC;'>3</span> KAMLOOPS A        <span style='text-decoration: underline;'>51</span>423 <span style='color: #BB0000;'>NA</span>               BC     50.7 -<span style='color: #BB0000;'>120.</span>  345. 1163781   
-#&gt; <span style='color: #BCBCBC;'>4</span> KAMLOOPS A        <span style='text-decoration: underline;'>51</span>423 <span style='color: #BB0000;'>NA</span>               BC     50.7 -<span style='color: #BB0000;'>120.</span>  345. 1163781   
-#&gt; <span style='color: #BCBCBC;'>5</span> KAMLOOPS A        <span style='text-decoration: underline;'>51</span>423 <span style='color: #BB0000;'>NA</span>               BC     50.7 -<span style='color: #BB0000;'>120.</span>  345. 1163781   
-#&gt; <span style='color: #BCBCBC;'>6</span> KAMLOOPS A        <span style='text-decoration: underline;'>51</span>423 <span style='color: #BB0000;'>NA</span>               BC     50.7 -<span style='color: #BB0000;'>120.</span>  345. 1163781   
-#&gt; <span style='color: #949494;'># … with 29 more variables: WMO_id &lt;chr&gt;, TC_id &lt;chr&gt;, date &lt;date&gt;,</span>
-#&gt; <span style='color: #949494;'>#   time &lt;dttm&gt;, year &lt;chr&gt;, month &lt;chr&gt;, day &lt;chr&gt;, hour &lt;chr&gt;, weather &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   hmdx &lt;dbl&gt;, hmdx_flag &lt;chr&gt;, precip_amt &lt;dbl&gt;, precip_amt_flag &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   pressure &lt;dbl&gt;, pressure_flag &lt;chr&gt;, rel_hum &lt;dbl&gt;, rel_hum_flag &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   temp &lt;dbl&gt;, temp_dew &lt;dbl&gt;, temp_dew_flag &lt;chr&gt;, temp_flag &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   visib &lt;dbl&gt;, visib_flag &lt;chr&gt;, wind_chill &lt;dbl&gt;, wind_chill_flag &lt;chr&gt;,</span>
-#&gt; <span style='color: #949494;'>#   wind_dir &lt;dbl&gt;, wind_dir_flag &lt;chr&gt;, wind_spd &lt;dbl&gt;, wind_spd_flag &lt;chr&gt;</span></div><div class='input'>
-<span class='co'># Data about finch observations at RFID feeders in Kamloops, BC</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>finches</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 6 × 10</span>
-#&gt;   animal_id  date       time                logger_id species        age   sex  
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;date&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dttm&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> 041868FF93 2016-03-01 2016-03-01 <span style='color: #949494;'>06:57:42</span> 2300      Mountain Chic… AHY   U    
-#&gt; <span style='color: #BCBCBC;'>2</span> 041868FF93 2016-03-01 2016-03-01 <span style='color: #949494;'>06:58:41</span> 2300      Mountain Chic… AHY   U    
-#&gt; <span style='color: #BCBCBC;'>3</span> 041868FF93 2016-03-01 2016-03-01 <span style='color: #949494;'>07:07:21</span> 2300      Mountain Chic… AHY   U    
-#&gt; <span style='color: #BCBCBC;'>4</span> 06200003BB 2016-03-01 2016-03-01 <span style='color: #949494;'>07:32:34</span> 2400      House Finch    SY    M    
-#&gt; <span style='color: #BCBCBC;'>5</span> 06200003BB 2016-03-01 2016-03-01 <span style='color: #949494;'>07:32:35</span> 2400      House Finch    SY    M    
-#&gt; <span style='color: #BCBCBC;'>6</span> 06200003BB 2016-03-01 2016-03-01 <span style='color: #949494;'>07:32:36</span> 2400      House Finch    SY    M    
-#&gt; <span style='color: #949494;'># … with 3 more variables: site_name &lt;chr&gt;, lon &lt;dbl&gt;, lat &lt;dbl&gt;</span></div><div class='input'>
-<span class='co'># Match weather to finches</span>
-<span class='va'>finch_weather</span> <span class='op'>&lt;-</span> <span class='fu'>weather_interp</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>finches</span>, weather <span class='op'>=</span> <span class='va'>kamloops</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>temp is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='output co'>#&gt; <span class='message'>temp_dew is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='output co'>#&gt; <span class='message'>rel_hum is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='output co'>#&gt; <span class='message'>precip_amt does not have at least 2 points of non-missing data, skipping...</span></div><div class='output co'>#&gt; <span class='message'>wind_spd is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='output co'>#&gt; <span class='message'>visib is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='output co'>#&gt; <span class='message'>pressure is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='output co'>#&gt; <span class='message'>hmdx is missing 4163 out of 4368 data, interpolation may be less accurate as a result.</span></div><div class='output co'>#&gt; <span class='message'>wind_chill is missing 3810 out of 4368 data, interpolation may be less accurate as a result.</span></div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span> <span class='co'># check_eccc()</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Weather data only</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>kamloops</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Data about finch observations at RFID feeders in Kamloops, BC</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>finches</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Match weather to finches</span></span>
+<span class='r-in'><span class='va'>finch_weather</span> <span class='op'>&lt;-</span> <span class='fu'>weather_interp</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>finches</span>, weather <span class='op'>=</span> <span class='va'>kamloops</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
