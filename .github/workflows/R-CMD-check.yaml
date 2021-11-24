@@ -31,7 +31,7 @@ jobs:
       - name: MacOS dependencies
         if: runner.os == 'macOS'
         run: |
-          brew install pkg-config gdal
+          brew install pkg-config gdal proj
 
       - uses: r-lib/actions/setup-pandoc@v1
 
