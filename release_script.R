@@ -15,7 +15,8 @@ dplyr::bind_cols(dplyr::select(hist, date_updated, checks),
   dplyr::filter(stringr::str_detect(date_updated, "2021-05-18")) %>%
   tidyr::unnest(checks) %>%
   dplyr::filter(status %in% c("WARN", "ERROR")) %>%
-  dplyr::select(-version, -tinstall, -tcheck, -ttotal, -any, -ok, -note, -warn, -error, -fail) %>%
+  dplyr::select(-version, -tinstall, -tcheck, -ttotal, -any,
+                -ok, -note, -warn, -error, -fail) %>%
   tidyr::unnest(details) %>%
   dplyr::pull(output) %>%
   unique()
@@ -72,6 +73,10 @@ source("vignettes/precompile.R")
 devtools::check(remote = TRUE, manual = TRUE, run_dont_test = TRUE,
                 env_vars = list("NOT_CRAN" = ""))
 devtools::check(remote = TRUE, manual = TRUE, run_dont_test = TRUE)
+
+# TURN OFF INTERNET AND TRY AGAIN
+devtools::check(remote = TRUE, manual = TRUE, run_dont_test = TRUE,
+                env_vars = list("NOT_CRAN" = ""))
 
 # Win builder
 devtools::check_win_release()
@@ -139,11 +144,7 @@ codemetar::write_codemeta()
 # pkgdown::build_reference()
 #pkgdown::build_articles(lazy = FALSE)
 
-pkgdown::build_site(lazy = TRUE)
-unlink("./vignettes/normals_cache/", recursive = TRUE)
-unlink("./vignettes/articles/tidyhydat_cache/", recursive = TRUE)
-
-pkgdown::build_article(name = "articles/tidyhydat")
+pkgdown::build_site()
 
 
 ## Push to github
@@ -152,16 +153,12 @@ pkgdown::build_article(name = "articles/tidyhydat")
 ## Check Reverse Dependencies (are there any?)
 tools::dependsOnPkgs("weathercan")
 
-revdepcheck::revdep_check(num_workers = 4)
-
-## Double check
-old <- options(repos = c(CRAN = 'http://cran.rstudio.com'))
-db <- available.packages()
-pkgs <- rownames(db)
-deps <- tools::package_dependencies(pkgs, db, which = 'all', reverse = TRUE)
-deps$weathercan
-options(old)
-
+# Check RavenR which suggests weathercan
+weathercan::kamloops_day %>%
+  RavenR::rvn_rvt_write_met(metdata = .,
+                            filenames = file.path(tempdir(), "rvn_rvt_metfile.rvt"),
+                            filename_stndata = file.path(tempdir(), "met_stndata.rvt"))
+# Warnings about NA okay
 
 ## Push to github
 

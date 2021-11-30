@@ -1,30 +1,33 @@
-## Release v.0.6.1
+## Release v.0.6.2
 
-* Switch from stations_dl() function asks users to store data in cache (doesn't run during tests or setup)
-* Don't test get_check() on CRAN because requires internet
-* Uses vcr v1.0.2 to avoid test directory problems
+* General changes to avoid CRAN policy violations, namely, errors when API is inaccessible:
+  * Use @examplesIf to ONLY run examples if resources are available 
+     (I believe this was the problem that resulted in archival)
+  * Avoid tests where API calls used (even if mocking, or using vcr)
+  * Pre-compiled the vignettes which rely on the API
+* Fixed minor bugs with new stations data
+* Increased robustness to ECCC data changes
 
 ## Test environments
-As of June 4th, 2021
+As of November 30th, 2021
 
-* ubuntu 20.04 - Local (4.1.0), GitHub Actions (devel, release, old release)
-* OSX 10.15.7 - GitHub Actions (release)
-* Windows Server - GitHub Actions (release, old release), winbuilder (devel)
-* Debian GCC - rhub (release, patched, devel)
-* Debian CLANG - rhub (devel)
+* ubuntu 20.04 - Local (4.1.1), GitHub Actions (devel, release, old release)
+* Windows Server - GitHub Actions (release), winbuilder (devel), rhub (devel, release, old release)
+* OSX 11.6.1 - GitHub Actions (release)
+* Solaris - rhub (release)
 * Fedora GCC - rhub (devel)
 * Fedora CLANG - rhub (devel)
-* Solaris - rhub (release)
+* Debian CLANG - rhub (devel)
+* Debian GCC - rhub (release, patched, devel)
+
 
 ## R CMD check results
 
 There were no ERRORs and no WARNINGs
 
-2 NOTEs:
+In addition to the NOTE that this is a new submission:
 
-Debian GCC (patched and devel) had one NOTE:
-* checking for future file timestamps ... NOTE
-  unable to verify current time
+1 NOTEs:
 
 Solaris had one NOTEs:
 * checking top-level files ... NOTE
