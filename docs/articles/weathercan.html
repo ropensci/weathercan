@@ -77,7 +77,7 @@
       <h1 data-toc-skip>Getting Started</h1>
                         <h4 class="author">Steffi LaZerte</h4>
             
-            <h4 class="date">2021-11-24</h4>
+            <h4 class="date">2021-11-30</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/weathercan/blob/master/vignettes/weathercan.Rmd"><code>vignettes/weathercan.Rmd</code></a></small>
       <div class="hidden name"><code>weathercan.Rmd</code></div>
@@ -208,15 +208,19 @@
 ## [1] "2021-10-31 23:34:00 UTC"
 ## 
 ## $weathercan_modified
-## [1] "2021-11-22"</code></pre>
+## [1] "2021-11-30"</code></pre>
 </div>
 <div id="weather" class="section level2">
 <h2 class="hasAnchor">
 <a href="#weather" class="anchor"></a>Weather</h2>
 <p>Once you have your <code>station_id</code>(s) you can download weather data:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">kam</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/weather_dl.html">weather_dl</a></span><span class="op">(</span>station_ids <span class="op">=</span> <span class="fl">51423</span>, start <span class="op">=</span> <span class="st">"2016-01-01"</span>, end <span class="op">=</span> <span class="st">"2016-02-15"</span><span class="op">)</span>
-<span class="va">kam</span></code></pre></div>
+<code class="sourceCode R"><span class="va">kam</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/weather_dl.html">weather_dl</a></span><span class="op">(</span>station_ids <span class="op">=</span> <span class="fl">51423</span>, start <span class="op">=</span> <span class="st">"2016-01-01"</span>, end <span class="op">=</span> <span class="st">"2016-02-15"</span><span class="op">)</span></code></pre></div>
+<pre><code>## As of weathercan v0.3.0 time display is either local time or UTC
+## See Details under ?weather_dl for more information.
+## This message is shown once per session</code></pre>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">kam</span></code></pre></div>
 <pre><code>## # A tibble: 1,104 × 37
 ##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id date       time                year  month day   hour  weather  hmdx
 ##    &lt;chr&gt;             &lt;dbl&gt; &lt;lgl&gt;            &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt; &lt;date&gt;     &lt;dttm&gt;              &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;
@@ -234,7 +238,7 @@
 ## #   rel_hum_flag &lt;chr&gt;, temp &lt;dbl&gt;, temp_dew &lt;dbl&gt;, temp_dew_flag &lt;chr&gt;, temp_flag &lt;chr&gt;, visib &lt;dbl&gt;, visib_flag &lt;chr&gt;, wind_chill &lt;dbl&gt;,
 ## #   wind_chill_flag &lt;chr&gt;, wind_dir &lt;dbl&gt;, wind_dir_flag &lt;chr&gt;, wind_spd &lt;dbl&gt;, wind_spd_flag &lt;chr&gt;</code></pre>
 <p>You can also download data from multiple stations at once:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">kam.pg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/weather_dl.html">weather_dl</a></span><span class="op">(</span>station_ids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">48248</span>, <span class="fl">51423</span><span class="op">)</span>, start <span class="op">=</span> <span class="st">"2016-01-01"</span>, end <span class="op">=</span> <span class="st">"2016-02-15"</span><span class="op">)</span>
 
 <span class="va">kam.pg</span></code></pre></div>
@@ -255,14 +259,14 @@
 ## #   rel_hum_flag &lt;chr&gt;, temp &lt;dbl&gt;, temp_dew &lt;dbl&gt;, temp_dew_flag &lt;chr&gt;, temp_flag &lt;chr&gt;, visib &lt;dbl&gt;, visib_flag &lt;chr&gt;, wind_chill &lt;dbl&gt;,
 ## #   wind_chill_flag &lt;chr&gt;, wind_dir &lt;dbl&gt;, wind_dir_flag &lt;chr&gt;, wind_spd &lt;dbl&gt;, wind_spd_flag &lt;chr&gt;</code></pre>
 <p>And plot it:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">kam.pg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">time</span>, y <span class="op">=</span> <span class="va">temp</span>, group <span class="op">=</span> <span class="va">station_name</span>, colour <span class="op">=</span> <span class="va">station_name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"top"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="unnamed-chunk-12-1.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" style="display: block; margin: auto;"></p>
 <p>Or you can use the vector created above:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">stn_vec_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/weather_dl.html">weather_dl</a></span><span class="op">(</span>station_ids <span class="op">=</span> <span class="va">stn_vector</span>, start <span class="op">=</span> <span class="st">"2016-01-01"</span>, end <span class="op">=</span> <span class="st">"2016-02-15"</span><span class="op">)</span>
 
 <span class="va">stn_vec_df</span></code></pre></div>
@@ -288,14 +292,14 @@
 <h2 class="hasAnchor">
 <a href="#climate-normals" class="anchor"></a>Climate Normals</h2>
 <p>To access climate normals, you first need to know the <code>climate_id</code> associated with the station you’re interested in.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/stations_search.html">stations_search</a></span><span class="op">(</span><span class="st">"Winnipeg"</span>, normals_years <span class="op">=</span> <span class="st">"current"</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 13
 ##   prov  station_name                station_id climate_id WMO_id TC_id   lat   lon  elev tz        normals normals_1981_2010 normals_1971_2000
 ##   &lt;chr&gt; &lt;chr&gt;                            &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;lgl&gt;   &lt;lgl&gt;             &lt;lgl&gt;            
 ## 1 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/GMT+6 TRUE    TRUE              TRUE</code></pre>
 <p>The current year range is 1981-2010, but you can also search for stations in the previous year range:</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/stations_search.html">stations_search</a></span><span class="op">(</span><span class="st">"Winnipeg"</span>, normals_years <span class="op">=</span> <span class="st">"1971-2000"</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 13
 ##   prov  station_name                station_id climate_id WMO_id TC_id   lat   lon  elev tz        normals normals_1981_2010 normals_1971_2000
@@ -303,10 +307,10 @@
 ## 1 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/GMT+6 TRUE    TRUE              TRUE</code></pre>
 <p>Note that the Winnipeg station has normals for both year ranges.</p>
 <p>Then you can download the climate normals with the <code><a href="../reference/normals_dl.html">normals_dl()</a></code> function.</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/normals_dl.html">normals_dl</a></span><span class="op">(</span><span class="st">"5023222"</span><span class="op">)</span></code></pre></div>
 <p>There are two parts to the normals data, average weather measurements and average frost dates.</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span>
 <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">normals</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 13 × 203
@@ -332,7 +336,7 @@
 ## #   rain_extreme_daily &lt;dbl&gt;, rain_extreme_daily_code &lt;chr&gt;, rain_extreme_daily_date &lt;date&gt;, rain_extreme_daily_date_code &lt;chr&gt;, snow_extreme_daily &lt;dbl&gt;,
 ## #   snow_extreme_daily_code &lt;chr&gt;, snow_extreme_daily_date &lt;date&gt;, snow_extreme_daily_date_code &lt;chr&gt;, precip_extreme_daily &lt;dbl&gt;,
 ## #   precip_extreme_daily_code &lt;chr&gt;, precip_extreme_daily_date &lt;date&gt;, precip_extreme_daily_date_code &lt;chr&gt;, snow_extreme_depth &lt;dbl&gt;, …</code></pre>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">frost</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 7 × 14
 ##   prov  station_name     climate_id normals_years meets_wmo normals   frost_code date_first_fall_… date_last_spring… length_frost_fr… prob  prob_first_fall_tem…
@@ -346,7 +350,7 @@
 ## 7 MB    WINNIPEG RICHAR… 5023222    1981-2010     TRUE      &lt;tibble … A                        265               143              121 90%                    276
 ## # … with 2 more variables: prob_length_frost_free &lt;dbl&gt;, prob_last_spring_temp_below_0_on_date &lt;dbl&gt;</code></pre>
 <p>Alternatively, download the 1971-2000 normals:</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/normals_dl.html">normals_dl</a></span><span class="op">(</span><span class="st">"5023222"</span>, normals_years <span class="op">=</span> <span class="st">"1971-2000"</span><span class="op">)</span>
 <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">normals</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 13 × 229
@@ -372,7 +376,7 @@
 ## #   rain_extreme_daily &lt;dbl&gt;, rain_extreme_daily_code &lt;chr&gt;, rain_extreme_daily_date &lt;date&gt;, rain_extreme_daily_date_code &lt;chr&gt;, snow_extreme_daily &lt;dbl&gt;,
 ## #   snow_extreme_daily_code &lt;chr&gt;, snow_extreme_daily_date &lt;date&gt;, snow_extreme_daily_date_code &lt;chr&gt;, precip_extreme_daily &lt;dbl&gt;,
 ## #   precip_extreme_daily_code &lt;chr&gt;, precip_extreme_daily_date &lt;date&gt;, precip_extreme_daily_date_code &lt;chr&gt;, snow_extreme_depth &lt;dbl&gt;, …</code></pre>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">frost</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 0 × 6
 ## # … with 6 variables: prov &lt;chr&gt;, station_name &lt;chr&gt;, climate_id &lt;chr&gt;, normals_years &lt;chr&gt;, meets_wmo &lt;lgl&gt;, normals &lt;list&gt;</code></pre>

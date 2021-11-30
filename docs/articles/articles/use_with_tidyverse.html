@@ -71,13 +71,13 @@
 
       
 
-      </header><script src="use_with_tidyverse_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
+      </header><script src="use_with_tidyverse_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Using with the tidyverse</h1>
                         <h4 class="author">Sam Albers</h4>
             
-            <h4 class="date">2021-10-15</h4>
+            <h4 class="date">2021-11-30</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/weathercan/blob/master/vignettes/articles/use_with_tidyverse.Rmd"><code>vignettes/articles/use_with_tidyverse.Rmd</code></a></small>
       <div class="hidden name"><code>use_with_tidyverse.Rmd</code></div>
@@ -109,9 +109,9 @@
 <a href="#using-weathercan-to-load-in-data" class="anchor"></a>Using weathercan to load in data</h2>
 <p>Your first decision that you need to make when analyzing data from weather stations across canada is to determine for which stations you’d like to query from Environment and Climate Change Canada. In this example, to keep processing time low, we will query two stations with very long records that happen to be far apart. To make that choice we can use (tidyverse)[<a href="http://tidyverse.org/" class="uri">http://tidyverse.org/</a>] tools and the included <code><a href="../../reference/stations.html">stations()</a></code> function to access the data frame of stations in this package:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/stations.html">stations</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">station_id</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">707</span>, <span class="fl">4859</span>, <span class="fl">6693</span>,<span class="fl">5397</span>, <span class="fl">2315</span><span class="op">)</span>,
-         <span class="va">interval</span> <span class="op">==</span> <span class="st">"day"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<code class="sourceCode R"><span class="fu"><a href="../../reference/stations.html">stations</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">station_id</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">707</span>, <span class="fl">4859</span>, <span class="fl">6693</span>,<span class="fl">5397</span>, <span class="fl">2315</span><span class="op">)</span>,
+         <span class="va">interval</span> <span class="op">==</span> <span class="st">"day"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">prov</span>, <span class="va">station_name</span>, <span class="va">station_id</span>, <span class="va">start</span>, <span class="va">end</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 5 × 5
 ##   prov  station_name     station_id start   end
@@ -125,8 +125,8 @@
 <p>The following will take quite some time to download as it is downloading over 100 years of daily data for 5 stations.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pancan_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/weather_dl.html">weather_dl</a></span><span class="op">(</span>station_ids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">707</span>, <span class="fl">4859</span>, <span class="fl">6693</span>,<span class="fl">5397</span>, <span class="fl">2315</span><span class="op">)</span>, 
-                        interval <span class="op">=</span> <span class="st">"day"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">&gt;=</span> <span class="fl">1920</span><span class="op">)</span> <span class="op">%&gt;%</span>
+                        interval <span class="op">=</span> <span class="st">"day"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">&gt;=</span> <span class="fl">1920</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">station_name</span>, <span class="va">station_id</span>, <span class="va">prov</span>, <span class="va">lat</span>, <span class="va">lon</span>, <span class="va">elev</span>, <span class="va">climate_id</span>, <span class="va">WMO_id</span>, <span class="va">TC_id</span>, <span class="va">mean_temp</span>, <span class="va">date</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="plot-the-data" class="section level2">
@@ -136,8 +136,8 @@
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">pancan_df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">mean_temp</span>, colour <span class="op">=</span> <span class="va">station_name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## Warning: Removed 28760 rows containing missing values (geom_point).</code></pre>
-<pre><code>## Warning: Removed 8947 row(s) containing missing values (geom_path).</code></pre>
+<pre><code>## Warning: Removed 28874 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: Removed 9032 row(s) containing missing values (geom_path).</code></pre>
 <p><img src="use_with_tidyverse_files/figure-html/raw_plt-1.png" width="960"></p>
 <p>This is quite a large dataset.</p>
 </div>
@@ -145,8 +145,8 @@
 <h2 class="hasAnchor">
 <a href="#creating-list-columns" class="anchor"></a>Creating list-columns</h2>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pancan_df_nest</span> <span class="op">&lt;-</span> <span class="va">pancan_df</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">station_name</span>, <span class="va">station_id</span>, <span class="va">prov</span>, <span class="va">lat</span>, <span class="va">lon</span>, <span class="va">elev</span>, <span class="va">climate_id</span>, <span class="va">WMO_id</span>, <span class="va">TC_id</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<code class="sourceCode R"><span class="va">pancan_df_nest</span> <span class="op">&lt;-</span> <span class="va">pancan_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">station_name</span>, <span class="va">station_id</span>, <span class="va">prov</span>, <span class="va">lat</span>, <span class="va">lon</span>, <span class="va">elev</span>, <span class="va">climate_id</span>, <span class="va">WMO_id</span>, <span class="va">TC_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">pancan_df_nest</span></code></pre></div>
 <pre><code>## # A tibble: 5 × 10
@@ -170,7 +170,7 @@
 <span class="op">}</span></code></pre></div>
 <p>Run the model with the existing data</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pancan_df_nest</span> <span class="op">&lt;-</span> <span class="va">pancan_df_nest</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">pancan_df_nest</span> <span class="op">&lt;-</span> <span class="va">pancan_df_nest</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>model <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">clim_model</span><span class="op">)</span><span class="op">)</span>
 <span class="va">pancan_df_nest</span></code></pre></div>
 <pre><code>## # A tibble: 5 × 11
@@ -186,7 +186,7 @@
 ## # … with 1 more variable: model &lt;list&gt;</code></pre>
 <p>Then add the residuals to the model</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pancan_df_nest</span> <span class="op">&lt;-</span> <span class="va">pancan_df_nest</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">pancan_df_nest</span> <span class="op">&lt;-</span> <span class="va">pancan_df_nest</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>model <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">clim_model</span><span class="op">)</span>,
          resids <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">map2</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">model</span>, <span class="va">add_residuals</span><span class="op">)</span><span class="op">)</span> 
 <span class="va">pancan_df_nest</span></code></pre></div>
@@ -213,7 +213,7 @@
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">resids</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">pancan_df_nest</span>, <span class="va">resids</span><span class="op">)</span>
 <span class="va">resids</span></code></pre></div>
-<pre><code>## # A tibble: 185,890 × 14
+<pre><code>## # A tibble: 186,120 × 14
 ## # Groups:   station_name, station_id, prov, lat, lon, elev, climate_id, WMO_id,
 ## #   TC_id [5]
 ##    station_name station_id prov    lat   lon  elev climate_id WMO_id TC_id data 
@@ -228,7 +228,7 @@
 ##  8 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
 ##  9 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
 ## 10 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
-## # … with 185,880 more rows, and 4 more variables: model &lt;list&gt;,
+## # … with 186,110 more rows, and 4 more variables: model &lt;list&gt;,
 ## #   mean_temp &lt;dbl&gt;, date &lt;date&gt;, resid &lt;dbl&gt;</code></pre>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">resids</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">resid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
@@ -236,20 +236,22 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">station_name</span>, ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
-<pre><code>## Warning: Removed 8947 row(s) containing missing values (geom_path).</code></pre>
-<pre><code>## Warning: Removed 28760 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: Removed 9032 row(s) containing missing values (geom_path).</code></pre>
+<pre><code>## Warning: Removed 28874 rows containing missing values (geom_point).</code></pre>
 <p><img src="use_with_tidyverse_files/figure-html/resid-1.png" width="960"></p>
 </div>
 <div id="using-broom" class="section level3">
 <h3 class="hasAnchor">
 <a href="#using-broom" class="anchor"></a>Using broom</h3>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">glance_df</span> <span class="op">&lt;-</span> <span class="va">pancan_df_nest</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>glance <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">model</span>, <span class="fu">broom</span><span class="fu">::</span><span class="va"><a href="https://generics.r-lib.org/reference/glance.html">glance</a></span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">glance</span>, .drop <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<code class="sourceCode R"><span class="va">glance_df</span> <span class="op">&lt;-</span> <span class="va">pancan_df_nest</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>glance <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">model</span>, <span class="fu">broom</span><span class="fu">::</span><span class="va"><a href="https://generics.r-lib.org/reference/glance.html">glance</a></span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">glance</span>, .drop <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">station_name</span>, <span class="va">prov</span>, <span class="va">r.squared</span>, <span class="va">p.value</span>, <span class="va">AIC</span><span class="op">)</span></code></pre></div>
 <pre><code>## Warning: The `.drop` argument of `unnest()` is deprecated as of tidyr 1.0.0.
-## All list-columns are now preserved.</code></pre>
+## All list-columns are now preserved.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
 <table class="table">
 <colgroup>
 <col width="10%">
@@ -304,9 +306,9 @@
 <td align="left">NA</td>
 <td align="left">BELLEVILLE</td>
 <td align="left">ON</td>
-<td align="right">0.0032877</td>
+<td align="right">0.0033078</td>
 <td align="right">0.0000000</td>
-<td align="right">271022.2</td>
+<td align="right">271354.0</td>
 </tr>
 <tr class="odd">
 <td align="right">6693</td>
@@ -332,9 +334,9 @@
 <td align="left">WQH</td>
 <td align="left">LENNOXVILLE</td>
 <td align="left">QC</td>
-<td align="right">0.0014163</td>
+<td align="right">0.0013902</td>
 <td align="right">0.0000000</td>
-<td align="right">284795.7</td>
+<td align="right">285118.3</td>
 </tr>
 <tr class="odd">
 <td align="right">2315</td>
@@ -346,9 +348,9 @@
 <td align="left">NA</td>
 <td align="left">TABER</td>
 <td align="left">AB</td>
-<td align="right">0.0004140</td>
-<td align="right">0.0017126</td>
-<td align="right">183658.3</td>
+<td align="right">0.0003935</td>
+<td align="right">0.0022225</td>
+<td align="right">183811.0</td>
 </tr>
 </tbody>
 </table>
@@ -358,12 +360,12 @@
 <h2 class="hasAnchor">
 <a href="#looking-at-the-predictions" class="anchor"></a>Looking at the predictions</h2>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">preds</span> <span class="op">&lt;-</span> <span class="va">pancan_df_nest</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">preds</span> <span class="op">&lt;-</span> <span class="va">pancan_df_nest</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>model <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">clim_model</span><span class="op">)</span>,
-         preds <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">map2</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">model</span>, <span class="va">add_predictions</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+         preds <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">map2</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">model</span>, <span class="va">add_predictions</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">preds</span><span class="op">)</span>
 <span class="va">preds</span></code></pre></div>
-<pre><code>## # A tibble: 185,890 × 15
+<pre><code>## # A tibble: 186,120 × 15
 ## # Groups:   station_name, station_id, prov, lat, lon, elev, climate_id, WMO_id,
 ## #   TC_id [5]
 ##    station_name station_id prov    lat   lon  elev climate_id WMO_id TC_id data 
@@ -378,14 +380,14 @@
 ##  8 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
 ##  9 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
 ## 10 AGASSIZ CDA         707 BC     49.2 -122.    15 1100120    &lt;NA&gt;   &lt;NA&gt;  &lt;tib…
-## # … with 185,880 more rows, and 5 more variables: model &lt;list&gt;, resids &lt;list&gt;,
+## # … with 186,110 more rows, and 5 more variables: model &lt;list&gt;, resids &lt;list&gt;,
 ## #   mean_temp &lt;dbl&gt;, date &lt;date&gt;, pred &lt;dbl&gt;</code></pre>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">preds</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">mean_temp</span>, colour <span class="op">=</span> <span class="va">station_name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">pred</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">station_name</span>, scales <span class="op">=</span> <span class="st">"free_y"</span>, ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
-<pre><code>## Warning: Removed 28760 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: Removed 28874 rows containing missing values (geom_point).</code></pre>
 <p><img src="use_with_tidyverse_files/figure-html/pred-1.png" width="960"></p>
 </div>
   </div>
