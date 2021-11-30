@@ -148,7 +148,7 @@ stations_meta()
     ## [1] "2021-10-31 23:34:00 UTC"
     ## 
     ## $weathercan_modified
-    ## [1] "2021-11-22"
+    ## [1] "2021-11-30"
 
 **Note:** For reproducibility, if you are using the stations list to
 gather your data, it can be a good idea to take note of the ECCC date of

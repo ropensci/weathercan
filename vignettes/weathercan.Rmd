@@ -1,7 +1,7 @@
 ---
 title: "Getting Started"
 author: "Steffi LaZerte"
-date: "2021-11-24"
+date: "2021-11-30"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Getting Started}
@@ -199,7 +199,7 @@ stations_meta()
 ## [1] "2021-10-31 23:34:00 UTC"
 ## 
 ## $weathercan_modified
-## [1] "2021-11-22"
+## [1] "2021-11-30"
 ```
 
 
@@ -210,6 +210,15 @@ Once you have your `station_id`(s) you can download weather data:
 
 ```r
 kam <- weather_dl(station_ids = 51423, start = "2016-01-01", end = "2016-02-15")
+```
+
+```
+## As of weathercan v0.3.0 time display is either local time or UTC
+## See Details under ?weather_dl for more information.
+## This message is shown once per session
+```
+
+```r
 kam
 ```
 

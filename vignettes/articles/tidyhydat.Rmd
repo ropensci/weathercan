@@ -1,7 +1,7 @@
 ---
 title: "weathercan and tidyhydat"
 author: "Steffi LaZerte"
-date: "2021-11-24"
+date: "2021-11-30"
 output: rmarkdown::html_document
 ---
 
@@ -69,10 +69,11 @@ stations_search("brandon", interval = "day",
 
 ```
 ## # A tibble: 2 × 16
-##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_2010 normals_1971_2000
-##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
-## 1 MB    BRANDON A         50821 5010481     71140 YBR    49.9 -100.  409. Etc/GMT+6 day       2012  2021 FALSE   FALSE             FALSE            
-## 2 MB    BRANDON RCS       49909 5010490     71136 PBO    49.9 -100.  409. Etc/GMT+6 day       2012  2021 FALSE   FALSE             FALSE
+##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals
+##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>  
+## 1 MB    BRANDON A         50821 5010481     71140 YBR    49.9 -100.  409. Etc/GMT+6 day       2012  2021 FALSE  
+## 2 MB    BRANDON RCS       49909 5010490     71136 PBO    49.9 -100.  409. Etc/GMT+6 day       2012  2021 FALSE  
+## # … with 2 more variables: normals_1981_2010 <lgl>, normals_1971_2000 <lgl>
 ```
 
 In this case "A" is for "Airport", let's go with that!
