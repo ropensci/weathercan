@@ -66,6 +66,8 @@ navbar:
       href: reference/index.html
     - text: "Articles"
       href: articles/index.html
+    - text: "Changelog"
+      href: news/index.html
   right:
     - icon: fa-github fa-lg
       href: https://github.com/ropensci/weathercan
