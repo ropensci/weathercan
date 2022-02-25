@@ -144,7 +144,7 @@ codemetar::write_codemeta()
 # pkgdown::build_reference()
 #pkgdown::build_articles(lazy = FALSE)
 
-pkgdown::build_site()
+pkgdown::build_site(lazy = TRUE)
 
 
 ## Push to github
