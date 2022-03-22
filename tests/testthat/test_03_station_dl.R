@@ -58,7 +58,7 @@ test_that("stations_dl() runs and updates data", {
 
   #vcr::use_cassette("stations_dl_good", {  # Don't use vcr until deal with url redirects
   #})
-  stub(stations_dl_internal, "askYesNo", TRUE)
+  stub(stations_dl_internal, "utils::askYesNo", TRUE)
   stub(stations_dl_internal, "stations_file", file.path("stations.rds"))
   expect_message(stations_dl_internal(internal = FALSE), "Stations data saved")
   expect_type(s <- readRDS("stations.rds"), "list") %>%
