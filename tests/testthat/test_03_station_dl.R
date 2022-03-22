@@ -91,12 +91,6 @@ test_that("stations() /stations_meta() return data", {
 
   expect_named(stations_meta(), c("ECCC_modified", "weathercan_modified"))
 
-  mockery::stub(stations, "stations_meta",
-                list(weathercan_modified = as.Date("2000-01-01")))
-  expect_message(stations(),
-                 "The stations data frame hasn't been updated in over 4 weeks.")
-
-
   expect_length(s, 16)
   expect_lt(length(data.frame(s)[is.na(data.frame(s))]),
             length(data.frame(s)[!is.na(data.frame(s))]))
