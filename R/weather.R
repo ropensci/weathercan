@@ -421,7 +421,7 @@ get_html <- function(station_id,
 
   if(format == "csv" & interval != "month") {
     q['Year'] <- format(date, "%Y")
-    q['Month'] = format(date, "%m")
+    q['Month'] <- format(date, "%m")
   }
 
   get_check(url = getOption("weathercan.urls.weather"),

@@ -225,7 +225,7 @@ data_extract <- function(n, climate_id) {
                         dplyr::filter(nn, .data$type != "sub") %>%
                           dplyr::select("variable", "subgroup"),
                         by = "variable")
-  for(i in 1:nrow(n)) {
+  for(i in seq_len(nrow(n))) {
     if(is.na(n[["subgroup"]][i])) n[["subgroup"]][i] <- n[["subgroup"]][i-1]
   }
 

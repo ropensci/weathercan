@@ -3,31 +3,9 @@
 version <- "0.6.2"
 #usethis::use_release_issue(version = v)
 
-# Check existing errors
-# https://cran.rstudio.org/web/checks/check_results_weathercan.html
 
-hist <- cchecks::cch_pkgs_history("weathercan")$data$history
-dplyr::select(hist, date_updated, "summary")
-
-dplyr::bind_cols(dplyr::select(hist, date_updated, checks),
-                 hist$summary,
-                 hist$check_details) %>%
-  dplyr::filter(stringr::str_detect(date_updated, "2021-05-18")) %>%
-  tidyr::unnest(checks) %>%
-  dplyr::filter(status %in% c("WARN", "ERROR")) %>%
-  dplyr::select(-version, -tinstall, -tcheck, -ttotal, -any,
-                -ok, -note, -warn, -error, -fail) %>%
-  tidyr::unnest(details) %>%
-  dplyr::pull(output) %>%
-  unique()
-
-cchecks::cch_pkgs("weathercan")$data$checks %>%
-  dplyr::filter(!status %in% c("OK", "NOTE"))
-
-cchecks::cch_pkgs("weathercan")$data$check_details$details %>%
-  dplyr::mutate(output = glue::glue("{flavors}\n{output}\n\n")) %>%
-  dplyr::pull(output)
-
+# Good practices --------------------
+goodpractice::gp()
 
 
 ## Update dependencies
@@ -170,3 +148,33 @@ usethis::use_github_release()
 
 # Prep for next
 usethis::use_dev_version()
+
+
+
+
+# Appendix --------------
+
+# Check existing errors
+# https://cran.rstudio.org/web/checks/check_results_weathercan.html
+
+hist <- cchecks::cch_pkgs_history("weathercan")$data$history
+dplyr::select(hist, date_updated, "summary")
+
+dplyr::bind_cols(dplyr::select(hist, date_updated, checks),
+                 hist$summary,
+                 hist$check_details) %>%
+  dplyr::filter(stringr::str_detect(date_updated, "2021-05-18")) %>%
+  tidyr::unnest(checks) %>%
+  dplyr::filter(status %in% c("WARN", "ERROR")) %>%
+  dplyr::select(-version, -tinstall, -tcheck, -ttotal, -any,
+                -ok, -note, -warn, -error, -fail) %>%
+  tidyr::unnest(details) %>%
+  dplyr::pull(output) %>%
+  unique()
+
+cchecks::cch_pkgs("weathercan")$data$checks %>%
+  dplyr::filter(!status %in% c("OK", "NOTE"))
+
+cchecks::cch_pkgs("weathercan")$data$check_details$details %>%
+  dplyr::mutate(output = glue::glue("{flavors}\n{output}\n\n")) %>%
+  dplyr::pull(output)
