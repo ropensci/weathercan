@@ -294,16 +294,8 @@ weather_dl <- function(station_ids,
 
   if(nrow(w_all) > 0) {
     ## Trim to available data provided it is formatted
-    if(trim && format && nrow(w_all) > 0){
-      if(verbose) message("Trimming missing values before and after")
-      temp <-  dplyr::select(w_all,
-                             -tidyselect::any_of(c(names(m_names), "date", "time",
-                                                   "year", "month",
-                                                   "day", "hour", "qual")))
-      temp <- w_all$date[which(rowSums(is.na(temp) | temp == "") != ncol(temp))]
 
-      w_all <- w_all[w_all$date >= min(temp) & w_all$date <= max(temp), ]
-    }
+    w_all <- weather_trim(w_all, format, verbose)
 
     m <- names(m_names)[names(m_names) %in% names(w_all)]
 
@@ -480,6 +472,21 @@ weather_raw <- function(html, skip = 0,
   w
 }
 
+
+weather_trim <- function(w, format, verbose) {
+
+  if(format && nrow(w) > 0) {
+    if(verbose) message("Trimming missing values before and after")
+    temp <-  dplyr::select(w,
+                           -tidyselect::any_of(c(names(m_names), "date", "time",
+                                                 "year", "month",
+                                                 "day", "hour", "qual")))
+    temp <- w$date[which(rowSums(is.na(temp) | temp == "") != ncol(temp))]
+
+    w <- w[w$date >= min(temp) & w$date <= max(temp), ]
+  }
+  w
+}
 
 weather_format <- function(w, stn, meta, interval = "hour", s.start, s.end,
                            string_as = "NA", time_disp = NULL, quiet = FALSE) {
