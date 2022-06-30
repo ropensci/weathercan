@@ -236,9 +236,10 @@ stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
   # Calculate Timezones
   station_tz <- dplyr::select(s, "prov", "station_id", "lat", "lon") %>%
     dplyr::distinct() %>%
-    dplyr::mutate(tz = lutz::tz_lookup_coords(.data$lat, .data$lon,
-                                              method = "accurate"),
-                  tz = purrr::map_chr(.data$tz, ~tz_offset(.x)))
+    dplyr::mutate(
+      tz = lutz::tz_lookup_coords(.data$lat, .data$lon, method = "accurate"),
+      tz = purrr::map_chr(.data$tz, ~tz_offset(.x)),
+      tz = dplyr::if_else(is.na(.data$lat) | is.na(.data$lon), NA_character_, .data$tz))
 
   s <- s %>%
     dplyr::left_join(station_tz, by = c("station_id", "prov", "lat", "lon")) %>%
