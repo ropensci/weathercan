@@ -1,4 +1,6 @@
 # weathercan dev
+- Internal re-arranging and clean up
+- Stations without lat/lon now have NA timezone
 
 # weathercan 0.6.2
 

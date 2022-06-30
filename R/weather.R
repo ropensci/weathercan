@@ -295,7 +295,7 @@ weather_dl <- function(station_ids,
   if(nrow(w_all) > 0) {
     ## Trim to available data provided it is formatted
 
-    w_all <- weather_trim(w_all, format, verbose)
+    if(trim) w_all <- weather_trim(w_all, format, verbose)
 
     m <- names(m_names)[names(m_names) %in% names(w_all)]
 
