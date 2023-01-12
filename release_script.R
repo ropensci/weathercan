@@ -129,19 +129,19 @@ pkgdown::build_site(lazy = TRUE)
 ## Check GitHub Actions
 
 ## Check Reverse Dependencies (are there any?)
-tools::dependsOnPkgs("weathercan")
+#tools::dependsOnPkgs("weathercan")
 
 # Check RavenR which suggests weathercan
-weathercan::kamloops_day %>%
-  RavenR::rvn_rvt_write_met(metdata = .,
-                            filenames = file.path(tempdir(), "rvn_rvt_metfile.rvt"),
-                            filename_stndata = file.path(tempdir(), "met_stndata.rvt"))
+#weathercan::kamloops_day %>%
+#  RavenR::rvn_rvt_write_met(metdata = .,
+#                            filenames = file.path(tempdir(), "rvn_rvt_metfile.rvt"),
+#                            filename_stndata = file.path(tempdir(), "met_stndata.rvt"))
 # Warnings about NA okay
 
 ## Push to github
 
 ## Actually release it (SEND TO CRAN!)
-devtools::release()
+#devtools::release()
 
 ## Once it is released (Accepted by CRAN) create signed release on github
 usethis::use_github_release()
