@@ -1,7 +1,7 @@
 ---
 title: "Getting Started"
 author: "Steffi LaZerte"
-date: "2021-11-30"
+date: "2023-01-12"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Getting Started}
@@ -46,7 +46,7 @@ glimpse(stations())
 ```
 
 ```
-## Rows: 26,337
+## Rows: 26,382
 ## Columns: 16
 ## $ prov              <chr> "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", …
 ## $ station_name      <chr> "DAYSLAND", "DAYSLAND", "DAYSLAND", "EDMONTON CORONATION", "EDMONTON CORONATION", "EDMONTON CORONATION", "FLEET", "FLEET", "FLEET", …
@@ -82,11 +82,11 @@ stations_search("Kamloops")
 ##  3 BC    KAMLOOPS A                 1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 day       1951  2013 TRUE    TRUE              TRUE             
 ##  4 BC    KAMLOOPS A                 1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE             
 ##  5 BC    KAMLOOPS A                 1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 month     1951  2013 TRUE    TRUE              TRUE             
-##  6 BC    KAMLOOPS A                51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 day       2013  2021 FALSE   FALSE             FALSE            
-##  7 BC    KAMLOOPS A                51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2021 FALSE   FALSE             FALSE            
+##  6 BC    KAMLOOPS A                51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 day       2013  2022 FALSE   FALSE             FALSE            
+##  7 BC    KAMLOOPS A                51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2022 FALSE   FALSE             FALSE            
 ##  8 BC    KAMLOOPS AFTON MINES       1276 1163790        NA <NA>   50.7 -120.  701  Etc/GMT+8 day       1977  1993 FALSE   FALSE             TRUE             
 ##  9 BC    KAMLOOPS AFTON MINES       1276 1163790        NA <NA>   50.7 -120.  701  Etc/GMT+8 month     1977  1993 FALSE   FALSE             TRUE             
-## 10 BC    KAMLOOPS AUT              42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 day       2006  2021 FALSE   FALSE             FALSE            
+## 10 BC    KAMLOOPS AUT              42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 day       2006  2022 FALSE   FALSE             FALSE            
 ## # … with 30 more rows
 ```
 
@@ -102,8 +102,8 @@ stations_search("Kamloops", interval = "hour")
 ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_2010 normals_1971_2000
 ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
 ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE             
-## 2 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2021 FALSE   FALSE             FALSE            
-## 3 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2021 FALSE   FALSE             FALSE
+## 2 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2022 FALSE   FALSE             FALSE            
+## 3 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2022 FALSE   FALSE             FALSE
 ```
 
 You can specify more than one interval:
@@ -120,9 +120,9 @@ stations_search("Kamloops", interval = c("hour", "month"))
 ##  1 BC    KAMLOOPS                      1274 1163779        NA <NA>   50.7 -120.  379. Etc/GMT+8 month     1878  1982 FALSE   FALSE             FALSE            
 ##  2 BC    KAMLOOPS A                    1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE             
 ##  3 BC    KAMLOOPS A                    1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 month     1951  2013 TRUE    TRUE              TRUE             
-##  4 BC    KAMLOOPS A                   51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2021 FALSE   FALSE             FALSE            
+##  4 BC    KAMLOOPS A                   51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2022 FALSE   FALSE             FALSE            
 ##  5 BC    KAMLOOPS AFTON MINES          1276 1163790        NA <NA>   50.7 -120.  701  Etc/GMT+8 month     1977  1993 FALSE   FALSE             TRUE             
-##  6 BC    KAMLOOPS AUT                 42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2021 FALSE   FALSE             FALSE            
+##  6 BC    KAMLOOPS AUT                 42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2022 FALSE   FALSE             FALSE            
 ##  7 BC    KAMLOOPS AUT                 42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 month     2006  2006 FALSE   FALSE             FALSE            
 ##  8 BC    KAMLOOPS CDA                  1277 1163810        NA <NA>   50.7 -120.  345  Etc/GMT+8 month     1949  1977 FALSE   FALSE             FALSE            
 ##  9 BC    KAMLOOPS CHERRY CREEK         1278 1163814        NA <NA>   50.7 -121.  556. Etc/GMT+8 month     1970  1974 FALSE   FALSE             FALSE            
@@ -143,8 +143,8 @@ stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour"
 ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_2010 normals_1971_2000 distance
 ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>                <dbl>
 ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE                  8.64
-## 2 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2021 FALSE   FALSE             FALSE                 8.64
-## 3 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2021 FALSE   FALSE             FALSE                 9.28
+## 2 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2022 FALSE   FALSE             FALSE                 8.64
+## 3 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2022 FALSE   FALSE             FALSE                 9.28
 ```
 
 We can also perform more complex searches using `filter()` function from the `dplyr` package
@@ -164,11 +164,11 @@ BCstations
 
 ```
 ## # A tibble: 3 × 16
-##   prov  station_name                station_id climate_id WMO_id TC_id   lat   lon  elev tz      interval start   end normals normals_1981_2010 normals_1971_20…
-##   <chr> <chr>                            <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>   <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>           
-## 1 BC    CRESTON CAMPBELL SCIENTIFIC       6838 114B1F0     71770 WJR    49.1 -116.  641. Etc/GM… hour      1994  2021 FALSE   FALSE             FALSE           
-## 2 BC    NELSON CS                         6839 1145M29     71776 WNM    49.5 -117.  535. Etc/GM… hour      1994  2021 FALSE   FALSE             FALSE           
-## 3 BC    WARFIELD RCS                     31067 1148705     71401 XWF    49.1 -118.  567. Etc/GM… hour      2001  2021 FALSE   FALSE             FALSE
+##   prov  station_name                station_id climate_id WMO_id TC_id   lat   lon  elev tz       interval start   end normals normals_1981_20… normals_1971_20…
+##   <chr> <chr>                            <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>    <chr>    <dbl> <dbl> <lgl>   <lgl>            <lgl>           
+## 1 BC    CRESTON CAMPBELL SCIENTIFIC       6838 114B1F0     71770 WJR    49.1 -116.  641. Etc/GMT… hour      1994  2022 FALSE   FALSE            FALSE           
+## 2 BC    NELSON CS                         6839 1145M29     71776 WNM    49.5 -117.  535. Etc/GMT… hour      1994  2022 FALSE   FALSE            FALSE           
+## 3 BC    WARFIELD RCS                     31067 1148705     71401 XWF    49.1 -118.  567. Etc/GMT… hour      2001  2022 FALSE   FALSE            FALSE
 ```
 
 ```r
@@ -196,10 +196,10 @@ stations_meta()
 
 ```
 ## $ECCC_modified
-## [1] "2021-10-31 23:34:00 UTC"
+## [1] "2022-12-28 23:30:00 UTC"
 ## 
 ## $weathercan_modified
-## [1] "2021-11-30"
+## [1] "2023-01-12"
 ```
 
 
@@ -280,7 +280,7 @@ ggplot(data = kam.pg, aes(x = time, y = temp, group = station_name, colour = sta
   theme_minimal()
 ```
 
-<img src="unnamed-chunk-12-1.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" style="display: block; margin: auto;" />
+<img src="figures/weathercan-unnamed-chunk-12-1.png" alt="plot of chunk unnamed-chunk-12" style="display: block; margin: auto;" />
 
 Or you can use the vector created above:
 
@@ -362,21 +362,21 @@ unnest(n, normals)
 
 ```
 ## # A tibble: 13 × 203
-##    prov  station_name       climate_id normals_years meets_wmo period temp_daily_avera… temp_daily_averag… temp_sd temp_sd_code temp_daily_max temp_daily_max_c…
-##    <chr> <chr>              <chr>      <chr>         <lgl>     <fct>              <dbl> <chr>                <dbl> <chr>                 <dbl> <chr>            
-##  1 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Jan                -16.4 A                      4.1 A                     -11.3 A                
-##  2 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Feb                -13.2 A                      4.2 A                      -8.1 A                
-##  3 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Mar                 -5.8 A                      3.1 A                      -0.8 A                
-##  4 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Apr                  4.4 A                      2.7 A                      10.9 A                
-##  5 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      May                 11.6 A                      2.1 A                      18.6 A                
-##  6 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Jun                 17   A                      2   A                      23.2 A                
-##  7 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Jul                 19.7 A                      1.4 A                      25.9 A                
-##  8 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Aug                 18.8 A                      1.9 A                      25.4 A                
-##  9 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Sep                 12.7 A                      1.3 A                      19   A                
-## 10 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Oct                  5   A                      1.8 A                      10.5 A                
-## 11 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Nov                 -4.9 A                      3.6 A                      -0.5 A                
-## 12 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Dec                -13.2 A                      4.4 A                      -8.5 A                
-## 13 MB    WINNIPEG RICHARDS… 5023222    1981-2010     TRUE      Year                 3   A                      1.2 A                       8.7 A                
+##    prov  station_name           climate_id normals_years meets_wmo period temp_daily_aver… temp_daily_aver… temp_sd temp_sd_code temp_daily_max temp_daily_max_…
+##    <chr> <chr>                  <chr>      <chr>         <lgl>     <fct>             <dbl> <chr>              <dbl> <chr>                 <dbl> <chr>           
+##  1 MB    WINNIPEG RICHARDSON I… 5023222    1981-2010     TRUE      Jan               -16.4 A                    4.1 A                     -11.3 A               
+##  2 MB    WINNIPEG RICHARDSON I… 5023222    1981-2010     TRUE      Feb               -13.2 A                    4.2 A                      -8.1 A               
+##  3 MB    WINNIPEG RICHARDSON I… 5023222    1981-2010     TRUE      Mar                -5.8 A                    3.1 A                      -0.8 A               
+##  4 MB    WINNIPEG RICHARDSON I… 5023222    1981-2010     TRUE      Apr                 4.4 A                    2.7 A                      10.9 A               
+##  5 MB    WINNIPEG RICHARDSON I… 5023222    1981-2010     TRUE      May                11.6 A                    2.1 A                      18.6 A               
+##  6 MB    WINNIPEG RICHARDSON I… 5023222    1981-2010     TRUE      Jun                17   A                    2   A                      23.2 A               
+##  7 MB    WINNIPEG RICHARDSON I… 5023222    1981-2010     TRUE      Jul                19.7 A                    1.4 A                      25.9 A               
+##  8 MB    WINNIPEG RICHARDSON I… 5023222    1981-2010     TRUE      Aug                18.8 A                    1.9 A                      25.4 A               
+##  9 MB    WINNIPEG RICHARDSON I… 5023222    1981-2010     TRUE      Sep                12.7 A                    1.3 A                      19   A               
+## 10 MB    WINNIPEG RICHARDSON I… 5023222    1981-2010     TRUE      Oct                 5   A                    1.8 A                      10.5 A               
+## 11 MB    WINNIPEG RICHARDSON I… 5023222    1981-2010     TRUE      Nov                -4.9 A                    3.6 A                      -0.5 A               
+## 12 MB    WINNIPEG RICHARDSON I… 5023222    1981-2010     TRUE      Dec               -13.2 A                    4.4 A                      -8.5 A               
+## 13 MB    WINNIPEG RICHARDSON I… 5023222    1981-2010     TRUE      Year                3   A                    1.2 A                       8.7 A               
 ## # … with 191 more variables: temp_daily_min <dbl>, temp_daily_min_code <chr>, temp_extreme_max <dbl>, temp_extreme_max_code <chr>,
 ## #   temp_extreme_max_date <date>, temp_extreme_max_date_code <chr>, temp_extreme_min <dbl>, temp_extreme_min_code <chr>, temp_extreme_min_date <date>,
 ## #   temp_extreme_min_date_code <chr>, rain <dbl>, rain_code <chr>, snow <dbl>, snow_code <chr>, precip <dbl>, precip_code <chr>, snow_mean_depth <dbl>,
@@ -392,15 +392,15 @@ unnest(n, frost)
 
 ```
 ## # A tibble: 7 × 14
-##   prov  station_name     climate_id normals_years meets_wmo normals   frost_code date_first_fall_… date_last_spring… length_frost_fr… prob  prob_first_fall_tem…
-##   <chr> <chr>            <chr>      <chr>         <lgl>     <list>    <chr>                  <dbl>             <dbl>            <dbl> <chr>                <dbl>
-## 1 MB    WINNIPEG RICHAR… 5023222    1981-2010     TRUE      <tibble … A                        265               143              121 10%                    255
-## 2 MB    WINNIPEG RICHAR… 5023222    1981-2010     TRUE      <tibble … A                        265               143              121 25%                    259
-## 3 MB    WINNIPEG RICHAR… 5023222    1981-2010     TRUE      <tibble … A                        265               143              121 33%                    261
-## 4 MB    WINNIPEG RICHAR… 5023222    1981-2010     TRUE      <tibble … A                        265               143              121 50%                    265
-## 5 MB    WINNIPEG RICHAR… 5023222    1981-2010     TRUE      <tibble … A                        265               143              121 66%                    268
-## 6 MB    WINNIPEG RICHAR… 5023222    1981-2010     TRUE      <tibble … A                        265               143              121 75%                    270
-## 7 MB    WINNIPEG RICHAR… 5023222    1981-2010     TRUE      <tibble … A                        265               143              121 90%                    276
+##   prov  station_name            climate_id normals_years meets_wmo normals  frost_code date_first_fall… date_last_sprin… length_frost_fr… prob  prob_first_fall…
+##   <chr> <chr>                   <chr>      <chr>         <lgl>     <list>   <chr>                 <dbl>            <dbl>            <dbl> <chr>            <dbl>
+## 1 MB    WINNIPEG RICHARDSON IN… 5023222    1981-2010     TRUE      <tibble> A                       265              143              121 10%                255
+## 2 MB    WINNIPEG RICHARDSON IN… 5023222    1981-2010     TRUE      <tibble> A                       265              143              121 25%                259
+## 3 MB    WINNIPEG RICHARDSON IN… 5023222    1981-2010     TRUE      <tibble> A                       265              143              121 33%                261
+## 4 MB    WINNIPEG RICHARDSON IN… 5023222    1981-2010     TRUE      <tibble> A                       265              143              121 50%                265
+## 5 MB    WINNIPEG RICHARDSON IN… 5023222    1981-2010     TRUE      <tibble> A                       265              143              121 66%                268
+## 6 MB    WINNIPEG RICHARDSON IN… 5023222    1981-2010     TRUE      <tibble> A                       265              143              121 75%                270
+## 7 MB    WINNIPEG RICHARDSON IN… 5023222    1981-2010     TRUE      <tibble> A                       265              143              121 90%                276
 ## # … with 2 more variables: prob_length_frost_free <dbl>, prob_last_spring_temp_below_0_on_date <dbl>
 ```
 
@@ -415,21 +415,21 @@ unnest(n, normals)
 
 ```
 ## # A tibble: 13 × 229
-##    prov  station_name       climate_id normals_years meets_wmo period temp_daily_avera… temp_daily_averag… temp_sd temp_sd_code temp_daily_max temp_daily_max_c…
-##    <chr> <chr>              <chr>      <chr>         <lgl>     <fct>              <dbl> <chr>                <dbl> <chr>                 <dbl> <chr>            
-##  1 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Jan                -17.8 A                      3.9 A                     -12.7 A                
-##  2 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Feb                -13.6 A                      4.2 A                      -8.5 A                
-##  3 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Mar                 -6.1 A                      3.5 A                      -1.1 A                
-##  4 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Apr                  4   A                      2.7 A                      10.3 A                
-##  5 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      May                 12   A                      2.5 A                      19.2 A                
-##  6 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Jun                 17   A                      1.8 A                      23.3 A                
-##  7 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Jul                 19.5 A                      1.5 A                      25.8 A                
-##  8 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Aug                 18.5 A                      1.8 A                      25   A                
-##  9 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Sep                 12.3 A                      1.4 A                      18.6 A                
-## 10 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Oct                  5.3 A                      1.6 A                      10.8 A                
-## 11 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Nov                 -5.3 A                      3.3 A                      -0.9 A                
-## 12 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Dec                -14.4 A                      4.2 A                      -9.7 A                
-## 13 MB    WINNIPEG RICHARDS… 5023222    1971-2000     TRUE      Year                 2.6 A                      1.3 A                       8.3 A                
+##    prov  station_name           climate_id normals_years meets_wmo period temp_daily_aver… temp_daily_aver… temp_sd temp_sd_code temp_daily_max temp_daily_max_…
+##    <chr> <chr>                  <chr>      <chr>         <lgl>     <fct>             <dbl> <chr>              <dbl> <chr>                 <dbl> <chr>           
+##  1 MB    WINNIPEG RICHARDSON I… 5023222    1971-2000     TRUE      Jan               -17.8 A                    3.9 A                     -12.7 A               
+##  2 MB    WINNIPEG RICHARDSON I… 5023222    1971-2000     TRUE      Feb               -13.6 A                    4.2 A                      -8.5 A               
+##  3 MB    WINNIPEG RICHARDSON I… 5023222    1971-2000     TRUE      Mar                -6.1 A                    3.5 A                      -1.1 A               
+##  4 MB    WINNIPEG RICHARDSON I… 5023222    1971-2000     TRUE      Apr                 4   A                    2.7 A                      10.3 A               
+##  5 MB    WINNIPEG RICHARDSON I… 5023222    1971-2000     TRUE      May                12   A                    2.5 A                      19.2 A               
+##  6 MB    WINNIPEG RICHARDSON I… 5023222    1971-2000     TRUE      Jun                17   A                    1.8 A                      23.3 A               
+##  7 MB    WINNIPEG RICHARDSON I… 5023222    1971-2000     TRUE      Jul                19.5 A                    1.5 A                      25.8 A               
+##  8 MB    WINNIPEG RICHARDSON I… 5023222    1971-2000     TRUE      Aug                18.5 A                    1.8 A                      25   A               
+##  9 MB    WINNIPEG RICHARDSON I… 5023222    1971-2000     TRUE      Sep                12.3 A                    1.4 A                      18.6 A               
+## 10 MB    WINNIPEG RICHARDSON I… 5023222    1971-2000     TRUE      Oct                 5.3 A                    1.6 A                      10.8 A               
+## 11 MB    WINNIPEG RICHARDSON I… 5023222    1971-2000     TRUE      Nov                -5.3 A                    3.3 A                      -0.9 A               
+## 12 MB    WINNIPEG RICHARDSON I… 5023222    1971-2000     TRUE      Dec               -14.4 A                    4.2 A                      -9.7 A               
+## 13 MB    WINNIPEG RICHARDSON I… 5023222    1971-2000     TRUE      Year                2.6 A                    1.3 A                       8.3 A               
 ## # … with 217 more variables: temp_daily_min <dbl>, temp_daily_min_code <chr>, temp_extreme_max <dbl>, temp_extreme_max_code <chr>,
 ## #   temp_extreme_max_date <date>, temp_extreme_max_date_code <chr>, temp_extreme_min <dbl>, temp_extreme_min_code <chr>, temp_extreme_min_date <date>,
 ## #   temp_extreme_min_date_code <chr>, rain <dbl>, rain_code <chr>, snow <dbl>, snow_code <chr>, precip <dbl>, precip_code <chr>, snow_mean_depth <dbl>,

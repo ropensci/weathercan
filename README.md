@@ -74,7 +74,7 @@ head(stations())
 glimpse(stations())
 ```
 
-    ## Rows: 26,343
+    ## Rows: 26,382
     ## Columns: 16
     ## $ prov              <chr> "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", …
     ## $ station_name      <chr> "DAYSLAND", "DAYSLAND", "DAYSLAND", "EDMONTON CORONATION", "EDMONTON CORONATION", "EDMONTON CORONATION", "FLEET", "FLEET", "FLEET", …
@@ -104,8 +104,8 @@ stations_search("Kamloops", interval = "hour")
     ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_2010 normals_1971_2000
     ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
     ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE             
-    ## 2 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2021 FALSE   FALSE             FALSE            
-    ## 3 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2021 FALSE   FALSE             FALSE
+    ## 2 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2022 FALSE   FALSE             FALSE            
+    ## 3 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2022 FALSE   FALSE             FALSE
 
 Time frame must be one of “hour”, “day”, or “month”.
 
@@ -119,8 +119,8 @@ stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour"
     ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_2010 normals_1971_2000 distance
     ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>                <dbl>
     ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE                  8.64
-    ## 2 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2021 FALSE   FALSE             FALSE                 8.64
-    ## 3 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2021 FALSE   FALSE             FALSE                 9.28
+    ## 2 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2022 FALSE   FALSE             FALSE                 8.64
+    ## 3 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2022 FALSE   FALSE             FALSE                 9.28
 
 You can update this list of stations with
 
@@ -128,7 +128,11 @@ You can update this list of stations with
 stations_dl()
 ```
 
-    ## According to Environment Canada, Modified Date: 2021-11-30 23:34 UTC
+    ## According to Environment Canada, Modified Date: 2022-12-28 23:30 UTC
+
+    ## Environment Canada Disclaimers:
+    ## "Station Inventory Disclaimer: Please note that this inventory list is a snapshot of stations on our website as of the modified date, and may be subject to change without notice."
+    ## "Station ID Disclaimer: Station IDs are an internal index numbering system and may be subject to change without notice."
 
     ## Stations data saved...
     ## Use `stations()` to access most recent version and `stations_meta()` to see when this was last updated
@@ -140,10 +144,10 @@ stations_meta()
 ```
 
     ## $ECCC_modified
-    ## [1] "2021-11-30 23:34:00 UTC"
+    ## [1] "2022-12-28 23:30:00 UTC"
     ## 
     ## $weathercan_modified
-    ## [1] "2022-01-31"
+    ## [1] "2023-01-12"
 
 **Note:** For reproducibility, if you are using the stations list to
 gather your data, it can be a good idea to take note of the ECCC date of
@@ -246,18 +250,17 @@ Canada](http://open.canada.ca/en/open-government-licence-canada)).
 
 ## `weathercan` in the wild!
 
--   Browse [`weathercan` use cases](https://ropensci.org/usecases/) on
-    rOpenSci.org
--   Checkout the [`weathercan` Shiny
-    App](https://nickrongkp.shinyapps.io/WeatherCan/) by Nick Rong
-    (@nickyrong) and Nathan Smith (@WraySmith)
--   R package
-    [`RavenR`](https://github.com/rchlumsk/RavenR/tree/master/R) has
-    functions for converting ECCC data downloaded by `weathercan` to the
-    .rvt format for Raven.
--   R package [`meteoland`](https://github.com/emf-creaf/meteoland) has
-    functions for converting ECCC data downloaded by `weathercan` to the
-    format required for use in `meteoland`.
+- Browse [`weathercan` use cases](https://ropensci.org/usecases/) on
+  rOpenSci.org
+- Checkout the [`weathercan` Shiny
+  App](https://nickrongkp.shinyapps.io/WeatherCan/) by Nick Rong
+  (@nickyrong) and Nathan Smith (@WraySmith)
+- R package [`RavenR`](https://github.com/rchlumsk/RavenR/tree/master/R)
+  has functions for converting ECCC data downloaded by `weathercan` to
+  the .rvt format for Raven.
+- R package [`meteoland`](https://github.com/emf-creaf/meteoland) has
+  functions for converting ECCC data downloaded by `weathercan` to the
+  format required for use in `meteoland`.
 
 ## Similar packages
 
@@ -296,4 +299,4 @@ Please note that this project is released with a [Contributor Code of
 Conduct](https://ropensci.org/code-of-conduct/). By participating in
 this project you agree to abide by its terms.
 
-[![ropensci\_footer](http://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)
+[![ropensci_footer](http://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)

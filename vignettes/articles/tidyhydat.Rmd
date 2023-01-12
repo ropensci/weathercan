@@ -1,7 +1,7 @@
 ---
 title: "weathercan and tidyhydat"
 author: "Steffi LaZerte"
-date: "2021-11-30"
+date: "2023-01-12"
 output: rmarkdown::html_document
 ---
 
@@ -71,8 +71,8 @@ stations_search("brandon", interval = "day",
 ## # A tibble: 2 × 16
 ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals
 ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>  
-## 1 MB    BRANDON A         50821 5010481     71140 YBR    49.9 -100.  409. Etc/GMT+6 day       2012  2021 FALSE  
-## 2 MB    BRANDON RCS       49909 5010490     71136 PBO    49.9 -100.  409. Etc/GMT+6 day       2012  2021 FALSE  
+## 1 MB    BRANDON A         50821 5010481     71140 YBR    49.9 -100.  409. Etc/GMT+6 day       2012  2022 FALSE  
+## 2 MB    BRANDON RCS       49909 5010490     71136 PBO    49.9 -100.  409. Etc/GMT+6 day       2012  2022 FALSE  
 ## # … with 2 more variables: normals_1981_2010 <lgl>, normals_1971_2000 <lgl>
 ```
 
@@ -93,7 +93,7 @@ ggplot(data = rain, aes(x = date, y = total_rain)) +
   scale_y_continuous(name = "Total Rain (mm)", expand = c(0,0))
 ```
 
-<img src="unnamed-chunk-7-1.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" width="80%" style="display: block; margin: auto;" />
+<img src="figures/tidyhydat-unnamed-chunk-7-1.png" alt="plot of chunk unnamed-chunk-7" width="80%" style="display: block; margin: auto;" />
 
 Yikes! You can see why my downspout came off!
 
@@ -128,7 +128,7 @@ search_stn_name("brandon") %>%
 ```
 
 ```
-##   Queried from version of HYDAT released on 2021-10-19
+##   Queried from version of HYDAT released on 2022-01-17
 ##    Observations:                      2
 ##    Station(s) returned:               1
 ##    Stations requested but not returned: 
@@ -185,7 +185,7 @@ g <- ggplot() +
 g
 ```
 
-<img src="unnamed-chunk-12-1.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" width="80%" style="display: block; margin: auto;" />
+<img src="figures/tidyhydat-unnamed-chunk-12-1.png" alt="plot of chunk unnamed-chunk-12" width="80%" style="display: block; margin: auto;" />
 
 
 Interesting, looks like there's a bit of a lag between the rain event and the
@@ -209,7 +209,7 @@ g +
            label = glue("{d$dates[2] - d$dates[1]}-day delay"))
 ```
 
-<img src="unnamed-chunk-13-1.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" width="80%" style="display: block; margin: auto;" />
+<img src="figures/tidyhydat-unnamed-chunk-13-1.png" alt="plot of chunk unnamed-chunk-13" width="80%" style="display: block; margin: auto;" />
 
 We can expect a lag like this because much of the flow being captured by the Brandon HYDAT
 station is from precipitation in the upstream catchment area (not only from
@@ -234,7 +234,7 @@ g <- ggplot() +
 g
 ```
 
-<img src="unnamed-chunk-14-1.png" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" width="80%" style="display: block; margin: auto;" />
+<img src="figures/tidyhydat-unnamed-chunk-14-1.png" alt="plot of chunk unnamed-chunk-14" width="80%" style="display: block; margin: auto;" />
 
 Again there looks to be a lag, let's see if it's the same as before.
 
@@ -253,7 +253,7 @@ g +
            label = glue("{d$dates[2] - d$dates[1]}-day delay"))
 ```
 
-<img src="unnamed-chunk-15-1.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" width="80%" style="display: block; margin: auto;" />
+<img src="figures/tidyhydat-unnamed-chunk-15-1.png" alt="plot of chunk unnamed-chunk-15" width="80%" style="display: block; margin: auto;" />
 
 
 ### Ploting flow and water level
@@ -277,7 +277,12 @@ ggplot() +
                                  "Level" = "grey30"))
 ```
 
-<img src="unnamed-chunk-16-1.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" width="80%" style="display: block; margin: auto;" />
+```
+## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+## ℹ Please use `linewidth` instead.
+```
+
+<img src="figures/tidyhydat-unnamed-chunk-16-1.png" alt="plot of chunk unnamed-chunk-16" width="80%" style="display: block; margin: auto;" />
 
 Almost a perfect match between water level and flow (which makes sense).
 

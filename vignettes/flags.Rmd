@@ -1,7 +1,7 @@
 ---
 title: "Flags and codes"
 author: "Steffi LaZerte"
-date: "2021-11-30"
+date: "2023-01-12"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Flags and codes}
@@ -27,20 +27,20 @@ For example, a sample of unformatted data from Magog station in Quebec looks lik
 
 ```
 ## # A tibble: 12 × 6
-##    station_name `Date/Time` `Total Precip (mm)` `Total Precip Fl… `Snow Grnd Last … `Snow Grnd Last…
-##    <chr>        <chr>       <chr>               <chr>             <chr>             <chr>           
-##  1 MAGOG        2017-03     30.4                ^                 <NA>              M               
-##  2 MAGOG        2017-04     114.0               ^                 0                 <NA>            
-##  3 MAGOG        2017-05     78.8                ^                 0                 <NA>            
-##  4 MAGOG        2017-06     140.7               ^                 0                 <NA>            
-##  5 MAGOG        2017-07     80.7                <NA>              0                 <NA>            
-##  6 MAGOG        2017-08     135.8               <NA>              0                 <NA>            
-##  7 MAGOG        2017-09     63.0                ^                 0                 <NA>            
-##  8 MAGOG        2017-10     140.8               ^                 0                 <NA>            
-##  9 MAGOG        2017-11     70.0                ^                 0                 <NA>            
-## 10 MAGOG        2017-12     45.7                ^                 10                <NA>            
-## 11 MAGOG        2018-01     34.6                ^                 2                 <NA>            
-## 12 MAGOG        2018-02     77.2                ^                 0                 <NA>
+##    station_name `Date/Time` `Total Precip (mm)` `Total Precip Fl…` `Snow Grnd Las…` `Snow Grnd Las…`
+##    <chr>        <chr>       <chr>               <chr>              <chr>            <chr>           
+##  1 MAGOG        2017-03     30.4                ^                  <NA>             M               
+##  2 MAGOG        2017-04     114.0               ^                  0                <NA>            
+##  3 MAGOG        2017-05     78.8                ^                  0                <NA>            
+##  4 MAGOG        2017-06     140.7               ^                  0                <NA>            
+##  5 MAGOG        2017-07     80.7                <NA>               0                <NA>            
+##  6 MAGOG        2017-08     135.8               <NA>               0                <NA>            
+##  7 MAGOG        2017-09     63.0                ^                  0                <NA>            
+##  8 MAGOG        2017-10     140.8               ^                  0                <NA>            
+##  9 MAGOG        2017-11     70.0                ^                  0                <NA>            
+## 10 MAGOG        2017-12     45.7                ^                  10               <NA>            
+## 11 MAGOG        2018-01     34.6                ^                  2                <NA>            
+## 12 MAGOG        2018-02     77.2                ^                  0                <NA>
 ```
 
 In this output, you can see two flags: `^` in `Total Precip` and `M` in `Snow Grnd Last Day`
