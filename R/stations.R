@@ -145,7 +145,7 @@ stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
 
   # If called internally use inst
   if(internal) {
-    d <- system.file("inst", "extdata", package = "weathercan")
+    d <- system.file("extdata", package = "weathercan")
     f <- file.path(d, "stations.rds")
   } else {
     d <- dirname(stations_file())
@@ -394,7 +394,7 @@ stations_search <- function(name = NULL,
       coords <- try(as.numeric(as.character(coords)), silent = TRUE)
       })
     if(length(coords) != 2 | all(is.na(coords)) |
-       class(coords) == "try-error") {
+       inherits(coords, "try-error")) {
       stop("'coord' takes one pair of lat and lon in a numeric vector")
     }
 
@@ -423,7 +423,7 @@ stations_search <- function(name = NULL,
         starts_latest <- try(as.numeric(as.character(starts_latest)),
                              silent = TRUE)
       })
-      if (is.na(starts_latest) | class(starts_latest) == "try-error"){
+      if (is.na(starts_latest) | inherits(starts_latest, "try-error")){
         stop("'starts_latest' needs to be coercible into numeric")
       }
       stn <- dplyr::filter(stn, .data$start <= starts_latest)
@@ -434,7 +434,7 @@ stations_search <- function(name = NULL,
         ends_earliest <- try(as.numeric(as.character(ends_earliest)),
                              silent = TRUE)
       })
-      if (is.na(ends_earliest) | class(ends_earliest) == "try-error"){
+      if (is.na(ends_earliest) | inherits(ends_earliest, "try-error")){
         stop("'ends_earliest' needs to be coercible into numeric")
       }
       stn <- dplyr::filter(stn, .data$end >= ends_earliest)
@@ -449,7 +449,7 @@ stations_search <- function(name = NULL,
     }
 
     if(verbose) message("Searching by name")
-    if(class(try(as.character(name), silent = TRUE)) == "try-error") {
+    if(inherits(try(as.character(name), silent = TRUE), "try-error")) {
       stop("'name' needs to be coercible into a character")
     }
 

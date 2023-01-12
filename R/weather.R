@@ -109,9 +109,9 @@ weather_dl <- function(station_ids,
 
   # Address as.POSIXct...
   if((!is.null(start) &
-      class(try(as.Date(start), silent = TRUE)) == "try-error") |
+      inherits(try(as.Date(start), silent = TRUE), "try-error")) |
      (!is.null(end) &
-      class(try(as.Date(end), silent = TRUE)) == "try-error")) {
+      inherits(try(as.Date(end), silent = TRUE), "try-error"))) {
     stop("'start' and 'end' must be either a standard date format ",
          "(YYYY-MM-DD) or NULL")
   }
@@ -163,13 +163,13 @@ weather_dl <- function(station_ids,
       }
     }
 
-    if(class(try(as.Date(stn1$start), silent = TRUE)) == "try-error") {
+    if(inherits(try(as.Date(stn1$start), silent = TRUE), "try-error")) {
       stn1 <- dplyr::mutate(stn1,
                             start = lubridate::ymd(as.character(.data$start),
                                                    truncated = 2),
                             start = lubridate::floor_date(.data$start, "year"))
     }
-    if(class(try(as.Date(stn1$end), silent = TRUE)) == "try-error") {
+    if(inherits(try(as.Date(stn1$end), silent = TRUE), "try-error")) {
       stn1 <- dplyr::mutate(stn1,
                             end = lubridate::ymd(as.character(.data$end),
                                                  truncated = 2),
