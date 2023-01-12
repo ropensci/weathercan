@@ -66,7 +66,7 @@ test_that("weather (hour) formats NL timezone", {
   })
 
   expect_equal(w$time[1],
-               as.POSIXct("1965-01-03 00:30:00", tz = "UTC"))
+               as.POSIXct("1965-01-01 00:30:00", tz = "UTC"))
 })
 
 test_that("weather (hour) multiple stations", {
