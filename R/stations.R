@@ -48,11 +48,11 @@
 stations <- function() {
 
   if(abs(difftime(stations_meta()$weathercan_modified,
-                  Sys.Date(), units = "days")) > 7) {
+                  Sys.Date(), units = "days")) > 28) {
     if(!identical(Sys.getenv("TESTTHAT"), "true")) {
       message("The stations data frame hasn't been updated in over 4 weeks. ",
-              "Consider running `stations_dl()` to update it so you have the ",
-              "most recent stations list available")
+              "Consider running `stations_dl()` to check for updates and make ",
+              "sure you have the most recent stations list available")
     }
   }
 
