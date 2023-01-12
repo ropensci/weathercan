@@ -217,21 +217,39 @@ stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
   raw <- httr::content(resp, as = "text", encoding = "Latin1")
 
   s <- readr::read_delim(raw, skip = skip, col_types = readr::cols())
-  s <- dplyr::select(s, prov = "Province",
-                  station_name = "Name",
-                  station_id = "Station ID",
-                  climate_id = "Climate ID",
-                  hour_start = dplyr::matches("HLY First"),
-                  hour_end = dplyr::matches("HLY Last"),
-                  day_start = dplyr::matches("DLY First"),
-                  day_end = dplyr::matches("DLY Last"),
-                  month_start = dplyr::matches("MLY First"),
-                  month_end = dplyr::matches("MLY Last"),
-                  WMO_id = "WMO ID",
-                  TC_id = "TC ID",
-                  lat = dplyr::matches("Latitude \\(Decimal"),
-                  lon = dplyr::matches("Longitude \\(Decimal"),
-                  elev = dplyr::starts_with("Elevation"))
+  s <- dplyr::select(s,
+                     "prov" = "Province",
+                     "station_name" = "Name",
+                     "station_id" = "Station ID",
+                     "climate_id" = "Climate ID",
+                     "hour_start" = dplyr::matches("HLY First"),
+                     "hour_end" = dplyr::matches("HLY Last"),
+                     "day_start" = dplyr::matches("DLY First"),
+                     "day_end" = dplyr::matches("DLY Last"),
+                     "month_start" = dplyr::matches("MLY First"),
+                     "month_end" = dplyr::matches("MLY Last"),
+                     "WMO_id" = "WMO ID",
+                     "TC_id" = "TC ID",
+                     #lat = Latitude,
+                     #lon = Longitude,
+                     "lat" = dplyr::matches("Latitude \\(Decimal"),
+                     "lon" = dplyr::matches("Longitude \\(Decimal"),
+                     "elev" = dplyr::starts_with("Elevation")
+  )
+
+  # Transform lat/lon to decimal degrees
+  # s <- s %>%
+  #   dplyr::mutate(lat = sprintf("%.f", lat),
+  #                 lon = sprintf("%.f", lon)) %>%
+  #   tidyr::separate(lat, into = c("lat_d", "lat_m", "lat_s", "lat_sd"),
+  #                   sep = c(-7L, -5L, -3L), remove = FALSE, convert = TRUE) %>%
+  #   dplyr::mutate(lat = lat_d + lat_m/60 + (lat_s + lat_sd/1000)/3600) %>%
+  #   tidyr::separate(lon, into = c("lon_d", "lon_m", "lon_s", "lon_sd"),
+  #                   sep = c(-7L, -5L, -3L), remove = FALSE, convert = TRUE) %>%
+  #   dplyr::mutate(lon = lon_d - lon_m/60 - (lon_s + lon_sd/1000)/3600) %>%
+  #   dplyr::select(-dplyr::matches("(lat|lon)_(d|m|s|sd)$"))
+
+
 
   # Calculate Timezones
   station_tz <- dplyr::select(s, "prov", "station_id", "lat", "lon") %>%
@@ -244,7 +262,7 @@ stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
   s <- s %>%
     dplyr::left_join(station_tz, by = c("station_id", "prov", "lat", "lon")) %>%
     tidyr::gather(key = "interval", value = "date", dplyr::matches("(start)|(end)")) %>%
-    tidyr::separate(.data$interval, c("interval", "type"), sep = "_") %>%
+    tidyr::separate("interval", c("interval", "type"), sep = "_") %>%
     dplyr::mutate(type = factor(.data$type, levels = c("start", "end")),
                   station_name = as.character(.data$station_name),
                   lat = replace(.data$lat, .data$lat == 0, NA),
@@ -268,7 +286,7 @@ stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
                                            "NS", "NU", "ON", "PE", "QC", "SK",
                                            "YT")),
                   prov = as.character(.data$prov)) %>%
-    tidyr::spread(.data$type, .data$date) %>%
+    tidyr::spread("type", "date") %>%
     dplyr::arrange(.data$prov, .data$station_id, .data$interval) %>%
     dplyr::as_tibble()
 

@@ -360,7 +360,7 @@ weather_dl <- function(station_ids,
         dplyr::select("station_id", "problems")
 
       if(utils::packageVersion("tidyr") > "0.8.99") {
-        show <- tidyr::unnest(show, .data$problems)
+        show <- tidyr::unnest(show, "problems")
       } else {
         show <- tidyr::unnest(show)
       }
@@ -393,7 +393,7 @@ weather_single <- function(date_range, s, interval, encoding) {
   w <- dplyr::select(w, "data")
 
   if(utils::packageVersion("tidyr") > "0.8.99") {
-    w <- tidyr::unnest(w, .data$data)
+    w <- tidyr::unnest(w, "data")
   } else w <- tidyr::unnest(w)
   w
 }
@@ -478,9 +478,9 @@ weather_trim <- function(w, format, verbose) {
   if(format && nrow(w) > 0) {
     if(verbose) message("Trimming missing values before and after")
     temp <-  dplyr::select(w,
-                           -tidyselect::any_of(c(names(m_names), "date", "time",
-                                                 "year", "month",
-                                                 "day", "hour", "qual")))
+                           -dplyr::any_of(c(names(m_names), "date", "time",
+                                            "year", "month",
+                                            "day", "hour", "qual")))
     temp <- w$date[which(rowSums(is.na(temp) | temp == "") != ncol(temp))]
 
     w <- w[w$date >= min(temp) & w$date <= max(temp), ]
@@ -525,11 +525,11 @@ weather_format <- function(w, stn, meta, interval = "hour", s.start, s.end,
                   names(w)[!(names(w) %in% c("date", "year", "month", "day",
                                              "hour", "time", "qual",
                                              "weather"))]) %>%
-    tidyr::separate(.data$variable, into = c("variable", "type"),
+    tidyr::separate("variable", into = c("variable", "type"),
                     sep = "_flag", fill = "right") %>%
     dplyr::mutate(type = replace(.data$type, .data$type == "", "flag"),
                   type = replace(.data$type, is.na(.data$type), "value")) %>%
-    tidyr::spread(.data$type, .data$value) %>%
+    tidyr::spread("type", "value") %>%
     dplyr::mutate(value = replace(.data$value, .data$value == "", NA),  ## No data
                   value = replace(.data$value, .data$flag == "M", NA))  ## Missing
 
@@ -545,23 +545,23 @@ weather_format <- function(w, stn, meta, interval = "hour", s.start, s.end,
                                              "Climate Archives")))
   }
   w <- w %>%
-    tidyr::gather(key = "type", value = "value", .data$flag, .data$value) %>%
+    tidyr::gather(key = "type", value = "value", "flag", "value") %>%
     dplyr::mutate(variable = replace(.data$variable, .data$type == "flag",
                                      paste0(.data$variable[.data$type == "flag"],
                                             "_flag"))) %>%
-    dplyr::select(date, dplyr::everything(), -"type") %>%
-    tidyr::spread(.data$variable, .data$value)
+    dplyr::select("date", dplyr::everything(), -"type") %>%
+    tidyr::spread("variable", "value")
 
   ## Can we convert to numeric?
   #w$wind_spd[c(54, 89, 92)] <- c(">3", ">5", ">10")
 
   num <- apply(dplyr::select(
-    w, -tidyselect::any_of(c("date", "year", "month",
-                             "day", "hour", "time", "qual",
-                             "weather",
-                             grep("flag", names(w), value = TRUE)))),
-               MARGIN = 2,
-               FUN = function(x) tryCatch(as.numeric(x),
+    w, -dplyr::any_of(c("date", "year", "month",
+                        "day", "hour", "time", "qual",
+                        "weather",
+                        grep("flag", names(w), value = TRUE)))),
+    MARGIN = 2,
+    FUN = function(x) tryCatch(as.numeric(x),
                                           warning = function(w) w))
 
   warn <- vapply(num,
@@ -684,7 +684,7 @@ meta_format <- function(meta, s) {
   meta <- meta %>%
     dplyr::mutate(X1 = stringr::str_extract(.data$X1, pattern = m)) %>%
     dplyr::filter(!is.na(.data$X1)) %>%
-    tidyr::spread(.data$X1, .data$X2)
+    tidyr::spread("X1", "X2")
 
   m <- m_names[m_names %in% names(meta)]
 

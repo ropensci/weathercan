@@ -11,7 +11,7 @@ flags <- tibble(interval = c("hour", "day", "month"),
                                                   interval = .y),
                                         interval = .y, return = "legend"))) %>%
   tidyr::unnest(flags) %>%
-  select(code = "X1", meaning = "X2") %>%
+  select("code" = "X1", "meaning" = "X2") %>%
   distinct() %>%
   arrange(code) %>%
   mutate(meaning = str_remove(meaning, "\\*"))
@@ -42,7 +42,7 @@ gloss_url <- list(
   tidyr::unnest(data) %>%
   mutate(value = paste0("https://climate.weather.gc.ca/glossary_e.html#",
                         values)) %>%
-  select(interval, weathercan_name = ind, ECCC_ref = value)
+  select("interval", "weathercan_name" = "ind", "ECCC_ref" = "value")
 
 
 glossary <- tibble(interval = c(rep("hour", length(w_names$hour)),
@@ -78,7 +78,7 @@ codes <- normals_raw(normals_html(prov = "AB", station_id = 1839,
   str_replace_all("\"\"", "'") %>%
   str_remove_all("\"") %>%
   tibble::enframe(name = NULL) %>%
-  tidyr::separate(value, sep = " = ", into = c("code", "meaning"))
+  tidyr::separate("value", sep = " = ", into = c("code", "meaning"))
 usethis::use_data(codes, overwrite = TRUE)
 
 
@@ -95,9 +95,9 @@ glossary_normals <- tibble(ECCC_name = html_nodes(h, "h3") %>% html_text(),
              "evaporation", "frost", "hours", "wind", "sun", "humidex",
              "wind_chill", "humidity", "pressure", "rad", "visibility",
              "cloud")) %>%
-  select(ECCC_name, weathercan_name, description) %>%
-  bind_rows(select(n_names, weathercan_name = new_var, ECCC_name = variable)) %>%
-  bind_rows(select(f_names, weathercan_name = new_var, ECCC_name = variable)) %>%
+  select("ECCC_name", "weathercan_name", "description") %>%
+  bind_rows(select(n_names, "weathercan_name" = "new_var", "ECCC_name" = "variable")) %>%
+  bind_rows(select(f_names, "weathercan_name" = "new_var", "ECCC_name" = "variable")) %>%
   mutate(ECCC_name = str_to_title(ECCC_name),
          ECCC_name = str_replace_all(ECCC_name, c("Mm" = "mm",
                                                   "Cm" = "cm",
