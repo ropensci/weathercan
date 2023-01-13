@@ -95,9 +95,8 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
   yrs <- paste0("normals_", stringr::str_replace(normals_years, "-", "_"))
 
   n <- dplyr::filter(stn, .data$climate_id %in% climate_ids) %>%
-    dplyr::select(.data$prov, .data$station_name, .data$station_id,
-                  .data$climate_id,
-                  normals = .data[[yrs]]) %>%
+    dplyr::select("prov", "station_name", "station_id", "climate_id",
+                  "normals" = dplyr::matches(yrs)) %>%
     dplyr::distinct() %>%
     dplyr::mutate(climate_id = as.character(.data$climate_id))
 
@@ -225,7 +224,7 @@ data_extract <- function(n, climate_id) {
                         dplyr::filter(nn, .data$type != "sub") %>%
                           dplyr::select("variable", "subgroup"),
                         by = "variable")
-  for(i in 1:nrow(n)) {
+  for(i in seq_len(nrow(n))) {
     if(is.na(n[["subgroup"]][i])) n[["subgroup"]][i] <- n[["subgroup"]][i-1]
   }
 
@@ -276,7 +275,8 @@ data_extract <- function(n, climate_id) {
 
   # Column order
   o <- c(rbind(nn$new_var, paste0(nn$new_var, "_code")))
-  n_nice <- dplyr::select(n_nice, "period", !!o)
+
+  n_nice <- dplyr::select(n_nice, "period", dplyr::all_of(o))
 
   # Row order
   o <- names(n)[!names(n) %in% c("variable", "Code", "subgroup", "variable_sub")]

@@ -6,7 +6,7 @@ if(!dir.exists("./data-raw/normals/")) dir.create("./data-raw/normals")
 # Get list of stations with normals data
 if(!file.exists("./data-raw/normals/normals_check.csv")) {
   n <- stations() %>%
-    dplyr::select(prov, station_name, climate_id, normals_1981_2010, normals_1971_2000) %>%
+    dplyr::select("prov", "station_name", "climate_id", "normals_1981_2010", "normals_1971_2000") %>%
     dplyr::distinct() %>%
     tidyr::pivot_longer(cols = dplyr::contains("normals_"),
                         names_to = "normals", values_to = "available") %>%

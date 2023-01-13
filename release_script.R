@@ -3,31 +3,9 @@
 version <- "0.6.2"
 #usethis::use_release_issue(version = v)
 
-# Check existing errors
-# https://cran.rstudio.org/web/checks/check_results_weathercan.html
 
-hist <- cchecks::cch_pkgs_history("weathercan")$data$history
-dplyr::select(hist, date_updated, "summary")
-
-dplyr::bind_cols(dplyr::select(hist, date_updated, checks),
-                 hist$summary,
-                 hist$check_details) %>%
-  dplyr::filter(stringr::str_detect(date_updated, "2021-05-18")) %>%
-  tidyr::unnest(checks) %>%
-  dplyr::filter(status %in% c("WARN", "ERROR")) %>%
-  dplyr::select(-version, -tinstall, -tcheck, -ttotal, -any,
-                -ok, -note, -warn, -error, -fail) %>%
-  tidyr::unnest(details) %>%
-  dplyr::pull(output) %>%
-  unique()
-
-cchecks::cch_pkgs("weathercan")$data$checks %>%
-  dplyr::filter(!status %in% c("OK", "NOTE"))
-
-cchecks::cch_pkgs("weathercan")$data$check_details$details %>%
-  dplyr::mutate(output = glue::glue("{flavors}\n{output}\n\n")) %>%
-  dplyr::pull(output)
-
+# Good practices --------------------
+goodpractice::gp()
 
 
 ## Update dependencies
@@ -151,22 +129,52 @@ pkgdown::build_site(lazy = TRUE)
 ## Check GitHub Actions
 
 ## Check Reverse Dependencies (are there any?)
-tools::dependsOnPkgs("weathercan")
+#tools::dependsOnPkgs("weathercan")
 
 # Check RavenR which suggests weathercan
-weathercan::kamloops_day %>%
-  RavenR::rvn_rvt_write_met(metdata = .,
-                            filenames = file.path(tempdir(), "rvn_rvt_metfile.rvt"),
-                            filename_stndata = file.path(tempdir(), "met_stndata.rvt"))
+#weathercan::kamloops_day %>%
+#  RavenR::rvn_rvt_write_met(metdata = .,
+#                            filenames = file.path(tempdir(), "rvn_rvt_metfile.rvt"),
+#                            filename_stndata = file.path(tempdir(), "met_stndata.rvt"))
 # Warnings about NA okay
 
 ## Push to github
 
 ## Actually release it (SEND TO CRAN!)
-devtools::release()
+#devtools::release()
 
 ## Once it is released (Accepted by CRAN) create signed release on github
 usethis::use_github_release()
 
 # Prep for next
 usethis::use_dev_version()
+
+
+
+
+# Appendix --------------
+
+# Check existing errors
+# https://cran.rstudio.org/web/checks/check_results_weathercan.html
+
+hist <- cchecks::cch_pkgs_history("weathercan")$data$history
+dplyr::select(hist, date_updated, "summary")
+
+dplyr::bind_cols(dplyr::select(hist, date_updated, checks),
+                 hist$summary,
+                 hist$check_details) %>%
+  dplyr::filter(stringr::str_detect(date_updated, "2021-05-18")) %>%
+  tidyr::unnest(checks) %>%
+  dplyr::filter(status %in% c("WARN", "ERROR")) %>%
+  dplyr::select(-version, -tinstall, -tcheck, -ttotal, -any,
+                -ok, -note, -warn, -error, -fail) %>%
+  tidyr::unnest(details) %>%
+  dplyr::pull(output) %>%
+  unique()
+
+cchecks::cch_pkgs("weathercan")$data$checks %>%
+  dplyr::filter(!status %in% c("OK", "NOTE"))
+
+cchecks::cch_pkgs("weathercan")$data$check_details$details %>%
+  dplyr::mutate(output = glue::glue("{flavors}\n{output}\n\n")) %>%
+  dplyr::pull(output)

@@ -13,7 +13,7 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(cache = FALSE,
                       fig.align = "center",
-                      fig.path = "vignettes/interp-",
+                      fig.path = "vignettes/figures/interp-",
                       dpi = 200,
                       fig.asp = 0.65, fig.width = 5,
                       out.width = "80%")

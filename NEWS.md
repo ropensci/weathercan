@@ -1,3 +1,8 @@
+# weathercan 0.6.3
+- Internal re-arranging and clean up
+- Stations without lat/lon now have NA timezone
+- Fixed vignette images
+
 # weathercan 0.6.2
 
 - Create cache dir for stations data recursively
