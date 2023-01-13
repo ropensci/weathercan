@@ -413,8 +413,8 @@
       "sameAs": "https://CRAN.R-project.org/package=rappdirs"
     }
   ],
-  "releaseNotes": "https://github.com/ropensci/weathercan/blob/master/NEWS.md",
-  "readme": "https://github.com/ropensci/weathercan/blob/master/README.md",
+  "releaseNotes": "https://github.com/ropensci/weathercan/blob/main/NEWS.md",
+  "readme": "https://github.com/ropensci/weathercan/blob/main/README.md",
   "contIntegration": "https://app.codecov.io/gh/ropensci/weathercan",
   "citation": [
     {

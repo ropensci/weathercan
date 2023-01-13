@@ -34,7 +34,7 @@ Getting ready to make your first contribution? Here are a couple of tutorials yo
 - Make your changes
   - For changes beyond minor typos, add an item to NEWS.md describing the changes and add yourself to the DESCRIPTION file as a contributor
 - Push to your GitHub account
-- Submit a pull request to home base (likely master branch, but check to make sure) at `ropensci/weathercan`
+- Submit a pull request to home base (main branch) at `ropensci/weathercan`
 
 # Code formatting
 
