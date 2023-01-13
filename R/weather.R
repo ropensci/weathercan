@@ -689,7 +689,7 @@ meta_format <- function(meta, s) {
   m <- m_names[m_names %in% names(meta)]
 
   meta %>%
-    dplyr::select(m) %>%
+    dplyr::select(dplyr::all_of(m)) %>%
     dplyr::mutate(station_id = s,
                   prov = province[[.data$prov]],
                   lat = as.numeric(as.character(.data$lat)),
