@@ -1,6 +1,6 @@
 # Steps/Commands to run before a CRAN release -----------------------------
 
-version <- "0.6.2"
+version <- "0.6.3"
 #usethis::use_release_issue(version = v)
 
 
