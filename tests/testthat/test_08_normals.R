@@ -3,26 +3,22 @@ context("Climate Normals")
 
 # normals_html() ------------------------------------------------------------
 
-vcr::use_cassette("normals_html_5010480_1981", {
-  test_that("normals_html() correctly retrieves request 1981-2010", {
-    skip_on_cran()
-    expect_silent(nd <- normals_html(station_id = 3471, climate_id = "5010480",
-                                     normals_years = "1981-2010", prov = "MB"))
-    expect_is(nd, "response")
-    expect_false(httr::http_error(nd))
-    expect_gt(length(nd$content), 10000)
-  })
-}, preserve_exact_body_bytes = TRUE)
+test_that("normals_html() correctly retrieves request 1981-2010", {
+  skip_on_cran()
+  expect_silent(nd <- normals_html(station_id = 3471, climate_id = "5010480",
+                                   normals_years = "1981-2010", prov = "MB"))
+  expect_is(nd, "response")
+  expect_false(httr::http_error(nd))
+  expect_gt(length(nd$content), 10000)
+})
 
-vcr::use_cassette("normals_html_5010480_1971", {
-  test_that("normals_html() correctly retrieves request 1971-2000", {
-    skip_on_cran()
-    expect_silent(nd <- normals_html(station_id = 3471, climate_id = "5010480",
-                                     normals_years = "1971-2000", prov = "MB"))
-    expect_is(nd, "response")
-    expect_false(httr::http_error(nd))
-    expect_gt(length(nd$content), 10000)
-  })
+test_that("normals_html() correctly retrieves request 1971-2000", {
+  skip_on_cran()
+  expect_silent(nd <- normals_html(station_id = 3471, climate_id = "5010480",
+                                   normals_years = "1971-2000", prov = "MB"))
+  expect_is(nd, "response")
+  expect_false(httr::http_error(nd))
+  expect_gt(length(nd$content), 10000)
 })
 
 # Proper error when 404
@@ -46,10 +42,8 @@ vcr::use_cassette("normals_http404", {
 test_that("normals_raw() extracts normals as character", {
   skip_on_cran()
   #1981
-  vcr::use_cassette("normals_html_5010480_1981", {
-    expect_silent(nd <- normals_html(station_id = 3471, climate_id = "5010480",
-                                     normals_years = "1981-2010", prov = "MB"))
-  })
+  expect_silent(nd <- normals_html(station_id = 3471, climate_id = "5010480",
+                                   normals_years = "1981-2010", prov = "MB"))
 
   expect_silent(nd <- normals_raw(nd)) %>%
     expect_is("character")
@@ -57,10 +51,8 @@ test_that("normals_raw() extracts normals as character", {
 
 
   #1971
-  vcr::use_cassette("normals_html_5010480_1971", {
-    expect_silent(nd <- normals_html(station_id = 3471, climate_id = "5010480",
-                                     normals_years = "1971-2000", prov = "MB"))
-  })
+  expect_silent(nd <- normals_html(station_id = 3471, climate_id = "5010480",
+                                   normals_years = "1971-2000", prov = "MB"))
 
   expect_silent(nd <- normals_raw(nd)) %>%
     expect_is("character")
@@ -73,10 +65,8 @@ test_that("normals_raw() extracts normals as character", {
 test_that("normals_extract() cleans up raw data", {
   skip_on_cran()
   #1981-2010
-  vcr::use_cassette("normals_html_5010480_1981", {
-    expect_silent(nd <- normals_html(station_id = 3471, climate_id = "5010480",
-                                     normals_years = "1981-2010", prov = "MB"))
-  })
+  expect_silent(nd <- normals_html(station_id = 3471, climate_id = "5010480",
+                                   normals_years = "1981-2010", prov = "MB"))
 
   n <- normals_raw(nd)
 
@@ -86,10 +76,8 @@ test_that("normals_extract() cleans up raw data", {
   expect_true(stringr::str_detect(n1[1], "Jan"))
 
   #1971-2000
-  vcr::use_cassette("normals_html_5010480_1971", {
-    expect_silent(nd <- normals_html(station_id = 3471, climate_id = "5010480",
-                                     normals_years = "1971-2000", prov = "MB"))
-  })
+  expect_silent(nd <- normals_html(station_id = 3471, climate_id = "5010480",
+                                   normals_years = "1971-2000", prov = "MB"))
 
   n <- normals_raw(nd)
 
@@ -104,10 +92,8 @@ test_that("normals_extract() cleans up raw data", {
 test_that("data_extract() / frost_extract() extract data", {
   skip_on_cran()
   # 1981-2010
-  vcr::use_cassette("normals_html_5010480_1981", {
-    expect_silent(nd <- normals_html(station_id = 3471, climate_id = "5010480",
+  expect_silent(nd <- normals_html(station_id = 3471, climate_id = "5010480",
                                      normals_years = "1981-2010", prov = "MB"))
-  })
 
   n <- nd %>%
     normals_raw() %>%
@@ -120,10 +106,8 @@ test_that("data_extract() / frost_extract() extract data", {
 
 
   # 1971-2000
-  vcr::use_cassette("normals_html_5010480_1971", {
-    expect_silent(nd <- normals_html(station_id = 3471, climate_id = "5010480",
-                                     normals_years = "1971-2000", prov = "MB"))
-  })
+  expect_silent(nd <- normals_html(station_id = 3471, climate_id = "5010480",
+                                   normals_years = "1971-2000", prov = "MB"))
 
   n <- nd %>%
     normals_raw() %>%
@@ -141,10 +125,8 @@ test_that("data_extract() / frost_extract() extract data", {
 test_that("normals_format()/frost_format() format data to correct class", {
   skip_on_cran()
   # 1981-2010
-  vcr::use_cassette("normals_html_5010480_1981", {
-    expect_silent(nd <- normals_html(station_id = 3471, climate_id = "5010480",
-                                     normals_years = "1981-2010", prov = "MB"))
-  })
+  expect_silent(nd <- normals_html(station_id = 3471, climate_id = "5010480",
+                                   normals_years = "1981-2010", prov = "MB"))
 
   n <- nd %>%
     normals_raw() %>%
@@ -167,10 +149,8 @@ test_that("normals_format()/frost_format() format data to correct class", {
 
 
   # 1971-2000
-  vcr::use_cassette("normals_html_5010480_1971", {
-    expect_silent(nd <- normals_html(station_id = 3471, climate_id = "5010480",
-                                     normals_years = "1971-2000", prov = "MB"))
-  })
+  expect_silent(nd <- normals_html(station_id = 3471, climate_id = "5010480",
+                                   normals_years = "1971-2000", prov = "MB"))
 
   n <- nd %>%
     normals_raw() %>%
@@ -197,64 +177,56 @@ test_that("normals_format()/frost_format() format data to correct class", {
 test_that("normals_dl() downloads normals/frost dates as tibble - single", {
   skip_on_cran()
   # 1981-2010
-  vcr::use_cassette("normals_dl_5010480_1981", {
-    expect_silent(nd <- normals_dl(climate_id = "5010480")) %>%
-      expect_is("tbl_df")
-  })
+  expect_silent(nd <- normals_dl(climate_id = "5010480")) %>%
+    expect_is("tbl_df")
 
   # 1971-2000
-  vcr::use_cassette("normals_dl_5010480_1971", {
-    expect_silent(nd <- normals_dl(climate_id = "5010480",
-                                   normals_years = "1971-2000")) %>%
-      expect_is("tbl_df")
-  })
+  expect_silent(nd <- normals_dl(climate_id = "5010480",
+                                 normals_years = "1971-2000")) %>%
+    expect_is("tbl_df")
 })
 
-vcr::use_cassette("normals_dl_1096450_2403500_5010480_1981", {
-  test_that("normals_dl() downloads normals/frost dates as tibble - multi 1981", {
-    skip_on_cran()
-    expect_silent(nd <- normals_dl(climate_id = c("2403500", "5010480",
-                                                  "1096450"))) %>%
-      expect_is("tbl_df")
+test_that("normals_dl() downloads normals/frost dates as tibble - multi 1981", {
+  skip_on_cran()
+  expect_silent(nd <- normals_dl(climate_id = c("2403500", "5010480",
+                                                "1096450"))) %>%
+    expect_is("tbl_df")
 
-    expect_equal(nrow(nd), 3)
-    expect_is(tidyr::unnest(nd, normals), "data.frame")
-    expect_is(tidyr::unnest(nd, frost), "data.frame")
-    expect_length(tidyr::unnest(nd, normals) %>%
-                    dplyr::pull(climate_id) %>%
-                    unique(), 3)
-    expect_length(tidyr::unnest(nd, frost) %>%
-                    dplyr::pull(climate_id) %>%
-                    unique(), 3)
-  })
+  expect_equal(nrow(nd), 3)
+  expect_is(tidyr::unnest(nd, normals), "data.frame")
+  expect_is(tidyr::unnest(nd, frost), "data.frame")
+  expect_length(tidyr::unnest(nd, normals) %>%
+                  dplyr::pull(climate_id) %>%
+                  unique(), 3)
+  expect_length(tidyr::unnest(nd, frost) %>%
+                  dplyr::pull(climate_id) %>%
+                  unique(), 3)
 })
 
-vcr::use_cassette("normals_dl_1096450_2403500_5010480_1971", {
-  test_that("normals_dl() downloads normals/frost dates as tibble - multi 1971", {
-    skip_on_cran()
-    expect_silent(nd <- normals_dl(climate_id = c("2403500", "5010480",
-                                                  "1096450"),
-                                   normals_years = "1971-2000")) %>%
-      expect_is("tbl_df")
 
-    expect_equal(nrow(nd), 3)
-    expect_is(tidyr::unnest(nd, normals), "data.frame")
-    expect_is(tidyr::unnest(nd, frost), "data.frame")
-    expect_length(tidyr::unnest(nd, normals) %>%
-                    dplyr::pull(climate_id) %>%
-                    unique(), 3)
-    expect_length(tidyr::unnest(nd, frost) %>%
-                    dplyr::pull(climate_id) %>%
-                    unique(), 0)
-  })
+test_that("normals_dl() downloads normals/frost dates as tibble - multi 1971", {
+  skip_on_cran()
+  expect_silent(nd <- normals_dl(climate_id = c("2403500", "5010480",
+                                                "1096450"),
+                                 normals_years = "1971-2000")) %>%
+    expect_is("tbl_df")
+
+  expect_equal(nrow(nd), 3)
+  expect_is(tidyr::unnest(nd, normals), "data.frame")
+  expect_is(tidyr::unnest(nd, frost), "data.frame")
+  expect_length(tidyr::unnest(nd, normals) %>%
+                  dplyr::pull(climate_id) %>%
+                  unique(), 3)
+  expect_length(tidyr::unnest(nd, frost) %>%
+                  dplyr::pull(climate_id) %>%
+                  unique(), 0)
 })
 
 # Bug fixes ------------------------------------------------------------------
 # Fix issue #106 - Added (C) to extreme wind chill
-vcr::use_cassette("normals_dl_2100517_1981", {
-  test_that("normals_dl() gets extreme wind chill correctly", {
-    skip_on_cran()
-    expect_silent(nd <- normals_dl(climate_id = "2100517")) %>%
-      expect_is("tbl_df")
-  })
+test_that("normals_dl() gets extreme wind chill correctly", {
+  skip_on_cran()
+  expect_silent(nd <- normals_dl(climate_id = "2100517")) %>%
+    expect_is("tbl_df")
 })
+
