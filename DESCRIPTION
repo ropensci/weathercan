@@ -54,3 +54,4 @@ Suggests:
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
+Config/Needs/website: meteoland
