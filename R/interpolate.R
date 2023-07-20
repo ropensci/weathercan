@@ -83,8 +83,8 @@ weather_interp <- function(data, weather,
 
   ## If 'time', convert to same timezone
   if(interval == "hour") {
-    if(attr(data[['time']], "tzone") != attr(weather[['time']], "tzone")) {
-      weather[['time']] <- lubridate::with_tz(weather[['time']], attr(data[['time']], "tzone"))
+    if(lubridate::tz(data$time) != lubridate::tz(weather$time)) {
+      stop("`data` and `weather` timezones must match", call. = FALSE)
     }
   }
 
@@ -144,8 +144,15 @@ weather_interp <- function(data, weather,
 
 
 approx_na_rm <- function(x, y, xout, na_gap = NULL) {
+
   if(!all(class(x) == class(xout)) & !(is.numeric(xout) & is.numeric(x))) {
     stop("'xout' must be the same class as 'x'")
+  }
+
+  if(lubridate::is.POSIXct(x) &&
+     lubridate::is.POSIXct(xout) &&
+     lubridate::tz(x) != lubridate::tz(xout)) {
+    stop("Timezone of `x` doesn't match `xout`", call. = FALSE)
   }
 
   new <- as.data.frame(stats::approx(x = x, y = y, xout = xout))
