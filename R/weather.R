@@ -163,13 +163,13 @@ weather_dl <- function(station_ids,
       }
     }
 
-    if(inherits(try(as.Date(stn1$start), silent = TRUE), "try-error")) {
+    if(!lubridate::is.Date(stn1$start)) {
       stn1 <- dplyr::mutate(stn1,
                             start = lubridate::ymd(as.character(.data$start),
                                                    truncated = 2),
                             start = lubridate::floor_date(.data$start, "year"))
     }
-    if(inherits(try(as.Date(stn1$end), silent = TRUE), "try-error")) {
+    if(!lubridate::is.Date(stn1$end)) {
       stn1 <- dplyr::mutate(stn1,
                             end = lubridate::ymd(as.character(.data$end),
                                                  truncated = 2),
