@@ -373,7 +373,8 @@ frost_extract <- function(f, climate_id) {
   } else {
     r <- dplyr::full_join(
       dplyr::mutate(f1, climate_id = climate_id),
-      dplyr::mutate(f2, climate_id = climate_id), by = "climate_id") %>%
+      dplyr::mutate(f2, climate_id = climate_id),
+      by = "climate_id", relationship = "many-to-many") %>%
       dplyr::select(-climate_id)
   }
 
