@@ -3,7 +3,7 @@ Type: Package
 Title: Download Weather Data from Environment and Climate Change Canada
 Version: 0.6.3.9000
 Authors@R: c(
-     person("Steffi", "LaZerte", email = "steffi@steffi.ca", role = c("aut","cre"), comment = c(ORCID = "0000-0002-7690-8360")),
+     person("Steffi", "LaZerte", email = "sel@steffilazerte.ca", role = c("aut","cre"), comment = c(ORCID = "0000-0002-7690-8360")),
      person("Sam", "Albers", email = "sam.albers@gmail.com", role = c("ctb"), comment = c(ORCID = "0000-0002-9270-7884")),
      person("Nick", "Brown", email = "nicholas512@gmail.com", role = c("ctb"), comment = c(ORCID = "0000-0002-2719-0671")),
      person("Kevin", "Cazelles", email = "kevin.cazelles@gmail.com", role = c("ctb"), comment = c(ORCID = "0000-0001-6619-9874")))
