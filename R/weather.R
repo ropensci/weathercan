@@ -456,7 +456,8 @@ weather_raw <- function(html, skip = 0,
   readr::local_edition(1)
   suppressWarnings({ # when some data are missing, final columns not present
     w <- readr::read_csv(I(raw), n_max = nrows, skip = skip,
-                         col_types = paste(rep("c", ncols), collapse = ""))})
+                         col_types = paste(rep("c", ncols), collapse = ""),
+                         progress = FALSE)})
   # Get rid of special symbols right away
   w <- remove_sym(w)
 
@@ -657,7 +658,8 @@ meta_raw <- function(html, encoding = "UTF-8", interval, return = "meta") {
       stringr::str_replace_all("(\\t)+", "\\\t") %>%
       readr::read_tsv(., n_max = i,
                       col_names = FALSE,
-                      col_types = readr::cols())
+                      col_types = readr::cols(),
+                      progress = FALSE)
 
     if(ncol(r) > 2) {
       stop("Problems parsing metadata. Submit an issue at ",
@@ -671,7 +673,8 @@ meta_raw <- function(html, encoding = "UTF-8", interval, return = "meta") {
       stringr::str_remove("\\*https\\:\\/\\/climate.weather.gc.ca\\/FAQ_e.html#Q5") %>%
       readr::read_tsv(., skip = stringr::str_which(split, "Legend") + 1,
                       col_names = FALSE,
-                      col_types = readr::cols())
+                      col_types = readr::cols(),
+                      progress = FALSE)
   }
   # Get rid of any special symbols
   remove_sym(r)

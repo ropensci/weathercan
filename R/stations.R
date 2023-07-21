@@ -186,7 +186,7 @@ stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
 
   headings <- readr::read_lines(httr::content(resp, as = "text",
                                               encoding = "Latin1"),
-                                n_max = 5)
+                                n_max = 5, progress = FALSE)
   if(!any(stringr::str_detect(headings, "Climate ID"))){
     stop("Could not read stations list (",
          getOption("weathercan.urls.stations"), ")", call. = FALSE)
@@ -216,7 +216,8 @@ stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
 
   raw <- httr::content(resp, as = "text", encoding = "Latin1")
 
-  s <- readr::read_delim(raw, skip = skip, col_types = readr::cols())
+  s <- readr::read_delim(raw, skip = skip, col_types = readr::cols(),
+                         progress = FALSE)
   s <- dplyr::select(s,
                      "prov" = "Province",
                      "station_name" = "Name",
