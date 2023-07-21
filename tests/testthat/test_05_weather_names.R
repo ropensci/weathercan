@@ -1,5 +1,4 @@
 # weather names ---------------------------------------------------------
-context("Data column names")
 
 # Test and alert only if ECCC changes any of the column names
 test_that("weather_raw() hour column names as expected", {

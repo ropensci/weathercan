@@ -1,3 +1,14 @@
+# weathercan 0.7.0
+- Internal updates to tests (testthat 3rd edition)
+- Small changes to messages
+
+## Bug fixes
+- Fix bug with Interpolate where silently transforms non-matching timezones.
+  This can produce incorrect matching when using "local-UTC" timezones
+  (as weathercan does as of v0.3.0). Now timezone mismatch results in an error
+  so users can decide how it should be handled.
+  
+
 # weathercan 0.6.3
 - Internal re-arranging and clean up
 - Stations without lat/lon now have NA timezone

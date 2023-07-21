@@ -1,18 +1,21 @@
 # weather by hour ---------------------------------------------------------
-context("weather_dl() arguments")
 
 test_that("weather_dl() hour format = FALSE", {
   skip_on_cran()
+  withr::local_options(list("weathercan.time.message" = TRUE))
+
   vcr::use_cassette("weather_hour_51423_2014-01", {
-    w <- weather_dl(station_ids = 51423, start = "2014-01-01", end = "2014-01-31",
-                    format = FALSE)
+    expect_silent(w <- weather_dl(station_ids = 51423,
+                                  start = "2014-01-01",
+                                  end = "2014-01-31",
+                                  format = FALSE))
   })
 
   ## Basics
-  expect_is(w, "data.frame")
+  expect_s3_class(w, "data.frame")
   expect_length(w, 40)
   expect_equal(nrow(w), 744)
-  expect_is(w$prov, "character")
+  expect_type(w$prov, "character")
 
   c <- dplyr::select(w, -station_id, -prov, -lat, -lon, -elev)
   expect_true(all(apply(c, 2, is.character)))
@@ -34,10 +37,10 @@ test_that("weather_dl() day format = FALSE", {
   })
 
   ## Basics
-  expect_is(w, "data.frame")
+  expect_s3_class(w, "data.frame")
   expect_length(w, 41)
   expect_equal(nrow(w), 365)
-  expect_is(w$prov, "character")
+  expect_type(w$prov, "character")
 
   c <- dplyr::select(w, -station_id, -prov, -lat, -lon, -elev)
   expect_true(all(apply(c, 2, is.character)))
@@ -62,10 +65,10 @@ test_that("weather_dl() month format = FALSE", {
   })
 
   ## Basics
-  expect_is(w, "data.frame")
+  expect_s3_class(w, "data.frame")
   expect_length(w, 39)
   expect_equal(nrow(w), 842)
-  expect_is(w$prov, "character")
+  expect_type(w$prov, "character")
 
   c <- dplyr::select(w, -station_id, -prov, -lat, -lon, -elev)
   expect_true(all(apply(c, 2, is.character)))

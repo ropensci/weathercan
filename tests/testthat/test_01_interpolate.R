@@ -15,14 +15,13 @@ test_that("approx_na_rm (time) without NAs", {
   for(i in c(0, 2, lubridate::hours(2), lubridate::days(14))) {
     expect_silent(a <- approx_na_rm(x = k$time, y = k$temp,
                                     xout = f$time, na_gap = i))
-    expect_is(a, "data.frame")
-    expect_is(a$x, "POSIXct")
-    expect_is(a$y, "numeric")
+    expect_s3_class(a, "data.frame")
+    expect_s3_class(a$x, "POSIXct")
+    expect_type(a$y, "double")
     expect_named(a, c("x", "y"))
     expect_equal(nrow(a), nrow(f))
     expect_true(all(f$time == a$x))
-    if(i == 2) expect_equal(a$y[1:5], c(NA, NA, 2.424500, 2.508556, 2.508611),
-                            tolerance = 0.001)
+    expect_snapshot_value(a, style = "json2", tolerance = 0.001)
   }
 
   ## Values
@@ -49,9 +48,9 @@ test_that("approx_na_rm (time) without NAs for different measures", {
   ## Format
   for(m in c("temp", "pressure", "rel_hum", "temp_dew", "visib", "wind_spd")){
     expect_silent(a <- approx_na_rm(x = k$time, y = k[, m], xout = f$time))
-    expect_is(a, "data.frame")
-    expect_is(a$x, "POSIXct")
-    expect_is(a$y, "numeric")
+    expect_s3_class(a, "data.frame")
+    expect_s3_class(a$x, "POSIXct")
+    expect_type(a$y, "double")
     expect_named(a, c("x", "y"))
     expect_equal(nrow(a), nrow(f))
     expect_true(all(f$time == a$x))
@@ -103,19 +102,24 @@ test_that("approx_na_rm (time) replaces gaps with NAs", {
 # Raw interpolation (numeric) ---------------------------------------------
 
 test_that("approx_na_rm (numeric) without NAs", {
-  k <- data.frame(x = 1:100, y = sample(1:1000, 100))
-  f <- data.frame(x = sample(seq(1.1, 99.5, length.out = 10)))
+
+  withr::with_seed(123, {
+    k <- data.frame(x = 1:100, y = sample(1:1000, 100))
+    f <- data.frame(x = sample(seq(1.1, 99.5, length.out = 10)))
+  })
 
   ## Format
   for(i in c(0, 2, lubridate::hours(2), lubridate::days(14))) {
     expect_silent(a <- approx_na_rm(x = k$x, y = k$y, xout = f$x, na_gap = i))
-    expect_is(a, "data.frame")
-    expect_is(a$x, "numeric")
-    expect_is(a$y, "numeric")
+    expect_s3_class(a, "data.frame")
+    expect_type(a$x, "double")
+    expect_type(a$y, "double")
     expect_named(a, c("x", "y"))
     expect_equal(nrow(a), nrow(f))
     expect_true(all(f$x == a$x))
+    expect_snapshot_value(a, style = "json2", tolerance = 0.001)
   }
+
 
   ## Values
   for(i in sample(seq_len(nrow(a)), size = 10)) {
@@ -151,9 +155,9 @@ test_that("approx_na_rm (numeric) with NAs", {
   ## Skip enough, get no NAs
   expect_silent(a <- approx_na_rm(x = k$x, y = k$y, xout = f$x, na_gap = 5))
   expect_true(all(!is.na(a)))
-  expect_is(a, "data.frame")
-  expect_is(a$x, "numeric")
-  expect_is(a$y, "numeric")
+  expect_s3_class(a, "data.frame")
+  expect_type(a$x, "double")
+  expect_type(a$y, "double")
   expect_named(a, c("x", "y"))
   expect_equal(nrow(a), nrow(f))
   expect_true(all(f$x == a$x))
@@ -167,6 +171,7 @@ test_that("weather_interp (hour) fails with incorrect data types", {
                   kamloops$time < as.POSIXct("2016-03-03"), ]
   f <- finches[1:20, ] %>%
     dplyr::mutate(time = lubridate::force_tz(time, "UTC"))
+
 
   ## Expect failure
   expect_error(weather_interp(f, dplyr::mutate(k, time = as.numeric(time))),
@@ -191,11 +196,7 @@ test_that("weather_interp (hour) interpolates particular columns", {
     expect_named(a, c(names(f), m))
     expect_gt(nrow(a), sum(is.na(a[, m]))) # Not all NA
     expect_equal(a[, seq_len(ncol(f))], f)
-    if(m == "temp") {
-      expect_equal(a$temp[1:5],
-                   c(NA, NA, 2.424500, 2.508556, 2.508611),
-                   tolerance = 0.001)
-    }
+    expect_snapshot_value(a, style = "json2", tolerance = 0.001)
   }
 
   ## Multiple columns
@@ -213,7 +214,9 @@ test_that("weather_interp (hour) interpolates 'all'", {
     dplyr::mutate(time = lubridate::force_tz(time, "UTC"))
 
   ## Expect success
-  expect_message(a <- weather_interp(f, k))
+  expect_message(a <- weather_interp(f, k), "hmdx does not") %>%
+    expect_message("wind_chill does not") %>%
+    expect_message("precip_amt does not")
   expect_named(a, c(names(f), c("temp", "temp_dew", "rel_hum",
                                 "wind_spd", "visib", "pressure")))
   expect_equal(a[, seq_len(ncol(f))], f)
@@ -246,7 +249,6 @@ test_that("weather_interp (hour) quiet", {
 })
 
 # Add interpolation (day) -------------------------------------------------
-context("Add interpolation (day)")
 
 test_that("weather_interp (day) fails with incorrect data types", {
   k <- kamloops_day[kamloops_day$date < as.Date("2016-04-01"), ]
@@ -287,6 +289,7 @@ test_that("weather_interp (day) interpolates particular columns", {
     }
     expect_named(a, c(names(f), m))
     expect_equal(a[, seq_len(ncol(f))], f)
+    expect_snapshot_value(a, style = "json2", tolerance = 0.001)
   }
 
   ## Multiple columns
@@ -305,7 +308,11 @@ test_that("weather_interp (day) interpolates 'all'", {
     dplyr::mutate(date = lubridate::as_date(time))
 
   ## Expect success
-  expect_message(a <- weather_interp(f, k, interval = "day"))
+  expect_message(a <- weather_interp(f, k, interval = "day")) %>%
+    expect_message("total_snow is missing") %>%
+    expect_message("total_precip is missing") %>%
+    expect_message("snow_grnd is missing") %>%
+    expect_message("spd_max_gust is missing")
   expect_named(a, c(names(f), c("max_temp", "min_temp", "mean_temp",
                                 "heat_deg_days", "cool_deg_days", "total_rain",
                                 "total_snow", "total_precip", "snow_grnd",

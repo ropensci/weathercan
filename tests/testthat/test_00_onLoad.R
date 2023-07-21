@@ -1,4 +1,3 @@
-context("onLoad")
 
 test_that("URLS correctly set", {
 

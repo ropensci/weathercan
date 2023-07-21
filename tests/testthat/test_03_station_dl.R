@@ -1,23 +1,23 @@
 
 # stations_dl() ------------------------------------------------------------
-context("stations_dl()")
 
 test_that("stations_dl() requires R 3.3.4", {
   # Can't test stations_dl because requires depth = 2 which creates problems:
   # https://github.com/r-lib/mockery/issues
   skip_on_cran()
-  stub(stations_dl_internal, 'getRversion', package_version("3.3.3"))
+  mockery::stub(stations_dl_internal, 'getRversion', package_version("3.3.3"))
   expect_message(stations_dl_internal(), "Need R version")
 })
 
 test_that("stations_dl() requires lutz and sf", {
   skip_on_cran()
-  stub(stations_dl_internal, 'requireNamespace', mock(FALSE, FALSE))
+  mockery::stub(stations_dl_internal, 'requireNamespace',  mockery::mock(FALSE, FALSE))
   expect_error(stations_dl_internal(), "Package 'lutz' and its dependency, 'sf'")
 })
 
 test_that("stations_dl() errors appropriately", {
   skip_on_cran()
+  skip_if_offline()
   skip_if_not_installed("sf")
   skip_if_not_installed("lutz")
 
@@ -27,16 +27,17 @@ test_that("stations_dl() errors appropriately", {
   options(weathercan.urls.stations = bkup)
 })
 
-test_that("stations_normals() gets normals info", {
-  skip_on_cran()
-  vcr::use_cassette("stations_normals", {
-    expect_silent(n <- stations_normals()) %>%
-      expect_is("data.frame")
-  })
+vcr::use_cassette("stations_normals", {
+  test_that("stations_normals() gets normals info", {
+    skip_on_cran()
 
-  expect_gt(nrow(n), 1500)
-  expect_named(n, c("station_name", "climate_id",
-                    "normals_1981_2010", "normals_1971_2000"))
+    expect_silent(n <- stations_normals()) %>%
+      expect_s3_class("data.frame")
+
+    expect_gt(nrow(n), 1500)
+    expect_named(n, c("station_name", "climate_id",
+                      "normals_1981_2010", "normals_1971_2000"))
+  })
 })
 
 test_that("stations_meta() returns metadata", {
@@ -56,11 +57,11 @@ test_that("stations_dl() runs and updates data", {
   skip_on_cran()
   skip_if_offline()
 
-  #vcr::use_cassette("stations_dl_good", {  # Don't use vcr until deal with url redirects
-  #})
-  stub(stations_dl_internal, "utils::askYesNo", TRUE)
-  stub(stations_dl_internal, "stations_file", file.path("stations.rds"))
-  expect_message(stations_dl_internal(internal = FALSE), "Stations data saved")
+  mockery::stub(stations_dl_internal, "utils::askYesNo", TRUE)
+  mockery::stub(stations_dl_internal, "stations_file", file.path("stations.rds"))
+  expect_message(stations_dl_internal(internal = FALSE), "Stations data saved") %>%
+    expect_message("According to Environment Canada") %>%
+    expect_message("Environment Canada Disclaimers")
   expect_type(s <- readRDS("stations.rds"), "list") %>%
     expect_length(2)
   expect_s3_class(s$stn, "data.frame")
@@ -94,8 +95,8 @@ test_that("stations() /stations_meta() return data", {
   expect_length(s, 16)
   expect_lt(length(data.frame(s)[is.na(data.frame(s))]),
             length(data.frame(s)[!is.na(data.frame(s))]))
-  expect_is(s$prov, "character")
-  expect_is(s$station_name, "character")
+  expect_type(s$prov, "character")
+  expect_type(s$station_name, "character")
   expect_gt(nrow(s), 10)
   expect_equal(unique(s$interval), c("day", "hour", "month"))
 
@@ -109,14 +110,12 @@ test_that("stations() /stations_meta() return data", {
 
 
 # stations_search() ---------------------------------------------------------
-context("stations_search()")
 
 test_that("stations_search 'name' returns correct format", {
   expect_error(stations_search())
   expect_error(stations_search(name = mean()))
-  expect_is(stations_search("XXX"), "data.frame")
+  expect_s3_class(stations_search("XXX"), "data.frame")
   expect_length(stations_search("XXX"), 16)
-
 })
 
 test_that("stations_search 'name' returns correct data", {
@@ -150,15 +149,16 @@ test_that("stations_search 'coords' returns correct format", {
   skip_if_not_installed("sf")
   expect_error(stations_search(coords = c("Hi")))
   expect_error(stations_search(coords = 44))
-  expect_message(stn <- stations_search(coords = c(54, -122)))
-  expect_is(stn, "data.frame")
+  expect_message(stn <- stations_search(coords = c(54, -122)), "No stations within")
+  expect_s3_class(stn, "data.frame")
   expect_length(stn, 17)
   expect_gt(nrow(stn), 0)
 })
 
 test_that("stations_search 'coords' returns correct data", {
   ## Check specific
-  expect_equal(nrow(stn <- stations_search(coords = c(54, -122))), 10)
+  expect_equal(nrow(stn <- stations_search(coords = c(54, -122))), 10) %>%
+    expect_message("No stations within 10km")
   expect_equal(stn$station_name[1], "UPPER FRASER")
   expect_equal(round(stn$distance[1], 5), 13.75226)
   expect_lt(max(stn$distance) - min(stn$distance), 10)
@@ -187,11 +187,13 @@ test_that("stations_search quiet/verbose", {
   expect_silent(stations_search(coords = c(54, -122), quiet = TRUE))
 
   expect_message(stations_search(c(54, -122), verbose = TRUE),
-                 "Searching by name")
+                 "Searching by name") %>%
+    expect_message("The `name` argument looks like a pair of coordinates")
   expect_message(stations_search("Kamloops", verbose = TRUE),
                  "Searching by name")
   expect_message(stations_search(coords = c(54, -122), verbose = TRUE),
-                 "Calculating station distances")
+                 "Calculating station distances") %>%
+    expect_message("No stations within 10km")
 
 })
 
