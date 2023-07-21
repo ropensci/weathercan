@@ -147,7 +147,7 @@ weather_dl <- function(station_ids,
     if(nrow(stn1) == 0) {
       if(length(station_ids) > 1) {
         missing <- c(missing, s)
-        if(!quiet) message("No data for station ", s)
+        if(verbose) message("No data for station ", s)
         next
       } else {
 
@@ -263,7 +263,7 @@ weather_dl <- function(station_ids,
 
       if(nrow(temp) == 0 || all(is.na(temp) | temp == "")) {
         if(length(station_ids) > 1) {
-          if(!quiet) message("No data for station ", s)
+          if(verbose) message("No data for station ", s)
           missing <- c(missing, s)
           next
         } else {
