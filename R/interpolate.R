@@ -155,7 +155,7 @@ approx_na_rm <- function(x, y, xout, na_gap = NULL) {
     stop("Timezone of `x` doesn't match `xout`", call. = FALSE)
   }
 
-  new <- as.data.frame(stats::approx(x = x, y = y, xout = xout))
+  new <- as.data.frame(stats::approx(x = x, y = y, xout = xout, rule = 1))
 
   if(any(is.na(y)) & !is.null(na_gap)) {
     if(lubridate::is.Date(x) | lubridate::is.POSIXct(x)) {
