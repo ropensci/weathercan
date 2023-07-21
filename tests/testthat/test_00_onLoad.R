@@ -1,3 +1,4 @@
+withr::local_options(list("weathercan.time.message" = TRUE))
 
 test_that("URLS correctly set", {
 
