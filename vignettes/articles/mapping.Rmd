@@ -216,10 +216,10 @@ Now we'll apply these functions to our data. Note that this `figs` object isn't 
 figs <- st_join(mb_stations, mb_ecoregions) %>%
   st_set_geometry(NULL) %>%
   left_join(select(w, station_id, date, mean_temp), by = "station_id") %>%
-  nest(-ECOREGION) %>%
+  nest(data = -ECOREGION) %>%
   mutate(fig_region = map2(data, ECOREGION, ~plot_region_fig(.x, .y))) %>%
   unnest(data) %>%
-  nest(-ECOREGION, -station_id) %>%
+  nest(data = c(-ECOREGION, -station_id)) %>%
   mutate(fig_station = map2(data, station_id, ~plot_station_fig(.x, .y)))
 ```
 
