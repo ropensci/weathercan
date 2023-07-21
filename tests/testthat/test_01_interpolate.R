@@ -34,7 +34,7 @@ test_that("approx_na_rm (time) without NAs", {
                  approx(x = c(h1, h2),
                         y = k_temp,
                         xout = a$x[i],
-                        rule = 1)$y)
+                        yleft = NA, yright = NA)$y)
   }
 })
 
@@ -128,14 +128,14 @@ test_that("approx_na_rm (numeric) without NAs", {
                  approx(x = c(floor(a$x[i]), ceiling(a$x[i])),
                         y = k$y[k$x %in% c(floor(a$x[i]), ceiling(a$x[i]))],
                         xout = a$x[i],
-                        rule = 1)$y)
+                        yleft = NA, yright = NA)$y)
   }
 
   ## Make sure what's expected
   expect_equal(c(22, 21.25), approx(x = c(11, 12, 13),
                                     y = c(21, 25, 20),
                                     xout = c(11.25, 12.75),
-                                    rule = 1)$y)
+                                    yleft = NA, yright = NA)$y)
 })
 
 
