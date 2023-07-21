@@ -2,6 +2,8 @@
 - Internal updates to tests (testthat 3rd edition)
 - Small changes to messages
 - Switch completely to sf (remove sp dependency)
+- Remove "Use with tidyverse" vignette - better to go to the source: https://r4ds.hadley.nz/
+- Remove "Meteoland" vignette as functions are defunct
 
 ## Bug fixes
 - Fix bug with Interpolate where silently transforms non-matching timezones.
