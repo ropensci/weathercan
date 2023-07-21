@@ -1,8 +1,8 @@
-test_that("tz_offset() returns the correct tz", {
-  expect_equal(tz_offset("America/Winnipeg"), "Etc/GMT+6")
-  expect_equal(tz_offset("America/Vancouver"), "Etc/GMT+8")
-  expect_equal(tz_offset("America/Winnipeg"), "Etc/GMT+6")
-  expect_equal(tz_offset("America/Edmonton"), "Etc/GMT+7")
+test_that("tz_diff() returns the correct tz", {
+  expect_equal(tz_diff("America/Winnipeg"), "Etc/GMT+6")
+  expect_equal(tz_diff("America/Vancouver"), "Etc/GMT+8")
+  expect_equal(tz_diff("America/Winnipeg"), "Etc/GMT+6")
+  expect_equal(tz_diff("America/Edmonton"), "Etc/GMT+7")
 })
 
 test_that("check_int() as expected", {
