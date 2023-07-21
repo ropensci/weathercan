@@ -86,7 +86,7 @@ stations_search(name = "Ottawa", normals_years = "current")   # 1981-2010
 stations_search(name = "Ottawa", normals_years = "1981-2010") # Same as above
 stations_search(name = "Ottawa", normals_years = "1971-2000") # 1971-2010
 
-if(requireNamespace("sp")) {
+if(requireNamespace("sf")) {
   stations_search(coords = c(53.915495, -122.739379))
 }
 \dontshow{\}) # examplesIf}

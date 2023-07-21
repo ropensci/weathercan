@@ -153,6 +153,8 @@ test_that("stations_search 'coords' returns correct format", {
   expect_s3_class(stn, "data.frame")
   expect_length(stn, 17)
   expect_gt(nrow(stn), 0)
+
+  expect_snapshot_value(stn, style = "json2", tolerance = 0.001)
 })
 
 test_that("stations_search 'coords' returns correct data", {
@@ -160,7 +162,7 @@ test_that("stations_search 'coords' returns correct data", {
   expect_equal(nrow(stn <- stations_search(coords = c(54, -122))), 10) %>%
     expect_message("No stations within 10km")
   expect_equal(stn$station_name[1], "UPPER FRASER")
-  expect_equal(round(stn$distance[1], 5), 13.75226)
+  expect_equal(round(stn$distance[1], 5), 13.73664)
   expect_lt(max(stn$distance) - min(stn$distance), 10)
 
   ## Check with Kamloops
@@ -170,7 +172,7 @@ test_that("stations_search 'coords' returns correct data", {
 
   ## Check messages
   expect_message(stations_search(coords = c(54, -122)),
-                 "No stations within 10km. Returning closest 10 stations.")
+                 "No stations within 10km. Returning closest 10 records")
 
   ## Check distance
   expect_equal(nrow(stn <- stations_search(coords = k, dist = 30)), 58)

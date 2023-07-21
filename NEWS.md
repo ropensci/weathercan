@@ -1,6 +1,7 @@
 # weathercan 0.7.0
 - Internal updates to tests (testthat 3rd edition)
 - Small changes to messages
+- Switch completely to sf (remove sp dependency)
 
 ## Bug fixes
 - Fix bug with Interpolate where silently transforms non-matching timezones.
