@@ -1,5 +1,39 @@
 # Raw interpolation (time) ------------------------------------------------
 
+test_that("approx() uses rule 1", {
+  expect_equal(
+    approx(x = c(1:5), y = c(2, 2, 2, 5, 5), xout = c(4:6)),
+    list(x = c(4,5,6), y = c(5, 5, NA)))
+
+  expect_equal(
+    approx(x = c(1:5), y = c(2, 2, 2, 5, 5), xout = c(4:6), rule = 2),
+    list(x = c(4,5,6), y = c(5, 5, 5)))
+
+  expect_equal(
+    approx(x = c(1:5), y = c(2, 2, 2, 5, 5), xout = c(4:6), yright = 0),
+    list(x = c(4,5,6), y = c(5, 5, 0)))
+
+  expect_equal(
+    approx(x = c(1:5), y = c(2, 2, 2, 5, 5), xout = c(4:6), yright = NA),
+    list(x = c(4,5,6), y = c(5, 5, NA)))
+
+  expect_equal(
+    approx(x = c(1:5), y = c(2, 2, 2, 5, 5), xout = c(0:3)),
+    list(x = 0:3, y = c(NA, 2, 2, 2)))
+
+  expect_equal(
+    approx(x = c(1:5), y = c(2, 2, 2, 5, 5), xout = c(0:3), rule = 2),
+    list(x = 0:3, y = c(2, 2, 2, 2)))
+
+  expect_equal(
+    approx(x = c(1:5), y = c(2, 2, 2, 5, 5), xout = c(0:3), yleft = 0),
+    list(x = 0:3, y = c(0, 2, 2, 2)))
+
+  expect_equal(
+    approx(x = c(1:5), y = c(2, 2, 2, 5, 5), xout = c(0:3), yleft = NA),
+    list(x = 0:3, y = c(NA, 2, 2, 2)))
+})
+
 test_that("approx_na_rm (time) without NAs", {
   k <- kamloops[kamloops$time > as.POSIXct("2016-03-01") &
                   kamloops$time < as.POSIXct("2016-03-03"), ]
