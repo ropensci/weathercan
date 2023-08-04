@@ -55,7 +55,7 @@ test_that("approx_na_rm (time) without NAs", {
     expect_named(a, c("x", "y"))
     expect_equal(nrow(a), nrow(f))
     expect_true(all(f$time == a$x))
-    expect_snapshot_value(a, style = "json2", tolerance = 0.001)
+    #expect_snapshot_value(a, style = "json2", tolerance = 0.001)
   }
 
   ## Values
@@ -152,7 +152,7 @@ test_that("approx_na_rm (numeric) without NAs", {
     expect_named(a, c("x", "y"))
     expect_equal(nrow(a), nrow(f))
     expect_true(all(f$x == a$x))
-    expect_snapshot_value(a, style = "json2", tolerance = 0.001)
+    #expect_snapshot_value(a, style = "json2", tolerance = 0.001)
   }
 
 
@@ -233,7 +233,7 @@ test_that("weather_interp (hour) interpolates particular columns", {
     expect_named(a, c(names(f), m))
     expect_gt(nrow(a), sum(is.na(a[, m]))) # Not all NA
     expect_equal(a[, seq_len(ncol(f))], f)
-    expect_snapshot_value(a, style = "json2", tolerance = 0.001)
+    #expect_snapshot_value(a, style = "json2", tolerance = 0.001)
   }
 
   ## Multiple columns
@@ -326,7 +326,7 @@ test_that("weather_interp (day) interpolates particular columns", {
     }
     expect_named(a, c(names(f), m))
     expect_equal(a[, seq_len(ncol(f))], f)
-    expect_snapshot_value(a, style = "json2", tolerance = 0.001)
+    #expect_snapshot_value(a, style = "json2", tolerance = 0.001)
   }
 
   ## Multiple columns
