@@ -1,7 +1,7 @@
 ---
 title: "Flags and codes"
 author: "Steffi LaZerte"
-date: "2023-01-12"
+date: "2023-07-21"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Flags and codes}
@@ -27,20 +27,20 @@ For example, a sample of unformatted data from Magog station in Quebec looks lik
 
 ```
 ## # A tibble: 12 × 6
-##    station_name `Date/Time` `Total Precip (mm)` `Total Precip Fl…` `Snow Grnd Las…` `Snow Grnd Las…`
-##    <chr>        <chr>       <chr>               <chr>              <chr>            <chr>           
-##  1 MAGOG        2017-03     30.4                ^                  <NA>             M               
-##  2 MAGOG        2017-04     114.0               ^                  0                <NA>            
-##  3 MAGOG        2017-05     78.8                ^                  0                <NA>            
-##  4 MAGOG        2017-06     140.7               ^                  0                <NA>            
-##  5 MAGOG        2017-07     80.7                <NA>               0                <NA>            
-##  6 MAGOG        2017-08     135.8               <NA>               0                <NA>            
-##  7 MAGOG        2017-09     63.0                ^                  0                <NA>            
-##  8 MAGOG        2017-10     140.8               ^                  0                <NA>            
-##  9 MAGOG        2017-11     70.0                ^                  0                <NA>            
-## 10 MAGOG        2017-12     45.7                ^                  10               <NA>            
-## 11 MAGOG        2018-01     34.6                ^                  2                <NA>            
-## 12 MAGOG        2018-02     77.2                ^                  0                <NA>
+##    station_name `Date/Time` `Total Precip (mm)` `Total Precip Flag` `Snow Grnd Last Day (cm)`
+##    <chr>        <chr>       <chr>               <chr>               <chr>                    
+##  1 MAGOG        2017-03     30.4                ^                   <NA>                     
+##  2 MAGOG        2017-04     114.0               ^                   0                        
+##  3 MAGOG        2017-05     78.8                ^                   0                        
+##  4 MAGOG        2017-06     140.7               ^                   0                        
+##  5 MAGOG        2017-07     80.7                <NA>                0                        
+##  6 MAGOG        2017-08     135.8               <NA>                0                        
+##  7 MAGOG        2017-09     63.0                ^                   0                        
+##  8 MAGOG        2017-10     140.8               ^                   0                        
+##  9 MAGOG        2017-11     70.0                ^                   0                        
+## 10 MAGOG        2017-12     45.7                ^                   10                       
+## 11 MAGOG        2018-01     34.6                ^                   2                        
+## 12 MAGOG        2018-02     77.2                ^                   0
 ```
 
 In this output, you can see two flags: `^` in `Total Precip` and `M` in `Snow Grnd Last Day`
@@ -97,22 +97,21 @@ In the `normals_dl`() function, codes are associated with each variable:
 
 ```
 ## # A tibble: 13 × 7
-##    period temp_daily_average temp_daily_average_code temp_daily_max temp_daily_max_c… temp_daily_min
-##    <fct>               <dbl> <chr>                            <dbl> <chr>                      <dbl>
-##  1 Jan                 -16.6 A                                -11.1 A                          -21.9
-##  2 Feb                 -13.6 A                                 -8.1 A                          -19  
-##  3 Mar                  -6.2 A                                 -1   A                          -11.4
-##  4 Apr                   4   A                                 10.5 A                           -2.6
-##  5 May                  10.6 A                                 17.8 A                            3.4
-##  6 Jun                  15.9 A                                 22.4 A                            9.3
-##  7 Jul                  18.5 A                                 25.2 A                           11.7
-##  8 Aug                  17.7 A                                 24.9 A                           10.4
-##  9 Sep                  11.8 A                                 18.9 A                            4.7
-## 10 Oct                   4.1 A                                 10.4 A                           -2.2
-## 11 Nov                  -5.6 A                                 -0.5 A                          -10.6
-## 12 Dec                 -14   A                                 -9   A                          -19  
-## 13 Year                  2.2 A                                  8.4 A                           -3.9
-## # … with 1 more variable: temp_daily_min_code <chr>
+##    period temp_daily_average temp_daily_average_code temp_daily_max temp_daily_max_code
+##    <fct>               <dbl> <chr>                            <dbl> <chr>              
+##  1 Jan                 -16.6 A                                -11.1 A                  
+##  2 Feb                 -13.6 A                                 -8.1 A                  
+##  3 Mar                  -6.2 A                                 -1   A                  
+##  4 Apr                   4   A                                 10.5 A                  
+##  5 May                  10.6 A                                 17.8 A                  
+##  6 Jun                  15.9 A                                 22.4 A                  
+##  7 Jul                  18.5 A                                 25.2 A                  
+##  8 Aug                  17.7 A                                 24.9 A                  
+##  9 Sep                  11.8 A                                 18.9 A                  
+## 10 Oct                   4.1 A                                 10.4 A                  
+## 11 Nov                  -5.6 A                                 -0.5 A                  
+## 12 Dec                 -14   A                                 -9   A                  
+## 13 Year                  2.2 A                                  8.4 A
 ```
 
 For example, here, the code indicates that these temperature variables meet the WMO '3 and 5 rule' (no more than 3 consecutive and no more than 5 total missing for either temperature or precipitation).                                                                   

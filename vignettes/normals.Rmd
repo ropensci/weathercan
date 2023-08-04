@@ -1,7 +1,7 @@
 ---
 title: "Climate Normals"
 author: "Steffi LaZerte"
-date: "2023-01-12"
+date: "2023-07-21"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Climate Normals}
@@ -79,21 +79,21 @@ normals
 
 ```
 ## # A tibble: 13 × 203
-##    prov  station_name           climate_id normals_years meets_wmo period temp_daily_aver…
-##    <chr> <chr>                  <chr>      <chr>         <lgl>     <fct>             <dbl>
-##  1 MB    WINNIPEG RICHARDSON I… 5023222    1981-2010     TRUE      Jan               -16.4
-##  2 MB    WINNIPEG RICHARDSON I… 5023222    1981-2010     TRUE      Feb               -13.2
-##  3 MB    WINNIPEG RICHARDSON I… 5023222    1981-2010     TRUE      Mar                -5.8
-##  4 MB    WINNIPEG RICHARDSON I… 5023222    1981-2010     TRUE      Apr                 4.4
-##  5 MB    WINNIPEG RICHARDSON I… 5023222    1981-2010     TRUE      May                11.6
-##  6 MB    WINNIPEG RICHARDSON I… 5023222    1981-2010     TRUE      Jun                17  
-##  7 MB    WINNIPEG RICHARDSON I… 5023222    1981-2010     TRUE      Jul                19.7
-##  8 MB    WINNIPEG RICHARDSON I… 5023222    1981-2010     TRUE      Aug                18.8
-##  9 MB    WINNIPEG RICHARDSON I… 5023222    1981-2010     TRUE      Sep                12.7
-## 10 MB    WINNIPEG RICHARDSON I… 5023222    1981-2010     TRUE      Oct                 5  
-## 11 MB    WINNIPEG RICHARDSON I… 5023222    1981-2010     TRUE      Nov                -4.9
-## 12 MB    WINNIPEG RICHARDSON I… 5023222    1981-2010     TRUE      Dec               -13.2
-## 13 MB    WINNIPEG RICHARDSON I… 5023222    1981-2010     TRUE      Year                3
+##    prov  station_name         climate_id normals_years meets_wmo period temp_daily_average
+##    <chr> <chr>                <chr>      <chr>         <lgl>     <fct>               <dbl>
+##  1 MB    WINNIPEG RICHARDSON… 5023222    1981-2010     TRUE      Jan                 -16.4
+##  2 MB    WINNIPEG RICHARDSON… 5023222    1981-2010     TRUE      Feb                 -13.2
+##  3 MB    WINNIPEG RICHARDSON… 5023222    1981-2010     TRUE      Mar                  -5.8
+##  4 MB    WINNIPEG RICHARDSON… 5023222    1981-2010     TRUE      Apr                   4.4
+##  5 MB    WINNIPEG RICHARDSON… 5023222    1981-2010     TRUE      May                  11.6
+##  6 MB    WINNIPEG RICHARDSON… 5023222    1981-2010     TRUE      Jun                  17  
+##  7 MB    WINNIPEG RICHARDSON… 5023222    1981-2010     TRUE      Jul                  19.7
+##  8 MB    WINNIPEG RICHARDSON… 5023222    1981-2010     TRUE      Aug                  18.8
+##  9 MB    WINNIPEG RICHARDSON… 5023222    1981-2010     TRUE      Sep                  12.7
+## 10 MB    WINNIPEG RICHARDSON… 5023222    1981-2010     TRUE      Oct                   5  
+## 11 MB    WINNIPEG RICHARDSON… 5023222    1981-2010     TRUE      Nov                  -4.9
+## 12 MB    WINNIPEG RICHARDSON… 5023222    1981-2010     TRUE      Dec                 -13.2
+## 13 MB    WINNIPEG RICHARDSON… 5023222    1981-2010     TRUE      Year                  3
 ```
 
 To visualize missing data we can use the `gg_miss_var()` function from the `naniar` package.
@@ -162,7 +162,7 @@ normals_measurements
 ##  8 AB    HORBURG      301C3D4    1981-2010 temp_daily_min_code    
 ##  9 AB    HORBURG      301C3D4    1981-2010 temp_extreme_max       
 ## 10 AB    HORBURG      301C3D4    1981-2010 temp_extreme_max_code  
-## # … with 307,881 more rows
+## # ℹ 307,881 more rows
 ```
 
 For example, if you wanted all `climate_id`s for stations that have data on

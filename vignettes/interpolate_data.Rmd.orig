@@ -48,33 +48,76 @@ Although the times in the weather data do not exactly match those in the finch d
 
 Here we specify that we only want the temperature (`temp`) column:
 
-```{r, out.width = "100%", fig.width = 8, dpi = 200}
+```{r, error = TRUE, out.width = "100%", fig.width = 8, dpi = 200}
+finches_temperature <- weather_interp(data = finches, weather = kamloops, cols = "temp")
+```
+
+Ooops! What happened?
+
+Well the weather data on Kamloops returned by `weathercan` has times set in the
+'local' timezone (without) daylight savings. For simplicity, these times are
+scored as "UTC" according to R.
+
+```{r}
+kamloops$time[1:5]
+```
+
+
+The `finches` data, on the other hand, is set in a true timezone:
+```{r}
+finches$time[1:5]
+```
+
+This means that it also has daylight savings applied, eep!
+
+To interpolate, the data must be in the same timezone. The easiest way forward
+is to convert the `finches` data to the same, 'local' time without daylight
+savings as the `kamloops` data. 
+
+First we'll transform it to non-daylight savings
+(i.e. Etc/GMT+8, note that the +8 is [intentionally inverted](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones))
+with the `with_tz()` function from the `lubridate` package.
+
+```{r}
+finches <- mutate(finches, time = lubridate::with_tz(time, "Etc/GMT+8"))
+```
+
+Now we'll force to UTC with the `force_tz()` function from the `lubridate` package.
+
+```{r}
+finches <- mutate(finches, time = lubridate::force_tz(time, "UTC"))
+```
+
+Now `finches` and `kamloops` data are in the same nominal and actual timezones!
+
+Let's continue
+
+```{r}
 finches_temperature <- weather_interp(data = finches, weather = kamloops, cols = "temp")
 summary(finches_temperature)
 glimpse(finches_temperature)
+```
 
+Let's take a look at the interpolate points specifically
+```{r}
+compare1 <- select(finches_temperature, time, temp)
+compare1 <- mutate(compare1, type = "interpolated")
+compare2 <- select(kamloops, time, temp)
+compare2 <- mutate(compare2, type = "original")
+compare <- bind_rows(compare1, compare2)
+
+ggplot(data = compare, aes(x = time, y = temp, colour = type)) +
+  geom_point(alpha = 0.5) +
+  scale_x_datetime(limits = range(compare1$time))
+```
+
+What does this mean for our data?
+```{r}
 ggplot(data = finches_temperature, aes(x = temp, fill = animal_id)) +
   theme_bw() +
   theme(legend.position = "none") +
   geom_histogram(binwidth = 1) +
   labs(x = "Temperature (C)", y = "Activity Count", fill = "Finch ID")
-```
-
-Or summarized:
-```{r, out.width = "100%", fig.width = 8, dpi = 200}
-finches_temperature <- finches_temperature %>%
-  group_by(date) %>%
-  summarize(n = length(time),
-            temp = mean(temp))
-
-ggplot(data = finches_temperature, aes(x = date, y = n)) +
-  theme_bw() +
-  theme(legend.position = "top") +
-  geom_point(aes(shape = "Activity")) +
-  geom_line(aes(y = temp * 100, colour = "Temperature")) +
-  scale_colour_discrete(name = "") +
-  scale_shape_discrete(name = "") +
-  scale_y_continuous(name = "Activity", sec.axis = sec_axis(~. / 100, name = "Temperature (C)"))
 ```
 
 ## Data gaps

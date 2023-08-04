@@ -1,6 +1,6 @@
 # Steps/Commands to run before a CRAN release -----------------------------
 
-version <- "0.6.3"
+version <- "0.7.0"
 #usethis::use_release_issue(version = v)
 
 
@@ -52,6 +52,21 @@ devtools::check(remote = TRUE, manual = TRUE, run_dont_test = TRUE,
                 env_vars = list("NOT_CRAN" = ""))
 devtools::check(remote = TRUE, manual = TRUE, run_dont_test = TRUE)
 
+
+## Once it is released create signed release on github
+usethis::use_github_release()
+
+# Prep for next
+usethis::use_dev_version()
+
+
+
+
+
+
+
+
+# CRAN workflow ---------------------------------
 # TURN OFF INTERNET AND TRY AGAIN
 devtools::check(remote = TRUE, manual = TRUE, run_dont_test = TRUE,
                 env_vars = list("NOT_CRAN" = ""))

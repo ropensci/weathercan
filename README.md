@@ -33,7 +33,7 @@ website](https://docs.ropensci.org/weathercan/)
 ## Installation
 
 You can install `weathercan` from the [rOpenSci
-r-Universe](https://ropensci.r-universe.dev/ui):
+r-Universe](https://ropensci.r-universe.dev/ui/):
 
 ``` r
 install.packages("weathercan", 
@@ -104,8 +104,8 @@ stations_search("Kamloops", interval = "hour")
     ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_2010 normals_1971_2000
     ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
     ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE             
-    ## 2 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2022 FALSE   FALSE             FALSE            
-    ## 3 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2022 FALSE   FALSE             FALSE
+    ## 2 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2023 FALSE   FALSE             FALSE            
+    ## 3 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2023 FALSE   FALSE             FALSE
 
 Time frame must be one of “hour”, “day”, or “month”.
 
@@ -115,12 +115,17 @@ You can also search by proximity:
 stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour")
 ```
 
+    ## The legacy packages maptools, rgdal, and rgeos, underpinning this package
+    ## will retire shortly. Please refer to R-spatial evolution reports on
+    ## https://r-spatial.org/r/2023/05/15/evolution4.html for details.
+    ## This package is now running under evolution status 0
+
     ## # A tibble: 3 × 17
     ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_2010 normals_1971_2000 distance
     ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>                <dbl>
     ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE                  8.64
-    ## 2 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2022 FALSE   FALSE             FALSE                 8.64
-    ## 3 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2022 FALSE   FALSE             FALSE                 9.28
+    ## 2 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2023 FALSE   FALSE             FALSE                 8.64
+    ## 3 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2023 FALSE   FALSE             FALSE                 9.28
 
 You can update this list of stations with
 
@@ -128,7 +133,7 @@ You can update this list of stations with
 stations_dl()
 ```
 
-    ## According to Environment Canada, Modified Date: 2022-12-28 23:30 UTC
+    ## According to Environment Canada, Modified Date: 2023-01-24 23:30 UTC
 
     ## Environment Canada Disclaimers:
     ## "Station Inventory Disclaimer: Please note that this inventory list is a snapshot of stations on our website as of the modified date, and may be subject to change without notice."
@@ -144,10 +149,10 @@ stations_meta()
 ```
 
     ## $ECCC_modified
-    ## [1] "2022-12-28 23:30:00 UTC"
+    ## [1] "2023-01-24 23:30:00 UTC"
     ## 
     ## $weathercan_modified
-    ## [1] "2023-01-12"
+    ## [1] "2023-07-21"
 
 **Note:** For reproducibility, if you are using the stations list to
 gather your data, it can be a good idea to take note of the ECCC date of
@@ -182,7 +187,7 @@ kam
     ##  8 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 07:00:00 2018  02    01    07:00 Cloudy     NA
     ##  9 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 08:00:00 2018  02    01    08:00 <NA>       NA
     ## 10 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 09:00:00 2018  02    01    09:00 <NA>       NA
-    ## # … with 1,766 more rows
+    ## # ℹ 1,766 more rows
 
 You can also download data from multiple stations at once:
 
@@ -221,7 +226,6 @@ vignette for more details.
 citation("weathercan")
 ```
 
-    ## 
     ## To cite 'weathercan' in publications, please use:
     ## 
     ##   LaZerte, Stefanie E and Sam Albers (2018). weathercan: Download and format weather data from Environment and Climate Change Canada. The

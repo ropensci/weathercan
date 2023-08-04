@@ -336,7 +336,7 @@ frost_extract <- function(f, climate_id) {
     readr::local_edition(1)
     f1 <- readr::read_csv(I(f[frost_free:last]),
                           col_names = c("variable", "value", "frost_code"),
-                          col_types = readr::cols()) %>%
+                          col_types = readr::cols(), progress = FALSE) %>%
       tidyr::spread(key = "variable", value = "value")
 
     n <- tibble_to_list(f_names[f_names$variable %in% names(f1),
@@ -353,7 +353,8 @@ frost_extract <- function(f, climate_id) {
   if(length(frost_probs) > 0) {
     readr::local_edition(1)
     f2 <- readr::read_csv(I(f[frost_probs:length(f)]),
-                          col_names = FALSE, col_types = readr::cols()) %>%
+                          col_names = FALSE, col_types = readr::cols(),
+                          progress = FALSE) %>%
       as.data.frame()
     f2 <- data.frame(prob = rep(c("10%", "25%", "33%", "50%",
                                   "66%", "75%", "90%"), 3),
@@ -373,7 +374,8 @@ frost_extract <- function(f, climate_id) {
   } else {
     r <- dplyr::full_join(
       dplyr::mutate(f1, climate_id = climate_id),
-      dplyr::mutate(f2, climate_id = climate_id), by = "climate_id") %>%
+      dplyr::mutate(f2, climate_id = climate_id),
+      by = "climate_id", relationship = "many-to-many") %>%
       dplyr::select(-climate_id)
   }
 

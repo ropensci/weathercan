@@ -186,7 +186,7 @@ stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
 
   headings <- readr::read_lines(httr::content(resp, as = "text",
                                               encoding = "Latin1"),
-                                n_max = 5)
+                                n_max = 5, progress = FALSE)
   if(!any(stringr::str_detect(headings, "Climate ID"))){
     stop("Could not read stations list (",
          getOption("weathercan.urls.stations"), ")", call. = FALSE)
@@ -216,7 +216,8 @@ stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
 
   raw <- httr::content(resp, as = "text", encoding = "Latin1")
 
-  s <- readr::read_delim(raw, skip = skip, col_types = readr::cols())
+  s <- readr::read_delim(raw, skip = skip, col_types = readr::cols(),
+                         progress = FALSE)
   s <- dplyr::select(s,
                      "prov" = "Province",
                      "station_name" = "Name",
@@ -256,7 +257,7 @@ stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
     dplyr::distinct() %>%
     dplyr::mutate(
       tz = lutz::tz_lookup_coords(.data$lat, .data$lon, method = "accurate"),
-      tz = purrr::map_chr(.data$tz, ~tz_offset(.x)),
+      tz = purrr::map_chr(.data$tz, ~tz_diff(.x)),
       tz = dplyr::if_else(is.na(.data$lat) | is.na(.data$lon), NA_character_, .data$tz))
 
   s <- s %>%
@@ -366,7 +367,7 @@ stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
 #' stations_search(name = "Ottawa", normals_years = "1981-2010") # Same as above
 #' stations_search(name = "Ottawa", normals_years = "1971-2000") # 1971-2010
 #'
-#' if(requireNamespace("sp")) {
+#' if(requireNamespace("sf")) {
 #'   stations_search(coords = c(53.915495, -122.739379))
 #' }
 #'
@@ -416,9 +417,9 @@ stations_search <- function(name = NULL,
       stop("'coord' takes one pair of lat and lon in a numeric vector")
     }
 
-    if(!requireNamespace("sp", quietly = TRUE)) {
-     stop("Package 'sp' required to search for stations using coordinates. ",
-          "Use the code \"install.packages('sp')\" to install.", call. = FALSE)
+    if(!requireNamespace("sf", quietly = TRUE)) {
+     stop("Package 'sf' required to search for stations using coordinates. ",
+          "Use the code \"install.packages('sf')\" to install.", call. = FALSE)
     }
 
   }
@@ -481,18 +482,25 @@ stations_search <- function(name = NULL,
 
   if(!is.null(coords)){
     if(verbose) message("Calculating station distances")
-    coords <- as.numeric(as.character(coords[c(2,1)]))
-    locs <- as.matrix(stn[!is.na(stn$lat), c("lon", "lat")])
-    stn$distance <- NA
-    stn$distance[!is.na(stn$lat)] <- sp::spDistsN1(pts = locs,
-                                                   pt = coords, longlat = TRUE)
-    stn <- dplyr::arrange(stn, .data$distance)
+
+    coords <- sf::st_point(coords[c(2,1)]) %>%
+      sf::st_sfc(crs = 4326)
+
+    locs <- dplyr::select(stn, "station_id", "lon", "lat") %>%
+      tidyr::drop_na() %>%
+      dplyr::distinct() %>%
+      sf::st_as_sf(coords = c("lon", "lat"), crs = 4326) %>%
+      dplyr::mutate(distance = as.vector(sf::st_distance(coords, .data$geometry))/1000) %>%
+      sf::st_drop_geometry()
+
+    stn <- dplyr::left_join(stn, locs, by = "station_id") %>%
+      dplyr::arrange(.data$distance)
 
     i <- which(stn$distance <= dist)
     if(length(i) == 0) {
      i <- 1:10
      if(!quiet) message("No stations within ", dist,
-                        "km. Returning closest 10 stations.")
+                        "km. Returning closest 10 records")
     }
   }
 

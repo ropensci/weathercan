@@ -1,9 +1,9 @@
 Package: weathercan
 Type: Package
 Title: Download Weather Data from Environment and Climate Change Canada
-Version: 0.6.3
+Version: 0.7.0
 Authors@R: c(
-     person("Steffi", "LaZerte", email = "steffi@steffi.ca", role = c("aut","cre"), comment = c(ORCID = "0000-0002-7690-8360")),
+     person("Steffi", "LaZerte", email = "sel@steffilazerte.ca", role = c("aut","cre"), comment = c(ORCID = "0000-0002-7690-8360")),
      person("Sam", "Albers", email = "sam.albers@gmail.com", role = c("ctb"), comment = c(ORCID = "0000-0002-9270-7884")),
      person("Nick", "Brown", email = "nicholas512@gmail.com", role = c("ctb"), comment = c(ORCID = "0000-0002-2719-0671")),
      person("Kevin", "Cazelles", email = "kevin.cazelles@gmail.com", role = c("ctb"), comment = c(ORCID = "0000-0001-6619-9874")))
@@ -35,7 +35,7 @@ Imports:
     tidyselect (>= 1.0.0),
     xml2 (>= 0.1.2),
     rappdirs (>= 0.3.3)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 Suggests:
     devtools,
@@ -48,10 +48,10 @@ Suggests:
     naniar,
     rmarkdown,
     sf,
-    sp,
-    testthat,
-    vcr (>= 1.0.2)
+    testthat (>= 3.0.0),
+    vcr (>= 1.0.2),
+    withr
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
-Config/Needs/website: meteoland
+Config/testthat/edition: 3

@@ -147,7 +147,7 @@ weather_dl <- function(station_ids,
     if(nrow(stn1) == 0) {
       if(length(station_ids) > 1) {
         missing <- c(missing, s)
-        if(!quiet) message("No data for station ", s)
+        if(verbose) message("No data for station ", s)
         next
       } else {
 
@@ -163,13 +163,13 @@ weather_dl <- function(station_ids,
       }
     }
 
-    if(inherits(try(as.Date(stn1$start), silent = TRUE), "try-error")) {
+    if(!lubridate::is.Date(stn1$start)) {
       stn1 <- dplyr::mutate(stn1,
                             start = lubridate::ymd(as.character(.data$start),
                                                    truncated = 2),
                             start = lubridate::floor_date(.data$start, "year"))
     }
-    if(inherits(try(as.Date(stn1$end), silent = TRUE), "try-error")) {
+    if(!lubridate::is.Date(stn1$end)) {
       stn1 <- dplyr::mutate(stn1,
                             end = lubridate::ymd(as.character(.data$end),
                                                  truncated = 2),
@@ -263,7 +263,7 @@ weather_dl <- function(station_ids,
 
       if(nrow(temp) == 0 || all(is.na(temp) | temp == "")) {
         if(length(station_ids) > 1) {
-          if(!quiet) message("No data for station ", s)
+          if(verbose) message("No data for station ", s)
           missing <- c(missing, s)
           next
         } else {
@@ -456,7 +456,8 @@ weather_raw <- function(html, skip = 0,
   readr::local_edition(1)
   suppressWarnings({ # when some data are missing, final columns not present
     w <- readr::read_csv(I(raw), n_max = nrows, skip = skip,
-                         col_types = paste(rep("c", ncols), collapse = ""))})
+                         col_types = paste(rep("c", ncols), collapse = ""),
+                         progress = FALSE)})
   # Get rid of special symbols right away
   w <- remove_sym(w)
 
@@ -657,7 +658,8 @@ meta_raw <- function(html, encoding = "UTF-8", interval, return = "meta") {
       stringr::str_replace_all("(\\t)+", "\\\t") %>%
       readr::read_tsv(., n_max = i,
                       col_names = FALSE,
-                      col_types = readr::cols())
+                      col_types = readr::cols(),
+                      progress = FALSE)
 
     if(ncol(r) > 2) {
       stop("Problems parsing metadata. Submit an issue at ",
@@ -671,7 +673,8 @@ meta_raw <- function(html, encoding = "UTF-8", interval, return = "meta") {
       stringr::str_remove("\\*https\\:\\/\\/climate.weather.gc.ca\\/FAQ_e.html#Q5") %>%
       readr::read_tsv(., skip = stringr::str_which(split, "Legend") + 1,
                       col_names = FALSE,
-                      col_types = readr::cols())
+                      col_types = readr::cols(),
+                      progress = FALSE)
   }
   # Get rid of any special symbols
   remove_sym(r)

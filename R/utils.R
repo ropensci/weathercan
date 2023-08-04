@@ -1,11 +1,13 @@
-tz_offset <- function(tz, as = "tz") {
-  t <- as.numeric(difftime(as.POSIXct("2016-01-01 00:00:00", tz = "UTC"),
-                           as.POSIXct("2016-01-01 00:00:00", tz = tz), units = "hours"))
+tz_diff <- function(tz, as = "tz") {
+  if(!is.na(tz)) {
+    t <- as.numeric(difftime(as.POSIXct("2016-01-01 00:00:00", tz = "UTC"),
+                             as.POSIXct("2016-01-01 00:00:00", tz = tz), units = "hours"))
 
-  if(as == "tz"){
-    if(t > 0) t <- paste0("Etc/GMT-", t)
-    if(t <= 0) t <- paste0("Etc/GMT+", abs(t))
-  }
+    if(as == "tz"){
+      if(t > 0) t <- paste0("Etc/GMT-", t)
+      if(t <= 0) t <- paste0("Etc/GMT+", abs(t))
+    }
+  } else t <- NA_character_
   t
 }
 

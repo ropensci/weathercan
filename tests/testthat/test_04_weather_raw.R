@@ -1,10 +1,8 @@
 
 # weather_raw --------------------------------------------------------------
-context("weather_raw")
 
 test_that("weather_html/raw (hour) download a data frame", {
   skip_on_cran()
-  #if(on_CRAN()) mockery::stub(weather_html, "get_html", tests$weather_html_01)
 
   vcr::use_cassette("weather_raw1", {
     expect_silent(wd <- weather_html(station_id = 51423,
@@ -15,14 +13,12 @@ test_that("weather_html/raw (hour) download a data frame", {
   expect_silent(wd <- weather_raw(wd))
 
   ## Basics
-  expect_is(wd, "data.frame")
+  expect_s3_class(wd, "data.frame")
   expect_length(wd, 30)
   expect_equal(nrow(wd), 744)
-  expect_is(dplyr::pull(wd, "Date/Time (LST)"), "character")
+  expect_type(dplyr::pull(wd, "Date/Time (LST)"), "character")
   expect_lt(length(data.frame(wd)[is.na(data.frame(wd))]),
             length(data.frame(wd)[!is.na(data.frame(wd))]))
-  #expect_true(stringi::stri_escape_unicode(wd[, "Data Quality"][1]) %in%
-  #              c("\\u2021"))
 })
 
 test_that("weather_html/raw (day) download a data frame", {
@@ -36,10 +32,10 @@ test_that("weather_html/raw (day) download a data frame", {
   expect_silent(wd <- weather_raw(wd))
 
   ## Basics
-  expect_is(wd, "data.frame")
+  expect_s3_class(wd, "data.frame")
   expect_length(wd, 31)
   expect_equal(nrow(wd), 365)
-  expect_is(dplyr::pull(wd, "Date/Time"), "character")
+  expect_type(dplyr::pull(wd, "Date/Time"), "character")
   expect_lt(length(data.frame(wd)[is.na(data.frame(wd))]),
             length(data.frame(wd)[!is.na(data.frame(wd))]))
   # expect_true(stringi::stri_escape_unicode(wd[, "Data Quality"][1]) %in%
@@ -58,10 +54,10 @@ test_that("weather_html/raw (month) download a data frame", {
   expect_silent(wd <- weather_raw(wd))
 
   ## Basics
-  expect_is(wd, "data.frame")
+  expect_s3_class(wd, "data.frame")
   expect_length(wd, 29)
   expect_equal(nrow(wd), 842)
-  expect_is(dplyr::pull(wd, "Date/Time"), "character")
+  expect_type(dplyr::pull(wd, "Date/Time"), "character")
   expect_lt(length(data.frame(wd)[is.na(data.frame(wd))]),
             length(data.frame(wd)[!is.na(data.frame(wd))]))
 
@@ -78,7 +74,7 @@ test_that("meta_html/raw (hour) download meta data", {
     expect_silent(meta <- meta_raw(meta, interval = "hour"))
 
   ## Basics
-  expect_is(meta, "data.frame")
+  expect_s3_class(meta, "data.frame")
   expect_length(meta, 2)
   expect_equal(nrow(meta), 8)
   m <- paste0("(", paste0(m_names, collapse = ")|("), ")")
@@ -96,7 +92,7 @@ test_that("meta_html/raw (day) download meta data", {
   expect_silent(meta <- meta_raw(meta, interval = "day"))
 
   ## Basics
-  expect_is(meta, "data.frame")
+  expect_s3_class(meta, "data.frame")
   expect_length(meta, 2)
   expect_equal(nrow(meta), 8)
   m <- paste0("(", paste0(m_names, collapse = ")|("), ")")
@@ -114,7 +110,7 @@ test_that("meta_html/raw (month) download meta data", {
   expect_silent(meta <- meta_raw(meta, interval = "month"))
 
   ## Basics
-  expect_is(meta, "data.frame")
+  expect_s3_class(meta, "data.frame")
   expect_length(meta, 2)
   expect_equal(nrow(meta), 8)
   m <- paste0("(", paste0(m_names, collapse = ")|("), ")")
