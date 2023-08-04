@@ -11,7 +11,7 @@ articles:
   normals: normals.html
   reproducibility: reproducibility.html
   weathercan: weathercan.html
-last_built: 2023-07-25T15:20Z
+last_built: 2023-08-04T16:25Z
 urls:
   reference: http://ropensci.github.io/weathercan/reference
   article: http://ropensci.github.io/weathercan/articles
