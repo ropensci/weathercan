@@ -1,0 +1,60 @@
+body {
+  font-size: 15px;
+}
+
+pre {
+  font-size: 14px;
+}
+
+a {
+  color: #8F0500 !important;
+}
+
+a:focus, a:hover {
+  color: #8F0500 !important;
+}
+
+.navbar-link {
+  color: #FFFFFF !important;
+}
+
+
+.navbar-inverse .navbar-collapse {
+  border-color: #C90000 !important;
+}
+
+.navbar-inverse {
+  background-color: #C90000 !important;
+  color: #000000;
+}
+
+.navbar-brand, .navbar-inverse .navbar-nav, .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+  background-color: #C90000 !important;
+  color: #FFFFFF !important;
+}
+
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+  background-color: #C90000 !important;
+}
+
+
+.navbar-inverse .navbar-nav a {
+  color: #FFFFFF !important;
+}
+
+.navbar-inverse .navbar-nav a:hover, .navbar-inverse .navbar-nav a:focus  {
+  color: #000000 !important;
+}
+
+.navbar-inverse .navbar-nav .dropdown-menu a {
+  color: #666666 !important;
+}
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+  background-color: #C90000 !important;
+  color: #FFFFFF !important;
+}
+
+.label-default{
+  background-color: #C90000 !important;
+}
