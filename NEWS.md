@@ -1,3 +1,5 @@
+# weathercan 0.7.0.9000
+
 # weathercan 0.7.0
 - Internal updates to tests (testthat 3rd edition)
 - Small changes to messages
