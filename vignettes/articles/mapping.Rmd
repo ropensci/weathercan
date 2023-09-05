@@ -5,6 +5,10 @@ date: "`r Sys.Date()`"
 output: rmarkdown::html_document
 ---
 
+```{r, include = FALSE}
+knitr::opts_chunk$set(cache = FALSE)
+```
+
 <style>
 div.leaflet-popup-content-wrapper {
   width: 700px;
@@ -36,10 +40,6 @@ This article is based on the blog post [Integrating data from weathercan](https:
 In that article I demonstrated how we can incorporate data from `weathercan` into spatial visualizations. In this article I'd like to take that even further and show you how you can create interactive maps which highlight spatial variability in weather data.
 
 Here, we'll take a look at annual temperatures throughout different Eco Regions in Manitoba, Canada.
-
-```{r, include = FALSE}
-knitr::opts_chunk$set(cache = FALSE)
-```
 
 ## Setup
 
@@ -274,8 +274,6 @@ leaflet(width = "750px", height = "85vh") %>%
   addLayersControl(
     overlayGroups = "Stations",
     options = layersControlOptions(collapsed = FALSE))
-
-
 ```
 
 I think this is an interesting way of looking at the Eco Regions in Manitoba. 
