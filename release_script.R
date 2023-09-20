@@ -53,6 +53,20 @@ devtools::check(remote = TRUE, manual = TRUE, run_dont_test = TRUE,
 devtools::check(remote = TRUE, manual = TRUE, run_dont_test = TRUE)
 
 
+## Update codemeta
+codemetar::write_codemeta()
+
+## Build site (so website uses newest version)
+## Update website
+## BUILD PACKAGE FIRST!
+#pkgdown::build_articles(lazy = TRUE)
+# pkgdown::build_home()
+# pkgdown::build_news()
+# pkgdown::build_reference()
+#pkgdown::build_articles(lazy = FALSE)
+
+pkgdown::build_site(lazy = FALSE)
+
 ## Once it is released create signed release on github
 usethis::use_github_release()
 
@@ -125,19 +139,7 @@ rhub::check_for_cran(path = paste0("../weathercan_", version, ".tar.gz"),
 # Update cran-comments
 
 
-## Update codemeta
-codemetar::write_codemeta()
 
-## Build site (so website uses newest version)
-## Update website
-## BUILD PACKAGE FIRST!
-#pkgdown::build_articles(lazy = TRUE)
-# pkgdown::build_home()
-# pkgdown::build_news()
-# pkgdown::build_reference()
-#pkgdown::build_articles(lazy = FALSE)
-
-pkgdown::build_site(lazy = TRUE)
 
 
 ## Push to github

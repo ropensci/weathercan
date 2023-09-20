@@ -35,7 +35,7 @@ div.info.legend.leaflet-control br {
 }
 </style>
 
-This article is based on the blog post [Integrating data from weathercan](https://ropensci.org/blog/2018/03/06/weathercan/) written for [ROpenSci](https://ropensci.org) March 6th 2018.
+This article is based on the blog post [Integrating data from weathercan](https://ropensci.org/blog/2018/03/06/weathercan/) written for [rOpenSci](https://ropensci.org) March 6th 2018.
 
 In that article I demonstrated how we can incorporate data from `weathercan` into spatial visualizations. In this article I'd like to take that even further and show you how you can create interactive maps which highlight spatial variability in weather data.
 
