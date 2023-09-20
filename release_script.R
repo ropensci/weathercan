@@ -36,12 +36,12 @@ devtools::build_readme()
 # Check/update URLS
 urlchecker::url_check()
 
+# Precompile Vignettes
+source("vignettes/precompile.R")
 
 
 ## Checks
 
-# Precompile Vignettes
-source("vignettes/precompile.R")
 
 # Run WITH and WITHOUT internet
 #devtools::run_examples(run_donttest = TRUE)

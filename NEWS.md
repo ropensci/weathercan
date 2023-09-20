@@ -1,4 +1,4 @@
-# weathercan 0.7.0.9000
+# weathercan 0.7.1
 - `stations()` now uses the most recent version of the data even if it hasn't changed
   (prevent message regarding age of stations data frame). 
 - Remove startup message about deprecated stations data frame
