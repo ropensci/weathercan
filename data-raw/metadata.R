@@ -87,7 +87,11 @@ h <- paste0("https://www.canada.ca/en/environment-climate-change/services/",
             "technical-documentation-climate-normals.html") %>%
   xml2::read_html()
 
-glossary_normals <- tibble(ECCC_name = html_nodes(h, "h3") %>% html_text(),
+
+ECCC_name <- html_nodes(h, "h3") %>% html_text() %>%
+  str_subset("(Environment and Climate Change Canada)|(Government of Canada)", negate = TRUE)
+
+glossary_normals <- tibble(ECCC_name,
                            description = html_nodes(h, "h3+p") %>% html_text()) %>%
   filter(!str_detect(ECCC_name, "Thank you")) %>%
   mutate(weathercan_name =
