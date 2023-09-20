@@ -28,7 +28,7 @@ This package makes it easier to search for and download multiple months/years of
 
 Bear in mind that these downloads can be fairly large and performing multiple downloads may use up ECCC's bandwidth unnecessarily. Try to stick to what you need.
 
-For more details and tutorials checkout the [weathercan website](https://docs.ropensci.org/weathercan/)
+For more details and tutorials checkout the [weathercan website](https://docs.ropensci.org/weathercan/) (or see the [development docs](http://ropensci.github.io/weathercan/))
 
 > Check out the Demo weathercan shiny dashboard ([html](https://steffilazerte.shinyapps.io/weathercan_shiny/); [source](https://github.com/steffilazerte/weathercan_shiny))
 

@@ -78,9 +78,14 @@ stations_read <- function() {
   if (file.exists(stations_file())) {
     local_file <- stations_file() %>%
       readr::read_rds()
-    if(pkg_file$meta$ECCC_modified < local_file$meta$ECCC_modified) return(local_file)
-  }
-  pkg_file
+    # If pkg version is newer than local, use pkg else use local
+    if(pkg_file$meta$ECCC_modified > local_file$meta$ECCC_modified) {
+      r <- pkg_file
+    } else {
+      r <- local_file
+    }
+  } else r <- pkg_file
+  r
 }
 
 stations_file <- function() {

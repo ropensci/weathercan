@@ -1,3 +1,9 @@
+# weathercan 0.7.1
+- `stations()` now uses the most recent version of the data even if it hasn't changed
+  (prevent message regarding age of stations data frame). 
+- Remove startup message about deprecated stations data frame
+- Move Mapping Article from docs to website (https://steffilazerte.ca/posts/weathercan-mapping/)
+
 # weathercan 0.7.0
 - Internal updates to tests (testthat 3rd edition)
 - Small changes to messages

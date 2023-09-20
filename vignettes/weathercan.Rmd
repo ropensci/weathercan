@@ -1,7 +1,7 @@
 ---
 title: "Getting Started"
 author: "Steffi LaZerte"
-date: "2023-07-21"
+date: "2023-09-20"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Getting Started}
@@ -142,9 +142,9 @@ stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour"
 ## # A tibble: 3 × 17
 ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_2010 normals_1971_2000 distance
 ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>                <dbl>
-## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE                  8.64
-## 2 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2023 FALSE   FALSE             FALSE                 8.64
-## 3 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2023 FALSE   FALSE             FALSE                 9.28
+## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE                  8.61
+## 2 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2023 FALSE   FALSE             FALSE                 8.61
+## 3 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2023 FALSE   FALSE             FALSE                 9.26
 ```
 
 We can also perform more complex searches using `filter()` function from the `dplyr` package
@@ -199,7 +199,7 @@ stations_meta()
 ## [1] "2023-01-24 23:30:00 UTC"
 ## 
 ## $weathercan_modified
-## [1] "2023-07-21"
+## [1] "2023-09-20"
 ```
 
 
@@ -210,15 +210,6 @@ Once you have your `station_id`(s) you can download weather data:
 
 ```r
 kam <- weather_dl(station_ids = 51423, start = "2016-01-01", end = "2016-02-15")
-```
-
-```
-## As of weathercan v0.3.0 time display is either local time or UTC
-## See Details under ?weather_dl for more information.
-## This message is shown once per session
-```
-
-```r
 kam
 ```
 
@@ -276,7 +267,7 @@ ggplot(data = kam.pg, aes(x = time, y = temp, group = station_name, colour = sta
   theme_minimal()
 ```
 
-<img src="figures/weathercan-unnamed-chunk-12-1.png" alt="plot of chunk unnamed-chunk-12" width="80%" style="display: block; margin: auto;" />
+<img src="figures/weathercan-unnamed-chunk-12-1.png" alt="plot of chunk unnamed-chunk-12" style="display: block; margin: auto;" />
 
 Or you can use the vector created above:
 
