@@ -1,7 +1,7 @@
 ---
 title: "Climate Normals"
 author: "Steffi LaZerte"
-date: "2023-07-21"
+date: "2023-09-20"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Climate Normals}

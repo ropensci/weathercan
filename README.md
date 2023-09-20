@@ -24,7 +24,8 @@ multiple downloads may use up ECCC’s bandwidth unnecessarily. Try to
 stick to what you need.
 
 For more details and tutorials checkout the [weathercan
-website](https://docs.ropensci.org/weathercan/)
+website](https://docs.ropensci.org/weathercan/) (or see the [development
+docs](http://ropensci.github.io/weathercan/))
 
 > Check out the Demo weathercan shiny dashboard
 > ([html](https://steffilazerte.shinyapps.io/weathercan_shiny/);
@@ -115,17 +116,12 @@ You can also search by proximity:
 stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour")
 ```
 
-    ## The legacy packages maptools, rgdal, and rgeos, underpinning this package
-    ## will retire shortly. Please refer to R-spatial evolution reports on
-    ## https://r-spatial.org/r/2023/05/15/evolution4.html for details.
-    ## This package is now running under evolution status 0
-
     ## # A tibble: 3 × 17
     ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_2010 normals_1971_2000 distance
     ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>                <dbl>
-    ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE                  8.64
-    ## 2 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2023 FALSE   FALSE             FALSE                 8.64
-    ## 3 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2023 FALSE   FALSE             FALSE                 9.28
+    ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE                  8.61
+    ## 2 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2023 FALSE   FALSE             FALSE                 8.61
+    ## 3 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2023 FALSE   FALSE             FALSE                 9.26
 
 You can update this list of stations with
 
@@ -152,7 +148,7 @@ stations_meta()
     ## [1] "2023-01-24 23:30:00 UTC"
     ## 
     ## $weathercan_modified
-    ## [1] "2023-07-21"
+    ## [1] "2023-09-20"
 
 **Note:** For reproducibility, if you are using the stations list to
 gather your data, it can be a good idea to take note of the ECCC date of
