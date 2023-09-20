@@ -84,7 +84,7 @@ stations_read <- function() {
     } else {
       r <- local_file
     }
-  }
+  } else r <- pkg_file
   r
 }
 
