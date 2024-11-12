@@ -1,7 +1,7 @@
 ---
 title: "Getting Started"
 author: "Steffi LaZerte"
-date: "2023-09-20"
+date: "2024-11-12"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Getting Started}
@@ -13,7 +13,7 @@ vignette: >
 
 
 
-```r
+``` r
 library(dplyr)
 library(ggplot2)
 library(weathercan)
@@ -25,7 +25,7 @@ library(weathercan)
 `weathercan` includes the function `stations()` which returns a list of stations and their details (including `station_id`).
 
 
-```r
+``` r
 head(stations())
 ```
 
@@ -41,7 +41,7 @@ head(stations())
 ## 6 AB    EDMONTON CORONATION       1796 301BK03        NA <NA>   53.6 -114.  671. Etc/GMT+7 month     1978  1979 FALSE   FALSE             FALSE
 ```
 
-```r
+``` r
 glimpse(stations())
 ```
 
@@ -69,7 +69,7 @@ glimpse(stations())
 You can look through this data frame directly, or you can use the `stations_search` function:
 
 
-```r
+``` r
 stations_search("Kamloops")
 ```
 
@@ -93,7 +93,7 @@ stations_search("Kamloops")
 You can narrow down your search by specifying time intervals (options are "hour", "day", or "month"):
 
 
-```r
+``` r
 stations_search("Kamloops", interval = "hour")
 ```
 
@@ -109,7 +109,7 @@ stations_search("Kamloops", interval = "hour")
 You can specify more than one interval:
 
 
-```r
+``` r
 stations_search("Kamloops", interval = c("hour", "month"))
 ```
 
@@ -134,7 +134,7 @@ stations_search("Kamloops", interval = c("hour", "month"))
 You can also search by proximity. These results include a new column `distance` specifying the distance in km from the coordinates:
 
 
-```r
+``` r
 stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour")
 ```
 
@@ -151,7 +151,7 @@ We can also perform more complex searches using `filter()` function from the `dp
 direction on the data returned by stations():
 
 
-```r
+``` r
 BCstations <- stations() %>%
   filter(prov %in% c("BC")) %>%
   filter(interval == "hour") %>%
@@ -171,7 +171,7 @@ BCstations
 ## 3 BC    WARFIELD RCS                     31067 1148705     71401 XWF    49.1 -118.  567. Etc/G… hour      2001  2023 FALSE   FALSE             FALSE
 ```
 
-```r
+``` r
 ## weather_dl() accepts numbers so we can create a vector to input into weather:
 stn_vector <- BCstations$station_id
 stn_vector
@@ -184,13 +184,13 @@ stn_vector
 You can update this list of stations with
 
 
-```r
+``` r
 stations_dl()
 ```
 
 And check when it was last updated with
 
-```r
+``` r
 stations_meta()
 ```
 
@@ -199,7 +199,7 @@ stations_meta()
 ## [1] "2023-01-24 23:30:00 UTC"
 ## 
 ## $weathercan_modified
-## [1] "2023-09-20"
+## [1] "2024-11-08"
 ```
 
 
@@ -208,8 +208,17 @@ stations_meta()
 Once you have your `station_id`(s) you can download weather data:
 
 
-```r
+``` r
 kam <- weather_dl(station_ids = 51423, start = "2016-01-01", end = "2016-02-15")
+```
+
+```
+## As of weathercan v0.3.0 time display is either local time or UTC
+## See Details under ?weather_dl for more information.
+## This message is shown once per session
+```
+
+``` r
 kam
 ```
 
@@ -228,12 +237,15 @@ kam
 ##  9 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 08:00:00 2016  01    01    08:00 <NA>       NA
 ## 10 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 09:00:00 2016  01    01    09:00 Snow       NA
 ## # ℹ 1,094 more rows
+## # ℹ 19 more variables: hmdx_flag <chr>, precip_amt <dbl>, precip_amt_flag <chr>, pressure <dbl>, pressure_flag <chr>, rel_hum <dbl>, rel_hum_flag <chr>,
+## #   temp <dbl>, temp_dew <dbl>, temp_dew_flag <chr>, temp_flag <chr>, visib <dbl>, visib_flag <chr>, wind_chill <dbl>, wind_chill_flag <chr>, wind_dir <dbl>,
+## #   wind_dir_flag <chr>, wind_spd <dbl>, wind_spd_flag <chr>
 ```
 
 You can also download data from multiple stations at once:
 
 
-```r
+``` r
 kam.pg <- weather_dl(station_ids = c(48248, 51423), start = "2016-01-01", end = "2016-02-15")
 
 kam.pg
@@ -254,25 +266,31 @@ kam.pg
 ##  9 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 08:00:00 2016  01    01    08:00 <NA>       NA
 ## 10 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 09:00:00 2016  01    01    09:00 <NA>       NA
 ## # ℹ 2,198 more rows
+## # ℹ 19 more variables: hmdx_flag <chr>, precip_amt <dbl>, precip_amt_flag <chr>, pressure <dbl>, pressure_flag <chr>, rel_hum <dbl>, rel_hum_flag <chr>,
+## #   temp <dbl>, temp_dew <dbl>, temp_dew_flag <chr>, temp_flag <chr>, visib <dbl>, visib_flag <chr>, wind_chill <dbl>, wind_chill_flag <chr>, wind_dir <dbl>,
+## #   wind_dir_flag <chr>, wind_spd <dbl>, wind_spd_flag <chr>
 ```
 
 
 And plot it:
 
 
-```r
+``` r
 ggplot(data = kam.pg, aes(x = time, y = temp, group = station_name, colour = station_name)) +
   theme(legend.position = "top") +
   geom_line() +
   theme_minimal()
 ```
 
-<img src="figures/weathercan-unnamed-chunk-12-1.png" alt="plot of chunk unnamed-chunk-12" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures/weathercan-unnamed-chunk-12-1.png" alt="plot of chunk unnamed-chunk-12"  />
+<p class="caption">plot of chunk unnamed-chunk-12</p>
+</div>
 
 Or you can use the vector created above:
 
 
-```r
+``` r
 stn_vec_df <- weather_dl(station_ids = stn_vector, start = "2016-01-01", end = "2016-02-15")
 
 stn_vec_df
@@ -293,6 +311,9 @@ stn_vec_df
 ##  9 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 08:00:00 2016  01    01    08:00 <NA>       NA
 ## 10 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 09:00:00 2016  01    01    09:00 <NA>       NA
 ## # ℹ 3,302 more rows
+## # ℹ 19 more variables: hmdx_flag <chr>, precip_amt <dbl>, precip_amt_flag <chr>, pressure <dbl>, pressure_flag <chr>, rel_hum <dbl>, rel_hum_flag <chr>,
+## #   temp <dbl>, temp_dew <dbl>, temp_dew_flag <chr>, temp_flag <chr>, visib <dbl>, visib_flag <chr>, wind_chill <dbl>, wind_chill_flag <chr>, wind_dir <dbl>,
+## #   wind_dir_flag <chr>, wind_spd <dbl>, wind_spd_flag <chr>
 ```
 
 For more information on the data flags, see the [Flags vignette](flags.html), for more information on units and terms, see the [Terms and Units vignette](glossary.html).
@@ -302,7 +323,7 @@ For more information on the data flags, see the [Flags vignette](flags.html), fo
 To access climate normals, you first need to know the `climate_id` associated with the station you're interested in.
 
 
-```r
+``` r
 stations_search("Winnipeg", normals_years = "current")
 ```
 
@@ -317,7 +338,7 @@ The current year range is 1981-2010, but you can also search for stations in the
 previous year range:
 
 
-```r
+``` r
 stations_search("Winnipeg", normals_years = "1971-2000")
 ```
 
@@ -333,14 +354,31 @@ Note that the Winnipeg station has normals for both year ranges.
 Then you can download the climate normals with the `normals_dl()` function.
 
 
-```r
+``` r
 n <- normals_dl("5023222")
+```
+
+```
+## Warning: There were 2 warnings in `dplyr::mutate()`.
+## The first warning was:
+## ℹ In argument: `frost = purrr::map2(...)`.
+## Caused by warning:
+## ! 21 parsing failures.
+## row col  expected     actual         file
+##   4  -- 3 columns 15 columns literal data
+##   5  -- 3 columns 15 columns literal data
+##   6  -- 3 columns 15 columns literal data
+##   7  -- 3 columns 15 columns literal data
+##   8  -- 3 columns 15 columns literal data
+## ... ... ......... .......... ............
+## See problems(...) for more details.
+## ℹ Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.
 ```
 
 There are two parts to the normals data, average weather measurements and average frost dates.
 
 
-```r
+``` r
 library(tidyr)
 unnest(n, normals)
 ```
@@ -362,30 +400,43 @@ unnest(n, normals)
 ## 11 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Nov                  -4.9 A                           3.6 A                      -0.5
 ## 12 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Dec                 -13.2 A                           4.4 A                      -8.5
 ## 13 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      Year                  3   A                           1.2 A                       8.7
+## # ℹ 192 more variables: temp_daily_max_code <chr>, temp_daily_min <dbl>, temp_daily_min_code <chr>, temp_extreme_max <dbl>, temp_extreme_max_code <chr>,
+## #   temp_extreme_max_date <date>, temp_extreme_max_date_code <chr>, temp_extreme_min <dbl>, temp_extreme_min_code <chr>, temp_extreme_min_date <date>,
+## #   temp_extreme_min_date_code <chr>, rain <dbl>, rain_code <chr>, snow <dbl>, snow_code <chr>, precip <dbl>, precip_code <chr>, snow_mean_depth <dbl>,
+## #   snow_mean_depth_code <chr>, snow_median_depth <dbl>, snow_median_depth_code <chr>, snow_depth_month_end <dbl>, snow_depth_month_end_code <chr>,
+## #   rain_extreme_daily <dbl>, rain_extreme_daily_code <chr>, rain_extreme_daily_date <date>, rain_extreme_daily_date_code <chr>, snow_extreme_daily <dbl>,
+## #   snow_extreme_daily_code <chr>, snow_extreme_daily_date <date>, snow_extreme_daily_date_code <chr>, precip_extreme_daily <dbl>,
+## #   precip_extreme_daily_code <chr>, precip_extreme_daily_date <date>, precip_extreme_daily_date_code <chr>, snow_extreme_depth <dbl>, …
 ```
 
-```r
+``` r
 unnest(n, frost)
 ```
 
 ```
-## # A tibble: 7 × 14
-##   prov  station_name                climate_id normals_years meets_wmo normals  frost_code date_first_fall_frost date_last_spring_frost length_frost_free prob 
-##   <chr> <chr>                       <chr>      <chr>         <lgl>     <list>   <chr>                      <dbl>                  <dbl>             <dbl> <chr>
-## 1 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                            265                    143               121 10%  
-## 2 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                            265                    143               121 25%  
-## 3 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                            265                    143               121 33%  
-## 4 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                            265                    143               121 50%  
-## 5 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                            265                    143               121 66%  
-## 6 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                            265                    143               121 75%  
-## 7 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                            265                    143               121 90%
+## # A tibble: 6 × 32
+##   prov  station_name                climate_id normals_years meets_wmo normals  frost_code date_first_fall_frost date_last_spring_frost length_frost_free
+##   <chr> <chr>                       <chr>      <chr>         <lgl>     <list>   <chr>                      <dbl>                  <dbl>             <dbl>
+## 1 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                            265                    143               121
+## 2 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                            265                    143               121
+## 3 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                            265                    143               121
+## 4 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> <NA>                          NA                     NA                NA
+## 5 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> <NA>                          NA                     NA                NA
+## 6 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> <NA>                          NA                     NA                NA
+## # ℹ 22 more variables: `Probability of first temperature in fall <= 0C, on or before indicated date (10%)` <dbl>,
+## #   `Probability of first temperature in fall <= 0C, on or before indicated date (25%)` <dbl>,
+## #   `Probability of first temperature in fall <= 0C, on or before indicated date (33%)` <dbl>,
+## #   `Probability of first temperature in fall <= 0C, on or before indicated date (50%)` <dbl>,
+## #   `Probability of first temperature in fall <= 0C, on or before indicated date (66%)` <dbl>,
+## #   `Probability of first temperature in fall <= 0C, on or before indicated date (75%)` <dbl>,
+## #   `Probability of first temperature in fall <= 0C, on or before indicated date (90%)` <dbl>, …
 ```
 
 
 Alternatively, download the 1971-2000 normals:
 
 
-```r
+``` r
 n <- normals_dl("5023222", normals_years = "1971-2000")
 unnest(n, normals)
 ```
@@ -407,14 +458,22 @@ unnest(n, normals)
 ## 11 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Nov                  -5.3 A                           3.3 A                      -0.9
 ## 12 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Dec                 -14.4 A                           4.2 A                      -9.7
 ## 13 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Year                  2.6 A                           1.3 A                       8.3
+## # ℹ 218 more variables: temp_daily_max_code <chr>, temp_daily_min <dbl>, temp_daily_min_code <chr>, temp_extreme_max <dbl>, temp_extreme_max_code <chr>,
+## #   temp_extreme_max_date <date>, temp_extreme_max_date_code <chr>, temp_extreme_min <dbl>, temp_extreme_min_code <chr>, temp_extreme_min_date <date>,
+## #   temp_extreme_min_date_code <chr>, rain <dbl>, rain_code <chr>, snow <dbl>, snow_code <chr>, precip <dbl>, precip_code <chr>, snow_mean_depth <dbl>,
+## #   snow_mean_depth_code <chr>, snow_median_depth <dbl>, snow_median_depth_code <chr>, snow_depth_month_end <dbl>, snow_depth_month_end_code <chr>,
+## #   rain_extreme_daily <dbl>, rain_extreme_daily_code <chr>, rain_extreme_daily_date <date>, rain_extreme_daily_date_code <chr>, snow_extreme_daily <dbl>,
+## #   snow_extreme_daily_code <chr>, snow_extreme_daily_date <date>, snow_extreme_daily_date_code <chr>, precip_extreme_daily <dbl>,
+## #   precip_extreme_daily_code <chr>, precip_extreme_daily_date <date>, precip_extreme_daily_date_code <chr>, snow_extreme_depth <dbl>, …
 ```
 
-```r
+``` r
 unnest(n, frost)
 ```
 
 ```
 ## # A tibble: 0 × 6
+## # ℹ 6 variables: prov <chr>, station_name <chr>, climate_id <chr>, normals_years <chr>, meets_wmo <lgl>, normals <list>
 ```
 
 

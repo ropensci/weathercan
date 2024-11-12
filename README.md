@@ -34,7 +34,7 @@ docs](http://ropensci.github.io/weathercan/))
 ## Installation
 
 You can install `weathercan` from the [rOpenSci
-r-Universe](https://ropensci.r-universe.dev/ui/):
+r-Universe](https://ropensci.r-universe.dev/):
 
 ``` r
 install.packages("weathercan", 
@@ -61,22 +61,23 @@ stations and their details (including `station_id`).
 head(stations())
 ```
 
-    ## # A tibble: 6 × 16
-    ##   prov  station_name        station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_2010 normals_1971_2000
+    ## # A tibble: 6 × 17
+    ##   prov  station_name        station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1991_2020 normals_1981_2010
     ##   <chr> <chr>                    <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
     ## 1 AB    DAYSLAND                  1795 301AR54        NA <NA>   52.9 -112.  689. Etc/GMT+7 day       1908  1922 FALSE   FALSE             FALSE            
     ## 2 AB    DAYSLAND                  1795 301AR54        NA <NA>   52.9 -112.  689. Etc/GMT+7 hour        NA    NA FALSE   FALSE             FALSE            
     ## 3 AB    DAYSLAND                  1795 301AR54        NA <NA>   52.9 -112.  689. Etc/GMT+7 month     1908  1922 FALSE   FALSE             FALSE            
     ## 4 AB    EDMONTON CORONATION       1796 301BK03        NA <NA>   53.6 -114.  671. Etc/GMT+7 day       1978  1979 FALSE   FALSE             FALSE            
     ## 5 AB    EDMONTON CORONATION       1796 301BK03        NA <NA>   53.6 -114.  671. Etc/GMT+7 hour        NA    NA FALSE   FALSE             FALSE            
-    ## 6 AB    EDMONTON CORONATION       1796 301BK03        NA <NA>   53.6 -114.  671. Etc/GMT+7 month     1978  1979 FALSE   FALSE             FALSE
+    ## 6 AB    EDMONTON CORONATION       1796 301BK03        NA <NA>   53.6 -114.  671. Etc/GMT+7 month     1978  1979 FALSE   FALSE             FALSE            
+    ## # ℹ 1 more variable: normals_1971_2000 <lgl>
 
 ``` r
 glimpse(stations())
 ```
 
     ## Rows: 26,382
-    ## Columns: 16
+    ## Columns: 17
     ## $ prov              <chr> "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", …
     ## $ station_name      <chr> "DAYSLAND", "DAYSLAND", "DAYSLAND", "EDMONTON CORONATION", "EDMONTON CORONATION", "EDMONTON CORONATION", "FLEET", "FLEET", "FLEET", …
     ## $ station_id        <dbl> 1795, 1795, 1795, 1796, 1796, 1796, 1797, 1797, 1797, 1798, 1798, 1798, 1799, 1799, 1799, 1800, 1800, 1800, 1801, 1801, 1801, 1802, …
@@ -91,6 +92,7 @@ glimpse(stations())
     ## $ start             <dbl> 1908, NA, 1908, 1978, NA, 1978, 1987, NA, 1987, 1987, NA, 1987, 1980, NA, 1980, 1980, NA, 1980, 1986, NA, 1986, 1987, NA, 1987, 1986…
     ## $ end               <dbl> 1922, NA, 1922, 1979, NA, 1979, 1990, NA, 1990, 1998, NA, 1998, 2009, NA, 2007, 1981, NA, 1981, 2019, NA, 2007, 1991, NA, 1991, 1995…
     ## $ normals           <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, TRU…
+    ## $ normals_1991_2020 <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,…
     ## $ normals_1981_2010 <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, TRU…
     ## $ normals_1971_2000 <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,…
 
@@ -101,12 +103,13 @@ You can look through this data frame directly, or you can use the
 stations_search("Kamloops", interval = "hour")
 ```
 
-    ## # A tibble: 3 × 16
-    ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_2010 normals_1971_2000
+    ## # A tibble: 3 × 17
+    ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1991_2020 normals_1981_2010
     ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
     ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE             
-    ## 2 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2023 FALSE   FALSE             FALSE            
-    ## 3 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2023 FALSE   FALSE             FALSE
+    ## 2 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2023 TRUE    TRUE              FALSE            
+    ## 3 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2023 TRUE    TRUE              FALSE            
+    ## # ℹ 1 more variable: normals_1971_2000 <lgl>
 
 Time frame must be one of “hour”, “day”, or “month”.
 
@@ -116,12 +119,13 @@ You can also search by proximity:
 stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour")
 ```
 
-    ## # A tibble: 3 × 17
-    ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_2010 normals_1971_2000 distance
-    ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>                <dbl>
-    ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE                  8.61
-    ## 2 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2023 FALSE   FALSE             FALSE                 8.61
-    ## 3 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2023 FALSE   FALSE             FALSE                 9.26
+    ## # A tibble: 3 × 18
+    ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1991_2020 normals_1981_2010
+    ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
+    ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE             
+    ## 2 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2023 TRUE    TRUE              FALSE            
+    ## 3 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2023 TRUE    TRUE              FALSE            
+    ## # ℹ 2 more variables: normals_1971_2000 <lgl>, distance <dbl>
 
 You can update this list of stations with
 
@@ -148,7 +152,7 @@ stations_meta()
     ## [1] "2023-01-24 23:30:00 UTC"
     ## 
     ## $weathercan_modified
-    ## [1] "2023-09-20"
+    ## [1] "2024-11-12"
 
 **Note:** For reproducibility, if you are using the stations list to
 gather your data, it can be a good idea to take note of the ECCC date of
@@ -200,10 +204,13 @@ associated with the station you’re interested in.
 stations_search("Winnipeg", normals_years = "current")
 ```
 
-    ## # A tibble: 1 × 13
-    ##   prov  station_name                station_id climate_id WMO_id TC_id   lat   lon  elev tz        normals normals_1981_2010 normals_1971_2000
-    ##   <chr> <chr>                            <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <lgl>   <lgl>             <lgl>            
-    ## 1 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/GMT+6 TRUE    TRUE              TRUE
+    ## # A tibble: 4 × 14
+    ##   prov  station_name                station_id climate_id WMO_id TC_id   lat   lon  elev tz        normals normals_1991_2020 normals_1981_2010 normals_1971_2000
+    ##   <chr> <chr>                            <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <lgl>   <lgl>             <lgl>             <lgl>            
+    ## 1 MB    WINNIPEG A CS                    27174 502S001     71849 XWG    49.9 -97.2  239. Etc/GMT+6 TRUE    TRUE              FALSE             FALSE            
+    ## 2 MB    WINNIPEG INTL A                  51097 5023227        NA YWG    49.9 -97.2  239. Etc/GMT+6 TRUE    TRUE              FALSE             FALSE            
+    ## 3 MB    WINNIPEG RICHARDSON AWOS         47407 5023226     71852 YWG    49.9 -97.2  239. Etc/GMT+6 TRUE    TRUE              FALSE             FALSE            
+    ## 4 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/GMT+6 TRUE    TRUE              TRUE              TRUE
 
 Then you can download the climate normals with the `normals_dl()`
 function.

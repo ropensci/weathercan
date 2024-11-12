@@ -1,7 +1,7 @@
 Package: weathercan
 Type: Package
 Title: Download Weather Data from Environment and Climate Change Canada
-Version: 0.7.1.9000
+Version: 0.7.2
 Authors@R: c(
      person("Steffi", "LaZerte", email = "sel@steffilazerte.ca", role = c("aut","cre"), comment = c(ORCID = "0000-0002-7690-8360")),
      person("Sam", "Albers", email = "sam.albers@gmail.com", role = c("ctb"), comment = c(ORCID = "0000-0002-9270-7884")),
@@ -18,7 +18,7 @@ Language: en-CA
 BugReports: https://github.com/ropensci/weathercan/issues/
 LazyData: TRUE
 URL: https://docs.ropensci.org/weathercan/, https://github.com/ropensci/weathercan/
-Depends: R (>= 3.3.0)
+Depends: R (>= 4.1.0)
 Imports:
     dplyr (>= 1.0.0),
     httr (>= 1.4.2),
@@ -35,7 +35,7 @@ Imports:
     tidyselect (>= 1.0.0),
     xml2 (>= 0.1.2),
     rappdirs (>= 0.3.3)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Roxygen: list(markdown = TRUE)
 Suggests:
     devtools,

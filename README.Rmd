@@ -34,7 +34,7 @@ For more details and tutorials checkout the [weathercan website](https://docs.ro
 
 ## Installation
 
-You can install `weathercan` from the [rOpenSci r-Universe](https://ropensci.r-universe.dev/ui/):
+You can install `weathercan` from the [rOpenSci r-Universe](https://ropensci.r-universe.dev/):
 
 ```{r, eval = FALSE}
 install.packages("weathercan", 

@@ -1,17 +1,15 @@
 # Steps/Commands to run before a CRAN release -----------------------------
 
-version <- "0.7.0"
-#usethis::use_release_issue(version = v)
+version <- "0.7.2"
+#usethis::use_release_issue(version = version)
 
-
-# Good practices --------------------
-goodpractice::gp()
-
+gert::git_pull()
+urlchecker::url_check()
 
 ## Update dependencies
 update(remotes::package_deps("weathercan", dependencies = TRUE))
 
-## Internal data files
+## Update internal data files
 source("data-raw/data-index.R")
 source("data-raw/data-raw.R")
 source("data-raw/metadata.R")
@@ -19,39 +17,36 @@ source("data-raw/metadata.R")
 ## Documentation
 
 # Update NEWS
+file.edit("NEWS.md")
 
 # Check spelling
 dict <- hunspell::dictionary('en_CA')
 devtools::spell_check()
 spelling::update_wordlist()
 
+# Check URLS
+urlchecker::url_check()
+
 # Check test coverage
 #covr::report()
 
 # Update README.Rmd
-# Compile README.md
-# REBUILD!
 devtools::build_readme()
-
-# Check/update URLS
-urlchecker::url_check()
 
 # Precompile Vignettes
 source("vignettes/precompile.R")
 
-
 ## Checks
-
-
 # Run WITH and WITHOUT internet
-#devtools::run_examples(run_donttest = TRUE)
-#devtools::test()
 
-# Local tests, as CRAN and not as CRAN
-devtools::check(remote = TRUE, manual = TRUE, run_dont_test = TRUE,
-                env_vars = list("NOT_CRAN" = ""))
-devtools::check(remote = TRUE, manual = TRUE, run_dont_test = TRUE)
+devtools::run_examples(run_donttest = TRUE)
+devtools::test()
 
+# Local tests
+devtools::check(cran = FALSE, manual = TRUE, run_dont_test = TRUE)
+devtools::check(cran = FALSE, manual = TRUE,
+                args = c("--no-examples", "--no-tests")) # Quick re-check as needed
+devtools::check_win_devel()
 
 ## Update codemeta
 codemetar::write_codemeta()
@@ -76,7 +71,8 @@ usethis::use_dev_version()
 
 
 
-
+# Good practices --------------------
+goodpractice::gp()
 
 
 

@@ -1,7 +1,7 @@
 ---
 title: "weathercan and tidyhydat"
 author: "Steffi LaZerte"
-date: "2023-09-20"
+date: "2024-11-12"
 output: rmarkdown::html_document
 ---
 
@@ -22,7 +22,7 @@ can compliment weather data from `weathercan` (and vice versa).
 ### Loading packages
 
 
-```r
+``` r
 library(weathercan)
 library(tidyhydat)
 ```
@@ -31,7 +31,7 @@ library(tidyhydat)
 ## Error in library(tidyhydat): there is no package called 'tidyhydat'
 ```
 
-```r
+``` r
 library(dplyr)
 library(ggplot2)
 library(lubridate)
@@ -44,7 +44,7 @@ library(glue)
 (Note, this can take a while!)
 
 
-```r
+``` r
 download_hydat()
 ```
 
@@ -62,50 +62,54 @@ The event occurred in late June/early July, so let's give ourselves a two-month
 range.
 
 
-```r
+``` r
 dates <- c("2020-06-01", "2020-08-01")
 ```
 
 We'll find a local Brandon weather station that has daily data for this range
 
-```r
+``` r
 stations_search("brandon", interval = "day",
                 starts_latest = 2020, ends_earliest = 2020)
 ```
 
 ```
 ## # A tibble: 2 × 16
-##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals
-##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>  
-## 1 MB    BRANDON A         50821 5010481     71140 YBR    49.9 -100.  409. Etc/GMT+6 day       2012  2023 FALSE  
-## 2 MB    BRANDON RCS       49909 5010490     71136 PBO    49.9 -100.  409. Etc/GMT+6 day       2012  2023 FALSE
+##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_2010
+##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>            
+## 1 MB    BRANDON A         50821 5010481     71140 YBR    49.9 -100.  409. Etc/GMT+6 day       2012  2023 FALSE   FALSE            
+## 2 MB    BRANDON RCS       49909 5010490     71136 PBO    49.9 -100.  409. Etc/GMT+6 day       2012  2023 FALSE   FALSE            
+## # ℹ 1 more variable: normals_1971_2000 <lgl>
 ```
 
 In this case "A" is for "Airport", let's go with that!
 
 
-```r
+``` r
 rain <- weather_dl(station_ids = 50821, interval = "day", start = dates[1], end = dates[2])
 ```
 
 Take a quick look:
 
 
-```r
+``` r
 ggplot(data = rain, aes(x = date, y = total_rain)) +
   theme_bw() +
   geom_bar(stat = "identity") +
   scale_y_continuous(name = "Total Rain (mm)", expand = c(0,0))
 ```
 
-<img src="figures/tidyhydat-unnamed-chunk-7-1.png" alt="plot of chunk unnamed-chunk-7" width="80%" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="figures/tidyhydat-unnamed-chunk-7-1.png" alt="plot of chunk unnamed-chunk-7" width="80%" />
+<p class="caption">plot of chunk unnamed-chunk-7</p>
+</div>
 
 Yikes! You can see why my downspout came off!
 
 Now let's get some HYDAT data to compare. First we'll find a local station
 
 
-```r
+``` r
 search_stn_name("brandon")
 ```
 
@@ -118,7 +122,7 @@ to only Manitoba and only stations with 2020 data with the `hy_stn_data_range()`
 function.
 
 
-```r
+``` r
 search_stn_name("brandon") %>%
   filter(PROV_TERR_STATE_LOC == "MB") %>%
   pull(STATION_NUMBER) %>%
@@ -134,7 +138,7 @@ Hmm, let's see what kind of data is available by looking at the included
 `hy_data_types` data frame.
 
 
-```r
+``` r
 filter(hy_data_types, DATA_TYPE %in% c("H", "Q"))
 ```
 
@@ -148,7 +152,7 @@ Great! We have both flow and water level data for a station number "05MH001",
 
 Let's grab the flow and water level data for this station.
 
-```r
+``` r
 flow <- hy_daily_flows(station_number = "05MH001",
                        start_date = dates[1], end_date = dates[2])
 ```
@@ -157,7 +161,7 @@ flow <- hy_daily_flows(station_number = "05MH001",
 ## Error in hy_daily_flows(station_number = "05MH001", start_date = dates[1], : could not find function "hy_daily_flows"
 ```
 
-```r
+``` r
 level <- hy_daily_levels(station_number = "05MH001",
                          start_date = dates[1], end_date = dates[2])
 ```
@@ -169,7 +173,7 @@ level <- hy_daily_levels(station_number = "05MH001",
 ### Ploting rain and flow
 
 
-```r
+``` r
 g <- ggplot() +
   theme_bw() +
   theme(axis.title.x = element_blank()) +
@@ -185,7 +189,7 @@ g <- ggplot() +
 ## Error in eval(expr, envir, enclos): object 'flow' not found
 ```
 
-```r
+``` r
 g
 ```
 
@@ -201,7 +205,7 @@ called "lag to peak").
 Let's add a bit of information about this lag to peak.
 
 
-```r
+``` r
 d <- data.frame(dates = c(rain$date[which.max(rain$total_precip)],
                           flow$Date[which.max(flow$Value)]),
                 y = max(flow$Value) + 5)
@@ -211,7 +215,7 @@ d <- data.frame(dates = c(rain$date[which.max(rain$total_precip)],
 ## Error in eval(expr, envir, enclos): object 'flow' not found
 ```
 
-```r
+``` r
 g +
   geom_path(data = d, aes(x = dates, y = y),
               arrow = arrow(length = unit(0.25, "lines"), ends = "both", type = "closed")) +
@@ -233,7 +237,7 @@ local contributions), which takes time to travel.
 ### Ploting rain and water level
 
 
-```r
+``` r
 g <- ggplot() +
   theme_bw() +
   theme(axis.title.x = element_blank()) +
@@ -251,7 +255,7 @@ g <- ggplot() +
 ## Error in eval(expr, envir, enclos): object 'level' not found
 ```
 
-```r
+``` r
 g
 ```
 
@@ -262,7 +266,7 @@ g
 Again there looks to be a lag, let's see if it's the same as before.
 
 
-```r
+``` r
 d <- data.frame(dates = c(rain$date[which.max(rain$total_precip)],
                           level$Date[which.max(level$Value)]),
                 y = max(level$Value)*1.00025)
@@ -272,7 +276,7 @@ d <- data.frame(dates = c(rain$date[which.max(rain$total_precip)],
 ## Error in eval(expr, envir, enclos): object 'level' not found
 ```
 
-```r
+``` r
 g +
   geom_path(data = d, aes(x = dates, y = y),
               arrow = arrow(length = unit(0.25, "lines"), ends = "both", type = "closed")) +
@@ -292,7 +296,7 @@ g +
 Looks like the flow and water level match up, perhaps we should take a closer look.
 
 
-```r
+``` r
 ggplot() +
   theme_bw() +
   theme(legend.position = c(0.8, 0.8)) +
@@ -306,6 +310,13 @@ ggplot() +
   scale_colour_manual(name = "Type",
                       values = c("Flow" = "cornflowerblue",
                                  "Level" = "grey30"))
+```
+
+```
+## Warning: A numeric `legend.position` argument in `theme()` was deprecated in ggplot2 3.5.0.
+## ℹ Please use the `legend.position.inside` argument of `theme()` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 ```
 
 ```

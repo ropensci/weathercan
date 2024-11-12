@@ -1,7 +1,7 @@
 citHeader("To cite 'weathercan' in publications, please use:")
 
 
-citEntry(entry = "article",
+bibentry(bibtype = "Article",
          title = "{weathercan}: {D}ownload and format weather data from Environment and Climate Change Canada",
          author = c(person("Stefanie E", "LaZerte"),
                     person("Sam", "Albers")),

@@ -1,28 +1,26 @@
 {
-  "@context": [
-    "http://purl.org/codemeta/2.0",
-    "http://schema.org"
-  ],
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "weathercan",
-  "description": "Provides means for downloading historical weather data from \n    the Environment and Climate Change Canada website \n    (<https://climate.weather.gc.ca/historical_data/search_historic_data_e.html>). \n    Data can be downloaded from multiple stations and over large date ranges \n    and automatically processed into a single dataset. Tools are also provided \n    to identify stations either by name or proximity to a location.",
+  "description": "Provides means for downloading historical weather data from the Environment and Climate Change Canada website (<https://climate.weather.gc.ca/historical_data/search_historic_data_e.html>). Data can be downloaded from multiple stations and over large date ranges and automatically processed into a single dataset. Tools are also provided to identify stations either by name or proximity to a location.",
   "name": "weathercan: Download Weather Data from Environment and Climate Change Canada",
+  "relatedLink": "https://docs.ropensci.org/weathercan/",
   "codeRepository": "https://github.com/ropensci/weathercan/",
   "issueTracker": "https://github.com/ropensci/weathercan/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.6.2",
+  "version": "0.7.2",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.1.2 (2021-11-01)",
+  "runtimePlatform": "R version 4.4.0 (2024-04-24)",
   "author": [
     {
       "@type": "Person",
       "givenName": "Steffi",
       "familyName": "LaZerte",
-      "email": "steffi@steffi.ca",
+      "email": "sel@steffilazerte.ca",
       "@id": "https://orcid.org/0000-0002-7690-8360"
     }
   ],
@@ -54,7 +52,7 @@
       "@type": "Person",
       "givenName": "Steffi",
       "familyName": "LaZerte",
-      "email": "steffi@steffi.ca",
+      "email": "sel@steffilazerte.ca",
       "@id": "https://orcid.org/0000-0002-7690-8360"
     }
   ],
@@ -181,20 +179,9 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "sp",
-      "name": "sp",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=sp"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "testthat",
       "name": "testthat",
+      "version": ">= 3.0.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -215,16 +202,28 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=vcr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "withr",
+      "name": "withr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=withr"
     }
   ],
-  "softwareRequirements": [
-    {
+  "softwareRequirements": {
+    "1": {
       "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
-      "version": ">= 3.3.0"
+      "version": ">= 4.1.0"
     },
-    {
+    "2": {
       "@type": "SoftwareApplication",
       "identifier": "dplyr",
       "name": "dplyr",
@@ -237,7 +236,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=dplyr"
     },
-    {
+    "3": {
       "@type": "SoftwareApplication",
       "identifier": "httr",
       "name": "httr",
@@ -250,7 +249,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=httr"
     },
-    {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "lubridate",
       "name": "lubridate",
@@ -263,7 +262,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=lubridate"
     },
-    {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "memoise",
       "name": "memoise",
@@ -276,13 +275,13 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=memoise"
     },
-    {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "methods",
       "name": "methods",
       "version": ">= 3.2.2"
     },
-    {
+    "7": {
       "@type": "SoftwareApplication",
       "identifier": "purrr",
       "name": "purrr",
@@ -295,7 +294,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=purrr"
     },
-    {
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "rlang",
       "name": "rlang",
@@ -308,7 +307,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=rlang"
     },
-    {
+    "9": {
       "@type": "SoftwareApplication",
       "identifier": "readr",
       "name": "readr",
@@ -321,7 +320,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=readr"
     },
-    {
+    "10": {
       "@type": "SoftwareApplication",
       "identifier": "rvest",
       "name": "rvest",
@@ -334,7 +333,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=rvest"
     },
-    {
+    "11": {
       "@type": "SoftwareApplication",
       "identifier": "stringi",
       "name": "stringi",
@@ -347,7 +346,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=stringi"
     },
-    {
+    "12": {
       "@type": "SoftwareApplication",
       "identifier": "stringr",
       "name": "stringr",
@@ -360,7 +359,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=stringr"
     },
-    {
+    "13": {
       "@type": "SoftwareApplication",
       "identifier": "tidyr",
       "name": "tidyr",
@@ -373,7 +372,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=tidyr"
     },
-    {
+    "14": {
       "@type": "SoftwareApplication",
       "identifier": "tidyselect",
       "name": "tidyselect",
@@ -386,7 +385,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=tidyselect"
     },
-    {
+    "15": {
       "@type": "SoftwareApplication",
       "identifier": "xml2",
       "name": "xml2",
@@ -399,7 +398,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=xml2"
     },
-    {
+    "16": {
       "@type": "SoftwareApplication",
       "identifier": "rappdirs",
       "name": "rappdirs",
@@ -411,11 +410,10 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=rappdirs"
-    }
-  ],
-  "releaseNotes": "https://github.com/ropensci/weathercan/blob/main/NEWS.md",
-  "readme": "https://github.com/ropensci/weathercan/blob/main/README.md",
-  "contIntegration": "https://app.codecov.io/gh/ropensci/weathercan",
+    },
+    "SystemRequirements": null
+  },
+  "fileSize": "11844.435KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -447,32 +445,13 @@
       }
     }
   ],
-  "provider": {
-    "@id": "https://cran.r-project.org",
-    "@type": "Organization",
-    "name": "Comprehensive R Archive Network (CRAN)",
-    "url": "https://cran.r-project.org"
-  },
+  "releaseNotes": "https://github.com/ropensci/weathercan/blob/master/NEWS.md",
+  "readme": "https://github.com/ropensci/weathercan/blob/main/README.md",
+  "contIntegration": ["https://github.com/ropensci/weathercan/actions", "https://app.codecov.io/gh/ropensci/weathercan"],
   "review": {
     "@type": "Review",
     "url": "https://github.com/ropensci/software-review/issues/160",
     "provider": "https://ropensci.org"
   },
-  "keywords": [
-    "weather-data",
-    "environment-canada",
-    "weather-downloader",
-    "r",
-    "rstats",
-    "r-package",
-    "peer-reviewed"
-  ],
-  "relatedLink": [
-    "https://CRAN.R-project.org/package=weathercan",
-    "https://docs.ropensci.org/weathercan",
-    "https://docs.ropensci.org/weathercan/"
-  ],
-  "copyrightHolder": {},
-  "funder": {},
-  "fileSize": "11280.82KB"
+  "keywords": ["weather-data", "environment-canada", "weather-downloader", "r", "rstats", "r-package", "peer-reviewed"]
 }
