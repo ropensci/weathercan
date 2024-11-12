@@ -339,10 +339,11 @@ stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
 #' @param normals_only DEPRECATED. Logical. Return only stations with climate
 #'   normals?
 #' @param normals_years Character. One of `NULL` (default), `current`,
-#'   `1981-2010`, or `1971-2000`. `current` returns only stations from most
-#'   recent normals year range. Default `NULL` does not filter by climate
-#'   normals. Specific year ranges return stations with normals in that period.
-#'   See Details for more specifics.
+#'   `1991-2020`, `1981-2010`, or `1971-2000`. `current` returns only stations
+#'   from the most recent *complete* normals year range (i.e. `1981-2010`).
+#'   Default `NULL` does not filter by climate normals. Specific year ranges
+#'   return stations with normals in that period. See Details for more
+#'   specifics.
 #' @param starts_latest Numeric. Restrict results to stations with data
 #'   collection beginning in or before the specified year.
 #' @param ends_earliest Numeric. Restrict results to stations with data
@@ -398,9 +399,9 @@ stations_search <- function(name = NULL,
     normals_years <- "current"
   }
   if(!is.null(normals_years) &&
-     !normals_years %in% c("current", "1981-2010", "1971-2000")) {
+     !normals_years %in% c("current", "1991-2020", "1981-2010", "1971-2000")) {
     stop("`normals_years` must either be `NULL` (don't filter by normals),",
-         "'current', '1981-2010' or '1971-2000'", call. = FALSE)
+         "'current', '1991-2020', '1981-2010' or '1971-2000'", call. = FALSE)
   }
 
   if(all(is.null(name), is.null(coords)) |
@@ -437,9 +438,17 @@ stations_search <- function(name = NULL,
                        .data$interval %in% !! interval, !is.na(.data$start))
 
   if(!is.null(normals_years)) {
-    yr <- "normals"
-    if(normals_years != "current") {
-      yr <- paste0(yr, "_", stringr::str_replace(normals_years, "-", "_"))
+
+    if(normals_years == "1991-2020") {
+      message(
+        "You can find out which stations have normals for 1991-2020, ",
+        "but be aware that they are not yet available for download via weathercan")
+    }
+
+    if(normals_years == "current") {
+      yr <- "normals_1981_2010"  # Currently set Normals
+    } else {
+      yr <- paste0("normals_", stringr::str_replace(normals_years, "-", "_"))
     }
     stn <- dplyr::filter(stn, .data[[yr]])
   } else {

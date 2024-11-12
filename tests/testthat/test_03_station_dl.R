@@ -94,7 +94,7 @@ test_that("stations() /stations_meta() return data", {
 
   expect_named(stations_meta(), c("ECCC_modified", "weathercan_modified"))
 
-  expect_length(s, 16)
+  expect_length(s, 17)
   expect_lt(length(data.frame(s)[is.na(data.frame(s))]),
             length(data.frame(s)[!is.na(data.frame(s))]))
   expect_type(s$prov, "character")
@@ -117,7 +117,7 @@ test_that("stations_search 'name' returns correct format", {
   expect_error(stations_search())
   expect_error(stations_search(name = mean()))
   expect_s3_class(stations_search("XXX"), "data.frame")
-  expect_length(stations_search("XXX"), 16)
+  expect_length(stations_search("XXX"), 17)
 })
 
 test_that("stations_search 'name' returns correct data", {
@@ -153,7 +153,7 @@ test_that("stations_search 'coords' returns correct format", {
   expect_error(stations_search(coords = 44))
   expect_message(stn <- stations_search(coords = c(54, -122)), "No stations within")
   expect_s3_class(stn, "data.frame")
-  expect_length(stn, 17)
+  expect_length(stn, 18)
   expect_gt(nrow(stn), 0)
 
   expect_snapshot_value(stn, style = "json2", tolerance = 0.001)
@@ -266,4 +266,6 @@ test_that("stations_search returns normals only", {
   expect_gt(nrow(stations()), nrow(s2))
   expect_equal(s$station_id, s1$station_id)
 
+  expect_message(s3 <- stations_search("Brandon", normals_years = "1991-2020"),
+                 "be aware that they are not yet available")
 })

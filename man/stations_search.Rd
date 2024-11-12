@@ -35,10 +35,11 @@ provided.}
 Must be any of "hour", "day", "month".}
 
 \item{normals_years}{Character. One of \code{NULL} (default), \code{current},
-\code{1981-2010}, or \code{1971-2000}. \code{current} returns only stations from most
-recent normals year range. Default \code{NULL} does not filter by climate
-normals. Specific year ranges return stations with normals in that period.
-See Details for more specifics.}
+\code{1991-2020}, \code{1981-2010}, or \code{1971-2000}. \code{current} returns only stations
+from the most recent \emph{complete} normals year range (i.e. \code{1981-2010}).
+Default \code{NULL} does not filter by climate normals. Specific year ranges
+return stations with normals in that period. See Details for more
+specifics.}
 
 \item{normals_only}{DEPRECATED. Logical. Return only stations with climate
 normals?}
