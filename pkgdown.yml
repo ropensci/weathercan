@@ -10,7 +10,7 @@ articles:
   reproducibility: reproducibility.html
   articles/tidyhydat: tidyhydat.html
   weathercan: weathercan.html
-last_built: 2024-11-12T23:20Z
+last_built: 2024-11-12T23:37Z
 urls:
   reference: https://docs.ropensci.org/weathercan/reference
   article: https://docs.ropensci.org/weathercan/articles
