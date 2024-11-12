@@ -75,12 +75,12 @@ stations_search("Brandon A", normals_years = "current")
 n <- normals_dl(climate_ids = "5010480")
 n
 
-# Pull out last frost data
+# Pull out last frost data *with* station information
 library(tidyr)
 f <- unnest(n, frost)
 f
 
-# Pull out normals
+# Pull out normals *with* station information
 nm <- unnest(n, normals)
 nm
 
@@ -93,13 +93,12 @@ n$frost
 
 # Download multiple stations for 1981-2010,
 n <- normals_dl(climate_ids = c("301C3D4", "301FFNJ", "301N49A"))
-n
+unnest(n, frost)
 
-# Note, putting both into the same data set can be done but makes for
+
+# Note, putting both normals and frost data into the same data set can be done but makes for
 # a very unweildly dataset (there is lots of repetition)
-nm <- unnest(n, normals)
-f <- unnest(n, frost)
-both <- dplyr::full_join(nm, f)
-both
+nm <- unnest(n, normals) |>
+  unnest(frost)
 \dontshow{\}) # examplesIf}
 }

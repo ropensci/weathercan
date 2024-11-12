@@ -1,5 +1,8 @@
 # weathercan (development version)
 
+# weathercan 0.7.2
+- Fix normals to work with new ECCC data format
+
 # weathercan 0.7.1
 - `stations()` now uses the most recent version of the data even if it hasn't changed
   (prevent message regarding age of stations data frame). 

@@ -176,9 +176,9 @@ test_that("normals_format()/frost_format() format data to correct class", {
 
   expect_silent(f_fmt <- frost_format(f)) %>%
     expect_s3_class("data.frame")
-  expect_null(f_fmt[["date_first_fall_frost"]])
-  expect_null(f_fmt[["prob_first_fall_temp_below_0_on_date"]])
-  expect_null(f_fmt[["frost_code"]])
+  expect_length(f_fmt[["date_first_fall_frost"]], 0)
+  expect_length(f_fmt[["prob_first_fall_temp_below_0_on_date"]], 0)
+  expect_length(f_fmt[["frost_code"]], 0)
 })
 
 
@@ -250,4 +250,12 @@ test_that("normals_dl() gets extreme wind chill correctly", {
 
   expect_silent(nd <- normals_dl(climate_id = "2100517")) %>%
     expect_s3_class("tbl_df")
+})
+
+test_that("normals_dl() multiple weird stations", {
+  skip_on_cran()
+  skip_if_offline()
+  expect_silent(nd <- normals_dl(climate_ids = c("301C3D4", "301FFNJ", "301N49A")))
+
+  expect_snapshot_value(nd, style = "json2", tolerance = 0.001)
 })

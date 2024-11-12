@@ -251,20 +251,20 @@ n_names <- tribble(
          variable_sub = paste0(variable, "_", subgroup))
 
 f_names <- tribble(
-  ~new_var, ~variable, ~group,
-  "date_last_spring_frost", "Average Date of Last Spring Frost", 1,
-  "date_first_fall_frost", "Average Date of First Fall Frost", 1,
-  "length_frost_free", "Average Length of Frost-Free Period", 1,
+  ~new_var, ~variable, ~group, ~match,
+  "date_last_spring_frost", "Average Date of Last Spring Frost", 1, "Average Date of Last Spring",
+  "date_first_fall_frost", "Average Date of First Fall Frost", 1, "Average Date of First Fall",
+  "length_frost_free", "Average Length of Frost-Free Period", 1, "Average Length",
   "prob_last_spring_temp_below_0_on_date",
   paste0("Probability of last temperature in spring of 0 ",
-         "C or lower on or after indicated dates"), 2,
+         "C or lower on or after indicated dates"), 2, "Probability of last temperature",
   "prob_first_fall_temp_below_0_on_date",
   paste0("Probability of first temperature in fall of 0 ",
-         "C or lower on or before indicated dates"), 2,
+         "C or lower on or before indicated dates"), 2, "Probability of first temperature",
   "prob_length_frost_free",
   paste0("Probability of frost-free period equal ",
-         "to or less than indicated period (Days)"), 2,
-  "probability", "probability", 3)
+         "to or less than indicated period (Days)"), 2, "Probability of frost-free",
+  "probability", "probability", 3, "probability")
 
 n_formats <- select(n_names, "new_var") %>%
   filter(!stringr::str_detect(new_var, "title")) %>%

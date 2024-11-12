@@ -10,7 +10,9 @@
 #'   data frame or the \code{\link{stations_search}} function to find Climate
 #'   IDs.
 #' @param normals_years Character. The year range for which you want climate
-#'   normals. Default "1981-2010".
+#'   normals. Default "1981-2010". One of "1971-2000", "1981-2010", "1991-2020".
+#'   Note: Some "1991-2020" are available online, but are not yet downloadable
+#'   via weathercan.
 #' @param format Logical. If TRUE (default) formats measurements to numeric and
 #'   date accordingly. Unlike `weather_dl()`, `normals_dl()` will always format
 #'   column headings as normals data from ECCC cannot be directly made into a
@@ -29,10 +31,11 @@
 #'   not the climate normals for this station met the WMO standards for
 #'   temperature and precipitation (i.e. both have code >= A). Each measurement
 #'   column has a corresponding `_code` column which reflects the data quality
-#'   of that measurement (see the [1981-2010 ECCC calculations
-#'   document](https://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf)
-#'   or the [1971-2000 ECCC calculations document](https://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1971_2000_Calculation_Information.pdf)
-#'   for more details)
+#'   of that measurement (see the
+#'   [1991-2020](https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1991_2020_Calculation_Information.pdf),
+#'   [1981-2010](https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf), or
+#'   [1971-2000](https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1971_2000_Calculation_Information.pdf)
+#'   for more details) ECCC calculation documents.
 #'
 #'   Climate normals are downloaded from the url stored in option
 #'   `weathercan.urls.normals`. To change this location use:
@@ -49,12 +52,12 @@
 #' n <- normals_dl(climate_ids = "5010480")
 #' n
 #'
-#' # Pull out last frost data
+#' # Pull out last frost data *with* station information
 #' library(tidyr)
 #' f <- unnest(n, frost)
 #' f
 #'
-#' # Pull out normals
+#' # Pull out normals *with* station information
 #' nm <- unnest(n, normals)
 #' nm
 #'
@@ -67,14 +70,13 @@
 #'
 #' # Download multiple stations for 1981-2010,
 #' n <- normals_dl(climate_ids = c("301C3D4", "301FFNJ", "301N49A"))
-#' n
+#' unnest(n, frost)
 #'
-#' # Note, putting both into the same data set can be done but makes for
+#'
+#' # Note, putting both normals and frost data into the same data set can be done but makes for
 #' # a very unweildly dataset (there is lots of repetition)
-#' nm <- unnest(n, normals)
-#' f <- unnest(n, frost)
-#' both <- dplyr::full_join(nm, f)
-#' both
+#' nm <- unnest(n, normals) |>
+#'   unnest(frost)
 #' @export
 
 normals_dl <- function(climate_ids, normals_years = "1981-2010",
@@ -88,6 +90,11 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
          "`stations_meta()` to check when it was last updated", call. = FALSE)
   }
   stn <- stations()
+
+  if(normals_years == "1991-2020") {
+    stop("The new normals for 1991-2020 are not yet available via weathercan",
+         call. = FALSE)
+  }
 
   check_ids(climate_ids, stn, type = "climate_id")
   check_normals(normals_years)
@@ -110,7 +117,6 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
     n <- dplyr::filter(n, .data$normals == TRUE) %>%
       dplyr::select(-"normals")
   }
-
 
   # Download data
   n <- n %>%
@@ -326,57 +332,66 @@ frost_extract <- function(f, climate_id) {
 
   if(all(f == "")) return(dplyr::tibble())
 
-  frost_free <- stringr::str_which(f, f_names$variable[f_names$group == 1][1])
-  frost_probs <- stringr::str_which(f, f_names$variable[f_names$group == 2][1])
+  frost_free <- stringr::str_which(f, f_names$match[f_names$group == 1][1])[1]
+  frost_probs <- stringr::str_which(f, f_names$match[f_names$group == 2][1])[1]
 
   # Frost free days overall
-  if(length(frost_free) > 0) {
+  if(any(!is.na(frost_free)) && length(frost_free) > 0) {
     if(length(frost_probs) == 0) last <- length(f) else last <- frost_probs - 1
 
     readr::local_edition(1)
     f1 <- readr::read_csv(I(f[frost_free:last]),
                           col_names = c("variable", "value", "frost_code"),
-                          col_types = readr::cols(), progress = FALSE) %>%
+                          col_types = readr::cols(), progress = FALSE) |>
       tidyr::spread(key = "variable", value = "value")
 
-    n <- tibble_to_list(f_names[f_names$variable %in% names(f1),
-                                c("new_var", "variable")])
-    f1 <- dplyr::rename(f1, !!n) %>%
+    nms <- purrr::map(stats::setNames(f_names$match, f_names$new_var),
+                      \(x) stringr::str_subset(names(f1), x)) |>
+      unlist()
+
+    f1 <- dplyr::rename(f1, !!nms) %>%
       dplyr::mutate_at(.vars = dplyr::vars(dplyr::contains("date")),
-                       ~lubridate::yday(lubridate::as_date(paste0("1999", .)))) %>%
+                       ~lubridate::yday(lubridate::as_date(paste0("1999", .)))) |>
       dplyr::mutate(length_frost_free =
                       stringr::str_extract(.data$length_frost_free, "[0-9]*"),
                     length_frost_free = as.numeric(.data$length_frost_free))
   } else f1 <- na_tibble(f_names$new_var[f_names$group == 1])
 
   # Frost free probabilities
-  if(length(frost_probs) > 0) {
+  if(any(!is.na(frost_probs)) && length(frost_probs) > 0) {
+
     readr::local_edition(1)
     f2 <- readr::read_csv(I(f[frost_probs:length(f)]),
                           col_names = FALSE, col_types = readr::cols(),
-                          progress = FALSE) %>%
-      as.data.frame()
-    f2 <- data.frame(prob = rep(c("10%", "25%", "33%", "50%",
-                                  "66%", "75%", "90%"), 3),
-                     value = c(t(f2[2, 2:8]), t(f2[4, 2:8]), t(f2[6, 2:8])),
-                     measure = c(rep(f2[1,1], 7), rep(f2[3,1], 7),
-                                 rep(f2[5,1], 7))) %>%
-      tidyr::spread("measure", "value")
+                          progress = FALSE) |>
+      dplyr::select(dplyr::where(\(x) !all(is.na(x)))) |>
+      dplyr::rename_with(
+        .fn = \(x) "prob",
+        .cols = dplyr::where(\(x) any(stringr::str_detect(x, "(P|p)robability")))) |>
+      dplyr::rename_with(
+        .fn = \(x) "value",
+        .cols = dplyr::where(\(x) {
+          any(stringr::str_detect(x, paste0("(", paste0(month.abb, collapse = ")|("), ")")))
+        })) |>
+      dplyr::mutate(measure = stringr::str_remove(.data$prob, "\\(\\d{2}%\\)"),
+                    prob = stringr::str_extract(.data$prob, "\\d{2}%")) |>
+      tidyr::pivot_wider(names_from = "measure", values_from = "value")
 
-    n <- tibble_to_list(f_names[f_names$variable %in% names(f2),
-                                c("new_var", "variable")])
+    nms <- purrr::map(stats::setNames(f_names$match, f_names$new_var),
+                      \(x) stringr::str_subset(names(f2), x)) |>
+      unlist()
 
-    f2 <- dplyr::rename(f2, !!n)
+    f2 <- dplyr::rename(f2, !!nms)
   } else f2 <- na_tibble(f_names$new_var[f_names$group == 2])
 
   if(nrow(f1) == 0 & nrow(f2) == 0) {
     r <- cbind(f1, f2)
   } else {
     r <- dplyr::full_join(
-      dplyr::mutate(f1, climate_id = climate_id),
-      dplyr::mutate(f2, climate_id = climate_id),
-      by = "climate_id", relationship = "many-to-many") %>%
-      dplyr::select(-climate_id)
+      dplyr::mutate(f1, climate_id = .env$climate_id),
+      dplyr::mutate(f2, climate_id = .env$climate_id),
+      by = "climate_id", relationship = "many-to-many") |>
+      dplyr::select(-"climate_id")
   }
 
   dplyr::as_tibble(r)
@@ -389,18 +404,20 @@ frost_find <- function(n, type = "extract") {
   # If no frost-free title, look for next measurement
 
   if(length(frost) == 0) {
-    for(i in f_names$variable) {
-      frost <- find_line(n, i)
-      if(length(frost) != 0) break
-    }
+    frost <- purrr::map(f_names$match, \(x) find_line(n, x)) |>
+      unlist() |>
+      min_na()
   }
 
   if(length(frost) == 1) {
     if(type == "extract") r <- n[(frost):length(n)]
     if(type == "remove") r <- n[1:(frost-1)]
-  } else {
+  } else if(length(frost) == 0) {
     if(type == "extract") r <- ""
     if(type == "remove") r <- n
+  } else{
+    stop("Problem identifying frost data in normals\nPlease report this here: ",
+         "https://github.com/ropensci/weathercan/issues", call. = FALSE)
   }
   r
 }
