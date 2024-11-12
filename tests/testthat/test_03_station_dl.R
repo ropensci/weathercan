@@ -36,7 +36,9 @@ vcr::use_cassette("stations_normals", {
 
     expect_gt(nrow(n), 1500)
     expect_named(n, c("station_name", "climate_id",
-                      "normals_1981_2010", "normals_1971_2000"))
+                      "normals_1991_2020",
+                      "normals_1981_2010",
+                      "normals_1971_2000"))
   })
 })
 
