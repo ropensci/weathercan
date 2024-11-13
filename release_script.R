@@ -62,13 +62,21 @@ codemetar::write_codemeta()
 
 pkgdown::build_site(lazy = FALSE)
 
+
+# Finalize --------------------
+
+## Merge when ready!
+usethis::pr_view()
+
+## Once merged close branch
+usethis::pr_finish()
+
 ## Once it is released create signed release on github
 usethis::use_github_release()
 
-# Prep for next
+## Prep for next
+usethis::pr_init("dev")
 usethis::use_dev_version()
-
-
 
 
 # Good practices --------------------
