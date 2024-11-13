@@ -44,7 +44,7 @@ n
 
 Because there are two different types of climate normals (weather measurements and first/last frost dates), the data are nested as two different datasets. We can see that the Airport (Richardson Int'l) has `r ncol(n$normals[[1]])` average weather measurements/codes as well as first/last frost dates.
 
-We can also see that this station has data quality sufficient to meet the WMO standards for temperature and precipitation (i.e. both these measurements have code >= A). See the [ECCC calculations document](https://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf) for more details.
+We can also see that this station has data quality sufficient to meet the WMO standards for temperature and precipitation (i.e. both these measurements have code >= A). See the [ECCC calculations document](https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf) for more details.
 
 To extract either data set we can use the `unnest()` function from the `tidyr` package.
 
@@ -100,7 +100,7 @@ normals_measurements %>%
 
 The measurements contained in the climate normals are very specific. To better understand how they are calculated please explore the following resources:
 
-- ECCC Climate Normals Calculations ([1981-2010](https://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf) | [1971-2000](https://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1971_2000_Calculation_Information.pdf))
+- ECCC Climate Normals Calculations ([1991-2020](https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1991_2020_Calculation_Information.pdf) | ([1981-2010](https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf) | [1971-2000](https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1971_2000_Calculation_Information.pdf))
     - [`weathercan` Climate Normals Codes](flags.html)
 - [ECCC Climate Normals Technical Documentation](https://www.canada.ca/en/environment-climate-change/services/climate-change/canadian-centre-climate-services/display-download/technical-documentation-climate-normals.html)
     - [`weathercan` Climate Normals Glossary](glossary_normals.html)

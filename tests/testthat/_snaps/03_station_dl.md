@@ -6,7 +6,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["prov", "station_name", "station_id", "climate_id", "WMO_id", "TC_id", "lat", "lon", "elev", "tz", "interval", "start", "end", "normals", "normals_1981_2010", "normals_1971_2000", "distance"]
+          "value": ["prov", "station_name", "station_id", "climate_id", "WMO_id", "TC_id", "lat", "lon", "elev", "tz", "interval", "start", "end", "normals", "normals_1991_2020", "normals_1981_2010", "normals_1971_2000", "distance"]
         },
         "row.names": {
           "type": "integer",
@@ -84,6 +84,11 @@
           "type": "double",
           "attributes": {},
           "value": [1962, 1962, 1980, 1980, 1975, 1975, 1978, 1978, 1965, 1965]
+        },
+        {
+          "type": "logical",
+          "attributes": {},
+          "value": [false, false, false, false, false, false, false, false, false, false]
         },
         {
           "type": "logical",

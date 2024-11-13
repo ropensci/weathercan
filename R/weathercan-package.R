@@ -33,21 +33,18 @@
 #'  - [`kamloops_day`]
 #'  - [`pg`]
 #'
-#' As well as several vignettes:
+#' As well as several vignettes available in the package and [Online](https://docs.ropensci.org/weathercan/):
 #'
-#'  - General Usage: `vignette("usage")`
-#'  - Merging and Interpolating: `vignette("interpolation")`
-#'  - Flags and Codes: `vignette("flags")`
-#'  - Weather Data Glossary: `vignette("glossary")`
-#'  - Climate Normals Glossary: `vignette("glossary_normals")`
+#'  - [General Usage](https://docs.ropensci.org/weathercan/articles/weathercan.html): `vignette("weathercan", package = "weathercan")`
+#'  - [Interpolating](https://docs.ropensci.org/weathercan/articles/interpolate_data.html): `vignette("interpolation", package = "weathercan")`
+#'  - [Reproducibility](https://docs.ropensci.org/weathercan/articles/reproducibility.html): `vignette("reproducibility", package = "weathercan")`
+#'  - [Flags and Codes](https://docs.ropensci.org/weathercan/articles/flags.html): `vignette("flags", package = "weathercan")`
+#'  - [Weather: Terms and Units](https://docs.ropensci.org/weathercan/articles/glossary.html): `vignette("glossary", package = "weathercan")`
+#'  - [Climate Normals: Terms and Units](https://docs.ropensci.org/weathercan/articles/glossary_normals.html): `vignette("glossary_normals", package = "weathercan")`
 #'
-#' [Online](https://docs.ropensci.org/weathercan/) we also have some
-#' advanced articles:
+#' We also have some advanced articles:
 #'
-#'  - Using `weathercan` with [tidyverse](https://www.tidyverse.org/)
-#'  ([here](https://docs.ropensci.org/weathercan/articles/articles/use_with_tidyverse.html))
-#'  - Mapping weather data
-#'  ([here](https://docs.ropensci.org/weathercan/articles/articles/mapping.html))
+#'  - [Using `weathercan` with tidyhydat](https://docs.ropensci.org/weathercan/articles/tidyhydat.html))
 #'
 #' @references
 #' Environment and Climate Change Canada: <https://www.canada.ca/en/environment-climate-change.html>
@@ -57,12 +54,10 @@
 #' ECCC Historical Climate Data: <https://climate.weather.gc.ca/>
 #'
 #'
-#' @docType package
-#' @name weathercan-package
-#' @aliases weathercan weathercan-package
+#' @keywords internal
+"_PACKAGE"
 #' @importFrom dplyr "%>%"
-#' @importFrom rlang .data
-
+#' @importFrom rlang .data .env
 NULL
 
 # Dealing with CRAN Notes due to Non-standard evaluation
@@ -85,7 +80,6 @@ NULL
           "https://climate.weather.gc.ca/climate_normals/station_inventory_e.html",
           weathercan.time.message = FALSE)
 
-
   # CRAN Note avoidance
   if(getRversion() >= "2.15.1")
     utils::globalVariables(
@@ -95,4 +89,10 @@ NULL
       )
     )
   invisible()
+}
+
+.onAttach <- function(libname, pkgname) {
+  packageStartupMessage(
+    "As of v0.7.2, the `normals` column in `stations()` reflects whether or not ",
+    "there\nare *any* normals available (not just the most recent).")
 }

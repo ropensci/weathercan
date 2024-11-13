@@ -20,7 +20,9 @@ data frame or the \code{\link{stations_search}} function to find Climate
 IDs.}
 
 \item{normals_years}{Character. The year range for which you want climate
-normals. Default "1981-2010".}
+normals. Default "1981-2010". One of "1971-2000", "1981-2010", "1991-2020".
+Note: Some "1991-2020" are available online, but are not yet downloadable
+via weathercan.}
 
 \item{format}{Logical. If TRUE (default) formats measurements to numeric and
 date accordingly. Unlike \code{weather_dl()}, \code{normals_dl()} will always format
@@ -57,9 +59,11 @@ The data also returns a column called \code{meets_wmo} this reflects whether or
 not the climate normals for this station met the WMO standards for
 temperature and precipitation (i.e. both have code >= A). Each measurement
 column has a corresponding \verb{_code} column which reflects the data quality
-of that measurement (see the \href{https://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf}{1981-2010 ECCC calculations document}
-or the \href{https://climate.weather.gc.ca/doc/Canadian_Climate_Normals_1971_2000_Calculation_Information.pdf}{1971-2000 ECCC calculations document}
-for more details)
+of that measurement (see the
+\href{https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1991_2020_Calculation_Information.pdf}{1991-2020},
+\href{https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf}{1981-2010}, or
+\href{https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1971_2000_Calculation_Information.pdf}{1971-2000}
+for more details) ECCC calculation documents.
 
 Climate normals are downloaded from the url stored in option
 \code{weathercan.urls.normals}. To change this location use:
@@ -75,12 +79,12 @@ stations_search("Brandon A", normals_years = "current")
 n <- normals_dl(climate_ids = "5010480")
 n
 
-# Pull out last frost data
+# Pull out last frost data *with* station information
 library(tidyr)
 f <- unnest(n, frost)
 f
 
-# Pull out normals
+# Pull out normals *with* station information
 nm <- unnest(n, normals)
 nm
 
@@ -93,13 +97,12 @@ n$frost
 
 # Download multiple stations for 1981-2010,
 n <- normals_dl(climate_ids = c("301C3D4", "301FFNJ", "301N49A"))
-n
+unnest(n, frost)
 
-# Note, putting both into the same data set can be done but makes for
+
+# Note, putting both normals and frost data into the same data set can be done but makes for
 # a very unweildly dataset (there is lots of repetition)
-nm <- unnest(n, normals)
-f <- unnest(n, frost)
-both <- dplyr::full_join(nm, f)
-both
+nm <- unnest(n, normals) |>
+  unnest(frost)
 \dontshow{\}) # examplesIf}
 }

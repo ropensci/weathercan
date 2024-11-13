@@ -20,9 +20,10 @@ downloading station data.}
 \item{interval}{Interval of the data measurements ('hour', 'day', 'month')}
 \item{start}{Starting year of data record}
 \item{end}{Ending year of data record}
-\item{normals}{Whether current climate normals are available for that station}
+\item{normals}{Whether \emph{any} climate normals are available for that station (new behaivour)}
+\item{normals_1991_2020}{Whether 1991-2020 climate normals are available for that station. \strong{Note} that even if available, these are not yet downloadable via weathercan.}
 \item{normals_1981_2010}{Whether 1981-2010 climate normals are available for that station}
-\item{normals_1971_2000}{Whether 1981-2010 climate normals are available for that station}
+\item{normals_1971_2000}{Whether 1971-2000 climate normals are available for that station}
 }
 }
 \source{
@@ -45,12 +46,12 @@ information can be updated by running \code{stations_dl()}.
 }
 \examples{
 \dontshow{if (check_eccc()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-
 stations()
 stations_meta()
 
+# Which Manitoba stations have *any* climate normals?
+
 library(dplyr)
 filter(stations(), interval == "hour", normals == TRUE, prov == "MB")
-
 \dontshow{\}) # examplesIf}
 }

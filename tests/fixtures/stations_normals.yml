@@ -1,6 +1,762 @@
 http_interactions:
 - request:
     method: get
+    uri: https://climate.weather.gc.ca/climate_normals/station_inventory_e.html?yr=1991
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json, text/xml, application/xml, */*
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      date: Tue, 12 Nov 2024 21:32:06 GMT
+      server: Apache
+      strict-transport-security: max-age=63072000; preload
+      expires: '0'
+      cache-control: no-store, no-cache, must-revalidate
+      pragma: no-cache
+      content-disposition: attachment; filename=Canadian_Climate_Normals_1991_2020_station_inventory.csv
+      vary: Accept-Encoding
+      content-encoding: gzip
+      content-security-policy: frame-src 'self'; media-src 'self'; object-src 'self';
+        base-uri 'self'; form-action 'self' https://www.canada.ca https://canada.ca
+        https://recherche-search.gc.ca https://weather.gc.ca https://meteo.gc.ca
+      referrer-policy: no-referrer-when-downgrade
+      content-length: '16644'
+      content-type: text/csv;charset=UTF-8
+    body:
+      encoding: ''
+      file: no
+      string: "\uFEFF\"COMPOSITE_STATION_NAME\",\"NORMALS_CODE\",\"STATION_NAME\",\"CLIMATE_ID\",\"WMO_IDENTIFIER\",\"TC_IDENTIFIER\",\"PROVINCE_OR_TERRITORY\",\"LATITUDE\",\"LONGITUDE\",\"ELEVATION(m)\"\n\"BANFF\",\"C\",\"BANFF\",\"3050520\",\"\",\"\",\"ALBERTA\",\"51.18\",\"-115.57\",\"1383.7\"\n\"BANFF\",\"C\",\"BANFF
+        (AUT)\",\"3050521\",\"\",\"\",\"ALBERTA\",\"51.18\",\"-115.57\",\"1396.9\"\n\"BANFF\",\"C\",\"BANFF
+        CS\",\"3050519\",\"71122\",\"WZG\",\"ALBERTA\",\"51.19\",\"-115.55\",\"1396.9\"\n\"BROOKS\",\"D\",\"BROOKS\",\"3030QLP\",\"71457\",\"WBO\",\"ALBERTA\",\"50.56\",\"-111.85\",\"747.0\"\n\"CALGARY
+        (AIRPORT)\",\"C\",\"CALGARY INT'L A\",\"3031093\",\"71877\",\"YYC\",\"ALBERTA\",\"51.11\",\"-114.02\",\"1084.1\"\n\"CALGARY
+        (AIRPORT)\",\"C\",\"CALGARY INTL A\",\"3031092\",\"71877\",\"YYC\",\"ALBERTA\",\"51.12\",\"-114.01\",\"1099.1\"\n\"CAMROSE\",\"C\",\"CAMROSE\",\"3011240\",\"71254\",\"WRV\",\"ALBERTA\",\"53.05\",\"-112.82\",\"739.0\"\n\"COLD
+        LAKE\",\"A\",\"COLD LAKE A\",\"3081680\",\"71120\",\"YOD\",\"ALBERTA\",\"54.42\",\"-110.28\",\"541.0\"\n\"CORONATION\",\"C\",\"CORONATION
+        (AUT)\",\"3011885\",\"\",\"WCT\",\"ALBERTA\",\"52.08\",\"-111.45\",\"790.7\"\n\"CORONATION\",\"C\",\"CORONATION
+        A\",\"3011880\",\"\",\"\",\"ALBERTA\",\"52.07\",\"-111.45\",\"791.0\"\n\"CORONATION\",\"C\",\"CORONATION
+        CLIMATE\",\"3011887\",\"71318\",\"WCT\",\"ALBERTA\",\"52.07\",\"-111.45\",\"791.0\"\n\"DRUMHELLER
+        EAST\",\"G\",\"DRUMHELLER EAST\",\"30221LG\",\"71237\",\"WDZ\",\"ALBERTA\",\"51.45\",\"-112.68\",\"678.2\"\n\"EDMONTON
+        (AIRPORT)\",\"B\",\"EDMONTON INT'L A\",\"3012205\",\"71123\",\"YEG\",\"ALBERTA\",\"53.32\",\"-113.58\",\"723.3\"\n\"EDMONTON
+        (AIRPORT)\",\"B\",\"EDMONTON INTERNATIONAL CS\",\"3012206\",\"71155\",\"XEG\",\"ALBERTA\",\"53.31\",\"-113.61\",\"715.0\"\n\"EDMONTON
+        (AIRPORT)\",\"B\",\"EDMONTON INTL A\",\"3012216\",\"71123\",\"YEG\",\"ALBERTA\",\"53.31\",\"-113.58\",\"723.3\"\n\"EDMONTON
+        (CITY)\",\"D\",\"EDMONTON BLATCHFORD\",\"3012209\",\"71157\",\"XEC\",\"ALBERTA\",\"53.57\",\"-113.52\",\"671.0\"\n\"EDMONTON
+        (CITY)\",\"D\",\"EDMONTON CITY CENTRE A\",\"3012208\",\"\",\"\",\"ALBERTA\",\"53.57\",\"-113.52\",\"670.6\"\n\"EDMONTON
+        (CITY)\",\"D\",\"EDMONTON CITY CENTRE AWOS\",\"3012202\",\"71879\",\"YXD\",\"ALBERTA\",\"53.57\",\"-113.52\",\"671.4\"\n\"EDSON\",\"D\",\"EDSON\",\"3062239\",\"71167\",\"YET\",\"ALBERTA\",\"53.58\",\"-116.47\",\"926.9\"\n\"EDSON\",\"D\",\"EDSON
+        A\",\"3062242\",\"71881\",\"YET\",\"ALBERTA\",\"53.60\",\"-116.48\",\"925.4\"\n\"EDSON\",\"D\",\"EDSON
+        A\",\"3062244\",\"\",\"\",\"ALBERTA\",\"53.58\",\"-116.47\",\"927.2\"\n\"EDSON\",\"D\",\"EDSON
+        AWOS A\",\"3062245\",\"71881\",\"PDS\",\"ALBERTA\",\"53.58\",\"-116.47\",\"926.9\"\n\"EDSON\",\"D\",\"EDSON
+        CLIMATE\",\"3062246\",\"71156\",\"ZZJ\",\"ALBERTA\",\"53.58\",\"-116.45\",\"927.0\"\n\"FORT
+        CHIPEWYAN\",\"C\",\"FORT CHIPEWYAN\",\"3072655\",\"71305\",\"YPY\",\"ALBERTA\",\"58.77\",\"-111.12\",\"238.0\"\n\"FORT
+        CHIPEWYAN\",\"C\",\"FORT CHIPEWYAN A\",\"3072658\",\"\",\"\",\"ALBERTA\",\"58.77\",\"-111.12\",\"232.0\"\n\"FORT
+        CHIPEWYAN\",\"C\",\"FORT CHIPEWYAN AWOS A\",\"3072662\",\"\",\"PCP\",\"ALBERTA\",\"58.77\",\"-111.12\",\"238.0\"\n\"FORT
+        CHIPEWYAN\",\"C\",\"FORT CHIPEWYAN RCS\",\"3072659\",\"71056\",\"PCH\",\"ALBERTA\",\"58.77\",\"-111.12\",\"238.0\"\n\"FORT
+        MCMURRAY\",\"C\",\"FORT MCMURRAY A\",\"3062693\",\"\",\"\",\"ALBERTA\",\"56.65\",\"-111.22\",\"369.1\"\n\"FORT
+        MCMURRAY\",\"C\",\"FORT MCMURRAY A\",\"3062697\",\"71689\",\"YMM\",\"ALBERTA\",\"56.65\",\"-111.22\",\"369.1\"\n\"FORT
+        MCMURRAY\",\"C\",\"FORT MCMURRAY AWOS A\",\"3062700\",\"\",\"\",\"ALBERTA\",\"56.65\",\"-111.22\",\"369.1\"\n\"FORT
+        MCMURRAY\",\"C\",\"FORT MCMURRAY CS\",\"3062696\",\"71585\",\"XMM\",\"ALBERTA\",\"56.65\",\"-111.21\",\"368.8\"\n\"FORT
+        SASKATCHEWAN\",\"D\",\"FORT SASKATCHEWAN\",\"3012710\",\"\",\"\",\"ALBERTA\",\"53.72\",\"-113.18\",\"620.0\"\n\"GARDEN
+        RIVER\",\"G\",\"GARDEN RIVER\",\"307KPFP\",\"71253\",\"WGF\",\"ALBERTA\",\"58.71\",\"-113.87\",\"240.8\"\n\"GRANDE
+        PRAIRIE\",\"C\",\"GRANDE PRAIRIE A\",\"3072920\",\"71940\",\"YQU\",\"ALBERTA\",\"55.18\",\"-118.89\",\"669.0\"\n\"GRANDE
+        PRAIRIE\",\"C\",\"GRANDE PRAIRIE A\",\"3072921\",\"71940\",\"YQU\",\"ALBERTA\",\"55.18\",\"-118.88\",\"669.0\"\n\"HIGH
+        LEVEL\",\"A\",\"HIGH LEVEL A\",\"3073140\",\"71066\",\"YOJ\",\"ALBERTA\",\"58.62\",\"-117.16\",\"338.0\"\n\"HIGH
+        LEVEL\",\"A\",\"HIGH LEVEL A\",\"3073146\",\"\",\"YOJ\",\"ALBERTA\",\"58.62\",\"-117.16\",\"338.0\"\n\"JASPER\",\"C\",\"JASPER\",\"3053520\",\"\",\"\",\"ALBERTA\",\"52.88\",\"-118.07\",\"1062.2\"\n\"JASPER\",\"C\",\"JASPER
+        WARDEN\",\"3053536\",\"71486\",\"WJW\",\"ALBERTA\",\"52.93\",\"-118.03\",\"1020.0\"\n\"LETHBRIDGE\",\"C\",\"LETHBRIDGE\",\"3033875\",\"71267\",\"YQL\",\"ALBERTA\",\"49.63\",\"-112.80\",\"929.0\"\n\"LETHBRIDGE\",\"C\",\"LETHBRIDGE
+        A\",\"3033880\",\"\",\"YQL\",\"ALBERTA\",\"49.63\",\"-112.80\",\"928.7\"\n\"LETHBRIDGE\",\"C\",\"LETHBRIDGE
+        AWOS A\",\"3033884\",\"\",\"YQL\",\"ALBERTA\",\"49.63\",\"-112.80\",\"929.0\"\n\"LETHBRIDGE\",\"C\",\"LETHBRIDGE
+        CDA\",\"3033890\",\"71243\",\"WQL\",\"ALBERTA\",\"49.70\",\"-112.77\",\"910.0\"\n\"LLOYDMINSTER\",\"A\",\"LLOYDMINSTER\",\"3013959\",\"71871\",\"YLL\",\"ALBERTA\",\"53.31\",\"-110.07\",\"668.7\"\n\"LLOYDMINSTER\",\"A\",\"LLOYDMINSTER
+        A\",\"3013961\",\"\",\"\",\"ALBERTA\",\"53.31\",\"-110.07\",\"668.4\"\n\"MEDICINE
+        HAT\",\"C\",\"MEDICINE HAT\",\"3034479\",\"71247\",\"YXH\",\"ALBERTA\",\"50.02\",\"-110.72\",\"716.9\"\n\"MEDICINE
+        HAT\",\"C\",\"MEDICINE HAT A\",\"3034480\",\"\",\"YXH\",\"ALBERTA\",\"50.02\",\"-110.72\",\"716.9\"\n\"MEDICINE
+        HAT\",\"C\",\"MEDICINE HAT AWOS\",\"3034483\",\"\",\"\",\"ALBERTA\",\"50.02\",\"-110.72\",\"716.9\"\n\"MEDICINE
+        HAT\",\"C\",\"MEDICINE HAT RCS\",\"3034485\",\"71026\",\"XMW\",\"ALBERTA\",\"50.03\",\"-110.72\",\"715.0\"\n\"NORDEGG\",\"D\",\"NORDEGG
+        CS\",\"3054843\",\"71060\",\"XND\",\"ALBERTA\",\"52.49\",\"-116.04\",\"1332.0\"\n\"NORDEGG\",\"D\",\"NORDEGG
+        RS\",\"3054845\",\"\",\"\",\"ALBERTA\",\"52.50\",\"-116.05\",\"1320.1\"\n\"ONEFOUR\",\"E\",\"ONEFOUR
+        CDA\",\"3044923\",\"71116\",\"WOE\",\"ALBERTA\",\"49.12\",\"-110.47\",\"935.0\"\n\"PEACE
+        RIVER\",\"C\",\"PEACE RIVER A\",\"3075040\",\"71068\",\"YPE\",\"ALBERTA\",\"56.23\",\"-117.45\",\"570.9\"\n\"PEACE
+        RIVER\",\"C\",\"PEACE RIVER A\",\"3075041\",\"71068\",\"YPE\",\"ALBERTA\",\"56.23\",\"-117.45\",\"570.9\"\n\"PINCHER
+        CREEK\",\"D\",\"PINCHER CREEK\",\"3035198\",\"71085\",\"ZPC\",\"ALBERTA\",\"49.52\",\"-114.00\",\"1189.6\"\n\"PINCHER
+        CREEK\",\"D\",\"PINCHER CREEK (AUT)\",\"3035206\",\"\",\"PPX\",\"ALBERTA\",\"49.52\",\"-114.00\",\"1189.6\"\n\"PINCHER
+        CREEK\",\"D\",\"PINCHER CREEK A\",\"3035202\",\"\",\"\",\"ALBERTA\",\"49.52\",\"-114.00\",\"1189.9\"\n\"PINCHER
+        CREEK\",\"D\",\"PINCHER CREEK CLIMATE\",\"3035208\",\"71736\",\"PCK\",\"ALBERTA\",\"49.52\",\"-114.00\",\"1190.0\"\n\"QUEENSTOWN\",\"A\",\"QUEENSTOWN\",\"3035340\",\"\",\"\",\"ALBERTA\",\"50.61\",\"-112.98\",\"940.0\"\n\"RED
+        DEER\",\"C\",\"RED DEER A\",\"3025480\",\"71878\",\"YQF\",\"ALBERTA\",\"52.18\",\"-113.89\",\"904.6\"\n\"RED
+        DEER\",\"C\",\"RED DEER REGIONAL A\",\"3025481\",\"\",\"YQF\",\"ALBERTA\",\"52.18\",\"-113.89\",\"904.6\"\n\"RED
+        DEER\",\"C\",\"RED DEER REGIONAL A\",\"3025484\",\"71878\",\"YQF\",\"ALBERTA\",\"52.18\",\"-113.89\",\"904.6\"\n\"RED
+        EARTH\",\"E\",\"RED EARTH\",\"3075488\",\"71246\",\"WRD\",\"ALBERTA\",\"56.55\",\"-115.28\",\"546.0\"\n\"SLAVE
+        LAKE\",\"C\",\"SLAVE LAKE\",\"3065995\",\"71369\",\"YZH\",\"ALBERTA\",\"55.29\",\"-114.78\",\"582.8\"\n\"SLAVE
+        LAKE\",\"C\",\"SLAVE LAKE A\",\"3065999\",\"\",\"\",\"ALBERTA\",\"55.28\",\"-114.78\",\"582.8\"\n\"SLAVE
+        LAKE\",\"C\",\"SLAVE LAKE A\",\"3066001\",\"\",\"\",\"ALBERTA\",\"55.30\",\"-114.78\",\"580.6\"\n\"SLAVE
+        LAKE\",\"C\",\"SLAVE LAKE AWOS A\",\"3066002\",\"\",\"PLV\",\"ALBERTA\",\"55.29\",\"-114.78\",\"582.8\"\n\"SLAVE
+        LAKE\",\"C\",\"SLAVE LAKE RCS\",\"3065997\",\"71693\",\"PZH\",\"ALBERTA\",\"55.29\",\"-114.78\",\"582.8\"\n\"ABBOTSFORD\",\"C\",\"ABBOTSFORD
+        A\",\"1100030\",\"71108\",\"YXX\",\"BRITISH COLUMBIA\",\"49.03\",\"-122.36\",\"59.1\"\n\"ABBOTSFORD\",\"C\",\"ABBOTSFORD
+        A\",\"1100031\",\"71108\",\"YXX\",\"BRITISH COLUMBIA\",\"49.03\",\"-122.36\",\"59.1\"\n\"ADDENBROKE
+        ISLAND\",\"A\",\"ADDENBROKE ISLAND\",\"1060080\",\"\",\"WCZ\",\"BRITISH COLUMBIA\",\"51.60\",\"-127.86\",\"21.3\"\n\"BELLA
+        COOLA\",\"C\",\"BELLA COOLA A\",\"1060841\",\"71206\",\"YBD\",\"BRITISH COLUMBIA\",\"52.39\",\"-126.60\",\"35.7\"\n\"BELLA
+        COOLA\",\"C\",\"BELLA COOLA AIRPORT\",\"1060844\",\"71533\",\"VBD\",\"BRITISH
+        COLUMBIA\",\"52.39\",\"-126.59\",\"36.9\"\n\"BLUE RIVER\",\"C\",\"BLUE RIVER
+        A\",\"1160899\",\"\",\"YCP\",\"BRITISH COLUMBIA\",\"52.13\",\"-119.29\",\"690.4\"\n\"BLUE
+        RIVER\",\"C\",\"BLUE RIVER CS\",\"1160H99\",\"71883\",\"WSV\",\"BRITISH COLUMBIA\",\"52.13\",\"-119.29\",\"682.8\"\n\"BONILLA
+        ISLAND\",\"A\",\"BONILLA ISLAND\",\"1060902\",\"\",\"WVB\",\"BRITISH COLUMBIA\",\"53.49\",\"-130.64\",\"16.2\"\n\"BONILLA
+        ISLAND\",\"A\",\"BONILLA ISLAND (AUT)\",\"1060R0K\",\"71484\",\"WWL\",\"BRITISH
+        COLUMBIA\",\"53.49\",\"-130.64\",\"12.5\"\n\"BURNS LAKE DECKER LAKE\",\"E\",\"BURNS
+        LAKE DECKER LAKE\",\"1091174\",\"71952\",\"WPZ\",\"BRITISH COLUMBIA\",\"54.38\",\"-125.96\",\"713.2\"\n\"CAPE
+        BEALE LIGHT\",\"C\",\"CAPE BEALE LIGHT\",\"1031316\",\"\",\"\",\"BRITISH COLUMBIA\",\"48.79\",\"-125.22\",\"25.9\"\n\"CLINTON\",\"E\",\"CLINTON
+        (AUT)\",\"1161661\",\"\",\"ZCL\",\"BRITISH COLUMBIA\",\"51.14\",\"-121.50\",\"1056.7\"\n\"CLINTON\",\"E\",\"CLINTON
+        A\",\"1161662\",\"71717\",\"YIN\",\"BRITISH COLUMBIA\",\"51.27\",\"-121.68\",\"1126.2\"\n\"CLINTON\",\"E\",\"CLINTON
+        RCS\",\"1161663\",\"71474\",\"NCN\",\"BRITISH COLUMBIA\",\"51.14\",\"-121.50\",\"1059.0\"\n\"COMOX\",\"A\",\"COMOX
+        A\",\"1021830\",\"71893\",\"YQQ\",\"BRITISH COLUMBIA\",\"49.72\",\"-124.90\",\"25.6\"\n\"CRANBROOK\",\"B\",\"CRANBROOK
+        A\",\"1152102\",\"71880\",\"YXC\",\"BRITISH COLUMBIA\",\"49.61\",\"-115.78\",\"940.0\"\n\"CRANBROOK\",\"B\",\"CRANBROOK
+        A\",\"1152105\",\"71880\",\"YXC\",\"BRITISH COLUMBIA\",\"49.61\",\"-115.78\",\"940.0\"\n\"CRANBROOK\",\"B\",\"CRANBROOK
+        AIRPORT AUTO\",\"1152106\",\"71660\",\"VXC\",\"BRITISH COLUMBIA\",\"49.62\",\"-115.79\",\"926.7\"\n\"CRESTON\",\"A\",\"CRESTON\",\"1142160\",\"\",\"\",\"BRITISH
+        COLUMBIA\",\"49.10\",\"-116.52\",\"610.4\"\n\"CRESTON\",\"A\",\"CRESTON CAMPBELL
+        SCIENTIFIC\",\"114B1F0\",\"71770\",\"WJR\",\"BRITISH COLUMBIA\",\"49.08\",\"-116.50\",\"640.7\"\n\"DEASE
+        LAKE\",\"D\",\"DEASE LAKE\",\"1192340\",\"71958\",\"WDL\",\"BRITISH COLUMBIA\",\"58.43\",\"-130.01\",\"806.6\"\n\"DEASE
+        LAKE\",\"D\",\"DEASE LAKE (AUT)\",\"119BLM0\",\"71222\",\"WKX\",\"BRITISH
+        COLUMBIA\",\"58.43\",\"-130.03\",\"800.7\"\n\"DEASE LAKE\",\"D\",\"DEASE LAKE
+        A\",\"1192341\",\"71686\",\"YDL\",\"BRITISH COLUMBIA\",\"58.42\",\"-130.03\",\"802.8\"\n\"DEASE
+        LAKE\",\"D\",\"DEASE LAKE LWIS\",\"1192345\",\"\",\"\",\"BRITISH COLUMBIA\",\"58.42\",\"-130.03\",\"792.5\"\n\"ESTEVAN
+        POINT\",\"A\",\"ESTEVAN POINT\",\"1032730\",\"\",\"\",\"BRITISH COLUMBIA\",\"49.38\",\"-126.54\",\"5.8\"\n\"ESTEVAN
+        POINT\",\"A\",\"ESTEVAN POINT CS\",\"1032731\",\"71894\",\"WEB\",\"BRITISH
+        COLUMBIA\",\"49.38\",\"-126.54\",\"5.8\"\n\"FORT NELSON\",\"C\",\"FORT NELSON\",\"1192948\",\"71594\",\"VFN\",\"BRITISH
+        COLUMBIA\",\"58.84\",\"-122.57\",\"380.2\"\n\"FORT NELSON\",\"C\",\"FORT NELSON
+        A\",\"1192940\",\"71945\",\"YYE\",\"BRITISH COLUMBIA\",\"58.84\",\"-122.60\",\"381.9\"\n\"FORT
+        NELSON\",\"C\",\"FORT NELSON A\",\"1192946\",\"71945\",\"YYE\",\"BRITISH COLUMBIA\",\"58.84\",\"-122.60\",\"381.9\"\n\"FORT
+        NELSON\",\"C\",\"FORT NELSON UA\",\"1192950\",\"71945\",\"\",\"BRITISH COLUMBIA\",\"58.84\",\"-122.57\",\"378.3\"\n\"FORT
+        ST. JOHN\",\"C\",\"FORT ST JOHN A\",\"1183000\",\"71943\",\"YXJ\",\"BRITISH
+        COLUMBIA\",\"56.24\",\"-120.74\",\"694.9\"\n\"FORT ST. JOHN\",\"C\",\"FORT
+        ST. JOHN A\",\"1183001\",\"71943\",\"YXJ\",\"BRITISH COLUMBIA\",\"56.24\",\"-120.74\",\"694.9\"\n\"GOLDEN\",\"C\",\"GOLDEN
+        A\",\"1173210\",\"71173\",\"YGE\",\"BRITISH COLUMBIA\",\"51.30\",\"-116.98\",\"784.9\"\n\"GOLDEN\",\"C\",\"GOLDEN
+        A\",\"1173214\",\"\",\"YGE\",\"BRITISH COLUMBIA\",\"51.30\",\"-116.98\",\"784.9\"\n\"GOLDEN\",\"C\",\"GOLDEN
+        AIRPORT\",\"1173220\",\"71905\",\"VGE\",\"BRITISH COLUMBIA\",\"51.30\",\"-116.98\",\"785.0\"\n\"HOLLAND
+        ROCK\",\"F\",\"HOLLAND ROCK\",\"1063496\",\"71219\",\"WHL\",\"BRITISH COLUMBIA\",\"54.17\",\"-130.36\",\"5.5\"\n\"KAMLOOPS\",\"C\",\"KAMLOOPS
+        A\",\"1163780\",\"71887\",\"YKA\",\"BRITISH COLUMBIA\",\"50.70\",\"-120.44\",\"345.3\"\n\"KAMLOOPS\",\"C\",\"KAMLOOPS
+        A\",\"1163781\",\"71887\",\"YKA\",\"BRITISH COLUMBIA\",\"50.70\",\"-120.45\",\"345.3\"\n\"KAMLOOPS\",\"C\",\"KAMLOOPS
+        AUT\",\"1163842\",\"71741\",\"ZKA\",\"BRITISH COLUMBIA\",\"50.70\",\"-120.44\",\"345.0\"\n\"KELOWNA\",\"E\",\"KELOWNA
+        A\",\"1123970\",\"71203\",\"YLW\",\"BRITISH COLUMBIA\",\"49.96\",\"-119.38\",\"429.5\"\n\"KELOWNA\",\"E\",\"KELOWNA
+        AWOS\",\"1123965\",\"\",\"VLW\",\"BRITISH COLUMBIA\",\"49.96\",\"-119.38\",\"429.5\"\n\"LYTTON\",\"E\",\"LYTTON\",\"1114739\",\"\",\"WLY\",\"BRITISH
+        COLUMBIA\",\"50.22\",\"-121.58\",\"225.0\"\n\"LYTTON\",\"E\",\"LYTTON A\",\"1114738\",\"71812\",\"WLY\",\"BRITISH
+        COLUMBIA\",\"50.22\",\"-121.58\",\"224.9\"\n\"LYTTON\",\"E\",\"LYTTON RCS\",\"1114746\",\"71765\",\"VLY\",\"BRITISH
+        COLUMBIA\",\"50.22\",\"-121.58\",\"225.0\"\n\"MACKENZIE\",\"D\",\"MACKENZIE\",\"1184791\",\"71290\",\"YZY\",\"BRITISH
+        COLUMBIA\",\"55.30\",\"-123.13\",\"690.1\"\n\"MACKENZIE\",\"D\",\"MACKENZIE
+        A\",\"1184790\",\"\",\"VMK\",\"BRITISH COLUMBIA\",\"55.31\",\"-123.14\",\"690.1\"\n\"MACKENZIE\",\"D\",\"MACKENZIE
+        AIRPORT AUTO\",\"1184793\",\"71944\",\"VZY\",\"BRITISH COLUMBIA\",\"55.31\",\"-123.14\",\"694.0\"\n\"NAKUSP\",\"F\",\"NAKUSP
+        CS\",\"1145297\",\"71216\",\"WNP\",\"BRITISH COLUMBIA\",\"50.27\",\"-117.82\",\"512.1\"\n\"PEMBERTON\",\"E\",\"PEMBERTON
+        AIRPORT (WIND)\",\"1086081\",\"\",\"WPN\",\"BRITISH COLUMBIA\",\"50.30\",\"-122.74\",\"203.0\"\n\"PEMBERTON\",\"E\",\"PEMBERTON
+        AIRPORT CS\",\"1086082\",\"71777\",\"WGP\",\"BRITISH COLUMBIA\",\"50.31\",\"-122.73\",\"204.3\"\n\"PENTICTON\",\"C\",\"PENTICTON
+        A\",\"1126146\",\"71889\",\"YYF\",\"BRITISH COLUMBIA\",\"49.46\",\"-119.60\",\"344.4\"\n\"PENTICTON\",\"C\",\"PENTICTON
+        A\",\"1126150\",\"71889\",\"YYF\",\"BRITISH COLUMBIA\",\"49.46\",\"-119.60\",\"344.4\"\n\"PITT
+        MEADOWS\",\"C\",\"PITT MEADOWS CS\",\"1106178\",\"71775\",\"WMM\",\"BRITISH
+        COLUMBIA\",\"49.21\",\"-122.69\",\"5.0\"\n\"PLEASANT CAMP\",\"C\",\"PLEASANT
+        CAMP\",\"1206197\",\"\",\"\",\"BRITISH COLUMBIA\",\"59.45\",\"-136.37\",\"274.3\"\n\"PORT
+        HARDY\",\"C\",\"PORT HARDY A\",\"1026270\",\"71109\",\"YZT\",\"BRITISH COLUMBIA\",\"50.68\",\"-127.37\",\"21.6\"\n\"PORT
+        HARDY\",\"C\",\"PORT HARDY A\",\"1026271\",\"71109\",\"YZT\",\"BRITISH COLUMBIA\",\"50.68\",\"-127.37\",\"21.6\"\n\"PRINCE
+        GEORGE\",\"C\",\"PRINCE GEORGE\",\"1096439\",\"71896\",\"YXS\",\"BRITISH COLUMBIA\",\"53.88\",\"-122.68\",\"691.0\"\n\"PRINCE
+        GEORGE\",\"C\",\"PRINCE GEORGE A\",\"1096450\",\"71896\",\"YXS\",\"BRITISH
+        COLUMBIA\",\"53.89\",\"-122.68\",\"691.3\"\n\"PRINCE GEORGE\",\"C\",\"PRINCE
+        GEORGE AIRPORT AUTO\",\"1096453\",\"71302\",\"VXS\",\"BRITISH COLUMBIA\",\"53.89\",\"-122.67\",\"680.0\"\n\"PRINCETON\",\"C\",\"PRINCETON
+        A\",\"1126510\",\"\",\"YDC\",\"BRITISH COLUMBIA\",\"49.47\",\"-120.51\",\"701.7\"\n\"PRINCETON\",\"C\",\"PRINCETON
+        CS\",\"112FN0M\",\"71032\",\"WPR\",\"BRITISH COLUMBIA\",\"49.47\",\"-120.51\",\"696.5\"\n\"QUESNEL\",\"C\",\"QUESNEL\",\"1096629\",\"71192\",\"YQZ\",\"BRITISH
+        COLUMBIA\",\"53.03\",\"-122.51\",\"545.0\"\n\"QUESNEL\",\"C\",\"QUESNEL A\",\"1096630\",\"\",\"\",\"BRITISH
+        COLUMBIA\",\"53.03\",\"-122.51\",\"545.0\"\n\"QUESNEL\",\"C\",\"QUESNEL AIRPORT
+        AUTO\",\"1096631\",\"71779\",\"VQZ\",\"BRITISH COLUMBIA\",\"53.03\",\"-122.51\",\"545.3\"\n\"QUESNEL\",\"C\",\"QUESNEL
+        AWOS\",\"1096625\",\"71103\",\"CQZ\",\"BRITISH COLUMBIA\",\"53.03\",\"-122.51\",\"545.0\"\n\"REVELSTOKE\",\"E\",\"REVELSTOKE
+        A\",\"1176745\",\"71685\",\"YRV\",\"BRITISH COLUMBIA\",\"50.97\",\"-118.18\",\"444.7\"\n\"REVELSTOKE\",\"E\",\"REVELSTOKE
+        A\",\"1176749\",\"\",\"ZRV\",\"BRITISH COLUMBIA\",\"50.96\",\"-118.18\",\"444.7\"\n\"REVELSTOKE\",\"E\",\"REVELSTOKE
+        AIRPORT AUTO\",\"1176755\",\"71882\",\"VRA\",\"BRITISH COLUMBIA\",\"50.96\",\"-118.18\",\"444.7\"\n\"SALMON
+        ARM\",\"D\",\"SALMON ARM A\",\"1166R45\",\"\",\"\",\"BRITISH COLUMBIA\",\"50.69\",\"-119.23\",\"527.3\"\n\"SALMON
+        ARM\",\"D\",\"SALMON ARM CS\",\"116FRMN\",\"71218\",\"WSL\",\"BRITISH COLUMBIA\",\"50.70\",\"-119.29\",\"350.5\"\n\"SANDSPIT\",\"C\",\"SANDSPIT\",\"1057052\",\"71111\",\"YZP\",\"BRITISH
+        COLUMBIA\",\"53.25\",\"-131.81\",\"6.4\"\n\"SANDSPIT\",\"C\",\"SANDSPIT A\",\"1057050\",\"\",\"YZP\",\"BRITISH
+        COLUMBIA\",\"53.25\",\"-131.81\",\"6.4\"\n\"SANDSPIT\",\"C\",\"SANDSPIT AIRPORT
+        AUTO\",\"1057051\",\"71101\",\"VZP\",\"BRITISH COLUMBIA\",\"53.25\",\"-131.81\",\"6.5\"\n\"SANDSPIT\",\"C\",\"SANDSPIT
+        AWOS\",\"1057055\",\"\",\"CZP\",\"BRITISH COLUMBIA\",\"53.25\",\"-131.81\",\"6.4\"\n\"SMITHERS\",\"A\",\"SMITHERS\",\"1077499\",\"71950\",\"YYD\",\"BRITISH
+        COLUMBIA\",\"54.83\",\"-127.18\",\"523.0\"\n\"SMITHERS\",\"A\",\"SMITHERS
+        A\",\"1077500\",\"\",\"YYD\",\"BRITISH COLUMBIA\",\"54.82\",\"-127.18\",\"521.8\"\n\"SMITHERS\",\"A\",\"SMITHERS
+        AIRPORT AUTO\",\"1077501\",\"71268\",\"VYD\",\"BRITISH COLUMBIA\",\"54.82\",\"-127.19\",\"517.6\"\n\"SQUAMISH\",\"C\",\"SQUAMISH
+        AIRPORT\",\"10476F0\",\"71207\",\"WSK\",\"BRITISH COLUMBIA\",\"49.78\",\"-123.16\",\"53.7\"\n\"STEWART\",\"C\",\"STEWART
+        A\",\"1067742\",\"\",\"ZST\",\"BRITISH COLUMBIA\",\"55.94\",\"-129.99\",\"7.3\"\n\"STEWART\",\"C\",\"STEWART
+        A\",\"1067748\",\"\",\"ZST\",\"BRITISH COLUMBIA\",\"55.93\",\"-129.98\",\"7.3\"\n\"TATLAYOKO
+        LAKE\",\"C\",\"TATLAYOKO LAKE\",\"1088010\",\"\",\"\",\"BRITISH COLUMBIA\",\"51.67\",\"-124.41\",\"870.0\"\n\"TATLAYOKO
+        LAKE\",\"C\",\"TATLAYOKO LAKE RCS\",\"1088015\",\"71028\",\"XTL\",\"BRITISH
+        COLUMBIA\",\"51.67\",\"-124.40\",\"875.0\"\n\"TERRACE\",\"C\",\"TERRACE A\",\"1068130\",\"71951\",\"YXT\",\"BRITISH
+        COLUMBIA\",\"54.47\",\"-128.58\",\"217.3\"\n\"TERRACE\",\"C\",\"TERRACE A\",\"1068134\",\"71951\",\"YXT\",\"BRITISH
+        COLUMBIA\",\"54.47\",\"-128.58\",\"217.3\"\n\"VANCOUVER (HARBOUR)\",\"C\",\"VANCOUVER
+        HARBOUR CS\",\"1108446\",\"71201\",\"WHC\",\"BRITISH COLUMBIA\",\"49.30\",\"-123.12\",\"2.5\"\n\"VANCOUVER
+        INTERNATIONAL (AIRPORT)\",\"C\",\"VANCOUVER INT'L A\",\"1108447\",\"\",\"YVR\",\"BRITISH
+        COLUMBIA\",\"49.20\",\"-123.18\",\"4.3\"\n\"VANCOUVER INTERNATIONAL (AIRPORT)\",\"C\",\"VANCOUVER
+        INTL A\",\"1108395\",\"71892\",\"YVR\",\"BRITISH COLUMBIA\",\"49.19\",\"-123.18\",\"4.3\"\n\"VICTORIA
+        (AIRPORT)\",\"C\",\"VICTORIA INT'L A\",\"1018620\",\"71799\",\"YYJ\",\"BRITISH
+        COLUMBIA\",\"48.65\",\"-123.43\",\"19.5\"\n\"VICTORIA (AIRPORT)\",\"C\",\"VICTORIA
+        INTL A\",\"1018621\",\"71799\",\"YYJ\",\"BRITISH COLUMBIA\",\"48.65\",\"-123.43\",\"19.5\"\n\"VICTORIA
+        (UNIVERSITY)\",\"D\",\"VICTORIA UNIVERSITY CS\",\"1018598\",\"71783\",\"WYJ\",\"BRITISH
+        COLUMBIA\",\"48.46\",\"-123.30\",\"60.1\"\n\"VICTORIA GONZALES (CITY)\",\"D\",\"VICTORIA
+        GONZALES CS\",\"1018611\",\"71200\",\"WLM\",\"BRITISH COLUMBIA\",\"48.41\",\"-123.32\",\"61.0\"\n\"VICTORIA
+        GONZALES (CITY)\",\"D\",\"VICTORIA GONZALES HTS\",\"1018610\",\"\",\"WLM\",\"BRITISH
+        COLUMBIA\",\"48.41\",\"-123.33\",\"69.5\"\n\"WARFIELD\",\"D\",\"WARFIELD\",\"1148700\",\"\",\"\",\"BRITISH
+        COLUMBIA\",\"49.10\",\"-117.75\",\"605.6\"\n\"WARFIELD\",\"D\",\"WARFIELD
+        RCS\",\"1148705\",\"71401\",\"XWF\",\"BRITISH COLUMBIA\",\"49.11\",\"-117.74\",\"566.9\"\n\"WILLIAMS
+        LAKE\",\"D\",\"WILLIAMS LAKE A\",\"1098940\",\"71104\",\"YWL\",\"BRITISH COLUMBIA\",\"52.18\",\"-122.05\",\"939.7\"\n\"WILLIAMS
+        LAKE\",\"D\",\"WILLIAMS LAKE A\",\"1098941\",\"71104\",\"YWL\",\"BRITISH COLUMBIA\",\"52.18\",\"-122.05\",\"939.7\"\n\"BERENS
+        RIVER\",\"D\",\"BERENS RIVER CS\",\"5030203\",\"71158\",\"WCF\",\"MANITOBA\",\"52.36\",\"-97.02\",\"221.9\"\n\"BRANDON\",\"C\",\"BRANDON
+        A\",\"5010480\",\"71140\",\"YBR\",\"MANITOBA\",\"49.91\",\"-99.95\",\"409.4\"\n\"BRANDON\",\"C\",\"BRANDON
+        A\",\"5010481\",\"71140\",\"YBR\",\"MANITOBA\",\"49.91\",\"-99.95\",\"409.3\"\n\"CHURCHILL\",\"C\",\"CHURCHILL
+        A\",\"5060600\",\"\",\"YYQ\",\"MANITOBA\",\"58.74\",\"-94.07\",\"29.3\"\n\"CHURCHILL\",\"C\",\"CHURCHILL
+        A\",\"5060605\",\"71618\",\"YYQ\",\"MANITOBA\",\"58.74\",\"-94.07\",\"29.3\"\n\"CHURCHILL\",\"C\",\"CHURCHILL
+        CLIMATE\",\"5060608\",\"71696\",\"PYQ\",\"MANITOBA\",\"58.73\",\"-94.07\",\"28.5\"\n\"CHURCHILL\",\"C\",\"CHURCHILL
+        UA\",\"5060606\",\"71913\",\"\",\"MANITOBA\",\"58.73\",\"-94.07\",\"28.5\"\n\"DAUPHIN\",\"D\",\"DAUPHIN\",\"5040689\",\"71036\",\"YDN\",\"MANITOBA\",\"51.10\",\"-100.05\",\"304.5\"\n\"DAUPHIN\",\"D\",\"DAUPHIN
+        A\",\"5040680\",\"\",\"PDH\",\"MANITOBA\",\"51.10\",\"-100.05\",\"304.5\"\n\"DAUPHIN\",\"D\",\"DAUPHIN
+        CS\",\"5040681\",\"71550\",\"WZT\",\"MANITOBA\",\"51.10\",\"-100.06\",\"304.5\"\n\"EMERSON\",\"C\",\"EMERSON\",\"5020880\",\"\",\"\",\"MANITOBA\",\"49.03\",\"-97.18\",\"237.6\"\n\"EMERSON\",\"C\",\"EMERSON
+        AUT\",\"5020882\",\"71560\",\"WEX\",\"MANITOBA\",\"49.00\",\"-97.24\",\"242.0\"\n\"EMERSON\",\"C\",\"EMERSON
+        AUTO\",\"5020881\",\"71560\",\"WEX\",\"MANITOBA\",\"49.00\",\"-97.24\",\"242.0\"\n\"FLIN
+        FLON\",\"A\",\"FLIN FLON\",\"5050919\",\"71954\",\"WFO\",\"MANITOBA\",\"54.68\",\"-101.68\",\"303.9\"\n\"FLIN
+        FLON\",\"A\",\"FLIN FLON\",\"5050920\",\"\",\"\",\"MANITOBA\",\"54.77\",\"-101.88\",\"320.0\"\n\"FLIN
+        FLON\",\"A\",\"FLIN FLON A\",\"5050960\",\"\",\"YFO\",\"MANITOBA\",\"54.68\",\"-101.68\",\"303.9\"\n\"GILLAM\",\"C\",\"GILLAM\",\"5060999\",\"73087\",\"WGX\",\"MANITOBA\",\"56.36\",\"-94.70\",\"145.3\"\n\"GILLAM\",\"C\",\"GILLAM
+        A\",\"5061001\",\"71912\",\"YGX\",\"MANITOBA\",\"56.36\",\"-94.71\",\"145.1\"\n\"GILLAM\",\"C\",\"GILLAM
+        A\",\"5061022\",\"71912\",\"YGX\",\"MANITOBA\",\"56.36\",\"-94.71\",\"145.1\"\n\"GRAND
+        RAPIDS HYDRO\",\"D\",\"GRAND RAPIDS (AUT)\",\"5031A10\",\"71858\",\"WJD\",\"MANITOBA\",\"53.19\",\"-99.27\",\"222.5\"\n\"GRAND
+        RAPIDS HYDRO\",\"D\",\"GRAND RAPIDS HYDRO\",\"5031111\",\"\",\"\",\"MANITOBA\",\"53.16\",\"-99.28\",\"222.5\"\n\"HODGSON
+        2/3\",\"C\",\"HODGSON 2\",\"5031301\",\"\",\"\",\"MANITOBA\",\"51.19\",\"-97.47\",\"231.7\"\n\"HODGSON
+        2/3\",\"C\",\"HODGSON 3\",\"5031310\",\"\",\"\",\"MANITOBA\",\"51.21\",\"-97.57\",\"231.7\"\n\"ISLAND
+        LAKE\",\"C\",\"ISLAND LAKE A\",\"5061374\",\"71145\",\"YIV\",\"MANITOBA\",\"53.86\",\"-94.65\",\"235.3\"\n\"ISLAND
+        LAKE\",\"C\",\"ISLAND LAKE A\",\"5061375\",\"\",\"YIV\",\"MANITOBA\",\"53.86\",\"-94.65\",\"235.3\"\n\"ISLAND
+        LAKE\",\"C\",\"ISLAND LAKE A\",\"5061376\",\"71145\",\"YIV\",\"MANITOBA\",\"53.85\",\"-94.65\",\"235.6\"\n\"LYNN
+        LAKE\",\"C\",\"LYNN LAKE\",\"5061645\",\"71078\",\"YYL\",\"MANITOBA\",\"56.86\",\"-101.08\",\"356.6\"\n\"LYNN
+        LAKE\",\"C\",\"LYNN LAKE\",\"5061648\",\"\",\"PNK\",\"MANITOBA\",\"56.86\",\"-101.08\",\"356.6\"\n\"LYNN
+        LAKE\",\"C\",\"LYNN LAKE A\",\"5061646\",\"\",\"\",\"MANITOBA\",\"56.86\",\"-101.08\",\"356.6\"\n\"LYNN
+        LAKE\",\"C\",\"LYNN LAKE RCS\",\"5061649\",\"71632\",\"PLE\",\"MANITOBA\",\"56.85\",\"-101.07\",\"354.2\"\n\"MAFEKING\",\"C\",\"MAFEKING\",\"5041685\",\"\",\"\",\"MANITOBA\",\"52.67\",\"-101.10\",\"325.0\"\n\"MELITA\",\"D\",\"MELITA\",\"501A7AR\",\"71447\",\"WEI\",\"MANITOBA\",\"49.28\",\"-100.99\",\"445.9\"\n\"NORWAY
+        HOUSE\",\"D\",\"NORWAY HOUSE\",\"5062040\",\"71410\",\"YNE\",\"MANITOBA\",\"53.96\",\"-97.84\",\"223.7\"\n\"NORWAY
+        HOUSE\",\"D\",\"NORWAY HOUSE\",\"5062045\",\"\",\"\",\"MANITOBA\",\"53.97\",\"-97.85\",\"223.7\"\n\"NORWAY
+        HOUSE\",\"D\",\"NORWAY HOUSE A\",\"506B047\",\"\",\"\",\"MANITOBA\",\"53.95\",\"-97.85\",\"223.7\"\n\"PINAWA\",\"D\",\"PINAWA\",\"503B1ER\",\"71448\",\"WEA\",\"MANITOBA\",\"50.18\",\"-96.06\",\"268.0\"\n\"PINAWA\",\"D\",\"PINAWA
+        WNRE\",\"5032162\",\"\",\"\",\"MANITOBA\",\"50.18\",\"-96.06\",\"266.7\"\n\"THE
+        PAS\",\"B\",\"THE PAS A\",\"5052880\",\"71867\",\"YQD\",\"MANITOBA\",\"53.97\",\"-101.10\",\"270.4\"\n\"THE
+        PAS\",\"B\",\"THE PAS A\",\"5052881\",\"\",\"YQD\",\"MANITOBA\",\"53.97\",\"-101.09\",\"270.6\"\n\"THE
+        PAS\",\"B\",\"THE PAS A\",\"5052882\",\"71867\",\"YQD\",\"MANITOBA\",\"53.97\",\"-101.09\",\"270.6\"\n\"THE
+        PAS\",\"B\",\"THE PAS CLIMATE\",\"5052890\",\"71695\",\"PQD\",\"MANITOBA\",\"53.97\",\"-101.10\",\"274.0\"\n\"THOMPSON\",\"B\",\"THOMPSON
+        A\",\"5062921\",\"71079\",\"YTH\",\"MANITOBA\",\"55.80\",\"-97.86\",\"224.0\"\n\"THOMPSON\",\"B\",\"THOMPSON
+        A\",\"5062922\",\"71079\",\"YTH\",\"MANITOBA\",\"55.80\",\"-97.86\",\"224.0\"\n\"WINNIPEG
+        RICHARDSON (AIRPORT)\",\"C\",\"WINNIPEG A CS\",\"502S001\",\"71849\",\"XWG\",\"MANITOBA\",\"49.92\",\"-97.25\",\"238.7\"\n\"WINNIPEG
+        RICHARDSON (AIRPORT)\",\"C\",\"WINNIPEG INTL A\",\"5023227\",\"\",\"YWG\",\"MANITOBA\",\"49.91\",\"-97.24\",\"238.7\"\n\"WINNIPEG
+        RICHARDSON (AIRPORT)\",\"C\",\"WINNIPEG RICHARDSON AWOS\",\"5023226\",\"71852\",\"YWG\",\"MANITOBA\",\"49.92\",\"-97.23\",\"238.7\"\n\"WINNIPEG
+        RICHARDSON (AIRPORT)\",\"C\",\"WINNIPEG RICHARDSON INT'L A\",\"5023222\",\"71852\",\"YWG\",\"MANITOBA\",\"49.92\",\"-97.23\",\"238.7\"\n\"BATHURST\",\"D\",\"BATHURST
+        A\",\"8100503\",\"71574\",\"ZBF\",\"NEW BRUNSWICK\",\"47.63\",\"-65.75\",\"58.8\"\n\"BATHURST\",\"D\",\"BATHURST
+        A\",\"8100505\",\"\",\"ZBF\",\"NEW BRUNSWICK\",\"47.63\",\"-65.74\",\"58.8\"\n\"BATHURST\",\"D\",\"BATHURST
+        A\",\"8100506\",\"71574\",\"ZBF\",\"NEW BRUNSWICK\",\"47.63\",\"-65.74\",\"58.8\"\n\"CHARLO\",\"C\",\"CHARLO
+        A\",\"8100880\",\"\",\"\",\"NEW BRUNSWICK\",\"47.98\",\"-66.33\",\"40.2\"\n\"CHARLO\",\"C\",\"CHARLO
+        AUTO\",\"8100885\",\"71315\",\"ZCR\",\"NEW BRUNSWICK\",\"47.99\",\"-66.33\",\"42.0\"\n\"DOAKTOWN\",\"D\",\"DOAKTOWN\",\"8101200\",\"\",\"\",\"NEW
+        BRUNSWICK\",\"46.55\",\"-66.14\",\"57.0\"\n\"DOAKTOWN\",\"D\",\"DOAKTOWN AUTO
+        RCS\",\"8101201\",\"71038\",\"ADN\",\"NEW BRUNSWICK\",\"46.59\",\"-66.01\",\"43.0\"\n\"EDMUNDSTON\",\"C\",\"EDMUNDSTON\",\"8101303\",\"71590\",\"ERM\",\"NEW
+        BRUNSWICK\",\"47.42\",\"-68.32\",\"154.2\"\n\"EDMUNDSTON\",\"C\",\"EDMUNDSTON\",\"810AL00\",\"\",\"\",\"NEW
+        BRUNSWICK\",\"47.35\",\"-68.19\",\"163.0\"\n\"FREDERICTON (AIRPORT)\",\"C\",\"FREDERICTON
+        A\",\"8101500\",\"\",\"\",\"NEW BRUNSWICK\",\"45.87\",\"-66.53\",\"20.7\"\n\"FREDERICTON
+        (AIRPORT)\",\"C\",\"FREDERICTON INTL A\",\"8101505\",\"71700\",\"YFC\",\"NEW
+        BRUNSWICK\",\"45.87\",\"-66.54\",\"20.7\"\n\"KOUCHIBOUGAUAC\",\"D\",\"KOUCHIBOUGUAC\",\"8102325\",\"\",\"\",\"NEW
+        BRUNSWICK\",\"46.77\",\"-65.00\",\"35.1\"\n\"KOUCHIBOUGAUAC\",\"D\",\"KOUCHIBOUGUAC\",\"8102326\",\"71670\",\"AKC\",\"NEW
+        BRUNSWICK\",\"46.79\",\"-65.01\",\"21.0\"\n\"KOUCHIBOUGAUAC\",\"D\",\"KOUCHIBOUGUAC
+        CS\",\"8102328\",\"71670\",\"AKC\",\"NEW BRUNSWICK\",\"46.78\",\"-65.02\",\"21.0\"\n\"MIRAMICHI\",\"C\",\"MIRAMICHI
+        A\",\"8101000\",\"\",\"\",\"NEW BRUNSWICK\",\"47.01\",\"-65.47\",\"32.9\"\n\"MIRAMICHI\",\"C\",\"MIRAMICHI
+        RCS\",\"8100989\",\"71744\",\"ACQ\",\"NEW BRUNSWICK\",\"47.01\",\"-65.47\",\"33.0\"\n\"MISCOU
+        ISLAND\",\"F\",\"MISCOU ISLAND (AUT)\",\"8103050\",\"71719\",\"WMI\",\"NEW
+        BRUNSWICK\",\"48.01\",\"-64.49\",\"4.0\"\n\"MONCTON\",\"C\",\"MONCTON A\",\"8103200\",\"71705\",\"YQM\",\"NEW
+        BRUNSWICK\",\"46.11\",\"-64.68\",\"70.7\"\n\"MONCTON\",\"C\",\"MONCTON/GREATER
+        MONCTON ROMEO LEBLANC INTL A\",\"8103201\",\"71705\",\"YQM\",\"NEW BRUNSWICK\",\"46.11\",\"-64.68\",\"70.7\"\n\"SAINT
+        JOHN\",\"C\",\"SAINT JOHN A\",\"8104900\",\"71609\",\"YSJ\",\"NEW BRUNSWICK\",\"45.32\",\"-65.89\",\"108.8\"\n\"SAINT
+        JOHN\",\"C\",\"SAINT JOHN A\",\"8104901\",\"71609\",\"YSJ\",\"NEW BRUNSWICK\",\"45.32\",\"-65.89\",\"108.8\"\n\"ST.
+        LEONARD\",\"C\",\"ST LEONARD A\",\"8104928\",\"71703\",\"YSL\",\"NEW BRUNSWICK\",\"47.16\",\"-67.83\",\"242.2\"\n\"ST.
+        LEONARD\",\"C\",\"ST LEONARD CS\",\"810I001\",\"71019\",\"WIY\",\"NEW BRUNSWICK\",\"47.16\",\"-67.83\",\"245.0\"\n\"WOODSTOCK/NEWBRIDGE\",\"A\",\"WOODSTOCK\",\"8105600\",\"\",\"\",\"NEW
+        BRUNSWICK\",\"46.17\",\"-67.55\",\"153.0\"\n\"WOODSTOCK/NEWBRIDGE\",\"A\",\"WOODSTOCK
+        NEWBRIDGE\",\"8105603\",\"71606\",\"EWD\",\"NEW BRUNSWICK\",\"46.15\",\"-67.54\",\"154.0\"\n\"BONAVISTA\",\"E\",\"BONAVISTA\",\"8400600\",\"\",\"WVA\",\"NEWFOUNDLAND\",\"48.67\",\"-53.11\",\"25.6\"\n\"BONAVISTA\",\"E\",\"BONAVISTA\",\"8400601\",\"71178\",\"AVA\",\"NEWFOUNDLAND\",\"48.67\",\"-53.11\",\"25.6\"\n\"BURGEO\",\"E\",\"BURGEO\",\"8400798\",\"\",\"\",\"NEWFOUNDLAND\",\"47.62\",\"-57.62\",\"10.6\"\n\"BURGEO\",\"E\",\"BURGEO
+        2\",\"8400800\",\"\",\"WBF\",\"NEWFOUNDLAND\",\"47.62\",\"-57.62\",\"10.6\"\n\"BURGEO\",\"E\",\"BURGEO
+        NL\",\"8400801\",\"71152\",\"ABF\",\"NEWFOUNDLAND\",\"47.62\",\"-57.62\",\"10.6\"\n\"CAPE
+        RACE\",\"F\",\"CAPE RACE (AUT)\",\"8401000\",\"71800\",\"WRA\",\"NEWFOUNDLAND\",\"46.66\",\"-53.08\",\"26.5\"\n\"CARTWRIGHT\",\"C\",\"CARTWRIGHT\",\"8501100\",\"71818\",\"WCA\",\"NEWFOUNDLAND\",\"53.71\",\"-57.04\",\"14.3\"\n\"CARTWRIGHT\",\"C\",\"CARTWRIGHT
+        A\",\"8501101\",\"\",\"WCA\",\"NEWFOUNDLAND\",\"53.68\",\"-57.04\",\"14.3\"\n\"CARTWRIGHT\",\"C\",\"CARTWRIGHT
+        A\",\"8501106\",\"71818\",\"YCA\",\"NEWFOUNDLAND\",\"53.68\",\"-57.04\",\"14.3\"\n\"CHURCHILL
+        FALLS\",\"F\",\"CHURCHILL FALLS\",\"8501130\",\"\",\"AFL\",\"NEWFOUNDLAND\",\"53.56\",\"-64.09\",\"439.5\"\n\"CHURCHILL
+        FALLS\",\"F\",\"CHURCHILL FALLS A\",\"8501131\",\"71002\",\"ZUM\",\"NEWFOUNDLAND\",\"53.56\",\"-64.11\",\"439.5\"\n\"CHURCHILL
+        FALLS\",\"F\",\"CHURCHILL FALLS A\",\"8501132\",\"\",\"\",\"NEWFOUNDLAND\",\"53.55\",\"-64.10\",\"439.5\"\n\"CORNER
+        BROOK\",\"A\",\"CORNER BROOK\",\"8401298\",\"71973\",\"WKB\",\"NEWFOUNDLAND\",\"48.93\",\"-57.92\",\"151.8\"\n\"CORNER
+        BROOK\",\"A\",\"CORNER BROOK\",\"8401300\",\"\",\"\",\"NEWFOUNDLAND\",\"48.95\",\"-57.95\",\"4.6\"\n\"DANIEL'S
+        HARBOUR\",\"E\",\"DANIEL'S HARBOUR\",\"8401405\",\"73024\",\"ADL\",\"NEWFOUNDLAND\",\"50.24\",\"-57.58\",\"19.0\"\n\"DANIEL'S
+        HARBOUR\",\"E\",\"DANIELS HARBOUR\",\"8401400\",\"71185\",\"WDH\",\"NEWFOUNDLAND\",\"50.24\",\"-57.58\",\"19.0\"\n\"DEER
+        LAKE\",\"C\",\"DEER LAKE A\",\"8401501\",\"71809\",\"YDF\",\"NEWFOUNDLAND\",\"49.22\",\"-57.40\",\"21.9\"\n\"DEER
+        LAKE\",\"C\",\"DEER LAKE A\",\"8401502\",\"71809\",\"YDF\",\"NEWFOUNDLAND\",\"49.21\",\"-57.39\",\"21.9\"\n\"DUNVILLE/ARGENTIA\",\"D\",\"ARGENTIA
+        (AUT)\",\"8400104\",\"71807\",\"WAR\",\"NEWFOUNDLAND\",\"47.31\",\"-54.00\",\"9.5\"\n\"DUNVILLE/ARGENTIA\",\"D\",\"DUNVILLE\",\"8401528\",\"\",\"\",\"NEWFOUNDLAND\",\"47.27\",\"-53.92\",\"15.0\"\n\"GANDER\",\"B\",\"GANDER
+        AIRPORT CS\",\"8401705\",\"71742\",\"XGD\",\"NEWFOUNDLAND\",\"48.95\",\"-54.57\",\"151.0\"\n\"GANDER\",\"B\",\"GANDER
+        INT'L A\",\"8401700\",\"71803\",\"YQX\",\"NEWFOUNDLAND\",\"48.95\",\"-54.58\",\"151.2\"\n\"GANDER\",\"B\",\"GANDER
+        INTL A\",\"8401703\",\"71803\",\"YQX\",\"NEWFOUNDLAND\",\"48.94\",\"-54.57\",\"151.2\"\n\"GOOSE\",\"A\",\"GOOSE
+        BAY A\",\"8501900\",\"71816\",\"YYR\",\"NEWFOUNDLAND\",\"53.32\",\"-60.42\",\"48.8\"\n\"HARBOUR
+        BRETON\",\"D\",\"HARBOUR BRETON\",\"8402071\",\"\",\"\",\"NEWFOUNDLAND\",\"47.47\",\"-55.83\",\"30.0\"\n\"HOPEDALE\",\"G\",\"HOPEDALE
+        (AUT)\",\"8502400\",\"71900\",\"WHO\",\"NEWFOUNDLAND\",\"55.45\",\"-60.22\",\"11.9\"\n\"LA
+        SCIE\",\"F\",\"LA SCIE\",\"8402520\",\"71337\",\"WAG\",\"NEWFOUNDLAND\",\"49.92\",\"-55.67\",\"194.0\"\n\"LETHBRIDGE\",\"C\",\"LETHBRIDGE\",\"8402544\",\"\",\"\",\"NEWFOUNDLAND\",\"48.35\",\"-53.90\",\"15.2\"\n\"MARY'S
+        HARBOUR\",\"F\",\"MARY'S HARBOUR\",\"850B5R1\",\"71339\",\"YMH\",\"NEWFOUNDLAND\",\"52.30\",\"-55.83\",\"11.6\"\n\"MARY'S
+        HARBOUR\",\"F\",\"MARY'S HARBOUR A\",\"8502591\",\"71817\",\"YMH\",\"NEWFOUNDLAND\",\"52.30\",\"-55.83\",\"10.6\"\n\"MARY'S
+        HARBOUR\",\"F\",\"MARY'S HARBOUR A\",\"8502592\",\"71339\",\"YMH\",\"NEWFOUNDLAND\",\"52.30\",\"-55.85\",\"10.6\"\n\"NAIN\",\"C\",\"NAIN\",\"8502799\",\"71665\",\"WFP\",\"NEWFOUNDLAND\",\"56.55\",\"-61.68\",\"7.6\"\n\"NAIN\",\"C\",\"NAIN
+        A\",\"8502800\",\"71902\",\"YDP\",\"NEWFOUNDLAND\",\"56.55\",\"-61.68\",\"6.4\"\n\"NAIN\",\"C\",\"NAIN
+        A\",\"8502801\",\"71902\",\"YDP\",\"NEWFOUNDLAND\",\"56.55\",\"-61.68\",\"6.4\"\n\"NAIN\",\"C\",\"NAIN
+        A\",\"8502810\",\"\",\"YDP\",\"NEWFOUNDLAND\",\"56.55\",\"-61.68\",\"6.4\"\n\"PORT
+        AUX BASQUES\",\"E\",\"PORT AUX BASQUES\",\"8402975\",\"71197\",\"WZB\",\"NEWFOUNDLAND\",\"47.57\",\"-59.15\",\"39.7\"\n\"PORT
+        AUX BASQUES\",\"E\",\"PORT AUX BASQUES\",\"8402980\",\"73026\",\"APB\",\"NEWFOUNDLAND\",\"47.57\",\"-59.15\",\"39.7\"\n\"ST.
+        ANTHONY\",\"E\",\"ST ANTHONY\",\"8403399\",\"71558\",\"WDW\",\"NEWFOUNDLAND\",\"51.38\",\"-56.10\",\"29.3\"\n\"ST.
+        ANTHONY\",\"E\",\"ST ANTHONY A\",\"840C401\",\"71819\",\"YAY\",\"NEWFOUNDLAND\",\"51.38\",\"-56.10\",\"32.9\"\n\"ST.
+        ANTHONY\",\"E\",\"ST. ANTHONY A\",\"8403389\",\"71819\",\"YAY\",\"NEWFOUNDLAND\",\"51.39\",\"-56.07\",\"32.9\"\n\"ST.
+        ANTHONY\",\"E\",\"ST. ANTHONY LWIS\",\"840D401\",\"71830\",\"AAY\",\"NEWFOUNDLAND\",\"51.39\",\"-56.09\",\"33.0\"\n\"ST.
+        JOHN'S (AIRPORT)\",\"C\",\"ST JOHN'S A\",\"8403506\",\"71801\",\"YYT\",\"NEWFOUNDLAND\",\"47.62\",\"-52.74\",\"140.5\"\n\"ST.
+        JOHN'S (AIRPORT)\",\"C\",\"ST. JOHN'S INTL A\",\"8403505\",\"71801\",\"YYT\",\"NEWFOUNDLAND\",\"47.62\",\"-52.75\",\"140.5\"\n\"ST.
+        JOHN'S (WEST)\",\"D\",\"ST JOHN'S WEST CDA\",\"8403600\",\"\",\"\",\"NEWFOUNDLAND\",\"47.52\",\"-52.78\",\"114.3\"\n\"ST.
+        JOHN'S (WEST)\",\"D\",\"ST JOHN'S WEST CDA CS\",\"8403605\",\"\",\"XSW\",\"NEWFOUNDLAND\",\"47.52\",\"-52.78\",\"114.0\"\n\"ST.
+        JOHN'S (WEST)\",\"D\",\"ST JOHNS WEST CLIMATE\",\"8403603\",\"71250\",\"AJW\",\"NEWFOUNDLAND\",\"47.51\",\"-52.78\",\"110.0\"\n\"ST.
+        LAWRENCE\",\"D\",\"ST LAWRENCE\",\"8403615\",\"\",\"\",\"NEWFOUNDLAND\",\"46.92\",\"-55.38\",\"48.5\"\n\"ST.
+        LAWRENCE\",\"D\",\"ST LAWRENCE\",\"8403616\",\"\",\"WDS\",\"NEWFOUNDLAND\",\"46.92\",\"-55.38\",\"48.5\"\n\"ST.
+        LAWRENCE\",\"D\",\"ST LAWRENCE\",\"8403619\",\"71110\",\"ADS\",\"NEWFOUNDLAND\",\"46.92\",\"-55.38\",\"48.5\"\n\"STEPHENVILLE\",\"C\",\"STEPHENVILLE
+        A\",\"8403800\",\"71815\",\"YJT\",\"NEWFOUNDLAND\",\"48.53\",\"-58.55\",\"24.7\"\n\"STEPHENVILLE\",\"C\",\"STEPHENVILLE
+        A\",\"8403801\",\"71815\",\"YJT\",\"NEWFOUNDLAND\",\"48.54\",\"-58.55\",\"24.7\"\n\"WABUSH\",\"C\",\"WABUSH
+        A\",\"8504176\",\"\",\"YWK\",\"NEWFOUNDLAND\",\"52.92\",\"-66.86\",\"551.4\"\n\"WABUSH\",\"C\",\"WABUSH
+        A\",\"8504177\",\"71825\",\"YWK\",\"NEWFOUNDLAND\",\"52.92\",\"-66.86\",\"551.4\"\n\"WABUSH\",\"C\",\"WABUSH
+        LAKE A\",\"8504175\",\"71825\",\"YWK\",\"NEWFOUNDLAND\",\"52.93\",\"-66.87\",\"551.4\"\n\"COLVILLE
+        LAKE\",\"D\",\"COLVILLE LAKE\",\"2200824\",\"71055\",\"WFX\",\"NORTHWEST TERRITORIES\",\"67.02\",\"-126.12\",\"271.0\"\n\"COLVILLE
+        LAKE\",\"D\",\"COLVILLE LAKE A\",\"2200827\",\"\",\"YVL\",\"NORTHWEST TERRITORIES\",\"67.02\",\"-126.13\",\"274.0\"\n\"DELINE\",\"D\",\"DELINE
+        A\",\"2201023\",\"\",\"YWJ\",\"NORTHWEST TERRITORIES\",\"65.21\",\"-123.44\",\"214.3\"\n\"DELINE\",\"D\",\"DELINE
+        A\",\"22010KA\",\"\",\"YWJ\",\"NORTHWEST TERRITORIES\",\"65.21\",\"-123.44\",\"214.3\"\n\"DELINE\",\"D\",\"DELINE
+        CS\",\"2201022\",\"71503\",\"XDE\",\"NORTHWEST TERRITORIES\",\"65.21\",\"-123.43\",\"212.8\"\n\"FORT
+        LIARD\",\"D\",\"FORT LIARD\",\"2201579\",\"71497\",\"WJL\",\"NORTHWEST TERRITORIES\",\"60.23\",\"-123.47\",\"213.4\"\n\"FORT
+        LIARD\",\"D\",\"FORT LIARD A\",\"2201575\",\"\",\"YJF\",\"NORTHWEST TERRITORIES\",\"60.24\",\"-123.47\",\"215.8\"\n\"FORT
+        LIARD\",\"D\",\"FORT LIARD A\",\"2201581\",\"\",\"YJF\",\"NORTHWEST TERRITORIES\",\"60.24\",\"-123.47\",\"215.8\"\n\"FORT
+        MCPHERSON\",\"D\",\"FORT MCPHERSON A\",\"2201601\",\"\",\"ZFM\",\"NORTHWEST
+        TERRITORIES\",\"67.41\",\"-134.86\",\"35.4\"\n\"FORT MCPHERSON\",\"D\",\"FORT
+        MCPHERSON A\",\"2201606\",\"\",\"ZFM\",\"NORTHWEST TERRITORIES\",\"67.41\",\"-134.86\",\"35.4\"\n\"FORT
+        RELIANCE\",\"F\",\"FORT RELIANCE (AUT)\",\"2201903\",\"71160\",\"WFZ\",\"NORTHWEST
+        TERRITORIES\",\"62.71\",\"-109.17\",\"167.6\"\n\"FORT SIMPSON\",\"A\",\"FORT
+        SIMPSON A\",\"2202101\",\"71946\",\"YFS\",\"NORTHWEST TERRITORIES\",\"61.76\",\"-121.24\",\"169.2\"\n\"FORT
+        SIMPSON\",\"A\",\"FORT SIMPSON A\",\"2202103\",\"71946\",\"YFS\",\"NORTHWEST
+        TERRITORIES\",\"61.76\",\"-121.24\",\"169.5\"\n\"FORT SIMPSON\",\"A\",\"FORT
+        SIMPSON CLIMATE\",\"2202102\",\"71365\",\"ZFS\",\"NORTHWEST TERRITORIES\",\"61.76\",\"-121.24\",\"168.0\"\n\"FORT
+        SMITH\",\"C\",\"FORT SMITH A\",\"2202200\",\"71934\",\"YSM\",\"NORTHWEST TERRITORIES\",\"60.02\",\"-111.96\",\"205.1\"\n\"FORT
+        SMITH\",\"C\",\"FORT SMITH A\",\"2202201\",\"71934\",\"YSM\",\"NORTHWEST TERRITORIES\",\"60.02\",\"-111.96\",\"205.1\"\n\"FORT
+        SMITH\",\"C\",\"FORT SMITH CLIMATE\",\"2202202\",\"71362\",\"ZSM\",\"NORTHWEST
+        TERRITORIES\",\"60.03\",\"-111.93\",\"203.0\"\n\"HAY RIVER\",\"A\",\"HAY RIVER
+        A\",\"2202400\",\"71935\",\"YHY\",\"NORTHWEST TERRITORIES\",\"60.84\",\"-115.78\",\"164.9\"\n\"HAY
+        RIVER\",\"A\",\"HAY RIVER A\",\"2202401\",\"71935\",\"YHY\",\"NORTHWEST TERRITORIES\",\"60.84\",\"-115.78\",\"164.9\"\n\"HAY
+        RIVER\",\"A\",\"HAY RIVER CLIMATE\",\"2202402\",\"71361\",\"ZHY\",\"NORTHWEST
+        TERRITORIES\",\"60.84\",\"-115.78\",\"164.0\"\n\"INUVIK\",\"C\",\"INUVIK A\",\"2202570\",\"\",\"YEV\",\"NORTHWEST
+        TERRITORIES\",\"68.30\",\"-133.48\",\"67.7\"\n\"INUVIK\",\"C\",\"INUVIK A\",\"2202571\",\"\",\"YEV\",\"NORTHWEST
+        TERRITORIES\",\"68.30\",\"-133.48\",\"67.7\"\n\"INUVIK\",\"C\",\"INUVIK CLIMATE\",\"2202578\",\"71364\",\"ZEV\",\"NORTHWEST
+        TERRITORIES\",\"68.32\",\"-133.52\",\"103.0\"\n\"INUVIK\",\"C\",\"INUVIK UA\",\"2202582\",\"71957\",\"\",\"NORTHWEST
+        TERRITORIES\",\"68.32\",\"-133.52\",\"103.2\"\n\"MOULD BAY\",\"F\",\"MOULD
+        BAY A\",\"2502700\",\"\",\"YMD\",\"NORTHWEST TERRITORIES\",\"76.23\",\"-119.33\",\"12.2\"\n\"MOULD
+        BAY\",\"F\",\"MOULD BAY CS\",\"250M001\",\"71989\",\"WAY\",\"NORTHWEST TERRITORIES\",\"76.24\",\"-119.35\",\"1.5\"\n\"NORMAN
+        WELLS\",\"C\",\"NORMAN WELLS A\",\"2202800\",\"\",\"\",\"NORTHWEST TERRITORIES\",\"65.28\",\"-126.80\",\"72.5\"\n\"NORMAN
+        WELLS\",\"C\",\"NORMAN WELLS A\",\"2202801\",\"71043\",\"YVQ\",\"NORTHWEST
+        TERRITORIES\",\"65.28\",\"-126.80\",\"72.5\"\n\"NORMAN WELLS\",\"C\",\"NORMAN
+        WELLS CLIMATE\",\"2202810\",\"71480\",\"NVQ\",\"NORTHWEST TERRITORIES\",\"65.29\",\"-126.75\",\"93.6\"\n\"PAULATUK\",\"C\",\"PAULATUK\",\"2203058\",\"71984\",\"ZPK\",\"NORTHWEST
+        TERRITORIES\",\"69.36\",\"-124.08\",\"6.3\"\n\"PAULATUK\",\"C\",\"PAULATUK
+        A\",\"2203055\",\"\",\"YPC\",\"NORTHWEST TERRITORIES\",\"69.36\",\"-124.08\",\"4.6\"\n\"PAULATUK\",\"C\",\"PAULATUK
+        A\",\"2203057\",\"\",\"YPC\",\"NORTHWEST TERRITORIES\",\"69.36\",\"-124.08\",\"4.6\"\n\"PELLY
+        ISLAND\",\"D\",\"PELLY ISLAND\",\"2203095\",\"71502\",\"WND\",\"NORTHWEST
+        TERRITORIES\",\"69.63\",\"-135.44\",\"17.0\"\n\"SACHS HARBOUR\",\"D\",\"SACHS
+        HARBOUR A\",\"2503649\",\"\",\"YSY\",\"NORTHWEST TERRITORIES\",\"71.99\",\"-125.24\",\"86.3\"\n\"SACHS
+        HARBOUR\",\"D\",\"SACHS HARBOUR A\",\"2503650\",\"\",\"YSY\",\"NORTHWEST TERRITORIES\",\"72.00\",\"-125.27\",\"86.3\"\n\"SACHS
+        HARBOUR\",\"D\",\"SACHS HARBOUR CLIMATE\",\"2503648\",\"71467\",\"WSY\",\"NORTHWEST
+        TERRITORIES\",\"71.99\",\"-125.25\",\"87.5\"\n\"TUKTOYAKTUK\",\"E\",\"TUKTOYAKTUK\",\"2203914\",\"71985\",\"ZUB\",\"NORTHWEST
+        TERRITORIES\",\"69.43\",\"-133.02\",\"4.6\"\n\"TUKTOYAKTUK\",\"E\",\"TUKTOYAKTUK
+        A\",\"2203911\",\"\",\"YUB\",\"NORTHWEST TERRITORIES\",\"69.43\",\"-133.03\",\"4.3\"\n\"TUKTOYAKTUK\",\"E\",\"TUKTOYAKTUK
+        A\",\"2203912\",\"\",\"YUB\",\"NORTHWEST TERRITORIES\",\"69.43\",\"-133.03\",\"4.3\"\n\"ULUKHAKTOK/HOLMAN\",\"D\",\"HOLMAN
+        CS\",\"2502505\",\"71029\",\"XHI\",\"NORTHWEST TERRITORIES\",\"70.76\",\"-117.80\",\"29.9\"\n\"ULUKHAKTOK/HOLMAN\",\"D\",\"ULUKHAKTOK
+        A\",\"2502501\",\"\",\"YHI\",\"NORTHWEST TERRITORIES\",\"70.76\",\"-117.81\",\"36.0\"\n\"ULUKHAKTOK/HOLMAN\",\"D\",\"ULUKHAKTOK
+        A\",\"2502503\",\"\",\"YHI\",\"NORTHWEST TERRITORIES\",\"70.76\",\"-117.81\",\"36.0\"\n\"WHATI\",\"C\",\"WHATI\",\"2202678\",\"71163\",\"WMT\",\"NORTHWEST
+        TERRITORIES\",\"63.13\",\"-117.24\",\"271.3\"\n\"WRIGLEY\",\"F\",\"WRIGLEY
+        A\",\"2204000\",\"\",\"YWY\",\"NORTHWEST TERRITORIES\",\"63.21\",\"-123.44\",\"149.7\"\n\"WRIGLEY\",\"F\",\"WRIGLEY
+        A\",\"2204005\",\"\",\"YWY\",\"NORTHWEST TERRITORIES\",\"63.21\",\"-123.44\",\"149.7\"\n\"YELLOWKNIFE
+        (AIRPORT)\",\"C\",\"YELLOWKNIFE A\",\"2204100\",\"71936\",\"YZF\",\"NORTHWEST
+        TERRITORIES\",\"62.46\",\"-114.44\",\"205.7\"\n\"YELLOWKNIFE (AIRPORT)\",\"C\",\"YELLOWKNIFE
+        A\",\"2204101\",\"71936\",\"YZF\",\"NORTHWEST TERRITORIES\",\"62.46\",\"-114.44\",\"205.7\"\n\"BEAVER
+        ISLAND\",\"C\",\"BEAVER ISLAND (AUT)\",\"8200558\",\"71403\",\"WBV\",\"NOVA
+        SCOTIA\",\"44.82\",\"-62.33\",\"16.0\"\n\"BRIDGEWATER\",\"D\",\"BRIDGEWATER\",\"8200600\",\"\",\"\",\"NOVA
+        SCOTIA\",\"44.40\",\"-64.55\",\"27.4\"\n\"CHETICAMP\",\"C\",\"CHETICAMP\",\"8200825\",\"\",\"\",\"NOVA
+        SCOTIA\",\"46.65\",\"-60.95\",\"11.0\"\n\"CHETICAMP\",\"C\",\"CHETICAMP CS\",\"8200827\",\"71959\",\"XCH\",\"NOVA
+        SCOTIA\",\"46.65\",\"-60.95\",\"43.9\"\n\"CHETICAMP\",\"C\",\"CHETICAMP HIGHLANDS
+        NATIONAL PARK\",\"8200828\",\"73023\",\"AHT\",\"NOVA SCOTIA\",\"46.65\",\"-60.95\",\"8.0\"\n\"DEBERT\",\"D\",\"DEBERT\",\"8201380\",\"\",\"\",\"NOVA
+        SCOTIA\",\"45.42\",\"-63.42\",\"38.1\"\n\"DEBERT\",\"D\",\"DEBERT\",\"8201390\",\"71317\",\"ZDB\",\"NOVA
+        SCOTIA\",\"45.42\",\"-63.47\",\"37.5\"\n\"GREENWOOD\",\"A\",\"GREENWOOD A\",\"8202000\",\"71397\",\"YZX\",\"NOVA
+        SCOTIA\",\"44.98\",\"-64.92\",\"28.0\"\n\"HALIFAX STANFIELD (AIRPORT)\",\"C\",\"HALIFAX
+        STANFIELD INT'L A\",\"8202250\",\"71395\",\"YHZ\",\"NOVA SCOTIA\",\"44.88\",\"-63.50\",\"145.4\"\n\"HALIFAX
+        STANFIELD (AIRPORT)\",\"C\",\"HALIFAX STANFIELD INT'L A\",\"8202251\",\"71395\",\"YHZ\",\"NOVA
+        SCOTIA\",\"44.88\",\"-63.51\",\"145.4\"\n\"HART ISLAND\",\"C\",\"HART ISLAND
+        (AUT)\",\"8202318\",\"71419\",\"WRN\",\"NOVA SCOTIA\",\"45.35\",\"-60.98\",\"8.2\"\n\"INGONISH
+        BEACH\",\"D\",\"INGONISH BEACH\",\"8202500\",\"\",\"\",\"NOVA SCOTIA\",\"46.65\",\"-60.40\",\"7.9\"\n\"INGONISH
+        BEACH\",\"D\",\"INGONISH BEACH RCS\",\"8202502\",\"71027\",\"XIB\",\"NOVA
+        SCOTIA\",\"46.66\",\"-60.41\",\"10.0\"\n\"KEJIMKUJIK\",\"D\",\"KEJIMKUJIK
+        1\",\"8202592\",\"71599\",\"WKG\",\"NOVA SCOTIA\",\"44.40\",\"-65.20\",\"125.0\"\n\"KEJIMKUJIK\",\"D\",\"KEJIMKUJIK
+        PARK\",\"8202590\",\"\",\"\",\"NOVA SCOTIA\",\"44.43\",\"-65.20\",\"126.8\"\n\"NAPPAN\",\"C\",\"NAPPAN
+        AUTO\",\"8203702\",\"71311\",\"XNP\",\"NOVA SCOTIA\",\"45.76\",\"-64.24\",\"19.8\"\n\"NAPPAN\",\"C\",\"NAPPAN
+        CDA\",\"8203700\",\"\",\"\",\"NOVA SCOTIA\",\"45.77\",\"-64.25\",\"19.8\"\n\"PARRSBORO\",\"C\",\"PARRSBORO\",\"8204400\",\"\",\"\",\"NOVA
+        SCOTIA\",\"45.40\",\"-64.33\",\"24.3\"\n\"PARRSBORO\",\"C\",\"PARRSBORO\",\"8204402\",\"71493\",\"APR\",\"NOVA
+        SCOTIA\",\"45.41\",\"-64.35\",\"30.9\"\n\"SABLE ISLAND\",\"F\",\"SABLE ISLAND\",\"8204700\",\"71600\",\"ESA\",\"NOVA
+        SCOTIA\",\"43.93\",\"-60.01\",\"5.0\"\n\"SABLE ISLAND\",\"F\",\"SABLE ISLAND\",\"8204701\",\"\",\"YSA\",\"NOVA
+        SCOTIA\",\"43.93\",\"-60.00\",\"4.0\"\n\"SABLE ISLAND\",\"F\",\"SABLE ISLAND\",\"8204708\",\"73025\",\"ASB\",\"NOVA
+        SCOTIA\",\"43.93\",\"-60.01\",\"1.2\"\n\"SABLE ISLAND\",\"F\",\"SABLE ISLAND
+        A\",\"8204703\",\"71595\",\"WSA\",\"NOVA SCOTIA\",\"43.93\",\"-59.96\",\"1.2\"\n\"SHEARWATER\",\"D\",\"SHEARWATER
+        A\",\"8205090\",\"71601\",\"YAW\",\"NOVA SCOTIA\",\"44.63\",\"-63.50\",\"44.0\"\n\"SHEARWATER\",\"D\",\"SHEARWATER
+        AUTO\",\"8205091\",\"\",\"WAW\",\"NOVA SCOTIA\",\"44.64\",\"-63.51\",\"53.0\"\n\"SHEARWATER\",\"D\",\"SHEARWATER
+        RCS\",\"8205092\",\"71264\",\"AAW\",\"NOVA SCOTIA\",\"44.63\",\"-63.51\",\"24.0\"\n\"ST.
+        PAUL ISLAND\",\"D\",\"ST PAUL ISLAND (AUT)\",\"8204909\",\"71418\",\"WEF\",\"NOVA
+        SCOTIA\",\"47.23\",\"-60.14\",\"27.0\"\n\"SYDNEY\",\"C\",\"SYDNEY A\",\"8205700\",\"71707\",\"YQY\",\"NOVA
+        SCOTIA\",\"46.17\",\"-60.05\",\"61.9\"\n\"SYDNEY\",\"C\",\"SYDNEY A\",\"8205701\",\"71707\",\"YQY\",\"NOVA
+        SCOTIA\",\"46.16\",\"-60.05\",\"61.9\"\n\"SYDNEY\",\"C\",\"SYDNEY CS\",\"8205702\",\"71758\",\"AQY\",\"NOVA
+        SCOTIA\",\"46.16\",\"-60.04\",\"62.5\"\n\"TATAMAGOUCHE\",\"D\",\"TATAMAGOUCHE\",\"8205774\",\"\",\"\",\"NOVA
+        SCOTIA\",\"45.68\",\"-63.23\",\"18.0\"\n\"WESTERN HEAD\",\"E\",\"WESTERN HEAD\",\"8206240\",\"71411\",\"WWE\",\"NOVA
+        SCOTIA\",\"43.99\",\"-64.66\",\"10.1\"\n\"YARMOUTH\",\"C\",\"YARMOUTH A\",\"8206495\",\"71603\",\"YQI\",\"NOVA
+        SCOTIA\",\"43.83\",\"-66.09\",\"42.9\"\n\"YARMOUTH\",\"C\",\"YARMOUTH A\",\"8206500\",\"\",\"YQI\",\"NOVA
+        SCOTIA\",\"43.83\",\"-66.09\",\"43.0\"\n\"YARMOUTH\",\"C\",\"YARMOUTH RCS\",\"8206491\",\"71884\",\"EQI\",\"NOVA
+        SCOTIA\",\"43.83\",\"-66.09\",\"36.0\"\n\"ALERT\",\"C\",\"ALERT\",\"2400300\",\"\",\"WLT\",\"NUNAVUT\",\"82.52\",\"-62.28\",\"30.5\"\n\"ALERT\",\"C\",\"ALERT
+        CLIMATE\",\"2400305\",\"71355\",\"ZLT\",\"NUNAVUT\",\"82.50\",\"-62.33\",\"65.4\"\n\"ALERT\",\"C\",\"ALERT
+        UA\",\"2400306\",\"71082\",\"\",\"NUNAVUT\",\"82.50\",\"-62.33\",\"65.4\"\n\"ARVIAT\",\"C\",\"ARVIAT
+        A\",\"2300427\",\"71174\",\"YEK\",\"NUNAVUT\",\"61.09\",\"-94.07\",\"10.4\"\n\"ARVIAT\",\"C\",\"ARVIAT
+        A\",\"2300MKF\",\"\",\"YEK\",\"NUNAVUT\",\"61.10\",\"-94.07\",\"10.4\"\n\"ARVIAT\",\"C\",\"ARVIAT
+        AWOS\",\"2300426\",\"\",\"YEK\",\"NUNAVUT\",\"61.10\",\"-94.07\",\"10.4\"\n\"ARVIAT\",\"C\",\"ARVIAT
+        CLIMATE\",\"2301153\",\"71322\",\"XAR\",\"NUNAVUT\",\"61.10\",\"-94.07\",\"9.8\"\n\"BAKER
+        LAKE\",\"D\",\"BAKER LAKE A\",\"2300500\",\"71926\",\"YBK\",\"NUNAVUT\",\"64.30\",\"-96.08\",\"18.6\"\n\"BAKER
+        LAKE\",\"D\",\"BAKER LAKE A\",\"2300503\",\"71926\",\"YBK\",\"NUNAVUT\",\"64.30\",\"-96.08\",\"18.6\"\n\"BAKER
+        LAKE\",\"D\",\"BAKER LAKE CLIMATE\",\"2300501\",\"71356\",\"XBL\",\"NUNAVUT\",\"64.32\",\"-96.00\",\"50.8\"\n\"BREVOORT
+        ISLAND\",\"C\",\"BREVOORT ISLAND\",\"2400565\",\"71097\",\"WOB\",\"NUNAVUT\",\"63.34\",\"-64.15\",\"376.0\"\n\"CAMBRIDGE
+        BAY\",\"A\",\"CAMBRIDGE BAY A\",\"2400600\",\"71925\",\"YCB\",\"NUNAVUT\",\"69.11\",\"-105.14\",\"31.1\"\n\"CAMBRIDGE
+        BAY\",\"A\",\"CAMBRIDGE BAY A\",\"2400601\",\"71925\",\"YCB\",\"NUNAVUT\",\"69.11\",\"-105.14\",\"31.1\"\n\"CAMBRIDGE
+        BAY\",\"A\",\"CAMBRIDGE BAY GSN\",\"2400602\",\"71288\",\"XCM\",\"NUNAVUT\",\"69.11\",\"-105.14\",\"18.7\"\n\"CLYDE
+        RIVER\",\"D\",\"CLYDE A\",\"2400800\",\"71090\",\"YCY\",\"NUNAVUT\",\"70.49\",\"-68.52\",\"26.5\"\n\"CLYDE
+        RIVER\",\"D\",\"CLYDE AWOS\",\"2400801\",\"71090\",\"YCY\",\"NUNAVUT\",\"70.49\",\"-68.52\",\"26.5\"\n\"CLYDE
+        RIVER\",\"D\",\"CLYDE RIVER A\",\"2400804\",\"71090\",\"YCY\",\"NUNAVUT\",\"70.49\",\"-68.52\",\"26.5\"\n\"CLYDE
+        RIVER\",\"D\",\"CLYDE RIVER CLIMATE\",\"2400802\",\"71358\",\"ZCY\",\"NUNAVUT\",\"70.48\",\"-68.52\",\"26.5\"\n\"CORAL
+        HARBOUR\",\"E\",\"CORAL HARBOUR A\",\"2301000\",\"71915\",\"YZS\",\"NUNAVUT\",\"64.19\",\"-83.36\",\"62.2\"\n\"CORAL
+        HARBOUR\",\"E\",\"CORAL HARBOUR A\",\"2301002\",\"71915\",\"YZS\",\"NUNAVUT\",\"64.19\",\"-83.36\",\"62.2\"\n\"CORAL
+        HARBOUR\",\"E\",\"CORAL HARBOUR RCS\",\"2301010\",\"71134\",\"NZS\",\"NUNAVUT\",\"64.18\",\"-83.35\",\"57.0\"\n\"CROKER
+        RIVER\",\"D\",\"CROKER RIVER\",\"230J01Q\",\"71059\",\"WXR\",\"NUNAVUT\",\"69.28\",\"-119.22\",\"69.4\"\n\"DEWAR
+        LAKES\",\"G\",\"DEWAR LAKES\",\"2401030\",\"71092\",\"WUW\",\"NUNAVUT\",\"68.65\",\"-71.17\",\"526.7\"\n\"EUREKA\",\"B\",\"EUREKA
+        A\",\"2401200\",\"71917\",\"WEU\",\"NUNAVUT\",\"79.98\",\"-85.93\",\"10.4\"\n\"EUREKA\",\"B\",\"EUREKA
+        A\",\"2401203\",\"71917\",\"WEU\",\"NUNAVUT\",\"79.99\",\"-85.81\",\"82.9\"\n\"EUREKA\",\"B\",\"EUREKA
+        A\",\"2401208\",\"\",\"WEU\",\"NUNAVUT\",\"79.99\",\"-85.81\",\"82.9\"\n\"EUREKA\",\"B\",\"EUREKA
+        CLIMATE\",\"2401199\",\"71613\",\"NEK\",\"NUNAVUT\",\"79.99\",\"-85.93\",\"10.0\"\n\"GJOA
+        HAVEN\",\"D\",\"GJOA HAVEN A\",\"2302335\",\"\",\"YHK\",\"NUNAVUT\",\"68.64\",\"-95.85\",\"46.9\"\n\"GJOA
+        HAVEN\",\"D\",\"GJOA HAVEN A\",\"2302337\",\"71597\",\"YHK\",\"NUNAVUT\",\"68.64\",\"-95.85\",\"46.9\"\n\"GJOA
+        HAVEN\",\"D\",\"GJOA HAVEN CLIMATE\",\"2302340\",\"71363\",\"ZHK\",\"NUNAVUT\",\"68.64\",\"-95.85\",\"42.3\"\n\"GRISE
+        FIORD\",\"E\",\"GRISE FIORD\",\"2402346\",\"\",\"WGZ\",\"NUNAVUT\",\"76.42\",\"-82.90\",\"42.7\"\n\"GRISE
+        FIORD\",\"E\",\"GRISE FIORD A\",\"2402360\",\"\",\"WGZ\",\"NUNAVUT\",\"76.43\",\"-82.91\",\"41.1\"\n\"GRISE
+        FIORD\",\"E\",\"GRISE FIORD CLIMATE\",\"2402351\",\"71971\",\"NGC\",\"NUNAVUT\",\"76.42\",\"-82.90\",\"44.5\"\n\"HAT
+        ISLAND\",\"C\",\"HAT ISLAND\",\"2302370\",\"71084\",\"WIL\",\"NUNAVUT\",\"68.32\",\"-100.09\",\"36.1\"\n\"IQALUIT\",\"D\",\"IQALUIT
+        A\",\"2402590\",\"71909\",\"YFB\",\"NUNAVUT\",\"63.75\",\"-68.55\",\"33.5\"\n\"IQALUIT\",\"D\",\"IQALUIT
+        A\",\"2402596\",\"\",\"YFB\",\"NUNAVUT\",\"63.76\",\"-68.56\",\"33.5\"\n\"IQALUIT\",\"D\",\"IQALUIT
+        AWOS\",\"2402591\",\"71909\",\"YFB\",\"NUNAVUT\",\"63.75\",\"-68.55\",\"33.5\"\n\"IQALUIT\",\"D\",\"IQALUIT
+        CLIMATE\",\"2402592\",\"71321\",\"XFB\",\"NUNAVUT\",\"63.75\",\"-68.54\",\"33.5\"\n\"IQALUIT\",\"D\",\"IQALUIT
+        UA\",\"2402594\",\"71909\",\"\",\"NUNAVUT\",\"63.75\",\"-68.55\",\"21.9\"\n\"KINNGAIT/CAPE
+        DORSET\",\"D\",\"CAPE DORSET A\",\"2400635\",\"71910\",\"YTE\",\"NUNAVUT\",\"64.23\",\"-76.53\",\"48.2\"\n\"KINNGAIT/CAPE
+        DORSET\",\"D\",\"CAPE DORSET AWOS\",\"2400634\",\"71910\",\"YTE\",\"NUNAVUT\",\"64.23\",\"-76.53\",\"48.2\"\n\"KINNGAIT/CAPE
+        DORSET\",\"D\",\"KINNGAIT\",\"2400636\",\"71575\",\"NCD\",\"NUNAVUT\",\"64.23\",\"-76.53\",\"50.0\"\n\"KINNGAIT/CAPE
+        DORSET\",\"D\",\"KINNGAIT AIRPORT\",\"2400637\",\"71366\",\"YTE\",\"NUNAVUT\",\"64.23\",\"-76.53\",\"48.2\"\n\"KUGAARUK\",\"C\",\"KUGAARUK
+        A\",\"2303092\",\"\",\"YBB\",\"NUNAVUT\",\"68.54\",\"-89.80\",\"15.5\"\n\"KUGAARUK\",\"C\",\"KUGAARUK
+        A\",\"2303095\",\"\",\"YBB\",\"NUNAVUT\",\"68.54\",\"-89.81\",\"15.5\"\n\"KUGAARUK\",\"C\",\"KUGAARUK
+        CLIMATE\",\"2303094\",\"71407\",\"NBB\",\"NUNAVUT\",\"68.54\",\"-89.80\",\"15.8\"\n\"KUGLUKTUK\",\"A\",\"KUGLUKTUK
+        A\",\"2300902\",\"71938\",\"YCO\",\"NUNAVUT\",\"67.82\",\"-115.14\",\"22.6\"\n\"KUGLUKTUK\",\"A\",\"KUGLUKTUK
+        A\",\"2300903\",\"71938\",\"YCO\",\"NUNAVUT\",\"67.82\",\"-115.14\",\"22.6\"\n\"KUGLUKTUK\",\"A\",\"KUGLUKTUK
+        CLIMATE\",\"2300904\",\"71332\",\"NCO\",\"NUNAVUT\",\"67.82\",\"-115.14\",\"22.6\"\n\"LUPIN\",\"D\",\"LUPIN
+        A\",\"23026HN\",\"\",\"YWO\",\"NUNAVUT\",\"65.76\",\"-111.25\",\"490.1\"\n\"LUPIN\",\"D\",\"LUPIN
+        CS\",\"230N002\",\"71470\",\"WIJ\",\"NUNAVUT\",\"65.76\",\"-111.25\",\"488.0\"\n\"NAUJAAT/REPULSE
+        BAY\",\"D\",\"NAUJAAT A\",\"2403495\",\"\",\"YUT\",\"NUNAVUT\",\"66.52\",\"-86.22\",\"22.9\"\n\"NAUJAAT/REPULSE
+        BAY\",\"D\",\"REPULSE BAY A\",\"2403490\",\"\",\"YUT\",\"NUNAVUT\",\"66.52\",\"-86.22\",\"22.9\"\n\"PANGNIRTUNG\",\"F\",\"PANGNIRTUNG\",\"2403049\",\"71826\",\"WXP\",\"NUNAVUT\",\"66.14\",\"-65.71\",\"22.6\"\n\"PANGNIRTUNG\",\"F\",\"PANGNIRTUNG
+        A\",\"2403053\",\"\",\"YXP\",\"NUNAVUT\",\"66.15\",\"-65.71\",\"24.1\"\n\"PANGNIRTUNG\",\"F\",\"PANGNIRTUNG
+        A\",\"2403054\",\"\",\"YXP\",\"NUNAVUT\",\"66.15\",\"-65.71\",\"24.0\"\n\"POND
+        INLET\",\"C\",\"POND INLET A\",\"2403201\",\"71095\",\"YIO\",\"NUNAVUT\",\"72.69\",\"-77.97\",\"61.6\"\n\"POND
+        INLET\",\"C\",\"POND INLET A\",\"2403206\",\"71095\",\"YIO\",\"NUNAVUT\",\"72.69\",\"-77.97\",\"61.6\"\n\"POND
+        INLET\",\"C\",\"POND INLET AWOS\",\"2403202\",\"71095\",\"YIO\",\"NUNAVUT\",\"72.69\",\"-77.97\",\"61.6\"\n\"POND
+        INLET\",\"C\",\"POND INLET CLIMATE\",\"2403204\",\"71576\",\"NDT\",\"NUNAVUT\",\"72.69\",\"-77.96\",\"64.7\"\n\"QIKIQTARJUAQ\",\"E\",\"QIKIQTARJUAQ
+        A\",\"2400572\",\"71338\",\"YVM\",\"NUNAVUT\",\"67.55\",\"-64.03\",\"5.5\"\n\"QIKIQTARJUAQ\",\"E\",\"QIKIQTARJUAQ
+        A\",\"2400577\",\"\",\"YVM\",\"NUNAVUT\",\"67.55\",\"-64.03\",\"5.5\"\n\"QIKIQTARJUAQ\",\"E\",\"QIKIQTARJUAQ
+        AWOS\",\"2400571\",\"71338\",\"YVM\",\"NUNAVUT\",\"67.55\",\"-64.03\",\"5.5\"\n\"QIKIQTARJUAQ\",\"E\",\"QIKIQTARJUAQ
+        CLIMATE\",\"2400573\",\"71357\",\"ZVM\",\"NUNAVUT\",\"67.55\",\"-64.03\",\"6.4\"\n\"RANKIN
+        INLET\",\"C\",\"RANKIN INLET A\",\"2303401\",\"71083\",\"YRT\",\"NUNAVUT\",\"62.82\",\"-92.12\",\"32.3\"\n\"RANKIN
+        INLET\",\"C\",\"RANKIN INLET A\",\"2303405\",\"71083\",\"YRT\",\"NUNAVUT\",\"62.81\",\"-92.11\",\"32.3\"\n\"RESOLUTE
+        BAY\",\"C\",\"RESOLUTE BAY A\",\"2403498\",\"71924\",\"YRB\",\"NUNAVUT\",\"74.72\",\"-94.97\",\"67.7\"\n\"RESOLUTE
+        BAY\",\"C\",\"RESOLUTE CARS\",\"2403500\",\"71924\",\"YRB\",\"NUNAVUT\",\"74.72\",\"-94.97\",\"67.7\"\n\"RESOLUTE
+        BAY\",\"C\",\"RESOLUTE CS\",\"2403505\",\"71018\",\"XRB\",\"NUNAVUT\",\"74.72\",\"-94.98\",\"30.0\"\n\"SANIRAJAK/HALL
+        BEACH\",\"D\",\"HALL BEACH A\",\"2402350\",\"71081\",\"YUX\",\"NUNAVUT\",\"68.78\",\"-81.24\",\"9.1\"\n\"SANIRAJAK/HALL
+        BEACH\",\"D\",\"HALL BEACH AWOS\",\"2402352\",\"71081\",\"YUX\",\"NUNAVUT\",\"68.78\",\"-81.24\",\"9.1\"\n\"SANIRAJAK/HALL
+        BEACH\",\"D\",\"SANIRAJAK\",\"2402353\",\"71320\",\"XUX\",\"NUNAVUT\",\"68.78\",\"-81.24\",\"8.2\"\n\"SANIRAJAK/HALL
+        BEACH\",\"D\",\"SANIRAJAK AIRPORT\",\"2402354\",\"71293\",\"YUX\",\"NUNAVUT\",\"68.78\",\"-81.24\",\"9.1\"\n\"ATIKOKAN\",\"D\",\"ATIKOKAN
+        (AUT)\",\"6020LPQ\",\"71747\",\"WCH\",\"ONTARIO\",\"48.76\",\"-91.63\",\"389.3\"\n\"ATIKOKAN\",\"D\",\"ATIKOKAN
+        MARMION\",\"6020384\",\"\",\"\",\"ONTARIO\",\"48.80\",\"-91.58\",\"442.0\"\n\"BANCROFT\",\"E\",\"BANCROFT
+        AUTO\",\"616I001\",\"71294\",\"WRK\",\"ONTARIO\",\"45.07\",\"-77.88\",\"330.7\"\n\"BIG
+        TROUT LAKE\",\"F\",\"BIG TROUT LAKE\",\"6010740\",\"71208\",\"OTL\",\"ONTARIO\",\"53.82\",\"-89.89\",\"222.5\"\n\"BIG
+        TROUT LAKE\",\"F\",\"BIG TROUT LAKE A\",\"6010735\",\"71675\",\"YTL\",\"ONTARIO\",\"53.82\",\"-89.90\",\"222.5\"\n\"BIG
+        TROUT LAKE\",\"F\",\"BIG TROUT LAKE READAC\",\"6010739\",\"\",\"TBL\",\"ONTARIO\",\"53.82\",\"-89.90\",\"222.2\"\n\"BROCKVILLE\",\"A\",\"BROCKVILLE
+        CLIMATE\",\"6100970\",\"71161\",\"TBO\",\"ONTARIO\",\"44.64\",\"-75.75\",\"120.4\"\n\"BROCKVILLE\",\"A\",\"BROCKVILLE
+        PCC\",\"6100971\",\"\",\"\",\"ONTARIO\",\"44.60\",\"-75.67\",\"96.0\"\n\"CHAPLEAU\",\"C\",\"CHAPLEAU
+        A\",\"6061361\",\"\",\"\",\"ONTARIO\",\"47.82\",\"-83.35\",\"448.1\"\n\"CHAPLEAU\",\"C\",\"CHAPLEAU
+        A\",\"6061362\",\"71642\",\"YLD\",\"ONTARIO\",\"47.82\",\"-83.35\",\"448.1\"\n\"CHAPLEAU\",\"C\",\"CHAPLEAU
+        A\",\"6061365\",\"\",\"YLD\",\"ONTARIO\",\"47.82\",\"-83.35\",\"448.1\"\n\"COLLINGWOOD\",\"E\",\"COLLINGWOOD\",\"6111792\",\"71270\",\"WCO\",\"ONTARIO\",\"44.50\",\"-80.22\",\"178.3\"\n\"CORNWALL\",\"C\",\"CORNWALL\",\"6101874\",\"\",\"\",\"ONTARIO\",\"45.02\",\"-74.75\",\"64.0\"\n\"DELHI\",\"D\",\"DELHI
+        CDA\",\"6131982\",\"\",\"\",\"ONTARIO\",\"42.87\",\"-80.55\",\"231.6\"\n\"DELHI\",\"D\",\"DELHI
+        CS\",\"6131983\",\"71573\",\"XDI\",\"ONTARIO\",\"42.87\",\"-80.55\",\"231.7\"\n\"DRUMMOND
+        CENTRE\",\"C\",\"DRUMMOND CENTRE\",\"6102J13\",\"\",\"\",\"ONTARIO\",\"45.03\",\"-76.25\",\"145.0\"\n\"EARLTON\",\"D\",\"EARLTON
+        A\",\"6072223\",\"71684\",\"YXR\",\"ONTARIO\",\"47.70\",\"-79.85\",\"243.8\"\n\"EARLTON\",\"D\",\"EARLTON
+        A\",\"6072225\",\"\",\"YXR\",\"ONTARIO\",\"47.70\",\"-79.85\",\"243.2\"\n\"EARLTON\",\"D\",\"EARLTON
+        AWOS\",\"6072224\",\"\",\"\",\"ONTARIO\",\"47.70\",\"-79.85\",\"243.4\"\n\"EARLTON\",\"D\",\"EARLTON
+        CLIMATE\",\"6072230\",\"71213\",\"TXR\",\"ONTARIO\",\"47.70\",\"-79.85\",\"243.4\"\n\"EGBERT\",\"D\",\"EGBERT
+        CARE\",\"611KBE0\",\"\",\"\",\"ONTARIO\",\"44.23\",\"-79.78\",\"252.0\"\n\"EGBERT\",\"D\",\"EGBERT
+        CS\",\"611E001\",\"71296\",\"XET\",\"ONTARIO\",\"44.23\",\"-79.78\",\"251.0\"\n\"FORT
+        FRANCES\",\"C\",\"FORT FRANCES A\",\"6022476\",\"\",\"\",\"ONTARIO\",\"48.65\",\"-93.43\",\"342.0\"\n\"FORT
+        FRANCES\",\"C\",\"FORT FRANCES RCS\",\"6022474\",\"71962\",\"TAG\",\"ONTARIO\",\"48.65\",\"-93.44\",\"342.0\"\n\"GERALDTON\",\"B\",\"GERALDTON
+        A\",\"6042716\",\"\",\"YGQ\",\"ONTARIO\",\"49.78\",\"-86.93\",\"348.4\"\n\"GERALDTON\",\"B\",\"GERALDTON
+        A\",\"6042717\",\"\",\"YGQ\",\"ONTARIO\",\"49.78\",\"-86.94\",\"348.4\"\n\"GODERICH\",\"E\",\"GODERICH\",\"6122847\",\"71261\",\"WGD\",\"ONTARIO\",\"43.77\",\"-81.72\",\"213.7\"\n\"GODERICH\",\"E\",\"SALTFORD\",\"6127418\",\"\",\"\",\"ONTARIO\",\"43.75\",\"-81.68\",\"228.6\"\n\"GORE
+        BAY\",\"E\",\"GORE BAY  AWOS\",\"6092930\",\"\",\"OZE\",\"ONTARIO\",\"45.88\",\"-82.57\",\"193.5\"\n\"GORE
+        BAY\",\"E\",\"GORE BAY A\",\"6092925\",\"\",\"YZE\",\"ONTARIO\",\"45.88\",\"-82.57\",\"193.5\"\n\"GORE
+        BAY\",\"E\",\"GORE BAY CLIMATE\",\"6092920\",\"71956\",\"TZE\",\"ONTARIO\",\"45.88\",\"-82.57\",\"188.6\"\n\"GORE
+        BAY\",\"E\",\"GORE BAY-MANITOULIN\",\"6092919\",\"\",\"YZE\",\"ONTARIO\",\"45.88\",\"-82.57\",\"189.9\"\n\"HAMILTON\",\"C\",\"HAMILTON
+        A\",\"6153193\",\"71263\",\"YHM\",\"ONTARIO\",\"43.17\",\"-79.94\",\"237.7\"\n\"HAMILTON\",\"C\",\"HAMILTON
+        A\",\"6153194\",\"71263\",\"YHM\",\"ONTARIO\",\"43.17\",\"-79.93\",\"237.7\"\n\"HARROW\",\"D\",\"HARROW
+        AUTOMATIC CLIMATE STATION\",\"613CC60\",\"\",\"\",\"ONTARIO\",\"42.03\",\"-82.90\",\"190.5\"\n\"HARROW\",\"D\",\"HARROW
+        CDA\",\"6133360\",\"\",\"\",\"ONTARIO\",\"42.03\",\"-82.90\",\"190.5\"\n\"HARROW\",\"D\",\"HARROW
+        CDA AUTO\",\"6133362\",\"71298\",\"XHA\",\"ONTARIO\",\"42.03\",\"-82.90\",\"191.0\"\n\"KAPUSKASING\",\"B\",\"KAPUSKASING
+        A\",\"6073975\",\"\",\"\",\"ONTARIO\",\"49.41\",\"-82.47\",\"226.5\"\n\"KAPUSKASING\",\"B\",\"KAPUSKASING
+        A\",\"6073976\",\"71831\",\"YYU\",\"ONTARIO\",\"49.41\",\"-82.47\",\"226.5\"\n\"KAPUSKASING\",\"B\",\"KAPUSKASING
+        CDA ON\",\"6073980\",\"71299\",\"XKA\",\"ONTARIO\",\"49.41\",\"-82.44\",\"218.0\"\n\"KENORA\",\"C\",\"KENORA
+        A\",\"6034075\",\"71850\",\"YQK\",\"ONTARIO\",\"49.79\",\"-94.37\",\"409.7\"\n\"KENORA\",\"C\",\"KENORA
+        A\",\"6034076\",\"71850\",\"YQK\",\"ONTARIO\",\"49.79\",\"-94.36\",\"409.7\"\n\"KINGSTON\",\"E\",\"KINGSTON
+        A\",\"6104146\",\"\",\"YGK\",\"ONTARIO\",\"44.22\",\"-76.60\",\"92.4\"\n\"KINGSTON\",\"E\",\"KINGSTON
+        CLIMATE\",\"6104142\",\"71820\",\"TKG\",\"ONTARIO\",\"44.22\",\"-76.60\",\"93.0\"\n\"KINGSVILLE\",\"D\",\"KINGSVILLE
+        MOE\",\"6134190\",\"\",\"\",\"ONTARIO\",\"42.04\",\"-82.67\",\"200.0\"\n\"KITCHENER/WATERLOO\",\"D\",\"KITCHENER/WATERLOO\",\"6144239\",\"71368\",\"YKF\",\"ONTARIO\",\"43.46\",\"-80.38\",\"321.6\"\n\"KITCHENER/WATERLOO\",\"D\",\"REGION
+        OF WATERLOO INT'L AIRPORT\",\"6149388\",\"\",\"\",\"ONTARIO\",\"43.46\",\"-80.38\",\"321.3\"\n\"KITCHENER/WATERLOO\",\"D\",\"WATERLOO
+        WELLINGTON A\",\"6149387\",\"\",\"\",\"ONTARIO\",\"43.45\",\"-80.38\",\"317.0\"\n\"LANSDOWNE
+        HOUSE\",\"F\",\"LANSDOWNE HOUSE (AUT)\",\"6014353\",\"71846\",\"WLF\",\"ONTARIO\",\"52.20\",\"-87.94\",\"253.4\"\n\"LONDON\",\"C\",\"LONDON
+        A\",\"6144473\",\"71623\",\"YXU\",\"ONTARIO\",\"43.03\",\"-81.15\",\"278.0\"\n\"LONDON\",\"C\",\"LONDON
+        CS\",\"6144478\",\"71622\",\"WSN\",\"ONTARIO\",\"43.03\",\"-81.15\",\"278.0\"\n\"LONDON\",\"C\",\"LONDON
+        INT'L AIRPORT\",\"6144475\",\"71623\",\"YXU\",\"ONTARIO\",\"43.03\",\"-81.15\",\"278.0\"\n\"MOOSONEE\",\"D\",\"MOOSONEE\",\"6075420\",\"71398\",\"YMO\",\"ONTARIO\",\"51.29\",\"-80.61\",\"9.1\"\n\"MOOSONEE\",\"D\",\"MOOSONEE
+        A\",\"6075428\",\"71836\",\"YMO\",\"ONTARIO\",\"51.29\",\"-80.61\",\"9.1\"\n\"MOOSONEE\",\"D\",\"MOOSONEE
+        AWOS\",\"6075431\",\"71836\",\"YMO\",\"ONTARIO\",\"51.28\",\"-80.60\",\"9.1\"\n\"MOOSONEE\",\"D\",\"MOOSONEE
+        RCS\",\"6075435\",\"71309\",\"XZC\",\"ONTARIO\",\"51.29\",\"-80.62\",\"9.1\"\n\"MOOSONEE\",\"D\",\"MOOSONEE
+        UA\",\"6075425\",\"71836\",\"WZC\",\"ONTARIO\",\"51.27\",\"-80.65\",\"10.0\"\n\"MUSKOKA\",\"D\",\"MUSKOKA\",\"6115529\",\"71532\",\"YQA\",\"ONTARIO\",\"44.97\",\"-79.30\",\"281.9\"\n\"MUSKOKA\",\"D\",\"MUSKOKA
+        A\",\"6115525\",\"71630\",\"YQA\",\"ONTARIO\",\"44.97\",\"-79.30\",\"281.9\"\n\"MUSKOKA\",\"D\",\"MUSKOKA
+        AWOS\",\"6115524\",\"\",\"\",\"ONTARIO\",\"44.97\",\"-79.30\",\"281.9\"\n\"NORTH
+        BAY\",\"C\",\"NORTH BAY A\",\"6085680\",\"71731\",\"YYB\",\"ONTARIO\",\"46.36\",\"-79.42\",\"370.3\"\n\"NORTH
+        BAY\",\"C\",\"NORTH BAY A\",\"6085700\",\"71731\",\"YYB\",\"ONTARIO\",\"46.36\",\"-79.42\",\"370.3\"\n\"NORTH
+        BAY\",\"C\",\"NORTH BAY A\",\"6085701\",\"\",\"YYB\",\"ONTARIO\",\"46.36\",\"-79.42\",\"370.3\"\n\"OSHAWA\",\"C\",\"OSHAWA\",\"6155875\",\"71697\",\"YOO\",\"ONTARIO\",\"43.92\",\"-78.88\",\"139.9\"\n\"OSHAWA\",\"C\",\"OSHAWA
+        WPCP\",\"6155878\",\"\",\"\",\"ONTARIO\",\"43.87\",\"-78.83\",\"83.8\"\n\"OTTAWA
+        (AIRPORT)\",\"C\",\"OTTAWA INTL A\",\"6106001\",\"71628\",\"YOW\",\"ONTARIO\",\"45.32\",\"-75.67\",\"114.9\"\n\"OTTAWA
+        (AIRPORT)\",\"C\",\"OTTAWA MACDONALD-CARTIER INT'L A\",\"6106000\",\"71628\",\"YOW\",\"ONTARIO\",\"45.32\",\"-75.67\",\"114.0\"\n\"OTTAWA
+        (CITY)\",\"A\",\"OTTAWA CDA\",\"6105976\",\"\",\"WCG\",\"ONTARIO\",\"45.38\",\"-75.72\",\"79.2\"\n\"OTTAWA
+        (CITY)\",\"A\",\"OTTAWA CDA RCS\",\"6105978\",\"71063\",\"XOA\",\"ONTARIO\",\"45.38\",\"-75.72\",\"79.2\"\n\"PEAWANUCK\",\"F\",\"PEAWANUCK
+        (AUT)\",\"6016295\",\"71434\",\"WWN\",\"ONTARIO\",\"54.98\",\"-85.43\",\"52.7\"\n\"PETAWAWA\",\"C\",\"PETAWAWA
+        A\",\"6106398\",\"71625\",\"YWA\",\"ONTARIO\",\"45.95\",\"-77.32\",\"130.1\"\n\"PETAWAWA\",\"C\",\"PETAWAWA
+        AWOS 2\",\"6106396\",\"71625\",\"YWA\",\"ONTARIO\",\"45.95\",\"-77.32\",\"130.1\"\n\"PETAWAWA\",\"C\",\"PETAWAWA
+        HOFFMAN\",\"610FC98\",\"\",\"\",\"ONTARIO\",\"45.88\",\"-77.25\",\"153.0\"\n\"PETERBOROUGH\",\"D\",\"PETERBOROUGH
+        A\",\"6166415\",\"71436\",\"YPQ\",\"ONTARIO\",\"44.23\",\"-78.36\",\"191.4\"\n\"PETERBOROUGH\",\"D\",\"PETERBOROUGH
+        A\",\"6166418\",\"\",\"\",\"ONTARIO\",\"44.23\",\"-78.37\",\"191.4\"\n\"PETERBOROUGH\",\"D\",\"PETERBOROUGH
+        AWOS\",\"6166420\",\"\",\"\",\"ONTARIO\",\"44.23\",\"-78.37\",\"191.4\"\n\"PICKLE
+        LAKE\",\"C\",\"PICKLE LAKE (AUT)\",\"6016525\",\"71835\",\"WPL\",\"ONTARIO\",\"51.45\",\"-90.22\",\"390.8\"\n\"PICKLE
+        LAKE\",\"C\",\"PICKLE LAKE A\",\"6016527\",\"71845\",\"YPL\",\"ONTARIO\",\"51.45\",\"-90.21\",\"386.2\"\n\"PICKLE
+        LAKE\",\"C\",\"PICKLE LAKE A\",\"6016528\",\"\",\"YPL\",\"ONTARIO\",\"51.45\",\"-90.21\",\"386.2\"\n\"PICKLE
+        LAKE\",\"C\",\"PICKLE LAKE A\",\"6016529\",\"71845\",\"YPL\",\"ONTARIO\",\"51.45\",\"-90.21\",\"386.2\"\n\"RED
+        LAKE\",\"C\",\"RED LAKE A\",\"6016970\",\"71854\",\"YRL\",\"ONTARIO\",\"51.07\",\"-93.79\",\"385.9\"\n\"RED
+        LAKE\",\"C\",\"RED LAKE A\",\"6016971\",\"\",\"YRL\",\"ONTARIO\",\"51.07\",\"-93.79\",\"385.9\"\n\"RED
+        LAKE\",\"C\",\"RED LAKE A\",\"6016975\",\"71854\",\"YRL\",\"ONTARIO\",\"51.07\",\"-93.79\",\"385.9\"\n\"RIDGETOWN\",\"C\",\"RIDGETOWN
+        AUTOMATIC CLIMATE STATION\",\"6137149\",\"\",\"\",\"ONTARIO\",\"42.45\",\"-81.88\",\"205.7\"\n\"RIDGETOWN\",\"C\",\"RIDGETOWN
+        RCS\",\"6137154\",\"71307\",\"XRG\",\"ONTARIO\",\"42.45\",\"-81.88\",\"205.7\"\n\"SARNIA\",\"D\",\"SARNIA\",\"6127510\",\"71704\",\"YZR\",\"ONTARIO\",\"43.00\",\"-82.31\",\"181.4\"\n\"SARNIA\",\"D\",\"SARNIA
+        AIRPORT\",\"6127514\",\"\",\"\",\"ONTARIO\",\"42.99\",\"-82.30\",\"180.6\"\n\"SARNIA\",\"D\",\"SARNIA
+        CHRIS HADFIELD A\",\"6127518\",\"\",\"\",\"ONTARIO\",\"43.00\",\"-82.31\",\"181.0\"\n\"SARNIA\",\"D\",\"SARNIA
+        CLIMATE\",\"6127519\",\"71746\",\"TZR\",\"ONTARIO\",\"43.00\",\"-82.30\",\"181.0\"\n\"SAULT
+        STE MARIE\",\"C\",\"SAULT STE MARIE A\",\"6057591\",\"71260\",\"YAM\",\"ONTARIO\",\"46.49\",\"-84.51\",\"192.0\"\n\"SAULT
+        STE MARIE\",\"C\",\"SAULT STE MARIE A\",\"6057592\",\"71260\",\"YAM\",\"ONTARIO\",\"46.48\",\"-84.51\",\"192.0\"\n\"SIOUX
+        LOOKOUT\",\"C\",\"SIOUX LOOKOUT A\",\"6037775\",\"\",\"\",\"ONTARIO\",\"50.12\",\"-91.90\",\"383.1\"\n\"SIOUX
+        LOOKOUT\",\"C\",\"SIOUX LOOKOUT A\",\"6037776\",\"71842\",\"YXL\",\"ONTARIO\",\"50.11\",\"-91.91\",\"383.1\"\n\"SIOUX
+        LOOKOUT\",\"C\",\"SIOUX LOOKOUT AIRPORT\",\"6037800\",\"73017\",\"OSL\",\"ONTARIO\",\"50.11\",\"-91.91\",\"338.1\"\n\"SUDBURY\",\"C\",\"SUDBURY
+        A\",\"6068150\",\"71730\",\"YSB\",\"ONTARIO\",\"46.63\",\"-80.80\",\"348.4\"\n\"SUDBURY\",\"C\",\"SUDBURY
+        A\",\"6068153\",\"71730\",\"YSB\",\"ONTARIO\",\"46.63\",\"-80.80\",\"348.4\"\n\"THUNDER
+        BAY\",\"G\",\"THUNDER BAY\",\"6048260\",\"71072\",\"YQT\",\"ONTARIO\",\"48.37\",\"-89.32\",\"199.3\"\n\"THUNDER
+        BAY\",\"G\",\"THUNDER BAY A\",\"6048261\",\"\",\"YQT\",\"ONTARIO\",\"48.37\",\"-89.33\",\"199.0\"\n\"THUNDER
+        BAY\",\"G\",\"THUNDER BAY A\",\"6048262\",\"\",\"YQT\",\"ONTARIO\",\"48.37\",\"-89.32\",\"199.3\"\n\"THUNDER
+        BAY\",\"G\",\"THUNDER BAY AWOS\",\"6048264\",\"71749\",\"ZQT\",\"ONTARIO\",\"48.37\",\"-89.32\",\"199.3\"\n\"TIMMINS/VICTOR
+        POWER\",\"C\",\"TIMMINS A\",\"6078286\",\"71739\",\"YTS\",\"ONTARIO\",\"48.57\",\"-81.38\",\"294.7\"\n\"TIMMINS/VICTOR
+        POWER\",\"C\",\"TIMMINS CLIMATE\",\"6078282\",\"71193\",\"TMS\",\"ONTARIO\",\"48.56\",\"-81.39\",\"294.4\"\n\"TIMMINS/VICTOR
+        POWER\",\"C\",\"TIMMINS VICTOR POWER A\",\"6078285\",\"71739\",\"YTS\",\"ONTARIO\",\"48.57\",\"-81.38\",\"294.7\"\n\"TORONTO
+        (CITY)\",\"C\",\"TORONTO\",\"6158350\",\"71266\",\"\",\"ONTARIO\",\"43.67\",\"-79.40\",\"112.5\"\n\"TORONTO
+        (CITY)\",\"C\",\"TORONTO CITY\",\"6158355\",\"71508\",\"XTO\",\"ONTARIO\",\"43.67\",\"-79.40\",\"112.5\"\n\"TORONTO
+        (ISLAND)\",\"E\",\"TORONTO CITY CENTRE\",\"6158359\",\"71265\",\"YTZ\",\"ONTARIO\",\"43.63\",\"-79.40\",\"76.8\"\n\"TORONTO
+        (ISLAND)\",\"E\",\"TORONTO CITY CENTRE\",\"6158667\",\"71265\",\"YTZ\",\"ONTARIO\",\"43.63\",\"-79.40\",\"76.8\"\n\"TORONTO
+        (ISLAND)\",\"E\",\"TORONTO ISLAND A\",\"6158665\",\"71265\",\"\",\"ONTARIO\",\"43.63\",\"-79.40\",\"76.5\"\n\"TORONTO
+        BUTTONVILLE (AIRPORT)\",\"C\",\"TORONTO BUTTONVILLE A\",\"6158409\",\"\",\"YKZ\",\"ONTARIO\",\"43.86\",\"-79.37\",\"198.1\"\n\"TORONTO
+        BUTTONVILLE (AIRPORT)\",\"C\",\"TORONTO BUTTONVILLE A\",\"6158410\",\"71639\",\"YKZ\",\"ONTARIO\",\"43.86\",\"-79.37\",\"198.1\"\n\"TORONTO
+        BUTTONVILLE (AIRPORT)\",\"C\",\"TORONTO BUTTONVILLE A\",\"615HMAK\",\"71639\",\"YKZ\",\"ONTARIO\",\"43.86\",\"-79.37\",\"198.1\"\n\"TORONTO
+        PEARSON (AIRPORT)\",\"B\",\"TORONTO INTL A\",\"6158731\",\"71624\",\"YYZ\",\"ONTARIO\",\"43.68\",\"-79.63\",\"173.4\"\n\"TORONTO
+        PEARSON (AIRPORT)\",\"B\",\"TORONTO LESTER B. PEARSON INT'L A\",\"6158733\",\"71624\",\"YYZ\",\"ONTARIO\",\"43.68\",\"-79.63\",\"173.4\"\n\"TRENTON\",\"A\",\"TRENTON
+        A\",\"6158875\",\"71621\",\"YTR\",\"ONTARIO\",\"44.12\",\"-77.53\",\"86.3\"\n\"VINELAND\",\"D\",\"VINELAND
+        RITTENHOUSE\",\"6139143\",\"\",\"\",\"ONTARIO\",\"43.17\",\"-79.42\",\"94.5\"\n\"VINELAND\",\"D\",\"VINELAND
+        STATION RCS\",\"6139148\",\"71171\",\"XVN\",\"ONTARIO\",\"43.18\",\"-79.40\",\"79.2\"\n\"WELLAND-PELHAM\",\"C\",\"WELLAND\",\"6139445\",\"\",\"\",\"ONTARIO\",\"42.99\",\"-79.26\",\"175.3\"\n\"WELLAND-PELHAM\",\"C\",\"WELLAND-PELHAM\",\"6139449\",\"71752\",\"TWL\",\"ONTARIO\",\"42.97\",\"-79.33\",\"178.0\"\n\"WIARTON\",\"B\",\"WIARTON
+        A\",\"6119499\",\"71633\",\"YVV\",\"ONTARIO\",\"44.74\",\"-81.11\",\"221.9\"\n\"WIARTON\",\"B\",\"WIARTON
+        A\",\"6119500\",\"71633\",\"YVV\",\"ONTARIO\",\"44.75\",\"-81.11\",\"222.2\"\n\"WINDSOR\",\"C\",\"WINDSOR
+        A\",\"6139525\",\"71538\",\"YQG\",\"ONTARIO\",\"42.28\",\"-82.96\",\"189.6\"\n\"WINDSOR\",\"C\",\"WINDSOR
+        A\",\"6139527\",\"\",\"YQG\",\"ONTARIO\",\"42.28\",\"-82.96\",\"189.6\"\n\"WINDSOR\",\"C\",\"WINDSOR
+        A\",\"6139530\",\"71538\",\"YQG\",\"ONTARIO\",\"42.28\",\"-82.96\",\"189.6\"\n\"WINDSOR
+        RIVERSIDE\",\"C\",\"WINDSOR RIVERSIDE\",\"6139520\",\"\",\"\",\"ONTARIO\",\"42.33\",\"-82.93\",\"188.4\"\n\"ALLISTON\",\"D\",\"ALLISTON\",\"8300100\",\"\",\"\",\"PRINCE
+        EDWARD ISLAND\",\"46.07\",\"-62.60\",\"61.0\"\n\"CHARLOTTETOWN (AIRPORT)\",\"C\",\"CHARLOTTETOWN
+        A\",\"8300300\",\"71706\",\"YYG\",\"PRINCE EDWARD ISLAND\",\"46.29\",\"-63.13\",\"48.8\"\n\"CHARLOTTETOWN
+        (AIRPORT)\",\"C\",\"CHARLOTTETOWN A\",\"8300301\",\"71706\",\"YYG\",\"PRINCE
+        EDWARD ISLAND\",\"46.29\",\"-63.12\",\"50.9\"\n\"EAST POINT\",\"F\",\"EAST
+        POINT (AUT)\",\"8300418\",\"71412\",\"WEP\",\"PRINCE EDWARD ISLAND\",\"46.46\",\"-61.99\",\"7.7\"\n\"NEW
+        GLASGOW\",\"C\",\"NEW GLASGOW\",\"8300497\",\"\",\"\",\"PRINCE EDWARD ISLAND\",\"46.41\",\"-63.35\",\"6.1\"\n\"NORTH
+        CAPE\",\"G\",\"NORTH CAPE\",\"8300516\",\"71987\",\"WNE\",\"PRINCE EDWARD
+        ISLAND\",\"47.06\",\"-64.00\",\"7.6\"\n\"ST. PETERS/MONTICELLO\",\"D\",\"MONTICELLO\",\"8300447\",\"\",\"\",\"PRINCE
+        EDWARD ISLAND\",\"46.47\",\"-62.47\",\"32.0\"\n\"ST. PETERS/MONTICELLO\",\"D\",\"ST.
+        PETERS\",\"8300562\",\"71310\",\"ZSP\",\"PRINCE EDWARD ISLAND\",\"46.45\",\"-62.58\",\"29.7\"\n\"SUMMERSIDE\",\"E\",\"SUMMERSIDE\",\"8300596\",\"71702\",\"WSD\",\"PRINCE
+        EDWARD ISLAND\",\"46.44\",\"-63.84\",\"12.2\"\n\"SUMMERSIDE\",\"E\",\"SUMMERSIDE
+        A\",\"8300700\",\"\",\"YSU\",\"PRINCE EDWARD ISLAND\",\"46.44\",\"-63.83\",\"19.5\"\n\"ANGERS\",\"E\",\"ANGERS\",\"7030170\",\"\",\"\",\"QUEBEC\",\"45.55\",\"-75.55\",\"91.0\"\n\"BAGOTVILLE\",\"A\",\"BAGOTVILLE
+        A\",\"7060400\",\"71727\",\"YBG\",\"QUEBEC\",\"48.33\",\"-71.00\",\"159.1\"\n\"BAIE-COMEAU\",\"D\",\"BAIE-COMEAU
+        A\",\"7040440\",\"\",\"\",\"QUEBEC\",\"49.13\",\"-68.20\",\"21.6\"\n\"BAIE-COMEAU\",\"D\",\"BAIE-COMEAU
+        A\",\"7040442\",\"71890\",\"GBC\",\"QUEBEC\",\"49.13\",\"-68.20\",\"21.6\"\n\"BONNARD\",\"F\",\"BONNARD\",\"7060825\",\"\",\"\",\"QUEBEC\",\"50.73\",\"-71.05\",\"506.0\"\n\"BONNARD\",\"F\",\"BONNARD
+        1\",\"7060826\",\"71383\",\"WKD\",\"QUEBEC\",\"50.73\",\"-71.01\",\"498.0\"\n\"CAP-CHAT\",\"E\",\"CAP
+        CHAT (AUT)\",\"70510M0\",\"\",\"\",\"QUEBEC\",\"49.08\",\"-66.73\",\"35.3\"\n\"CAP-CHAT\",\"E\",\"CAP-CHAT\",\"705S002\",\"71428\",\"WSG\",\"QUEBEC\",\"49.11\",\"-66.65\",\"5.0\"\n\"CAUSAPSCAL\",\"E\",\"CAUSAPSCAL\",\"7051200\",\"\",\"\",\"QUEBEC\",\"48.37\",\"-67.23\",\"168.0\"\n\"CHAPAIS\",\"A\",\"CHAPAIS\",\"7091299\",\"71824\",\"WUK\",\"QUEBEC\",\"49.82\",\"-74.98\",\"381.1\"\n\"CHAPAIS\",\"A\",\"CHAPAIS
+        2\",\"7091305\",\"\",\"\",\"QUEBEC\",\"49.78\",\"-74.85\",\"396.2\"\n\"DRUMMONDVILLE\",\"D\",\"DRUMMONDVILLE\",\"7022160\",\"\",\"\",\"QUEBEC\",\"45.88\",\"-72.48\",\"82.3\"\n\"FORET
+        MONTMORENCY\",\"D\",\"FORET MONTMORENCY\",\"7042388\",\"\",\"\",\"QUEBEC\",\"47.32\",\"-71.15\",\"640.0\"\n\"FORET
+        MONTMORENCY\",\"D\",\"FORET MONTMORENCY RCS\",\"7042395\",\"71212\",\"MFM\",\"QUEBEC\",\"47.32\",\"-71.15\",\"672.8\"\n\"GASPE\",\"C\",\"GASPE
+        A\",\"7052601\",\"71188\",\"YGP\",\"QUEBEC\",\"48.78\",\"-64.48\",\"34.1\"\n\"GASPE\",\"C\",\"GASPE
+        A\",\"7052602\",\"\",\"YGP\",\"QUEBEC\",\"48.78\",\"-64.48\",\"34.1\"\n\"GASPE\",\"C\",\"GASPE
+        A\",\"7052605\",\"71188\",\"YGP\",\"QUEBEC\",\"48.78\",\"-64.48\",\"34.1\"\n\"GRANBY\",\"C\",\"GRANBY\",\"7022800\",\"\",\"\",\"QUEBEC\",\"45.38\",\"-72.72\",\"175.0\"\n\"ILES
+        DE LA MADELEINE\",\"C\",\"ILES DE LA MADELEINE\",\"7053KGR\",\"71710\",\"WGR\",\"QUEBEC\",\"47.43\",\"-61.77\",\"7.6\"\n\"ILES
+        DE LA MADELEINE\",\"C\",\"ILES DE LA MADELEINE A\",\"7053250\",\"71709\",\"YGR\",\"QUEBEC\",\"47.43\",\"-61.78\",\"10.7\"\n\"ILES
+        DE LA MADELEINE\",\"C\",\"ILES DE LA MADELEINE A\",\"7053254\",\"\",\"YGR\",\"QUEBEC\",\"47.43\",\"-61.78\",\"10.7\"\n\"ILES
+        DE LA MADELEINE\",\"C\",\"ILES DE LA MADELEINE A\",\"705C2G9\",\"71709\",\"YGR\",\"QUEBEC\",\"47.42\",\"-61.78\",\"10.7\"\n\"INUKJUAK\",\"F\",\"INUKJUAK\",\"710S005\",\"71907\",\"MJK\",\"QUEBEC\",\"58.47\",\"-78.08\",\"26.2\"\n\"INUKJUAK\",\"F\",\"INUKJUAK
+        A\",\"7103280\",\"71306\",\"YPH\",\"QUEBEC\",\"58.47\",\"-78.08\",\"25.3\"\n\"INUKJUAK\",\"F\",\"INUKJUAK
+        A\",\"7103283\",\"\",\"YPH\",\"QUEBEC\",\"58.47\",\"-78.08\",\"26.2\"\n\"INUKJUAK\",\"F\",\"INUKJUAK
+        UA\",\"7103282\",\"71907\",\"WPH\",\"QUEBEC\",\"58.47\",\"-78.08\",\"24.4\"\n\"KUUJJUAQ\",\"B\",\"KUUJJUAQ
+        A\",\"7113534\",\"71906\",\"YVP\",\"QUEBEC\",\"58.10\",\"-68.42\",\"39.9\"\n\"KUUJJUAQ\",\"B\",\"KUUJJUAQ
+        A\",\"7113535\",\"71906\",\"YVP\",\"QUEBEC\",\"58.09\",\"-68.42\",\"39.9\"\n\"KUUJJUARAPIK\",\"C\",\"KUUJJUARAPIK\",\"7103539\",\"71615\",\"MFJ\",\"QUEBEC\",\"55.37\",\"-77.57\",\"30.0\"\n\"KUUJJUARAPIK\",\"C\",\"KUUJJUARAPIK
+        A\",\"7103536\",\"\",\"YGW\",\"QUEBEC\",\"55.28\",\"-77.75\",\"12.2\"\n\"KUUJJUARAPIK\",\"C\",\"KUUJJUARAPIK
+        A\",\"7103537\",\"73127\",\"YGW\",\"QUEBEC\",\"55.28\",\"-77.77\",\"12.2\"\n\"L'ACADIE\",\"E\",\"L'ACADIE\",\"702LED4\",\"71372\",\"WIZ\",\"QUEBEC\",\"45.29\",\"-73.35\",\"43.8\"\n\"L'ASSOMPTION\",\"F\",\"L'ASSOMPTION\",\"7014160\",\"71524\",\"WEW\",\"QUEBEC\",\"45.81\",\"-73.43\",\"21.0\"\n\"LA
+        GRANDE IV\",\"E\",\"LA GRANDE 4 A\",\"7093714\",\"71003\",\"YAH\",\"QUEBEC\",\"53.75\",\"-73.68\",\"306.3\"\n\"LA
+        GRANDE IV\",\"E\",\"LA GRANDE IV\",\"7093GJ5\",\"71823\",\"GAH\",\"QUEBEC\",\"53.76\",\"-73.68\",\"302.8\"\n\"LA
+        GRANDE IV\",\"E\",\"LA GRANDE IV A\",\"7093GJ3\",\"\",\"YAH\",\"QUEBEC\",\"53.76\",\"-73.68\",\"306.3\"\n\"LA
+        GRANDE RIVIERE\",\"C\",\"LA GRANDE RIVIERE A\",\"7093715\",\"71827\",\"YGL\",\"QUEBEC\",\"53.63\",\"-77.70\",\"195.1\"\n\"LA
+        GRANDE RIVIERE\",\"C\",\"LA GRANDE RIVIERE A\",\"7093716\",\"71827\",\"YGL\",\"QUEBEC\",\"53.63\",\"-77.70\",\"194.8\"\n\"LA
+        POCATIERE\",\"D\",\"LA POCATIERE\",\"7054096\",\"71713\",\"WST\",\"QUEBEC\",\"47.36\",\"-70.03\",\"31.0\"\n\"LA
+        POCATIERE\",\"D\",\"LA POCATIERE CDA\",\"7054095\",\"\",\"\",\"QUEBEC\",\"47.35\",\"-70.03\",\"30.5\"\n\"LA
+        TUQUE\",\"D\",\"LA TUQUE\",\"7074240\",\"\",\"\",\"QUEBEC\",\"47.40\",\"-72.78\",\"152.0\"\n\"LA
+        TUQUE\",\"D\",\"LA TUQUE\",\"707DBD4\",\"71378\",\"WDQ\",\"QUEBEC\",\"47.41\",\"-72.79\",\"168.9\"\n\"LAC
+        EON\",\"E\",\"LAC EON\",\"704C64L\",\"71421\",\"WEO\",\"QUEBEC\",\"51.87\",\"-63.28\",\"588.9\"\n\"LACHUTE\",\"D\",\"LACHUTE\",\"7033650\",\"\",\"\",\"QUEBEC\",\"45.65\",\"-74.33\",\"91.4\"\n\"LAUZON\",\"D\",\"LAUZON\",\"7024254\",\"\",\"\",\"QUEBEC\",\"46.82\",\"-71.10\",\"69.0\"\n\"LENNOXVILLE\",\"D\",\"LENNOXVILLE\",\"7024280\",\"71611\",\"WQH\",\"QUEBEC\",\"45.37\",\"-71.82\",\"181.0\"\n\"LOURDES
+        DE BLANC SABLON\",\"D\",\"LOURDES DE BLANC SABLON A\",\"7040813\",\"71808\",\"YBX\",\"QUEBEC\",\"51.45\",\"-57.18\",\"37.2\"\n\"LOURDES
+        DE BLANC SABLON\",\"D\",\"LOURDES DE BLANC SABLON A\",\"7040815\",\"71808\",\"YBX\",\"QUEBEC\",\"51.44\",\"-57.19\",\"37.2\"\n\"LOURDES
+        DE BLANC SABLON\",\"D\",\"LOURDES DE BLANC SABLON A\",\"7040816\",\"\",\"YBX\",\"QUEBEC\",\"51.44\",\"-57.19\",\"37.2\"\n\"MANIWAKI\",\"D\",\"MANIWAKI
+        AIRPORT\",\"7034482\",\"71721\",\"WMJ\",\"QUEBEC\",\"46.27\",\"-75.99\",\"199.7\"\n\"MANIWAKI\",\"D\",\"MANIWAKI
+        UA\",\"7034480\",\"71722\",\"WMW\",\"QUEBEC\",\"46.30\",\"-76.01\",\"188.6\"\n\"MATAGAMI\",\"E\",\"MATAGAMI\",\"7094637\",\"71821\",\"GMG\",\"QUEBEC\",\"49.76\",\"-77.79\",\"281.0\"\n\"MATAGAMI\",\"E\",\"MATAGAMI
+        A\",\"7094636\",\"71947\",\"YNM\",\"QUEBEC\",\"49.76\",\"-77.80\",\"279.8\"\n\"MONT-JOLI\",\"C\",\"MONT
+        JOLI A\",\"7055121\",\"71718\",\"YYY\",\"QUEBEC\",\"48.61\",\"-68.21\",\"52.4\"\n\"MONT-JOLI\",\"C\",\"MONT-JOLI
+        A\",\"7055120\",\"71718\",\"YYY\",\"QUEBEC\",\"48.60\",\"-68.22\",\"52.4\"\n\"MONTREAL
+        TRUDEAU (AIRPORT)\",\"C\",\"MONTREAL INTL A\",\"7025251\",\"71627\",\"YUL\",\"QUEBEC\",\"45.47\",\"-73.74\",\"36.0\"\n\"MONTREAL
+        TRUDEAU (AIRPORT)\",\"C\",\"MONTREAL/PIERRE ELLIOTT TRUDEAU INTL\",\"702S006\",\"71183\",\"WTQ\",\"QUEBEC\",\"45.47\",\"-73.74\",\"32.1\"\n\"MONTREAL
+        TRUDEAU (AIRPORT)\",\"C\",\"MONTREAL/PIERRE ELLIOTT TRUDEAU INTL A\",\"7025250\",\"71627\",\"YUL\",\"QUEBEC\",\"45.47\",\"-73.75\",\"36.0\"\n\"NATASHQUAN\",\"D\",\"NATASHQUAN
+        A\",\"7045398\",\"71513\",\"YNA\",\"QUEBEC\",\"50.19\",\"-61.79\",\"11.9\"\n\"NATASHQUAN\",\"D\",\"NATASHQUAN
+        A\",\"7045400\",\"\",\"YNA\",\"QUEBEC\",\"50.18\",\"-61.82\",\"10.7\"\n\"NATASHQUAN\",\"D\",\"NATASHQUAN
+        AIRPORT\",\"7045401\",\"71813\",\"MNT\",\"QUEBEC\",\"50.19\",\"-61.81\",\"11.7\"\n\"NEW
+        CARLISLE\",\"D\",\"NEW CARLISLE\",\"7055420\",\"\",\"\",\"QUEBEC\",\"48.03\",\"-65.27\",\"45.0\"\n\"NEW
+        CARLISLE\",\"D\",\"NEW CARLISLE 1\",\"7055422\",\"71619\",\"WOC\",\"QUEBEC\",\"48.01\",\"-65.33\",\"46.4\"\n\"NICOLET\",\"D\",\"NICOLET\",\"7025440\",\"\",\"\",\"QUEBEC\",\"46.20\",\"-72.62\",\"30.4\"\n\"NICOLET\",\"D\",\"NICOLET\",\"7025442\",\"71723\",\"WNQ\",\"QUEBEC\",\"46.23\",\"-72.66\",\"8.0\"\n\"PARENT\",\"D\",\"PARENT\",\"7075800\",\"71726\",\"WPK\",\"QUEBEC\",\"47.92\",\"-74.62\",\"444.7\"\n\"PARENT\",\"D\",\"PARENT
+        S\",\"7075799\",\"\",\"\",\"QUEBEC\",\"47.92\",\"-74.62\",\"410.0\"\n\"QUEBEC
+        JEAN LESAGE (AIRPORT)\",\"C\",\"QUEBEC/JEAN LESAGE INTL\",\"701S001\",\"71714\",\"WQB\",\"QUEBEC\",\"46.80\",\"-71.38\",\"60.0\"\n\"QUEBEC
+        JEAN LESAGE (AIRPORT)\",\"C\",\"QUEBEC/JEAN LESAGE INTL A\",\"7016294\",\"71708\",\"YQB\",\"QUEBEC\",\"46.80\",\"-71.38\",\"74.4\"\n\"RICHMOND\",\"E\",\"RICHMOND\",\"7026465\",\"\",\"\",\"QUEBEC\",\"45.63\",\"-72.13\",\"123.1\"\n\"RIVIERE-DU-LOUP/ST-ANTONIN\",\"E\",\"RIVIERE-DU-LOUP\",\"7056616\",\"71715\",\"WNH\",\"QUEBEC\",\"47.81\",\"-69.55\",\"146.5\"\n\"RIVIERE-DU-LOUP/ST-ANTONIN\",\"E\",\"RIVIERE-DU-LOUP
+        / ST-ANTONIN\",\"7056870\",\"\",\"\",\"QUEBEC\",\"47.80\",\"-69.45\",\"152.0\"\n\"ROBERVAL\",\"C\",\"ROBERVAL
+        A\",\"7066685\",\"71728\",\"YRJ\",\"QUEBEC\",\"48.52\",\"-72.27\",\"178.6\"\n\"ROBERVAL\",\"C\",\"ROBERVAL
+        A\",\"7066686\",\"71728\",\"YRJ\",\"QUEBEC\",\"48.52\",\"-72.27\",\"178.6\"\n\"ROBERVAL\",\"C\",\"ROBERVAL
+        A\",\"7066687\",\"\",\"YRJ\",\"QUEBEC\",\"48.52\",\"-72.27\",\"178.6\"\n\"SCHEFFERVILLE\",\"F\",\"SCHEFFERVILLE\",\"7117827\",\"71828\",\"GKL\",\"QUEBEC\",\"54.80\",\"-66.80\",\"517.2\"\n\"SCHEFFERVILLE\",\"F\",\"SCHEFFERVILLE
+        A\",\"7117823\",\"71921\",\"YKL\",\"QUEBEC\",\"54.81\",\"-66.81\",\"520.9\"\n\"SCHEFFERVILLE\",\"F\",\"SCHEFFERVILLE
+        A\",\"7117825\",\"\",\"YKL\",\"QUEBEC\",\"54.80\",\"-66.82\",\"521.8\"\n\"SCHEFFERVILLE\",\"F\",\"SCHEFFERVILLE
+        COTE-NORD\",\"7117824\",\"73075\",\"GKM\",\"QUEBEC\",\"54.80\",\"-66.80\",\"517.2\"\n\"SEPT-ILES\",\"D\",\"SEPT-ILES\",\"7047914\",\"71279\",\"XZV\",\"QUEBEC\",\"50.22\",\"-66.25\",\"52.6\"\n\"SEPT-ILES\",\"D\",\"SEPT-ILES
+        A\",\"7047910\",\"\",\"YZV\",\"QUEBEC\",\"50.22\",\"-66.27\",\"54.9\"\n\"SEPT-ILES\",\"D\",\"SEPT-ILES
+        A\",\"7047911\",\"\",\"YZV\",\"QUEBEC\",\"50.22\",\"-66.27\",\"54.9\"\n\"SEPT-ILES\",\"D\",\"SEPT-ILES
+        UA\",\"7047912\",\"71811\",\"\",\"QUEBEC\",\"50.22\",\"-66.25\",\"53.1\"\n\"ST
+        GEORGES\",\"C\",\"ST GEORGES\",\"7027283\",\"\",\"\",\"QUEBEC\",\"46.15\",\"-70.70\",\"167.6\"\n\"ST
+        LUDGER\",\"D\",\"ST LUDGER\",\"7027516\",\"\",\"\",\"QUEBEC\",\"45.75\",\"-70.68\",\"335.0\"\n\"STE-FOY
+        (U. LAVAL)\",\"E\",\"STE FOY (PIE XII)\",\"7017BFN\",\"\",\"\",\"QUEBEC\",\"46.78\",\"-71.32\",\"79.2\"\n\"STE-FOY
+        (U. LAVAL)\",\"E\",\"STE-FOY (U. LAVAL)\",\"701Q004\",\"71392\",\"WJB\",\"QUEBEC\",\"46.78\",\"-71.29\",\"91.4\"\n\"THETFORD
+        MINES\",\"C\",\"THETFORD MINES\",\"7028441\",\"\",\"\",\"QUEBEC\",\"46.10\",\"-71.35\",\"381.0\"\n\"THETFORD
+        MINES\",\"C\",\"THETFORD MINES RCS\",\"7028442\",\"71494\",\"MTH\",\"QUEBEC\",\"46.05\",\"-71.27\",\"430.0\"\n\"TROIS-RIVIERES\",\"D\",\"TROIS
+        RIVIERES AQUEDUC\",\"701HE63\",\"\",\"\",\"QUEBEC\",\"46.38\",\"-72.62\",\"54.9\"\n\"TROIS-RIVIERES\",\"D\",\"TROIS-RIVIERES\",\"7018562\",\"71724\",\"WTY\",\"QUEBEC\",\"46.35\",\"-72.52\",\"6.0\"\n\"VAL-D'OR\",\"D\",\"VAL-D'OR\",\"7098603\",\"71725\",\"GVO\",\"QUEBEC\",\"48.06\",\"-77.79\",\"338.9\"\n\"VAL-D'OR\",\"D\",\"VAL-D'OR
+        A\",\"7098600\",\"71725\",\"YVO\",\"QUEBEC\",\"48.06\",\"-77.79\",\"337.4\"\n\"BUFFALO
+        NARROWS\",\"A\",\"BUFFALO NARROWS (AUT)\",\"4060983\",\"71077\",\"WVT\",\"SASKATCHEWAN\",\"55.84\",\"-108.42\",\"440.1\"\n\"BUFFALO
+        NARROWS\",\"A\",\"BUFFALO NARROWS A\",\"4060982\",\"71077\",\"YVT\",\"SASKATCHEWAN\",\"55.83\",\"-108.43\",\"433.7\"\n\"BUFFALO
+        NARROWS\",\"A\",\"BUFFALO NARROWS A\",\"4060988\",\"\",\"YVT\",\"SASKATCHEWAN\",\"55.84\",\"-108.42\",\"433.7\"\n\"CORONACH
+        SPC\",\"C\",\"CORONACH\",\"4031844\",\"\",\"\",\"SASKATCHEWAN\",\"49.12\",\"-105.52\",\"772.9\"\n\"CORONACH
+        SPC\",\"C\",\"CORONACH SPC\",\"40318MN\",\"71516\",\"WAQ\",\"SASKATCHEWAN\",\"49.05\",\"-105.48\",\"756.0\"\n\"ESTEVAN\",\"A\",\"ESTEVAN\",\"4012410\",\"71559\",\"PJM\",\"SASKATCHEWAN\",\"49.22\",\"-102.97\",\"580.6\"\n\"ESTEVAN\",\"A\",\"ESTEVAN
+        A\",\"4012400\",\"\",\"\",\"SASKATCHEWAN\",\"49.22\",\"-102.97\",\"580.3\"\n\"ESTEVAN\",\"A\",\"ESTEVAN
+        A\",\"4012401\",\"\",\"YEN\",\"SASKATCHEWAN\",\"49.21\",\"-102.97\",\"580.3\"\n\"ESTEVAN\",\"A\",\"ESTEVAN
+        A\",\"4012403\",\"71862\",\"YEN\",\"SASKATCHEWAN\",\"49.21\",\"-102.97\",\"580.3\"\n\"HUDSON
+        BAY\",\"D\",\"HUDSON BAY\",\"4083322\",\"\",\"\",\"SASKATCHEWAN\",\"52.82\",\"-102.32\",\"358.1\"\n\"HUDSON
+        BAY\",\"D\",\"HUDSON BAY 13W\",\"4083323\",\"\",\"\",\"SASKATCHEWAN\",\"52.88\",\"-102.58\",\"422.0\"\n\"HUDSON
+        BAY\",\"D\",\"HUDSON BAY A\",\"4083321\",\"\",\"\",\"SASKATCHEWAN\",\"52.82\",\"-102.32\",\"358.1\"\n\"HUDSON
+        BAY\",\"D\",\"HUDSON BAY(AUT)\",\"4083324\",\"71868\",\"ZHB\",\"SASKATCHEWAN\",\"52.82\",\"-102.32\",\"358.1\"\n\"ISLAND
+        FALLS\",\"C\",\"ISLAND FALLS\",\"4063560\",\"\",\"\",\"SASKATCHEWAN\",\"55.53\",\"-102.35\",\"299.3\"\n\"ISLAND
+        FALLS\",\"C\",\"ISLAND FALLS (AUT)\",\"4063605\",\"71331\",\"PIF\",\"SASKATCHEWAN\",\"55.53\",\"-102.35\",\"297.4\"\n\"KEY
+        LAKE\",\"C\",\"KEY LAKE\",\"4063753\",\"71033\",\"PLS\",\"SASKATCHEWAN\",\"57.25\",\"-105.60\",\"513.9\"\n\"KEY
+        LAKE\",\"C\",\"KEY LAKE\",\"4063755\",\"\",\"\",\"SASKATCHEWAN\",\"57.25\",\"-105.62\",\"509.0\"\n\"KEY
+        LAKE\",\"C\",\"KEY LAKE\",\"4063757\",\"71499\",\"YKJ\",\"SASKATCHEWAN\",\"57.26\",\"-105.62\",\"513.9\"\n\"KEY
+        LAKE\",\"C\",\"KEY LAKE A\",\"4063759\",\"\",\"\",\"SASKATCHEWAN\",\"57.25\",\"-105.60\",\"513.9\"\n\"KINDERSLEY\",\"C\",\"KINDERSLEY
+        A\",\"4043899\",\"\",\"YKY\",\"SASKATCHEWAN\",\"51.52\",\"-109.18\",\"693.7\"\n\"KINDERSLEY\",\"C\",\"KINDERSLEY
+        A\",\"4043900\",\"71129\",\"YKY\",\"SASKATCHEWAN\",\"51.52\",\"-109.18\",\"693.7\"\n\"KINDERSLEY\",\"C\",\"KINDERSLEY
+        A\",\"4043901\",\"71129\",\"YKY\",\"SASKATCHEWAN\",\"51.52\",\"-109.18\",\"693.7\"\n\"KIPLING\",\"A\",\"KIPLING\",\"4014040\",\"\",\"\",\"SASKATCHEWAN\",\"50.20\",\"-102.73\",\"671.2\"\n\"LA
+        RONGE\",\"C\",\"LA RONGE A\",\"4064150\",\"71922\",\"YVC\",\"SASKATCHEWAN\",\"55.15\",\"-105.27\",\"379.2\"\n\"LA
+        RONGE\",\"C\",\"LA RONGE A\",\"4064155\",\"71922\",\"YVC\",\"SASKATCHEWAN\",\"55.15\",\"-105.27\",\"379.2\"\n\"LA
+        RONGE\",\"C\",\"LA RONGE RCS\",\"4064149\",\"71586\",\"XOX\",\"SASKATCHEWAN\",\"55.15\",\"-105.27\",\"378.6\"\n\"MEADOW
+        LAKE\",\"C\",\"MEADOW LAKE\",\"406N0NM\",\"71970\",\"WLJ\",\"SASKATCHEWAN\",\"54.13\",\"-108.52\",\"481.0\"\n\"MEADOW
+        LAKE\",\"C\",\"MEADOW LAKE A\",\"4065057\",\"71125\",\"YLJ\",\"SASKATCHEWAN\",\"54.13\",\"-108.05\",\"480.7\"\n\"MEADOW
+        LAKE\",\"C\",\"MEADOW LAKE A\",\"4065058\",\"71125\",\"YLJ\",\"SASKATCHEWAN\",\"54.13\",\"-108.52\",\"480.7\"\n\"MELFORT\",\"C\",\"MELFORT\",\"4055079\",\"71456\",\"WFF\",\"SASKATCHEWAN\",\"52.82\",\"-104.60\",\"490.0\"\n\"MELFORT\",\"C\",\"MELFORT
+        CDA\",\"4055085\",\"\",\"\",\"SASKATCHEWAN\",\"52.82\",\"-104.60\",\"480.1\"\n\"NORTH
+        BATTLEFORD\",\"C\",\"NORTH BATTLEFORD\",\"4045605\",\"\",\"\",\"SASKATCHEWAN\",\"52.77\",\"-108.25\",\"548.0\"\n\"NORTH
+        BATTLEFORD\",\"C\",\"NORTH BATTLEFORD\",\"4045695\",\"71876\",\"YQW\",\"SASKATCHEWAN\",\"52.77\",\"-108.24\",\"548.3\"\n\"NORTH
+        BATTLEFORD\",\"C\",\"NORTH BATTLEFORD A\",\"4045600\",\"71876\",\"YQW\",\"SASKATCHEWAN\",\"52.77\",\"-108.26\",\"548.3\"\n\"NORTH
+        BATTLEFORD\",\"C\",\"NORTH BATTLEFORD RCS\",\"4045607\",\"71754\",\"PQW\",\"SASKATCHEWAN\",\"52.77\",\"-108.26\",\"548.0\"\n\"PRINCE
+        ALBERT\",\"C\",\"PRINCE ALBERT A\",\"4056240\",\"71869\",\"YPA\",\"SASKATCHEWAN\",\"53.22\",\"-105.67\",\"428.2\"\n\"PRINCE
+        ALBERT\",\"C\",\"PRINCE ALBERT A\",\"4056241\",\"71869\",\"YPA\",\"SASKATCHEWAN\",\"53.21\",\"-105.67\",\"428.2\"\n\"PRINCE
+        ALBERT\",\"C\",\"PRINCE ALBERT GLASS FIELD\",\"4056243\",\"73002\",\"PPR\",\"SASKATCHEWAN\",\"53.21\",\"-105.68\",\"425.5\"\n\"REGINA
+        (AIRPORT)\",\"C\",\"REGINA INT'L A\",\"4016560\",\"71863\",\"YQR\",\"SASKATCHEWAN\",\"50.43\",\"-104.67\",\"577.6\"\n\"REGINA
+        (AIRPORT)\",\"C\",\"REGINA INTL A\",\"4016566\",\"\",\"YQR\",\"SASKATCHEWAN\",\"50.43\",\"-104.67\",\"577.6\"\n\"REGINA
+        (AIRPORT)\",\"C\",\"REGINA RCS\",\"4016699\",\"71514\",\"WDJ\",\"SASKATCHEWAN\",\"50.43\",\"-104.67\",\"577.3\"\n\"ROCK
+        POINT\",\"A\",\"ROCK POINT\",\"4026847\",\"\",\"\",\"SASKATCHEWAN\",\"51.15\",\"-107.26\",\"725.1\"\n\"SASKATOON
+        DIEFENBAKER (AIRPORT)\",\"C\",\"SASKATOON DIEFENBAKER INT'L A\",\"4057120\",\"71866\",\"YXE\",\"SASKATCHEWAN\",\"52.17\",\"-106.72\",\"504.1\"\n\"SASKATOON
+        DIEFENBAKER (AIRPORT)\",\"C\",\"SASKATOON INTL A\",\"4057152\",\"\",\"YXE\",\"SASKATCHEWAN\",\"52.17\",\"-106.70\",\"504.1\"\n\"SASKATOON
+        DIEFENBAKER (AIRPORT)\",\"C\",\"SASKATOON RCS\",\"4057165\",\"71496\",\"POX\",\"SASKATCHEWAN\",\"52.17\",\"-106.72\",\"504.1\"\n\"STONY
+        RAPIDS\",\"D\",\"STONY RAPIDS\",\"4067799\",\"71132\",\"YSF\",\"SASKATCHEWAN\",\"59.25\",\"-105.84\",\"244.2\"\n\"STONY
+        RAPIDS\",\"D\",\"STONY RAPIDS A\",\"4067PR5\",\"71132\",\"YSF\",\"SASKATCHEWAN\",\"59.25\",\"-105.83\",\"245.4\"\n\"SWIFT
+        CURRENT\",\"D\",\"SWIFT CURRENT\",\"4028038\",\"71142\",\"YYN\",\"SASKATCHEWAN\",\"50.29\",\"-107.69\",\"816.9\"\n\"SWIFT
+        CURRENT\",\"D\",\"SWIFT CURRENT A\",\"4028040\",\"71870\",\"YYN\",\"SASKATCHEWAN\",\"50.30\",\"-107.68\",\"816.9\"\n\"SWIFT
+        CURRENT\",\"D\",\"SWIFT CURRENT CDA\",\"4028060\",\"71446\",\"WVC\",\"SASKATCHEWAN\",\"50.27\",\"-107.73\",\"825.0\"\n\"YORKTON\",\"C\",\"YORKTON\",\"4019073\",\"71886\",\"PRJ\",\"SASKATCHEWAN\",\"51.26\",\"-102.46\",\"498.4\"\n\"YORKTON\",\"C\",\"YORKTON\",\"4019075\",\"71292\",\"YQV\",\"SASKATCHEWAN\",\"51.26\",\"-102.46\",\"498.3\"\n\"YORKTON\",\"C\",\"YORKTON\",\"4019085\",\"71138\",\"YQV\",\"SASKATCHEWAN\",\"51.26\",\"-102.46\",\"498.3\"\n\"YORKTON\",\"C\",\"YORKTON
+        A\",\"4019080\",\"71138\",\"YQV\",\"SASKATCHEWAN\",\"51.27\",\"-102.47\",\"498.3\"\n\"BURWASH\",\"D\",\"BURWASH\",\"2100179\",\"\",\"WDB\",\"YUKON
+        TERRITORY\",\"61.37\",\"-139.03\",\"806.8\"\n\"BURWASH\",\"D\",\"BURWASH A\",\"2100181\",\"71001\",\"YDB\",\"YUKON
+        TERRITORY\",\"61.37\",\"-139.04\",\"805.3\"\n\"BURWASH\",\"D\",\"BURWASH A\",\"2100182\",\"\",\"YDB\",\"YUKON
+        TERRITORY\",\"61.37\",\"-139.05\",\"806.2\"\n\"BURWASH\",\"D\",\"BURWASH AIRPORT
+        AUTO\",\"2100184\",\"71195\",\"VBR\",\"YUKON TERRITORY\",\"61.37\",\"-139.02\",\"807.0\"\n\"CARMACKS\",\"D\",\"CARMACKS\",\"2100300\",\"\",\"\",\"YUKON
+        TERRITORY\",\"62.10\",\"-136.30\",\"524.9\"\n\"CARMACKS\",\"D\",\"CARMACKS
+        CS\",\"2100301\",\"71039\",\"XCK\",\"YUKON TERRITORY\",\"62.12\",\"-136.19\",\"542.9\"\n\"DAWSON\",\"D\",\"DAWSON\",\"2100LRP\",\"71966\",\"WON\",\"YUKON
+        TERRITORY\",\"64.06\",\"-139.13\",\"370.0\"\n\"DAWSON\",\"D\",\"DAWSON A\",\"2100402\",\"\",\"YDA\",\"YUKON
+        TERRITORY\",\"64.04\",\"-139.13\",\"370.3\"\n\"FARO\",\"E\",\"FARO (AUT)\",\"2100518\",\"71949\",\"WUM\",\"YUKON
+        TERRITORY\",\"62.21\",\"-133.38\",\"716.6\"\n\"FARO\",\"E\",\"FARO A\",\"2100517\",\"\",\"ZFA\",\"YUKON
+        TERRITORY\",\"62.21\",\"-133.37\",\"716.3\"\n\"HAINES JUNCTION\",\"E\",\"HAINES
+        JUNCTION\",\"2100630\",\"71505\",\"WHT\",\"YUKON TERRITORY\",\"60.77\",\"-137.58\",\"595.3\"\n\"HAINES
+        JUNCTION\",\"E\",\"HAINES JUNCTION YTG\",\"2100631\",\"\",\"\",\"YUKON TERRITORY\",\"60.75\",\"-137.51\",\"596.0\"\n\"HOUR
+        LAKE\",\"D\",\"HOUR LAKE\",\"2100FCG\",\"\",\"\",\"YUKON TERRITORY\",\"61.18\",\"-129.13\",\"890.0\"\n\"IVVAVIK
+        NAT. PARK\",\"C\",\"IVVAVIK NAT. PARK\",\"2100660\",\"71978\",\"WOI\",\"YUKON
+        TERRITORY\",\"69.16\",\"-140.15\",\"243.8\"\n\"MACMILLAN PASS\",\"G\",\"MACMILLAN
+        PASS\",\"2100693\",\"71990\",\"WNV\",\"YUKON TERRITORY\",\"63.24\",\"-130.04\",\"1379.0\"\n\"MAYO\",\"C\",\"MAYO
+        A\",\"2100700\",\"71965\",\"YMA\",\"YUKON TERRITORY\",\"63.62\",\"-135.87\",\"503.8\"\n\"MAYO\",\"C\",\"MAYO
+        A\",\"2100701\",\"71965\",\"YMA\",\"YUKON TERRITORY\",\"63.62\",\"-135.87\",\"503.8\"\n\"MAYO\",\"C\",\"MAYO
+        A\",\"2100702\",\"\",\"YMA\",\"YUKON TERRITORY\",\"63.62\",\"-135.87\",\"503.8\"\n\"OLD
+        CROW\",\"C\",\"OLD CROW A\",\"2100800\",\"\",\"YOC\",\"YUKON TERRITORY\",\"67.57\",\"-139.84\",\"250.2\"\n\"OLD
+        CROW\",\"C\",\"OLD CROW RCS\",\"2100805\",\"71044\",\"ZOC\",\"YUKON TERRITORY\",\"67.57\",\"-139.84\",\"251.2\"\n\"TESLIN\",\"D\",\"TESLIN
+        (AUT)\",\"2101102\",\"71045\",\"WZW\",\"YUKON TERRITORY\",\"60.17\",\"-132.73\",\"705.0\"\n\"TESLIN\",\"D\",\"TESLIN
+        A\",\"2101100\",\"\",\"YZW\",\"YUKON TERRITORY\",\"60.17\",\"-132.74\",\"705.0\"\n\"WATSON
+        LAKE\",\"C\",\"WATSON LAKE (AUT)\",\"2101204\",\"71199\",\"XQH\",\"YUKON TERRITORY\",\"60.12\",\"-128.83\",\"683.3\"\n\"WATSON
+        LAKE\",\"C\",\"WATSON LAKE A\",\"2101200\",\"71953\",\"YQH\",\"YUKON TERRITORY\",\"60.12\",\"-128.82\",\"687.4\"\n\"WATSON
+        LAKE\",\"C\",\"WATSON LAKE A\",\"2101201\",\"\",\"YQH\",\"YUKON TERRITORY\",\"60.12\",\"-128.82\",\"687.3\"\n\"WHITEHORSE\",\"C\",\"WHITEHORSE
+        A\",\"2101300\",\"71964\",\"YXY\",\"YUKON TERRITORY\",\"60.71\",\"-135.07\",\"706.2\"\n\"WHITEHORSE\",\"C\",\"WHITEHORSE
+        A\",\"2101303\",\"71964\",\"YXY\",\"YUKON TERRITORY\",\"60.71\",\"-135.07\",\"706.2\"\n\"WHITEHORSE\",\"C\",\"WHITEHORSE
+        AUTO\",\"2101310\",\"71773\",\"VXY\",\"YUKON TERRITORY\",\"60.73\",\"-135.10\",\"707.0\"\n"
+  recorded_at: 2024-11-12 21:32:11 GMT
+  recorded_with: vcr/1.6.0, webmockr/1.0.0
+- request:
+    method: get
     uri: https://climate.weather.gc.ca/climate_normals/station_inventory_e.html?yr=1981
     body:
       encoding: ''
@@ -14,8 +770,8 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 15 Apr 2021 19:44:36 GMT
-      server: Apache/2.4.29 (Ubuntu)
+      date: Tue, 12 Nov 2024 21:32:07 GMT
+      server: Apache
       strict-transport-security: max-age=63072000; preload
       expires: '0'
       cache-control: no-store, no-cache, must-revalidate
@@ -23,12 +779,16 @@ http_interactions:
       content-disposition: attachment; filename=Canadian_Climate_Normals_1981_2010_station_inventory.csv
       vary: Accept-Encoding
       content-encoding: gzip
-      content-length: '26628'
+      content-security-policy: frame-src 'self'; media-src 'self'; object-src 'self';
+        base-uri 'self'; form-action 'self' https://www.canada.ca https://canada.ca
+        https://recherche-search.gc.ca https://weather.gc.ca https://meteo.gc.ca
+      referrer-policy: no-referrer-when-downgrade
+      content-length: '26635'
       content-type: text/csv;charset=UTF-8
     body:
-      encoding: UTF-8
+      encoding: ''
       file: no
-      string: "\uFEFF\"CLIMATE_ID\",\"STATION_NAME\",\"PROVINCE\",\"STATION_TYPE\",\"WMO_IDENTIFIER\",\"TC_IDENTIFIER\",\"LATITUDE\",\"LONGITUDE\",\"ELEVATION
+      string: "\uFEFF\"CLIMATE_ID\",\"STATION_NAME\",\"PROVINCE_OR_TERRITORY\",\"STATION_TYPE\",\"WMO_IDENTIFIER\",\"TC_IDENTIFIER\",\"LATITUDE\",\"LONGITUDE\",\"ELEVATION
         (m)\",\"NORMALS_CODE\"\n\"3040223\",\"ALTAWAN\",\"ALBERTA\",\"DAILY CLIMATE\",\"\",\"\",\"49.25\",\"-110.01\",\"944.9\",\"D\"\n\"3010234\",\"ANDREW\",\"ALBERTA\",\"DAILY
         CLIMATE\",\"\",\"\",\"54.02\",\"-112.23\",\"610.0\",\"C\"\n\"3060321\",\"ATHABASCA
         2\",\"ALBERTA\",\"DAILY CLIMATE\",\"\",\"\",\"54.82\",\"-113.54\",\"626.3\",\"A\"\n\"3070493\",\"BALLATER\",\"ALBERTA\",\"DAILY
@@ -405,7 +1165,7 @@ http_interactions:
         LAKE RIVER\",\"BRITISH COLUMBIA\",\"UNKNOWN\",\"\",\"\",\"52.13\",\"-122.15\",\"585.2\",\"C\"\n\"1128958\",\"WINFIELD\",\"BRITISH
         COLUMBIA\",\"DAILY CLIMATE\",\"\",\"\",\"50.04\",\"-119.42\",\"506.0\",\"C\"\n\"1088970\",\"WISTARIA\",\"BRITISH
         COLUMBIA\",\"DAILY CLIMATE\",\"\",\"\",\"53.83\",\"-126.21\",\"862.6\",\"D\"\n\"1048974\",\"WOODFIBRE\",\"BRITISH
-        COLUMBIA\",\"DAILY CLIMATE\",\"\",\"\",\"49.58\",\"-123.89\",\"3.5\",\"D\"\n\"5010033\",\"ALEXANDER\",\"MANITOBA\",\"DAILY
+        COLUMBIA\",\"DAILY CLIMATE\",\"\",\"\",\"49.66\",\"-123.26\",\"3.5\",\"D\"\n\"5010033\",\"ALEXANDER\",\"MANITOBA\",\"DAILY
         CLIMATE\",\"\",\"\",\"49.83\",\"-100.30\",\"427.0\",\"D\"\n\"5040037\",\"ALONSA\",\"MANITOBA\",\"DAILY
         CLIMATE\",\"\",\"\",\"50.83\",\"-99.05\",\"274.3\",\"A\"\n\"5020040\",\"ALTONA\",\"MANITOBA\",\"DAILY
         CLIMATE\",\"\",\"\",\"49.10\",\"-97.55\",\"247.8\",\"C\"\n\"5040060\",\"AMARANTH\",\"MANITOBA\",\"DAILY
@@ -471,7 +1231,7 @@ http_interactions:
         RIVER\",\"MANITOBA\",\"UNKNOWN\",\"\",\"\",\"51.80\",\"-100.57\",\"378.0\",\"D\"\n\"5022171\",\"PINEY\",\"MANITOBA\",\"DAILY
         CLIMATE\",\"\",\"\",\"49.03\",\"-96.01\",\"325.5\",\"A\"\n\"5022245\",\"PLUM
         COULEE\",\"MANITOBA\",\"DAILY CLIMATE\",\"\",\"\",\"49.05\",\"-97.80\",\"265.2\",\"C\"\n\"5012321\",\"PORTAGE
-        LA PRAIRIE CDA\",\"MANITOBA\",\"DAILY CLIMATE\",\"\",\"\",\"49.95\",\"-98.27\",\"259.1\",\"C\"\n\"5022335\",\"RATHWELL\",\"MANITOBA\",\"DAILY
+        LA PRAIRIE CDA\",\"MANITOBA\",\"DAILY CLIMATE\",\"\",\"\",\"49.96\",\"-98.28\",\"259.1\",\"C\"\n\"5022335\",\"RATHWELL\",\"MANITOBA\",\"DAILY
         CLIMATE\",\"\",\"\",\"49.68\",\"-98.55\",\"324.2\",\"D\"\n\"501BMMA\",\"RIVERS
         PETTAPIECE\",\"MANITOBA\",\"DAILY CLIMATE\",\"\",\"\",\"50.11\",\"-100.18\",\"487.5\",\"D\"\n\"5042485\",\"RORKETON
         WEST\",\"MANITOBA\",\"DAILY CLIMATE\",\"\",\"\",\"51.43\",\"-99.73\",\"266.4\",\"D\"\n\"501KE01\",\"ROSSBURN
@@ -559,7 +1319,7 @@ http_interactions:
         INT'L A\",\"NEWFOUNDLAND\",\"CON\",\"71803\",\"YQX\",\"48.95\",\"-54.58\",\"151.2\",\"A\"\n\"8401728\",\"GARNISH\",\"NEWFOUNDLAND\",\"DAILY
         CLIMATE\",\"\",\"\",\"47.23\",\"-55.36\",\"10.8\",\"D\"\n\"8401880\",\"GOOBIES\",\"NEWFOUNDLAND\",\"DAILY
         CLIMATE\",\"\",\"\",\"47.95\",\"-53.97\",\"72.0\",\"D\"\n\"8501900\",\"GOOSE
-        A\",\"NEWFOUNDLAND\",\"WSD\",\"71816\",\"YYR\",\"53.32\",\"-60.42\",\"48.8\",\"A\"\n\"8402050\",\"GRAND
+        BAY A\",\"NEWFOUNDLAND\",\"WSD\",\"71816\",\"YYR\",\"53.32\",\"-60.42\",\"48.8\",\"A\"\n\"8402050\",\"GRAND
         FALLS\",\"NEWFOUNDLAND\",\"DAILY CLIMATE\",\"\",\"\",\"48.93\",\"-55.67\",\"60.0\",\"D\"\n\"8402071\",\"HARBOUR
         BRETON\",\"NEWFOUNDLAND\",\"DAILY CLIMATE\",\"\",\"\",\"47.47\",\"-55.83\",\"30.0\",\"C\"\n\"8402078\",\"HAWKE'S
         BAY\",\"NEWFOUNDLAND\",\"DAILY CLIMATE\",\"\",\"\",\"50.60\",\"-57.18\",\"11.2\",\"D\"\n\"8402309\",\"HOLYROOD
@@ -722,7 +1482,7 @@ http_interactions:
         ERIE\",\"ONTARIO\",\"DAILY CLIMATE\",\"\",\"\",\"42.88\",\"-78.97\",\"179.8\",\"C\"\n\"6022476\",\"FORT
         FRANCES A\",\"ONTARIO\",\"DAILY CLIMATE\",\"\",\"\",\"48.65\",\"-93.43\",\"342.0\",\"C\"\n\"6152695\",\"GEORGETOWN
         WWTP\",\"ONTARIO\",\"DAILY CLIMATE\",\"\",\"\",\"43.64\",\"-79.88\",\"221.0\",\"A\"\n\"6042716\",\"GERALDTON
-        A\",\"ONTARIO\",\"CON\",\"71834\",\"YGQ\",\"49.78\",\"-86.93\",\"348.4\",\"A\"\n\"6142803\",\"GLEN
+        A\",\"ONTARIO\",\"CON\",\"\",\"YGQ\",\"49.78\",\"-86.93\",\"348.4\",\"A\"\n\"6142803\",\"GLEN
         ALLAN\",\"ONTARIO\",\"DAILY CLIMATE\",\"\",\"\",\"43.68\",\"-80.71\",\"400.0\",\"A\"\n\"6102832\",\"GLEN
         GORDON\",\"ONTARIO\",\"DAILY CLIMATE\",\"\",\"\",\"45.17\",\"-74.53\",\"53.3\",\"D\"\n\"6102808\",\"GLENBURNIE\",\"ONTARIO\",\"DAILY
         CLIMATE\",\"\",\"\",\"44.33\",\"-76.50\",\"114.3\",\"D\"\n\"6102857\",\"GODFREY\",\"ONTARIO\",\"DAILY
@@ -1075,8 +1835,8 @@ http_interactions:
         LAKE A\",\"YUKON TERRITORY\",\"CARS\",\"71953\",\"YQH\",\"60.12\",\"-128.82\",\"687.4\",\"A\"\n\"2101300\",\"WHITEHORSE
         A\",\"YUKON TERRITORY\",\"FSS\",\"71964\",\"YXY\",\"60.71\",\"-135.07\",\"706.2\",\"C\"\n\"2101400\",\"WHITEHORSE
         RIVERDALE\",\"YUKON TERRITORY\",\"DAILY CLIMATE\",\"\",\"\",\"60.71\",\"-135.03\",\"640.1\",\"D\"\n"
-  recorded_at: 2021-04-15 19:44:37 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.8.0
+  recorded_at: 2024-11-12 21:32:11 GMT
+  recorded_with: vcr/1.6.0, webmockr/1.0.0
 - request:
     method: get
     uri: https://climate.weather.gc.ca/climate_normals/station_inventory_e.html?yr=1971
@@ -1092,8 +1852,8 @@ http_interactions:
       reason: OK
       message: 'Success: (200) OK'
     headers:
-      date: Thu, 15 Apr 2021 19:44:37 GMT
-      server: Apache/2.4.29 (Ubuntu)
+      date: Tue, 12 Nov 2024 21:32:10 GMT
+      server: Apache
       strict-transport-security: max-age=63072000; preload
       expires: '0'
       cache-control: no-store, no-cache, must-revalidate
@@ -1101,12 +1861,16 @@ http_interactions:
       content-disposition: attachment; filename=Canadian_Climate_Normals_1971_2000_station_inventory.csv
       vary: Accept-Encoding
       content-encoding: gzip
-      content-length: '34084'
+      content-security-policy: frame-src 'self'; media-src 'self'; object-src 'self';
+        base-uri 'self'; form-action 'self' https://www.canada.ca https://canada.ca
+        https://recherche-search.gc.ca https://weather.gc.ca https://meteo.gc.ca
+      referrer-policy: no-referrer-when-downgrade
+      content-length: '34095'
       content-type: text/csv;charset=UTF-8
     body:
-      encoding: UTF-8
+      encoding: ''
       file: no
-      string: "\uFEFF\"CLIMATE_ID\",\"STATION_NAME\",\"PROVINCE\",\"STATION_TYPE\",\"WMO_IDENTIFIER\",\"TC_IDENTIFIER\",\"LATITUDE\",\"LONGITUDE\",\"ELEVATION
+      string: "\uFEFF\"CLIMATE_ID\",\"STATION_NAME\",\"PROVINCE_OR_TERRITORY\",\"STATION_TYPE\",\"WMO_IDENTIFIER\",\"TC_IDENTIFIER\",\"LATITUDE\",\"LONGITUDE\",\"ELEVATION
         (m)\",\"NORMALS_CODE\"\n\"3040049\",\"ADEN\",\"ALBERTA\",\"DAILY CLIMATE\",\"\",\"\",\"49.05\",\"-111.32\",\"1036.3\",\"D\"\n\"3040223\",\"ALTAWAN\",\"ALBERTA\",\"DAILY
         CLIMATE\",\"\",\"\",\"49.25\",\"-110.01\",\"944.9\",\"C\"\n\"3010234\",\"ANDREW\",\"ALBERTA\",\"DAILY
         CLIMATE\",\"\",\"\",\"54.02\",\"-112.23\",\"610.0\",\"C\"\n\"3060321\",\"ATHABASCA
@@ -1536,7 +2300,7 @@ http_interactions:
         COLUMBIA\",\"DAILY CLIMATE\",\"\",\"\",\"50.04\",\"-119.42\",\"506.0\",\"A\"\n\"1088970\",\"WISTARIA\",\"BRITISH
         COLUMBIA\",\"DAILY CLIMATE\",\"\",\"\",\"53.83\",\"-126.21\",\"862.6\",\"A\"\n\"1188973\",\"WONOWON\",\"BRITISH
         COLUMBIA\",\"UNKNOWN\",\"\",\"\",\"56.73\",\"-121.80\",\"914.4\",\"D\"\n\"1048974\",\"WOODFIBRE\",\"BRITISH
-        COLUMBIA\",\"DAILY CLIMATE\",\"\",\"\",\"49.58\",\"-123.89\",\"3.5\",\"C\"\n\"117R00F\",\"YOHO
+        COLUMBIA\",\"DAILY CLIMATE\",\"\",\"\",\"49.66\",\"-123.26\",\"3.5\",\"C\"\n\"117R00F\",\"YOHO
         NAT PARK BOULDER CR\",\"BRITISH COLUMBIA\",\"DAILY CLIMATE\",\"\",\"\",\"51.38\",\"-116.53\",\"1219.2\",\"D\"\n\"117900R\",\"YOHO
         NP WAPTA LAKE\",\"BRITISH COLUMBIA\",\"DAILY CLIMATE\",\"\",\"\",\"51.45\",\"-116.33\",\"1645.9\",\"D\"\n\"5010033\",\"ALEXANDER\",\"MANITOBA\",\"DAILY
         CLIMATE\",\"\",\"\",\"49.83\",\"-100.30\",\"427.0\",\"D\"\n\"5040037\",\"ALONSA\",\"MANITOBA\",\"DAILY
@@ -1611,8 +2375,8 @@ http_interactions:
         CLIMATE\",\"\",\"\",\"49.03\",\"-96.01\",\"325.5\",\"D\"\n\"5022245\",\"PLUM
         COULEE\",\"MANITOBA\",\"DAILY CLIMATE\",\"\",\"\",\"49.05\",\"-97.80\",\"265.2\",\"A\"\n\"5012322\",\"PORTAGE
         LA PRAIRIE 2\",\"MANITOBA\",\"\",\"\",\"\",\"49.98\",\"-98.32\",\"261.2\",\"C\"\n\"5012321\",\"PORTAGE
-        LA PRAIRIE CDA\",\"MANITOBA\",\"DAILY CLIMATE\",\"\",\"\",\"49.95\",\"-98.27\",\"259.1\",\"A\"\n\"5012320\",\"PORTAGE
-        SOUTHPORT A\",\"MANITOBA\",\"CON\",\"71851\",\"YPG\",\"49.90\",\"-98.27\",\"269.7\",\"C\"\n\"501233B\",\"RAPID
+        LA PRAIRIE CDA\",\"MANITOBA\",\"DAILY CLIMATE\",\"\",\"\",\"49.96\",\"-98.28\",\"259.1\",\"A\"\n\"5012320\",\"PORTAGE
+        SOUTHPORT A\",\"MANITOBA\",\"CON\",\"\",\"YPG\",\"49.90\",\"-98.27\",\"269.7\",\"C\"\n\"501233B\",\"RAPID
         CITY\",\"MANITOBA\",\"UNKNOWN\",\"\",\"\",\"50.12\",\"-99.93\",\"545.6\",\"D\"\n\"5022335\",\"RATHWELL\",\"MANITOBA\",\"DAILY
         CLIMATE\",\"\",\"\",\"49.68\",\"-98.55\",\"324.2\",\"A\"\n\"5012520\",\"RUSSELL\",\"MANITOBA\",\"UNKNOWN\",\"\",\"\",\"50.77\",\"-101.28\",\"567.0\",\"D\"\n\"5022630\",\"SELKIRK\",\"MANITOBA\",\"DAILY
         CLIMATE\",\"\",\"\",\"50.17\",\"-96.87\",\"226.0\",\"D\"\n\"5012710\",\"SOMERSET\",\"MANITOBA\",\"UNKNOWN\",\"\",\"\",\"49.45\",\"-98.62\",\"487.8\",\"C\"\n\"5012719\",\"SOURIS\",\"MANITOBA\",\"DAILY
@@ -1705,7 +2469,7 @@ http_interactions:
         CLIMATE\",\"\",\"\",\"48.70\",\"-58.23\",\"143.0\",\"D\"\n\"8401700\",\"GANDER
         INT'L A\",\"NEWFOUNDLAND\",\"CON\",\"71803\",\"YQX\",\"48.95\",\"-54.58\",\"151.2\",\"A\"\n\"8401880\",\"GOOBIES\",\"NEWFOUNDLAND\",\"DAILY
         CLIMATE\",\"\",\"\",\"47.95\",\"-53.97\",\"72.0\",\"D\"\n\"8501900\",\"GOOSE
-        A\",\"NEWFOUNDLAND\",\"WSD\",\"71816\",\"YYR\",\"53.32\",\"-60.42\",\"48.8\",\"A\"\n\"8402050\",\"GRAND
+        BAY A\",\"NEWFOUNDLAND\",\"WSD\",\"71816\",\"YYR\",\"53.32\",\"-60.42\",\"48.8\",\"A\"\n\"8402050\",\"GRAND
         FALLS\",\"NEWFOUNDLAND\",\"DAILY CLIMATE\",\"\",\"\",\"48.93\",\"-55.67\",\"60.0\",\"A\"\n\"8402071\",\"HARBOUR
         BRETON\",\"NEWFOUNDLAND\",\"DAILY CLIMATE\",\"\",\"\",\"47.47\",\"-55.83\",\"30.0\",\"D\"\n\"8402080\",\"HEARTS
         CONTENT\",\"NEWFOUNDLAND\",\"UNKNOWN\",\"\",\"\",\"47.87\",\"-53.38\",\"8.5\",\"D\"\n\"8402309\",\"HOLYROOD
@@ -1911,7 +2675,7 @@ http_interactions:
         R CHAUDIERE DAM\",\"ONTARIO\",\"DAILY CLIMATE\",\"\",\"\",\"46.13\",\"-80.02\",\"198.1\",\"C\"\n\"6152605\",\"FRENCHMANS
         BAY\",\"ONTARIO\",\"UNKNOWN\",\"\",\"\",\"43.82\",\"-79.08\",\"76.2\",\"A\"\n\"6152695\",\"GEORGETOWN
         WWTP\",\"ONTARIO\",\"DAILY CLIMATE\",\"\",\"\",\"43.64\",\"-79.88\",\"221.0\",\"C\"\n\"6042716\",\"GERALDTON
-        A\",\"ONTARIO\",\"CON\",\"71834\",\"YGQ\",\"49.78\",\"-86.93\",\"348.4\",\"D\"\n\"6142803\",\"GLEN
+        A\",\"ONTARIO\",\"CON\",\"\",\"YGQ\",\"49.78\",\"-86.93\",\"348.4\",\"D\"\n\"6142803\",\"GLEN
         ALLAN\",\"ONTARIO\",\"DAILY CLIMATE\",\"\",\"\",\"43.68\",\"-80.71\",\"400.0\",\"A\"\n\"6102832\",\"GLEN
         GORDON\",\"ONTARIO\",\"DAILY CLIMATE\",\"\",\"\",\"45.17\",\"-74.53\",\"53.3\",\"A\"\n\"6152833\",\"GLEN
         HAFFY MONO MILLS\",\"ONTARIO\",\"DAILY CLIMATE\",\"\",\"\",\"43.93\",\"-79.95\",\"434.3\",\"A\"\n\"6102808\",\"GLENBURNIE\",\"ONTARIO\",\"DAILY
@@ -1981,7 +2745,7 @@ http_interactions:
         CDA\",\"ONTARIO\",\"DAILY CLIMATE\",\"\",\"WCG\",\"45.38\",\"-75.72\",\"79.2\",\"A\"\n\"6106000\",\"OTTAWA
         MACDONALD-CARTIER INT'L A\",\"ONTARIO\",\"CON\",\"71628\",\"YOW\",\"45.32\",\"-75.67\",\"114.0\",\"A\"\n\"6116132\",\"OWEN
         SOUND MOE\",\"ONTARIO\",\"DAILY CLIMATE\",\"\",\"\",\"44.58\",\"-80.93\",\"178.9\",\"A\"\n\"6126210\",\"PAISLEY\",\"ONTARIO\",\"UNKNOWN\",\"\",\"\",\"44.27\",\"-81.37\",\"244.1\",\"C\"\n\"6106398\",\"PETAWAWA
-        A\",\"ONTARIO\",\"AU5\",\"71625\",\"YWA\",\"45.95\",\"-77.32\",\"130.1\",\"C\"\n\"6106400\",\"PETAWAWA
+        A\",\"ONTARIO\",\"WOD\",\"71625\",\"YWA\",\"45.95\",\"-77.32\",\"130.1\",\"C\"\n\"6106400\",\"PETAWAWA
         NAT FORESTRY\",\"ONTARIO\",\"NONE\",\"\",\"\",\"45.98\",\"-77.43\",\"183.0\",\"C\"\n\"6166418\",\"PETERBOROUGH
         A\",\"ONTARIO\",\"CON\",\"\",\"\",\"44.23\",\"-78.37\",\"191.4\",\"A\"\n\"6166428\",\"PETERBOROUGH
         DOBBIN TS\",\"ONTARIO\",\"\",\"\",\"\",\"44.32\",\"-78.40\",\"243.8\",\"C\"\n\"6166450\",\"PETERBOROUGH
@@ -2407,5 +3171,5 @@ http_interactions:
         LAKE A\",\"YUKON TERRITORY\",\"CARS\",\"71953\",\"YQH\",\"60.12\",\"-128.82\",\"687.4\",\"A\"\n\"2101300\",\"WHITEHORSE
         A\",\"YUKON TERRITORY\",\"FSS\",\"71964\",\"YXY\",\"60.71\",\"-135.07\",\"706.2\",\"A\"\n\"2101400\",\"WHITEHORSE
         RIVERDALE\",\"YUKON TERRITORY\",\"DAILY CLIMATE\",\"\",\"\",\"60.71\",\"-135.03\",\"640.1\",\"C\"\n"
-  recorded_at: 2021-04-15 19:44:37 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.8.0
+  recorded_at: 2024-11-12 21:32:11 GMT
+  recorded_with: vcr/1.6.0, webmockr/1.0.0

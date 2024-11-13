@@ -46,9 +46,9 @@ find_line <- function(headings, cols) {
 }
 
 na_tibble <- function(cols) {
-  n <- as.list(rep(as.numeric(NA), length(cols))) %>%
-    stats::setNames(cols)
-  dplyr::tibble(!!n)
+  as.list(rep(as.numeric(NA), length(cols))) |>
+    stats::setNames(cols) |>
+    dplyr::as_tibble(.rows = 0)
 }
 
 tibble_to_list <- function(tbl) {
@@ -61,6 +61,14 @@ get_check <- function(..., task = NULL) {
   if (grepl("^https://climate.weather.gc.ca/error", req$url)) {
     stop("Service is currently down!")
   } else req
+}
+
+min_na <- function(..., na.rm = TRUE) {
+  l <- list(...)
+  if(all(lengths(l) == 0)) {
+    r <- numeric()
+  } else r <- min(..., na.rm = na.rm)
+  r
 }
 
 

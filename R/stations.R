@@ -28,23 +28,24 @@
 #'   \item{interval}{Interval of the data measurements ('hour', 'day', 'month')}
 #'   \item{start}{Starting year of data record}
 #'   \item{end}{Ending year of data record}
-#'   \item{normals}{Whether current climate normals are available for that station}
+#'   \item{normals}{Whether *any* climate normals are available for that station (new behaivour)}
+#'   \item{normals_1991_2020}{Whether 1991-2020 climate normals are available for that station. **Note** that even if available, these are not yet downloadable via weathercan.}
 #'   \item{normals_1981_2010}{Whether 1981-2010 climate normals are available for that station}
-#'   \item{normals_1971_2000}{Whether 1981-2010 climate normals are available for that station}
+#'   \item{normals_1971_2000}{Whether 1971-2000 climate normals are available for that station}
 #' }
 #' @source \url{https://climate.weather.gc.ca/index_e.html}
 #'
 #' @export
 #'
 #' @examplesIf check_eccc()
-#'
 #' stations()
 #' stations_meta()
 #'
+#' # Which Manitoba stations have *any* climate normals?
+#'
 #' library(dplyr)
 #' filter(stations(), interval == "hour", normals == TRUE, prov == "MB")
-#'
-#'
+
 stations <- function() {
 
   if(abs(difftime(stations_meta()$weathercan_modified,
@@ -79,7 +80,7 @@ stations_read <- function() {
     local_file <- stations_file() %>%
       readr::read_rds()
     # If pkg version is newer than local, use pkg else use local
-    if(pkg_file$meta$ECCC_modified > local_file$meta$ECCC_modified) {
+    if(pkg_file$meta$weathercan_modified > local_file$meta$weathercan_modified) {
       r <- pkg_file
     } else {
       r <- local_file
@@ -300,7 +301,8 @@ stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
     dplyr::left_join(normals, by = c("station_name", "climate_id")) %>%
     dplyr::mutate(dplyr::across(dplyr::contains("normals"),
                                 ~tidyr::replace_na(., FALSE)),
-                  normals = .data$normals_1981_2010) %>%
+                  normals = purrr::pmap_lgl(dplyr::pick(dplyr::starts_with("normals_")),
+                                           any)) %>%
     dplyr::relocate(dplyr::contains("normals_"), .after = dplyr::last_col())
 
 
@@ -337,10 +339,11 @@ stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
 #' @param normals_only DEPRECATED. Logical. Return only stations with climate
 #'   normals?
 #' @param normals_years Character. One of `NULL` (default), `current`,
-#'   `1981-2010`, or `1971-2000`. `current` returns only stations from most
-#'   recent normals year range. Default `NULL` does not filter by climate
-#'   normals. Specific year ranges return stations with normals in that period.
-#'   See Details for more specifics.
+#'   `1991-2020`, `1981-2010`, or `1971-2000`. `current` returns only stations
+#'   from the most recent *complete* normals year range (i.e. `1981-2010`).
+#'   Default `NULL` does not filter by climate normals. Specific year ranges
+#'   return stations with normals in that period. See Details for more
+#'   specifics.
 #' @param starts_latest Numeric. Restrict results to stations with data
 #'   collection beginning in or before the specified year.
 #' @param ends_earliest Numeric. Restrict results to stations with data
@@ -396,9 +399,9 @@ stations_search <- function(name = NULL,
     normals_years <- "current"
   }
   if(!is.null(normals_years) &&
-     !normals_years %in% c("current", "1981-2010", "1971-2000")) {
+     !normals_years %in% c("current", "1991-2020", "1981-2010", "1971-2000")) {
     stop("`normals_years` must either be `NULL` (don't filter by normals),",
-         "'current', '1981-2010' or '1971-2000'", call. = FALSE)
+         "'current', '1991-2020', '1981-2010' or '1971-2000'", call. = FALSE)
   }
 
   if(all(is.null(name), is.null(coords)) |
@@ -435,9 +438,17 @@ stations_search <- function(name = NULL,
                        .data$interval %in% !! interval, !is.na(.data$start))
 
   if(!is.null(normals_years)) {
-    yr <- "normals"
-    if(normals_years != "current") {
-      yr <- paste0(yr, "_", stringr::str_replace(normals_years, "-", "_"))
+
+    if(normals_years == "1991-2020") {
+      message(
+        "You can find out which stations have normals for 1991-2020, ",
+        "but be aware that they are not yet available for download via weathercan")
+    }
+
+    if(normals_years == "current") {
+      yr <- "normals_1981_2010"  # Currently set Normals
+    } else {
+      yr <- paste0("normals_", stringr::str_replace(normals_years, "-", "_"))
     }
     stn <- dplyr::filter(stn, .data[[yr]])
   } else {
@@ -530,13 +541,13 @@ normals_stn_list <- function(yr) {
   get_check(getOption("weathercan.urls.stations.normals"),
             query = list(yr = yr)) %>%
     httr::content(type = "text/csv", col_types = readr::cols(),
-                  encoding = "Latin1") %>%
+                  encoding = "Latin1", progress = FALSE) %>%
     dplyr::rename_with(tolower) %>%
     dplyr::select(dplyr::any_of(c("station_name", "climate_id")))
 }
 
 stations_normals <- function() {
-  dplyr::tibble(years = c("1981-2010", "1971-2000")) %>%
+  dplyr::tibble(years = c("1991-2020", "1981-2010", "1971-2000")) %>%
     dplyr::mutate(yr = stringr::str_extract(.data$years, "^[0-9]{4}"),
                   stns = purrr::map(.data$yr, normals_stn_list)) %>%
     tidyr::unnest("stns") %>%

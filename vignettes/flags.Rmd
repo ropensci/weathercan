@@ -1,7 +1,7 @@
 ---
 title: "Flags and codes"
 author: "Steffi LaZerte"
-date: "2023-09-20"
+date: "2024-11-12"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Flags and codes}
@@ -40,7 +40,8 @@ For example, a sample of unformatted data from Magog station in Quebec looks lik
 ##  9 MAGOG        2017-11     70.0                ^                   0                        
 ## 10 MAGOG        2017-12     45.7                ^                   10                       
 ## 11 MAGOG        2018-01     34.6                ^                   2                        
-## 12 MAGOG        2018-02     77.2                ^                   0
+## 12 MAGOG        2018-02     77.2                ^                   0                        
+## # ℹ 1 more variable: `Snow Grnd Last Day Flag` <chr>
 ```
 
 In this output, you can see two flags: `^` in `Total Precip` and `M` in `Snow Grnd Last Day`
@@ -96,6 +97,23 @@ In the `normals_dl`() function, codes are associated with each variable:
 
 
 ```
+## Warning: There were 2 warnings in `dplyr::mutate()`.
+## The first warning was:
+## ℹ In argument: `frost = purrr::map2(...)`.
+## Caused by warning:
+## ! 21 parsing failures.
+## row col  expected     actual         file
+##   4  -- 3 columns 15 columns literal data
+##   5  -- 3 columns 15 columns literal data
+##   6  -- 3 columns 15 columns literal data
+##   7  -- 3 columns 15 columns literal data
+##   8  -- 3 columns 15 columns literal data
+## ... ... ......... .......... ............
+## See problems(...) for more details.
+## ℹ Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.
+```
+
+```
 ## # A tibble: 13 × 7
 ##    period temp_daily_average temp_daily_average_code temp_daily_max temp_daily_max_code
 ##    <fct>               <dbl> <chr>                            <dbl> <chr>              
@@ -111,7 +129,8 @@ In the `normals_dl`() function, codes are associated with each variable:
 ## 10 Oct                   4.1 A                                 10.4 A                  
 ## 11 Nov                  -5.6 A                                 -0.5 A                  
 ## 12 Dec                 -14   A                                 -9   A                  
-## 13 Year                  2.2 A                                  8.4 A
+## 13 Year                  2.2 A                                  8.4 A                  
+## # ℹ 2 more variables: temp_daily_min <dbl>, temp_daily_min_code <chr>
 ```
 
 For example, here, the code indicates that these temperature variables meet the WMO '3 and 5 rule' (no more than 3 consecutive and no more than 5 total missing for either temperature or precipitation).                                                                   

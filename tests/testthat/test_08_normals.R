@@ -1,6 +1,19 @@
 
 # normals_html() ------------------------------------------------------------
 
+test_that("normals_html() correctly retrieves request 1991-2020", {
+  skip("New normals not ready yet")
+  skip_on_cran()
+  skip_if_offline()
+
+  expect_silent(nd <- normals_html(station_id = 3471, climate_id = "5010480",
+                                   normals_years = "1991-2020", prov = "MB"))
+
+  expect_s3_class(nd, "response")
+  expect_false(httr::http_error(nd))
+  expect_gt(length(nd$content), 10000)
+})
+
 test_that("normals_html() correctly retrieves request 1981-2010", {
   skip_on_cran()
   skip_if_offline()
@@ -176,9 +189,9 @@ test_that("normals_format()/frost_format() format data to correct class", {
 
   expect_silent(f_fmt <- frost_format(f)) %>%
     expect_s3_class("data.frame")
-  expect_null(f_fmt[["date_first_fall_frost"]])
-  expect_null(f_fmt[["prob_first_fall_temp_below_0_on_date"]])
-  expect_null(f_fmt[["frost_code"]])
+  expect_length(f_fmt[["date_first_fall_frost"]], 0)
+  expect_length(f_fmt[["prob_first_fall_temp_below_0_on_date"]], 0)
+  expect_length(f_fmt[["frost_code"]], 0)
 })
 
 
@@ -190,16 +203,45 @@ test_that("normals_dl() downloads normals/frost dates as tibble - single", {
   memoise::forget(normals_html) # Reset cache so we can test fully
 
   # 1981-2010
-  expect_silent(nd1 <- normals_dl(climate_id = "5010480")) %>%
+  expect_silent(nd1 <- normals_dl(climate_id = "5010480",
+                                  normals_years = "1981-2010")) %>%
     expect_s3_class("tbl_df")
 
   # 1971-2000
   expect_silent(nd2 <- normals_dl(climate_id = "5010480",
-                                 normals_years = "1971-2000")) %>%
+                                  normals_years = "1971-2000")) %>%
     expect_s3_class("tbl_df")
 
   expect_snapshot_value(nd1, style = "json2", tolerance = 0.001)
   expect_snapshot_value(nd2, style = "json2", tolerance = 0.001)
+
+
+  skip("New normals not ready yet")
+  # 1991-2020
+  expect_silent(nd1 <- normals_dl(climate_id = "5010480",
+                                  normals_years = "1991-2020")) %>%
+    expect_s3_class("tbl_df")
+})
+
+test_that("normals_dl() downloads normals/frost dates as tibble - multi 1991", {
+  skip("New normals not ready yet")
+  skip_on_cran()
+  skip_if_offline()
+
+  expect_silent(nd <- normals_dl(climate_id = c("2403500", "5010480",
+                                                "1096450"),
+                                 normals_years = "1991-2020")) %>%
+    expect_s3_class("tbl_df")
+
+  expect_equal(nrow(nd), 3)
+  expect_s3_class(tidyr::unnest(nd, normals), "data.frame")
+  expect_s3_class(tidyr::unnest(nd, frost), "data.frame")
+  expect_length(tidyr::unnest(nd, normals) %>%
+                  dplyr::pull(climate_id) %>%
+                  unique(), 3)
+  expect_length(tidyr::unnest(nd, frost) %>%
+                  dplyr::pull(climate_id) %>%
+                  unique(), 0)
 })
 
 test_that("normals_dl() downloads normals/frost dates as tibble - multi 1981", {
@@ -207,7 +249,8 @@ test_that("normals_dl() downloads normals/frost dates as tibble - multi 1981", {
   skip_if_offline()
 
   expect_silent(nd <- normals_dl(climate_id = c("2403500", "5010480",
-                                                "1096450"))) %>%
+                                                "1096450"),
+                                 normals_years = "1981-2010")) %>%
     expect_s3_class("tbl_df")
 
   expect_equal(nrow(nd), 3)
@@ -220,7 +263,6 @@ test_that("normals_dl() downloads normals/frost dates as tibble - multi 1981", {
                   dplyr::pull(climate_id) %>%
                   unique(), 3)
 })
-
 
 test_that("normals_dl() downloads normals/frost dates as tibble - multi 1971", {
   skip_on_cran()
@@ -250,4 +292,12 @@ test_that("normals_dl() gets extreme wind chill correctly", {
 
   expect_silent(nd <- normals_dl(climate_id = "2100517")) %>%
     expect_s3_class("tbl_df")
+})
+
+test_that("normals_dl() multiple weird stations", {
+  skip_on_cran()
+  skip_if_offline()
+  expect_silent(nd <- normals_dl(climate_ids = c("301C3D4", "301FFNJ", "301N49A")))
+
+  expect_snapshot_value(nd, style = "json2", tolerance = 0.001)
 })
