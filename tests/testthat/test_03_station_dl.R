@@ -71,6 +71,9 @@ test_that("stations_dl() runs and updates data", {
   expect_type(s$meta, "list") %>%
     expect_length(2)
 
+  # Ensure that we're getting recent data
+  expect_equal(max(s$stn$end, na.rm = TRUE), lubridate::year(Sys.Date()))
+
   # stations_read() ----
 
   # Without local file, use package file
