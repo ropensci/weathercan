@@ -187,10 +187,16 @@ weather_dl <- function(station_ids,
       msg.start <- "earliest date"
     } else {
       s.start <- as.Date(start)
+      if(s.start > Sys.Date()) s.start <- Sys.Date()
       msg.start <- start
     }
 
-    if(is.null(end)) s.end <- Sys.Date() else s.end <- as.Date(end)
+    if(is.null(end)) {
+      s.end <- Sys.Date()
+    } else {
+      s.end <- as.Date(end)
+      if(s.end > Sys.Date()) s.end <- Sys.Date()
+    }
     msg.end <- as.character(s.end)
 
     dates <- lubridate::interval(s.start, s.end)
@@ -381,6 +387,7 @@ weather_dl <- function(station_ids,
 }
 
 weather_single <- function(date_range, s, interval, encoding) {
+
   w <- dplyr::tibble(date_range = date_range)
   w <- dplyr::mutate(w, html = purrr::map(.data$date_range,
                                     ~ weather_html(station_id = s,

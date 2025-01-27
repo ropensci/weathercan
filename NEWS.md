@@ -1,5 +1,6 @@
 # weathercan 0.7.3
 - Switch stations inventory list to new location
+- Don't try to download future weather
 
 # weathercan 0.7.2
 - Fix normals to work with new ECCC data format
