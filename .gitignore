@@ -1,6 +1,8 @@
 .gitignore
 .Rproj.user
 .Rhistory
+.Rprofile
+.Renviron
 .RData
 .Ruserdata
 .Rproj
@@ -13,3 +15,5 @@ devtests.R
 /doc/
 /Meta/
 docs
+renv
+renv.lock
