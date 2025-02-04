@@ -120,6 +120,10 @@ weather_dl <- function(station_ids,
     stop("'interval' must be either 'hour', 'day', OR 'month'")
   }
 
+  if(!(interval %in% c('hour', 'day', 'month'))) {
+    stop("'interval' must be either 'hour', 'day', OR 'month'")
+  }
+
   if(!is.null(stn)){
     stop("`stn` is defunct, to use an updated stations data frame ",
          "use `stations_dl()` to update the internal data, and ",
