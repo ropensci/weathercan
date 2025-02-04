@@ -227,3 +227,26 @@ test_that("weather (hour) crosses the year line", {
   expect_equal(min(w$date), as.Date("2001-12-01"))
   expect_equal(max(w$date), as.Date("2002-01-05"))
 })
+
+test_that("weather (invalid_interval) verifies error return when interval is invalid", {
+  # The value of interval is invalid
+  skip_on_cran()
+  vcr::use_cassette("weather_hour_6819_51423_2017-08_2018-05", {
+    expect_error(weather_dl(c(6819, 51423),
+                                  start = "2017-08-01",
+                                  end = "2018-05-01",
+                                  interval = "invalid_interval"),
+      "'interval' must be either 'hour', 'day', OR 'month'")
+  })
+})
+
+test_that("weather (too_large_interval_length) verifies error return when interval character vector length is greather than 1", {
+  # The values of interval are valid, but there are too many
+  skip_on_cran()
+  vcr::use_cassette("weather_hour_6819_51423_2017-08_2018-05", {
+    expect_error(weather_dl(c(6819, 51423),
+                                  start = "2017-08-01",
+                                  end = "2018-05-01", interval = c("hour", "day")),
+      "'interval' must be either 'hour', 'day', OR 'month'")
+  })
+})
