@@ -17,3 +17,7 @@ devtests.R
 docs
 renv
 renv.lock
+.Rdata
+.httr-oauth
+.DS_Store
+.quarto
