@@ -300,7 +300,7 @@ test_that("normals_dl() stops if climate normals are not available for stations"
                           normals_years = "1971-2000"))
 })
 
-test_that("normals_dl() stops if climate normals are not available some stations", {
+test_that("normals_dl() messages if climate normals are not available some stations", {
   skip_on_cran()
   skip_if_offline()
 
