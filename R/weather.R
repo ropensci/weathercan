@@ -463,13 +463,8 @@ weather_raw <- function(html, skip = 0,
 
   # For some reason the flags "^" are replaced with "I",
   # change back to match flags on ECCC website
-  if(utils::packageVersion("dplyr") > package_version("0.8.0")) {
-    w <- dplyr::mutate_at(w, .vars = dplyr::vars(dplyr::ends_with("Flag")),
-                          list(~gsub("^I$", "^", .)))
-  } else {
-    w <- dplyr::mutate_at(w, .vars = dplyr::vars(dplyr::ends_with("Flag")),
-                          dplyr::funs(gsub("^I$", "^", .)))
-  }
+  w <- dplyr::mutate(w, dplyr::across(dplyr::ends_with("Flag"),
+                        ~gsub("^I$", "^", .)))
   w
 }
 

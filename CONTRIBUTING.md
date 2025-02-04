@@ -41,3 +41,15 @@ Getting ready to make your first contribution? Here are a couple of tutorials yo
 - In general follow the convention of <http://r-pkgs.had.co.nz/r.html#style> (snake_case functions and argument names, etc.)
 - Where there is conflict, default to the style of `weathercan`
 - Use explicit package imports (i.e. package_name::package_function) and avoid @import if at all possible
+
+# Testing
+
+In order to test `weathercan`, you may need to do some extra legwork.
+
+- Install `devtools`. 
+- You may need to install `weathercan` itself (I know) from GitHub, using `devtools::install_github("ropensci/weathercan")
+- You still may need to install more, such as `install.packages(c["vcr", "mockery",  "sf"]).
+- Try running all of the tests any time you edit something.
+- Interactively test the packages if you can using cmd+shift+L. That will normally prompt if you are missing packages. It may not work all of the time, because some packages are used only for testing.
+
+If this doesn't work, _please_ try and update this section! The more the better.
