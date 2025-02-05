@@ -284,6 +284,32 @@ test_that("normals_dl() downloads normals/frost dates as tibble - multi 1971", {
                   unique(), 0)
 })
 
+test_that("normals_dl() stops if stn argument is provided", {
+  skip_on_cran()
+  skip_if_offline()
+
+  expect_error(normals_dl(stn = "BRANDON A"))
+  expect_error(normals_dl(stn = ""))
+})
+
+test_that("normals_dl() stops if climate normals are not available for stations", {
+  skip_on_cran()
+  skip_if_offline()
+
+  expect_error(normals_dl(climate_ids = c("301AR54", "301B6L0", "301B8LR"),
+                          normals_years = "1971-2000"))
+})
+
+test_that("normals_dl() messages if climate normals are not available some stations", {
+  skip_on_cran()
+  skip_if_offline()
+
+  expect_message(normals_dl(climate_ids = c("301AR54", "2100685", "301B8LR"),
+                          normals_years = "1971-2000"),
+    "Not all stations have climate normals available \\(climate ids: 301AR54, 301B8LR\\)")
+})
+
+
 # Bug fixes ------------------------------------------------------------------
 # Fix issue #106 - Added (C) to extreme wind chill
 test_that("normals_dl() gets extreme wind chill correctly", {

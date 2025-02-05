@@ -107,7 +107,7 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
     dplyr::distinct() %>%
     dplyr::mutate(climate_id = as.character(.data$climate_id))
 
-  if(nrow(n) == 0) stop("No stations matched these climate ids", call. = FALSE)
+  # if(nrow(n) == 0) stop("No stations matched these climate ids", call. = FALSE)
 
   if(all(n$normals == FALSE)) {
     stop("No stations had climate normals available", call. = FALSE)
