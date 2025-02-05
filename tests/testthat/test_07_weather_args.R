@@ -133,7 +133,7 @@ test_that("weather_dl() (invalid end day) returns error when end is not a valid 
 })
 
 
-test_that("weather_dl() (invalid end string) verifies error return when start is not a valid date string", {
+test_that("weather_dl() (invalid end string) verifies error return when end is not a valid date string", {
   skip_on_cran()
   vcr::use_cassette("weather_month_5401", {
     expect_error(weather_dl(station_ids = 5401,
