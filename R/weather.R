@@ -130,6 +130,8 @@ weather_dl <- function(station_ids,
          "`stations_meta()` to check when it was last updated", call. = FALSE)
   }
 
+  stn <- stations()
+
   check_int(interval)
 
   w_all <- data.frame()
