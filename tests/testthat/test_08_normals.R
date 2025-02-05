@@ -305,13 +305,8 @@ test_that("normals_dl() messages if climate normals are not available some stati
   skip_if_offline()
 
   expect_message(normals_dl(climate_ids = c("301AR54", "2100685", "301B8LR"),
-                          normals_years = "1971-2000"))
-
-  output <- evaluate_promise(normals_dl(climate_ids = c("301AR54", "2100685", "301B8LR"),
-                                        normals_years = "1971-2000"))
-  output_message <- paste(output$messages, collapse = "")
-  climate_ids_message <- sub(".*climate ids: ([^)]+).*", "\\1", output_message)
-  expect_equal(length(strsplit(climate_ids_message, ",")[[1]]), 2)
+                          normals_years = "1971-2000"),
+    "Not all stations have climate normals available \\(climate ids: 301AR54, 301B8LR\\)")
 })
 
 
