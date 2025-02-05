@@ -90,6 +90,11 @@ Other contributors:
   \item Sam Albers \email{sam.albers@gmail.com} (\href{https://orcid.org/0000-0002-9270-7884}{ORCID}) [contributor]
   \item Nick Brown \email{nicholas512@gmail.com} (\href{https://orcid.org/0000-0002-2719-0671}{ORCID}) [contributor]
   \item Kevin Cazelles \email{kevin.cazelles@gmail.com} (\href{https://orcid.org/0000-0001-6619-9874}{ORCID}) [contributor]
+  \item Richard Littauer \email{richard.littauer@gmail.com} (\href{https://orcid.org/0000-0001-5428-7535}{ORCID}) [contributor]
+  \item Shandiya Balasubramaniam (\href{https://orcid.org/0000-0001-9928-9964}{ORCID}) [contributor]
+  \item Mark Ciechanowski (\href{https://orcid.org/0000-0002-3732-5939}{ORCID}) [contributor]
+  \item Jeremy Selva \email{jeremy1189.jjs@gmail.com} (\href{https://orcid.org/0000-0002-4498-2662}{ORCID}) [contributor]
+  \item Kelli F. Johnson \email{kelli.johnson@noaa.gov} (\href{https://orcid.org/0000-0002-5149-451X}{ORCID}) [contributor]
 }
 
 }

@@ -7,10 +7,11 @@ Authors@R: c(
      person("Sam", "Albers", email = "sam.albers@gmail.com", role = c("ctb"), comment = c(ORCID = "0000-0002-9270-7884")),
      person("Nick", "Brown", email = "nicholas512@gmail.com", role = c("ctb"), comment = c(ORCID = "0000-0002-2719-0671")),
      person("Kevin", "Cazelles", email = "kevin.cazelles@gmail.com", role = c("ctb"), comment = c(ORCID = "0000-0001-6619-9874")),
+     person("Richard", "Littauer", email = "richard.littauer@gmail.com", role = c("ctb"), comment = c(ORCID = "0000-0001-5428-7535")),
      person("Shandiya", "Balasubramaniam", role = "ctb", comment = c(ORCID = "0000-0001-9928-9964")),
-     person("Mark", "Ciechanowski", role = "ctb"),
-     person("Jeremy", "Selva", role = "ctb"),
-     person("Kelli", "Johnson", email = "kelli.johnson@noaa.gov", role = "ctb")
+     person("Mark", "Ciechanowski", role = "ctb", comment = c(ORCID = "0000-0002-3732-5939")),
+     person("Jeremy", "Selva", email = "jeremy1189.jjs@gmail.com", role = "ctb", comment = c(ORCID = "0000-0002-4498-2662")),
+     person(c("Kelli", "F."), "Johnson", email = "kelli.johnson@noaa.gov", role = c("ctb"), comment = c(ORCID = "0000-0002-5149-451X"))
      )
 Description: Provides means for downloading historical weather data from 
     the Environment and Climate Change Canada website 
@@ -40,7 +41,7 @@ Imports:
     tidyselect (>= 1.0.0),
     xml2 (>= 0.1.2),
     rappdirs (>= 0.3.3)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
 Suggests:
     devtools,
