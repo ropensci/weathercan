@@ -107,7 +107,7 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
     dplyr::distinct() %>%
     dplyr::mutate(climate_id = as.character(.data$climate_id))
 
-  if(nrow(n) == 0) stop("No stations matched these climate ids", call. = FALSE)
+  # if(nrow(n) == 0) stop("No stations matched these climate ids", call. = FALSE)
 
   if(all(n$normals == FALSE)) {
     stop("No stations had climate normals available", call. = FALSE)
@@ -303,28 +303,72 @@ data_format <- function(n, climate_id) {
 
   # Prepare dates (if missing, NA)
   n_fmt <- n %>%
-    dplyr::mutate_at(.vars = dates,
-                     ~dplyr::if_else(. == "", as.character(NA),
-                                     paste0(., "/", as.numeric(period)))) %>%
-    dplyr::mutate_at(.vars = dates,
-                     ~dplyr::if_else(period == "Year", as.character(NA), .))
+    dplyr::mutate(
+      dplyr::across(
+        .cols = dplyr::all_of(dates),
+        .fns = ~ dplyr::if_else(
+          condition = . == "",
+          true = as.character(NA),
+          false = paste0(., "/", as.numeric(.data$period))
+        )
+      )
+    ) %>%
+    dplyr::mutate(
+      dplyr::across(
+        .cols = dplyr::all_of(dates),
+        .fns = ~ dplyr::if_else(
+          condition = .data$period == "Year",
+          true = as.character(NA),
+          false = .
+        )
+      )
+    )
 
   # In case of warnings
-  tryCatch({n_fmt <- dplyr::mutate_at(n_fmt, .vars = dates, ~lubridate::ydm(.))},
-           warning = function(w) stop(climate_id,
-                                      " has a formating issue with dates",
-                                      call. = FALSE))
-  tryCatch({n_fmt <- dplyr::mutate_at(n_fmt, .vars = nums, as.numeric)},
-           warning = function(w) stop(climate_id,
-                                      " has a formating issue with numbers",
-                                      call. = FALSE))
-  tryCatch({n_fmt <- dplyr::mutate_at(n_fmt, .vars = chars,
-                                      ~dplyr::if_else(. == "",
-                                                      as.character(NA),
-                                                      as.character(.)))},
-           warning = function(w) stop(climate_id,
-                                      " has a formating issue with characters",
-                                      call. = FALSE))
+
+  tryCatch(
+    {
+      n_fmt <- dplyr::mutate(
+        .data = n_fmt,
+        dplyr::across(
+          .cols = dplyr::all_of(dates),
+          .fns = ~lubridate::ydm(.)
+        )
+      )
+    },
+    warning = function(w) stop(climate_id, " has a formating issue with dates", call. = FALSE)
+  )
+
+  tryCatch(
+    {
+      n_fmt <- dplyr::mutate(
+        .data = n_fmt,
+        dplyr::across(
+          .cols = dplyr::all_of(nums),
+          .fns = as.numeric
+        )
+      )
+    },
+     warning = function(w) stop(climate_id, " has a formating issue with numbers", call. = FALSE)
+  )
+
+  tryCatch(
+    {
+      n_fmt <- dplyr::mutate(
+        .data = n_fmt,
+        dplyr::across(
+          .cols = dplyr::all_of(chars),
+          .fns = ~ dplyr::if_else(
+            condition = . == "",
+            true = as.character(NA),
+            false = as.character(.)
+          )
+        )
+      )
+    },
+    warning = function(w) stop(climate_id, " has a formating issue with characters", call. = FALSE))
+
+
   n_fmt
 }
 
