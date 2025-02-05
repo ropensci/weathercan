@@ -77,6 +77,7 @@ usethis::use_github_release()
 ## Prep for next
 usethis::pr_init("dev")
 usethis::use_dev_version()
+usethis::pr_push()
 
 
 # Good practices --------------------

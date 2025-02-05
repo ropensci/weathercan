@@ -191,6 +191,7 @@ weather_dl <- function(station_ids,
       msg.start <- "earliest date"
     } else {
       s.start <- as.Date(start)
+      if(s.start > Sys.Date()) s.start <- Sys.Date()
       msg.start <- start
     }
 
@@ -393,6 +394,7 @@ weather_dl <- function(station_ids,
 }
 
 weather_single <- function(date_range, s, interval, encoding) {
+
   w <- dplyr::tibble(date_range = date_range)
   w <- dplyr::mutate(w, html = purrr::map(.data$date_range,
                                     ~ weather_html(station_id = s,

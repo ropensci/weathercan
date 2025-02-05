@@ -9,7 +9,8 @@ test_that("URLS correctly set", {
   expect_true(stringr::str_detect(w, "climate.weather.gc.ca"))
 
   expect_type(w <- getOption("weathercan.urls.stations"), "character")
-  expect_true(stringr::str_detect(w, "drive.google.com"))
+  #expect_true(stringr::str_detect(w, "drive.google.com"))
+  expect_true(stringr::str_detect(w, "collaboration.cmc.ec.gc.ca"))
 
   expect_type(w <- getOption("weathercan.urls.stations.normals"), "character")
   expect_true(stringr::str_detect(w, "climate.weather.gc.ca"))
