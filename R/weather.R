@@ -129,7 +129,6 @@ weather_dl <- function(station_ids,
          "use `stations_dl()` to update the internal data, and ",
          "`stations_meta()` to check when it was last updated", call. = FALSE)
   }
-  stn <- stations()
 
   check_int(interval)
 
