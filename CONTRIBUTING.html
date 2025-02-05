@@ -90,6 +90,16 @@
 </li>
 <li>Use explicit package imports (i.e. package_name::package_function) and avoid @import if at all possible</li>
 </ul></div>
+<div class="section level1">
+<h1 id="testing">Testing<a class="anchor" aria-label="anchor" href="#testing"></a></h1>
+<p>In order to test <code>weathercan</code>, you may need to do some extra legwork.</p>
+<ul><li>Install <code>devtools</code>.</li>
+<li>You may need to install <code>weathercan</code> itself (I know) from GitHub, using `devtools::install_github(“ropensci/weathercan”)</li>
+<li>You still may need to install more, such as `install.packages(c[“vcr”, “mockery”, “sf”]).</li>
+<li>Try running all of the tests any time you edit something.</li>
+<li>Interactively test the packages if you can using cmd+shift+L. That will normally prompt if you are missing packages. It may not work all of the time, because some packages are used only for testing.</li>
+</ul><p>If this doesn’t work, <em>please</em> try and update this section! The more the better.</p>
+</div>
 
 
   </main></div>
