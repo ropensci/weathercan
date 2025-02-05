@@ -1,6 +1,10 @@
-.gitignore
+.httr-oauth
+.DS_Store
+.quarto
 .Rproj.user
 .Rhistory
+.Rprofile
+.Renviron
 .RData
 .Ruserdata
 .Rproj
@@ -13,3 +17,6 @@ devtests.R
 /doc/
 /Meta/
 docs
+renv
+renv.lock
+
