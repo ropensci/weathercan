@@ -194,7 +194,11 @@ weather_dl <- function(station_ids,
       msg.start <- start
     }
 
-    if(is.null(end)) s.end <- Sys.Date() else s.end <- as.Date(end)
+    if(is.null(end)) {
+        s.end <- Sys.Date()
+    } else {
+        s.end <- as.Date(end)
+    }
     msg.end <- as.character(s.end)
 
     dates <- lubridate::interval(s.start, s.end)
@@ -331,7 +335,11 @@ weather_dl <- function(station_ids,
   }
 
   if(length(end_dates) > 0 & !quiet) {
-    if(all(station_ids %in% missing)) type <- "all" else type <- "some"
+    if(all(station_ids %in% missing)) {
+        type <- "all"
+    } else {
+        type <- "some"
+    }
 
     message(paste0("The end dates (", msg.end, ") are earlier than the ",
                    "start dates (", msg.start, ") for ", type, " stations (",
