@@ -95,3 +95,64 @@ test_that("weather_dl() month string_as = NULL", {
   })
 
 })
+
+
+test_that("weather_dl() (invalid start day) returns error when start is not a valid date day", {
+  skip_on_cran()
+
+  vcr::use_cassette("weather_month_5401", {
+    expect_error(weather_dl(station_ids = 5401,
+                                  start = "2017-01-99",
+                                  end = "2017-05-01",
+                                  interval = "month", format = FALSE),
+      "'start' and 'end' must be either a standard date format ")
+  })
+})
+
+test_that("weather_dl() (invalid start string) returns error when start is not a valid date string", {
+  skip_on_cran()
+
+  vcr::use_cassette("weather_month_5401", {
+    expect_error(weather_dl(station_ids = 5401,
+                                  start = "2017-01-NN",
+                                  end = "2017-05-01",
+                                  interval = "month", format = FALSE),
+      "'start' and 'end' must be either a standard date format ")
+  })
+})
+
+test_that("weather_dl() (invalid end day) returns error when end is not a valid date day", {
+  skip_on_cran()
+  vcr::use_cassette("weather_month_5401", {
+    expect_error(weather_dl(station_ids = 5401,
+                                  start = "2017-01-01",
+                                  end = "2017-04-99",
+                                  interval = "month", format = FALSE),
+      "'start' and 'end' must be either a standard date format ")
+  })
+})
+
+
+test_that("weather_dl() (invalid end string) verifies error return when end is not a valid date string", {
+  skip_on_cran()
+  vcr::use_cassette("weather_month_5401", {
+    expect_error(weather_dl(station_ids = 5401,
+                                  start = "2017-01-01",
+                                  end = "2017-04-NN",
+                                  interval = "month", format = FALSE),
+      "'start' and 'end' must be either a standard date format ")
+  })
+})
+
+
+test_that("weather_dl() (invalid stn) verifies error return when defunct stn", {
+  skip_on_cran()
+  vcr::use_cassette("weather_month_5401", {
+    expect_error(weather_dl(station_ids = 5401,
+                                  start = "2017-01-01",
+                                  end = "2017-05-01",
+                                  stn = "invalid defunct",
+                                  interval = "month", format = FALSE),
+      "`stn` is defunct, to use an updated stations data frame use ")
+  })
+})
