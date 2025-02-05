@@ -1,6 +1,9 @@
 # weathercan 0.7.3
 - Switch stations inventory list to new location
 - Don't try to download future weather
+- Better test coverage (#149; 🙏 thanks @shandiya, @mciechanumich!)
+- Replaced superseded dplyr functions (#150; 🙏 thanks @JauntyJJS, @RichardLitt!)
+- Fixed test coverage GitHub Action (🙏 thanks @kellijohnson-NOAA!)
 
 # weathercan 0.7.2
 - Fix normals to work with new ECCC data format
