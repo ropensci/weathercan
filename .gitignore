@@ -1,3 +1,6 @@
+.httr-oauth
+.DS_Store
+.quarto
 .Rproj.user
 .Rhistory
 .Rprofile
@@ -16,7 +19,4 @@ devtests.R
 docs
 renv
 renv.lock
-.Rdata
-.httr-oauth
-.DS_Store
-.quarto
+
