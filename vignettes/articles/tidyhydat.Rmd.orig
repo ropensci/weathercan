@@ -8,10 +8,11 @@ output: rmarkdown::html_document
 ```{r, include = FALSE}
 knitr::opts_chunk$set(cache = FALSE,
                       fig.align = "center",
-                      fig.path = "vignettes/articles/figures/tidyhydat-",
+                      fig.path = "figures/tidyhydat-",
                       dpi = 200,
                       fig.asp = 0.65, fig.width = 5,
-                      out.width = "80%")
+                      out.width = "80%",
+                      delay = 30)
 ```
 
 [`tidyhydat`](https://docs.ropensci.org/tidyhydat) is another R package for accessing

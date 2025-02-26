@@ -13,7 +13,7 @@ vignette: >
 old <- options(tibble.max_extra_cols = 0, width = 90)
 
 knitr::opts_chunk$set(fig.align = "center",
-                      fig.path = "vignettes/figures/normals-")
+                      fig.path = "figures/normals-")
 ```
 
 ## Downloading Climate Normals
