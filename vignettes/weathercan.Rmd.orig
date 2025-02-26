@@ -12,7 +12,7 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(cache = FALSE,
                       fig.align = "center",
-                      fig.path = "vignettes/figures/weathercan-")
+                      fig.path = "figures/weathercan-")
 old <- options(width = 160)
 ```
 

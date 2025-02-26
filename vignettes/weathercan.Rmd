@@ -1,7 +1,7 @@
 ---
 title: "Getting Started"
 author: "Steffi LaZerte"
-date: "2024-11-12"
+date: "2025-02-25"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Getting Started}
@@ -30,15 +30,16 @@ head(stations())
 ```
 
 ```
-## # A tibble: 6 × 16
-##   prov  station_name        station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_2010 normals_1971_2000
+## # A tibble: 6 × 17
+##   prov  station_name        station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1991_2020 normals_1981_2010
 ##   <chr> <chr>                    <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
 ## 1 AB    DAYSLAND                  1795 301AR54        NA <NA>   52.9 -112.  689. Etc/GMT+7 day       1908  1922 FALSE   FALSE             FALSE            
 ## 2 AB    DAYSLAND                  1795 301AR54        NA <NA>   52.9 -112.  689. Etc/GMT+7 hour        NA    NA FALSE   FALSE             FALSE            
 ## 3 AB    DAYSLAND                  1795 301AR54        NA <NA>   52.9 -112.  689. Etc/GMT+7 month     1908  1922 FALSE   FALSE             FALSE            
 ## 4 AB    EDMONTON CORONATION       1796 301BK03        NA <NA>   53.6 -114.  671. Etc/GMT+7 day       1978  1979 FALSE   FALSE             FALSE            
 ## 5 AB    EDMONTON CORONATION       1796 301BK03        NA <NA>   53.6 -114.  671. Etc/GMT+7 hour        NA    NA FALSE   FALSE             FALSE            
-## 6 AB    EDMONTON CORONATION       1796 301BK03        NA <NA>   53.6 -114.  671. Etc/GMT+7 month     1978  1979 FALSE   FALSE             FALSE
+## 6 AB    EDMONTON CORONATION       1796 301BK03        NA <NA>   53.6 -114.  671. Etc/GMT+7 month     1978  1979 FALSE   FALSE             FALSE            
+## # ℹ 1 more variable: normals_1971_2000 <lgl>
 ```
 
 ``` r
@@ -46,8 +47,8 @@ glimpse(stations())
 ```
 
 ```
-## Rows: 26,382
-## Columns: 16
+## Rows: 26,442
+## Columns: 17
 ## $ prov              <chr> "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", …
 ## $ station_name      <chr> "DAYSLAND", "DAYSLAND", "DAYSLAND", "EDMONTON CORONATION", "EDMONTON CORONATION", "EDMONTON CORONATION", "FLEET", "FLEET", "FLEET", …
 ## $ station_id        <dbl> 1795, 1795, 1795, 1796, 1796, 1796, 1797, 1797, 1797, 1798, 1798, 1798, 1799, 1799, 1799, 1800, 1800, 1800, 1801, 1801, 1801, 1802, …
@@ -62,6 +63,7 @@ glimpse(stations())
 ## $ start             <dbl> 1908, NA, 1908, 1978, NA, 1978, 1987, NA, 1987, 1987, NA, 1987, 1980, NA, 1980, 1980, NA, 1980, 1986, NA, 1986, 1987, NA, 1987, 1986…
 ## $ end               <dbl> 1922, NA, 1922, 1979, NA, 1979, 1990, NA, 1990, 1998, NA, 1998, 2009, NA, 2007, 1981, NA, 1981, 2019, NA, 2007, 1991, NA, 1991, 1995…
 ## $ normals           <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, TRU…
+## $ normals_1991_2020 <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,…
 ## $ normals_1981_2010 <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, TRU…
 ## $ normals_1971_2000 <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,…
 ```
@@ -74,20 +76,21 @@ stations_search("Kamloops")
 ```
 
 ```
-## # A tibble: 40 × 16
-##    prov  station_name         station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_2010 normals_1971_2000
+## # A tibble: 40 × 17
+##    prov  station_name         station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1991_2020 normals_1981_2010
 ##    <chr> <chr>                     <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
 ##  1 BC    KAMLOOPS                   1274 1163779        NA <NA>   50.7 -120.  379. Etc/GMT+8 day       1878  1982 FALSE   FALSE             FALSE            
 ##  2 BC    KAMLOOPS                   1274 1163779        NA <NA>   50.7 -120.  379. Etc/GMT+8 month     1878  1982 FALSE   FALSE             FALSE            
 ##  3 BC    KAMLOOPS A                 1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 day       1951  2013 TRUE    TRUE              TRUE             
 ##  4 BC    KAMLOOPS A                 1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE             
 ##  5 BC    KAMLOOPS A                 1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 month     1951  2013 TRUE    TRUE              TRUE             
-##  6 BC    KAMLOOPS A                51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 day       2013  2023 FALSE   FALSE             FALSE            
-##  7 BC    KAMLOOPS A                51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2023 FALSE   FALSE             FALSE            
-##  8 BC    KAMLOOPS AFTON MINES       1276 1163790        NA <NA>   50.7 -120.  701  Etc/GMT+8 day       1977  1993 FALSE   FALSE             TRUE             
-##  9 BC    KAMLOOPS AFTON MINES       1276 1163790        NA <NA>   50.7 -120.  701  Etc/GMT+8 month     1977  1993 FALSE   FALSE             TRUE             
-## 10 BC    KAMLOOPS AUT              42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 day       2006  2023 FALSE   FALSE             FALSE            
+##  6 BC    KAMLOOPS A                51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 day       2013  2025 TRUE    TRUE              FALSE            
+##  7 BC    KAMLOOPS A                51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2025 TRUE    TRUE              FALSE            
+##  8 BC    KAMLOOPS AFTON MINES       1276 1163790        NA <NA>   50.7 -120.  701  Etc/GMT+8 day       1977  1993 TRUE    FALSE             FALSE            
+##  9 BC    KAMLOOPS AFTON MINES       1276 1163790        NA <NA>   50.7 -120.  701  Etc/GMT+8 month     1977  1993 TRUE    FALSE             FALSE            
+## 10 BC    KAMLOOPS AUT              42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 day       2006  2025 TRUE    TRUE              FALSE            
 ## # ℹ 30 more rows
+## # ℹ 1 more variable: normals_1971_2000 <lgl>
 ```
 
 You can narrow down your search by specifying time intervals (options are "hour", "day", or "month"):
@@ -98,12 +101,13 @@ stations_search("Kamloops", interval = "hour")
 ```
 
 ```
-## # A tibble: 3 × 16
-##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_2010 normals_1971_2000
+## # A tibble: 3 × 17
+##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1991_2020 normals_1981_2010
 ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
 ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE             
-## 2 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2023 FALSE   FALSE             FALSE            
-## 3 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2023 FALSE   FALSE             FALSE
+## 2 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2025 TRUE    TRUE              FALSE            
+## 3 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2025 TRUE    TRUE              FALSE            
+## # ℹ 1 more variable: normals_1971_2000 <lgl>
 ```
 
 You can specify more than one interval:
@@ -114,20 +118,21 @@ stations_search("Kamloops", interval = c("hour", "month"))
 ```
 
 ```
-## # A tibble: 21 × 16
-##    prov  station_name            station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_2010 normals_1971_2000
+## # A tibble: 21 × 17
+##    prov  station_name            station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1991_2020 normals_1981_2010
 ##    <chr> <chr>                        <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
 ##  1 BC    KAMLOOPS                      1274 1163779        NA <NA>   50.7 -120.  379. Etc/GMT+8 month     1878  1982 FALSE   FALSE             FALSE            
 ##  2 BC    KAMLOOPS A                    1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE             
 ##  3 BC    KAMLOOPS A                    1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 month     1951  2013 TRUE    TRUE              TRUE             
-##  4 BC    KAMLOOPS A                   51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2023 FALSE   FALSE             FALSE            
-##  5 BC    KAMLOOPS AFTON MINES          1276 1163790        NA <NA>   50.7 -120.  701  Etc/GMT+8 month     1977  1993 FALSE   FALSE             TRUE             
-##  6 BC    KAMLOOPS AUT                 42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2023 FALSE   FALSE             FALSE            
-##  7 BC    KAMLOOPS AUT                 42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 month     2006  2006 FALSE   FALSE             FALSE            
+##  4 BC    KAMLOOPS A                   51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2025 TRUE    TRUE              FALSE            
+##  5 BC    KAMLOOPS AFTON MINES          1276 1163790        NA <NA>   50.7 -120.  701  Etc/GMT+8 month     1977  1993 TRUE    FALSE             FALSE            
+##  6 BC    KAMLOOPS AUT                 42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2025 TRUE    TRUE              FALSE            
+##  7 BC    KAMLOOPS AUT                 42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 month     2006  2006 TRUE    TRUE              FALSE            
 ##  8 BC    KAMLOOPS CDA                  1277 1163810        NA <NA>   50.7 -120.  345  Etc/GMT+8 month     1949  1977 FALSE   FALSE             FALSE            
 ##  9 BC    KAMLOOPS CHERRY CREEK         1278 1163814        NA <NA>   50.7 -121.  556. Etc/GMT+8 month     1970  1974 FALSE   FALSE             FALSE            
 ## 10 BC    KAMLOOPS CHERRY CREEK 2       1279 1163815        NA <NA>   50.6 -121.  701  Etc/GMT+8 month     1974  1977 FALSE   FALSE             FALSE            
 ## # ℹ 11 more rows
+## # ℹ 1 more variable: normals_1971_2000 <lgl>
 ```
 
 
@@ -139,12 +144,13 @@ stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour"
 ```
 
 ```
-## # A tibble: 3 × 17
-##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1981_2010 normals_1971_2000 distance
-##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>                <dbl>
-## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE                  8.61
-## 2 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2023 FALSE   FALSE             FALSE                 8.61
-## 3 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2023 FALSE   FALSE             FALSE                 9.26
+## # A tibble: 3 × 18
+##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1991_2020 normals_1981_2010
+##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
+## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE             
+## 2 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2025 TRUE    TRUE              FALSE            
+## 3 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2025 TRUE    TRUE              FALSE            
+## # ℹ 2 more variables: normals_1971_2000 <lgl>, distance <dbl>
 ```
 
 We can also perform more complex searches using `filter()` function from the `dplyr` package
@@ -163,12 +169,13 @@ BCstations
 ```
 
 ```
-## # A tibble: 3 × 16
-##   prov  station_name                station_id climate_id WMO_id TC_id   lat   lon  elev tz     interval start   end normals normals_1981_2010 normals_1971_2000
+## # A tibble: 3 × 17
+##   prov  station_name                station_id climate_id WMO_id TC_id   lat   lon  elev tz     interval start   end normals normals_1991_2020 normals_1981_2010
 ##   <chr> <chr>                            <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>  <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
-## 1 BC    CRESTON CAMPBELL SCIENTIFIC       6838 114B1F0     71770 WJR    49.1 -116.  641. Etc/G… hour      1994  2023 FALSE   FALSE             FALSE            
-## 2 BC    NELSON CS                         6839 1145M29     71776 WNM    49.5 -117.  535. Etc/G… hour      1994  2023 FALSE   FALSE             FALSE            
-## 3 BC    WARFIELD RCS                     31067 1148705     71401 XWF    49.1 -118.  567. Etc/G… hour      2001  2023 FALSE   FALSE             FALSE
+## 1 BC    CRESTON CAMPBELL SCIENTIFIC       6838 114B1F0     71770 WJR    49.1 -116.  641. Etc/G… hour      1994  2025 TRUE    TRUE              FALSE            
+## 2 BC    NELSON CS                         6839 1145M29     71776 WNM    49.5 -117.  535. Etc/G… hour      1994  2025 TRUE    TRUE              FALSE            
+## 3 BC    WARFIELD RCS                     31067 1148705     71401 XWF    49.1 -118.  567. Etc/G… hour      2001  2025 TRUE    TRUE              FALSE            
+## # ℹ 1 more variable: normals_1971_2000 <lgl>
 ```
 
 ``` r
@@ -196,10 +203,10 @@ stations_meta()
 
 ```
 ## $ECCC_modified
-## [1] "2023-01-24 23:30:00 UTC"
+## [1] "2025-02-03 23:30:00 UTC"
 ## 
 ## $weathercan_modified
-## [1] "2024-11-08"
+## [1] "2025-02-25"
 ```
 
 
@@ -328,10 +335,10 @@ stations_search("Winnipeg", normals_years = "current")
 ```
 
 ```
-## # A tibble: 1 × 13
-##   prov  station_name                station_id climate_id WMO_id TC_id   lat   lon  elev tz        normals normals_1981_2010 normals_1971_2000
-##   <chr> <chr>                            <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <lgl>   <lgl>             <lgl>            
-## 1 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/GMT+6 TRUE    TRUE              TRUE
+## # A tibble: 1 × 14
+##   prov  station_name                station_id climate_id WMO_id TC_id   lat   lon  elev tz        normals normals_1991_2020 normals_1981_2010 normals_1971_2000
+##   <chr> <chr>                            <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <lgl>   <lgl>             <lgl>             <lgl>            
+## 1 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/GMT+6 TRUE    TRUE              TRUE              TRUE
 ```
 
 The current year range is 1981-2010, but you can also search for stations in the
@@ -343,10 +350,10 @@ stations_search("Winnipeg", normals_years = "1971-2000")
 ```
 
 ```
-## # A tibble: 1 × 13
-##   prov  station_name                station_id climate_id WMO_id TC_id   lat   lon  elev tz        normals normals_1981_2010 normals_1971_2000
-##   <chr> <chr>                            <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <lgl>   <lgl>             <lgl>            
-## 1 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/GMT+6 TRUE    TRUE              TRUE
+## # A tibble: 1 × 14
+##   prov  station_name                station_id climate_id WMO_id TC_id   lat   lon  elev tz        normals normals_1991_2020 normals_1981_2010 normals_1971_2000
+##   <chr> <chr>                            <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <lgl>   <lgl>             <lgl>             <lgl>            
+## 1 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/GMT+6 TRUE    TRUE              TRUE              TRUE
 ```
 
 Note that the Winnipeg station has normals for both year ranges.
@@ -356,23 +363,6 @@ Then you can download the climate normals with the `normals_dl()` function.
 
 ``` r
 n <- normals_dl("5023222")
-```
-
-```
-## Warning: There were 2 warnings in `dplyr::mutate()`.
-## The first warning was:
-## ℹ In argument: `frost = purrr::map2(...)`.
-## Caused by warning:
-## ! 21 parsing failures.
-## row col  expected     actual         file
-##   4  -- 3 columns 15 columns literal data
-##   5  -- 3 columns 15 columns literal data
-##   6  -- 3 columns 15 columns literal data
-##   7  -- 3 columns 15 columns literal data
-##   8  -- 3 columns 15 columns literal data
-## ... ... ......... .......... ............
-## See problems(...) for more details.
-## ℹ Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.
 ```
 
 There are two parts to the normals data, average weather measurements and average frost dates.
@@ -414,22 +404,17 @@ unnest(n, frost)
 ```
 
 ```
-## # A tibble: 6 × 32
-##   prov  station_name                climate_id normals_years meets_wmo normals  frost_code date_first_fall_frost date_last_spring_frost length_frost_free
-##   <chr> <chr>                       <chr>      <chr>         <lgl>     <list>   <chr>                      <dbl>                  <dbl>             <dbl>
-## 1 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                            265                    143               121
-## 2 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                            265                    143               121
-## 3 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                            265                    143               121
-## 4 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> <NA>                          NA                     NA                NA
-## 5 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> <NA>                          NA                     NA                NA
-## 6 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> <NA>                          NA                     NA                NA
-## # ℹ 22 more variables: `Probability of first temperature in fall <= 0C, on or before indicated date (10%)` <dbl>,
-## #   `Probability of first temperature in fall <= 0C, on or before indicated date (25%)` <dbl>,
-## #   `Probability of first temperature in fall <= 0C, on or before indicated date (33%)` <dbl>,
-## #   `Probability of first temperature in fall <= 0C, on or before indicated date (50%)` <dbl>,
-## #   `Probability of first temperature in fall <= 0C, on or before indicated date (66%)` <dbl>,
-## #   `Probability of first temperature in fall <= 0C, on or before indicated date (75%)` <dbl>,
-## #   `Probability of first temperature in fall <= 0C, on or before indicated date (90%)` <dbl>, …
+## # A tibble: 7 × 14
+##   prov  station_name                climate_id normals_years meets_wmo normals  frost_code date_first_fall_frost date_last_spring_frost length_frost_free prob 
+##   <chr> <chr>                       <chr>      <chr>         <lgl>     <list>   <chr>                      <dbl>                  <dbl>             <dbl> <chr>
+## 1 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                            265                    143               121 10%  
+## 2 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                            265                    143               121 25%  
+## 3 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                            265                    143               121 33%  
+## 4 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                            265                    143               121 50%  
+## 5 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                            265                    143               121 66%  
+## 6 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                            265                    143               121 75%  
+## 7 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                            265                    143               121 90%  
+## # ℹ 3 more variables: prob_last_spring_temp_below_0_on_date <dbl>, prob_first_fall_temp_below_0_on_date <dbl>, prob_length_frost_free <dbl>
 ```
 
 
