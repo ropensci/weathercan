@@ -1,7 +1,7 @@
 ---
 title: "weathercan and tidyhydat"
 author: "Steffi LaZerte"
-date: "2025-02-25"
+date: "2025-02-26"
 output: rmarkdown::html_document
 ---
 
@@ -187,7 +187,7 @@ g <- ggplot() +
   geom_line(data = flow, aes(x = Date, y = Value)) +
   scale_y_continuous(name = bquote(Total~Flow~(m^3/s)), expand = c(0, 0),
                      limits = c(0, max(flow$Value * 1.1)),
-                     sec.axis = sec_axis(trans = ~ . / 2, name = "Total Rain (mm)"))
+                     sec.axis = sec_axis(transform = ~ . / 2, name = "Total Rain (mm)"))
 g
 ```
 
@@ -240,7 +240,7 @@ g <- ggplot() +
            stat = "identity", alpha = 0.7, fill = "cornflowerblue") +
   geom_line(data = level, aes(x = Date, y = Value)) +
   scale_y_continuous(name = "Water Level (m)", expand = c(0, 0),
-                     sec.axis = sec_axis(trans = ~ (. - min(level$Value)) * 65,
+                     sec.axis = sec_axis(transform = ~ (. - min(level$Value)) * 65,
                                          name = "Total Rain (mm)")) +
   coord_cartesian(ylim = c(min(level$Value), max(level$Value)*1.001))
 g
@@ -282,23 +282,22 @@ Looks like the flow and water level match up, perhaps we should take a closer lo
 ``` r
 ggplot() +
   theme_bw() +
-  theme(legend.position = c(0.8, 0.8)) +
+  theme(legend.position.inside = c(0.8, 0.8)) +
   geom_line(data = flow, aes(x = Date, y = Value, colour = "Flow"),
-            size = 2) +
-  geom_line(data = level, size = 1,
+            linewidth = 2) +
+  geom_line(data = level, linewidth = 1,
             aes(x = Date, y = (Value - min(Value) + 0.1) * 130, colour = "Level")) +
   scale_y_continuous(bquote(Total~Flow~(m^3/s)), expand = c(0, 0),
-                     sec.axis = sec_axis(trans = ~ ./130 + min(level$Value) - 0.1,
+                     sec.axis = sec_axis(transforsm = ~ ./130 + min(level$Value) - 0.1,
                                          name = "Water Level (m)")) +
   scale_colour_manual(name = "Type",
                       values = c("Flow" = "cornflowerblue",
                                  "Level" = "grey30"))
 ```
 
-<div class="figure" style="text-align: center">
-<img src="figures/tidyhydat-unnamed-chunk-16-1.png" alt="plot of chunk unnamed-chunk-16" width="80%" />
-<p class="caption">plot of chunk unnamed-chunk-16</p>
-</div>
+```
+## Error in sec_axis(transforsm = ~./130 + min(level$Value) - 0.1, name = "Water Level (m)"): unused argument (transforsm = ~./130 + min(level$Value) - 0.1)
+```
 
 Almost a perfect match between water level and flow (which makes sense).
 
