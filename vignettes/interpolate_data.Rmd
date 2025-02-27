@@ -1,7 +1,7 @@
 ---
 title: "Interpolating"
 author: "Steffi LaZerte"
-date: "2025-02-25"
+date: "2025-02-26"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Interpolating}
@@ -439,8 +439,8 @@ ggplot(data = finches_weather, aes(x = date, y = n)) +
   theme_bw() +
   theme(legend.position = "top") +
   geom_bar(stat = "identity") +
-  geom_line(aes(y = temp * 50, colour = "Temperature"), size = 2) +
-  geom_line(aes(y = wind_spd * 50, colour = "Wind Speed"), size = 2) +
+  geom_line(aes(y = temp * 50, colour = "Temperature"), linewidth = 2) +
+  geom_line(aes(y = wind_spd * 50, colour = "Wind Speed"), linewidth = 2) +
   scale_colour_discrete(name = "") +
   scale_y_continuous(
     name = "Activity Counts",
