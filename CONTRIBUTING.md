@@ -42,14 +42,16 @@ Getting ready to make your first contribution? Here are a couple of tutorials yo
 - Where there is conflict, default to the style of `weathercan`
 - Use explicit package imports (i.e. package_name::package_function) and avoid @import if at all possible
 
-# Testing
+# Development and Testing - In depth
 
-In order to test `weathercan`, you may need to do some extra legwork.
+In order to actively develop and test `weathercan` (i.e. beyond small documentation changes) 
+you will need to set up your system for R Package development 
+([R Packages](https://r-pkgs.org/) is a great resource here).
 
-- Install `devtools`. 
-- You may need to install `weathercan` itself (I know) from GitHub, using `devtools::install_github("ropensci/weathercan")
-- You still may need to install more, such as `install.packages(c["vcr", "mockery",  "sf"]).
-- Try running all of the tests any time you edit something.
-- Interactively test the packages if you can using cmd+shift+L. That will normally prompt if you are missing packages. It may not work all of the time, because some packages are used only for testing.
+- After cloning the repository (above), install R packages devtools and pak.
+- If using RStudio, open the weathercan project
+- Use pak to install all weathercan dependencies: `pak::local_install()`
+- Try running tests any time you edit something (in RStudio, this is Ctrl/Cmd-Shift-T)
+- You can [load all internal functions](https://r-pkgs.org/workflow101.html#sec-workflow101-load-all) for interactive testing using Ctrl/Cmd-Shift-L.
 
 If this doesn't work, _please_ try and update this section! The more the better.
