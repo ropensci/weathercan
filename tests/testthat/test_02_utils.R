@@ -45,6 +45,7 @@ test_that("check_eccc() as expected", {
   expect_silent(check_eccc())
   expect_type(check_eccc(), "logical")
 
+  # Expect FALSE if on cran
   if(Sys.getenv("NOT_CRAN") == "") expect_false(check_eccc())
 
   skip_if_offline()

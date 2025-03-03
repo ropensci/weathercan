@@ -51,10 +51,6 @@ na_tibble <- function(cols) {
     dplyr::as_tibble(.rows = 0)
 }
 
-tibble_to_list <- function(tbl) {
-  stats::setNames(tbl[[2]], tbl[[1]])
-}
-
 get_check <- function(..., task = NULL) {
   req <- httr::GET(...)
   httr::stop_for_status(req, task = task)
