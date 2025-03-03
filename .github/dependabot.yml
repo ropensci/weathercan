@@ -1,0 +1,9 @@
+# Uses dependabot to check things
+version: 2
+updates:
+  # Enable version updates for GitHub Actions
+  - package-ecosystem: "github-actions"
+    # The default location of the bot is `.github/workflows`
+    directory: "/"
+    schedule:
+      interval: "weekly"
