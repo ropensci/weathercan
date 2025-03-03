@@ -557,11 +557,3 @@ stations_normals <- function() {
                   years = paste0("normals_", .data$years)) %>%
     tidyr::pivot_wider(names_from = "years", values_from = "normals")
 }
-
-stations_extract_normals <- function(loc) {
-  xml2::read_html(loc) %>%
-    rvest::html_nodes("a") %>%
-    rvest::html_text() %>%
-    stringr::str_subset(".csv") %>%
-    stringr::str_extract("[0-9A-Z]{7}")
-}
