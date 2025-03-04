@@ -13,7 +13,7 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(cache = FALSE,
                       fig.align = "center",
-                      fig.path = "figures/interp-",
+                      fig.path = "vignettes/articles/figures/interp-",
                       dpi = 200,
                       fig.asp = 0.65, fig.width = 5,
                       out.width = "80%")
@@ -72,7 +72,7 @@ This means that it also has daylight savings applied, eep!
 
 To interpolate, the data must be in the same timezone. The easiest way forward
 is to convert the `finches` data to the same, 'local' time without daylight
-savings as the `kamloops` data. 
+savings as the `kamloops` data.
 
 First we'll transform it to non-daylight savings
 (i.e. Etc/GMT+8, note that the +8 is [intentionally inverted](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones))

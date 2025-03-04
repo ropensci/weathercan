@@ -8,7 +8,7 @@ output: rmarkdown::html_document
 ```{r, include = FALSE}
 knitr::opts_chunk$set(cache = FALSE,
                       fig.align = "center",
-                      fig.path = "figures/tidyhydat-",
+                      fig.path = "vignettes/articles/figures/tidyhydat-",
                       dpi = 200,
                       fig.asp = 0.65, fig.width = 5,
                       out.width = "80%",
@@ -214,7 +214,7 @@ ggplot() +
   geom_line(data = level, linewidth = 1,
             aes(x = Date, y = (Value - min(Value) + 0.1) * 130, colour = "Level")) +
   scale_y_continuous(bquote(Total~Flow~(m^3/s)), expand = c(0, 0),
-                     sec.axis = sec_axis(transforsm = ~ ./130 + min(level$Value) - 0.1,
+                     sec.axis = sec_axis(transform = ~ ./130 + min(level$Value) - 0.1,
                                          name = "Water Level (m)")) +
   scale_colour_manual(name = "Type",
                       values = c("Flow" = "cornflowerblue",
