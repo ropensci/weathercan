@@ -1,7 +1,7 @@
 ---
 title: "Climate Normals"
 author: "Steffi LaZerte"
-date: "2024-11-12"
+date: "2025-02-27"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Climate Normals}
@@ -33,7 +33,7 @@ stations_search("Winnipeg", normals_years = "current")
 ```
 
 ```
-## # A tibble: 1 × 13
+## # A tibble: 1 × 14
 ##   prov  station_name    station_id climate_id WMO_id TC_id   lat   lon  elev tz    normals
 ##   <chr> <chr>                <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr> <lgl>  
 ## 1 MB    WINNIPEG RICHA…       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… TRUE

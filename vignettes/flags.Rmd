@@ -1,7 +1,7 @@
 ---
 title: "Flags and codes"
 author: "Steffi LaZerte"
-date: "2024-11-12"
+date: "2025-02-25"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Flags and codes}
@@ -95,23 +95,6 @@ The flags index can be accessed through the built in data frame: `flags`
 ### Codes
 In the `normals_dl`() function, codes are associated with each variable:
 
-
-```
-## Warning: There were 2 warnings in `dplyr::mutate()`.
-## The first warning was:
-## ℹ In argument: `frost = purrr::map2(...)`.
-## Caused by warning:
-## ! 21 parsing failures.
-## row col  expected     actual         file
-##   4  -- 3 columns 15 columns literal data
-##   5  -- 3 columns 15 columns literal data
-##   6  -- 3 columns 15 columns literal data
-##   7  -- 3 columns 15 columns literal data
-##   8  -- 3 columns 15 columns literal data
-## ... ... ......... .......... ............
-## See problems(...) for more details.
-## ℹ Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.
-```
 
 ```
 ## # A tibble: 13 × 7

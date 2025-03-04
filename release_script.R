@@ -33,6 +33,9 @@ urlchecker::url_check()
 # Update README.Rmd
 devtools::build_readme()
 
+# Update Contributors
+allcontributors::add_contributors()
+
 # Precompile Vignettes
 source("vignettes/precompile.R")
 
