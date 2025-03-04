@@ -37,6 +37,8 @@ test_that("get_check() as expected", {
   skip_on_cran()
   expect_error(get_check("https://climate.weather.gc.ca/error/dbdown_e.html"),
               "Service is currently down!")
+
+  skip_if_not(httr::status_code(httr::GET("http://httpbin.org/")) == 200)
   expect_error(get_check("http://httpbin.org/status/404", task = "test"),
               "Not Found (HTTP 404). Failed to test.", fixed = TRUE)
 })
@@ -45,6 +47,7 @@ test_that("check_eccc() as expected", {
   expect_silent(check_eccc())
   expect_type(check_eccc(), "logical")
 
+  # Expect FALSE if on cran
   if(Sys.getenv("NOT_CRAN") == "") expect_false(check_eccc())
 
   skip_if_offline()

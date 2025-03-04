@@ -1,22 +1,25 @@
-# Renders the .Rmd.orig files to .Rmd files. This is considered "half-rendering"
-# because it creates .Rmd files that will get rendered by ROpenSci during the site
-# builds that they run on Jenkins.
-# see https://ropensci.org/blog/2019/12/08/precompute-vignettes/
-# Inspired by https://github.com/ropensci/patentsview/blob/master/vignettes/build.R
+# Pre-compile vignettes which depend on API access
+library(knitr)
+library(readr)
+library(stringr)
 
-cur_dir <- getwd()
-on.exit(setwd(cur_dir))
+# Make sure to put figures in local dir in knitr chunk options
 
-directories <- c("vignettes", "vignettes/articles")
+v <- list.files("vignettes", ".orig$", full.names = TRUE, recursive = TRUE)
 
-for (directory in directories) {
-  setwd(directory)
-  print(paste("Directory", directory))
-  source_files <- list.files(pattern = "\\.Rmd\\.orig$")
-  for (file in source_files) {
-    print(paste("  Knitting", file))
-    knitr::knit(file, gsub("\\.orig$", "", file))
-  }
+for(i in v) {
+  new <- stringr::str_remove(i, ".orig$")
+  knit(i, new)
 
-  setwd(cur_dir)
+  read_lines(new) %>%
+    str_replace_all("\"vignettes(/articles)*/", "\"") %>%
+    write_lines(new)
 }
+
+unlink("./vignettes/normals_cache/", recursive = TRUE)
+unlink("./vignettes/articles/tidyhydat_cache/", recursive = TRUE)
+
+# build vignette
+#devtools::build_vignettes()
+#unlink("./doc/", recursive = TRUE)
+#unlink("./Meta/", recursive = TRUE)

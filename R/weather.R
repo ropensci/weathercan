@@ -116,11 +116,7 @@ weather_dl <- function(station_ids,
          "(YYYY-MM-DD) or NULL")
   }
 
-  if(length(interval) > 1) {
-    stop("'interval' must be either 'hour', 'day', OR 'month'")
-  }
-
-  if(!(interval %in% c('hour', 'day', 'month'))) {
+  if(length(interval) > 1 || !(interval %in% c('hour', 'day', 'month'))) {
     stop("'interval' must be either 'hour', 'day', OR 'month'")
   }
 
