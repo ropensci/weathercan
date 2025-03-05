@@ -36,4 +36,4 @@ jobs:
           git config user.name  "Github Actions"
           git config user.email "github-actions@github.com"
           git commit README.md -m 'Update allcontributors on README.Rmd'
-          git push https://${{github.actor}}:${{github.token}}@github.com/${{github.repository}}.git HEAD:${{ github.ref }}
+          git push https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref }}
