@@ -30,11 +30,6 @@ jobs:
           rc=`Rscript -e "any(allcontributors::add_contributors())"`
           echo "return_code=$rc" >> $GITHUB_OUTPUT
 
-      - name: Dump steps context
-        env:
-          STEPS_CONTEXT: ${{ toJson(steps) }}
-        run: echo "The return code was ${{ steps.need_commit.outputs.return_code }}"
-
       - name: Commit on change
         if: ${{ contains(steps.need_commit.outputs.return_code, 'TRUE') }}
         run: |
