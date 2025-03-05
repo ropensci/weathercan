@@ -307,6 +307,7 @@ contributing](CONTRIBUTING.md)
 ## Contributors
 
 
+
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
@@ -329,6 +330,12 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <img src="https://avatars.githubusercontent.com/u/18472598?v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/commits?author=boshek">boshek</a>
+</td>
+<td align="center">
+<a href="https://github.com/mustberuss">
+<img src="https://avatars.githubusercontent.com/u/14958432?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/commits?author=mustberuss">mustberuss</a>
 </td>
 <td align="center">
 <a href="https://github.com/JauntyJJS">
@@ -354,16 +361,16 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 </a><br>
 <a href="https://github.com/ropensci/weathercan/commits?author=mciechanumich">mciechanumich</a>
 </td>
+</tr>
+
+
+<tr>
 <td align="center">
 <a href="https://github.com/jeroen">
 <img src="https://avatars.githubusercontent.com/u/216319?v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/commits?author=jeroen">jeroen</a>
 </td>
-</tr>
-
-
-<tr>
 <td align="center">
 <a href="https://github.com/RichardLitt">
 <img src="https://avatars.githubusercontent.com/u/910753?v=4" width="100px;" alt=""/>
@@ -671,5 +678,6 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
 
 [![ropensci_footer](http://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)
