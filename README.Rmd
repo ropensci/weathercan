@@ -151,13 +151,381 @@ The data and the code in this repository are licensed under multiple licences. A
 
 `CHCN` is an older package last updated in 2012. Unfortunately, ECCC updated their services within the last couple of years which caused a great many of the previous web scrapers to fail. `CHCN` relies on a decommissioned [older web-scraper](https://quickcode.io/) and so is currently broken. 
 
+## Code of Conduct
+
+Please note that this project is released with a [Contributor Code of Conduct](https://ropensci.org/code-of-conduct/). By participating in this project you agree to abide by its terms.
+
 ## Contributions
 
 We welcome any and all contributions! To make the process as painless as possible for all involved, please see our [guide to contributing](CONTRIBUTING.md)
 
-## Code of Conduct
+## Contributors
 
-Please note that this project is released with a [Contributor Code of Conduct](https://ropensci.org/code-of-conduct/). By participating in this project you agree to abide by its terms.
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+All contributions to this project are gratefully acknowledged using the [`allcontributors` package](https://github.com/ropensci/allcontributors) following the [all-contributors](https://allcontributors.org) specification. Contributions of any kind are welcome!
+
+### Code
+
+<table>
+
+<tr>
+<td align="center">
+<a href="https://github.com/steffilazerte">
+<img src="https://avatars.githubusercontent.com/u/14676081?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/commits?author=steffilazerte">steffilazerte</a>
+</td>
+<td align="center">
+<a href="https://github.com/boshek">
+<img src="https://avatars.githubusercontent.com/u/18472598?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/commits?author=boshek">boshek</a>
+</td>
+<td align="center">
+<a href="https://github.com/JauntyJJS">
+<img src="https://avatars.githubusercontent.com/u/9066508?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/commits?author=JauntyJJS">JauntyJJS</a>
+</td>
+<td align="center">
+<a href="https://github.com/maelle">
+<img src="https://avatars.githubusercontent.com/u/8360597?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/commits?author=maelle">maelle</a>
+</td>
+<td align="center">
+<a href="https://github.com/nicholas512">
+<img src="https://avatars.githubusercontent.com/u/15223327?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/commits?author=nicholas512">nicholas512</a>
+</td>
+<td align="center">
+<a href="https://github.com/mciechanumich">
+<img src="https://avatars.githubusercontent.com/u/110423309?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/commits?author=mciechanumich">mciechanumich</a>
+</td>
+<td align="center">
+<a href="https://github.com/jeroen">
+<img src="https://avatars.githubusercontent.com/u/216319?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/commits?author=jeroen">jeroen</a>
+</td>
+</tr>
+
+
+<tr>
+<td align="center">
+<a href="https://github.com/RichardLitt">
+<img src="https://avatars.githubusercontent.com/u/910753?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/commits?author=RichardLitt">RichardLitt</a>
+</td>
+<td align="center">
+<a href="https://github.com/shandiya">
+<img src="https://avatars.githubusercontent.com/u/25561324?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/commits?author=shandiya">shandiya</a>
+</td>
+<td align="center">
+<a href="https://github.com/kellijohnson-NOAA">
+<img src="https://avatars.githubusercontent.com/u/4108564?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/commits?author=kellijohnson-NOAA">kellijohnson-NOAA</a>
+</td>
+</tr>
+
+</table>
+
+
+### Issue Authors
+
+<table>
+
+<tr>
+<td align="center">
+<a href="https://github.com/paleolimbot">
+<img src="https://avatars.githubusercontent.com/u/10995762?u=964d5dc69b45b5f96975903f08c42457b3b6f8bb&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Apaleolimbot">paleolimbot</a>
+</td>
+<td align="center">
+<a href="https://github.com/joethorley">
+<img src="https://avatars.githubusercontent.com/u/613671?u=36846e1d63ac2709c1f9cfe69f5e0a740f90ec3b&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Ajoethorley">joethorley</a>
+</td>
+<td align="center">
+<a href="https://github.com/pbulsink">
+<img src="https://avatars.githubusercontent.com/u/5419974?u=a8ef3c2ac1c7db26335c1883b438d4857fc4dd08&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Apbulsink">pbulsink</a>
+</td>
+<td align="center">
+<a href="https://github.com/durraniu">
+<img src="https://avatars.githubusercontent.com/u/7092652?u=35c3f6ca06e50fae23addf2ea0530dd0ea3c619b&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Adurraniu">durraniu</a>
+</td>
+<td align="center">
+<a href="https://github.com/stefaniebutland">
+<img src="https://avatars.githubusercontent.com/u/11927811?u=ea2b36cbdc6c1d4b5cd9231b397c03998d730626&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Astefaniebutland">stefaniebutland</a>
+</td>
+<td align="center">
+<a href="https://github.com/adamhsparks">
+<img src="https://avatars.githubusercontent.com/u/3195906?u=ff1ca92ae028fe7eb18d006f92cb8a725625e69c&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Aadamhsparks">adamhsparks</a>
+</td>
+<td align="center">
+<a href="https://github.com/nadrojordan">
+<img src="https://avatars.githubusercontent.com/u/45609791?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Anadrojordan">nadrojordan</a>
+</td>
+</tr>
+
+
+<tr>
+<td align="center">
+<a href="https://github.com/macsmith26">
+<img src="https://avatars.githubusercontent.com/u/8423170?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Amacsmith26">macsmith26</a>
+</td>
+<td align="center">
+<a href="https://github.com/essicolo">
+<img src="https://avatars.githubusercontent.com/u/5118227?u=998bb82ad723f4a34d26337184270105d45065c5&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Aessicolo">essicolo</a>
+</td>
+<td align="center">
+<a href="https://github.com/sckott">
+<img src="https://avatars.githubusercontent.com/u/577668?u=c54eb1ce08ff22365e094559a109a12437bdca40&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Asckott">sckott</a>
+</td>
+<td align="center">
+<a href="https://github.com/AreliaTW">
+<img src="https://avatars.githubusercontent.com/u/9757190?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3AAreliaTW">AreliaTW</a>
+</td>
+<td align="center">
+<a href="https://github.com/WatershedFlow">
+<img src="https://avatars.githubusercontent.com/u/54557989?u=9f928dbad590dee9cee8b3bbd412ead410aeb7f8&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3AWatershedFlow">WatershedFlow</a>
+</td>
+<td align="center">
+<a href="https://github.com/cgquick">
+<img src="https://avatars.githubusercontent.com/u/41929199?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Acgquick">cgquick</a>
+</td>
+<td align="center">
+<a href="https://github.com/emhodg">
+<img src="https://avatars.githubusercontent.com/u/39999885?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Aemhodg">emhodg</a>
+</td>
+</tr>
+
+
+<tr>
+<td align="center">
+<a href="https://github.com/klwilson23">
+<img src="https://avatars.githubusercontent.com/u/17127598?u=5f4b8f7dc6a51ccc903c1bbda5eda94cf935d2f2&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Aklwilson23">klwilson23</a>
+</td>
+<td align="center">
+<a href="https://github.com/jjvenky">
+<img src="https://avatars.githubusercontent.com/u/5414862?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Ajjvenky">jjvenky</a>
+</td>
+<td align="center">
+<a href="https://github.com/greenLauren">
+<img src="https://avatars.githubusercontent.com/u/38663672?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3AgreenLauren">greenLauren</a>
+</td>
+<td align="center">
+<a href="https://github.com/tspeidel">
+<img src="https://avatars.githubusercontent.com/u/6731198?u=df8c5eb153bc062517dd937b4f59674ddec38b04&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Atspeidel">tspeidel</a>
+</td>
+<td align="center">
+<a href="https://github.com/datacarvel">
+<img src="https://avatars.githubusercontent.com/u/13441528?u=aebdf93bc1759b5c82752dbdeafb180021e8f315&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Adatacarvel">datacarvel</a>
+</td>
+<td align="center">
+<a href="https://github.com/AmeerDotHydro">
+<img src="https://avatars.githubusercontent.com/u/35280932?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3AAmeerDotHydro">AmeerDotHydro</a>
+</td>
+<td align="center">
+<a href="https://github.com/tspeidel-ey">
+<img src="https://avatars.githubusercontent.com/u/66435255?u=44d99c50f4be8d0b9c38b0e55338507d47158a70&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Atspeidel-ey">tspeidel-ey</a>
+</td>
+</tr>
+
+
+<tr>
+<td align="center">
+<a href="https://github.com/Carina8899">
+<img src="https://avatars.githubusercontent.com/u/62023172?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3ACarina8899">Carina8899</a>
+</td>
+<td align="center">
+<a href="https://github.com/amcilraithRRC">
+<img src="https://avatars.githubusercontent.com/u/72586000?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3AamcilraithRRC">amcilraithRRC</a>
+</td>
+<td align="center">
+<a href="https://github.com/AnneDaySRK">
+<img src="https://avatars.githubusercontent.com/u/76066790?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3AAnneDaySRK">AnneDaySRK</a>
+</td>
+<td align="center">
+<a href="https://github.com/a2grotto">
+<img src="https://avatars.githubusercontent.com/u/57048454?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Aa2grotto">a2grotto</a>
+</td>
+<td align="center">
+<a href="https://github.com/FraserHemis">
+<img src="https://avatars.githubusercontent.com/u/77513170?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3AFraserHemis">FraserHemis</a>
+</td>
+<td align="center">
+<a href="https://github.com/rajibshibly">
+<img src="https://avatars.githubusercontent.com/u/39829190?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Arajibshibly">rajibshibly</a>
+</td>
+<td align="center">
+<a href="https://github.com/mjdzr">
+<img src="https://avatars.githubusercontent.com/u/58193630?u=7a713c8a36c3339ec89b312cca1b976dd3bb8c8e&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Amjdzr">mjdzr</a>
+</td>
+</tr>
+
+
+<tr>
+<td align="center">
+<a href="https://github.com/juliasunga">
+<img src="https://avatars.githubusercontent.com/u/78092195?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Ajuliasunga">juliasunga</a>
+</td>
+<td align="center">
+<a href="https://github.com/KevCaz">
+<img src="https://avatars.githubusercontent.com/u/1583534?u=51c94bcad641cfffb79f57e263b794dcb9413621&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3AKevCaz">KevCaz</a>
+</td>
+<td align="center">
+<a href="https://github.com/ecwiebe">
+<img src="https://avatars.githubusercontent.com/u/13489492?u=8d05f05e9bb79cdaec1aa5a5e033f22759526f6e&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Aecwiebe">ecwiebe</a>
+</td>
+<td align="center">
+<a href="https://github.com/carlos-arnillas">
+<img src="https://avatars.githubusercontent.com/u/26018349?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Acarlos-arnillas">carlos-arnillas</a>
+</td>
+<td align="center">
+<a href="https://github.com/gilberto-sassi">
+<img src="https://avatars.githubusercontent.com/u/47753866?u=be2874420e4d6c3d6690a62e1ecf8dec8a6bae26&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Agilberto-sassi">gilberto-sassi</a>
+</td>
+<td align="center">
+<a href="https://github.com/busmansholiday">
+<img src="https://avatars.githubusercontent.com/u/108430289?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Abusmansholiday">busmansholiday</a>
+</td>
+</tr>
+
+</table>
+
+
+### Issue Contributors
+
+<table>
+
+<tr>
+<td align="center">
+<a href="https://github.com/ebourlon">
+<img src="https://avatars.githubusercontent.com/u/26873630?u=3fe18d9da8d8064052ea0dc5ad11bbe9ea7b20fb&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+commenter%3Aebourlon">ebourlon</a>
+</td>
+<td align="center">
+<a href="https://github.com/clairervh">
+<img src="https://avatars.githubusercontent.com/u/2093182?u=dea38aba64f8a9f9a2dc9a85f3a6f30550aa7d0b&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+commenter%3Aclairervh">clairervh</a>
+</td>
+<td align="center">
+<a href="https://github.com/rajeshroy402">
+<img src="https://avatars.githubusercontent.com/u/40631866?u=a0340377b75b6f8038d009d2474131014a4ed0f6&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+commenter%3Arajeshroy402">rajeshroy402</a>
+</td>
+<td align="center">
+<a href="https://github.com/urbaingeo4455">
+<img src="https://avatars.githubusercontent.com/u/57878964?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+commenter%3Aurbaingeo4455">urbaingeo4455</a>
+</td>
+<td align="center">
+<a href="https://github.com/CamMakoJ">
+<img src="https://avatars.githubusercontent.com/u/16771660?u=67e4378f2c60ee6900bac76d3c6840492c75da84&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+commenter%3ACamMakoJ">CamMakoJ</a>
+</td>
+<td align="center">
+<a href="https://github.com/salix-d">
+<img src="https://avatars.githubusercontent.com/u/31168746?u=bdf7cc91649a046d6b6b159d153ac37557954c64&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+commenter%3Asalix-d">salix-d</a>
+</td>
+<td align="center">
+<a href="https://github.com/wgieni">
+<img src="https://avatars.githubusercontent.com/u/38118614?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+commenter%3Awgieni">wgieni</a>
+</td>
+</tr>
+
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
 [![ropensci_footer](http://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)
 

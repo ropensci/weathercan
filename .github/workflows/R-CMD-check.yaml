@@ -12,7 +12,13 @@ name: R-CMD-check.yaml
 permissions: read-all
 
 jobs:
+  Update-allcontributors:
+    uses: ./.github/workflows/allcontributors.yaml
+    permissions:
+      contents: write
+
   R-CMD-check:
+    needs: [Update-allcontributors]
     runs-on: ${{ matrix.config.os }}
 
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})
