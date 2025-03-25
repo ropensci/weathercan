@@ -14,7 +14,7 @@ test_that("weather_html/raw (hour) download a data frame", {
 
   ## Basics
   expect_s3_class(wd, "data.frame")
-  expect_length(wd, 30)
+  expect_length(wd, 31)
   expect_equal(nrow(wd), 744)
   expect_type(dplyr::pull(wd, "Date/Time (LST)"), "character")
   expect_lt(length(data.frame(wd)[is.na(data.frame(wd))]),

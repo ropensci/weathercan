@@ -1,6 +1,5 @@
 # Steps/Commands to run before a CRAN release -----------------------------
 
-version <- "0.7.2"
 #usethis::use_release_issue(version = version)
 
 gert::git_pull()

@@ -9,13 +9,10 @@ test_that("weather_raw() hour column names as expected", {
                      interval = "hour") %>%
     weather_raw()
 
-  expect_true(all(names(wd) %in% c(w_names$hour,
-                                   "Latitude (y)", "Longitude (x)",
-                                   "Station Name", "Climate ID")))
-
-  # Data quality no longer present
-  temp <- w_names$hour[w_names$hour != "Data Quality"]
-  expect_true(all(temp %in% names(wd)))
+  expect_named(wd, c(unname(w_names$hour),
+                     "Latitude (y)", "Longitude (x)",
+                     "Station Name", "Climate ID"),
+               ignore.order = TRUE)
 })
 
 test_that("weather_raw() day column names as expected", {
@@ -26,7 +23,7 @@ test_that("weather_raw() day column names as expected", {
                      interval = "day") %>%
     weather_raw()
 
-  expect_true(all(names(wd) %in% c(w_names$day,
+  expect_true(all(names(wd) %in% c(unname(w_names$day),
                                    "Latitude (y)", "Longitude (x)",
                                    "Station Name", "Climate ID")))
   expect_true(all(w_names$day %in% names(wd)))

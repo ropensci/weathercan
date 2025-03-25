@@ -13,7 +13,7 @@ test_that("weather_dl() hour format = FALSE", {
 
   ## Basics
   expect_s3_class(w, "data.frame")
-  expect_length(w, 40)
+  expect_length(w, 41)
   expect_equal(nrow(w), 744)
   expect_type(w$prov, "character")
 
