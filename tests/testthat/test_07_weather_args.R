@@ -4,12 +4,10 @@ test_that("weather_dl() hour format = FALSE", {
   skip_on_cran()
   withr::local_options(list("weathercan.time.message" = TRUE))
 
-  vcr::use_cassette("weather_hour_51423_2014-01", {
-    expect_silent(w <- weather_dl(station_ids = 51423,
-                                  start = "2014-01-01",
-                                  end = "2014-01-31",
-                                  format = FALSE))
-  })
+  expect_silent(w <- weather_dl(station_ids = 51423,
+                                start = "2014-01-01",
+                                end = "2014-01-31",
+                                format = FALSE))
 
   ## Basics
   expect_s3_class(w, "data.frame")
@@ -31,10 +29,8 @@ test_that("weather_dl() hour format = FALSE", {
 
 test_that("weather_dl() day format = FALSE", {
   skip_on_cran()
-  vcr::use_cassette("weather_day_51423_2014", {
-    w <- weather_dl(station_ids = 51423, start = "2014-01-01", end = "2014-03-01",
-                    interval = "day", format = FALSE)
-  })
+  w <- weather_dl(station_ids = 51423, start = "2014-01-01", end = "2014-03-01",
+                  interval = "day", format = FALSE)
 
   ## Basics
   expect_s3_class(w, "data.frame")
@@ -58,11 +54,9 @@ test_that("weather_dl() day format = FALSE", {
 
 test_that("weather_dl() month format = FALSE", {
   skip_on_cran()
-  vcr::use_cassette("weather_month_5401", {
-    expect_silent(w <- weather_dl(station_ids = 5401,
-                                  start = "2017-01-01", end = "2017-05-01",
-                                  interval = "month", format = FALSE))
-  })
+  expect_silent(w <- weather_dl(station_ids = 5401,
+                                start = "2017-01-01", end = "2017-05-01",
+                                interval = "month", format = FALSE))
 
   ## Basics
   expect_s3_class(w, "data.frame")
@@ -85,74 +79,61 @@ test_that("weather_dl() month format = FALSE", {
 
 test_that("weather_dl() month string_as = NULL", {
   skip_on_cran()
-  vcr::use_cassette("weather_month_5410", {
-    expect_warning(expect_message(w <- weather_dl(station_id = 5410,
-                                                  interval = "month",
-                                                  start = "2014-01-01",
-                                                  end = "2014-03-01",
-                                                  string_as = NULL)),
-                   NA)
-  })
-
+  expect_warning(expect_message(w <- weather_dl(station_id = 5410,
+                                                interval = "month",
+                                                start = "2014-01-01",
+                                                end = "2014-03-01",
+                                                string_as = NULL)),
+                 NA)
 })
 
 
 test_that("weather_dl() (invalid start day) returns error when start is not a valid date day", {
   skip_on_cran()
 
-  vcr::use_cassette("weather_month_5401", {
-    expect_error(weather_dl(station_ids = 5401,
-                                  start = "2017-01-99",
-                                  end = "2017-05-01",
-                                  interval = "month", format = FALSE),
-      "'start' and 'end' must be either a standard date format ")
-  })
+  expect_error(weather_dl(station_ids = 5401,
+                          start = "2017-01-99",
+                          end = "2017-05-01",
+                          interval = "month", format = FALSE),
+               "'start' and 'end' must be either a standard date format ")
 })
 
 test_that("weather_dl() (invalid start string) returns error when start is not a valid date string", {
   skip_on_cran()
 
-  vcr::use_cassette("weather_month_5401", {
-    expect_error(weather_dl(station_ids = 5401,
-                                  start = "2017-01-NN",
-                                  end = "2017-05-01",
-                                  interval = "month", format = FALSE),
-      "'start' and 'end' must be either a standard date format ")
-  })
+  expect_error(weather_dl(station_ids = 5401,
+                          start = "2017-01-NN",
+                          end = "2017-05-01",
+                          interval = "month", format = FALSE),
+               "'start' and 'end' must be either a standard date format ")
 })
 
 test_that("weather_dl() (invalid end day) returns error when end is not a valid date day", {
   skip_on_cran()
-  vcr::use_cassette("weather_month_5401", {
-    expect_error(weather_dl(station_ids = 5401,
-                                  start = "2017-01-01",
-                                  end = "2017-04-99",
-                                  interval = "month", format = FALSE),
-      "'start' and 'end' must be either a standard date format ")
-  })
+  expect_error(weather_dl(station_ids = 5401,
+                          start = "2017-01-01",
+                          end = "2017-04-99",
+                          interval = "month", format = FALSE),
+               "'start' and 'end' must be either a standard date format ")
 })
 
 
 test_that("weather_dl() (invalid end string) verifies error return when end is not a valid date string", {
   skip_on_cran()
-  vcr::use_cassette("weather_month_5401", {
-    expect_error(weather_dl(station_ids = 5401,
-                                  start = "2017-01-01",
-                                  end = "2017-04-NN",
-                                  interval = "month", format = FALSE),
-      "'start' and 'end' must be either a standard date format ")
-  })
+  expect_error(weather_dl(station_ids = 5401,
+                          start = "2017-01-01",
+                          end = "2017-04-NN",
+                          interval = "month", format = FALSE),
+               "'start' and 'end' must be either a standard date format ")
 })
 
 
 test_that("weather_dl() (invalid stn) verifies error return when defunct stn", {
   skip_on_cran()
-  vcr::use_cassette("weather_month_5401", {
-    expect_error(weather_dl(station_ids = 5401,
-                                  start = "2017-01-01",
-                                  end = "2017-05-01",
-                                  stn = "invalid defunct",
-                                  interval = "month", format = FALSE),
-      "`stn` is defunct, to use an updated stations data frame use ")
-  })
+  expect_error(weather_dl(station_ids = 5401,
+                          start = "2017-01-01",
+                          end = "2017-05-01",
+                          stn = "invalid defunct",
+                          interval = "month", format = FALSE),
+               "`stn` is defunct, to use an updated stations data frame use ")
 })
