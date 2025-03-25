@@ -398,10 +398,15 @@ stations_search <- function(name = NULL,
             "`normals_years = 'current'`", .call = FALSE)
     normals_years <- "current"
   }
+
   if(!is.null(normals_years) &&
      !normals_years %in% c("current", "1991-2020", "1981-2010", "1971-2000")) {
     stop("`normals_years` must either be `NULL` (don't filter by normals),",
          "'current', '1991-2020', '1981-2010' or '1971-2000'", call. = FALSE)
+  }
+
+  if(length(interval) > 1 || !(interval %in% c('hour', 'day', 'month'))) {
+    stop("'interval' must be either 'hour', 'day', OR 'month'")
   }
 
   if(all(is.null(name), is.null(coords)) |
