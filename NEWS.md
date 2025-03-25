@@ -1,3 +1,5 @@
+# weathercan 0.7.3.9000
+- Add `qual` from newly added Flags column to hourly data
 # weathercan 0.7.3
 - Switch stations inventory list to new location
 - Don't try to download future weather
