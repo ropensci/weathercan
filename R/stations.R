@@ -395,7 +395,7 @@ stations_search <- function(name = NULL,
 
   if(!is.null(normals_only)) {
     warning("`normals_only` is deprecated, switching to ",
-            "`normals_years = 'current'`", .call = FALSE)
+            "`normals_years = 'current'`", call. = FALSE)
     normals_years <- "current"
   }
   if(!is.null(normals_years) &&
