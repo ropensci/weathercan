@@ -27,19 +27,17 @@ test_that("stations_dl() errors appropriately", {
   options(weathercan.urls.stations = bkup)
 })
 
-vcr::use_cassette("stations_normals", {
-  test_that("stations_normals() gets normals info", {
-    skip_on_cran()
+test_that("stations_normals() gets normals info", {
+  skip_on_cran()
 
-    expect_silent(n <- stations_normals()) %>%
-      expect_s3_class("data.frame")
+  expect_silent(n <- stations_normals()) %>%
+    expect_s3_class("data.frame")
 
-    expect_gt(nrow(n), 1500)
-    expect_named(n, c("station_name", "climate_id",
-                      "normals_1991_2020",
-                      "normals_1981_2010",
-                      "normals_1971_2000"))
-  })
+  expect_gt(nrow(n), 1500)
+  expect_named(n, c("station_name", "climate_id",
+                    "normals_1991_2020",
+                    "normals_1981_2010",
+                    "normals_1971_2000"))
 })
 
 test_that("stations_meta() returns metadata", {

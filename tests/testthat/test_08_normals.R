@@ -36,19 +36,17 @@ test_that("normals_html() correctly retrieves request 1971-2000", {
 })
 
 # Proper error when 404
-vcr::use_cassette("normals_http404", {
+test_that("normals_html() errors", {
+  skip_on_cran()
   memoise::forget(normals_html) # Reset cache so we can test a different url
-  test_that("normals_html() errors", {
-    skip_on_cran()
-    bkup <- getOption("weathercan.urls.normals")
-    options(weathercan.urls.normals = "https://httpstat.us/404")
-    expect_error(normals_html(prov = "MB", station_id = 3471,
-                              climate_id = "5010480",
-                              normals_years = "1981-2010"),
-                 "Failed to access",
-                 class = "http_error")
-    options(weathercan.urls.normals = bkup)
-  })
+  bkup <- getOption("weathercan.urls.normals")
+  options(weathercan.urls.normals = "https://httpstat.us/404")
+  expect_error(normals_html(prov = "MB", station_id = 3471,
+                            climate_id = "5010480",
+                            normals_years = "1981-2010"),
+               "Failed to access",
+               class = "http_error")
+  options(weathercan.urls.normals = bkup)
 })
 
 

@@ -15,11 +15,9 @@ test_that("weather_dl hour alerts to change in time handling", {
   skip_on_cran()
   withr::local_options(list("weathercan.time.message" = FALSE))
 
-  vcr::use_cassette("weather_hour_51423_2014-01", {
-    expect_message(weather_dl(station_ids = 51423, start = "2014-01-01",
-                              end = "2014-01-31"),
-                   "As of weathercan v0.3.0 time display is")
-  })
+  expect_message(weather_dl(station_ids = 51423, start = "2014-01-01",
+                            end = "2014-01-31"),
+                 "As of weathercan v0.3.0 time display is")
 })
 
 test_that("weather (hour) returns a data frame", {
@@ -64,13 +62,10 @@ test_that("weather (hour) formats timezone display", {
 test_that("weather (hour) formats NL timezone", {
   skip_on_cran()
 
-  vcr::use_cassette("weather_hour_6556_1965", {
-    expect_silent({w <- weather_dl(station_ids = 6556,
-                                   start = "1965-01-01",
-                                   end = "1965-01-15")}) %>%
-      expect_s3_class("data.frame")
-  })
-
+  expect_silent({w <- weather_dl(station_ids = 6556,
+                                 start = "1965-01-01",
+                                 end = "1965-01-15")}) %>%
+    expect_s3_class("data.frame")
   expect_equal(w$time[1],
                as.POSIXct("1965-01-01 00:30:00", tz = "UTC"))
 })
@@ -78,10 +73,8 @@ test_that("weather (hour) formats NL timezone", {
 test_that("weather (hour) multiple stations", {
   skip_on_cran()
 
-  vcr::use_cassette("weather_hour_42203_49909_2017-09", {
-    expect_silent(w <- weather_dl(station_ids = c(42203, 49909),
-                                  start = "2017-09-01", end = "2017-09-15"))
-  })
+  expect_silent(w <- weather_dl(station_ids = c(42203, 49909),
+                                start = "2017-09-01", end = "2017-09-15"))
 
   expect_equal(unique(w$station_name), c("KAMLOOPS AUT", "BRANDON RCS"))
   expect_equal(nrow(w[w$station_id == 42203,]), nrow(w[w$station_id == 49909,]))
@@ -99,12 +92,10 @@ test_that("weather (hour) multiple stations", {
 
 test_that("weather (hour) gets all", {
   skip_on_cran()
-  vcr::use_cassette("weather_hour_50821_2018", {
-    expect_silent(w <- weather_dl(station_ids = 50821,
-                                  start = "2018-01-01",
-                                  end = "2018-01-02",
-                                  interval = "hour", trim = FALSE))
-  })
+  expect_silent(w <- weather_dl(station_ids = 50821,
+                                start = "2018-01-01",
+                                end = "2018-01-02",
+                                interval = "hour", trim = FALSE))
   expect_s3_class(w, "data.frame")
   expect_length(w, length(kamloops))
   expect_equal(nrow(w), 48)
@@ -114,24 +105,21 @@ test_that("weather (hour) gets all", {
 
 test_that("weather (hour) trims NAs", {
   skip_on_cran()
-  vcr::use_cassette("weather_hour_6819_2017", {
-    expect_equal(nrow(weather_dl(6819, start = "2017-08-20", end = "2017-09-01",
-                                 interval = "hour", trim = TRUE)), 96)
-  })
-  # Cached
   expect_equal(nrow(weather_dl(6819, start = "2017-08-20", end = "2017-09-01",
+                               interval = "hour", trim = TRUE)), 96)
+
+# Cached
+expect_equal(nrow(weather_dl(6819, start = "2017-08-20", end = "2017-09-01",
                                interval = "hour", trim = FALSE)), 312)
 })
 
 test_that("weather (hour) no data fails nicely", {
   skip_on_cran()
-  vcr::use_cassette("weather_hour_1274_1275_2012-11", {
-    expect_message(w1 <- weather_dl(c(1274, 1275),
-                                    interval = "hour",
-                                    start = "2012-11-01",
-                                    end = "2012-11-30"),
-                   "There are no data for some stations \\(1274\\)")
-  })
+  expect_message(w1 <- weather_dl(c(1274, 1275),
+                                  interval = "hour",
+                                  start = "2012-11-01",
+                                  end = "2012-11-30"),
+                 "There are no data for some stations \\(1274\\)")
 
   # Cached
   expect_message(w0 <- weather_dl(1274, interval = "hour",
@@ -147,14 +135,12 @@ test_that("weather (hour) no data fails nicely", {
   expect_length(w1, length(kamloops))
   expect_equal(nrow(w1), 720)
 
-  vcr::use_cassette("weather_hour_1275_1001_2017-01", {
-    expect_message(
-      w1 <- weather_dl(c(1275, 1001), interval = "hour",
-                       start = "2017-01-01", end = "2017-01-30"),
-      paste0("There are no data for all stations \\(1275, 1001\\), ",
-             "in this time range \\(2017-01-01 to 2017-01-30\\), ",
-             "for this interval \\(hour\\)"))
-  })
+  expect_message(
+    w1 <- weather_dl(c(1275, 1001), interval = "hour",
+                     start = "2017-01-01", end = "2017-01-30"),
+    paste0("There are no data for all stations \\(1275, 1001\\), ",
+           "in this time range \\(2017-01-01 to 2017-01-30\\), ",
+           "for this interval \\(hour\\)"))
 
   # Cache
   expect_message(
@@ -197,12 +183,11 @@ test_that("weather (hour) verbose and quiet", {
 
 test_that("weather (hour) handles data with different numbers of columns", {
   skip_on_cran()
-  vcr::use_cassette("weather_hour_6819_51423_2017-08_2018-05", {
-    expect_silent(d <- weather_dl(c(6819, 51423),
-                                  start = "2017-08-01",
-                                  end = "2018-05-01", interval = "hour"))
-    expect_gt(nrow(d), 0)
-  })
+  expect_silent(d <- weather_dl(c(6819, 51423),
+                                start = "2017-08-01",
+                                end = "2018-05-01", interval = "hour"))
+  expect_gt(nrow(d), 0)
+
 })
 
 test_that("weather (hour) skips with message if end date < start date", {
@@ -213,17 +198,16 @@ test_that("weather (hour) skips with message if end date < start date", {
   expect_message(weather_dl(station_ids = 51423, end = "2012-01-01"),
                  "The end date ")
 
-  vcr::use_cassette("weather_hour_42203_49909_2006-04", {
-    expect_message(w <- weather_dl(49909, end = "2007-04-20"), "The end date")
-  })
+  expect_message(w <- weather_dl(49909, end = "2007-04-20"), "The end date")
+
 })
 
 test_that("weather (hour) crosses the year line", {
   skip_on_cran()
-  vcr::use_cassette("weather_hour_27534_2001-12_2002-01", {
-    expect_silent(w <- weather_dl(station_id = 27534, interval = "hour",
-                                  start = "2001-12-01", end = "2002-01-05"))
-  })
+
+  expect_silent(w <- weather_dl(station_id = 27534, interval = "hour",
+                                start = "2001-12-01", end = "2002-01-05"))
+
   expect_equal(min(w$date), as.Date("2001-12-01"))
   expect_equal(max(w$date), as.Date("2002-01-05"))
 })
@@ -231,22 +215,20 @@ test_that("weather (hour) crosses the year line", {
 test_that("weather (invalid_interval) verifies error return when interval is invalid", {
   # The value of interval is invalid
   skip_on_cran()
-  vcr::use_cassette("weather_hour_6819_51423_2017-08_2018-05", {
-    expect_error(weather_dl(c(6819, 51423),
-                                  start = "2017-08-01",
-                                  end = "2018-05-01",
-                                  interval = "invalid_interval"),
-      "'interval' must be either 'hour', 'day', OR 'month'")
-  })
+
+  expect_error(weather_dl(c(6819, 51423),
+                          start = "2017-08-01",
+                          end = "2018-05-01",
+                          interval = "invalid_interval"),
+               "'interval' must be either 'hour', 'day', OR 'month'")
 })
 
 test_that("weather (too_large_interval_length) verifies error return when interval character vector length is greather than 1", {
   # The values of interval are valid, but there are too many
   skip_on_cran()
-  vcr::use_cassette("weather_hour_6819_51423_2017-08_2018-05", {
-    expect_error(weather_dl(c(6819, 51423),
-                                  start = "2017-08-01",
-                                  end = "2018-05-01", interval = c("hour", "day")),
-      "'interval' must be either 'hour', 'day', OR 'month'")
-  })
+  expect_error(weather_dl(c(6819, 51423),
+                          start = "2017-08-01",
+                          end = "2018-05-01", interval = c("hour", "day")),
+               "'interval' must be either 'hour', 'day', OR 'month'")
+
 })

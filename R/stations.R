@@ -395,7 +395,7 @@ stations_search <- function(name = NULL,
 
   if(!is.null(normals_only)) {
     warning("`normals_only` is deprecated, switching to ",
-            "`normals_years = 'current'`", .call = FALSE)
+            "`normals_years = 'current'`", call. = FALSE)
     normals_years <- "current"
   }
 
@@ -411,7 +411,7 @@ stations_search <- function(name = NULL,
 
   if(all(is.null(name), is.null(coords)) |
      all(!is.null(name), !is.null(coords))) {
-    stop("Need a search name OR search coordinate")
+    stop("Need a search name OR search coordinate", call. = FALSE)
   }
 
   if(!is.null(stn)){
@@ -427,7 +427,7 @@ stations_search <- function(name = NULL,
       })
     if(length(coords) != 2 | all(is.na(coords)) |
        inherits(coords, "try-error")) {
-      stop("'coord' takes one pair of lat and lon in a numeric vector")
+      stop("'coord' takes one pair of lat and lon in a numeric vector", call. = FALSE)
     }
 
     if(!requireNamespace("sf", quietly = TRUE)) {
@@ -464,7 +464,7 @@ stations_search <- function(name = NULL,
                              silent = TRUE)
       })
       if (is.na(starts_latest) | inherits(starts_latest, "try-error")){
-        stop("'starts_latest' needs to be coercible into numeric")
+        stop("'starts_latest' needs to be coercible into numeric", call. = FALSE)
       }
       stn <- dplyr::filter(stn, .data$start <= starts_latest)
     }
@@ -475,7 +475,7 @@ stations_search <- function(name = NULL,
                              silent = TRUE)
       })
       if (is.na(ends_earliest) | inherits(ends_earliest, "try-error")){
-        stop("'ends_earliest' needs to be coercible into numeric")
+        stop("'ends_earliest' needs to be coercible into numeric", call. = FALSE)
       }
       stn <- dplyr::filter(stn, .data$end >= ends_earliest)
     }
@@ -490,7 +490,7 @@ stations_search <- function(name = NULL,
 
     if(verbose) message("Searching by name")
     if(inherits(try(as.character(name), silent = TRUE), "try-error")) {
-      stop("'name' needs to be coercible into a character")
+      stop("'name' needs to be coercible into a character", call. = FALSE)
     }
 
     name <- gsub("([A-Z]*)", "\\L\\1", name, perl = TRUE)

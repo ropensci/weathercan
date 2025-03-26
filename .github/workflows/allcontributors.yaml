@@ -25,15 +25,11 @@ jobs:
           cache-version: 5
 
       - name: Update allcontributors
-        id: need_commit
-        run: |
-          rc=`Rscript -e "any(allcontributors::add_contributors())"`
-          echo "return_code=$rc" >> $GITHUB_OUTPUT
+        run: Rscript -e 'allcontributors::add_contributors()'
 
-      - name: Commit on change
-        if: ${{ contains(steps.need_commit.outputs.return_code, 'TRUE') }}
+      - name: Commit results
         run: |
           git config user.name  "Github Actions"
           git config user.email "github-actions@github.com"
-          git commit README.md -m 'Update allcontributors on README.Rmd'
-          git push https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref }}
+          git commit README.md -m 'Update allcontributors on README.Rmd' || echo "No changes to commit"
+          git push https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref }} || echo "No changes to commit"

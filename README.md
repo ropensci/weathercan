@@ -308,6 +308,7 @@ contributing](CONTRIBUTING.md)
 
 
 
+
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
@@ -673,11 +674,22 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 </td>
 </tr>
 
+
+<tr>
+<td align="center">
+<a href="https://github.com/farhanreynaldo">
+<img src="https://avatars.githubusercontent.com/u/8732795?u=85782e91537627f642b48a59c52a5df1ff18343c&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+commenter%3Afarhanreynaldo">farhanreynaldo</a>
+</td>
+</tr>
+
 </table>
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
 
 
 [![ropensci_footer](http://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)

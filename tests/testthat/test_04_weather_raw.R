@@ -4,11 +4,9 @@
 test_that("weather_html/raw (hour) download a data frame", {
   skip_on_cran()
 
-  vcr::use_cassette("weather_raw1", {
-    expect_silent(wd <- weather_html(station_id = 51423,
-                                     date = as.Date("2014-01-01"),
-                                     interval = "hour"))
-  })
+  expect_silent(wd <- weather_html(station_id = 51423,
+                                   date = as.Date("2014-01-01"),
+                                   interval = "hour"))
 
   expect_silent(wd <- weather_raw(wd))
 
@@ -23,11 +21,9 @@ test_that("weather_html/raw (hour) download a data frame", {
 
 test_that("weather_html/raw (day) download a data frame", {
   skip_on_cran()
-  vcr::use_cassette("weather_raw2", {
-    expect_silent(wd <- weather_html(station_id = 51423,
-                                     date = as.Date("2014-01-01"),
-                                     interval = "day"))
-  })
+  expect_silent(wd <- weather_html(station_id = 51423,
+                                   date = as.Date("2014-01-01"),
+                                   interval = "day"))
 
   expect_silent(wd <- weather_raw(wd))
 
@@ -45,11 +41,9 @@ test_that("weather_html/raw (day) download a data frame", {
 
 test_that("weather_html/raw (month) download a data frame", {
   skip_on_cran()
-  vcr::use_cassette("weather_raw3", {
-    expect_silent(wd <- weather_html(station_id = 5401,
-                                     date = as.Date("2017-01-01"),
-                                     interval = "month"))
-  })
+  expect_silent(wd <- weather_html(station_id = 5401,
+                                   date = as.Date("2017-01-01"),
+                                   interval = "month"))
 
   expect_silent(wd <- weather_raw(wd))
 
@@ -68,10 +62,8 @@ test_that("weather_html/raw (month) download a data frame", {
 
 test_that("meta_html/raw (hour) download meta data", {
   skip_on_cran()
-  vcr::use_cassette("meta_raw1", {
-    expect_silent(meta <- meta_html(station_id = 51423, interval = "hour"))
-  })
-    expect_silent(meta <- meta_raw(meta, interval = "hour"))
+  expect_silent(meta <- meta_html(station_id = 51423, interval = "hour"))
+  expect_silent(meta <- meta_raw(meta, interval = "hour"))
 
   ## Basics
   expect_s3_class(meta, "data.frame")
@@ -86,9 +78,7 @@ test_that("meta_html/raw (hour) download meta data", {
 
 test_that("meta_html/raw (day) download meta data", {
   skip_on_cran()
-  vcr::use_cassette("meta_raw2", {
-    expect_silent(meta <- meta_html(station_id = 51423, interval = "day"))
-  })
+  expect_silent(meta <- meta_html(station_id = 51423, interval = "day"))
   expect_silent(meta <- meta_raw(meta, interval = "day"))
 
   ## Basics
@@ -104,9 +94,7 @@ test_that("meta_html/raw (day) download meta data", {
 
 test_that("meta_html/raw (month) download meta data", {
   skip_on_cran()
-  vcr::use_cassette("meta_raw3", {
-    expect_silent(meta <- meta_html(station_id = 5401, interval = "month"))
-  })
+  expect_silent(meta <- meta_html(station_id = 5401, interval = "month"))
   expect_silent(meta <- meta_raw(meta, interval = "month"))
 
   ## Basics

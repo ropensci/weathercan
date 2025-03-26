@@ -15,10 +15,8 @@ test_that("weather_dl month", {
 
 test_that("weather (month) returns a data frame", {
   skip_on_cran()
-  vcr::use_cassette("weather_month_5401", {
-    expect_silent(w <- weather_dl(station_ids = 5401, start = "2014-01-01",
-                                  end = "2014-05-01", interval = "month"))
-  })
+  expect_silent(w <- weather_dl(station_ids = 5401, start = "2014-01-01",
+                                end = "2014-05-01", interval = "month"))
 
   ## Basics
   expect_s3_class(w, "data.frame")
@@ -44,16 +42,15 @@ test_that("weather (month) returns a data frame", {
 
 test_that("weather (month) no data fails nicely", {
   skip_on_cran()
-  vcr::use_cassette("weather_month_1275_51423", {
-    expect_message(w1 <- weather_dl(station_ids = c(1275, 51423),
-                                    interval = "month",
-                                    start = "2012-01-01",
-                                    end = "2012-02-01"),
-                   paste0("There are no data for some stations \\(51423\\), ",
-                          "in this time range \\(2012-01-01 to 2012-02-01\\), ",
-                          "for this interval \\(month\\)")) %>%
-      suppressMessages()
-  })
+  expect_message(w1 <- weather_dl(station_ids = c(1275, 51423),
+                                  interval = "month",
+                                  start = "2012-01-01",
+                                  end = "2012-02-01"),
+                 paste0("There are no data for some stations \\(51423\\), ",
+                        "in this time range \\(2012-01-01 to 2012-02-01\\), ",
+                        "for this interval \\(month\\)")) %>%
+    suppressMessages()
+
   # Cached
   expect_message(w0 <- weather_dl(station_ids = 51423,
                                   interval = "month",
@@ -70,14 +67,12 @@ test_that("weather (month) no data fails nicely", {
   expect_length(w1, 35)
   expect_equal(nrow(w1), 2)
 
-  vcr::use_cassette("weather_month_1274", {
-    expect_message(w0 <- weather_dl(1274, interval = "month",
-                                    start = "2017-01-01",
-                                    end = "2017-02-01"),
-                   paste0("There are no data for station 1274, in ",
-                          "this time range \\(2017-01-01 to 2017-02-01\\).")) %>%
-      suppressMessages()
-  })
+  expect_message(w0 <- weather_dl(1274, interval = "month",
+                                  start = "2017-01-01",
+                                  end = "2017-02-01"),
+                 paste0("There are no data for station 1274, in ",
+                        "this time range \\(2017-01-01 to 2017-02-01\\).")) %>%
+    suppressMessages()
 
   #Cached
   expect_message(w1 <- weather_dl(c(1274, 1275), interval = "month",
@@ -98,12 +93,10 @@ test_that("weather (month) no data fails nicely", {
 
 test_that("weather (month) multiple stations", {
   skip_on_cran()
-  vcr::use_cassette("weather_month_5401_5940", {
-    expect_silent(w <- weather_dl(station_ids = c(5401, 5940),
-                                  start = "2014-01-01",
-                                  end = "2014-05-01",
-                                  interval = "month"))
-  })
+  expect_silent(w <- weather_dl(station_ids = c(5401, 5940),
+                                start = "2014-01-01",
+                                end = "2014-05-01",
+                                interval = "month"))
 
   expect_equal(unique(w$station_name), c("MAGOG", "ST PRIME"))
   expect_equal(nrow(w[w$station_id == 5401,]), nrow(w[w$station_id == 5940,]))
@@ -146,21 +139,19 @@ test_that("weather (month) verbose and quiet", {
 
 test_that("weather (month) handles data with different numbers of columns", {
   skip_on_cran()
-  vcr::use_cassette("weather_month_5217", {
-    expect_silent(d <- weather_dl(station_ids = 5217,
-                                  start = "2016-01-01",
-                                  end = "2018-12-01",
-                                  interval = "month"))
-  })
+  expect_silent(d <- weather_dl(station_ids = 5217,
+                                start = "2016-01-01",
+                                end = "2018-12-01",
+                                interval = "month"))
+
   expect_gt(nrow(d), 0)
   expect_length(d, 35)
 
-  vcr::use_cassette("weather_month_4291_27534", {
-    expect_silent(d <- weather_dl(c(4291, 27534),
-                                  start = "1997-01-01",
-                                  end = "2018-12-01",
-                                  interval = 'month'))
-  })
+  expect_silent(d <- weather_dl(c(4291, 27534),
+                                start = "1997-01-01",
+                                end = "2018-12-01",
+                                interval = 'month'))
+
   expect_gt(nrow(d), 0)
   expect_length(d, 35)
   expect_gt(nrow(d[d$station_id == 4291,]), 0)
@@ -198,77 +189,73 @@ test_that("weather (month) crosses the year line", {
 
 # list_cols ---------------------------------------------------------------
 
-vcr::use_cassette("weather_hour_51423_2014-01", {
-  test_that("list_col=TRUE and interval=hour groups on the right level", {
-    skip_on_cran()
-    withr::local_options(list("weathercan.time.message" = TRUE))
+test_that("list_col=TRUE and interval=hour groups on the right level", {
+  skip_on_cran()
+  withr::local_options(list("weathercan.time.message" = TRUE))
 
-    # Cached
-    if(packageVersion("tidyr") > "0.8.99") {
-      expect_equal(
-        ncol(weather_dl(station_ids = 51423, start = "2014-01-01",
-                        end = "2014-01-15", interval = "hour", quiet = TRUE) %>%
-               tidyr::nest(key = -tidyr::one_of(names(m_names), "date"))),
-        ncol(weather_dl(station_ids = 51423, start = "2014-01-01",
-                        end = "2014-01-15", interval = "hour",
-                        list_col = TRUE, quiet = TRUE)))
-    } else {
-      expect_equal(
-        ncol(weather_dl(station_ids = 51423, start = "2014-01-01",
-                        end = "2014-01-15", interval = "hour", quiet = TRUE) %>%
-               tidyr::nest(-dplyr::one_of(names(m_names), "date"))),
-        ncol(weather_dl(station_ids = 51423, start = "2014-01-01",
-                        end = "2014-01-15", interval = "hour",
-                        list_col = TRUE, quiet = TRUE)))
-    }
+  # Cached
+  if(packageVersion("tidyr") > "0.8.99") {
+    expect_equal(
+      ncol(weather_dl(station_ids = 51423, start = "2014-01-01",
+                      end = "2014-01-15", interval = "hour", quiet = TRUE) %>%
+             tidyr::nest(key = -tidyr::one_of(names(m_names), "date"))),
+      ncol(weather_dl(station_ids = 51423, start = "2014-01-01",
+                      end = "2014-01-15", interval = "hour",
+                      list_col = TRUE, quiet = TRUE)))
+  } else {
+    expect_equal(
+      ncol(weather_dl(station_ids = 51423, start = "2014-01-01",
+                      end = "2014-01-15", interval = "hour", quiet = TRUE) %>%
+             tidyr::nest(-dplyr::one_of(names(m_names), "date"))),
+      ncol(weather_dl(station_ids = 51423, start = "2014-01-01",
+                      end = "2014-01-15", interval = "hour",
+                      list_col = TRUE, quiet = TRUE)))
+  }
 
-  })
 })
 
-vcr::use_cassette("weather_day_51423_2014", {
-  test_that("list_col=TRUE and interval=day groups on the right level", {
-    skip_on_cran()
+test_that("list_col=TRUE and interval=day groups on the right level", {
+  skip_on_cran()
 
-    if(packageVersion("tidyr") > "0.8.99") {
-      expect_equal(
-        ncol(weather_dl(station_ids = 51423, start = "2014-01-01",
-                        end = "2014-01-15", interval = "day", quiet = TRUE) %>%
-               tidyr::nest(key = -dplyr::one_of(names(m_names), "month"))),
-        ncol(weather_dl(station_ids = 51423, start = "2014-01-01",
-                        end = "2014-01-15", interval = "day",
-                        list_col = TRUE, quiet = TRUE)))
-    } else {
-      expect_equal(
-        ncol(weather_dl(station_ids = 51423, start = "2014-01-01",
-                        end = "2014-01-15", interval = "day", quiet = TRUE) %>%
-               tidyr::nest(-dplyr::one_of(names(m_names)), -month)),
-        ncol(weather_dl(station_ids = 51423, start = "2014-01-01",
-                        end = "2014-01-15", interval = "day",
-                        list_col = TRUE, quiet = TRUE)))
-    }
-  })
+  if(packageVersion("tidyr") > "0.8.99") {
+    expect_equal(
+      ncol(weather_dl(station_ids = 51423, start = "2014-01-01",
+                      end = "2014-01-15", interval = "day", quiet = TRUE) %>%
+             tidyr::nest(key = -dplyr::one_of(names(m_names), "month"))),
+      ncol(weather_dl(station_ids = 51423, start = "2014-01-01",
+                      end = "2014-01-15", interval = "day",
+                      list_col = TRUE, quiet = TRUE)))
+  } else {
+    expect_equal(
+      ncol(weather_dl(station_ids = 51423, start = "2014-01-01",
+                      end = "2014-01-15", interval = "day", quiet = TRUE) %>%
+             tidyr::nest(-dplyr::one_of(names(m_names)), -month)),
+      ncol(weather_dl(station_ids = 51423, start = "2014-01-01",
+                      end = "2014-01-15", interval = "day",
+                      list_col = TRUE, quiet = TRUE)))
+  }
 })
 
-vcr::use_cassette("weather_month_5401", {
-  test_that("list_col=TRUE and interval=month groups on the right level", {
-    skip_on_cran()
-    if(packageVersion("tidyr") > "0.8.99") {
-      expect_equal(
-        ncol(weather_dl(station_ids = 5401, start = "2017-01-01",
-                        end = "2017-01-15", interval = "month", quiet = TRUE) %>%
-               tidyr::nest(key = -dplyr::one_of(names(m_names), "year"))),
-        ncol(weather_dl(station_ids = 5401, start = "2017-01-01",
-                        end = "2017-01-15", interval = "month",
-                        list_col = TRUE, quiet = TRUE)))
-    } else {
-      expect_equal(
-        ncol(weather_dl(station_ids = 5401, start = "2017-01-01",
-                        end = "2017-01-15", interval = "month", quiet = TRUE) %>%
-               tidyr::nest(-dplyr::one_of(names(m_names)), -year)),
-        ncol(weather_dl(station_ids = 5401, start = "2017-01-01",
-                        end = "2017-01-15", interval = "month",
-                        list_col = TRUE, quiet = TRUE)))
-    }
-  })
+
+test_that("list_col=TRUE and interval=month groups on the right level", {
+  skip_on_cran()
+  if(packageVersion("tidyr") > "0.8.99") {
+    expect_equal(
+      ncol(weather_dl(station_ids = 5401, start = "2017-01-01",
+                      end = "2017-01-15", interval = "month", quiet = TRUE) %>%
+             tidyr::nest(key = -dplyr::one_of(names(m_names), "year"))),
+      ncol(weather_dl(station_ids = 5401, start = "2017-01-01",
+                      end = "2017-01-15", interval = "month",
+                      list_col = TRUE, quiet = TRUE)))
+  } else {
+    expect_equal(
+      ncol(weather_dl(station_ids = 5401, start = "2017-01-01",
+                      end = "2017-01-15", interval = "month", quiet = TRUE) %>%
+             tidyr::nest(-dplyr::one_of(names(m_names)), -year)),
+      ncol(weather_dl(station_ids = 5401, start = "2017-01-01",
+                      end = "2017-01-15", interval = "month",
+                      list_col = TRUE, quiet = TRUE)))
+  }
 })
+
 

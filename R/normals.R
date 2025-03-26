@@ -259,7 +259,7 @@ data_extract <- function(n, climate_id) {
   if(!all(nn$variable[nn$new_var %in% n_nice$new_var] %in% n$variable)) {
     stop("Variable names did not align correctly during formating, ",
          "consider using 'format = FALSE' and/or reporting this error.",
-         .call = FALSE)
+         call. = FALSE)
   }
 
   # Remove titles
