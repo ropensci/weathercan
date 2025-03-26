@@ -282,5 +282,5 @@ test_that("stations_search checks arguments", {
 
   # Check invalid intervals
   expect_error(stations_search("Brandon", interval = "minute"),
-               "'interval' must be any of 'hour', 'day', 'month'")
+               "'interval' can only be 'hour', 'day', or 'month'")
 })
