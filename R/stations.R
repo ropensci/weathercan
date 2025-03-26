@@ -406,7 +406,7 @@ stations_search <- function(name = NULL,
   }
 
   if(length(interval) > 1 || !(interval %in% c('hour', 'day', 'month'))) {
-    stop("'interval' must be either 'hour', 'day', OR 'month'")
+    stop("'interval' must be either 'hour', 'day', OR 'month'", call. = FALSE)
   }
 
   if(all(is.null(name), is.null(coords)) |
