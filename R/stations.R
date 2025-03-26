@@ -405,8 +405,8 @@ stations_search <- function(name = NULL,
          "'current', '1991-2020', '1981-2010' or '1971-2000'", call. = FALSE)
   }
 
-  if(length(interval) > 1 || !(interval %in% c('hour', 'day', 'month'))) {
-    stop("'interval' must be either 'hour', 'day', OR 'month'", call. = FALSE)
+  if(!all(interval %in% c('hour', 'day', 'month'))) {
+    stop("'interval' must be any of 'hour', 'day', 'month'", call. = FALSE)
   }
 
   if(all(is.null(name), is.null(coords)) |
