@@ -6,7 +6,7 @@ province <- c("ALBERTA" = "AB",
               "BRITISH COLUMBIA" = "BC",
               "MANITOBA" = "MB",
               "NEW BRUNSWICK" = "NB",
-              "NEWFOUNDLAND" = "NL",
+              "NEWFOUNDLAND AND LABRADOR" = "NL",
               "NORTHWEST TERRITORIES" = "NT",
               "NOVA SCOTIA" = "NS",
               "NUNAVUT" = "NU",
@@ -14,7 +14,7 @@ province <- c("ALBERTA" = "AB",
               "PRINCE EDWARD ISLAND" = "PE",
               "QUEBEC" = "QC",
               "SASKATCHEWAN" = "SK",
-              "YUKON TERRITORY" = "YT")
+              "YUKON" = "YT")
 
 m_names <- c("station_name" = "Station Name", "station_id" = "ID",
              "station_operator" = "Current Station Operator",
