@@ -38,6 +38,8 @@ test_that("normals_html() correctly retrieves request 1971-2000", {
 # Proper error when 404
 test_that("normals_html() errors", {
   skip_on_cran()
+  skip("Service down, skip for now")
+
   memoise::forget(normals_html) # Reset cache so we can test a different url
   bkup <- getOption("weathercan.urls.normals")
   options(weathercan.urls.normals = "https://httpstat.us/404")
