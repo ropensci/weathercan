@@ -1,6 +1,7 @@
-# weathercan 0.7.3.9000
+# weathercan 0.7.4
 - Add `qual` from newly added Flags column to hourly data
 - Remove vcr
+- Fix long Provincial names (#171)
 
 # weathercan 0.7.3
 - Switch stations inventory list to new location
