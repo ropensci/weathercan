@@ -309,6 +309,7 @@ contributing](CONTRIBUTING.md)
 
 
 
+
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
@@ -383,6 +384,12 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <img src="https://avatars.githubusercontent.com/u/25561324?v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/commits?author=shandiya">shandiya</a>
+</td>
+<td align="center">
+<a href="https://github.com/everettsp">
+<img src="https://avatars.githubusercontent.com/u/24480376?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/commits?author=everettsp">everettsp</a>
 </td>
 <td align="center">
 <a href="https://github.com/kellijohnson-NOAA">
@@ -668,7 +675,7 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 </td>
 <td align="center">
 <a href="https://github.com/wgieni">
-<img src="https://avatars.githubusercontent.com/u/38118614?v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/38118614?u=7a28ed517ee2ce279a06617ee858132ae8bbb72a&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+commenter%3Awgieni">wgieni</a>
 </td>
@@ -682,6 +689,18 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+commenter%3Afarhanreynaldo">farhanreynaldo</a>
 </td>
+<td align="center">
+<a href="https://github.com/gdelaplante">
+<img src="https://avatars.githubusercontent.com/u/91148465?u=5ea48bdcf7c6f467924e89069d3c4697bb6342dc&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+commenter%3Agdelaplante">gdelaplante</a>
+</td>
+<td align="center">
+<a href="https://github.com/EmmaGRiley">
+<img src="https://avatars.githubusercontent.com/u/132517733?u=c2e80b5e8bd790206e726098d803632d0234db54&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+commenter%3AEmmaGRiley">EmmaGRiley</a>
+</td>
 </tr>
 
 </table>
@@ -689,6 +708,7 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
 
 
 
