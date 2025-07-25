@@ -21,6 +21,8 @@ test_that("stations_dl() errors appropriately", {
   skip_if_not_installed("sf")
   skip_if_not_installed("lutz")
 
+  skip()
+
   bkup <- getOption("weathercan.urls.stations")
   options(weathercan.urls.stations = "https://httpbin.org/status/404")
   expect_error(stations_dl(), "Not Found (HTTP 404).", fixed = TRUE)

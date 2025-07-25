@@ -1,7 +1,7 @@
 ---
 title: "Climate Normals"
 author: "Steffi LaZerte"
-date: "2025-02-27"
+date: "2025-07-25"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Climate Normals}
@@ -23,6 +23,10 @@ library(weathercan)
 library(tidyr)
 library(dplyr)
 library(naniar) # For exploring missing values
+```
+
+```
+## Error in library(naniar): there is no package called 'naniar'
 ```
 
 To download climate normals, we'll first find the stations we're interested in using the `stations_search()` function. We'll use the `normals_years = "current"` argument to filter to only stations with available climate normals for the `1981-2010` year range.
@@ -105,10 +109,9 @@ suppressWarnings({select(normals, -contains("_code")) %>%  # Remove '_code' colu
     gg_miss_var(facet = station_name)})
 ```
 
-<div class="figure" style="text-align: center">
-<img src="figures/normals-unnamed-chunk-7-1.png" alt="plot of chunk unnamed-chunk-7" width="100%" />
-<p class="caption">plot of chunk unnamed-chunk-7</p>
-</div>
+```
+## Error in gg_miss_var(., facet = station_name): could not find function "gg_miss_var"
+```
 
 Let's take a look at the frost data.
 

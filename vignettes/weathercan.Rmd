@@ -1,7 +1,7 @@
 ---
 title: "Getting Started"
 author: "Steffi LaZerte"
-date: "2025-02-25"
+date: "2025-07-25"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Getting Started}
@@ -47,7 +47,7 @@ glimpse(stations())
 ```
 
 ```
-## Rows: 26,442
+## Rows: 26,445
 ## Columns: 17
 ## $ prov              <chr> "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", …
 ## $ station_name      <chr> "DAYSLAND", "DAYSLAND", "DAYSLAND", "EDMONTON CORONATION", "EDMONTON CORONATION", "EDMONTON CORONATION", "FLEET", "FLEET", "FLEET", …
@@ -203,10 +203,10 @@ stations_meta()
 
 ```
 ## $ECCC_modified
-## [1] "2025-02-03 23:30:00 UTC"
+## [1] "2025-07-01 23:30:00 UTC"
 ## 
 ## $weathercan_modified
-## [1] "2025-02-25"
+## [1] "2025-07-25"
 ```
 
 
@@ -230,23 +230,23 @@ kam
 ```
 
 ```
-## # A tibble: 1,104 × 37
-##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id date       time                year  month day   hour  weather  hmdx
-##    <chr>             <dbl> <lgl>            <chr> <dbl> <dbl> <dbl> <chr>      <chr>  <chr> <date>     <dttm>              <chr> <chr> <chr> <chr> <chr>   <dbl>
-##  1 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 00:00:00 2016  01    01    00:00 <NA>       NA
-##  2 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 01:00:00 2016  01    01    01:00 Mostly…    NA
-##  3 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 02:00:00 2016  01    01    02:00 <NA>       NA
-##  4 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 03:00:00 2016  01    01    03:00 <NA>       NA
-##  5 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 04:00:00 2016  01    01    04:00 Cloudy     NA
-##  6 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 05:00:00 2016  01    01    05:00 <NA>       NA
-##  7 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 06:00:00 2016  01    01    06:00 <NA>       NA
-##  8 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 07:00:00 2016  01    01    07:00 Cloudy     NA
-##  9 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 08:00:00 2016  01    01    08:00 <NA>       NA
-## 10 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 09:00:00 2016  01    01    09:00 Snow       NA
+## # A tibble: 1,104 × 38
+##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id date       time                year  month day   hour  qual  weather
+##    <chr>             <dbl> <lgl>            <chr> <dbl> <dbl> <dbl> <chr>      <chr>  <chr> <date>     <dttm>              <chr> <chr> <chr> <chr> <chr> <chr>  
+##  1 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 00:00:00 2016  01    01    00:00 <NA>  <NA>   
+##  2 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 01:00:00 2016  01    01    01:00 <NA>  Mostly…
+##  3 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 02:00:00 2016  01    01    02:00 <NA>  <NA>   
+##  4 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 03:00:00 2016  01    01    03:00 <NA>  <NA>   
+##  5 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 04:00:00 2016  01    01    04:00 <NA>  Cloudy 
+##  6 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 05:00:00 2016  01    01    05:00 <NA>  <NA>   
+##  7 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 06:00:00 2016  01    01    06:00 <NA>  <NA>   
+##  8 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 07:00:00 2016  01    01    07:00 <NA>  Cloudy 
+##  9 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 08:00:00 2016  01    01    08:00 <NA>  <NA>   
+## 10 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 09:00:00 2016  01    01    09:00 <NA>  Snow   
 ## # ℹ 1,094 more rows
-## # ℹ 19 more variables: hmdx_flag <chr>, precip_amt <dbl>, precip_amt_flag <chr>, pressure <dbl>, pressure_flag <chr>, rel_hum <dbl>, rel_hum_flag <chr>,
-## #   temp <dbl>, temp_dew <dbl>, temp_dew_flag <chr>, temp_flag <chr>, visib <dbl>, visib_flag <chr>, wind_chill <dbl>, wind_chill_flag <chr>, wind_dir <dbl>,
-## #   wind_dir_flag <chr>, wind_spd <dbl>, wind_spd_flag <chr>
+## # ℹ 20 more variables: hmdx <dbl>, hmdx_flag <chr>, precip_amt <dbl>, precip_amt_flag <chr>, pressure <dbl>, pressure_flag <chr>, rel_hum <dbl>,
+## #   rel_hum_flag <chr>, temp <dbl>, temp_dew <dbl>, temp_dew_flag <chr>, temp_flag <chr>, visib <dbl>, visib_flag <chr>, wind_chill <dbl>,
+## #   wind_chill_flag <chr>, wind_dir <dbl>, wind_dir_flag <chr>, wind_spd <dbl>, wind_spd_flag <chr>
 ```
 
 You can also download data from multiple stations at once:
@@ -259,23 +259,23 @@ kam.pg
 ```
 
 ```
-## # A tibble: 2,208 × 37
-##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id date       time                year  month day   hour  weather  hmdx
-##    <chr>             <dbl> <lgl>            <chr> <dbl> <dbl> <dbl> <chr>      <chr>  <chr> <date>     <dttm>              <chr> <chr> <chr> <chr> <chr>   <dbl>
-##  1 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 00:00:00 2016  01    01    00:00 <NA>       NA
-##  2 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 01:00:00 2016  01    01    01:00 <NA>       NA
-##  3 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 02:00:00 2016  01    01    02:00 <NA>       NA
-##  4 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 03:00:00 2016  01    01    03:00 <NA>       NA
-##  5 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 04:00:00 2016  01    01    04:00 <NA>       NA
-##  6 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 05:00:00 2016  01    01    05:00 <NA>       NA
-##  7 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 06:00:00 2016  01    01    06:00 <NA>       NA
-##  8 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 07:00:00 2016  01    01    07:00 <NA>       NA
-##  9 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 08:00:00 2016  01    01    08:00 <NA>       NA
-## 10 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 09:00:00 2016  01    01    09:00 <NA>       NA
+## # A tibble: 2,208 × 38
+##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id date       time                year  month day   hour  qual  weather
+##    <chr>             <dbl> <lgl>            <chr> <dbl> <dbl> <dbl> <chr>      <chr>  <chr> <date>     <dttm>              <chr> <chr> <chr> <chr> <chr> <chr>  
+##  1 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 00:00:00 2016  01    01    00:00 <NA>  <NA>   
+##  2 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 01:00:00 2016  01    01    01:00 <NA>  <NA>   
+##  3 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 02:00:00 2016  01    01    02:00 <NA>  <NA>   
+##  4 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 03:00:00 2016  01    01    03:00 <NA>  <NA>   
+##  5 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 04:00:00 2016  01    01    04:00 <NA>  <NA>   
+##  6 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 05:00:00 2016  01    01    05:00 <NA>  <NA>   
+##  7 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 06:00:00 2016  01    01    06:00 <NA>  <NA>   
+##  8 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 07:00:00 2016  01    01    07:00 <NA>  <NA>   
+##  9 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 08:00:00 2016  01    01    08:00 <NA>  <NA>   
+## 10 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 09:00:00 2016  01    01    09:00 <NA>  <NA>   
 ## # ℹ 2,198 more rows
-## # ℹ 19 more variables: hmdx_flag <chr>, precip_amt <dbl>, precip_amt_flag <chr>, pressure <dbl>, pressure_flag <chr>, rel_hum <dbl>, rel_hum_flag <chr>,
-## #   temp <dbl>, temp_dew <dbl>, temp_dew_flag <chr>, temp_flag <chr>, visib <dbl>, visib_flag <chr>, wind_chill <dbl>, wind_chill_flag <chr>, wind_dir <dbl>,
-## #   wind_dir_flag <chr>, wind_spd <dbl>, wind_spd_flag <chr>
+## # ℹ 20 more variables: hmdx <dbl>, hmdx_flag <chr>, precip_amt <dbl>, precip_amt_flag <chr>, pressure <dbl>, pressure_flag <chr>, rel_hum <dbl>,
+## #   rel_hum_flag <chr>, temp <dbl>, temp_dew <dbl>, temp_dew_flag <chr>, temp_flag <chr>, visib <dbl>, visib_flag <chr>, wind_chill <dbl>,
+## #   wind_chill_flag <chr>, wind_dir <dbl>, wind_dir_flag <chr>, wind_spd <dbl>, wind_spd_flag <chr>
 ```
 
 
@@ -304,23 +304,23 @@ stn_vec_df
 ```
 
 ```
-## # A tibble: 3,312 × 37
-##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id date       time                year  month day   hour  weather  hmdx
-##    <chr>             <dbl> <lgl>            <chr> <dbl> <dbl> <dbl> <chr>      <chr>  <chr> <date>     <dttm>              <chr> <chr> <chr> <chr> <chr>   <dbl>
-##  1 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 00:00:00 2016  01    01    00:00 <NA>       NA
-##  2 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 01:00:00 2016  01    01    01:00 <NA>       NA
-##  3 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 02:00:00 2016  01    01    02:00 <NA>       NA
-##  4 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 03:00:00 2016  01    01    03:00 <NA>       NA
-##  5 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 04:00:00 2016  01    01    04:00 <NA>       NA
-##  6 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 05:00:00 2016  01    01    05:00 <NA>       NA
-##  7 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 06:00:00 2016  01    01    06:00 <NA>       NA
-##  8 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 07:00:00 2016  01    01    07:00 <NA>       NA
-##  9 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 08:00:00 2016  01    01    08:00 <NA>       NA
-## 10 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 09:00:00 2016  01    01    09:00 <NA>       NA
+## # A tibble: 3,312 × 38
+##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id date       time                year  month day   hour  qual  weather
+##    <chr>             <dbl> <lgl>            <chr> <dbl> <dbl> <dbl> <chr>      <chr>  <chr> <date>     <dttm>              <chr> <chr> <chr> <chr> <chr> <chr>  
+##  1 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 00:00:00 2016  01    01    00:00 <NA>  <NA>   
+##  2 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 01:00:00 2016  01    01    01:00 <NA>  <NA>   
+##  3 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 02:00:00 2016  01    01    02:00 <NA>  <NA>   
+##  4 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 03:00:00 2016  01    01    03:00 <NA>  <NA>   
+##  5 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 04:00:00 2016  01    01    04:00 <NA>  <NA>   
+##  6 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 05:00:00 2016  01    01    05:00 <NA>  <NA>   
+##  7 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 06:00:00 2016  01    01    06:00 <NA>  <NA>   
+##  8 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 07:00:00 2016  01    01    07:00 <NA>  <NA>   
+##  9 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 08:00:00 2016  01    01    08:00 <NA>  <NA>   
+## 10 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 09:00:00 2016  01    01    09:00 <NA>  <NA>   
 ## # ℹ 3,302 more rows
-## # ℹ 19 more variables: hmdx_flag <chr>, precip_amt <dbl>, precip_amt_flag <chr>, pressure <dbl>, pressure_flag <chr>, rel_hum <dbl>, rel_hum_flag <chr>,
-## #   temp <dbl>, temp_dew <dbl>, temp_dew_flag <chr>, temp_flag <chr>, visib <dbl>, visib_flag <chr>, wind_chill <dbl>, wind_chill_flag <chr>, wind_dir <dbl>,
-## #   wind_dir_flag <chr>, wind_spd <dbl>, wind_spd_flag <chr>
+## # ℹ 20 more variables: hmdx <dbl>, hmdx_flag <chr>, precip_amt <dbl>, precip_amt_flag <chr>, pressure <dbl>, pressure_flag <chr>, rel_hum <dbl>,
+## #   rel_hum_flag <chr>, temp <dbl>, temp_dew <dbl>, temp_dew_flag <chr>, temp_flag <chr>, visib <dbl>, visib_flag <chr>, wind_chill <dbl>,
+## #   wind_chill_flag <chr>, wind_dir <dbl>, wind_dir_flag <chr>, wind_spd <dbl>, wind_spd_flag <chr>
 ```
 
 For more information on the data flags, see the [Flags vignette](flags.html), for more information on units and terms, see the [Terms and Units vignette](glossary.html).

@@ -13,5 +13,7 @@ usethis::use_data(pg, overwrite = TRUE)
 # with Daylight savings on March 13th (AM)
 # finches <- feedrUI::dl_data(start = "2016-03", end = "2016-03-16")
 # finches <- dplyr::as_tibble(finches)
-#
-# usethis::use_data(finches, overwrite = TRUE)
+
+# Get the timezone back
+#finches <- dplyr::mutate(finches, time = lubridate::force_tz(time, "America/Vancouver"))
+#usethis::use_data(finches, overwrite = TRUE)
