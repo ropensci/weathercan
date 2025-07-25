@@ -1,5 +1,7 @@
 # weathercan 0.7.5
 - Fix province names for stations data frame (#175)
+- Don't allow start times earlier than 1840 (earliest API will return; #174)
+
 # weathercan 0.7.4
 - Add `qual` from newly added Flags column to hourly data
 - Remove vcr

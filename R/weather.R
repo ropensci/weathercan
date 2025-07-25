@@ -189,6 +189,7 @@ weather_dl <- function(station_ids,
     } else {
       s.start <- as.Date(start)
       if(s.start > Sys.Date()) s.start <- Sys.Date()
+      if(s.start < as.Date("1840-01-01")) s.start <- as.Date("1840-01-01") # Earliest date API will return
       msg.start <- start
     }
 
@@ -393,14 +394,17 @@ weather_dl <- function(station_ids,
 weather_single <- function(date_range, s, interval, encoding) {
 
   w <- dplyr::tibble(date_range = date_range)
-  w <- dplyr::mutate(w, html = purrr::map(.data$date_range,
-                                    ~ weather_html(station_id = s,
-                                                   date = .x,
-                                                   interval = interval)))
-  w <- dplyr::mutate(w, data = purrr::map(.data$html,
-                                    ~ weather_raw(.,
-                                                  encoding = encoding,
-                                                  header = TRUE)))
+  w <- dplyr::mutate(
+    w,
+    html = purrr::map(.data$date_range, ~ weather_html(station_id = s,
+                                                       date = .x,
+                                                       interval = interval)),
+    data = purrr::map(.data$html, ~ weather_raw(.x,
+                                                encoding = encoding,
+                                                header = TRUE)),
+    n = purrr::map_int(.data$data, ncol))
+
+  w <- dplyr::filter(w, .data$n > 1) # Drop requests with no data
   w <- dplyr::select(w, "data")
 
   if(utils::packageVersion("tidyr") > "0.8.99") {
