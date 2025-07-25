@@ -1,3 +1,5 @@
+# weathercan 0.7.5
+- Fix province names for stations data frame (#175)
 # weathercan 0.7.4
 - Add `qual` from newly added Flags column to hourly data
 - Remove vcr
