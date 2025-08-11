@@ -270,29 +270,19 @@ stations_dl_internal <- function(skip = NULL, verbose = FALSE, quiet = FALSE,
     dplyr::left_join(station_tz, by = c("station_id", "prov", "lat", "lon")) %>%
     tidyr::gather(key = "interval", value = "date", dplyr::matches("(start)|(end)")) %>%
     tidyr::separate("interval", c("interval", "type"), sep = "_") %>%
-    dplyr::mutate(type = factor(.data$type, levels = c("start", "end")),
-                  station_name = as.character(.data$station_name),
-                  lat = replace(.data$lat, .data$lat == 0, NA),
-                  lon = replace(.data$lon, .data$lon == 0, NA),
-                  date = replace(.data$date, date == "", NA),
-                  TC_id = replace(.data$TC_id, .data$TC_id == "", NA),
-                  prov = factor(.data$prov, levels = c("ALBERTA",
-                                                       "BRITISH COLUMBIA",
-                                                       "MANITOBA",
-                                                       "NEW BRUNSWICK",
-                                                       "NEWFOUNDLAND AND LABRADOR",
-                                                       "NORTHWEST TERRITORIES",
-                                                       "NOVA SCOTIA",
-                                                       "NUNAVUT",
-                                                       "ONTARIO",
-                                                       "PRINCE EDWARD ISLAND",
-                                                       "QUEBEC",
-                                                       "SASKATCHEWAN",
-                                                       "YUKON"),
-                                labels = c("AB", "BC", "MB", "NB", "NL", "NT",
-                                           "NS", "NU", "ON", "PE", "QC", "SK",
-                                           "YT")),
-                  prov = as.character(.data$prov)) %>%
+    dplyr::mutate(
+      type = factor(.data$type, levels = c("start", "end")),
+      station_name = as.character(.data$station_name),
+      lat = replace(.data$lat, .data$lat == 0, NA),
+      lon = replace(.data$lon, .data$lon == 0, NA),
+      date = replace(.data$date, date == "", NA),
+      TC_id = replace(.data$TC_id, .data$TC_id == "", NA),
+
+      # Catch old provincial references
+      prov = replace(.data$prov, .data$prov == "NEWFOUNDLAND", "NEWFOUNDLAND AND LABRADOR"),
+      prov = replace(.data$prov, .data$prov == "YUKON TERRITORY", "YUKON"),
+      prov = factor(.data$prov, levels = names(.env$province), labels = .env$province),
+      prov = as.character(.data$prov)) %>%
     tidyr::spread("type", "date") %>%
     dplyr::arrange(.data$prov, .data$station_id, .data$interval) %>%
     dplyr::as_tibble()

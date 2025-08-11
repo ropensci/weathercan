@@ -1,7 +1,7 @@
 ---
 title: "weathercan and tidyhydat"
 author: "Steffi LaZerte"
-date: "2025-02-26"
+date: "2025-07-25"
 output: rmarkdown::html_document
 ---
 
@@ -25,7 +25,13 @@ can compliment weather data from `weathercan` (and vice versa).
 ``` r
 library(weathercan)
 library(tidyhydat)
+```
 
+```
+## Error in library(tidyhydat): there is no package called 'tidyhydat'
+```
+
+``` r
 library(dplyr)
 library(ggplot2)
 library(lubridate)
@@ -69,12 +75,11 @@ stations_search("brandon", interval = "day",
 
 ```
 ## # A tibble: 2 × 17
-##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz    
-##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr> 
-## 1 MB    BRANDON A         50821 5010481     71140 YBR    49.9 -100.  409. Etc/G…
-## 2 MB    BRANDON RCS       49909 5010490     71136 PBO    49.9 -100.  409. Etc/G…
-## # ℹ 7 more variables: interval <chr>, start <dbl>, end <dbl>, normals <lgl>,
-## #   normals_1991_2020 <lgl>, normals_1981_2010 <lgl>, normals_1971_2000 <lgl>
+##   prov  station_name station_id climate_id WMO_id TC_id   lat    lon  elev tz        interval start   end normals
+##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl>  <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>  
+## 1 MB    BRANDON A         50821 5010481     71140 YBR    49.9 -100.0  409. Etc/GMT+6 day       2012  2025 FALSE  
+## 2 MB    BRANDON RCS       49909 5010490     71136 PBO    49.9 -100.0  409. Etc/GMT+6 day       2012  2025 FALSE  
+## # ℹ 3 more variables: normals_1991_2020 <lgl>, normals_1981_2010 <lgl>, normals_1971_2000 <lgl>
 ```
 
 In this case "A" is for "Airport", let's go with that!
@@ -109,13 +114,7 @@ search_stn_name("brandon")
 ```
 
 ```
-## # A tibble: 4 × 5
-##   STATION_NUMBER STATION_NAME             PROV_TERR_STATE_LOC LATITUDE LONGITUDE
-##   <chr>          <chr>                    <chr>                  <dbl>     <dbl>
-## 1 05MH001        ASSINIBOINE RIVER AT BR… MB                      49.9    -100. 
-## 2 05MH006        LITTLE SOURIS RIVER NEA… MB                      49.7     -99.8
-## 3 02OC007        MASKINONGE (LAC) A SAIN… QC                      46.3     -73.4
-## 4 05MH013        ASSINIBOINE RIVER NEAR … MB                      49.9    -100.
+## Error in search_stn_name("brandon"): could not find function "search_stn_name"
 ```
 
 There are a couple of options, but whoops, one's from Quebec! Let's filter this
@@ -132,18 +131,7 @@ search_stn_name("brandon") %>%
 ```
 
 ```
-##   Queried from version of HYDAT released on 2025-01-17
-##    Observations:                      4
-##    Station(s) returned:               2
-##    Stations requested but not returned: 
-##     All stations returned.
-## # A tibble: 4 × 6
-##   STATION_NUMBER DATA_TYPE SED_DATA_TYPE Year_from Year_to RECORD_LENGTH
-##   <chr>          <chr>     <chr>             <int>   <int>         <int>
-## 1 05MH001        H         <NA>               2014    2023            10
-## 2 05MH001        Q         <NA>               1906    2023            78
-## 3 05MH006        H         <NA>               2002    2023            22
-## 4 05MH006        Q         <NA>               1961    2023            63
+## Error in hy_stn_data_range(.): could not find function "hy_stn_data_range"
 ```
 
 Hmm, let's see what kind of data is available by looking at the included
@@ -155,11 +143,7 @@ filter(hy_data_types, DATA_TYPE %in% c("H", "Q"))
 ```
 
 ```
-## # A tibble: 2 × 3
-##   DATA_TYPE DATA_TYPE_EN DATA_TYPE_FR 
-##   <chr>     <chr>        <chr>        
-## 1 H         Water Level  Niveaux d'eau
-## 2 Q         Flow         D'ebit
+## Error: object 'hy_data_types' not found
 ```
 
 Great! We have both flow and water level data for a station number "05MH001",
@@ -171,8 +155,19 @@ Let's grab the flow and water level data for this station.
 ``` r
 flow <- hy_daily_flows(station_number = "05MH001",
                        start_date = dates[1], end_date = dates[2])
+```
+
+```
+## Error in hy_daily_flows(station_number = "05MH001", start_date = dates[1], : could not find function "hy_daily_flows"
+```
+
+``` r
 level <- hy_daily_levels(station_number = "05MH001",
                          start_date = dates[1], end_date = dates[2])
+```
+
+```
+## Error in hy_daily_levels(station_number = "05MH001", start_date = dates[1], : could not find function "hy_daily_levels"
 ```
 
 ### Ploting rain and flow
@@ -188,13 +183,19 @@ g <- ggplot() +
   scale_y_continuous(name = bquote(Total~Flow~(m^3/s)), expand = c(0, 0),
                      limits = c(0, max(flow$Value * 1.1)),
                      sec.axis = sec_axis(transform = ~ . / 2, name = "Total Rain (mm)"))
+```
+
+```
+## Error: object 'flow' not found
+```
+
+``` r
 g
 ```
 
-<div class="figure" style="text-align: center">
-<img src="figures/tidyhydat-unnamed-chunk-12-1.png" alt="plot of chunk unnamed-chunk-12" width="80%" />
-<p class="caption">plot of chunk unnamed-chunk-12</p>
-</div>
+```
+## Error: object 'g' not found
+```
 
 
 Interesting, looks like there's a bit of a lag between the rain event and the
@@ -208,7 +209,13 @@ Let's add a bit of information about this lag to peak.
 d <- data.frame(dates = c(rain$date[which.max(rain$total_precip)],
                           flow$Date[which.max(flow$Value)]),
                 y = max(flow$Value) + 5)
+```
 
+```
+## Error: object 'flow' not found
+```
+
+``` r
 g +
   geom_path(data = d, aes(x = dates, y = y),
               arrow = arrow(length = unit(0.25, "lines"), ends = "both", type = "closed")) +
@@ -218,10 +225,9 @@ g +
            label = glue("{d$dates[2] - d$dates[1]}-day delay"))
 ```
 
-<div class="figure" style="text-align: center">
-<img src="figures/tidyhydat-unnamed-chunk-13-1.png" alt="plot of chunk unnamed-chunk-13" width="80%" />
-<p class="caption">plot of chunk unnamed-chunk-13</p>
-</div>
+```
+## Error: object 'g' not found
+```
 
 We can expect a lag like this because much of the flow being captured by the Brandon HYDAT
 station is from precipitation in the upstream catchment area (not only from
@@ -243,13 +249,19 @@ g <- ggplot() +
                      sec.axis = sec_axis(transform = ~ (. - min(level$Value)) * 65,
                                          name = "Total Rain (mm)")) +
   coord_cartesian(ylim = c(min(level$Value), max(level$Value)*1.001))
+```
+
+```
+## Error: object 'level' not found
+```
+
+``` r
 g
 ```
 
-<div class="figure" style="text-align: center">
-<img src="figures/tidyhydat-unnamed-chunk-14-1.png" alt="plot of chunk unnamed-chunk-14" width="80%" />
-<p class="caption">plot of chunk unnamed-chunk-14</p>
-</div>
+```
+## Error: object 'g' not found
+```
 
 Again there looks to be a lag, let's see if it's the same as before.
 
@@ -258,7 +270,13 @@ Again there looks to be a lag, let's see if it's the same as before.
 d <- data.frame(dates = c(rain$date[which.max(rain$total_precip)],
                           level$Date[which.max(level$Value)]),
                 y = max(level$Value)*1.00025)
+```
 
+```
+## Error: object 'level' not found
+```
+
+``` r
 g +
   geom_path(data = d, aes(x = dates, y = y),
               arrow = arrow(length = unit(0.25, "lines"), ends = "both", type = "closed")) +
@@ -268,10 +286,9 @@ g +
            label = glue("{d$dates[2] - d$dates[1]}-day delay"))
 ```
 
-<div class="figure" style="text-align: center">
-<img src="figures/tidyhydat-unnamed-chunk-15-1.png" alt="plot of chunk unnamed-chunk-15" width="80%" />
-<p class="caption">plot of chunk unnamed-chunk-15</p>
-</div>
+```
+## Error: object 'g' not found
+```
 
 
 ### Ploting flow and water level
@@ -288,7 +305,7 @@ ggplot() +
   geom_line(data = level, linewidth = 1,
             aes(x = Date, y = (Value - min(Value) + 0.1) * 130, colour = "Level")) +
   scale_y_continuous(bquote(Total~Flow~(m^3/s)), expand = c(0, 0),
-                     sec.axis = sec_axis(transforsm = ~ ./130 + min(level$Value) - 0.1,
+                     sec.axis = sec_axis(transform = ~ ./130 + min(level$Value) - 0.1,
                                          name = "Water Level (m)")) +
   scale_colour_manual(name = "Type",
                       values = c("Flow" = "cornflowerblue",
@@ -296,7 +313,7 @@ ggplot() +
 ```
 
 ```
-## Error in sec_axis(transforsm = ~./130 + min(level$Value) - 0.1, name = "Water Level (m)"): unused argument (transforsm = ~./130 + min(level$Value) - 0.1)
+## Error: object 'flow' not found
 ```
 
 Almost a perfect match between water level and flow (which makes sense).

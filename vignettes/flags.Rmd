@@ -1,7 +1,7 @@
 ---
 title: "Flags and codes"
 author: "Steffi LaZerte"
-date: "2025-02-25"
+date: "2025-07-25"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Flags and codes}
@@ -79,6 +79,7 @@ The flags index can be accessed through the built in data frame: `flags`
 |A       |Accumulated                                                         |
 |B       |More than one occurrence and estimated                              |
 |C       |Precipitation occurred, amount uncertain                            |
+|D       |Data subject to further quality control procedure                   |
 |E       |Estimated                                                           |
 |F       |Accumulated and estimated                                           |
 |L       |Precipitation may or may not have occurred                          |
