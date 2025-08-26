@@ -306,6 +306,7 @@ contributing](CONTRIBUTING.md)
 ## Contributors
 
 
+
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
@@ -435,7 +436,7 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 </td>
 <td align="center">
 <a href="https://github.com/adamhsparks">
-<img src="https://avatars.githubusercontent.com/u/3195906?u=ff1ca92ae028fe7eb18d006f92cb8a725625e69c&v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/3195906?u=5d16842aa4ede1ddaa8911e126cc57b76ff22255&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Aadamhsparks">adamhsparks</a>
 </td>
@@ -631,6 +632,16 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 </td>
 </tr>
 
+
+<tr>
+<td align="center">
+<a href="https://github.com/JBauerPower">
+<img src="https://avatars.githubusercontent.com/u/147277460?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3AJBauerPower">JBauerPower</a>
+</td>
+</tr>
+
 </table>
 
 
@@ -704,6 +715,7 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
 
 
 [![ropensci_footer](http://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)
