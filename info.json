@@ -1,0 +1,12 @@
+{
+  "commit": {
+    "commit": "0bd2a22427327f82bf8e65e5351ceffada15ccdf",
+    "author": "Steffi LaZerte <steffi@steffi.ca>",
+    "time": "2025-10-17 21:10:32",
+    "files": "NA",
+    "merge": false,
+    "message": "Bump version\n"
+  },
+  "repo": "https://github.com/ropensci/weathercan",
+  "pkg": "weathercan"
+}

@@ -1,5 +1,5 @@
 pandoc: 3.1.11
-pkgdown: 2.1.1
+pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   flags: flags.html
@@ -10,7 +10,7 @@ articles:
   reproducibility: reproducibility.html
   articles/tidyhydat: tidyhydat.html
   weathercan: weathercan.html
-last_built: 2025-02-05T17:58Z
+last_built: 2025-10-17T21:17Z
 urls:
   reference: https://docs.ropensci.org/weathercan/reference
   article: https://docs.ropensci.org/weathercan/articles
