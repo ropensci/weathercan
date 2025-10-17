@@ -309,14 +309,14 @@ test_that("normals_dl() gets extreme wind chill correctly", {
   skip_on_cran()
   skip_if_offline()
 
-  expect_silent(nd <- normals_dl(climate_id = "2100517")) %>%
-    expect_s3_class("tbl_df")
+  expect_message(nd <- normals_dl(climate_id = "2100517"), "current normals")
+  expect_s3_class(nd, "tbl_df")
 })
 
 test_that("normals_dl() multiple weird stations", {
   skip_on_cran()
   skip_if_offline()
-  expect_silent(nd <- normals_dl(climate_ids = c("301C3D4", "301FFNJ", "301N49A")))
+  expect_message(nd <- normals_dl(climate_ids = c("301C3D4", "301FFNJ", "301N49A")), "current normals")
 
   expect_snapshot_value(nd, style = "json2", tolerance = 0.001)
 })

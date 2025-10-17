@@ -423,23 +423,13 @@ stations_search <- function(name = NULL,
   }
 
   check_int(interval)
+  normals_years <- check_normals(normals_years, null_ok = TRUE)
 
   stn <- dplyr::filter(stations(),
                        .data$interval %in% !! interval, !is.na(.data$start))
 
   if(!is.null(normals_years)) {
-
-    if(normals_years == "1991-2020") {
-      message(
-        "You can find out which stations have normals for 1991-2020, ",
-        "but be aware that they are not yet available for download via weathercan")
-    }
-
-    if(normals_years == "current") {
-      yr <- "normals_1981_2010"  # Currently set Normals
-    } else {
-      yr <- paste0("normals_", stringr::str_replace(normals_years, "-", "_"))
-    }
+    yr <- paste0("normals_", stringr::str_replace(normals_years, "-", "_"))
     stn <- dplyr::filter(stn, .data[[yr]])
   } else {
 
