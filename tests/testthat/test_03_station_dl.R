@@ -262,7 +262,6 @@ test_that("stations_search returns normals only", {
   )
   expect_gt(nrow(stations()), nrow(s))
   expect_true(all(s$normals))
-  expect_equal(unique(s$station_id), s$station_id)
 
   expect_silent(s1 <- stations_search("Brandon", normals_years = "1981-2010"))
   expect_gt(nrow(stations()), nrow(s1))

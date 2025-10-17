@@ -423,37 +423,35 @@ stations_search <- function(name = NULL,
   }
 
   check_int(interval)
-  normals_years <- check_normals(normals_years, null_ok = TRUE)
-
   stn <- dplyr::filter(stations(),
                        .data$interval %in% !! interval, !is.na(.data$start))
 
+  normals_years <- check_normals(normals_years, null_ok = TRUE)
   if(!is.null(normals_years)) {
     yr <- paste0("normals_", stringr::str_replace(normals_years, "-", "_"))
     stn <- dplyr::filter(stn, .data[[yr]])
-  } else {
-
-    if (!is.null(starts_latest)){
-      suppressWarnings({
-        starts_latest <- try(as.numeric(as.character(starts_latest)),
-                             silent = TRUE)
-      })
-      if (is.na(starts_latest) | inherits(starts_latest, "try-error")){
-        stop("'starts_latest' needs to be coercible into numeric", call. = FALSE)
-      }
-      stn <- dplyr::filter(stn, .data$start <= starts_latest)
+  }
+  
+  if (!is.null(starts_latest)){
+    suppressWarnings({
+      starts_latest <- try(as.numeric(as.character(starts_latest)),
+      silent = TRUE)
+    })
+    if (is.na(starts_latest) | inherits(starts_latest, "try-error")){
+      stop("'starts_latest' needs to be a year (YYYY)", call. = FALSE)
     }
-
-    if (!is.null(ends_earliest)){
-      suppressWarnings({
-        ends_earliest <- try(as.numeric(as.character(ends_earliest)),
-                             silent = TRUE)
-      })
-      if (is.na(ends_earliest) | inherits(ends_earliest, "try-error")){
-        stop("'ends_earliest' needs to be coercible into numeric", call. = FALSE)
-      }
-      stn <- dplyr::filter(stn, .data$end >= ends_earliest)
+    stn <- dplyr::filter(stn, .data$start <= starts_latest)
+  }
+  
+  if (!is.null(ends_earliest)){
+    suppressWarnings({
+      ends_earliest <- try(as.numeric(as.character(ends_earliest)),
+      silent = TRUE)
+    })
+    if (is.na(ends_earliest) | inherits(ends_earliest, "try-error")){
+      stop("'ends_earliest' needs to be a year (YYYY)", call. = FALSE)
     }
+    stn <- dplyr::filter(stn, .data$end >= ends_earliest)
   }
 
   if(!is.null(name)) {
@@ -509,10 +507,7 @@ stations_search <- function(name = NULL,
                                              .data$station_name,
                                              .data$station_id,
                                              .data$interval)
-  if(!is.null(normals_years)) {
-    stn <- dplyr::select(stn, -"interval", -"start", -"end") %>%
-      dplyr::distinct()
-  }
+
   stn
 }
 
