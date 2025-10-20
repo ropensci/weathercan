@@ -256,10 +256,12 @@ test_that("stations_search 'starts_latest' and 'ends_earliest' together", {
 test_that("stations_search returns normals only", {
   expect_warning(s <- stations_search("Brandon", normals_only = TRUE),
                  "`normals_only` is deprecated")
-  expect_silent(s <- stations_search("Brandon", normals_years = "current"))
+  expect_message(
+    s <- stations_search("Brandon", normals_years = "current"),
+    "The most current normals available for download by weathercan are"
+  )
   expect_gt(nrow(stations()), nrow(s))
   expect_true(all(s$normals))
-  expect_equal(unique(s$station_id), s$station_id)
 
   expect_silent(s1 <- stations_search("Brandon", normals_years = "1981-2010"))
   expect_gt(nrow(stations()), nrow(s1))

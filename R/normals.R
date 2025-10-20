@@ -10,8 +10,10 @@
 #'   data frame or the \code{\link{stations_search}} function to find Climate
 #'   IDs.
 #' @param normals_years Character. The year range for which you want climate
-#'   normals. Default "1981-2010". One of "1971-2000", "1981-2010", "1991-2020".
-#'   Note: Some "1991-2020" are available online, but are not yet downloadable
+#'   normals. Default `1981-2010`. One of `current`,
+#'   `1981-2010`, or `1971-2000`. `current` returns only stations
+#'   from the most recent *complete* normals year range (i.e. `1981-2010`).
+#'   Note: Some `1991-2020` are available online, but are not yet downloadable
 #'   via weathercan.
 #' @param format Logical. If TRUE (default) formats measurements to numeric and
 #'   date accordingly. Unlike `weather_dl()`, `normals_dl()` will always format
@@ -79,7 +81,7 @@
 #'   unnest(frost)
 #' @export
 
-normals_dl <- function(climate_ids, normals_years = "1981-2010",
+normals_dl <- function(climate_ids, normals_years = "current",
                        format = TRUE, stn = NULL,
                        verbose = FALSE, quiet = FALSE) {
 
@@ -91,13 +93,8 @@ normals_dl <- function(climate_ids, normals_years = "1981-2010",
   }
   stn <- stations()
 
-  if(normals_years == "1991-2020") {
-    stop("The new normals for 1991-2020 are not yet available via weathercan",
-         call. = FALSE)
-  }
-
   check_ids(climate_ids, stn, type = "climate_id")
-  check_normals(normals_years)
+  normals_years <- check_normals(normals_years)
 
   yrs <- paste0("normals_", stringr::str_replace(normals_years, "-", "_"))
 

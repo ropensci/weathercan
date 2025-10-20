@@ -1,3 +1,8 @@
+# weathercan 0.7.6
+- Standardize normals year range and checks
+- Fix bug in `stations_search()` that precluded doing normals and years searches at the same time
+- Change `stations_search()` output to include interval, start and end years
+
 # weathercan 0.7.5
 - Fix province names for stations data frame (#175)
 - Don't allow start times earlier than 1840 (earliest API will return; #174)

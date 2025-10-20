@@ -32,12 +32,31 @@ check_ids <- function(ids, stn, type){
   }
 }
 
-check_normals <- function(normals_years) {
- if(!is.character(normals_years) ||
-    !stringr::str_detect(normals_years, "^[0-9]{4}-[0-9]{4}$")) {
-   stop("'normals_years' must be a text string in the format YYYY-YYYY e.g., '1981-2010'",
-        call. = FALSE)
- }
+check_normals <- function(normals_years, null_ok = FALSE) {
+
+  if(null_ok && is.null(normals_years)) return(normals_years)
+
+  if(normals_years == "current") {
+    message("The most current normals available for download by weathercan are '1981-2010'")
+    normals_years <- "1981-2010"
+  }
+
+  if(!null_ok) new_message <- stop else new_message <- message
+
+  if(normals_years == "1991-2020") {
+    new_message(
+      "You use `stations_search()` to see which stations have normals for 1991-2020, ",
+      "but be aware that they are not yet available for download via weathercan")
+  }
+  
+  if(is.null(normals_years) || 
+    !is.character(normals_years) ||
+    !stringr::str_detect(normals_years, "^[0-9]{4}-[0-9]{4}$")
+  ) {
+    stop("'normals_years' must be either 'current' or a text string in the format YYYY-YYYY e.g., '1981-2010'",
+    call. = FALSE)
+  }
+  normals_years
 }
 
 find_line <- function(headings, cols) {

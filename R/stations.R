@@ -423,47 +423,35 @@ stations_search <- function(name = NULL,
   }
 
   check_int(interval)
-
   stn <- dplyr::filter(stations(),
                        .data$interval %in% !! interval, !is.na(.data$start))
 
+  normals_years <- check_normals(normals_years, null_ok = TRUE)
   if(!is.null(normals_years)) {
-
-    if(normals_years == "1991-2020") {
-      message(
-        "You can find out which stations have normals for 1991-2020, ",
-        "but be aware that they are not yet available for download via weathercan")
-    }
-
-    if(normals_years == "current") {
-      yr <- "normals_1981_2010"  # Currently set Normals
-    } else {
-      yr <- paste0("normals_", stringr::str_replace(normals_years, "-", "_"))
-    }
+    yr <- paste0("normals_", stringr::str_replace(normals_years, "-", "_"))
     stn <- dplyr::filter(stn, .data[[yr]])
-  } else {
-
-    if (!is.null(starts_latest)){
-      suppressWarnings({
-        starts_latest <- try(as.numeric(as.character(starts_latest)),
-                             silent = TRUE)
-      })
-      if (is.na(starts_latest) | inherits(starts_latest, "try-error")){
-        stop("'starts_latest' needs to be coercible into numeric", call. = FALSE)
-      }
-      stn <- dplyr::filter(stn, .data$start <= starts_latest)
+  }
+  
+  if (!is.null(starts_latest)){
+    suppressWarnings({
+      starts_latest <- try(as.numeric(as.character(starts_latest)),
+      silent = TRUE)
+    })
+    if (is.na(starts_latest) | inherits(starts_latest, "try-error")){
+      stop("'starts_latest' needs to be a year (YYYY)", call. = FALSE)
     }
-
-    if (!is.null(ends_earliest)){
-      suppressWarnings({
-        ends_earliest <- try(as.numeric(as.character(ends_earliest)),
-                             silent = TRUE)
-      })
-      if (is.na(ends_earliest) | inherits(ends_earliest, "try-error")){
-        stop("'ends_earliest' needs to be coercible into numeric", call. = FALSE)
-      }
-      stn <- dplyr::filter(stn, .data$end >= ends_earliest)
+    stn <- dplyr::filter(stn, .data$start <= starts_latest)
+  }
+  
+  if (!is.null(ends_earliest)){
+    suppressWarnings({
+      ends_earliest <- try(as.numeric(as.character(ends_earliest)),
+      silent = TRUE)
+    })
+    if (is.na(ends_earliest) | inherits(ends_earliest, "try-error")){
+      stop("'ends_earliest' needs to be a year (YYYY)", call. = FALSE)
     }
+    stn <- dplyr::filter(stn, .data$end >= ends_earliest)
   }
 
   if(!is.null(name)) {
@@ -519,10 +507,7 @@ stations_search <- function(name = NULL,
                                              .data$station_name,
                                              .data$station_id,
                                              .data$interval)
-  if(!is.null(normals_years)) {
-    stn <- dplyr::select(stn, -"interval", -"start", -"end") %>%
-      dplyr::distinct()
-  }
+
   stn
 }
 
