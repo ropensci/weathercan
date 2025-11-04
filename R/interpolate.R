@@ -149,14 +149,16 @@ approx_na_rm <- function(x, y, xout, na_gap = NULL) {
     stop("'xout' must be the same class as 'x'")
   }
 
-  if(lubridate::is.POSIXct(x) &&
-     lubridate::is.POSIXct(xout) &&
-     lubridate::tz(x) != lubridate::tz(xout)) {
-    stop("Timezone of `x` doesn't match `xout`", call. = FALSE)
+  if (lubridate::is.POSIXct(x) && 
+      lubridate::is.POSIXct(xout) &&
+      lubridate::tz(x) != lubridate::tz(xout)) {
+      stop("Timezone of `x` doesn't match `xout`", call. = FALSE)
   }
 
-  new <- as.data.frame(stats::approx(x = x, y = y, xout = xout,
-                                     yleft = NA, yright = NA))
+  new <- as.data.frame(
+    stats::approx(x = x, y = y, xout = xout,
+    yleft = NA, yright = NA)
+  )
 
   if(any(is.na(y)) & !is.null(na_gap)) {
     if(lubridate::is.Date(x) | lubridate::is.POSIXct(x)) {

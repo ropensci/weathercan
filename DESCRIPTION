@@ -13,7 +13,8 @@ Authors@R: c(
      person("Jeremy", "Selva", email = "jeremy1189.jjs@gmail.com", role = "ctb", comment = c(ORCID = "0000-0002-4498-2662")),
      person(c("Kelli", "F."), "Johnson", email = "kelli.johnson@noaa.gov", role = c("ctb"), comment = c(ORCID = "0000-0002-5149-451X")),
      person("Russ", "Allen", email = "mbr@historicip.com", role = c("ctb")),
-     person("Everett", "Snieder", email = "everett.snieder@gmail.com", role = c("ctb"), comment = c(ORCID = "0000-0003-4997-3404"))
+     person("Everett", "Snieder", email = "everett.snieder@gmail.com", role = c("ctb"), comment = c(ORCID = "0000-0003-4997-3404")),
+     person("Josh", "Persi", email = "joshpersi@gmail.com", role = c("ctb"), comment = c(ORCID = "0000-0002-2700-6483"))
      )
 Description: Provides means for downloading historical weather data from 
     the Environment and Climate Change Canada website 

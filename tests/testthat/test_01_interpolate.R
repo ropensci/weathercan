@@ -35,8 +35,8 @@ test_that("approx() uses rule 1", {
 })
 
 test_that("approx_na_rm (time) without NAs", {
-  k <- kamloops[kamloops$time > as.POSIXct("2016-03-01") &
-                  kamloops$time < as.POSIXct("2016-03-03"), ]
+  k <- kamloops[kamloops$time > as.POSIXct("2016-03-01", tz = "UTC") &
+                  kamloops$time < as.POSIXct("2016-03-03", tz = "UTC"), ]
   f <- finches[1:20, ]
 
   ## Need same TZ
@@ -222,8 +222,8 @@ test_that("weather_interp (hour) fails with incorrect data types", {
 })
 
 test_that("weather_interp (hour) interpolates particular columns", {
-  k <- kamloops[kamloops$time > as.POSIXct("2016-03-01") &
-                  kamloops$time < as.POSIXct("2016-03-03"), ]
+  k <- kamloops[kamloops$time > as.POSIXct("2016-03-01", tz = "UTC") &
+                  kamloops$time < as.POSIXct("2016-03-03", tz = "UTC"), ]
   f <- finches[1:20, ] %>%
     dplyr::mutate(time = lubridate::force_tz(time, "UTC"))
 

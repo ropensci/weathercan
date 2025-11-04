@@ -21,7 +21,7 @@ if(!file.exists("./data-raw/normals/normals_check.csv")) {
 
 # Download each station
 n <- readr::read_csv("./data-raw/normals/normals_check.csv")
-for(i in 1:nrow(n)) {
+for(i in seq_len(nrow(n))) {
   if(n[["checked"]][i] == FALSE) {
     message("Trying ", n$climate_id[i], " - ", n$normals[i])
     data <- normals_dl(climate_ids = n$climate_id[i], normals_years = n$normals[i])
