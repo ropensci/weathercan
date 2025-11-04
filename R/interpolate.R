@@ -149,14 +149,26 @@ approx_na_rm <- function(x, y, xout, na_gap = NULL) {
     stop("'xout' must be the same class as 'x'")
   }
 
-  if(lubridate::is.POSIXct(x) &&
-     lubridate::is.POSIXct(xout) &&
-     lubridate::tz(x) != lubridate::tz(xout)) {
-    stop("Timezone of `x` doesn't match `xout`", call. = FALSE)
+  if (
+    lubridate::is.POSIXct(x) &&
+      lubridate::is.POSIXct(xout)
+  ) {
+    if (lubridate::tz(x) != lubridate::tz(xout)) {
+      stop("Timezone of `x` doesn't match `xout`", call. = FALSE)
+    }
   }
 
-  new <- as.data.frame(stats::approx(x = x, y = y, xout = xout,
-                                     yleft = NA, yright = NA))
+  x1 <- if(lubridate::is.POSIXct(x)) as.numeric(x) else x
+  xout1 <- if(lubridate::is.POSIXct(xout)) as.numeric(xout) else xout
+  y1 <- if(lubridate::is.POSIXct(y)) as.numeric(y) else y
+
+  new <- as.data.frame(
+    stats::approx(x = x1, y = y1, xout = xout1,
+    yleft = NA, yright = NA)
+  )
+
+  if(lubridate::is.POSIXct(x)) new$x <- as.POSIXct(new$x, tz = lubridate::tz(x))
+  if(lubridate::is.POSIXct(y)) new$y <- as.POSIXct(new$y, tz = lubridate::tz(y))
 
   if(any(is.na(y)) & !is.null(na_gap)) {
     if(lubridate::is.Date(x) | lubridate::is.POSIXct(x)) {
