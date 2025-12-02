@@ -388,6 +388,7 @@ stations_search <- function(name = NULL,
             "`normals_years = 'current'`", call. = FALSE)
     normals_years <- "current"
   }
+
   if(!is.null(normals_years) &&
      !normals_years %in% c("current", "1991-2020", "1981-2010", "1971-2000")) {
     stop("`normals_years` must either be `NULL` (don't filter by normals),",
