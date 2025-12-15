@@ -308,6 +308,7 @@ contributing](CONTRIBUTING.md)
 
 
 
+
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
@@ -465,7 +466,7 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 </td>
 <td align="center">
 <a href="https://github.com/essicolo">
-<img src="https://avatars.githubusercontent.com/u/5118227?u=998bb82ad723f4a34d26337184270105d45065c5&v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/5118227?u=96e19b82af1f2cfcfbfd1a108ce2434b279f8079&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Aessicolo">essicolo</a>
 </td>
@@ -647,6 +648,12 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3AJBauerPower">JBauerPower</a>
 </td>
+<td align="center">
+<a href="https://github.com/x22925580-commits">
+<img src="https://avatars.githubusercontent.com/u/242810550?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Ax22925580-commits">x22925580-commits</a>
+</td>
 </tr>
 
 </table>
@@ -722,6 +729,7 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
 
 
 
