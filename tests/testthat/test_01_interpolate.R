@@ -396,3 +396,28 @@ test_that("weather_interp messages", {
   expect_error(weather_interp(f, k2, interval = "day", cols = "max_temp"),
                "Can only interpolate weather from one station at a time")
 })
+
+test_that("weather_interp checks arguments", {
+  k <- kamloops[kamloops$time > as.POSIXct("2016-03-01") &
+                  kamloops$time < as.POSIXct("2016-03-03"), ]
+  k_day <- kamloops_day[kamloops_day$date < as.Date("2016-04-01"), ]
+  f <- finches[1:20, ] %>%
+    dplyr::mutate(time = lubridate::force_tz(time, "UTC")) %>%
+    dplyr::mutate(date = lubridate::as_date(time))
+
+  ## Check valid interval
+  expect_silent(weather_interp(f, k, interval = "hour", cols = "temp"))
+  expect_silent(weather_interp(f, k_day, interval = "day", cols = "max_temp"))
+
+  ## Check multiple intervals
+  expect_error(
+    weather_interp(f, k, interval = c("hour", "day")),
+    "'interval' must be either 'hour' OR 'day'"
+  )
+
+  ## Check invalid interval
+  expect_error(
+    weather_interp(f, k, interval = "month"),
+    "'interval' must be either 'hour' OR 'day'"
+  )
+})
