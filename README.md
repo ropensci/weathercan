@@ -309,6 +309,7 @@ contributing](CONTRIBUTING.md)
 
 
 
+
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
@@ -650,7 +651,7 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 </td>
 <td align="center">
 <a href="https://github.com/x22925580-commits">
-<img src="https://avatars.githubusercontent.com/u/242810550?v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/242810550?u=4d778bfc33f734c22bbc53428ed06a998e7319b0&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Ax22925580-commits">x22925580-commits</a>
 </td>
@@ -711,6 +712,12 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 
 <tr>
 <td align="center">
+<a href="https://github.com/tanmaydimriGSOC">
+<img src="https://avatars.githubusercontent.com/u/105608756?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+commenter%3AtanmaydimriGSOC">tanmaydimriGSOC</a>
+</td>
+<td align="center">
 <a href="https://github.com/farhanreynaldo">
 <img src="https://avatars.githubusercontent.com/u/8732795?u=85782e91537627f642b48a59c52a5df1ff18343c&v=4" width="100px;" alt=""/>
 </a><br>
@@ -729,6 +736,7 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
 
 
 
