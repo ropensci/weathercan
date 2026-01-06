@@ -231,13 +231,15 @@ weather_dl <- function(station_ids,
       date_range <- seq(lubridate::floor_date(s.start, unit = "year"),
                         lubridate::floor_date(s.end, unit = "year"), by = "year")
     } else if(interval == "month") {
+      # Monthly data always downloads the entire data set, but still needs full
+      # year/month/day data to be submitted
       date_range <- lubridate::floor_date(s.start, unit = "year")
     }
 
     w <- weather_single(date_range, s, interval, encoding)
 
     # Extract only most recent meta
-    meta <-  meta_html(station_id = s, interval = interval) %>%
+    meta <-  meta_html(station_id = s, date = s.end, interval = interval) %>%
       meta_raw(encoding = encoding, interval = interval) %>%
       meta_format(s = s)
 
@@ -424,24 +426,21 @@ get_html <- function(station_id,
             timeframe = ifelse(interval == "hour", 1,
                                ifelse(interval == "day", 2,
                                       3)),
+            Year = format(date, "%Y"),
+            Month = format(date, "%m"),
+            Day = "01",
             submit = 'Download+Data')
-
-  if(format == "csv" & interval != "month") {
-    q['Year'] <- format(date, "%Y")
-    q['Month'] <- format(date, "%m")
-  }
 
   get_check(url = getOption("weathercan.urls.weather"),
             query = q, task = "access historical weather data")
 }
 
 weather_html <- function(station_id, date, interval = "hour") {
-  if(interval == "month") date <- NULL
   get_html(station_id, date, interval, format = "csv")
 }
 
-meta_html <- function(station_id, interval = "hour") {
-  get_html(station_id, date = NULL, interval, format = "txt")
+meta_html <- function(station_id, date, interval = "hour") {
+  get_html(station_id, date, interval, format = "txt")
 }
 
 remove_sym <- function(df) {

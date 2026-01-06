@@ -1,3 +1,7 @@
+# weathercan 0.7.7
+- Quick fix to adjust API calls which require a Day parameter for *all* calls 
+  (this isn't actually used for metadata or historical weather, but is required).
+
 # weathercan 0.7.6
 - Standardize normals year range and checks
 - Fix bug in `stations_search()` that precluded doing normals and years searches at the same time
