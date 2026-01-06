@@ -10,6 +10,13 @@ test_that("weather_html/raw (hour) download a data frame", {
 
   expect_silent(wd <- weather_raw(wd))
 
+  expect_error(
+    weather_html(station_id = 9999999999,
+                 date = as.Date("2014-01-01"),
+                 interval = "hour"), 
+    "API could not fetch data with this query")
+
+
   ## Basics
   expect_s3_class(wd, "data.frame")
   expect_length(wd, 31)
