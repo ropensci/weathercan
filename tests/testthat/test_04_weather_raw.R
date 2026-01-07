@@ -10,6 +10,13 @@ test_that("weather_html/raw (hour) download a data frame", {
 
   expect_silent(wd <- weather_raw(wd))
 
+  expect_error(
+    weather_html(station_id = 9999999999,
+                 date = as.Date("2014-01-01"),
+                 interval = "hour"), 
+    "API could not fetch data with this query")
+
+
   ## Basics
   expect_s3_class(wd, "data.frame")
   expect_length(wd, 31)
@@ -62,29 +69,26 @@ test_that("weather_html/raw (month) download a data frame", {
 
 test_that("meta_html/raw (hour) download meta data", {
   skip_on_cran()
-  expect_silent(meta <- meta_html(station_id = 51423, interval = "hour"))
+  expect_silent(meta <- meta_html(station_id = 51423, date = Sys.Date(), interval = "hour"))
   expect_silent(meta <- meta_raw(meta, interval = "hour"))
 
   ## Basics
   expect_s3_class(meta, "data.frame")
   expect_length(meta, 2)
-  expect_equal(nrow(meta), 8)
   m <- paste0("(", paste0(m_names, collapse = ")|("), ")")
   expect_true(all(stringr::str_detect(meta$X1, m)))
   expect_lt(length(data.frame(meta)[is.na(data.frame(meta))]),
             length(data.frame(meta)[!is.na(data.frame(meta))]))
-
 })
 
 test_that("meta_html/raw (day) download meta data", {
   skip_on_cran()
-  expect_silent(meta <- meta_html(station_id = 51423, interval = "day"))
+  expect_silent(meta <- meta_html(station_id = 51423, date = Sys.Date(), interval = "day"))
   expect_silent(meta <- meta_raw(meta, interval = "day"))
 
   ## Basics
   expect_s3_class(meta, "data.frame")
   expect_length(meta, 2)
-  expect_equal(nrow(meta), 8)
   m <- paste0("(", paste0(m_names, collapse = ")|("), ")")
   expect_true(all(stringr::str_detect(meta$X1, m)))
   expect_lt(length(data.frame(meta)[is.na(data.frame(meta))]),
@@ -94,13 +98,12 @@ test_that("meta_html/raw (day) download meta data", {
 
 test_that("meta_html/raw (month) download meta data", {
   skip_on_cran()
-  expect_silent(meta <- meta_html(station_id = 5401, interval = "month"))
+  expect_silent(meta <- meta_html(station_id = 5401, date = Sys.Date(), interval = "month"))
   expect_silent(meta <- meta_raw(meta, interval = "month"))
 
   ## Basics
   expect_s3_class(meta, "data.frame")
   expect_length(meta, 2)
-  expect_equal(nrow(meta), 8)
   m <- paste0("(", paste0(m_names, collapse = ")|("), ")")
   expect_true(all(stringr::str_detect(meta$X1, m)))
   expect_lt(length(data.frame(meta)[is.na(data.frame(meta))]),

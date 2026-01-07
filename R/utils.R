@@ -72,10 +72,16 @@ na_tibble <- function(cols) {
 
 get_check <- function(..., task = NULL) {
   req <- httr::GET(...)
+  
   httr::stop_for_status(req, task = task)
   if (grepl("^https://climate.weather.gc.ca/error", req$url)) {
     stop("Service is currently down!")
-  } else req
+  } else if (any(grepl("error was found", httr::content(req, as = "text", encoding = "UTF-8")))) {
+    stop("API could not fetch data with this query\n", 
+    "Please, open an issue on https://github.com/ropensci/weathercan/issues and share ",
+    "the details of your attempted download.", call. = FALSE)
+  }
+  req
 }
 
 min_na <- function(..., na.rm = TRUE) {
