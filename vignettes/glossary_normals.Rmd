@@ -9,7 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r, eval=FALSE, include = FALSE}
 library(weathercan)
 library(dplyr)
 library(tidyr)
@@ -25,7 +25,7 @@ See the ECCC website on climate normals for more details: <`r paste0("https://ww
 For details on weather measurements, see the `glossary` vignette.
 
 ### General descriptions
-```{r, asis = TRUE, echo = FALSE}
+```{r,eval=FALSE, asis = TRUE, echo = FALSE}
 glossary_normals[1:18,] %>%
   mutate(description = stringr::str_replace_all(description, "\\n", " ")) %>%
   knitr::kable()
@@ -35,7 +35,7 @@ glossary_normals[1:18,] %>%
 ### Original names and units
 These represent the original ECCC measurement names with units and their corresponding measurements in `weathercan`.
 
-```{r, echo = FALSE}
+```{r,eval=FALSE, echo = FALSE}
 g <- glossary_normals[19:nrow(glossary_normals),] %>%
   select(-description) %>%
   mutate(group = str_detect(weathercan_name, "title"),
@@ -49,7 +49,7 @@ g <- glossary_normals[19:nrow(glossary_normals),] %>%
   nest()
 ```
 
-```{r, results = "asis", echo = FALSE}
+```{r,eval=FALSE, results = "asis", echo = FALSE}
 for(t in seq_len(nrow(g))) {
   cat("<center><h4>", str_to_title(g$title[t]), "</h3></center>\n")
   print(knitr::kable(g$data[[t]], format = "html"))

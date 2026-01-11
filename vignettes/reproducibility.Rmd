@@ -1,7 +1,7 @@
 ---
 title: "Reproducibility"
 author: "Steffi LaZerte"
-date: "2025-07-25"
+date: "2026-01-11"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Reproducibility}
@@ -26,7 +26,7 @@ compiling reports) with the following information:
 For example:
 
 
-``` r
+``` {r, eval=FALSE}
 # Work
 library(weathercan)
 s <- stations_search("Winnipeg", normals_years = "current")
