@@ -18,11 +18,9 @@ Climate Normals and Averages describe the average climate conditions specific to
 First we'll load the `weathercan` package for downloading the data and the `tidyr` package for unnesting the data (see below).
 
 
-``` r
-library(weathercan)
-library(tidyr)
-library(dplyr)
-library(naniar) # For exploring missing values
+```{r, eval = FALSE}
+library(naniar)
+
 ```
 
 ```
@@ -99,6 +97,7 @@ normals
 To visualize missing data we can use the `gg_miss_var()` function from the `naniar` package.
 
 ``` r
+``` {r, eval = FALSE}
 select(normals, -contains("_code")) %>%  # Remove '_code' columns
   gg_miss_var(facet = station_name)
 ```

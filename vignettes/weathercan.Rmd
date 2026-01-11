@@ -25,7 +25,7 @@ library(weathercan)
 `weathercan` includes the function `stations()` which returns a list of stations and their details (including `station_id`).
 
 
-``` r
+``` {r, eval=FALSE}
 head(stations())
 ```
 
@@ -42,7 +42,7 @@ head(stations())
 ## # ℹ 1 more variable: normals_1971_2000 <lgl>
 ```
 
-``` r
+``` {r, eval=FALSE}
 glimpse(stations())
 ```
 
@@ -71,7 +71,7 @@ glimpse(stations())
 You can look through this data frame directly, or you can use the `stations_search` function:
 
 
-``` r
+``` {r, eval=FALSE}
 stations_search("Kamloops")
 ```
 
@@ -96,7 +96,7 @@ stations_search("Kamloops")
 You can narrow down your search by specifying time intervals (options are "hour", "day", or "month"):
 
 
-``` r
+``` {r, eval=FALSE}
 stations_search("Kamloops", interval = "hour")
 ```
 
@@ -113,7 +113,7 @@ stations_search("Kamloops", interval = "hour")
 You can specify more than one interval:
 
 
-``` r
+``` {r, eval=FALSE}
 stations_search("Kamloops", interval = c("hour", "month"))
 ```
 
@@ -139,7 +139,7 @@ stations_search("Kamloops", interval = c("hour", "month"))
 You can also search by proximity. These results include a new column `distance` specifying the distance in km from the coordinates:
 
 
-``` r
+``` {r, eval=FALSE}
 stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour")
 ```
 
@@ -157,7 +157,7 @@ We can also perform more complex searches using `filter()` function from the `dp
 direction on the data returned by stations():
 
 
-``` r
+``` {r, eval=FALSE}
 BCstations <- stations() %>%
   filter(prov %in% c("BC")) %>%
   filter(interval == "hour") %>%
@@ -178,7 +178,7 @@ BCstations
 ## # ℹ 1 more variable: normals_1971_2000 <lgl>
 ```
 
-``` r
+``` {r, eval=FALSE}
 ## weather_dl() accepts numbers so we can create a vector to input into weather:
 stn_vector <- BCstations$station_id
 stn_vector
@@ -191,13 +191,13 @@ stn_vector
 You can update this list of stations with
 
 
-``` r
+``` {r, eval=FALSE}
 stations_dl()
 ```
 
 And check when it was last updated with
 
-``` r
+``` {r, eval=FALSE}
 stations_meta()
 ```
 
@@ -452,7 +452,7 @@ unnest(n, normals)
 ## #   precip_extreme_daily_code <chr>, precip_extreme_daily_date <date>, precip_extreme_daily_date_code <chr>, snow_extreme_depth <dbl>, …
 ```
 
-``` r
+``` {r, eval=FALSE}
 unnest(n, frost)
 ```
 
