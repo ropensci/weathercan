@@ -152,8 +152,9 @@ normals_dl <- function(climate_ids, normals_years = "current",
 
 normals_html <- function(prov, station_id, climate_id, normals_years) {
   yrs <- stringr::str_extract(normals_years, "^[0-9]{4}")
-  q <- list(format = "csv", lang = "e", prov = prov, yr = yrs, 
-            stnID = station_id, climate_id = climate_id, 
+
+  q <- list(ffmt = "csv", lang = "e", prov = prov, yr = yrs, 
+            stnID = station_id, climateID = climate_id, 
             submit = "Download Data")
 
   get_check(url = getOption("weathercan.urls.normals"), query = q,
