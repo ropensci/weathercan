@@ -273,4 +273,13 @@ test_that("stations_search returns normals only", {
 
   expect_message(s3 <- stations_search("Brandon", normals_years = "1991-2020"),
                  "be aware that they are not yet available")
+
+  expect_error(
+    stations_search(name = "Ottawa", normals_years = "invalid input"),
+    "`normals_years` must either be `NULL`"
+  )
+  expect_no_error(stations_search(name = "Ottawa", normals_years = NULL))
+  expect_no_error(stations_search(name = "Ottawa", normals_years = "current"))
+
+
 })
