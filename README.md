@@ -311,6 +311,7 @@ contributing](CONTRIBUTING.md)
 
 
 
+
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
@@ -393,6 +394,12 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <a href="https://github.com/ropensci/weathercan/commits?author=shandiya">shandiya</a>
 </td>
 <td align="center">
+<a href="https://github.com/mahjabinoyshi">
+<img src="https://avatars.githubusercontent.com/u/197597579?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/commits?author=mahjabinoyshi">mahjabinoyshi</a>
+</td>
+<td align="center">
 <a href="https://github.com/everettsp">
 <img src="https://avatars.githubusercontent.com/u/24480376?v=4" width="100px;" alt=""/>
 </a><br>
@@ -416,7 +423,7 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <tr>
 <td align="center">
 <a href="https://github.com/paleolimbot">
-<img src="https://avatars.githubusercontent.com/u/10995762?u=964d5dc69b45b5f96975903f08c42457b3b6f8bb&v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/10995762?u=e59fac54d0c9e857e0740e63579a7a10df3acf24&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Apaleolimbot">paleolimbot</a>
 </td>
@@ -662,6 +669,12 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Azacharybelisle">zacharybelisle</a>
 </td>
+<td align="center">
+<a href="https://github.com/ryanthrendyle-work">
+<img src="https://avatars.githubusercontent.com/u/254770210?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Aryanthrendyle-work">ryanthrendyle-work</a>
+</td>
 </tr>
 
 </table>
@@ -749,6 +762,7 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
 
 
 
