@@ -1,3 +1,6 @@
+# weathercan 0.7.8
+- ECCC reverted some of the changes they made last week, this is a quick to address this.
+
 # weathercan 0.7.7
 - Quick fix to adjust API calls which require a Day parameter for *all* calls 
   (this isn't actually used for metadata or historical weather, but is required).
