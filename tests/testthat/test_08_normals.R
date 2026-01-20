@@ -320,3 +320,9 @@ test_that("normals_dl() multiple weird stations", {
 
   expect_snapshot_value(nd, style = "json2", tolerance = 0.001)
 })
+test_that("normals_dl validates normals_years", {
+  expect_error(
+    normals_dl("5010480", normals_years = "abcd"),
+    "`normals_years` must be one of"
+  )
+})
