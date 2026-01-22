@@ -10,7 +10,7 @@ stations_meta()
 Date of ECCC update and date downloaded via weathercan.
 }
 \examples{
-\dontshow{if (check_eccc()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (check_eccc()) withAutoprint(\{ # examplesIf}
 stations_meta()
 \dontshow{\}) # examplesIf}
 }

@@ -72,7 +72,7 @@ Climate normals are downloaded from the url stored in option
 \code{options(weathercan.urls.normals = "your_new_url")}.
 }
 \examples{
-\dontshow{if (check_eccc()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (check_eccc()) withAutoprint(\{ # examplesIf}
 
 # Find the climate_id
 stations_search("Brandon A", normals_years = "current")

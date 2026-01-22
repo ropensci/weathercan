@@ -97,6 +97,8 @@ Other contributors:
   \item Kelli F. Johnson \email{kelli.johnson@noaa.gov} (\href{https://orcid.org/0000-0002-5149-451X}{ORCID}) [contributor]
   \item Russ Allen \email{mbr@historicip.com} [contributor]
   \item Everett Snieder \email{everett.snieder@gmail.com} (\href{https://orcid.org/0000-0003-4997-3404}{ORCID}) [contributor]
+  \item Josh Persi \email{joshpersi@gmail.com} (\href{https://orcid.org/0000-0002-2700-6483}{ORCID}) [contributor]
+  \item Mahjabin Oyshi \email{oyshimahjabin3@gmail.com} (\href{https://orcid.org/0009-0000-7992-6727}{ORCID}) [contributor]
 }
 
 }
