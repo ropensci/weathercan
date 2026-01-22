@@ -2,93 +2,121 @@ library(dplyr)
 
 ## Get names expected from stations data download
 
-province <- c("ALBERTA" = "AB",
-              "BRITISH COLUMBIA" = "BC",
-              "MANITOBA" = "MB",
-              "NEW BRUNSWICK" = "NB",
-              "NEWFOUNDLAND AND LABRADOR" = "NL",
-              "NORTHWEST TERRITORIES" = "NT",
-              "NOVA SCOTIA" = "NS",
-              "NUNAVUT" = "NU",
-              "ONTARIO" = "ON",
-              "PRINCE EDWARD ISLAND" = "PE",
-              "QUEBEC" = "QC",
-              "SASKATCHEWAN" = "SK",
-              "YUKON" = "YT")
+province <- c(
+  "ALBERTA" = "AB",
+  "BRITISH COLUMBIA" = "BC",
+  "MANITOBA" = "MB",
+  "NEW BRUNSWICK" = "NB",
+  "NEWFOUNDLAND AND LABRADOR" = "NL",
+  "NORTHWEST TERRITORIES" = "NT",
+  "NOVA SCOTIA" = "NS",
+  "NUNAVUT" = "NU",
+  "ONTARIO" = "ON",
+  "PRINCE EDWARD ISLAND" = "PE",
+  "QUEBEC" = "QC",
+  "SASKATCHEWAN" = "SK",
+  "YUKON" = "YT"
+)
 
-m_names <- c("station_name" = "Station Name", "station_id" = "ID",
-             "station_operator" = "Current Station Operator",
-             "prov" = "Province", "lat" = "Latitude", "lon" = "Longitude",
-             "elev" = "Elevation", "climate_id" = "Climate Identifier",
-             "WMO_id" = "WMO Identifier", "TC_id" = "TC Identifier")
+m_names <- c(
+  "station_name"      = "Station Name",
+  "station_id"        = "ID",
+  "station_operator"  = "Current Station Operator",
+  "prov"              = "Province",
+  "lat"               = "Latitude",
+  "lon"               = "Longitude",
+  "elev"              = "Elevation",
+  "climate_id"        = "Climate Identifier",
+  "WMO_id"            = "WMO Identifier",
+  "TC_id"             = "TC Identifier"
+)
 
 w_names <- list(
   "hour" = c(
-    "time" = "Date/Time (LST)", "year" = "Year", "month" = "Month",
-    "day" = "Day", "hour" = "Time (LST)",
-    #"qual" = "Data Quality",
-    "qual" = "Flag",
-    "temp" = "Temp (C)", "temp_flag" = "Temp Flag",
-    "temp_dew" = "Dew Point Temp (C)",
-    "temp_dew_flag" = "Dew Point Temp Flag",
-    "rel_hum" = "Rel Hum (%)", "rel_hum_flag" = "Rel Hum Flag",
-    "precip_amt" = "Precip. Amount (mm)", "precip_amt_flag" = "Precip. Amount Flag",
-    "wind_dir" = "Wind Dir (10s deg)",
-    "wind_dir_flag" = "Wind Dir Flag",
-    "wind_spd" = "Wind Spd (km/h)", "wind_spd_flag" = "Wind Spd Flag",
-    "visib" = "Visibility (km)", "visib_flag" = "Visibility Flag",
-    "pressure" = "Stn Press (kPa)", "pressure_flag" = "Stn Press Flag",
-    "hmdx" = "Hmdx", "hmdx_flag" = "Hmdx Flag",
-    "wind_chill" = "Wind Chill", "wind_chill_flag" = "Wind Chill Flag",
-    "weather" = "Weather"),
+    "time"             = "Date/Time (LST)",
+    "year"             = "Year",
+    "month"            = "Month",
+    "day"              = "Day",
+    "hour"             = "Time (LST)",
+    "qual"             = "Flag",
+    "temp"             = "Temp (C)",
+    "temp_flag"        = "Temp Flag",
+    "temp_dew"         = "Dew Point Temp (C)",
+    "temp_dew_flag"    = "Dew Point Temp Flag",
+    "rel_hum"          = "Rel Hum (%)",
+    "rel_hum_flag"     = "Rel Hum Flag",
+    "precip_amt"       = "Precip. Amount (mm)",
+    "precip_amt_flag"  = "Precip. Amount Flag",
+    "wind_dir"         = "Wind Dir (10s deg)",
+    "wind_dir_flag"    = "Wind Dir Flag",
+    "wind_spd"         = "Wind Spd (km/h)",
+    "wind_spd_flag"    = "Wind Spd Flag",
+    "visib"            = "Visibility (km)",
+    "visib_flag"       = "Visibility Flag",
+    "pressure"         = "Stn Press (kPa)",
+    "pressure_flag"    = "Stn Press Flag",
+    "hmdx"             = "Hmdx",
+    "hmdx_flag"        = "Hmdx Flag",
+    "wind_chill"       = "Wind Chill",
+    "wind_chill_flag"  = "Wind Chill Flag",
+    "weather"          = "Weather"
+  ),
   "day" = c(
-    "date" = "Date/Time", "year" = "Year",
-    "month" = "Month", "day" = "Day",
-    "qual" = "Data Quality",
-    #"qual" = "Flag",
-    "max_temp" = "Max Temp (C)", "max_temp_flag" = "Max Temp Flag",
-    "min_temp" = "Min Temp (C)", "min_temp_flag" = "Min Temp Flag",
-    "mean_temp" = "Mean Temp (C)", "mean_temp_flag" = "Mean Temp Flag",
-    "heat_deg_days" = "Heat Deg Days (C)",
-    "heat_deg_days_flag" = "Heat Deg Days Flag",
-    "cool_deg_days" = "Cool Deg Days (C)",
-    "cool_deg_days_flag" = "Cool Deg Days Flag",
-    "total_rain" = "Total Rain (mm)",
-    "total_rain_flag" = "Total Rain Flag",
-    "total_snow" = "Total Snow (cm)",
-    "total_snow_flag" = "Total Snow Flag",
-    "total_precip" = "Total Precip (mm)",
-    "total_precip_flag" = "Total Precip Flag",
-    "snow_grnd" = "Snow on Grnd (cm)",
-    "snow_grnd_flag" = "Snow on Grnd Flag",
-    "dir_max_gust" = "Dir of Max Gust (10s deg)",
-    "dir_max_gust_flag" = "Dir of Max Gust Flag",
-    "spd_max_gust" = "Spd of Max Gust (km/h)",
-    "spd_max_gust_flag" = "Spd of Max Gust Flag"),
+    "date"                 = "Date/Time",
+    "year"                 = "Year",
+    "month"                = "Month",
+    "day"                  = "Day",
+    "qual"                 = "Data Quality",
+    "max_temp"             = "Max Temp (C)",
+    "max_temp_flag"        = "Max Temp Flag",
+    "min_temp"             = "Min Temp (C)",
+    "min_temp_flag"        = "Min Temp Flag",
+    "mean_temp"            = "Mean Temp (C)",
+    "mean_temp_flag"       = "Mean Temp Flag",
+    "heat_deg_days"        = "Heat Deg Days (C)",
+    "heat_deg_days_flag"   = "Heat Deg Days Flag",
+    "cool_deg_days"        = "Cool Deg Days (C)",
+    "cool_deg_days_flag"   = "Cool Deg Days Flag",
+    "total_rain"           = "Total Rain (mm)",
+    "total_rain_flag"      = "Total Rain Flag",
+    "total_snow"           = "Total Snow (cm)",
+    "total_snow_flag"      = "Total Snow Flag",
+    "total_precip"         = "Total Precip (mm)",
+    "total_precip_flag"    = "Total Precip Flag",
+    "snow_grnd"            = "Snow on Grnd (cm)",
+    "snow_grnd_flag"       = "Snow on Grnd Flag",
+    "dir_max_gust"         = "Dir of Max Gust (10s deg)",
+    "dir_max_gust_flag"    = "Dir of Max Gust Flag",
+    "spd_max_gust"         = "Spd of Max Gust (km/h)",
+    "spd_max_gust_flag"    = "Spd of Max Gust Flag"
+  ),
   "month" = c(
-    "date" = "Date/Time", "year" = "Year", "month" = "Month",
-    "mean_max_temp" = "Mean Max Temp (C)",
-    "mean_max_temp_flag" = "Mean Max Temp Flag",
-    "mean_min_temp" = "Mean Min Temp (C)",
-    "mean_min_temp_flag" = "Mean Min Temp Flag",
-    "mean_temp" = "Mean Temp (C)",
-    "mean_temp_flag" = "Mean Temp Flag",
-    "extr_max_temp" = "Extr Max Temp (C)",
-    "extr_max_temp_flag" = "Extr Max Temp Flag",
-    "extr_min_temp" = "Extr Min Temp (C)",
-    "extr_min_temp_flag" = "Extr Min Temp Flag",
-    "total_rain" = "Total Rain (mm)",
-    "total_rain_flag" = "Total Rain Flag",
-    "total_snow" = "Total Snow (cm)",
-    "total_snow_flag" = "Total Snow Flag",
-    "total_precip" = "Total Precip (mm)",
-    "total_precip_flag" = "Total Precip Flag",
-    "snow_grnd_last_day" = "Snow Grnd Last Day (cm)",
-    "snow_grnd_last_day_flag" = "Snow Grnd Last Day Flag",
-    "dir_max_gust" = "Dir of Max Gust (10's deg)",
-    "dir_max_gust_flag" = "Dir of Max Gust Flag",
-    "spd_max_gust" = "Spd of Max Gust (km/h)",
-    "spd_max_gust_flag" = "Spd of Max Gust Flag")
+    "date"                     = "Date/Time",
+    "year"                     = "Year",
+    "month"                    = "Month",
+    "mean_max_temp"            = "Mean Max Temp (C)",
+    "mean_max_temp_flag"       = "Mean Max Temp Flag",
+    "mean_min_temp"            = "Mean Min Temp (C)",
+    "mean_min_temp_flag"       = "Mean Min Temp Flag",
+    "mean_temp"                = "Mean Temp (C)",
+    "mean_temp_flag"           = "Mean Temp Flag",
+    "extr_max_temp"            = "Extr Max Temp (C)",
+    "extr_max_temp_flag"       = "Extr Max Temp Flag",
+    "extr_min_temp"            = "Extr Min Temp (C)",
+    "extr_min_temp_flag"       = "Extr Min Temp Flag",
+    "total_rain"               = "Total Rain (mm)",
+    "total_rain_flag"          = "Total Rain Flag",
+    "total_snow"               = "Total Snow (cm)",
+    "total_snow_flag"          = "Total Snow Flag",
+    "total_precip"             = "Total Precip (mm)",
+    "total_precip_flag"        = "Total Precip Flag",
+    "snow_grnd_last_day"       = "Snow Grnd Last Day (cm)",
+    "snow_grnd_last_day_flag"  = "Snow Grnd Last Day Flag",
+    "dir_max_gust"             = "Dir of Max Gust (10's deg)",
+    "dir_max_gust_flag"        = "Dir of Max Gust Flag",
+    "spd_max_gust"             = "Spd of Max Gust (km/h)",
+    "spd_max_gust_flag"        = "Spd of Max Gust Flag"
+  )
 )
 
 n_names <- tribble(
@@ -239,48 +267,168 @@ n_names <- tribble(
   "cloud_3_7", "3 to 7 tenths", "sub",
   "cloud_8_10", "8 to 10 tenths", "sub"
 ) %>%
-  mutate(variable = tolower(variable),
-         group = stringr::str_detect(new_var, "title"),
-         group = cumsum(group),
-         subgroup = type != "sub",
-         subgroup = cumsum(subgroup),
-         variable_sub = paste0(variable, "_", subgroup))
+  mutate(
+    variable = tolower(variable),
+    group    = stringr::str_detect(new_var, "title"),
+    group    = cumsum(group),
+    subgroup = type != "sub",
+    subgroup = cumsum(subgroup),
+    variable_sub = paste0(variable, "_", subgroup)
+  )
 
 f_names <- tribble(
   ~new_var, ~variable, ~group, ~match,
-  "date_last_spring_frost", "Average Date of Last Spring Frost", 1, "Average Date of Last Spring",
-  "date_first_fall_frost", "Average Date of First Fall Frost", 1, "Average Date of First Fall",
-  "length_frost_free", "Average Length of Frost-Free Period", 1, "Average Length",
+  "date_last_spring_frost",
+  "Average Date of Last Spring Frost", 1, "Average Date of Last Spring",
+  "date_first_fall_frost",
+  "Average Date of First Fall Frost", 1, "Average Date of First Fall",
+  "length_frost_free",
+  "Average Length of Frost-Free Period", 1, "Average Length",
   "prob_last_spring_temp_below_0_on_date",
-  paste0("Probability of last temperature in spring of 0 ",
-         "C or lower on or after indicated dates"), 2, "Probability of last temperature",
+  "Probability of last temperature in spring of 0 C or lower on or after indicated dates",
+  2, "Probability of last temperature",
   "prob_first_fall_temp_below_0_on_date",
-  paste0("Probability of first temperature in fall of 0 ",
-         "C or lower on or before indicated dates"), 2, "Probability of first temperature",
+  "Probability of first temperature in fall of 0 C or lower on or before indicated dates",
+  2, "Probability of first temperature",
   "prob_length_frost_free",
-  paste0("Probability of frost-free period equal ",
-         "to or less than indicated period (Days)"), 2, "Probability of frost-free",
-  "probability", "probability", 3, "probability")
+  "Probability of frost-free period equal to or less than indicated period (Days)",
+  2, "Probability of frost-free",
+  "probability", "probability", 3, "probability"
+)
 
 n_formats <- select(n_names, "new_var") %>%
   filter(!stringr::str_detect(new_var, "title")) %>%
-  mutate(format = case_when(
-    stringr::str_detect(new_var, "date") ~ "date",
-    stringr::str_detect(new_var, "dir") ~ "character",
-    TRUE ~ "numeric"))
+  mutate(
+    format = case_when(
+      stringr::str_detect(new_var, "date") ~ "date",
+      stringr::str_detect(new_var, "dir")  ~ "character",
+      TRUE                                 ~ "numeric"
+    )
+  )
 
-n_formats <- bind_rows(n_formats,
-                       tibble(new_var = paste0(n_formats[["new_var"]], "_code"),
-                              format = "character"))
+n_formats <- bind_rows(
+  n_formats,
+  tibble(
+    new_var = paste0(n_formats[["new_var"]], "_code"),
+    format  = "character"
+  )
+)
 
 f_formats <- select(f_names, "new_var") %>%
-  mutate(format = case_when(
-    stringr::str_detect(new_var, "on_date") ~ "date",
-    TRUE ~ "numeric")) %>%
+  mutate(
+    format = case_when(
+      stringr::str_detect(new_var, "on_date") ~ "date",
+      TRUE                                    ~ "numeric"
+    )
+  ) %>%
   bind_rows(tibble(new_var = "frost_code", format = "character"))
 
-usethis::use_data(province, w_names, m_names, n_names, f_names,
-                  n_formats, f_formats,
-                  overwrite = TRUE, internal = TRUE)
+usethis::use_data(
+  province, w_names, m_names, n_names, f_names,
+  n_formats, f_formats,
+  overwrite = TRUE, internal = TRUE
+)
 
-# Technical documentation: ftp://ftp.tor.ec.gc.ca/Pub/Documentation_Technical/Technical_Documentation.pdf
+# 1991–2020 normals helpers 
+
+
+library(httr)
+library(readr)
+library(jsonlite)
+
+#' Stations with 1991–2020 normals
+#'
+#' @param province Optional province or territory. Two-letter code
+#'   (e.g., "MB") or full name (e.g., "Manitoba"), case-insensitive.
+#' @return Tibble of stations with 1991–2020 normals.
+#' @export
+get_normals_1991_2020_stations <- function(province = NULL) {
+  s <- stations %>%
+    dplyr::filter(.data$normals_1991_2020)
+  
+  if (!is.null(province)) {
+    province_input <- toupper(province)
+    
+    prov_codes <- c(
+      "AB" = "ALBERTA",
+      "BC" = "BRITISH COLUMBIA",
+      "MB" = "MANITOBA",
+      "NB" = "NEW BRUNSWICK",
+      "NL" = "NEWFOUNDLAND AND LABRADOR",
+      "NT" = "NORTHWEST TERRITORIES",
+      "NS" = "NOVA SCOTIA",
+      "NU" = "NUNAVUT",
+      "ON" = "ONTARIO",
+      "PE" = "PRINCE EDWARD ISLAND",
+      "QC" = "QUEBEC",
+      "SK" = "SASKATCHEWAN",
+      "YT" = "YUKON"
+    )
+    
+    if (province_input %in% prov_codes) {
+      province_code <- names(prov_codes)[prov_codes == province_input]
+    } else if (province_input %in% names(prov_codes)) {
+      province_code <- province_input
+    } else {
+      warning("Province '", province, "' not recognized. Returning all provinces.")
+      return(s)
+    }
+    
+    s <- dplyr::filter(s, .data$prov == province_code)
+  }
+  
+  s
+}
+
+#' Download 1991–2020 climate normals from ECCC
+#'
+#' @param station Station name (character) or climate_id (character/number).
+#' @param format Either "csv" or "json".
+#' @param ... Passed to readr::read_csv() when format = "csv".
+#' @return A tibble or list with normals data, or NULL if not available.
+#' @export
+normals_dl_1991_2020 <- function(station, format = "csv", ...) {
+  stopifnot(format %in% c("csv", "json"))
+  
+  s <- stations %>%
+    dplyr::filter(.data$normals_1991_2020)
+  
+  if (is.character(station)) {
+    s <- s %>%
+      dplyr::filter(grepl(station, station_name, ignore.case = TRUE))
+  } else {
+    s <- s %>%
+      dplyr::filter(climate_id == as.character(station))
+  }
+  
+  if (nrow(s) == 0L) {
+    message("No 1991-2020 normals available for station: ", station)
+    return(NULL)
+  }
+  
+  # NOTE: this assumes stnID == climate_id; adjust if ECCC
+  # uses a different ID from the inventory.
+  base_url <- "https://climate.weather.gc.ca/climate_normals/"
+  url <- paste0(base_url, "results_1991_2020_", tolower(format),
+                "?stnID=", s$climate_id[1])
+  
+  resp <- httr::GET(url)
+  if (resp$status_code != 200) {
+    stop("Failed to download normals. HTTP ", resp$status_code)
+  }
+  
+  if (format == "csv") {
+    readr::read_csv(httr::content(resp, as = "text"), ...)
+  } else {
+    jsonlite::fromJSON(httr::content(resp, as = "text"))
+  }
+}
+
+# Example usage (outside the package, in a script):
+# normals_stations <- get_normals_1991_2020_stations()
+# mb_normals       <- get_normals_1991_2020_stations("MB")
+# wpg_data         <- normals_dl_1991_2020("WINNIPEG RICHARDSON AIRPORT")
+devtools::document()
+devtools::load_all()
+devtools::check()
+
