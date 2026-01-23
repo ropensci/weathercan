@@ -7,7 +7,7 @@ library(stringr)
 
 v <- list.files("vignettes", ".orig$", full.names = TRUE, recursive = TRUE)
 
-for(i in v) {
+for (i in v) {
   new <- stringr::str_remove(i, ".orig$")
   knit(i, new)
 

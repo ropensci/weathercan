@@ -1,7 +1,12 @@
 ## Get up-to-date stations data
 stations_dl_internal(verbose = TRUE)
 
-kamloops_day <- weather_dl(51423, start = "2016-01-01", end = "2016-06-30", interval = "day")
+kamloops_day <- weather_dl(
+  51423,
+  start = "2016-01-01",
+  end = "2016-06-30",
+  interval = "day"
+)
 usethis::use_data(kamloops_day, overwrite = TRUE)
 
 kamloops <- weather_dl(51423, start = "2016-01-01", end = "2016-06-30")
