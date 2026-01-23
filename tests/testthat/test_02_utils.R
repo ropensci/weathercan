@@ -18,8 +18,10 @@ test_that("check_ids() as expected", {
   expect_silent(check_ids("301AR54", stations(), type = "climate_id"))
   expect_error(check_ids(1, stations(), type = "station_id"))
   expect_error(check_ids(1, stations(), type = "climate_id"))
-  expect_error(check_ids(1795, stations(), type = "climate_id"),
-               "Did you use 'station_id' by accident?")
+  expect_error(
+    check_ids(1795, stations(), type = "climate_id"),
+    "Did you use 'station_id' by accident?"
+  )
 })
 
 test_that("check_normals() as expected", {
@@ -35,12 +37,17 @@ test_that("check_normals() as expected", {
 test_that("get_check() as expected", {
   skip_if_offline()
   skip_on_cran()
-  expect_error(get_check("https://climate.weather.gc.ca/error/dbdown_e.html"),
-              "Service is currently down!")
+  expect_error(
+    get_check("https://climate.weather.gc.ca/error/dbdown_e.html"),
+    "Service is currently down!"
+  )
 
   skip_if_not(httr::status_code(httr::GET("http://httpbin.org/")) == 200)
-  expect_error(get_check("http://httpbin.org/status/404", task = "test"),
-              "Not Found (HTTP 404). Failed to test.", fixed = TRUE)
+  expect_error(
+    get_check("http://httpbin.org/status/404", task = "test"),
+    "Not Found (HTTP 404). Failed to test.",
+    fixed = TRUE
+  )
 })
 
 test_that("check_eccc() as expected", {
@@ -48,8 +55,10 @@ test_that("check_eccc() as expected", {
   expect_type(check_eccc(), "logical")
 
   # Expect FALSE if on cran
-  if(Sys.getenv("NOT_CRAN") == "") expect_false(check_eccc())
+  if (Sys.getenv("NOT_CRAN") == "") {
+    expect_false(check_eccc())
+  }
 
   skip_if_offline()
-  if(Sys.getenv("NOT_CRAN") == TRUE) expect_true(check_eccc())
+  if (Sys.getenv("NOT_CRAN") == TRUE) expect_true(check_eccc())
 })

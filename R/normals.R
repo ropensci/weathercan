@@ -81,15 +81,21 @@
 #'   unnest(frost)
 #' @export
 
-normals_dl <- function(climate_ids, normals_years = "current",
-                       format = TRUE, stn = NULL,
-                       verbose = FALSE, quiet = FALSE) {
-
-
-  if(!is.null(stn)){
-    stop("`stn` is defunct, to use an updated stations data frame ",
-         "use `stations_dl()` to update the internal data, and ",
-         "`stations_meta()` to check when it was last updated", call. = FALSE)
+normals_dl <- function(
+  climate_ids,
+  normals_years = "current",
+  format = TRUE,
+  stn = NULL,
+  verbose = FALSE,
+  quiet = FALSE
+) {
+  if (!is.null(stn)) {
+    stop(
+      "`stn` is defunct, to use an updated stations data frame ",
+      "use `stations_dl()` to update the internal data, and ",
+      "`stations_meta()` to check when it was last updated",
+      call. = FALSE
+    )
   }
   stn <- stations()
 
@@ -99,18 +105,26 @@ normals_dl <- function(climate_ids, normals_years = "current",
   yrs <- paste0("normals_", stringr::str_replace(normals_years, "-", "_"))
 
   n <- dplyr::filter(stn, .data$climate_id %in% climate_ids) %>%
-    dplyr::select("prov", "station_name", "station_id", "climate_id",
-                  "normals" = dplyr::matches(yrs)) %>%
+    dplyr::select(
+      "prov",
+      "station_name",
+      "station_id",
+      "climate_id",
+      "normals" = dplyr::matches(yrs)
+    ) %>%
     dplyr::distinct() %>%
     dplyr::mutate(climate_id = as.character(.data$climate_id))
 
   # if(nrow(n) == 0) stop("No stations matched these climate ids", call. = FALSE)
 
-  if(all(n$normals == FALSE)) {
+  if (all(n$normals == FALSE)) {
     stop("No stations had climate normals available", call. = FALSE)
-  } else if(any(n$normals == FALSE)) {
-    message("Not all stations have climate normals available (climate ids: ",
-            paste0(n$climate_id[!n$normals], collapse = ", "), ")")
+  } else if (any(n$normals == FALSE)) {
+    message(
+      "Not all stations have climate normals available (climate ids: ",
+      paste0(n$climate_id[!n$normals], collapse = ", "),
+      ")"
+    )
     n <- dplyr::filter(n, .data$normals == TRUE) %>%
       dplyr::select(-"normals")
   }
@@ -118,47 +132,74 @@ normals_dl <- function(climate_ids, normals_years = "current",
   # Download data
   n <- n %>%
     dplyr::mutate(
-      html = purrr::pmap(list(.data$prov, .data$station_id, .data$climate_id),
-                         ~normals_html(..1, ..2, ..3, normals_years)),
+      html = purrr::pmap(
+        list(.data$prov, .data$station_id, .data$climate_id),
+        ~ normals_html(..1, ..2, ..3, normals_years)
+      ),
       normals = purrr::map(.data$html, normals_raw),
       meets_wmo = purrr::map_lgl(.data$normals, meets_wmo),
       normals = purrr::map(.data$normals, normals_extract),
       frost = purrr::map(.data$normals, frost_find),
-      normals = purrr::map2(.data$normals, .data$climate_id,
-                            ~ data_extract(.x, climate_id = .y)),
-      frost = purrr::map2(.data$frost, .data$climate_id,
-                          ~ frost_extract(.x, climate_id = .y)),
+      normals = purrr::map2(
+        .data$normals,
+        .data$climate_id,
+        ~ data_extract(.x, climate_id = .y)
+      ),
+      frost = purrr::map2(
+        .data$frost,
+        .data$climate_id,
+        ~ frost_extract(.x, climate_id = .y)
+      ),
       n_data = purrr::map_dbl(.data$normals, nrow),
-      n_frost = purrr::map_dbl(.data$frost, nrow))
+      n_frost = purrr::map_dbl(.data$frost, nrow)
+    )
 
-  if(any(no_data <- n$n_data + n$n_frost == 0)) {
-    message("All climate normals missing for some stations (climate_ids: ",
-            paste0(n$climate_id[no_data], collapse = ", "), ")")
+  if (any(no_data <- n$n_data + n$n_frost == 0)) {
+    message(
+      "All climate normals missing for some stations (climate_ids: ",
+      paste0(n$climate_id[no_data], collapse = ", "),
+      ")"
+    )
   }
 
   # Format dates etc.
-  n <- dplyr::mutate(n,
-                     normals_years = !!normals_years,
-                     normals = purrr::map2(.data$normals,
-                                           .data$climate_id,
-                                           data_format),
-                     frost = purrr::map2(.data$frost,
-                                         .data$climate_id,
-                                         frost_format))
+  n <- dplyr::mutate(
+    n,
+    normals_years = !!normals_years,
+    normals = purrr::map2(.data$normals, .data$climate_id, data_format),
+    frost = purrr::map2(.data$frost, .data$climate_id, frost_format)
+  )
 
-  dplyr::select(n, "prov", "station_name", "climate_id", "normals_years",
-                "meets_wmo", "normals", "frost")
+  dplyr::select(
+    n,
+    "prov",
+    "station_name",
+    "climate_id",
+    "normals_years",
+    "meets_wmo",
+    "normals",
+    "frost"
+  )
 }
 
 normals_html <- function(prov, station_id, climate_id, normals_years) {
   yrs <- stringr::str_extract(normals_years, "^[0-9]{4}")
 
-  q <- list(ffmt = "csv", lang = "e", prov = prov, yr = yrs, 
-            stnID = station_id, climateID = climate_id, 
-            submit = "Download Data")
+  q <- list(
+    ffmt = "csv",
+    lang = "e",
+    prov = prov,
+    yr = yrs,
+    stnID = station_id,
+    climateID = climate_id,
+    submit = "Download Data"
+  )
 
-  get_check(url = getOption("weathercan.urls.normals"), query = q,
-            task = "access climate normals")
+  get_check(
+    url = getOption("weathercan.urls.normals"),
+    query = q,
+    task = "access climate normals"
+  )
 }
 
 normals_raw <- function(html, nrows = -1) {
@@ -174,14 +215,16 @@ normals_raw <- function(html, nrows = -1) {
 normals_extract <- function(n, return = "data") {
   wmo <- find_line(n, cols = "meets WMO standards")
   skip <- find_line(n, cols = c("Jan", "Feb", "Mar"))
-  if(return == "data") {
-    if(length(wmo) > 0) {
+  if (return == "data") {
+    if (length(wmo) > 0) {
       n <- n[c(wmo, skip:length(n))]
     } else {
       n <- n[skip:length(n)]
     }
     # Remove WMO if exists
-    if(stringr::str_detect(n[1], "WMO standards")) n <- n[-1]
+    if (stringr::str_detect(n[1], "WMO standards")) {
+      n <- n[-1]
+    }
 
     # Remove empty strings if they exist
     n <- stringr::str_remove_all(n, "[,]{2,}$")
@@ -191,7 +234,6 @@ normals_extract <- function(n, return = "data") {
 
 
 data_extract <- function(n, climate_id) {
-
   # Remove frost dates
   n <- frost_find(n, type = "remove")
 
@@ -200,16 +242,20 @@ data_extract <- function(n, climate_id) {
   # Read normals (expect warnings due to header rows, etc.)
   suppressWarnings(n <- readr::read_csv(I(n), col_types = readr::cols()))
 
-  if(nrow(n) == 0) return(dplyr::tibble())
+  if (nrow(n) == 0) {
+    return(dplyr::tibble())
+  }
 
   # Line up names to deal with duplicate variable names
   names(n)[1] <- "variable"
   n <- dplyr::mutate(n, variable = tolower(.data$variable))
 
   # Mark title variables align variable names accordingly
-  nn <- dplyr::filter(n_names,
-                      stringr::str_detect(.data$new_var, "title"),
-                      .data$variable %in% n$variable)
+  nn <- dplyr::filter(
+    n_names,
+    stringr::str_detect(.data$new_var, "title"),
+    .data$variable %in% n$variable
+  )
   # Remove missing groups
   nn <- dplyr::filter(n_names, .data$group %in% nn$group)
 
@@ -224,40 +270,60 @@ data_extract <- function(n, climate_id) {
     dplyr::ungroup()
 
   # Make subgroups unique
-  n <- dplyr::left_join(n,
-                        dplyr::filter(nn, .data$type != "sub") %>%
-                          dplyr::select("variable", "subgroup"),
-                        by = "variable")
-  for(i in seq_len(nrow(n))) {
-    if(is.na(n[["subgroup"]][i])) n[["subgroup"]][i] <- n[["subgroup"]][i-1]
+  n <- dplyr::left_join(
+    n,
+    dplyr::filter(nn, .data$type != "sub") %>%
+      dplyr::select("variable", "subgroup"),
+    by = "variable"
+  )
+  for (i in seq_len(nrow(n))) {
+    if (is.na(n[["subgroup"]][i])) n[["subgroup"]][i] <- n[["subgroup"]][i - 1]
   }
 
-  n <- dplyr::mutate(n, variable_sub =
-                       paste0(.data$variable, "_", .data$subgroup))
+  n <- dplyr::mutate(
+    n,
+    variable_sub = paste0(.data$variable, "_", .data$subgroup)
+  )
 
   # Detect extra measurements not expected
-  missing_names <- dplyr::anti_join(dplyr::select(n, "variable_sub"),
-                                    nn, by = "variable_sub")
+  missing_names <- dplyr::anti_join(
+    dplyr::select(n, "variable_sub"),
+    nn,
+    by = "variable_sub"
+  )
 
-  if(nrow(missing_names) > 0) {
-    stop("Not all variables for climate station ", climate_id,
-         " were identified.\nPlease report this here: ",
-         "https://github.com/ropensci/weathercan/issues", call. = FALSE)
+  if (nrow(missing_names) > 0) {
+    stop(
+      "Not all variables for climate station ",
+      climate_id,
+      " were identified.\nPlease report this here: ",
+      "https://github.com/ropensci/weathercan/issues",
+      call. = FALSE
+    )
   } else if (nrow(nn) != nrow(n)) {
-    stop("Variables for climate station ", climate_id,
-         " were misidentified. Please report this here: ",
-         "https://github.com/ropensci/weathercan/issues", call. = FALSE)
+    stop(
+      "Variables for climate station ",
+      climate_id,
+      " were misidentified. Please report this here: ",
+      "https://github.com/ropensci/weathercan/issues",
+      call. = FALSE
+    )
   }
 
   # Join new, unique measurement names by sub labels
-  n_nice <- dplyr::left_join(n, dplyr::select(nn, "new_var", "variable_sub"),
-                             by = "variable_sub")
+  n_nice <- dplyr::left_join(
+    n,
+    dplyr::select(nn, "new_var", "variable_sub"),
+    by = "variable_sub"
+  )
 
   # Check for problems
-  if(!all(nn$variable[nn$new_var %in% n_nice$new_var] %in% n$variable)) {
-    stop("Variable names did not align correctly during formating, ",
-         "consider using 'format = FALSE' and/or reporting this error.",
-         call. = FALSE)
+  if (!all(nn$variable[nn$new_var %in% n_nice$new_var] %in% n$variable)) {
+    stop(
+      "Variable names did not align correctly during formating, ",
+      "consider using 'format = FALSE' and/or reporting this error.",
+      call. = FALSE
+    )
   }
 
   # Remove titles
@@ -283,7 +349,9 @@ data_extract <- function(n, climate_id) {
   n_nice <- dplyr::select(n_nice, "period", dplyr::all_of(o))
 
   # Row order
-  o <- names(n)[!names(n) %in% c("variable", "Code", "subgroup", "variable_sub")]
+  o <- names(n)[
+    !names(n) %in% c("variable", "Code", "subgroup", "variable_sub")
+  ]
   n_nice %>%
     dplyr::mutate(period = factor(.data$period, levels = o)) %>%
     dplyr::arrange(.data$period) %>%
@@ -330,11 +398,13 @@ data_format <- function(n, climate_id) {
         .data = n_fmt,
         dplyr::across(
           .cols = dplyr::all_of(dates),
-          .fns = ~lubridate::ydm(.)
+          .fns = ~ lubridate::ydm(.)
         )
       )
     },
-    warning = function(w) stop(climate_id, " has a formating issue with dates", call. = FALSE)
+    warning = function(w) {
+      stop(climate_id, " has a formating issue with dates", call. = FALSE)
+    }
   )
 
   tryCatch(
@@ -347,7 +417,9 @@ data_format <- function(n, climate_id) {
         )
       )
     },
-     warning = function(w) stop(climate_id, " has a formating issue with numbers", call. = FALSE)
+    warning = function(w) {
+      stop(climate_id, " has a formating issue with numbers", call. = FALSE)
+    }
   )
 
   tryCatch(
@@ -364,75 +436,110 @@ data_format <- function(n, climate_id) {
         )
       )
     },
-    warning = function(w) stop(climate_id, " has a formating issue with characters", call. = FALSE))
-
+    warning = function(w) {
+      stop(climate_id, " has a formating issue with characters", call. = FALSE)
+    }
+  )
 
   n_fmt
 }
 
 frost_extract <- function(f, climate_id) {
-
-  if(all(f == "")) return(dplyr::tibble())
+  if (all(f == "")) {
+    return(dplyr::tibble())
+  }
 
   frost_free <- stringr::str_which(f, f_names$match[f_names$group == 1][1])[1]
   frost_probs <- stringr::str_which(f, f_names$match[f_names$group == 2][1])[1]
 
   # Frost free days overall
-  if(any(!is.na(frost_free)) && length(frost_free) > 0) {
-    if(length(frost_probs) == 0) last <- length(f) else last <- frost_probs - 1
+  if (any(!is.na(frost_free)) && length(frost_free) > 0) {
+    if (length(frost_probs) == 0) {
+      last <- length(f)
+    } else {
+      last <- frost_probs - 1
+    }
 
     readr::local_edition(1)
-    f1 <- readr::read_csv(I(f[frost_free:last]),
-                          col_names = c("variable", "value", "frost_code"),
-                          col_types = readr::cols(), progress = FALSE) |>
+    f1 <- readr::read_csv(
+      I(f[frost_free:last]),
+      col_names = c("variable", "value", "frost_code"),
+      col_types = readr::cols(),
+      progress = FALSE
+    ) |>
       tidyr::spread(key = "variable", value = "value")
 
-    nms <- purrr::map(stats::setNames(f_names$match, f_names$new_var),
-                      \(x) stringr::str_subset(names(f1), x)) |>
+    nms <- purrr::map(stats::setNames(f_names$match, f_names$new_var), \(x) {
+      stringr::str_subset(names(f1), x)
+    }) |>
       unlist()
 
     f1 <- dplyr::rename(f1, !!nms) %>%
-      dplyr::mutate_at(.vars = dplyr::vars(dplyr::contains("date")),
-                       ~lubridate::yday(lubridate::as_date(paste0("1999", .)))) |>
-      dplyr::mutate(length_frost_free =
-                      stringr::str_extract(.data$length_frost_free, "[0-9]*"),
-                    length_frost_free = as.numeric(.data$length_frost_free))
-  } else f1 <- na_tibble(f_names$new_var[f_names$group == 1])
+      dplyr::mutate_at(
+        .vars = dplyr::vars(dplyr::contains("date")),
+        ~ lubridate::yday(lubridate::as_date(paste0("1999", .)))
+      ) |>
+      dplyr::mutate(
+        length_frost_free = stringr::str_extract(
+          .data$length_frost_free,
+          "[0-9]*"
+        ),
+        length_frost_free = as.numeric(.data$length_frost_free)
+      )
+  } else {
+    f1 <- na_tibble(f_names$new_var[f_names$group == 1])
+  }
 
   # Frost free probabilities
-  if(any(!is.na(frost_probs)) && length(frost_probs) > 0) {
-
+  if (any(!is.na(frost_probs)) && length(frost_probs) > 0) {
     readr::local_edition(1)
-    f2 <- readr::read_csv(I(f[frost_probs:length(f)]),
-                          col_names = FALSE, col_types = readr::cols(),
-                          progress = FALSE) |>
+    f2 <- readr::read_csv(
+      I(f[frost_probs:length(f)]),
+      col_names = FALSE,
+      col_types = readr::cols(),
+      progress = FALSE
+    ) |>
       dplyr::select(dplyr::where(\(x) !all(is.na(x)))) |>
       dplyr::rename_with(
         .fn = \(x) "prob",
-        .cols = dplyr::where(\(x) any(stringr::str_detect(x, "(P|p)robability")))) |>
+        .cols = dplyr::where(\(x) {
+          any(stringr::str_detect(x, "(P|p)robability"))
+        })
+      ) |>
       dplyr::rename_with(
         .fn = \(x) "value",
         .cols = dplyr::where(\(x) {
-          any(stringr::str_detect(x, paste0("(", paste0(month.abb, collapse = ")|("), ")")))
-        })) |>
-      dplyr::mutate(measure = stringr::str_remove(.data$prob, "\\(\\d{2}%\\)"),
-                    prob = stringr::str_extract(.data$prob, "\\d{2}%")) |>
+          any(stringr::str_detect(
+            x,
+            paste0("(", paste0(month.abb, collapse = ")|("), ")")
+          ))
+        })
+      ) |>
+      dplyr::mutate(
+        measure = stringr::str_remove(.data$prob, "\\(\\d{2}%\\)"),
+        prob = stringr::str_extract(.data$prob, "\\d{2}%")
+      ) |>
       tidyr::pivot_wider(names_from = "measure", values_from = "value")
 
-    nms <- purrr::map(stats::setNames(f_names$match, f_names$new_var),
-                      \(x) stringr::str_subset(names(f2), x)) |>
+    nms <- purrr::map(stats::setNames(f_names$match, f_names$new_var), \(x) {
+      stringr::str_subset(names(f2), x)
+    }) |>
       unlist()
 
     f2 <- dplyr::rename(f2, !!nms)
-  } else f2 <- na_tibble(f_names$new_var[f_names$group == 2])
+  } else {
+    f2 <- na_tibble(f_names$new_var[f_names$group == 2])
+  }
 
-  if(nrow(f1) == 0 & nrow(f2) == 0) {
+  if (nrow(f1) == 0 & nrow(f2) == 0) {
     r <- cbind(f1, f2)
   } else {
     r <- dplyr::full_join(
       dplyr::mutate(f1, climate_id = .env$climate_id),
       dplyr::mutate(f2, climate_id = .env$climate_id),
-      by = "climate_id", relationship = "many-to-many") |>
+      by = "climate_id",
+      relationship = "many-to-many"
+    ) |>
       dplyr::select(-"climate_id")
   }
 
@@ -440,26 +547,32 @@ frost_extract <- function(f, climate_id) {
 }
 
 frost_find <- function(n, type = "extract") {
-
   frost <- find_line(n, "station data \\(Frost-Free\\)")
 
   # If no frost-free title, look for next measurement
 
-  if(length(frost) == 0) {
+  if (length(frost) == 0) {
     frost <- purrr::map(f_names$match, \(x) find_line(n, x)) |>
       unlist() |>
       min_na()
   }
 
-  if(length(frost) == 1) {
-    if(type == "extract") r <- n[(frost):length(n)]
-    if(type == "remove") r <- n[1:(frost-1)]
-  } else if(length(frost) == 0) {
-    if(type == "extract") r <- ""
-    if(type == "remove") r <- n
-  } else{
-    stop("Problem identifying frost data in normals\nPlease report this here: ",
-         "https://github.com/ropensci/weathercan/issues", call. = FALSE)
+  if (length(frost) == 1) {
+    if (type == "extract") {
+      r <- n[(frost):length(n)]
+    }
+    if (type == "remove") r <- n[1:(frost - 1)]
+  } else if (length(frost) == 0) {
+    if (type == "extract") {
+      r <- ""
+    }
+    if (type == "remove") r <- n
+  } else {
+    stop(
+      "Problem identifying frost data in normals\nPlease report this here: ",
+      "https://github.com/ropensci/weathercan/issues",
+      call. = FALSE
+    )
   }
   r
 }
@@ -473,32 +586,53 @@ frost_format <- function(f, climate_id) {
   chars <- dplyr::filter(fmts, .data$format == "character") %>%
     dplyr::pull("new_var")
 
-  f_fmt <- dplyr::mutate_at(f, .vars = dates,
-                            ~dplyr::if_else(. == "" | is.na(.), as.character(NA),
-                                            paste0(., " 1999")))
+  f_fmt <- dplyr::mutate_at(
+    f,
+    .vars = dates,
+    ~ dplyr::if_else(. == "" | is.na(.), as.character(NA), paste0(., " 1999"))
+  )
 
   # In case of warnings
-  tryCatch({f_fmt <- dplyr::mutate_at(f_fmt, .vars = dates,
-                                      ~lubridate::yday(lubridate::mdy(.)))},
-           warning = function(w) stop(climate_id,
-                                      " has a formating issue with dates",
-                                      call. = FALSE))
-  tryCatch({f_fmt <- dplyr::mutate_at(f_fmt, .vars = nums,
-                                      ~as.numeric(as.character(.)))},
-           warning = function(w) stop(climate_id,
-                                      " has a formating issue with numbers",
-                                      call. = FALSE))
-  tryCatch({f_fmt <- dplyr::mutate_at(f_fmt, .vars = chars,
-                                      ~dplyr::if_else(. == "",
-                                                      as.character(NA),
-                                                      as.character(.)))},
-           warning = function(w) stop(climate_id,
-                                      " has a formating issue with characters",
-                                      call. = FALSE))
+  tryCatch(
+    {
+      f_fmt <- dplyr::mutate_at(
+        f_fmt,
+        .vars = dates,
+        ~ lubridate::yday(lubridate::mdy(.))
+      )
+    },
+    warning = function(w) {
+      stop(climate_id, " has a formating issue with dates", call. = FALSE)
+    }
+  )
+  tryCatch(
+    {
+      f_fmt <- dplyr::mutate_at(
+        f_fmt,
+        .vars = nums,
+        ~ as.numeric(as.character(.))
+      )
+    },
+    warning = function(w) {
+      stop(climate_id, " has a formating issue with numbers", call. = FALSE)
+    }
+  )
+  tryCatch(
+    {
+      f_fmt <- dplyr::mutate_at(
+        f_fmt,
+        .vars = chars,
+        ~ dplyr::if_else(. == "", as.character(NA), as.character(.))
+      )
+    },
+    warning = function(w) {
+      stop(climate_id, " has a formating issue with characters", call. = FALSE)
+    }
+  )
   f_fmt
 }
 
 meets_wmo <- function(n) {
   start <- stringr::str_which(n, "STATION_NAME")
-  any(stringr::str_detect(n[start:(start+1)], "\\*"))
+  any(stringr::str_detect(n[start:(start + 1)], "\\*"))
 }

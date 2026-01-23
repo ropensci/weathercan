@@ -46,8 +46,11 @@ devtools::test()
 
 # Local tests
 devtools::check(cran = FALSE, manual = TRUE, run_dont_test = TRUE)
-devtools::check(cran = FALSE, manual = TRUE,
-                args = c("--no-examples", "--no-tests")) # Quick re-check as needed
+devtools::check(
+  cran = FALSE,
+  manual = TRUE,
+  args = c("--no-examples", "--no-tests")
+) # Quick re-check as needed
 devtools::check_win_devel()
 
 ## Update codemeta
@@ -86,11 +89,14 @@ usethis::pr_push()
 goodpractice::gp()
 
 
-
 # CRAN workflow ---------------------------------
 # TURN OFF INTERNET AND TRY AGAIN
-devtools::check(remote = TRUE, manual = TRUE, run_dont_test = TRUE,
-                env_vars = list("NOT_CRAN" = ""))
+devtools::check(
+  remote = TRUE,
+  manual = TRUE,
+  run_dont_test = TRUE,
+  env_vars = list("NOT_CRAN" = "")
+)
 
 # Win builder
 devtools::check_win_release()
@@ -102,37 +108,48 @@ system("cd ..; R CMD build weathercan")
 #system(paste0("cd ..; R CMD check weathercan_", version, ".tar.gz --as-cran --run-donttest")) # Local
 
 # Check Windows
-rhub::check_for_cran(path = paste0("../weathercan_", version, ".tar.gz"),
-                     check_args = "--as-cran --run-donttest",
-                     platforms = c("windows-x86_64-oldrel",
-                                   "windows-x86_64-devel",
-                                   "windows-x86_64-release"),
-                     show_status = FALSE)
+rhub::check_for_cran(
+  path = paste0("../weathercan_", version, ".tar.gz"),
+  check_args = "--as-cran --run-donttest",
+  platforms = c(
+    "windows-x86_64-oldrel",
+    "windows-x86_64-devel",
+    "windows-x86_64-release"
+  ),
+  show_status = FALSE
+)
 ##                     env_vars=c(R_COMPILE_AND_INSTALL_PACKAGES = "always"))
 
 # Check debian
-rhub::check_for_cran(path = paste0("../weathercan_", version, ".tar.gz"),
-                     check_args = "--as-cran --run-donttest",
-                     platforms = c("debian-clang-devel",
-                                   "debian-gcc-devel", # CRAN = r-devel-linux-x86_64-debian-gcc
-                                   "debian-gcc-patched",
-                                   "debian-gcc-release"), # CRAN = r-patched-linux-x86_64),
-                     show_status = FALSE)
+rhub::check_for_cran(
+  path = paste0("../weathercan_", version, ".tar.gz"),
+  check_args = "--as-cran --run-donttest",
+  platforms = c(
+    "debian-clang-devel",
+    "debian-gcc-devel", # CRAN = r-devel-linux-x86_64-debian-gcc
+    "debian-gcc-patched",
+    "debian-gcc-release"
+  ), # CRAN = r-patched-linux-x86_64),
+  show_status = FALSE
+)
 
 # Check fedora
-rhub::check_for_cran(path = paste0("../weathercan_", version, ".tar.gz"),
-                     check_args = "--as-cran",
-                     platforms = c("fedora-clang-devel",
-                                   "fedora-gcc-devel"), # CRAN = r-devel-linux-x86_64-fedora-gc
-                     env_vars = c("_R_CHECK_FORCE_SUGGESTS_" = "false"),
-                     show_status = FALSE)
+rhub::check_for_cran(
+  path = paste0("../weathercan_", version, ".tar.gz"),
+  check_args = "--as-cran",
+  platforms = c("fedora-clang-devel", "fedora-gcc-devel"), # CRAN = r-devel-linux-x86_64-fedora-gc
+  env_vars = c("_R_CHECK_FORCE_SUGGESTS_" = "false"),
+  show_status = FALSE
+)
 
 # Check solaris
-rhub::check_for_cran(path = paste0("../weathercan_", version, ".tar.gz"),
-                     check_args = "--as-cran",
-                     platforms = "solaris-x86-patched",   # CRAN = r-patched-solaris-x86
-                     env_vars = c("_R_CHECK_FORCE_SUGGESTS_" = "false"),
-                     show_status = FALSE)
+rhub::check_for_cran(
+  path = paste0("../weathercan_", version, ".tar.gz"),
+  check_args = "--as-cran",
+  platforms = "solaris-x86-patched", # CRAN = r-patched-solaris-x86
+  env_vars = c("_R_CHECK_FORCE_SUGGESTS_" = "false"),
+  show_status = FALSE
+)
 
 
 # Problems with latex
@@ -142,12 +159,7 @@ rhub::check_for_cran(path = paste0("../weathercan_", version, ".tar.gz"),
 # Re-try (skip tests for speed)
 #system("cd ..; R CMD check weathercan_0.3.0.tar.gz --as-cran --no-tests")
 
-
 # Update cran-comments
-
-
-
-
 
 ## Push to github
 ## Check GitHub Actions
@@ -174,8 +186,6 @@ usethis::use_github_release()
 usethis::use_dev_version()
 
 
-
-
 # Appendix --------------
 
 # Check existing errors
@@ -184,14 +194,26 @@ usethis::use_dev_version()
 hist <- cchecks::cch_pkgs_history("weathercan")$data$history
 dplyr::select(hist, date_updated, "summary")
 
-dplyr::bind_cols(dplyr::select(hist, date_updated, checks),
-                 hist$summary,
-                 hist$check_details) %>%
+dplyr::bind_cols(
+  dplyr::select(hist, date_updated, checks),
+  hist$summary,
+  hist$check_details
+) %>%
   dplyr::filter(stringr::str_detect(date_updated, "2021-05-18")) %>%
   tidyr::unnest(checks) %>%
   dplyr::filter(status %in% c("WARN", "ERROR")) %>%
-  dplyr::select(-version, -tinstall, -tcheck, -ttotal, -any,
-                -ok, -note, -warn, -error, -fail) %>%
+  dplyr::select(
+    -version,
+    -tinstall,
+    -tcheck,
+    -ttotal,
+    -any,
+    -ok,
+    -note,
+    -warn,
+    -error,
+    -fail
+  ) %>%
   tidyr::unnest(details) %>%
   dplyr::pull(output) %>%
   unique()
