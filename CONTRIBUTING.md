@@ -26,6 +26,7 @@ Getting ready to make your first contribution? Here are a couple of tutorials yo
 
 # How to contribute code
 
+- Open and issue or comment on an existing one and describe what you'd like to do (this ensures you don't waste your time if the problem has been or is in the process of being resolved and gives us a chance to chat about you plan to address the problem)
 - Fork the repository
 - Clone the repository from GitHub to your computer e.g,. `git clone https://github.com/ropensci/weathercan.git`
 - Make sure to track progress upstream (i.e., on our version of `weathercan` at `ropensci/weathercan`)
@@ -38,9 +39,17 @@ Getting ready to make your first contribution? Here are a couple of tutorials yo
 
 # Code formatting
 
+- Please don't do large scale code formatting as part of a PR meant to fix a non-formatting related problem, it makes it hard to see what changes are actually being made
 - In general follow the convention of <http://r-pkgs.had.co.nz/r.html#style> (snake_case functions and argument names, etc.)
 - Where there is conflict, default to the style of `weathercan`
 - Use explicit package imports (i.e. package_name::package_function) and avoid @import if at all possible
+- We use the Air formatter for everything else
+
+# Use of AI
+
+- Using AI as a tool to help you review weathercan is totally fine
+- Please do a solid review of the AI code suggestions and ask if you're unsure what they mean
+- Let us know how you're using AI so we have the proper context when responding to a PR
 
 # Development and Testing - In depth
 
