@@ -326,5 +326,3 @@ test_that("normals_dl validates normals_years", {
     "'normals_years' must be either 'current' or a text string in the format YYYY-YYYY e.g., '1981-2010'"
   )
 })
-
-
