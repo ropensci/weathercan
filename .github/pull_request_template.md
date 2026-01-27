@@ -1,6 +1,7 @@
 <!--
 Thank you for contributing to weathercan!
 Please make sure you review the CONTRIBUTING.md file before opening a PR.
+In particular, discuss your proposed changes in an existing or new issue before opening a PR
 -->
 
 <!--- Provide a general summary of your changes in the Title above -->
@@ -9,7 +10,6 @@ Please make sure you review the CONTRIBUTING.md file before opening a PR.
 <!--- Describe your changes in detail -->
 
 ## Related Issue
-<!--- Make sure you discuss your proposed changes in an existing or new issue before opening a PR -->
 <!-- Make sure to mention that issue here e.g., "fix #4" or "addresses #4" -->
 
 ## Use of AI
