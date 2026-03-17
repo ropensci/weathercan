@@ -34,3 +34,5 @@
 ^vignettes/normals\.Rmd\.orig$
 ^vignettes/flags\.Rmd\.orig$
 ^DEVTESTS_normals_1991.R$
+^[.]?air[.]toml$
+^\.vscode$

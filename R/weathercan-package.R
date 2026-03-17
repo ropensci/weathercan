@@ -61,42 +61,49 @@
 NULL
 
 # Dealing with CRAN Notes due to Non-standard evaluation
-.onLoad <- function(libname = find.package("weathercan"),
-                    pkgname = "weathercan"){
-
+.onLoad <- function(
+  libname = find.package("weathercan"),
+  pkgname = "weathercan"
+) {
   # Add caching for functions
-  get_html <<- memoise::memoise(get_html, ~memoise::timeout(24 * 60 * 60))
-  normals_html <<- memoise::memoise(normals_html, ~memoise::timeout(24 * 60 * 60))
+  get_html <<- memoise::memoise(get_html, ~ memoise::timeout(24 * 60 * 60))
+  normals_html <<- memoise::memoise(
+    normals_html,
+    ~ memoise::timeout(24 * 60 * 60)
+  )
 
   options(
-    weathercan.urls.weather =
-      "https://climate.weather.gc.ca/climate_data/bulk_data_e.html",
-    weathercan.urls.normals =
-      "https://climate.weather.gc.ca/climate_normals/bulk_data_e.html",
+    weathercan.urls.weather = "https://climate.weather.gc.ca/climate_data/bulk_data_e.html",
+    weathercan.urls.normals = "https://climate.weather.gc.ca/climate_normals/bulk_data_e.html",
     # Download from google drive: https://stackoverflow.com/a/50533232/3362144
-    weathercan.urls.stations =
-      paste0("https://collaboration.cmc.ec.gc.ca/cmc/climate/",
-             "Get_More_Data_Plus_de_donnees/Station%20Inventory%20EN.csv"),
-             #weathercan.urls.stations =
+    weathercan.urls.stations = paste0(
+      "https://collaboration.cmc.ec.gc.ca/cmc/climate/",
+      "Get_More_Data_Plus_de_donnees/Station%20Inventory%20EN.csv"
+    ),
+    #weathercan.urls.stations =
     #  paste0("https://drive.google.com/uc?export=download&id=",
     #         "1HDRnj41YBWpMioLPwAFiLlK4SK8NV72C"),
-    weathercan.urls.stations.normals =
-      "https://climate.weather.gc.ca/climate_normals/station_inventory_e.html",
-    weathercan.time.message = FALSE)
+    weathercan.urls.stations.normals = "https://climate.weather.gc.ca/climate_normals/station_inventory_e.html",
+    weathercan.time.message = FALSE
+  )
 
   # CRAN Note avoidance
-  if(getRversion() >= "2.15.1")
+  if (getRversion() >= "2.15.1") {
     utils::globalVariables(
       # Vars used in Non-Standard Evaluations, declare here to
       # avoid CRAN warnings
-      c(".", " " # piping requires '.' at times
+      c(
+        ".",
+        " " # piping requires '.' at times
       )
     )
+  }
   invisible()
 }
 
 .onAttach <- function(libname, pkgname) {
   packageStartupMessage(
     "As of v0.7.2, the `normals` column in `stations()` reflects whether or not ",
-    "there\nare *any* normals available (not just the most recent).")
+    "there\nare *any* normals available (not just the most recent)."
+  )
 }

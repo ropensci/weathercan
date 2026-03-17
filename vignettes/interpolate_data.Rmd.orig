@@ -68,7 +68,7 @@ The `finches` data, on the other hand, is set in a true timezone:
 finches$time[1:5]
 ```
 
-This means that it also has daylight savings applied, eep!
+This means that it also has daylight savings applied in the summer, eep!
 
 To interpolate, the data must be in the same timezone. The easiest way forward
 is to convert the `finches` data to the same, 'local' time without daylight

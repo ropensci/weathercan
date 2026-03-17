@@ -1,6 +1,23 @@
-# weathercan 0.7.3.9000
+# weathercan 0.7.8
+- ECCC reverted some of the changes they made last week, this is a quick to address this.
+
+# weathercan 0.7.7
+- Quick fix to adjust API calls which require a Day parameter for *all* calls 
+  (this isn't actually used for metadata or historical weather, but is required).
+
+# weathercan 0.7.6
+- Standardize normals year range and checks
+- Fix bug in `stations_search()` that precluded doing normals and years searches at the same time
+- Change `stations_search()` output to include interval, start and end years
+
+# weathercan 0.7.5
+- Fix province names for stations data frame (#175)
+- Don't allow start times earlier than 1840 (earliest API will return; #174)
+
+# weathercan 0.7.4
 - Add `qual` from newly added Flags column to hourly data
 - Remove vcr
+- Fix long Provincial names (#171)
 
 # weathercan 0.7.3
 - Switch stations inventory list to new location

@@ -6,7 +6,7 @@
 \usage{
 normals_dl(
   climate_ids,
-  normals_years = "1981-2010",
+  normals_years = "current",
   format = TRUE,
   stn = NULL,
   verbose = FALSE,
@@ -20,8 +20,10 @@ data frame or the \code{\link{stations_search}} function to find Climate
 IDs.}
 
 \item{normals_years}{Character. The year range for which you want climate
-normals. Default "1981-2010". One of "1971-2000", "1981-2010", "1991-2020".
-Note: Some "1991-2020" are available online, but are not yet downloadable
+normals. Default \code{1981-2010}. One of \code{current},
+\code{1981-2010}, or \code{1971-2000}. \code{current} returns only stations
+from the most recent \emph{complete} normals year range (i.e. \code{1981-2010}).
+Note: Some \code{1991-2020} are available online, but are not yet downloadable
 via weathercan.}
 
 \item{format}{Logical. If TRUE (default) formats measurements to numeric and

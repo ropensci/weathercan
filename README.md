@@ -76,7 +76,7 @@ head(stations())
 glimpse(stations())
 ```
 
-    ## Rows: 26,442
+    ## Rows: 26,445
     ## Columns: 17
     ## $ prov              <chr> "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", …
     ## $ station_name      <chr> "DAYSLAND", "DAYSLAND", "DAYSLAND", "EDMONTON CORONATION", "EDMONTON CORONATION", "EDMONTON CORONATION", "FLEET", "FLEET", "FLEET", …
@@ -133,7 +133,7 @@ You can update this list of stations with
 stations_dl()
 ```
 
-    ## According to Environment Canada, Modified Date: 2025-02-03 23:30 UTC
+    ## According to Environment Canada, Modified Date: 2025-07-01 23:30 UTC
 
     ## Environment Canada Disclaimers:
     ## "Station Inventory Disclaimer: Please note that this inventory list is a snapshot of stations on our website as of the modified date, and may be subject to change without notice."
@@ -149,10 +149,10 @@ stations_meta()
 ```
 
     ## $ECCC_modified
-    ## [1] "2025-02-03 23:30:00 UTC"
+    ## [1] "2025-07-01 23:30:00 UTC"
     ## 
     ## $weathercan_modified
-    ## [1] "2025-02-28"
+    ## [1] "2025-07-25"
 
 **Note:** For reproducibility, if you are using the stations list to
 gather your data, it can be a good idea to take note of the ECCC date of
@@ -174,19 +174,19 @@ kam <- weather_dl(station_ids = 51423, start = "2018-02-01", end = "2018-04-15")
 kam
 ```
 
-    ## # A tibble: 1,776 × 37
-    ##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id date       time                year  month day   hour  weather  hmdx
-    ##    <chr>             <dbl> <lgl>            <chr> <dbl> <dbl> <dbl> <chr>      <chr>  <chr> <date>     <dttm>              <chr> <chr> <chr> <chr> <chr>   <dbl>
-    ##  1 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 00:00:00 2018  02    01    00:00 <NA>       NA
-    ##  2 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 01:00:00 2018  02    01    01:00 Snow       NA
-    ##  3 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 02:00:00 2018  02    01    02:00 <NA>       NA
-    ##  4 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 03:00:00 2018  02    01    03:00 <NA>       NA
-    ##  5 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 04:00:00 2018  02    01    04:00 Cloudy     NA
-    ##  6 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 05:00:00 2018  02    01    05:00 <NA>       NA
-    ##  7 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 06:00:00 2018  02    01    06:00 <NA>       NA
-    ##  8 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 07:00:00 2018  02    01    07:00 Cloudy     NA
-    ##  9 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 08:00:00 2018  02    01    08:00 <NA>       NA
-    ## 10 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 09:00:00 2018  02    01    09:00 <NA>       NA
+    ## # A tibble: 1,776 × 38
+    ##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id date       time                year  month day   hour  qual  weather
+    ##    <chr>             <dbl> <lgl>            <chr> <dbl> <dbl> <dbl> <chr>      <chr>  <chr> <date>     <dttm>              <chr> <chr> <chr> <chr> <chr> <chr>  
+    ##  1 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 00:00:00 2018  02    01    00:00 <NA>  <NA>   
+    ##  2 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 01:00:00 2018  02    01    01:00 <NA>  Snow   
+    ##  3 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 02:00:00 2018  02    01    02:00 <NA>  <NA>   
+    ##  4 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 03:00:00 2018  02    01    03:00 <NA>  <NA>   
+    ##  5 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 04:00:00 2018  02    01    04:00 <NA>  Cloudy 
+    ##  6 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 05:00:00 2018  02    01    05:00 <NA>  <NA>   
+    ##  7 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 06:00:00 2018  02    01    06:00 <NA>  <NA>   
+    ##  8 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 07:00:00 2018  02    01    07:00 <NA>  Cloudy 
+    ##  9 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 08:00:00 2018  02    01    08:00 <NA>  <NA>   
+    ## 10 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 09:00:00 2018  02    01    09:00 <NA>  <NA>   
     ## # ℹ 1,766 more rows
 
 You can also download data from multiple stations at once:
@@ -254,18 +254,17 @@ Canada](http://open.canada.ca/en/open-government-licence-canada)).
 
 ## `weathercan` in the wild!
 
--   Browse [`weathercan` use cases](https://ropensci.org/usecases/) on
-    rOpenSci.org
--   Checkout the [`weathercan` Shiny
-    App](https://nickrongkp.shinyapps.io/WeatherCan/) by Nick Rong
-    (@nickyrong) and Nathan Smith (@WraySmith)
--   R package
-    [`RavenR`](https://github.com/rchlumsk/RavenR/tree/master/R) has
-    functions for converting ECCC data downloaded by `weathercan` to the
-    .rvt format for Raven.
--   R package [`meteoland`](https://github.com/emf-creaf/meteoland) has
-    functions for converting ECCC data downloaded by `weathercan` to the
-    format required for use in `meteoland`.
+- Browse [`weathercan` use cases](https://ropensci.org/usecases/) on
+  rOpenSci.org
+- Checkout the [`weathercan` Shiny
+  App](https://nickrongkp.shinyapps.io/WeatherCan/) by Nick Rong
+  (@nickyrong) and Nathan Smith (@WraySmith)
+- R package [`RavenR`](https://github.com/rchlumsk/RavenR/tree/master/R)
+  has functions for converting ECCC data downloaded by `weathercan` to
+  the .rvt format for Raven.
+- R package [`meteoland`](https://github.com/emf-creaf/meteoland) has
+  functions for converting ECCC data downloaded by `weathercan` to the
+  format required for use in `meteoland`.
 
 ## Similar packages
 
@@ -305,6 +304,10 @@ possible for all involved, please see our [guide to
 contributing](CONTRIBUTING.md)
 
 ## Contributors
+
+
+
+
 
 
 
@@ -373,6 +376,12 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <a href="https://github.com/ropensci/weathercan/commits?author=jeroen">jeroen</a>
 </td>
 <td align="center">
+<a href="https://github.com/joshpersi">
+<img src="https://avatars.githubusercontent.com/u/38633218?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/commits?author=joshpersi">joshpersi</a>
+</td>
+<td align="center">
 <a href="https://github.com/RichardLitt">
 <img src="https://avatars.githubusercontent.com/u/910753?v=4" width="100px;" alt=""/>
 </a><br>
@@ -383,6 +392,18 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <img src="https://avatars.githubusercontent.com/u/25561324?v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/commits?author=shandiya">shandiya</a>
+</td>
+<td align="center">
+<a href="https://github.com/mahjabinoyshi">
+<img src="https://avatars.githubusercontent.com/u/197597579?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/commits?author=mahjabinoyshi">mahjabinoyshi</a>
+</td>
+<td align="center">
+<a href="https://github.com/everettsp">
+<img src="https://avatars.githubusercontent.com/u/24480376?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/commits?author=everettsp">everettsp</a>
 </td>
 <td align="center">
 <a href="https://github.com/kellijohnson-NOAA">
@@ -402,7 +423,7 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <tr>
 <td align="center">
 <a href="https://github.com/paleolimbot">
-<img src="https://avatars.githubusercontent.com/u/10995762?u=964d5dc69b45b5f96975903f08c42457b3b6f8bb&v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/10995762?u=e59fac54d0c9e857e0740e63579a7a10df3acf24&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Apaleolimbot">paleolimbot</a>
 </td>
@@ -420,7 +441,7 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 </td>
 <td align="center">
 <a href="https://github.com/durraniu">
-<img src="https://avatars.githubusercontent.com/u/7092652?u=35c3f6ca06e50fae23addf2ea0530dd0ea3c619b&v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/7092652?u=39e2ddc26666c054fec46b0a43e8f3b3e51ff57a&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Adurraniu">durraniu</a>
 </td>
@@ -432,7 +453,7 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 </td>
 <td align="center">
 <a href="https://github.com/adamhsparks">
-<img src="https://avatars.githubusercontent.com/u/3195906?u=ff1ca92ae028fe7eb18d006f92cb8a725625e69c&v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/3195906?u=5d16842aa4ede1ddaa8911e126cc57b76ff22255&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Aadamhsparks">adamhsparks</a>
 </td>
@@ -454,7 +475,7 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 </td>
 <td align="center">
 <a href="https://github.com/essicolo">
-<img src="https://avatars.githubusercontent.com/u/5118227?u=998bb82ad723f4a34d26337184270105d45065c5&v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/5118227?u=96e19b82af1f2cfcfbfd1a108ce2434b279f8079&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Aessicolo">essicolo</a>
 </td>
@@ -620,6 +641,40 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Abusmansholiday">busmansholiday</a>
 </td>
+<td align="center">
+<a href="https://github.com/gdelaplante">
+<img src="https://avatars.githubusercontent.com/u/91148465?u=5ea48bdcf7c6f467924e89069d3c4697bb6342dc&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Agdelaplante">gdelaplante</a>
+</td>
+</tr>
+
+
+<tr>
+<td align="center">
+<a href="https://github.com/JBauerPower">
+<img src="https://avatars.githubusercontent.com/u/147277460?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3AJBauerPower">JBauerPower</a>
+</td>
+<td align="center">
+<a href="https://github.com/x22925580-commits">
+<img src="https://avatars.githubusercontent.com/u/242810550?u=4d778bfc33f734c22bbc53428ed06a998e7319b0&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Ax22925580-commits">x22925580-commits</a>
+</td>
+<td align="center">
+<a href="https://github.com/zacharybelisle">
+<img src="https://avatars.githubusercontent.com/u/205228980?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Azacharybelisle">zacharybelisle</a>
+</td>
+<td align="center">
+<a href="https://github.com/ryanthrendyle-work">
+<img src="https://avatars.githubusercontent.com/u/254770210?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Aryanthrendyle-work">ryanthrendyle-work</a>
+</td>
 </tr>
 
 </table>
@@ -662,13 +717,13 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 </td>
 <td align="center">
 <a href="https://github.com/salix-d">
-<img src="https://avatars.githubusercontent.com/u/31168746?u=bdf7cc91649a046d6b6b159d153ac37557954c64&v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/31168746?v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+commenter%3Asalix-d">salix-d</a>
 </td>
 <td align="center">
 <a href="https://github.com/wgieni">
-<img src="https://avatars.githubusercontent.com/u/38118614?v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/38118614?u=7a28ed517ee2ce279a06617ee858132ae8bbb72a&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+commenter%3Awgieni">wgieni</a>
 </td>
@@ -677,10 +732,28 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 
 <tr>
 <td align="center">
+<a href="https://github.com/tanmaydimriGSOC">
+<img src="https://avatars.githubusercontent.com/u/105608756?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+commenter%3AtanmaydimriGSOC">tanmaydimriGSOC</a>
+</td>
+<td align="center">
 <a href="https://github.com/farhanreynaldo">
 <img src="https://avatars.githubusercontent.com/u/8732795?u=85782e91537627f642b48a59c52a5df1ff18343c&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+commenter%3Afarhanreynaldo">farhanreynaldo</a>
+</td>
+<td align="center">
+<a href="https://github.com/EmmaGRiley">
+<img src="https://avatars.githubusercontent.com/u/132517733?u=c2e80b5e8bd790206e726098d803632d0234db54&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+commenter%3AEmmaGRiley">EmmaGRiley</a>
+</td>
+<td align="center">
+<a href="https://github.com/egdevoie">
+<img src="https://avatars.githubusercontent.com/u/52979477?u=5b3ff7314872530433984e6c7fdd765927a91152&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+commenter%3Aegdevoie">egdevoie</a>
 </td>
 </tr>
 
@@ -689,6 +762,11 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
+
+
+
+
 
 
 

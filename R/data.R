@@ -1,4 +1,3 @@
-
 #' Hourly weather data for Kamloops
 #'
 #' Downloaded with \code{\link{weather}()}. Terms are more thoroughly defined

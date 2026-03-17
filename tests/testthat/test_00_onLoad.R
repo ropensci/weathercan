@@ -1,7 +1,6 @@
 withr::local_options(list("weathercan.time.message" = TRUE))
 
 test_that("URLS correctly set", {
-
   expect_type(w <- getOption("weathercan.urls.weather"), "character")
   expect_true(stringr::str_detect(w, "climate.weather.gc.ca"))
 
@@ -22,10 +21,20 @@ test_that("Functions cached correctly", {
 
   skip_on_cran()
   skip_if_offline()
-  t1 <- system.time(w <- weather_dl(station_ids = 51423, start = "2014-01-01",
-                                    end = "2014-01-31"))
-  t2 <- system.time(w <- weather_dl(station_ids = 51423, start = "2014-01-01",
-                                    end = "2014-01-31"))
+  t1 <- system.time(
+    w <- weather_dl(
+      station_ids = 51423,
+      start = "2014-01-01",
+      end = "2014-01-31"
+    )
+  )
+  t2 <- system.time(
+    w <- weather_dl(
+      station_ids = 51423,
+      start = "2014-01-01",
+      end = "2014-01-31"
+    )
+  )
   expect_gt(t1[3], t2[3])
 
   t1 <- system.time(normals_dl(climate_id = c("2403500", "5010480", "1096450")))

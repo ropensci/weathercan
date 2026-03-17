@@ -50,7 +50,7 @@ g <- glossary_normals[19:nrow(glossary_normals),] %>%
 ```
 
 ```{r, results = "asis", echo = FALSE}
-for(t in 1:nrow(g)) {
+for(t in seq_len(nrow(g))) {
   cat("<center><h4>", str_to_title(g$title[t]), "</h3></center>\n")
   print(knitr::kable(g$data[[t]], format = "html"))
   cat("\n")
