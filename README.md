@@ -312,6 +312,7 @@ contributing](CONTRIBUTING.md)
 
 
 
+
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
@@ -370,6 +371,12 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 
 <tr>
 <td align="center">
+<a href="https://github.com/mahjabinoyshi">
+<img src="https://avatars.githubusercontent.com/u/197597579?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/commits?author=mahjabinoyshi">mahjabinoyshi</a>
+</td>
+<td align="center">
 <a href="https://github.com/jeroen">
 <img src="https://avatars.githubusercontent.com/u/216319?v=4" width="100px;" alt=""/>
 </a><br>
@@ -394,17 +401,21 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <a href="https://github.com/ropensci/weathercan/commits?author=shandiya">shandiya</a>
 </td>
 <td align="center">
-<a href="https://github.com/mahjabinoyshi">
-<img src="https://avatars.githubusercontent.com/u/197597579?v=4" width="100px;" alt=""/>
-</a><br>
-<a href="https://github.com/ropensci/weathercan/commits?author=mahjabinoyshi">mahjabinoyshi</a>
-</td>
-<td align="center">
 <a href="https://github.com/everettsp">
 <img src="https://avatars.githubusercontent.com/u/24480376?v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/commits?author=everettsp">everettsp</a>
 </td>
+<td align="center">
+<a href="https://github.com/farhanreynaldo">
+<img src="https://avatars.githubusercontent.com/u/8732795?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/commits?author=farhanreynaldo">farhanreynaldo</a>
+</td>
+</tr>
+
+
+<tr>
 <td align="center">
 <a href="https://github.com/kellijohnson-NOAA">
 <img src="https://avatars.githubusercontent.com/u/4108564?v=4" width="100px;" alt=""/>
@@ -675,6 +686,12 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Aryanthrendyle-work">ryanthrendyle-work</a>
 </td>
+<td align="center">
+<a href="https://github.com/BraveCapricon">
+<img src="https://avatars.githubusercontent.com/u/124315780?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3ABraveCapricon">BraveCapricon</a>
+</td>
 </tr>
 
 </table>
@@ -738,12 +755,6 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+commenter%3AtanmaydimriGSOC">tanmaydimriGSOC</a>
 </td>
 <td align="center">
-<a href="https://github.com/farhanreynaldo">
-<img src="https://avatars.githubusercontent.com/u/8732795?u=85782e91537627f642b48a59c52a5df1ff18343c&v=4" width="100px;" alt=""/>
-</a><br>
-<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+commenter%3Afarhanreynaldo">farhanreynaldo</a>
-</td>
-<td align="center">
 <a href="https://github.com/EmmaGRiley">
 <img src="https://avatars.githubusercontent.com/u/132517733?u=c2e80b5e8bd790206e726098d803632d0234db54&v=4" width="100px;" alt=""/>
 </a><br>
@@ -762,6 +773,7 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
 
 
 
