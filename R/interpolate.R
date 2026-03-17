@@ -56,7 +56,7 @@ weather_interp <- function(
     }
   }
 
-  if(length(interval) > 1 || !(interval %in% c('hour', 'day'))) {
+  if (length(interval) > 1 || !(interval %in% c('hour', 'day'))) {
     stop("'interval' must be either 'hour' OR 'day'", call. = FALSE)
   }
 

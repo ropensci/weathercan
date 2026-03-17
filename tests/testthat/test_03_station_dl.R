@@ -357,6 +357,8 @@ test_that("stations_search checks arguments", {
   expect_silent(stations_search("Brandon", interval = c("hour", "month")))
 
   # Check invalid intervals
-  expect_error(stations_search("Brandon", interval = "minute"),
-               "'interval' can only be 'hour', 'day', or 'month'")
+  expect_error(
+    stations_search("Brandon", interval = "minute"),
+    "'interval' can only be 'hour', 'day', or 'month'"
+  )
 })
