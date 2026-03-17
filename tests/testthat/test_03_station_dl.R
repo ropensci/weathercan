@@ -346,3 +346,19 @@ test_that("stations_search returns normals only", {
     "be aware that they are not yet available"
   )
 })
+
+test_that("stations_search checks arguments", {
+  # Check each valid intervals
+  expect_silent(stations_search("Brandon", interval = "hour"))
+  expect_silent(stations_search("Brandon", interval = "day"))
+  expect_silent(stations_search("Brandon", interval = "month"))
+
+  # Check combinations of valid intervals
+  expect_silent(stations_search("Brandon", interval = c("hour", "month")))
+
+  # Check invalid intervals
+  expect_error(
+    stations_search("Brandon", interval = "minute"),
+    "'interval' can only be 'hour', 'day', or 'month'"
+  )
+})

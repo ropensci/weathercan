@@ -56,6 +56,10 @@ weather_interp <- function(
     }
   }
 
+  if (length(interval) > 1 || !(interval %in% c('hour', 'day'))) {
+    stop("'interval' must be either 'hour' OR 'day'", call. = FALSE)
+  }
+
   ## Make sure data and weather properly matched
   msg <- c(
     "'data' and 'weather' must be data frames with columns 'time'",
