@@ -7,7 +7,7 @@
     <a href="https://ropensci.org" class="external-link"><img src="https://ropensci.org/img/icon_short_white.svg" id="hexlogo" alt="rOpenSci"></a>
     <a class="navbar-brand me-2" href="index.html">weathercan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,7 +68,8 @@
 </ul></div>
 <div class="section level1">
 <h1 id="how-to-contribute-code">How to contribute code<a class="anchor" aria-label="anchor" href="#how-to-contribute-code"></a></h1>
-<ul><li>Fork the repository</li>
+<ul><li>Open and issue or comment on an existing one and describe what you’d like to do (this ensures you don’t waste your time if the problem has been or is in the process of being resolved and gives us a chance to chat about you plan to address the problem)</li>
+<li>Fork the repository</li>
 <li>Clone the repository from GitHub to your computer e.g,. <code>git clone https://github.com/ropensci/weathercan.git</code>
 </li>
 <li>Make sure to track progress upstream (i.e., on our version of <code>weathercan</code> at <code>ropensci/weathercan</code>)
@@ -85,10 +86,18 @@
 </ul></div>
 <div class="section level1">
 <h1 id="code-formatting">Code formatting<a class="anchor" aria-label="anchor" href="#code-formatting"></a></h1>
-<ul><li>In general follow the convention of <a href="http://r-pkgs.had.co.nz/r.html#style" class="external-link uri">http://r-pkgs.had.co.nz/r.html#style</a> (snake_case functions and argument names, etc.)</li>
+<ul><li>Please don’t do large scale code formatting as part of a PR meant to fix a non-formatting related problem, it makes it hard to see what changes are actually being made</li>
+<li>In general follow the convention of <a href="http://r-pkgs.had.co.nz/r.html#style" class="external-link uri">http://r-pkgs.had.co.nz/r.html#style</a> (snake_case functions and argument names, etc.)</li>
 <li>Where there is conflict, default to the style of <code>weathercan</code>
 </li>
 <li>Use explicit package imports (i.e. package_name::package_function) and avoid @import if at all possible</li>
+<li>We use the Air formatter for everything else</li>
+</ul></div>
+<div class="section level1">
+<h1 id="use-of-ai">Use of AI<a class="anchor" aria-label="anchor" href="#use-of-ai"></a></h1>
+<ul><li>Using AI as a tool to help you review weathercan is totally fine</li>
+<li>Please do a solid review of the AI code suggestions and ask if you’re unsure what they mean</li>
+<li>Let us know how you’re using AI so we have the proper context when responding to a PR</li>
 </ul></div>
 <div class="section level1">
 <h1 id="development-and-testing---in-depth">Development and Testing - In depth<a class="anchor" aria-label="anchor" href="#development-and-testing---in-depth"></a></h1>

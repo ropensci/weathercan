@@ -1,0 +1,135 @@
+# Download climate normals from Environment and Climate Change Canada
+
+Downloads climate normals from Environment and Climate Change Canada
+(ECCC) for one or more stations (defined by `climate_id`s). For details
+and units, see the
+[`glossary_normals`](https://docs.ropensci.org/weathercan/reference/glossary_normals.md)
+data frame or the `glossary_normals` vignette:
+[`vignette("glossary_normals", package = "weathercan")`](https://docs.ropensci.org/weathercan/articles/glossary_normals.md)
+
+## Usage
+
+``` r
+normals_dl(
+  climate_ids,
+  normals_years = "current",
+  format = TRUE,
+  stn = NULL,
+  verbose = FALSE,
+  quiet = FALSE
+)
+```
+
+## Arguments
+
+- climate_ids:
+
+  Character. A vector containing the Climate ID(s) of the station(s) you
+  wish to download data from. See the
+  [`stations`](https://docs.ropensci.org/weathercan/reference/stations.md)
+  data frame or the
+  [`stations_search`](https://docs.ropensci.org/weathercan/reference/stations_search.md)
+  function to find Climate IDs.
+
+- normals_years:
+
+  Character. The year range for which you want climate normals. Default
+  `1981-2010`. One of `current`, `1981-2010`, or `1971-2000`. `current`
+  returns only stations from the most recent *complete* normals year
+  range (i.e. `1981-2010`). Note: Some `1991-2020` are available online,
+  but are not yet downloadable via weathercan.
+
+- format:
+
+  Logical. If TRUE (default) formats measurements to numeric and date
+  accordingly. Unlike
+  [`weather_dl()`](https://docs.ropensci.org/weathercan/reference/weather_dl.md),
+  `normals_dl()` will always format column headings as normals data from
+  ECCC cannot be directly made into a data frame without doing so.
+
+- stn:
+
+  DEFUNCT. Now use
+  [`stations_dl()`](https://docs.ropensci.org/weathercan/reference/stations_dl.md)
+  to update internal data and
+  [`stations_meta()`](https://docs.ropensci.org/weathercan/reference/stations_meta.md)
+  to check the date it was last updated.
+
+- verbose:
+
+  Logical. Include progress messages
+
+- quiet:
+
+  Logical. Suppress all messages (including messages regarding missing
+  data, etc.)
+
+## Value
+
+tibble with nested normals and first/last frost data
+
+## Details
+
+Climate normals from ECCC include two types of data, averages by month
+for a variety of measurements as well as data relating to the frost-free
+period. Because these two data sources are quite different, we return
+them as nested data so the user can extract them as they wish. See
+examples for how to use the
+[`unnest()`](https://tidyr.tidyverse.org/reference/unnest.html) function
+from the [`tidyr`](https://tidyr.tidyverse.org/) package to extract the
+two different datasets.
+
+The data also returns a column called `meets_wmo` this reflects whether
+or not the climate normals for this station met the WMO standards for
+temperature and precipitation (i.e. both have code \>= A). Each
+measurement column has a corresponding `_code` column which reflects the
+data quality of that measurement (see the
+[1991-2020](https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1991_2020_Calculation_Information.pdf),
+[1981-2010](https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf),
+or
+[1971-2000](https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1971_2000_Calculation_Information.pdf)
+for more details) ECCC calculation documents.
+
+Climate normals are downloaded from the url stored in option
+`weathercan.urls.normals`. To change this location use:
+`options(weathercan.urls.normals = "your_new_url")`.
+
+## Examples
+
+``` r
+if (FALSE) { # check_eccc()
+
+# Find the climate_id
+stations_search("Brandon A", normals_years = "current")
+
+# Download climate normals 1981-2010
+n <- normals_dl(climate_ids = "5010480")
+n
+
+# Pull out last frost data *with* station information
+library(tidyr)
+f <- unnest(n, frost)
+f
+
+# Pull out normals *with* station information
+nm <- unnest(n, normals)
+nm
+
+# Download climate normals 1971-2000
+n <- normals_dl(climate_ids = "5010480", normals_years = "1971-2000")
+n
+
+# Note that some do not have last frost dates
+n$frost
+
+# Download multiple stations for 1981-2010,
+n <- normals_dl(climate_ids = c("301C3D4", "301FFNJ", "301N49A"))
+unnest(n, frost)
+
+
+# Note, putting both normals and frost data into the same data set can be done but makes for
+# a very unweildly dataset (there is lots of repetition)
+nm <- unnest(n, normals) |>
+  unnest(frost)
+}
+```

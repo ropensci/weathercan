@@ -1,0 +1,128 @@
+# Flags and codes
+
+## What are flags/codes
+
+The data output of the
+[`weather_dl()`](https://docs.ropensci.org/weathercan/reference/weather_dl.md)
+function include corresponding `_flag` columns for each data column.
+These columns are used by ECCC to add notes regarding measurements.
+
+Similarly, the data output of the
+[`normals_dl()`](https://docs.ropensci.org/weathercan/reference/normals_dl.md)
+function include corresponding `_code` columns. These columns are used
+by ECCC to add notes regarding the amount of data used to calculate the
+normals.
+
+### Flags
+
+In the
+[`weather_dl()`](https://docs.ropensci.org/weathercan/reference/weather_dl.md)
+function if `format = TRUE` (the default), data corresponding to flags
+`M`, `NA`, `[empty]` and `L` are all replaced with `NA`.
+
+For example, a sample of unformatted data from Magog station in Quebec
+looks like:
+
+    ## # A tibble: 12 × 6
+    ##    station_name `Date/Time` `Total Precip (mm)` `Total Precip Flag` `Snow Grnd Last Day (cm)`
+    ##    <chr>        <chr>       <chr>               <chr>               <chr>                    
+    ##  1 MAGOG        2017-03     30.4                ^                   <NA>                     
+    ##  2 MAGOG        2017-04     114.0               ^                   0                        
+    ##  3 MAGOG        2017-05     78.8                ^                   0                        
+    ##  4 MAGOG        2017-06     140.7               ^                   0                        
+    ##  5 MAGOG        2017-07     80.7                <NA>                0                        
+    ##  6 MAGOG        2017-08     135.8               <NA>                0                        
+    ##  7 MAGOG        2017-09     63.0                ^                   0                        
+    ##  8 MAGOG        2017-10     140.8               ^                   0                        
+    ##  9 MAGOG        2017-11     70.0                ^                   0                        
+    ## 10 MAGOG        2017-12     45.7                ^                   10                       
+    ## 11 MAGOG        2018-01     34.6                ^                   2                        
+    ## 12 MAGOG        2018-02     77.2                ^                   0                        
+    ## # ℹ 1 more variable: `Snow Grnd Last Day Flag` <chr>
+
+In this output, you can see two flags: `^` in `Total Precip` and `M` in
+`Snow Grnd Last Day`
+
+This same sample, formatted looks like:
+
+    ## # A tibble: 12 × 5
+    ##    date       total_precip total_precip_flag snow_grnd_last_day snow_grnd_last_day_flag
+    ##    <date>            <dbl> <chr>                          <dbl> <chr>                  
+    ##  1 2017-03-01         30.4 ^                                 NA M                      
+    ##  2 2017-04-01        114   ^                                  0 <NA>                   
+    ##  3 2017-05-01         78.8 ^                                  0 <NA>                   
+    ##  4 2017-06-01        141.  ^                                  0 <NA>                   
+    ##  5 2017-07-01         80.7 <NA>                               0 <NA>                   
+    ##  6 2017-08-01        136.  <NA>                               0 <NA>                   
+    ##  7 2017-09-01         63   ^                                  0 <NA>                   
+    ##  8 2017-10-01        141.  ^                                  0 <NA>                   
+    ##  9 2017-11-01         70   ^                                  0 <NA>                   
+    ## 10 2017-12-01         45.7 ^                                 10 <NA>                   
+    ## 11 2018-01-01         34.6 ^                                  2 <NA>                   
+    ## 12 2018-02-01         77.2 ^                                  0 <NA>
+
+As you can see, we still have the two flags, but the missing data flag
+(`M`) is now replaced with NA. The other flag `^` is not, as it
+indicates that “The value displayed is based on incomplete data” (see
+below).
+
+### Flags - Weather Data
+
+The flags index can be accessed through the built in data frame: `flags`
+
+| code      | meaning                                                             |
+|:----------|:--------------------------------------------------------------------|
+| A         | Accumulated                                                         |
+| B         | More than one occurrence and estimated                              |
+| C         | Precipitation occurred, amount uncertain                            |
+| D         | Data subject to further quality control procedure                   |
+| E         | Estimated                                                           |
+| F         | Accumulated and estimated                                           |
+| L         | Precipitation may or may not have occurred                          |
+| M         | Missing                                                             |
+| N         | Temperature missing but known to be \> 0                            |
+| S         | More than one occurrence                                            |
+| T         | Trace                                                               |
+| Y         | Temperature missing but known to be \< 0                            |
+| \[empty\] | Indicates an unobserved value                                       |
+| ^         | The value displayed is based on incomplete data                     |
+| †         | Data that is not subject to review by the National Climate Archives |
+| NA        | Not Available                                                       |
+
+### Codes
+
+In the `normals_dl`() function, codes are associated with each variable:
+
+    ## # A tibble: 13 × 7
+    ##    period temp_daily_average temp_daily_average_code temp_daily_max temp_daily_max_code
+    ##    <fct>               <dbl> <chr>                            <dbl> <chr>              
+    ##  1 Jan                 -16.6 A                                -11.1 A                  
+    ##  2 Feb                 -13.6 A                                 -8.1 A                  
+    ##  3 Mar                  -6.2 A                                 -1   A                  
+    ##  4 Apr                   4   A                                 10.5 A                  
+    ##  5 May                  10.6 A                                 17.8 A                  
+    ##  6 Jun                  15.9 A                                 22.4 A                  
+    ##  7 Jul                  18.5 A                                 25.2 A                  
+    ##  8 Aug                  17.7 A                                 24.9 A                  
+    ##  9 Sep                  11.8 A                                 18.9 A                  
+    ## 10 Oct                   4.1 A                                 10.4 A                  
+    ## 11 Nov                  -5.6 A                                 -0.5 A                  
+    ## 12 Dec                 -14   A                                 -9   A                  
+    ## 13 Year                  2.2 A                                  8.4 A                  
+    ## # ℹ 2 more variables: temp_daily_min <dbl>, temp_daily_min_code <chr>
+
+For example, here, the code indicates that these temperature variables
+meet the WMO ‘3 and 5 rule’ (no more than 3 consecutive and no more than
+5 total missing for either temperature or precipitation).
+
+### Codes - Climate Normals
+
+The codes index for climate normals can be accessed through the built-in
+data frame: `codes`
+
+| code | meaning                                                                                                                       |
+|:-----|:------------------------------------------------------------------------------------------------------------------------------|
+| A    | WMO ‘3 and 5 rule’ (i.e. no more than 3 consecutive and no more than 5 total missing for either temperature or precipitation) |
+| B    | At least 25 years                                                                                                             |
+| C    | At least 20 years                                                                                                             |
+| D    | At least 15 years                                                                                                             |
