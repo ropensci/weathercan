@@ -1,3 +1,6 @@
+# weathercan 0.7.9
+- Fix ECCC change to normals download query parameters again
+
 # weathercan 0.7.8
 - ECCC reverted some of the changes they made last week, this is a quick to address this.
 

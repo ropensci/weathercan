@@ -191,7 +191,7 @@ normals_html <- function(prov, station_id, climate_id, normals_years) {
     prov = prov,
     yr = yrs,
     stnID = station_id,
-    climateID = climate_id,
+    climate_id = climate_id, #This keeps changing!
     submit = "Download Data"
   )
 
