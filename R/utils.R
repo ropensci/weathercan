@@ -55,9 +55,9 @@ check_normals <- function(normals_years, null_ok = FALSE) {
 
   if (normals_years == "current") {
     message(
-      "The most current normals available for download by weathercan are '1981-2010'"
+      "The most current normals available for download by weathercan are '1991-2020'"
     )
-    normals_years <- "1981-2010"
+    normals_years <- "1991-2020"
   }
 
   if (!null_ok) {
@@ -66,20 +66,13 @@ check_normals <- function(normals_years, null_ok = FALSE) {
     new_message <- message
   }
 
-  if (normals_years == "1991-2020") {
-    new_message(
-      "You use `stations_search()` to see which stations have normals for 1991-2020, ",
-      "but be aware that they are not yet available for download via weathercan"
-    )
-  }
-
   if (
     is.null(normals_years) ||
       !is.character(normals_years) ||
       !stringr::str_detect(normals_years, "^[0-9]{4}-[0-9]{4}$")
   ) {
     stop(
-      "'normals_years' must be either 'current' or a text string in the format YYYY-YYYY e.g., '1981-2010'",
+      "'normals_years' must be either 'current' or a text string in the format YYYY-YYYY e.g., '1991-2020'",
       call. = FALSE
     )
   }
@@ -166,3 +159,30 @@ check_eccc <- function() {
 }
 
 is_error <- function(x) "try-error" %in% class(try(x, silent = TRUE))
+
+#' Make pretty column names
+#'
+#' @param x Character string of column names to prettify
+#'
+#' @returns Character string of pretty names
+#'
+#' @noRd
+#' @examples
+#' pretty_names(
+#'   c(
+#'     "Maximum Daily Mean (°C) Date (yyyy/mm/dd)",
+#'     "Extreme Daily Precipitation (mm) Date (yyyy/mm/dd)",
+#'     "Days with Maximum Temperature <= -20 °C",
+#'     "Probability of last temperature in spring <= 0°C, on or after indicated date (10%)"
+#'   )
+#' )
+
+pretty_names <- function(x) {
+  x |>
+    tolower() |>
+    stringr::str_remove_all("[^a-z0-9 _\\-\\<\\>\\=]+") |>
+    stringr::str_replace_all(c("\\%" = "perc", "date yyyymmdd" = "date")) |>
+    stringr::str_squish() |>
+    stringr::str_replace_all(" |-|_", "_") |>
+    stringr::str_replace_all("_+", "_")
+}

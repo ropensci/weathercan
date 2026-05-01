@@ -1,13 +1,5 @@
 # stations_dl() ------------------------------------------------------------
 
-test_that("stations_dl() requires R 3.3.4", {
-  # Can't test stations_dl because requires depth = 2 which creates problems:
-  # https://github.com/r-lib/mockery/issues
-  skip_on_cran()
-  mockery::stub(stations_dl_internal, 'getRversion', package_version("3.3.3"))
-  expect_message(stations_dl_internal(), "Need R version")
-})
-
 test_that("stations_dl() requires lutz and sf", {
   skip_on_cran()
   mockery::stub(
@@ -22,17 +14,11 @@ test_that("stations_dl() requires lutz and sf", {
 })
 
 test_that("stations_dl() errors appropriately", {
-  skip_on_cran()
-  skip_if_offline()
   skip_if_not_installed("sf")
   skip_if_not_installed("lutz")
 
-  skip()
-
-  bkup <- getOption("weathercan.urls.stations")
-  options(weathercan.urls.stations = "https://httpbin.org/status/404")
-  expect_error(stations_dl(), "Not Found (HTTP 404).", fixed = TRUE)
-  options(weathercan.urls.stations = bkup)
+  local_mocked_bindings(GET = function(...) test_404(), .package = "httr")
+  expect_error(stations_dl(), "Not Found \\(HTTP 404\\).")
 })
 
 test_that("stations_normals() gets normals info", {
@@ -325,26 +311,18 @@ test_that("stations_search returns normals only", {
   expect_warning(
     s <- stations_search("Brandon", normals_only = TRUE),
     "`normals_only` is deprecated"
-  )
-  expect_message(
-    s <- stations_search("Brandon", normals_years = "current"),
-    "The most current normals available for download by weathercan are"
-  )
+  ) |>
+    expect_message(
+      "The most current normals available for download by weathercan are"
+    )
   expect_gt(nrow(stations()), nrow(s))
   expect_true(all(s$normals))
 
   expect_silent(s1 <- stations_search("Brandon", normals_years = "1981-2010"))
   expect_gt(nrow(stations()), nrow(s1))
-  expect_equal(s$station_id, s1$station_id)
 
   expect_silent(s2 <- stations_search("Brandon", normals_years = "1971-2000"))
   expect_gt(nrow(stations()), nrow(s2))
-  expect_equal(s$station_id, s1$station_id)
-
-  expect_message(
-    s3 <- stations_search("Brandon", normals_years = "1991-2020"),
-    "be aware that they are not yet available"
-  )
 })
 
 test_that("stations_search checks arguments", {

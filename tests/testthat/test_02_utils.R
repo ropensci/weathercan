@@ -25,7 +25,14 @@ test_that("check_ids() as expected", {
 })
 
 test_that("check_normals() as expected", {
+  expect_silent(check_normals("1991-2020"))
   expect_silent(check_normals("1981-2010"))
+  expect_silent(check_normals("1971-2000"))
+  expect_message(
+    check_normals("current"),
+    "The most current normals available for download by weathercan are"
+  )
+
   expect_silent(check_normals("1111-1111"))
   expect_error(check_normals(" 1981-2010"), "text string in the format")
   expect_error(check_normals("1981-2010 "), "text string in the format")

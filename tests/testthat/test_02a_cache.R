@@ -22,12 +22,15 @@ test_that("cache_dir() works on different operating systems", {
 })
 
 test_that("cache_check() / cache_remove()", {
-  temp_dir <- tempfile()
-  local_mocked_bindings(cache_dir = function() temp_dir)
+  temp_dir <- test_cache()
+  local_mocked_bindings(cache_dir = function() test_cache())
 
   expect_false(dir.exists(temp_dir))
   expect_message(cache_check(), "Cache successfully created")
   expect_true(dir.exists(temp_dir))
   expect_message(cache_remove(), "Cache successfully removed")
   expect_false(dir.exists(temp_dir))
+
+  # Cleanup
+  unlink(test_cache(), recursive = TRUE)
 })

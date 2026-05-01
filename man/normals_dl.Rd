@@ -15,16 +15,14 @@ normals_dl(
 }
 \arguments{
 \item{climate_ids}{Character. A vector containing the Climate ID(s) of the
-station(s) you wish to download data from. See the \code{\link{stations}}
-data frame or the \code{\link{stations_search}} function to find Climate
+station(s) you wish to download data from. See the \code{\link[=stations]{stations()}}
+data frame or the \code{\link[=stations_search]{stations_search()}} function to find Climate
 IDs.}
 
 \item{normals_years}{Character. The year range for which you want climate
-normals. Default \code{1981-2010}. One of \code{current},
+normals. Default \code{current} (i.e. 1991-2020). One of \code{current}, \code{1991-2020},
 \code{1981-2010}, or \code{1971-2000}. \code{current} returns only stations
-from the most recent \emph{complete} normals year range (i.e. \code{1981-2010}).
-Note: Some \code{1991-2020} are available online, but are not yet downloadable
-via weathercan.}
+from the most recent \emph{complete} normals year range (i.e. \code{1991-2020}).}
 
 \item{format}{Logical. If TRUE (default) formats measurements to numeric and
 date accordingly. Unlike \code{weather_dl()}, \code{normals_dl()} will always format
@@ -40,7 +38,8 @@ data frame without doing so.}
 missing data, etc.)}
 }
 \value{
-tibble with nested normals and first/last frost data
+For new climate normals, a tibble of normals. For older climate
+normals, a tibble with \emph{nested} normals and first/last frost data.
 }
 \description{
 Downloads climate normals from Environment and Climate Change Canada (ECCC)
@@ -49,37 +48,77 @@ see the \code{\link{glossary_normals}} data frame or the \code{glossary_normals}
 \code{vignette("glossary_normals", package = "weathercan")}
 }
 \details{
-Climate normals from ECCC include two types of data, averages by
-month for a variety of measurements as well as data relating to the
-frost-free period. Because these two data sources are quite different, we
-return them as nested data so the user can extract them as they wish. See
-examples for how to use the \code{unnest()} function from the
-\href{https://tidyr.tidyverse.org/}{\code{tidyr}}
-package to extract the two different datasets.
+The format and method of downloading climate normals from ECCC
+varies by year span.
+
+Regardless of year, each normals measurement column has a corresponding
+\verb{_code} column which reflects the data quality of that measurement (see the
+\href{https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1991_2020_Calculation_Information.pdf}{1991-2020},
+\href{https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf}{1981-2010},
+or
+\href{https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1971_2000_Calculation_Information.pdf}{1971-2000}
+for more details) ECCC calculation documents.
+\subsection{Newer normals (1991-2020)}{
+
+Newer normals from ECCC are provided in one bulk downloaded which weathercan
+will fetch and store in a local cache directory (\code{\link[=cache_dir]{cache_dir()}}). Then
+\code{normals_dl()} will read, filter, format, and return the climate normals in a
+data frame easier to work with in R than the original data.
+
+These normals are also provided in a single table, so both 'normals' and
+'frost' data are combined in one.
+
+Newer climate normals are downloaded from the url stored in option
+\code{weathercan.urls.normals_1991_2020}. To change this location use:
+\code{options(weathercan.urls.normals_1991_2020 = "your_new_url")}.
+}
+
+\subsection{Older normals (1981-2010 and earlier)}{
+
+Older normals from ECCC are provided by individual file downloads which
+weathercan will fetch, format and return as requested (no local on-disk cache
+storage).
+
+These older normals also include two separate data types: averages by month
+for a variety of measurements as well as data relating to the frost-free
+period. Because these two data sources are quite different, we return them as
+nested data so the user can extract them as they wish. See examples for how
+to use the \code{unnest()} function from the
+\href{https://tidyr.tidyverse.org/}{\code{tidyr}} package to extract the two different
+datasets.
 
 The data also returns a column called \code{meets_wmo} this reflects whether or
 not the climate normals for this station met the WMO standards for
-temperature and precipitation (i.e. both have code >= A). Each measurement
-column has a corresponding \verb{_code} column which reflects the data quality
-of that measurement (see the
-\href{https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1991_2020_Calculation_Information.pdf}{1991-2020},
-\href{https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf}{1981-2010}, or
-\href{https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1971_2000_Calculation_Information.pdf}{1971-2000}
-for more details) ECCC calculation documents.
+temperature and precipitation (i.e. both have code >= A).
 
-Climate normals are downloaded from the url stored in option
+Older climate normals are downloaded from the url stored in option
 \code{weathercan.urls.normals}. To change this location use:
 \code{options(weathercan.urls.normals = "your_new_url")}.
 }
+}
 \examples{
-\dontshow{if (check_eccc()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (check_eccc()) withAutoprint(\{ # examplesIf}
 
 # Find the climate_id
 stations_search("Brandon A", normals_years = "current")
 
-# Download climate normals 1981-2010
+# Download climate normals 1991-2020 ("current" normals)
 n <- normals_dl(climate_ids = "5010480")
 n
+
+# Download multiple climate Ids - But only one location!
+# - 1990-2010 normals use composite stations
+stations_search("Winnipeg", normals_years = "current")
+n <- normals_dl(climate_ids = c("502S001", "5023227", "5023222"))
+unique(dplyr::select(n, "location_name", "composite_stations"))
+
+# Download multiple climate Ids
+n <- normals_dl(climate_ids = c("5010480", "5023222"))
+unique(dplyr::select(n, "location_name", "composite_stations"))
+
+# Download climate normals 1981-2010
+# - Note: Very different data format from current normals!
+n <- normals_dl(climate_ids = "5010480", normals_year = "1981-2010")
 
 # Pull out last frost data *with* station information
 library(tidyr)
@@ -98,12 +137,14 @@ n
 n$frost
 
 # Download multiple stations for 1981-2010,
-n <- normals_dl(climate_ids = c("301C3D4", "301FFNJ", "301N49A"))
+n <- normals_dl(
+  climate_ids = c("301C3D4", "301FFNJ", "301N49A"),
+  normals_years = "1981-2010"
+)
 unnest(n, frost)
 
-
-# Note, putting both normals and frost data into the same data set can be done but makes for
-# a very unweildly dataset (there is lots of repetition)
+# Note, putting both normals and frost data into the same data set can be
+# done, but makes for a very unweildly dataset (there is lots of repetition).
 nm <- unnest(n, normals) |>
   unnest(frost)
 \dontshow{\}) # examplesIf}

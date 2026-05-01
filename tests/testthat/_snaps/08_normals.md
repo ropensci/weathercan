@@ -1,4 +1,4 @@
-# normals_dl() downloads normals/frost dates as tibble - single
+# normals_dl() - single - 1981
 
     {
       "type": "list",
@@ -1206,7 +1206,7 @@
       ]
     }
 
----
+# normals_dl() - single - 1971
 
     {
       "type": "list",

@@ -1,5 +1,6 @@
 # weathercan 0.7.9
 - Fix ECCC change to normals download query parameters again
+- Added access to 1991-2020 Climate normals 
 - Added caching functions to support downloading and caching the full 1991-2020 dataset
   - `cache_dir()`, `cache_remove()`
 
