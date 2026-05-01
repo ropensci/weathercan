@@ -111,9 +111,9 @@ weather_dl <- function(
 ) {
   # Address as.POSIXct...
   if (
-    (!is.null(start) &
-      inherits(try(as.Date(start), silent = TRUE), "try-error")) |
-      (!is.null(end) &
+    (!is.null(start) &&
+      inherits(try(as.Date(start), silent = TRUE), "try-error")) ||
+      (!is.null(end) &&
         inherits(try(as.Date(end), silent = TRUE), "try-error"))
   ) {
     stop(
@@ -397,7 +397,7 @@ weather_dl <- function(
   }
 
   # Return messages
-  if (length(missing) > 0 & !quiet) {
+  if (length(missing) > 0 && !quiet) {
     if (all(station_ids %in% missing)) {
       type <- "all"
     } else {
@@ -428,7 +428,7 @@ weather_dl <- function(
     ))
   }
 
-  if (length(end_dates) > 0 & !quiet) {
+  if (length(end_dates) > 0 && !quiet) {
     if (all(station_ids %in% missing)) {
       type <- "all"
     } else {
@@ -587,8 +587,8 @@ weather_raw <- function(
 
   # Look for and remove BOM
   if (
-    raw[1] == as.raw(0xef) &
-      raw[2] == as.raw(0xbb) &
+    raw[1] == as.raw(0xef) &&
+      raw[2] == as.raw(0xbb) &&
       raw[3] == as.raw(0xbf)
   ) {
     raw <- raw[4:length(raw)]

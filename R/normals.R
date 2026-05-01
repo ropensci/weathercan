@@ -161,15 +161,15 @@ normals_dl <- function(
 
   # if(nrow(n) == 0) stop("No stations matched these climate ids", call. = FALSE)
 
-  if (all(n$normals == FALSE)) {
+  if (!any(n$normals)) {
     stop("No stations had climate normals available", call. = FALSE)
-  } else if (any(n$normals == FALSE)) {
+  } else if (!all(n$normals)) {
     message(
       "Not all stations have climate normals available (climate ids: ",
       paste0(n$climate_id[!n$normals], collapse = ", "),
       ")"
     )
-    n <- dplyr::filter(n, .data$normals == TRUE) %>%
+    n <- dplyr::filter(n, .data$normals) %>%
       dplyr::select(-"normals")
   }
 
@@ -198,7 +198,8 @@ normals_dl <- function(
       n_frost = purrr::map_dbl(.data$frost, nrow)
     )
 
-  if (any(no_data <- n$n_data + n$n_frost == 0)) {
+  no_data <- n$n_data + n$n_frost == 0
+  if (any(no_data)) {
     message(
       "All climate normals missing for some stations (climate_ids: ",
       paste0(n$climate_id[no_data], collapse = ", "),
@@ -501,7 +502,7 @@ frost_extract <- function(f, climate_id) {
   frost_probs <- stringr::str_which(f, f_names$match[f_names$group == 2][1])[1]
 
   # Frost free days overall
-  if (any(!is.na(frost_free)) && length(frost_free) > 0) {
+  if (!all(is.na(frost_free)) && length(frost_free) > 0) {
     if (length(frost_probs) == 0) {
       last <- length(f)
     } else {
@@ -539,7 +540,7 @@ frost_extract <- function(f, climate_id) {
   }
 
   # Frost free probabilities
-  if (any(!is.na(frost_probs)) && length(frost_probs) > 0) {
+  if (!all(is.na(frost_probs)) && length(frost_probs) > 0) {
     readr::local_edition(1)
     f2 <- readr::read_csv(
       I(f[frost_probs:length(f)]),
@@ -579,7 +580,7 @@ frost_extract <- function(f, climate_id) {
     f2 <- na_tibble(f_names$new_var[f_names$group == 2])
   }
 
-  if (nrow(f1) == 0 & nrow(f2) == 0) {
+  if (nrow(f1) == 0 && nrow(f2) == 0) {
     r <- cbind(f1, f2)
   } else {
     r <- dplyr::full_join(

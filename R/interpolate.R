@@ -65,14 +65,14 @@ weather_interp <- function(
     "'data' and 'weather' must be data frames with columns 'time'",
     " in POSIXct format or 'date' in Date format."
   )
-  if (!is.data.frame(data) | !is.data.frame(weather)) {
+  if (!is.data.frame(data) || !is.data.frame(weather)) {
     stop(msg)
   }
   if (
-    (interval == "hour" &
-      !("time" %in% names(data) & "time" %in% names(weather))) |
+    (interval == "hour" &&
+      !("time" %in% names(data) && "time" %in% names(weather))) ||
       (interval == "day" &
-        !("date" %in% names(data) & "date" %in% names(weather)))
+        !("date" %in% names(data) && "date" %in% names(weather)))
   ) {
     stop(
       "'interval' must be either 'hour' or 'day' and must correspond to a ",
@@ -86,7 +86,7 @@ weather_interp <- function(
 
   if (interval == "hour") {
     if (
-      !lubridate::is.POSIXct(data[['time']]) |
+      !lubridate::is.POSIXct(data[['time']]) ||
         !lubridate::is.POSIXct(weather[['time']])
     ) {
       stop(msg)
@@ -94,7 +94,7 @@ weather_interp <- function(
   }
   if (interval == "day") {
     if (
-      !lubridate::is.Date(data[['date']]) |
+      !lubridate::is.Date(data[['date']]) ||
         !lubridate::is.Date(weather[['date']])
     ) {
       stop(msg)
@@ -146,7 +146,7 @@ weather_interp <- function(
   ## (is linear interpolation relevant for each?)
   omit <- cols[!(vapply(weather[, cols], is.numeric, FUN.VALUE = TRUE))]
   cols <- cols[!(cols %in% omit)]
-  if (length(omit) > 0 & !quiet) {
+  if (length(omit) > 0 && !quiet) {
     message(
       "Some columns (",
       paste0(omit, collapse = ", "),
@@ -178,7 +178,7 @@ weather_interp <- function(
         )
       }
     } else {
-      if (nrow(w) < nrow(weather) & !quiet) {
+      if (nrow(w) < nrow(weather) && !quiet) {
         message(
           col,
           " is missing ",
@@ -208,7 +208,7 @@ weather_interp <- function(
 
 
 approx_na_rm <- function(x, y, xout, na_gap = NULL) {
-  if (!all(class(x) == class(xout)) & !(is.numeric(xout) & is.numeric(x))) {
+  if (!all(class(x) == class(xout)) && !(is.numeric(xout) && is.numeric(x))) {
     stop("'xout' must be the same class as 'x'")
   }
 
@@ -224,8 +224,8 @@ approx_na_rm <- function(x, y, xout, na_gap = NULL) {
     stats::approx(x = x, y = y, xout = xout, yleft = NA, yright = NA)
   )
 
-  if (any(is.na(y)) & !is.null(na_gap)) {
-    if (lubridate::is.Date(x) | lubridate::is.POSIXct(x)) {
+  if (anyNA(y) && !is.null(na_gap)) {
+    if (lubridate::is.Date(x) || lubridate::is.POSIXct(x)) {
       if (!lubridate::is.period(na_gap)) {
         stop(
           "With date/time data in x, na_gap must be a lubridate ",
@@ -280,7 +280,7 @@ approx_na_rm <- function(x, y, xout, na_gap = NULL) {
       )
       new$y[missing] <- NA
     }
-  } else if (any(is.na(y)) & is.null(na_gap)) {
+  } else if (anyNA(y) && is.null(na_gap)) {
     stop("Missing values in y but no na_gap set")
   }
 

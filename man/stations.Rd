@@ -50,8 +50,9 @@ stations()
 stations_meta()
 
 # Which Manitoba stations have *any* climate normals?
+# Note `normals` is TRUE or FALSE, so we can included it as is for normals == TRUE
 
 library(dplyr)
-filter(stations(), interval == "hour", normals == TRUE, prov == "MB")
+filter(stations(), interval == "hour", normals, prov == "MB")
 \dontshow{\}) # examplesIf}
 }

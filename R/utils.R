@@ -29,8 +29,8 @@ check_int <- function(interval) {
 }
 
 check_ids <- function(ids, stn, type) {
-  if (any(!ids %in% stn[[type]])) {
-    if (type == "climate_id" & any(nchar(as.character(ids)) != 7)) {
+  if (!all(ids %in% stn[[type]])) {
+    if (type == "climate_id" && any(nchar(as.character(ids)) != 7)) {
       stop(
         "'climate_id's expect an id with 7 characters (e.g., 301AR54). ",
         "Did you use 'station_id' by accident?",
@@ -139,7 +139,8 @@ min_na <- function(..., na.rm = TRUE) {
 #' check_eccc()
 #'
 check_eccc <- function() {
-  if (!Sys.getenv("NOT_CRAN") == TRUE) {
+  if (isFALSE(Sys.getenv("NOT_CRAN"))) {
+    # If CRAN
     return(FALSE)
   }
   if (is_error(httr::HEAD("r-project.org"))) {
