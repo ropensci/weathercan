@@ -1,6 +1,6 @@
 library(dplyr)
 
-## Get names expected from stations data download
+## Get names expected from stations data download ----------------------------
 
 province <- c(
   "ALBERTA" = "AB",
@@ -23,14 +23,17 @@ m_names <- c(
   "station_id" = "ID",
   "station_operator" = "Current Station Operator",
   "prov" = "Province",
+  "prov" = "province_or_territory",
   "lat" = "Latitude",
   "lon" = "Longitude",
   "elev" = "Elevation",
+  "elev" = "Elevation(m)",
   "climate_id" = "Climate Identifier",
   "WMO_id" = "WMO Identifier",
   "TC_id" = "TC Identifier"
 )
 
+# Weather variable names index ------------------------------------------------
 w_names <- list(
   "hour" = c(
     "time" = "Date/Time (LST)",
@@ -121,6 +124,7 @@ w_names <- list(
   )
 )
 
+# Normal variable names index ------------------------------------------------
 n_names <- tribble(
   ~new_var                         , ~variable                                 , ~type    ,
   "title_temp"                     , "Temperature"                             , "title"  ,
