@@ -65,7 +65,7 @@ test_that("weather (month) no data fails nicely", {
       "in this time range \\(2012-01-01 to 2012-02-01\\), ",
       "for this interval \\(month\\)"
     )
-  ) %>%
+  ) |>
     suppressMessages()
 
   # Cached
@@ -80,7 +80,7 @@ test_that("weather (month) no data fails nicely", {
       "There are no data for station 51423 for this ",
       "interval \\(month\\)"
     )
-  ) %>%
+  ) |>
     suppressMessages()
 
   expect_s3_class(w0, "data.frame")
@@ -101,7 +101,7 @@ test_that("weather (month) no data fails nicely", {
       "There are no data for station 1274, in ",
       "this time range \\(2017-01-01 to 2017-02-01\\)."
     )
-  ) %>%
+  ) |>
     suppressMessages()
 
   #Cached
@@ -117,7 +117,7 @@ test_that("weather (month) no data fails nicely", {
       "\\(1274, 1275\\), in this time range ",
       "\\(2017-01-01 to 2017-02-01\\)"
     )
-  ) %>%
+  ) |>
     suppressMessages()
 
   expect_s3_class(w0, "data.frame")
@@ -190,12 +190,12 @@ test_that("weather (month) verbose and quiet", {
       verbose = TRUE
     ),
     "Getting station"
-  ) %>%
-    expect_message("Formatting") %>%
-    expect_message("Adding header") %>%
-    expect_message("Getting station") %>%
-    expect_message("No data") %>%
-    expect_message("Trimming") %>%
+  ) |>
+    expect_message("Formatting") |>
+    expect_message("Adding header") |>
+    expect_message("Getting station") |>
+    expect_message("No data") |>
+    expect_message("Trimming") |>
     expect_message("There are no data")
 })
 
@@ -239,17 +239,17 @@ test_that("weather (month) skips with message if end date < start date", {
       interval = "month"
     ),
     "The end date"
-  ) %>%
+  ) |>
     suppressMessages()
   expect_message(
     weather_dl(station_ids = 27534, end = "1995-01-01", interval = "month"),
     "The end date"
-  ) %>%
+  ) |>
     suppressMessages()
   expect_message(
     w <- weather_dl(c(27534, 4291), end = "1928-11-10", interval = "month"),
     "End date earlier"
-  ) %>%
+  ) |>
     suppressMessages()
   expect_true(nrow(w) > 0)
 })
@@ -287,7 +287,7 @@ test_that("list_col=TRUE and interval=hour groups on the right level", {
           end = "2014-01-15",
           interval = "hour",
           quiet = TRUE
-        ) %>%
+        ) |>
           tidyr::nest(key = -tidyr::one_of(names(m_names), "date"))
       ),
       ncol(weather_dl(
@@ -308,7 +308,7 @@ test_that("list_col=TRUE and interval=hour groups on the right level", {
           end = "2014-01-15",
           interval = "hour",
           quiet = TRUE
-        ) %>%
+        ) |>
           tidyr::nest(-dplyr::one_of(names(m_names), "date"))
       ),
       ncol(weather_dl(
@@ -335,7 +335,7 @@ test_that("list_col=TRUE and interval=day groups on the right level", {
           end = "2014-01-15",
           interval = "day",
           quiet = TRUE
-        ) %>%
+        ) |>
           tidyr::nest(key = -dplyr::one_of(names(m_names), "month"))
       ),
       ncol(weather_dl(
@@ -356,7 +356,7 @@ test_that("list_col=TRUE and interval=day groups on the right level", {
           end = "2014-01-15",
           interval = "day",
           quiet = TRUE
-        ) %>%
+        ) |>
           tidyr::nest(-dplyr::one_of(names(m_names)), -month)
       ),
       ncol(weather_dl(
@@ -383,7 +383,7 @@ test_that("list_col=TRUE and interval=month groups on the right level", {
           end = "2017-01-15",
           interval = "month",
           quiet = TRUE
-        ) %>%
+        ) |>
           tidyr::nest(key = -dplyr::one_of(names(m_names), "year"))
       ),
       ncol(weather_dl(
@@ -404,7 +404,7 @@ test_that("list_col=TRUE and interval=month groups on the right level", {
           end = "2017-01-15",
           interval = "month",
           quiet = TRUE
-        ) %>%
+        ) |>
           tidyr::nest(-dplyr::one_of(names(m_names)), -year)
       ),
       ncol(weather_dl(

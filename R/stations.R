@@ -81,11 +81,11 @@ stations_meta <- function() {
 }
 
 stations_read <- function() {
-  pkg_file <- system.file("extdata", "stations.rds", package = "weathercan") %>%
+  pkg_file <- system.file("extdata", "stations.rds", package = "weathercan") |>
     readr::read_rds()
 
   if (file.exists(stations_file())) {
-    local_file <- stations_file() %>%
+    local_file <- stations_file() |>
       readr::read_rds()
     # If pkg version is newer than local, use pkg else use local
     if (
@@ -230,16 +230,16 @@ stations_dl_internal <- function(
   if (!quiet) {
     message(
       "According to Environment Canada, ",
-      stringr::str_subset(headings, "Modified Date") %>%
+      stringr::str_subset(headings, "Modified Date") |>
         stringr::str_remove_all("[^\001-\177]")
     )
   }
 
-  eccc_meta <- stringr::str_subset(headings, "Modified Date") %>%
+  eccc_meta <- stringr::str_subset(headings, "Modified Date") |>
     stringr::str_remove(stringr::regex(
       "Modified Date:",
       ignore_case = TRUE
-    )) %>%
+    )) |>
     lubridate::ymd_hms(truncated = 3)
 
   if (!quiet) {
@@ -286,23 +286,23 @@ stations_dl_internal <- function(
   )
 
   # Transform lat/lon to decimal degrees
-  # s <- s %>%
+  # s <- s |>
   #   dplyr::mutate(lat = sprintf("%.f", lat),
-  #                 lon = sprintf("%.f", lon)) %>%
+  #                 lon = sprintf("%.f", lon)) |>
   #   tidyr::separate(lat, into = c("lat_d", "lat_m", "lat_s", "lat_sd"),
-  #                   sep = c(-7L, -5L, -3L), remove = FALSE, convert = TRUE) %>%
-  #   dplyr::mutate(lat = lat_d + lat_m/60 + (lat_s + lat_sd/1000)/3600) %>%
+  #                   sep = c(-7L, -5L, -3L), remove = FALSE, convert = TRUE) |>
+  #   dplyr::mutate(lat = lat_d + lat_m/60 + (lat_s + lat_sd/1000)/3600) |>
   #   tidyr::separate(lon, into = c("lon_d", "lon_m", "lon_s", "lon_sd"),
-  #                   sep = c(-7L, -5L, -3L), remove = FALSE, convert = TRUE) %>%
-  #   dplyr::mutate(lon = lon_d - lon_m/60 - (lon_s + lon_sd/1000)/3600) %>%
+  #                   sep = c(-7L, -5L, -3L), remove = FALSE, convert = TRUE) |>
+  #   dplyr::mutate(lon = lon_d - lon_m/60 - (lon_s + lon_sd/1000)/3600) |>
   #   dplyr::select(-dplyr::matches("(lat|lon)_(d|m|s|sd)$"))
 
   # Calculate Timezones
-  station_tz <- dplyr::select(s, "prov", "station_id", "lat", "lon") %>%
-    dplyr::distinct() %>%
+  station_tz <- dplyr::select(s, "prov", "station_id", "lat", "lon") |>
+    dplyr::distinct() |>
     dplyr::mutate(
       tz = lutz::tz_lookup_coords(.data$lat, .data$lon, method = "accurate"),
-      tz = purrr::map_chr(.data$tz, ~ tz_diff(.x)),
+      tz = purrr::map_chr(.data$tz, tz_diff),
       tz = dplyr::if_else(
         is.na(.data$lat) | is.na(.data$lon),
         NA_character_,
@@ -310,14 +310,14 @@ stations_dl_internal <- function(
       )
     )
 
-  s <- s %>%
-    dplyr::left_join(station_tz, by = c("station_id", "prov", "lat", "lon")) %>%
+  s <- s |>
+    dplyr::left_join(station_tz, by = c("station_id", "prov", "lat", "lon")) |>
     tidyr::gather(
       key = "interval",
       value = "date",
       dplyr::matches("(start)|(end)")
-    ) %>%
-    tidyr::separate("interval", c("interval", "type"), sep = "_") %>%
+    ) |>
+    tidyr::separate("interval", c("interval", "type"), sep = "_") |>
     dplyr::mutate(
       type = factor(.data$type, levels = c("start", "end")),
       station_name = as.character(.data$station_name),
@@ -339,20 +339,22 @@ stations_dl_internal <- function(
         labels = .env$province
       ),
       prov = as.character(.data$prov)
-    ) %>%
-    tidyr::spread("type", "date") %>%
-    dplyr::arrange(.data$prov, .data$station_id, .data$interval) %>%
+    ) |>
+    tidyr::spread("type", "date") |>
+    dplyr::arrange(.data$prov, .data$station_id, .data$interval) |>
     dplyr::as_tibble()
 
-  s <- s %>%
-    dplyr::left_join(normals, by = c("station_name", "climate_id")) %>%
+  s <- s |>
+    dplyr::left_join(normals, by = c("station_name", "climate_id")) |>
     dplyr::mutate(
-      dplyr::across(dplyr::contains("normals"), ~ tidyr::replace_na(., FALSE)),
+      dplyr::across(dplyr::contains("normals"), \(x) {
+        tidyr::replace_na(x, FALSE)
+      }),
       normals = purrr::pmap_lgl(
         dplyr::pick(dplyr::starts_with("normals_")),
         any
       )
-    ) %>%
+    ) |>
     dplyr::relocate(dplyr::contains("normals_"), .after = dplyr::last_col())
 
   stn <- list(
@@ -582,19 +584,19 @@ stations_search <- function(
       message("Calculating station distances")
     }
 
-    coords <- sf::st_point(coords[c(2, 1)]) %>%
+    coords <- sf::st_point(coords[c(2, 1)]) |>
       sf::st_sfc(crs = 4326)
 
-    locs <- dplyr::select(stn, "station_id", "lon", "lat") %>%
-      tidyr::drop_na() %>%
-      dplyr::distinct() %>%
-      sf::st_as_sf(coords = c("lon", "lat"), crs = 4326) %>%
+    locs <- dplyr::select(stn, "station_id", "lon", "lat") |>
+      tidyr::drop_na() |>
+      dplyr::distinct() |>
+      sf::st_as_sf(coords = c("lon", "lat"), crs = 4326) |>
       dplyr::mutate(
         distance = as.vector(sf::st_distance(coords, .data$geometry)) / 1000
-      ) %>%
+      ) |>
       sf::st_drop_geometry()
 
-    stn <- dplyr::left_join(stn, locs, by = "station_id") %>%
+    stn <- dplyr::left_join(stn, locs, by = "station_id") |>
       dplyr::arrange(.data$distance)
 
     i <- which(stn$distance <= dist)
@@ -634,29 +636,29 @@ normals_stn_list <- function(yr) {
   get_check(
     getOption("weathercan.urls.stations.normals"),
     query = list(yr = yr)
-  ) %>%
+  ) |>
     httr::content(
       type = "text/csv",
       col_types = readr::cols(),
       encoding = "Latin1",
       progress = FALSE
-    ) %>%
-    dplyr::rename_with(tolower) %>%
+    ) |>
+    dplyr::rename_with(tolower) |>
     dplyr::select(dplyr::any_of(c("station_name", "climate_id")))
 }
 
 stations_normals <- function() {
-  dplyr::tibble(years = c("1991-2020", "1981-2010", "1971-2000")) %>%
+  dplyr::tibble(years = c("1991-2020", "1981-2010", "1971-2000")) |>
     dplyr::mutate(
       yr = stringr::str_extract(.data$years, "^[0-9]{4}"),
       stns = purrr::map(.data$yr, normals_stn_list)
-    ) %>%
-    tidyr::unnest("stns") %>%
-    dplyr::select(-"yr") %>%
+    ) |>
+    tidyr::unnest("stns") |>
+    dplyr::select(-"yr") |>
     dplyr::mutate(
       normals = TRUE,
       years = stringr::str_replace(.data$years, "-", "_"),
       years = paste0("normals_", .data$years)
-    ) %>%
+    ) |>
     tidyr::pivot_wider(names_from = "years", values_from = "normals")
 }

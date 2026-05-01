@@ -97,7 +97,7 @@ test_that("approx_na_rm (time) without NAs for different measures", {
       kamloops$time < as.POSIXct("2016-03-03"),
   ]
   k <- as.data.frame(k)
-  f <- finches[1:20, ] %>%
+  f <- finches[1:20, ] |>
     dplyr::mutate(time = lubridate::force_tz(time, "UTC"))
 
   ## Format
@@ -117,7 +117,7 @@ test_that("approx_na_rm (time) without NAs pads NAs at start/end", {
     kamloops$time >= as.POSIXct("2016-03-08 12:00:00", tz = "Etc/GMT+8") &
       kamloops$time <= as.POSIXct("2016-03-08 14:00:00", tz = "Etc/GMT+8"),
   ]
-  f <- finches[finches$time >= as.POSIXct("2016-03-08 04:00:00"), ][1:500, ] %>%
+  f <- finches[finches$time >= as.POSIXct("2016-03-08 04:00:00"), ][1:500, ] |>
     dplyr::mutate(time = lubridate::force_tz(time, "UTC"))
 
   expect_silent(
@@ -147,9 +147,9 @@ test_that("approx_na_rm (time) replaces gaps with NAs", {
     kamloops$time >= as.POSIXct("2016-02-29 08:00:00", tz = "UTC") &
       kamloops$time <= as.POSIXct("2016-03-30 9:00:00", tz = "UTC"),
   ]
-  f <- finches %>%
-    dplyr::mutate(time = lubridate::force_tz(.data$time, "UTC")) %>%
-    dplyr::filter(time >= as.POSIXct("2016-03-08 06:00:00")) %>%
+  f <- finches |>
+    dplyr::mutate(time = lubridate::force_tz(.data$time, "UTC")) |>
+    dplyr::filter(time >= as.POSIXct("2016-03-08 06:00:00")) |>
     dplyr::slice(1:500)
 
   expect_silent(
@@ -259,7 +259,7 @@ test_that("weather_interp (hour) fails with incorrect data types", {
     kamloops$time > as.POSIXct("2016-03-01") &
       kamloops$time < as.POSIXct("2016-03-03"),
   ]
-  f <- finches[1:20, ] %>%
+  f <- finches[1:20, ] |>
     dplyr::mutate(time = lubridate::force_tz(time, "UTC"))
 
   ## Expect failure
@@ -286,7 +286,7 @@ test_that("weather_interp (hour) interpolates particular columns", {
     kamloops$time > as.POSIXct("2016-03-01", tz = "UTC") &
       kamloops$time < as.POSIXct("2016-03-03", tz = "UTC"),
   ]
-  f <- finches[1:20, ] %>%
+  f <- finches[1:20, ] |>
     dplyr::mutate(time = lubridate::force_tz(time, "UTC"))
 
   ## Expect success
@@ -311,12 +311,12 @@ test_that("weather_interp (hour) interpolates 'all'", {
     kamloops$time > as.POSIXct("2016-03-01") &
       kamloops$time < as.POSIXct("2016-03-03"),
   ]
-  f <- finches[1:20, ] %>%
+  f <- finches[1:20, ] |>
     dplyr::mutate(time = lubridate::force_tz(time, "UTC"))
 
   ## Expect success
-  expect_message(a <- weather_interp(f, k), "hmdx does not") %>%
-    expect_message("wind_chill does not") %>%
+  expect_message(a <- weather_interp(f, k), "hmdx does not") |>
+    expect_message("wind_chill does not") |>
     expect_message("precip_amt does not")
   expect_named(
     a,
@@ -333,7 +333,7 @@ test_that("weather_interp (hour) fails on character columns", {
     kamloops$time > as.POSIXct("2016-03-01") &
       kamloops$time < as.POSIXct("2016-03-03"),
   ]
-  f <- finches[1:20, ] %>%
+  f <- finches[1:20, ] |>
     dplyr::mutate(time = lubridate::force_tz(time, "UTC"))
 
   k$temp <- as.character(k$temp)
@@ -356,7 +356,7 @@ test_that("weather_interp (hour) quiet", {
       kamloops$time < as.POSIXct("2016-03-03"),
   ]
   k$temp[1:10] <- NA
-  f <- finches[1:20, ] %>%
+  f <- finches[1:20, ] |>
     dplyr::mutate(time = lubridate::force_tz(time, "UTC"))
   expect_message(weather_interp(f, k, cols = "temp"))
   expect_silent(weather_interp(f, k, cols = "temp", quiet = TRUE))
@@ -366,8 +366,8 @@ test_that("weather_interp (hour) quiet", {
 
 test_that("weather_interp (day) fails with incorrect data types", {
   k <- kamloops_day[kamloops_day$date < as.Date("2016-04-01"), ]
-  f <- finches[1:20, ] %>%
-    dplyr::mutate(time = lubridate::force_tz(time, "UTC")) %>%
+  f <- finches[1:20, ] |>
+    dplyr::mutate(time = lubridate::force_tz(time, "UTC")) |>
     dplyr::mutate(date = lubridate::as_date(time))
 
   ## Expect failure
@@ -400,9 +400,9 @@ test_that("weather_interp (day) fails with incorrect data types", {
 
 test_that("weather_interp (day) interpolates particular columns", {
   k <- kamloops_day[kamloops_day$date < as.Date("2016-04-01"), ]
-  f <- finches[1:20, ] %>%
-    dplyr::mutate(time = lubridate::force_tz(time, "UTC")) %>%
-    dplyr::mutate(date = lubridate::as_date(time)) %>%
+  f <- finches[1:20, ] |>
+    dplyr::mutate(time = lubridate::force_tz(time, "UTC")) |>
+    dplyr::mutate(date = lubridate::as_date(time)) |>
     dplyr::arrange(animal_id)
 
   ## Expect success
@@ -446,15 +446,15 @@ test_that("weather_interp (day) interpolates particular columns", {
 
 test_that("weather_interp (day) interpolates 'all'", {
   k <- kamloops_day[kamloops_day$date < as.Date("2016-04-01"), ]
-  f <- finches[1:20, ] %>%
-    dplyr::mutate(time = lubridate::force_tz(time, "UTC")) %>%
+  f <- finches[1:20, ] |>
+    dplyr::mutate(time = lubridate::force_tz(time, "UTC")) |>
     dplyr::mutate(date = lubridate::as_date(time))
 
   ## Expect success
-  expect_message(a <- weather_interp(f, k, interval = "day")) %>%
-    expect_message("total_snow is missing") %>%
-    expect_message("total_precip is missing") %>%
-    expect_message("snow_grnd is missing") %>%
+  expect_message(a <- weather_interp(f, k, interval = "day")) |>
+    expect_message("total_snow is missing") |>
+    expect_message("total_precip is missing") |>
+    expect_message("snow_grnd is missing") |>
     expect_message("spd_max_gust is missing")
   expect_named(
     a,
@@ -480,8 +480,8 @@ test_that("weather_interp (day) interpolates 'all'", {
 
 test_that("weather_interp (day) skips character columns", {
   k <- kamloops_day[kamloops_day$date < as.Date("2016-04-01"), ]
-  f <- finches[1:20, ] %>%
-    dplyr::mutate(time = lubridate::force_tz(time, "UTC")) %>%
+  f <- finches[1:20, ] |>
+    dplyr::mutate(time = lubridate::force_tz(time, "UTC")) |>
     dplyr::mutate(date = lubridate::as_date(time))
 
   k$max_temp <- as.character(k$max_temp)
@@ -508,8 +508,8 @@ test_that("weather_interp (day) skips character columns", {
 test_that("weather_interp messages", {
   k <- kamloops_day[kamloops_day$date < as.Date("2016-04-01"), ]
   k$max_temp[1:10] <- NA
-  f <- finches[1:20, ] %>%
-    dplyr::mutate(time = lubridate::force_tz(time, "UTC")) %>%
+  f <- finches[1:20, ] |>
+    dplyr::mutate(time = lubridate::force_tz(time, "UTC")) |>
     dplyr::mutate(date = lubridate::as_date(time))
 
   k2 <- rbind(k, dplyr::mutate(k, station_id = 234))
@@ -538,8 +538,8 @@ test_that("weather_interp checks arguments", {
       kamloops$time < as.POSIXct("2016-03-03"),
   ]
   k_day <- kamloops_day[kamloops_day$date < as.Date("2016-04-01"), ]
-  f <- finches[1:20, ] %>%
-    dplyr::mutate(time = lubridate::force_tz(time, "UTC")) %>%
+  f <- finches[1:20, ] |>
+    dplyr::mutate(time = lubridate::force_tz(time, "UTC")) |>
     dplyr::mutate(date = lubridate::as_date(time))
 
   ## Check valid interval

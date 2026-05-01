@@ -7,22 +7,24 @@ library(stringr)
 flags <- tibble(
   interval = c("hour", "day", "month"),
   station_id = c(51423, 51423, 43823)
-) %>%
+) |>
   mutate(
     flags = purrr::map2(
       .data$station_id,
       .data$interval,
-      ~ meta_raw(
-        meta_html(station_id = .x, interval = .y),
-        interval = .y,
+      \(s, i) {
+        meta_html(station_id = s, interval = i) |>
+          meta_raw(
+            interval = i,
         return = "legend"
       )
+      }
     )
-  ) %>%
-  tidyr::unnest(flags) %>%
-  select("code" = "X1", "meaning" = "X2") %>%
-  distinct() %>%
-  arrange(code) %>%
+  ) |>
+  tidyr::unnest(flags) |>
+  select("code" = "X1", "meaning" = "X2") |>
+  distinct() |>
+  arrange(code) |>
   mutate(meaning = str_remove(meaning, "\\*"))
 usethis::use_data(flags, overwrite = TRUE)
 
@@ -66,14 +68,15 @@ gloss_url <- list(
     "dir_max_gust" = "d_maxGust",
     "spd_max_gust" = "s_maxGust"
   )
-) %>%
-  lapply(., utils::stack) %>%
-  lapply(., FUN = function(x) mutate(x, ind = as.character(ind))) %>%
-  tibble(interval = names(.), data = .) %>%
-  tidyr::unnest(data) %>%
+) |>
+  lapply(utils::stack) |>
+  lapply(FUN = function(x) mutate(x, ind = as.character(ind)))
+
+gloss_url <- tibble(interval = names(gloss_url), data = gloss_url) |>
+  tidyr::unnest(data) |>
   mutate(
     value = paste0("https://climate.weather.gc.ca/glossary_e.html#", values)
-  ) %>%
+  ) |>
   select("interval", "weathercan_name" = "ind", "ECCC_ref" = "value")
 
 
@@ -86,8 +89,8 @@ glossary <- tibble(
   ECCC_name = unlist(w_names, use.names = FALSE),
   weathercan_name = names(unlist(c(w_names, use.names = FALSE))),
   units = str_replace_all(str_extract(ECCC_name, "\\(.*\\)"), "\\(|\\)", "")
-) %>%
-  left_join(gloss_url, by = c("interval", "weathercan_name")) %>%
+) |>
+  left_join(gloss_url, by = c("interval", "weathercan_name")) |>
   mutate(
     ECCC_ref = replace(
       ECCC_ref,
@@ -122,8 +125,8 @@ glossary <- tibble(
       str_detect(weathercan_name, c("(qual)|(_flag)|(weather)")),
       "note"
     )
-  ) %>%
-  mutate_all(.funs = ~ str_replace_all(., "°", "\U00B0"))
+  ) |>
+  mutate(across(everything(), .fns = \(x) str_replace_all(x, "°", "\U00B0")))
 
 usethis::use_data(glossary, overwrite = TRUE)
 
@@ -133,11 +136,11 @@ codes <- normals_raw(normals_html(
   station_id = 1839,
   climate_id = "3011240",
   normals_years = "1981-2010"
-)) %>%
-  .[8:11] %>%
-  str_replace_all("\"\"", "'") %>%
-  str_remove_all("\"") %>%
-  tibble::enframe(name = NULL) %>%
+))
+codes <- codes[8:11] |>
+  str_replace_all("\"\"", "'") |>
+  str_remove_all("\"") |>
+  tibble::enframe(name = NULL) |>
   tidyr::separate("value", sep = " = ", into = c("code", "meaning"))
 usethis::use_data(codes, overwrite = TRUE)
 
@@ -146,12 +149,12 @@ h <- paste0(
   "https://www.canada.ca/en/environment-climate-change/services/",
   "climate-change/canadian-centre-climate-services/display-download/",
   "technical-documentation-climate-normals.html"
-) %>%
+) |>
   xml2::read_html()
 
 
-ECCC_name <- html_nodes(h, "h3") %>%
-  html_text() %>%
+ECCC_name <- html_nodes(h, "h3") |>
+  html_text() |>
   str_subset(
     "(Environment and Climate Change Canada)|(Government of Canada)",
     negate = TRUE
@@ -159,9 +162,9 @@ ECCC_name <- html_nodes(h, "h3") %>%
 
 glossary_normals <- tibble(
   ECCC_name,
-  description = html_nodes(h, "h3+p") %>% html_text()
-) %>%
-  filter(!str_detect(ECCC_name, "Thank you")) %>%
+  description = html_nodes(h, "h3+p") |> html_text()
+) |>
+  filter(!str_detect(ECCC_name, "Thank you")) |>
   mutate(
     weathercan_name = c(
       "temp",
@@ -183,18 +186,18 @@ glossary_normals <- tibble(
       "visibility",
       "cloud"
     )
-  ) %>%
-  select("ECCC_name", "weathercan_name", "description") %>%
+  ) |>
+  select("ECCC_name", "weathercan_name", "description") |>
   bind_rows(select(
     n_names,
     "weathercan_name" = "new_var",
     "ECCC_name" = "variable"
-  )) %>%
+  )) |>
   bind_rows(select(
     f_names,
     "weathercan_name" = "new_var",
     "ECCC_name" = "variable"
-  )) %>%
+  )) |>
   mutate(
     ECCC_name = str_to_title(ECCC_name),
     ECCC_name = str_replace_all(
@@ -213,7 +216,7 @@ glossary_normals <- tibble(
         "Mj/M2" = "MJ/m2"
       )
     )
-  ) %>%
+  ) |>
   filter(weathercan_name != "probability")
 
 usethis::use_data(glossary_normals, overwrite = TRUE)

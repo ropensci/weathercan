@@ -8,7 +8,7 @@ test_that("weather_raw() hour column names as expected", {
     station_id = 51423,
     date = as.Date("2014-01-01"),
     interval = "hour"
-  ) %>%
+  ) |>
     weather_raw()
 
   expect_named(
@@ -31,7 +31,7 @@ test_that("weather_raw() day column names as expected", {
     station_id = 51423,
     date = as.Date("2014-01-01"),
     interval = "day"
-  ) %>%
+  ) |>
     weather_raw()
 
   expect_true(all(
@@ -54,7 +54,7 @@ test_that("weather_raw() month column names as expected", {
     station_id = 43823,
     date = as.Date("2005-01-01"),
     interval = "month"
-  ) %>%
+  ) |>
     weather_raw()
 
   expect_true(all(

@@ -69,7 +69,7 @@ test_that("normals_raw() extracts normals as character", {
     )
   )
 
-  expect_silent(nd <- normals_raw(nd)) %>%
+  expect_silent(nd <- normals_raw(nd)) |>
     expect_type("character")
   expect_false(any(stringr::str_detect(nd, "[^\001-\177]")))
 
@@ -83,7 +83,7 @@ test_that("normals_raw() extracts normals as character", {
     )
   )
 
-  expect_silent(nd <- normals_raw(nd)) %>%
+  expect_silent(nd <- normals_raw(nd)) |>
     expect_type("character")
   expect_false(any(stringr::str_detect(nd, "[^\001-\177]")))
 })
@@ -106,7 +106,7 @@ test_that("normals_extract() cleans up raw data", {
 
   n <- normals_raw(nd)
 
-  expect_silent(n1 <- normals_extract(n)) %>%
+  expect_silent(n1 <- normals_extract(n)) |>
     expect_type("character")
   expect_lt(length(n1), length(n))
   expect_true(stringr::str_detect(n1[1], "Jan"))
@@ -123,7 +123,7 @@ test_that("normals_extract() cleans up raw data", {
 
   n <- normals_raw(nd)
 
-  expect_silent(n1 <- normals_extract(n)) %>%
+  expect_silent(n1 <- normals_extract(n)) |>
     expect_type("character")
   expect_lt(length(n1), length(n))
   expect_true(stringr::str_detect(n1[1], "Jan"))
@@ -145,13 +145,13 @@ test_that("data_extract() / frost_extract() extract data", {
     )
   )
 
-  n <- nd %>%
-    normals_raw() %>%
+  n <- nd |>
+    normals_raw() |>
     normals_extract()
 
-  expect_silent(data_extract(n, climate_id = "5010480")) %>%
+  expect_silent(data_extract(n, climate_id = "5010480")) |>
     expect_s3_class("data.frame")
-  expect_silent(frost_extract(n, climate_id = "5010480")) %>%
+  expect_silent(frost_extract(n, climate_id = "5010480")) |>
     expect_s3_class("data.frame")
 
   # 1971-2000
@@ -164,13 +164,13 @@ test_that("data_extract() / frost_extract() extract data", {
     )
   )
 
-  n <- nd %>%
-    normals_raw() %>%
+  n <- nd |>
+    normals_raw() |>
     normals_extract()
 
-  expect_silent(data_extract(n, climate_id = "5010480")) %>%
+  expect_silent(data_extract(n, climate_id = "5010480")) |>
     expect_s3_class("data.frame")
-  expect_silent(frost_extract(n, climate_id = "5010480")) %>%
+  expect_silent(frost_extract(n, climate_id = "5010480")) |>
     expect_s3_class("data.frame")
 })
 
@@ -190,20 +190,20 @@ test_that("normals_format()/frost_format() format data to correct class", {
     )
   )
 
-  n <- nd %>%
-    normals_raw() %>%
+  n <- nd |>
+    normals_raw() |>
     normals_extract()
 
   expect_silent(f <- frost_extract(n, climate_id = "5010480"))
   expect_silent(n <- data_extract(n, climate_id = "5010480"))
 
-  expect_silent(n_fmt <- data_format(n)) %>%
+  expect_silent(n_fmt <- data_format(n)) |>
     expect_s3_class("data.frame")
   expect_type(n_fmt[["temp_daily_average"]], "double")
   expect_s3_class(n_fmt[["temp_extreme_max_date"]], "Date")
   expect_type(n_fmt[["wind_dir"]], "character")
 
-  expect_silent(f_fmt <- frost_format(f)) %>%
+  expect_silent(f_fmt <- frost_format(f)) |>
     expect_s3_class("data.frame")
   expect_type(f_fmt[["date_first_fall_frost"]], "double")
   expect_type(f_fmt[["prob_first_fall_temp_below_0_on_date"]], "double")
@@ -219,20 +219,20 @@ test_that("normals_format()/frost_format() format data to correct class", {
     )
   )
 
-  n <- nd %>%
-    normals_raw() %>%
+  n <- nd |>
+    normals_raw() |>
     normals_extract()
 
   expect_silent(f <- frost_extract(n, climate_id = "5010480"))
   expect_silent(n <- data_extract(n, climate_id = "5010480"))
 
-  expect_silent(n_fmt <- data_format(n)) %>%
+  expect_silent(n_fmt <- data_format(n)) |>
     expect_s3_class("data.frame")
   expect_type(n_fmt[["temp_daily_average"]], "double")
   expect_s3_class(n_fmt[["temp_extreme_max_date"]], "Date")
   expect_type(n_fmt[["wind_dir"]], "character")
 
-  expect_silent(f_fmt <- frost_format(f)) %>%
+  expect_silent(f_fmt <- frost_format(f)) |>
     expect_s3_class("data.frame")
   expect_length(f_fmt[["date_first_fall_frost"]], 0)
   expect_length(f_fmt[["prob_first_fall_temp_below_0_on_date"]], 0)
@@ -276,21 +276,21 @@ test_that("normals_dl() - multi 1981", {
       climate_id = c("2403500", "5010480", "1096450"),
       normals_years = "1981-2010"
     )
-  ) %>%
+  ) |>
     expect_s3_class("tbl_df")
 
   expect_equal(nrow(nd), 3)
   expect_s3_class(tidyr::unnest(nd, normals), "data.frame")
   expect_s3_class(tidyr::unnest(nd, frost), "data.frame")
   expect_length(
-    tidyr::unnest(nd, normals) %>%
-      dplyr::pull(climate_id) %>%
+    tidyr::unnest(nd, normals) |>
+      dplyr::pull(climate_id) |>
       unique(),
     3
   )
   expect_length(
-    tidyr::unnest(nd, frost) %>%
-      dplyr::pull(climate_id) %>%
+    tidyr::unnest(nd, frost) |>
+      dplyr::pull(climate_id) |>
       unique(),
     3
   )
@@ -305,21 +305,21 @@ test_that("normals_dl() - multi 1971", {
       climate_id = c("2403500", "5010480", "1096450"),
       normals_years = "1971-2000"
     )
-  ) %>%
+  ) |>
     expect_s3_class("tbl_df")
 
   expect_equal(nrow(nd), 3)
   expect_s3_class(tidyr::unnest(nd, normals), "data.frame")
   expect_s3_class(tidyr::unnest(nd, frost), "data.frame")
   expect_length(
-    tidyr::unnest(nd, normals) %>%
-      dplyr::pull(climate_id) %>%
+    tidyr::unnest(nd, normals) |>
+      dplyr::pull(climate_id) |>
       unique(),
     3
   )
   expect_length(
-    tidyr::unnest(nd, frost) %>%
-      dplyr::pull(climate_id) %>%
+    tidyr::unnest(nd, frost) |>
+      dplyr::pull(climate_id) |>
       unique(),
     0
   )

@@ -87,7 +87,7 @@ test_that("weather (hour) formats NL timezone", {
       start = "1965-01-01",
       end = "1965-01-15"
     )
-  }) %>%
+  }) |>
     expect_s3_class("data.frame")
   expect_equal(w$time[1], as.POSIXct("1965-01-01 00:30:00", tz = "UTC"))
 })
@@ -271,12 +271,12 @@ test_that("weather (hour) verbose and quiet", {
       verbose = TRUE
     ),
     "Getting station"
-  ) %>%
-    expect_message("No data for station") %>%
-    expect_message("Getting station") %>%
-    expect_message("Formatting station") %>%
-    expect_message("Adding header data") %>%
-    expect_message("Trimming missing") %>%
+  ) |>
+    expect_message("No data for station") |>
+    expect_message("Getting station") |>
+    expect_message("Formatting station") |>
+    expect_message("Adding header data") |>
+    expect_message("Trimming missing") |>
     expect_message("There are no data")
 })
 

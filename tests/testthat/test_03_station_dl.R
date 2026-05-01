@@ -24,7 +24,7 @@ test_that("stations_dl() errors appropriately", {
 test_that("stations_normals() gets normals info", {
   skip_on_cran()
 
-  expect_silent(n <- stations_normals()) %>%
+  expect_silent(n <- stations_normals()) |>
     expect_s3_class("data.frame")
 
   expect_gt(nrow(n), 1500)
@@ -42,7 +42,7 @@ test_that("stations_normals() gets normals info", {
 
 test_that("stations_meta() returns metadata", {
   skip_on_cran()
-  expect_type(stations_meta(), "list") %>%
+  expect_type(stations_meta(), "list") |>
     expect_named(c("ECCC_modified", "weathercan_modified"))
 
   expect_s3_class(stations_meta()$ECCC_modified, "POSIXct")
@@ -65,14 +65,14 @@ test_that("stations_dl() runs and updates data", {
   expect_message(
     stations_dl_internal(internal = FALSE),
     "Stations data saved"
-  ) %>%
-    expect_message("According to Environment Canada") %>%
+  ) |>
+    expect_message("According to Environment Canada") |>
     expect_message("Environment Canada Disclaimers")
-  expect_type(s <- readRDS("stations.rds"), "list") %>%
+  expect_type(s <- readRDS("stations.rds"), "list") |>
     expect_length(2)
   expect_s3_class(s$stn, "data.frame")
   expect_gt(nrow(s$stn), 0)
-  expect_type(s$meta, "list") %>%
+  expect_type(s$meta, "list") |>
     expect_length(2)
 
   # Ensure that we're getting recent data
@@ -92,10 +92,10 @@ test_that("stations_dl() runs and updates data", {
 
 # stations() --------------------------------------------------------------
 test_that("stations() /stations_meta() return data", {
-  expect_silent(s <- stations()) %>%
+  expect_silent(s <- stations()) |>
     expect_s3_class("data.frame")
 
-  expect_silent(stations_meta()) %>%
+  expect_silent(stations_meta()) |>
     expect_type("list")
 
   expect_named(stations_meta(), c("ECCC_modified", "weathercan_modified"))
@@ -180,7 +180,7 @@ test_that("stations_search 'coords' returns correct format", {
 
 test_that("stations_search 'coords' returns correct data", {
   ## Check specific
-  expect_equal(nrow(stn <- stations_search(coords = c(54, -122))), 10) %>%
+  expect_equal(nrow(stn <- stations_search(coords = c(54, -122))), 10) |>
     expect_message("No stations within 10km")
   expect_equal(stn$station_name[1], "UPPER FRASER")
   expect_equal(round(stn$distance[1], 5), 13.73664)
@@ -215,7 +215,7 @@ test_that("stations_search quiet/verbose", {
   expect_message(
     stations_search(c(54, -122), verbose = TRUE),
     "Searching by name"
-  ) %>%
+  ) |>
     expect_message("The `name` argument looks like a pair of coordinates")
   expect_message(
     stations_search("Kamloops", verbose = TRUE),
@@ -224,7 +224,7 @@ test_that("stations_search quiet/verbose", {
   expect_message(
     stations_search(coords = c(54, -122), verbose = TRUE),
     "Calculating station distances"
-  ) %>%
+  ) |>
     expect_message("No stations within 10km")
 })
 

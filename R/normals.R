@@ -148,15 +148,15 @@ normals_dl <- function(
 
   yrs <- paste0("normals_", stringr::str_replace(normals_years, "-", "_"))
 
-  n <- dplyr::filter(stn, .data$climate_id %in% climate_ids) %>%
+  n <- dplyr::filter(stn, .data$climate_id %in% climate_ids) |>
     dplyr::select(
       "prov",
       "station_name",
       "station_id",
       "climate_id",
       "normals" = dplyr::matches(yrs)
-    ) %>%
-    dplyr::distinct() %>%
+    ) |>
+    dplyr::distinct() |>
     dplyr::mutate(climate_id = as.character(.data$climate_id))
 
   # if(nrow(n) == 0) stop("No stations matched these climate ids", call. = FALSE)
@@ -169,16 +169,16 @@ normals_dl <- function(
       paste0(n$climate_id[!n$normals], collapse = ", "),
       ")"
     )
-    n <- dplyr::filter(n, .data$normals) %>%
+    n <- dplyr::filter(n, .data$normals) |>
       dplyr::select(-"normals")
   }
 
   # Download data
-  n <- n %>%
+  n <- n |>
     dplyr::mutate(
       html = purrr::pmap(
         list(.data$prov, .data$station_id, .data$climate_id),
-        ~ normals_html(..1, ..2, ..3, normals_years)
+        \(p, s, c) normals_html(p, s, c, normals_years)
       ),
       normals = purrr::map(.data$html, normals_raw),
       meets_wmo = purrr::map_lgl(.data$normals, meets_wmo),
@@ -187,12 +187,12 @@ normals_dl <- function(
       normals = purrr::map2(
         .data$normals,
         .data$climate_id,
-        ~ data_extract(.x, climate_id = .y)
+        \(n, c) data_extract(n, climate_id = c)
       ),
       frost = purrr::map2(
         .data$frost,
         .data$climate_id,
-        ~ frost_extract(.x, climate_id = .y)
+        \(f, c) frost_extract(f, climate_id = c)
       ),
       n_data = purrr::map_dbl(.data$normals, nrow),
       n_frost = purrr::map_dbl(.data$frost, nrow)
@@ -253,10 +253,10 @@ normals_html <- function(prov, station_id, climate_id, normals_years) {
 
 normals_raw <- function(html, nrows = -1) {
   # Extract file
-  html %>%
-    httr::content(as = "text", encoding = "latin1") %>%
-    stringr::str_split(pattern = "\n") %>%
-    unlist() %>%
+  html |>
+    httr::content(as = "text", encoding = "latin1") |>
+    stringr::str_split(pattern = "\n") |>
+    unlist() |>
     # Get rid of all special symbols
     stringr::str_remove_all("[^\001-\177]")
 }
@@ -309,19 +309,19 @@ data_extract <- function(n, climate_id) {
   nn <- dplyr::filter(n_names, .data$group %in% nn$group)
 
   # Detect missing measurements
-  missing_data <- dplyr::filter(nn, .data$type == "unique") %>%
+  missing_data <- dplyr::filter(nn, .data$type == "unique") |>
     dplyr::anti_join(dplyr::select(n, "variable"), by = "variable")
   nn <- dplyr::filter(nn, !.data$new_var %in% missing_data$new_var)
 
   # Remove leftover missing subgroups
-  nn <- dplyr::group_by(nn, .data$subgroup) %>%
-    dplyr::filter(!all(.data$type == "sub")) %>%
+  nn <- dplyr::group_by(nn, .data$subgroup) |>
+    dplyr::filter(!all(.data$type == "sub")) |>
     dplyr::ungroup()
 
   # Make subgroups unique
   n <- dplyr::left_join(
     n,
-    dplyr::filter(nn, .data$type != "sub") %>%
+    dplyr::filter(nn, .data$type != "sub") |>
       dplyr::select("variable", "subgroup"),
     by = "variable"
   )
@@ -380,15 +380,15 @@ data_extract <- function(n, climate_id) {
   n_nice <- dplyr::filter(n_nice, !stringr::str_detect(.data$new_var, "title"))
 
   # Get codes
-  codes <- dplyr::select(n_nice, "code" = "Code", "new_var") %>%
-    dplyr::mutate(new_var = paste0(.data$new_var, "_code")) %>%
+  codes <- dplyr::select(n_nice, "code" = "Code", "new_var") |>
+    dplyr::mutate(new_var = paste0(.data$new_var, "_code")) |>
     tidyr::spread(key = "new_var", value = "code")
 
   # Spread variables
-  n_nice <- n_nice %>%
-    dplyr::select(-"Code", -"variable", -"subgroup", -"variable_sub") %>%
-    tidyr::gather(key = "period", value = "measure", -"new_var") %>%
-    tidyr::spread(key = "new_var", value = "measure") %>%
+  n_nice <- n_nice |>
+    dplyr::select(-"Code", -"variable", -"subgroup", -"variable_sub") |>
+    tidyr::gather(key = "period", value = "measure", -"new_var") |>
+    tidyr::spread(key = "new_var", value = "measure") |>
     # Add Codes
     cbind(codes)
 
@@ -401,41 +401,45 @@ data_extract <- function(n, climate_id) {
   o <- names(n)[
     !names(n) %in% c("variable", "Code", "subgroup", "variable_sub")
   ]
-  n_nice %>%
-    dplyr::mutate(period = factor(.data$period, levels = o)) %>%
-    dplyr::arrange(.data$period) %>%
+  n_nice |>
+    dplyr::mutate(period = factor(.data$period, levels = o)) |>
+    dplyr::arrange(.data$period) |>
     dplyr::as_tibble()
 }
 
 data_format <- function(n, climate_id) {
   fmts <- dplyr::filter(n_formats, .data$new_var %in% names(n))
-  dates <- dplyr::filter(fmts, .data$format == "date") %>%
+  dates <- dplyr::filter(fmts, .data$format == "date") |>
     dplyr::pull("new_var")
-  nums <- dplyr::filter(fmts, .data$format == "numeric") %>%
+  nums <- dplyr::filter(fmts, .data$format == "numeric") |>
     dplyr::pull("new_var")
-  chars <- dplyr::filter(fmts, .data$format == "character") %>%
+  chars <- dplyr::filter(fmts, .data$format == "character") |>
     dplyr::pull("new_var")
 
   # Prepare dates (if missing, NA)
-  n_fmt <- n %>%
+  n_fmt <- n |>
     dplyr::mutate(
       dplyr::across(
         .cols = dplyr::all_of(dates),
-        .fns = ~ dplyr::if_else(
-          condition = . == "",
-          true = as.character(NA),
-          false = paste0(., "/", as.numeric(.data$period))
-        )
+        .fns = \(x) {
+          dplyr::if_else(
+            condition = x == "",
+            true = as.character(NA),
+            false = paste0(x, "/", as.numeric(.data$period))
+          )
+        }
       )
-    ) %>%
+    ) |>
     dplyr::mutate(
       dplyr::across(
         .cols = dplyr::all_of(dates),
-        .fns = ~ dplyr::if_else(
-          condition = .data$period == "Year",
-          true = as.character(NA),
-          false = .
-        )
+        .fns = \(x) {
+          dplyr::if_else(
+            condition = .data$period == "Year",
+            true = as.character(NA),
+            false = x
+          )
+        }
       )
     )
 
@@ -447,7 +451,7 @@ data_format <- function(n, climate_id) {
         .data = n_fmt,
         dplyr::across(
           .cols = dplyr::all_of(dates),
-          .fns = ~ lubridate::ydm(.)
+          .fns = lubridate::ydm
         )
       )
     },
@@ -477,11 +481,9 @@ data_format <- function(n, climate_id) {
         .data = n_fmt,
         dplyr::across(
           .cols = dplyr::all_of(chars),
-          .fns = ~ dplyr::if_else(
-            condition = . == "",
-            true = as.character(NA),
-            false = as.character(.)
-          )
+          .fns = \(x) {
+            dplyr::if_else(x == "", as.character(NA), as.character(x))
+          }
         )
       )
     },
@@ -523,10 +525,11 @@ frost_extract <- function(f, climate_id) {
     }) |>
       unlist()
 
-    f1 <- dplyr::rename(f1, !!nms) %>%
-      dplyr::mutate_at(
-        .vars = dplyr::vars(dplyr::contains("date")),
-        ~ lubridate::yday(lubridate::as_date(paste0("1999", .)))
+    f1 <- dplyr::rename(f1, !!nms) |>
+      dplyr::mutate(
+        dplyr::across(.cols = dplyr::contains("date"), \(x) {
+          lubridate::yday(lubridate::as_date(paste0("1999", x)))
+        })
       ) |>
       dplyr::mutate(
         length_frost_free = stringr::str_extract(
@@ -628,26 +631,28 @@ frost_find <- function(n, type = "extract") {
 
 frost_format <- function(f, climate_id) {
   fmts <- dplyr::filter(f_formats, .data$new_var %in% names(f))
-  dates <- dplyr::filter(fmts, .data$format == "date") %>%
+  dates <- dplyr::filter(fmts, .data$format == "date") |>
     dplyr::pull("new_var")
-  nums <- dplyr::filter(fmts, .data$format == "numeric") %>%
+  nums <- dplyr::filter(fmts, .data$format == "numeric") |>
     dplyr::pull("new_var")
-  chars <- dplyr::filter(fmts, .data$format == "character") %>%
+  chars <- dplyr::filter(fmts, .data$format == "character") |>
     dplyr::pull("new_var")
 
-  f_fmt <- dplyr::mutate_at(
+  f_fmt <- dplyr::mutate(
     f,
-    .vars = dates,
-    ~ dplyr::if_else(. == "" | is.na(.), as.character(NA), paste0(., " 1999"))
+    dplyr::across(.cols = dplyr::all_of(dates), \(x) {
+      dplyr::if_else(x == "" | is.na(x), as.character(NA), paste0(x, " 1999"))
+    })
   )
 
   # In case of warnings
   tryCatch(
     {
-      f_fmt <- dplyr::mutate_at(
+      f_fmt <- dplyr::mutate(
         f_fmt,
-        .vars = dates,
-        ~ lubridate::yday(lubridate::mdy(.))
+        dplyr::across(.cols = dplyr::all_of(dates), \(x) {
+          lubridate::yday(lubridate::mdy(x))
+        })
       )
     },
     warning = function(w) {
@@ -656,10 +661,9 @@ frost_format <- function(f, climate_id) {
   )
   tryCatch(
     {
-      f_fmt <- dplyr::mutate_at(
+      f_fmt <- dplyr::mutate(
         f_fmt,
-        .vars = nums,
-        ~ as.numeric(as.character(.))
+        dplyr::across(dplyr::all_of(nums), \(x) as.numeric(as.character(x)))
       )
     },
     warning = function(w) {
@@ -668,10 +672,11 @@ frost_format <- function(f, climate_id) {
   )
   tryCatch(
     {
-      f_fmt <- dplyr::mutate_at(
+      f_fmt <- dplyr::mutate(
         f_fmt,
-        .vars = chars,
-        ~ dplyr::if_else(. == "", as.character(NA), as.character(.))
+        dplyr::across(dplyr::all_of(chars), \(x) {
+          dplyr::if_else(x == "", as.character(NA), as.character(x))
+        })
       )
     },
     warning = function(w) {

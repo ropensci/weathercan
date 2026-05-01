@@ -196,7 +196,7 @@ weather_interp <- function(
         y = weather[[col]],
         xout = data[[t]],
         na_gap = na_gap
-      ) %>%
+      ) |>
         dplyr::rename(!!!stats::setNames(c('x', 'y'), c(t, col)))
 
       data <- dplyr::left_join(data, unique(new), by = t)

@@ -10,9 +10,11 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
-knitr::opts_chunk$set(cache = FALSE,
-                      fig.align = "center",
-                      fig.path = "vignettes/articles/figures/weathercan-")
+knitr::opts_chunk$set(
+  cache = FALSE,
+  fig.align = "center",
+  fig.path = "vignettes/articles/figures/weathercan-"
+)
 old <- options(width = 160)
 ```
 
@@ -55,19 +57,23 @@ stations_search("Kamloops", interval = c("hour", "month"))
 You can also search by proximity. These results include a new column `distance` specifying the distance in km from the coordinates:
 
 ```{r}
-stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour")
+stations_search(
+  coords = c(50.667492, -120.329049),
+  dist = 20,
+  interval = "hour"
+)
 ```
 
 We can also perform more complex searches using `filter()` function from the `dplyr` package
 direction on the data returned by stations():
 
 ```{r search_crit}
-BCstations <- stations() %>%
-  filter(prov %in% c("BC")) %>%
-  filter(interval == "hour") %>%
-  filter(lat > 49 & lat < 49.5) %>%
-  filter(lon > -119 & lon < -116) %>%
-  filter(start <= 2002) %>%
+BCstations <- stations() |>
+  filter(prov %in% c("BC")) |>
+  filter(interval == "hour") |>
+  filter(lat > 49 & lat < 49.5) |>
+  filter(lon > -119 & lon < -116) |>
+  filter(start <= 2002) |>
   filter(end >= 2016)
 BCstations
 
@@ -100,7 +106,11 @@ kam
 You can also download data from multiple stations at once:
 
 ```{r}
-kam.pg <- weather_dl(station_ids = c(48248, 51423), start = "2016-01-01", end = "2016-02-15")
+kam.pg <- weather_dl(
+  station_ids = c(48248, 51423),
+  start = "2016-01-01",
+  end = "2016-02-15"
+)
 
 kam.pg
 ```
@@ -109,7 +119,10 @@ kam.pg
 And plot it:
 
 ```{r, fig.height=6, fig.width=12}
-ggplot(data = kam.pg, aes(x = time, y = temp, group = station_name, colour = station_name)) +
+ggplot(
+  data = kam.pg,
+  aes(x = time, y = temp, group = station_name, colour = station_name)
+) +
   theme(legend.position = "top") +
   geom_line() +
   theme_minimal()
@@ -118,7 +131,11 @@ ggplot(data = kam.pg, aes(x = time, y = temp, group = station_name, colour = sta
 Or you can use the vector created above:
 
 ```{r vector_input}
-stn_vec_df <- weather_dl(station_ids = stn_vector, start = "2016-01-01", end = "2016-02-15")
+stn_vec_df <- weather_dl(
+  station_ids = stn_vector,
+  start = "2016-01-01",
+  end = "2016-02-15"
+)
 
 stn_vec_df
 ```

@@ -149,12 +149,12 @@ weather_dl <- function(
       message("Getting station: ", s)
     }
 
-    stn1 <- stn %>%
+    stn1 <- stn |>
       dplyr::filter(
         .data$station_id %in% s,
         !is.na(.data$start),
         .data$interval == !!interval
-      ) %>%
+      ) |>
       dplyr::arrange(.data$interval)
 
     ## Check if station missing that interval
@@ -201,7 +201,7 @@ weather_dl <- function(
         end = lubridate::ceiling_date(.data$end, "year")
       )
     }
-    stn1 <- stn1 %>%
+    stn1 <- stn1 |>
       dplyr::mutate(
         end = replace(.data$end, .data$end > Sys.Date(), Sys.Date()),
         int = lubridate::interval(.data$start, .data$end),
@@ -289,8 +289,8 @@ weather_dl <- function(
     w <- weather_single(date_range, s, interval, encoding)
 
     # Extract only most recent meta
-    meta <- meta_html(station_id = s, date = s.end, interval = interval) %>%
-      meta_raw(encoding = encoding, interval = interval) %>%
+    meta <- meta_html(station_id = s, date = s.end, interval = interval) |>
+      meta_raw(encoding = encoding, interval = interval) |>
       meta_format(s = s)
 
     ## Format data if requested
@@ -486,7 +486,7 @@ weather_dl <- function(
     }
 
     if (verbose) {
-      show <- msg_fmt %>%
+      show <- msg_fmt |>
         dplyr::select("station_id", "problems")
 
       if (utils::packageVersion("tidyr") > "0.8.99") {
@@ -518,11 +518,11 @@ weather_single <- function(date_range, s, interval, encoding) {
     w,
     html = purrr::map(
       .data$date_range,
-      ~ weather_html(station_id = s, date = .x, interval = interval)
+      \(d) weather_html(station_id = s, date = d, interval = interval)
     ),
     data = purrr::map(
       .data$html,
-      ~ weather_raw(.x, encoding = encoding, header = TRUE)
+      \(w) weather_raw(w, encoding = encoding, header = TRUE)
     ),
     n = purrr::map_int(.data$data, ncol)
   )
@@ -571,8 +571,9 @@ meta_html <- function(station_id, date, interval = "hour") {
 }
 
 remove_sym <- function(df) {
-  to_remove <- "\\u00BB|\\u00BF|\\u00EF|\\u00C2|\\u00B0"
-  dplyr::rename_all(df, ~ stringr::str_remove_all(., to_remove))
+  dplyr::rename_with(df, \(x) {
+    stringr::str_remove_all(x, "\\u00BB|\\u00BF|\\u00EF|\\u00C2|\\u00B0")
+  })
 }
 
 
@@ -601,7 +602,7 @@ weather_raw <- function(
     col_names = FALSE,
     col_types = readr::cols(),
     progress = FALSE
-  ) %>%
+  ) |>
     ncol()
   readr::local_edition(1)
   suppressWarnings({
@@ -621,7 +622,7 @@ weather_raw <- function(
   # change back to match flags on ECCC website
   w <- dplyr::mutate(
     w,
-    dplyr::across(dplyr::ends_with("Flag"), ~ gsub("^I$", "^", .))
+    dplyr::across(dplyr::ends_with("Flag"), \(x) gsub("^I$", "^", x))
   )
   w
 }
@@ -696,7 +697,7 @@ weather_format <- function(
   }
 
   ## Replace some flagged values with NA
-  w <- w %>%
+  w <- w |>
     tidyr::gather(
       key = "variable",
       value = "value",
@@ -704,18 +705,18 @@ weather_format <- function(
         !(names(w) %in%
           c("date", "year", "month", "day", "hour", "time", "qual", "weather"))
       ]
-    ) %>%
+    ) |>
     tidyr::separate(
       "variable",
       into = c("variable", "type"),
       sep = "_flag",
       fill = "right"
-    ) %>%
+    ) |>
     dplyr::mutate(
       type = replace(.data$type, .data$type == "", "flag"),
       type = replace(.data$type, is.na(.data$type), "value")
-    ) %>%
-    tidyr::spread("type", "value") %>%
+    ) |>
+    tidyr::spread("type", "value") |>
     dplyr::mutate(
       value = replace(.data$value, .data$value == "", NA), ## No data
       value = replace(.data$value, .data$flag == "M", NA)
@@ -742,16 +743,16 @@ weather_format <- function(
       )
     )
   }
-  w <- w %>%
-    tidyr::gather(key = "type", value = "value", "flag", "value") %>%
+  w <- w |>
+    tidyr::gather(key = "type", value = "value", "flag", "value") |>
     dplyr::mutate(
       variable = replace(
         .data$variable,
         .data$type == "flag",
         paste0(.data$variable[.data$type == "flag"], "_flag")
       )
-    ) %>%
-    dplyr::select("date", dplyr::everything(), -"type") %>%
+    ) |>
+    dplyr::select("date", dplyr::everything(), -"type") |>
     tidyr::spread("variable", "value")
 
   ## Can we convert to numeric?
@@ -892,8 +893,8 @@ weather_list_cols <- function(w_all, interval, names) {
 }
 
 meta_raw <- function(html, encoding = "UTF-8", interval, return = "meta") {
-  split <- httr::content(html, as = "text", encoding = encoding) %>%
-    stringr::str_split("\n", simplify = TRUE) %>%
+  split <- httr::content(html, as = "text", encoding = encoding) |>
+    stringr::str_split("\n", simplify = TRUE) |>
     stringr::str_subset("^\r$", negate = TRUE)
 
   if (return == "meta") {
@@ -904,10 +905,9 @@ meta_raw <- function(html, encoding = "UTF-8", interval, return = "meta") {
       as = "text",
       type = "text/csv",
       encoding = encoding
-    ) %>%
-      stringr::str_replace_all("(\\t)+", "\\\t") %>%
+    ) |>
+      stringr::str_replace_all("(\\t)+", "\\\t") |>
       readr::read_tsv(
-        .,
         n_max = i,
         col_names = FALSE,
         col_types = readr::cols(),
@@ -927,13 +927,12 @@ meta_raw <- function(html, encoding = "UTF-8", interval, return = "meta") {
       as = "text",
       type = "text/csv",
       encoding = encoding
-    ) %>%
-      stringr::str_replace_all("(\\t)+", "\\\t") %>%
+    ) |>
+      stringr::str_replace_all("(\\t)+", "\\\t") |>
       stringr::str_remove(
         "\\*https\\:\\/\\/climate.weather.gc.ca\\/FAQ_e.html#Q5"
-      ) %>%
+      ) |>
       readr::read_tsv(
-        .,
         skip = stringr::str_which(split, "Legend") + 1,
         col_names = FALSE,
         col_types = readr::cols(),
@@ -947,15 +946,15 @@ meta_raw <- function(html, encoding = "UTF-8", interval, return = "meta") {
 meta_format <- function(meta, s) {
   m <- paste0("(", paste0(m_names, collapse = ")|("), ")")
 
-  meta <- meta %>%
-    dplyr::mutate(X1 = stringr::str_extract(.data$X1, pattern = m)) %>%
-    dplyr::filter(!is.na(.data$X1)) %>%
+  meta <- meta |>
+    dplyr::mutate(X1 = stringr::str_extract(.data$X1, pattern = m)) |>
+    dplyr::filter(!is.na(.data$X1)) |>
     tidyr::spread("X1", "X2")
 
   m <- m_names[m_names %in% names(meta)]
 
-  meta %>%
-    dplyr::select(dplyr::all_of(m)) %>%
+  meta |>
+    dplyr::select(dplyr::all_of(m)) |>
     dplyr::mutate(
       station_id = s,
       prov = province[[.data$prov]],

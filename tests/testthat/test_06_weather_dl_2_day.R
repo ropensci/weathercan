@@ -144,7 +144,7 @@ test_that("weather (day) mutliple stations", {
       interval = "day"
     ),
     "Some variables"
-  ) %>%
+  ) |>
     expect_message("Replaced all non-numeric")
 
   expect_equal(unique(w$station_name), c("KAMLOOPS A", "MUSKOKA SNOW"))
@@ -167,8 +167,8 @@ test_that("weather (day) no data fails nicely", {
       "There are no data for some stations \\(42013\\), ",
       "in this time range \\("
     )
-  ) %>%
-    expect_message("Some variables") %>%
+  ) |>
+    expect_message("Some variables") |>
     expect_message("Replaced")
 
   # Cached
@@ -238,8 +238,8 @@ test_that("weather (day) verbose and quiet", {
       end = "2017-02-01"
     ),
     "Some variables have non-numeric values"
-  ) %>%
-    expect_message("Replaced all non-numeric") %>%
+  ) |>
+    expect_message("Replaced all non-numeric") |>
     expect_message("There are no data")
 
   # Cached
@@ -261,17 +261,17 @@ test_that("weather (day) verbose and quiet", {
       verbose = TRUE
     ),
     "Getting station"
-  ) %>%
-    expect_message("Formatting station") %>%
-    expect_message("Adding header data") %>%
-    expect_message("Getting station") %>%
-    expect_message("Formatting station") %>%
-    expect_message("No data for station") %>%
-    expect_message("Trimming missing values") %>%
-    expect_message("There are no data for some stations") %>%
-    expect_message("Some variables") %>%
-    expect_message("Replaced") %>%
-    expect_message("Examples") %>%
+  ) |>
+    expect_message("Formatting station") |>
+    expect_message("Adding header data") |>
+    expect_message("Getting station") |>
+    expect_message("Formatting station") |>
+    expect_message("No data for station") |>
+    expect_message("Trimming missing values") |>
+    expect_message("There are no data for some stations") |>
+    expect_message("Some variables") |>
+    expect_message("Replaced") |>
+    expect_message("Examples") |>
     expect_message("A tibble:")
 })
 
@@ -324,7 +324,7 @@ test_that("weather (day) skips with message if end date < start date", {
   expect_message(
     w <- weather_dl(c(4291, 51423), end = "1928-11-10", interval = "day"),
     "The end date"
-  ) %>%
+  ) |>
     expect_message("End date earlier")
   expect_true(nrow(w) > 0)
 })

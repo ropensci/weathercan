@@ -272,7 +272,7 @@ n_names <- tribble(
   "cloud_0_2"                      , "0 to 2 tenths"                           , "sub"    ,
   "cloud_3_7"                      , "3 to 7 tenths"                           , "sub"    ,
   "cloud_8_10"                     , "8 to 10 tenths"                          , "sub"
-) %>%
+) |>
   mutate(
     variable = tolower(variable),
     group = stringr::str_detect(new_var, "title"),
@@ -296,8 +296,8 @@ f_names <- tribble(
   "probability"                                                                                       , "probability"                         ,                                  3 , "probability"
 )
 
-n_formats <- select(n_names, "new_var") %>%
-  filter(!stringr::str_detect(new_var, "title")) %>%
+n_formats <- select(n_names, "new_var") |>
+  filter(!stringr::str_detect(new_var, "title")) |>
   mutate(
     format = case_when(
       stringr::str_detect(new_var, "date") ~ "date",
@@ -314,13 +314,13 @@ n_formats <- bind_rows(
   )
 )
 
-f_formats <- select(f_names, "new_var") %>%
+f_formats <- select(f_names, "new_var") |>
   mutate(
     format = case_when(
       stringr::str_detect(new_var, "on_date") ~ "date",
       TRUE ~ "numeric"
     )
-  ) %>%
+  ) |>
   bind_rows(tibble(new_var = "frost_code", format = "character"))
 
 usethis::use_data(
