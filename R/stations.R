@@ -101,7 +101,7 @@ stations_read <- function() {
 }
 
 stations_file <- function() {
-  file.path(rappdirs::user_data_dir("weathercan"), "stations.rds")
+  file.path(cache_dir(), "stations.rds")
 }
 
 #' Get available stations
@@ -161,45 +161,20 @@ stations_dl_internal <- function(
   quiet = FALSE,
   internal = TRUE
 ) {
-  if (getRversion() <= "3.3.3") {
-    message("Need R version 3.3.4 or greater to update the stations data")
-    return()
-  }
-
   # If called internally use inst
   if (internal) {
     d <- system.file("extdata", package = "weathercan")
     f <- file.path(d, "stations.rds")
   } else {
-    d <- dirname(stations_file())
     f <- stations_file()
   }
 
-  # Ask for permission to save data
   if (!internal) {
-    if ((!dir.exists(d) || !file.exists(f)) && interactive()) {
-      cont <- utils::askYesNo(
-        paste0(
-          "weathercan would like to store the updated stations ",
-          "data to: \n",
-          f,
-          "\nIs that okay?"
-        )
-      )
-    } else {
-      cont <- TRUE
-    }
-
-    if (!cont) {
-      message("Not updating stations data")
-      return(invisible())
-    }
-
-    if (!dir.exists(d)) dir.create(d, recursive = TRUE)
+    cache_check()
   }
 
   if (
-    !requireNamespace("lutz", quietly = TRUE) |
+    !requireNamespace("lutz", quietly = TRUE) ||
       !requireNamespace("sf", quietly = TRUE)
   ) {
     stop(
@@ -493,7 +468,7 @@ stations_search <- function(
   }
 
   if (
-    all(is.null(name), is.null(coords)) |
+    all(is.null(name), is.null(coords)) ||
       all(!is.null(name), !is.null(coords))
   ) {
     stop("Need a search name OR search coordinate", call. = FALSE)
@@ -514,7 +489,7 @@ stations_search <- function(
       coords <- try(as.numeric(as.character(coords)), silent = TRUE)
     })
     if (
-      length(coords) != 2 | all(is.na(coords)) | inherits(coords, "try-error")
+      length(coords) != 2 || all(is.na(coords)) || inherits(coords, "try-error")
     ) {
       stop(
         "'coord' takes one pair of lat and lon in a numeric vector",
@@ -551,7 +526,7 @@ stations_search <- function(
         silent = TRUE
       )
     })
-    if (is.na(starts_latest) | inherits(starts_latest, "try-error")) {
+    if (is.na(starts_latest) || inherits(starts_latest, "try-error")) {
       stop("'starts_latest' needs to be a year (YYYY)", call. = FALSE)
     }
     stn <- dplyr::filter(stn, .data$start <= starts_latest)
@@ -564,7 +539,7 @@ stations_search <- function(
         silent = TRUE
       )
     })
-    if (is.na(ends_earliest) | inherits(ends_earliest, "try-error")) {
+    if (is.na(ends_earliest) || inherits(ends_earliest, "try-error")) {
       stop("'ends_earliest' needs to be a year (YYYY)", call. = FALSE)
     }
     stn <- dplyr::filter(stn, .data$end >= ends_earliest)
@@ -572,7 +547,7 @@ stations_search <- function(
 
   if (!is.null(name)) {
     if (!quiet) {
-      if (length(name) == 2 & is.numeric(name)) {
+      if (length(name) == 2 && is.numeric(name)) {
         message(
           "The `name` argument looks like a pair of coordinates. ",
           "Did you mean `coords = c(",
