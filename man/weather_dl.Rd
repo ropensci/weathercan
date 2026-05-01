@@ -110,7 +110,7 @@ was added as of April 1st 2018, so will be in all data which includes dates
 on or after April 2018).
 }
 \examples{
-\dontshow{if (check_eccc()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (check_eccc()) withAutoprint(\{ # examplesIf}
 
 kam <- weather_dl(station_ids = 51423,
                   start = "2016-01-01", end = "2016-02-15")

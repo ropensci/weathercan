@@ -6,7 +6,7 @@ gert::git_pull()
 urlchecker::url_check()
 
 ## Update dependencies
-update(remotes::package_deps("weathercan", dependencies = TRUE))
+pak::local_install_deps(dependencies = TRUE)
 
 ## Update internal data files
 source("data-raw/data-index.R")
