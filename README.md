@@ -313,11 +313,12 @@ contributing](CONTRIBUTING.md)
 
 
 
+
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 
-All contributions to this project are gratefully acknowledged using the [`allcontributors` package](https://github.com/ropensci/allcontributors) following the [all-contributors](https://allcontributors.org) specification. Contributions of any kind are welcome!
+All contributions to this project are gratefully acknowledged using the [`allcontributors` package](https://github.com/ropensci/allcontributors) following the [allcontributors](https://allcontributors.org) specification. Contributions of any kind are welcome!
 
 ### Code
 
@@ -692,6 +693,18 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3ABraveCapricon">BraveCapricon</a>
 </td>
+<td align="center">
+<a href="https://github.com/Quan-Cui">
+<img src="https://avatars.githubusercontent.com/u/86018749?u=95ea4030bf73fc222cfeba7c246555bea62f6dbc&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3AQuan-Cui">Quan-Cui</a>
+</td>
+<td align="center">
+<a href="https://github.com/mohamedsmabdelhamed-stack">
+<img src="https://avatars.githubusercontent.com/u/275818807?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Amohamedsmabdelhamed-stack">mohamedsmabdelhamed-stack</a>
+</td>
 </tr>
 
 </table>
@@ -773,6 +786,7 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
 
 
 
