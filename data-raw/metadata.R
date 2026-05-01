@@ -1,3 +1,4 @@
+library(httr2)
 library(rvest)
 library(dplyr)
 library(stringr)
@@ -13,11 +14,11 @@ flags <- tibble(
       .data$station_id,
       .data$interval,
       \(s, i) {
-        meta_html(station_id = s, interval = i) |>
+        meta_html(station_id = s, date = as.Date("2025-01-01"), interval = i) |>
           meta_raw(
             interval = i,
-        return = "legend"
-      )
+            return = "legend"
+          )
       }
     )
   ) |>
@@ -145,15 +146,18 @@ codes <- codes[8:11] |>
 usethis::use_data(codes, overwrite = TRUE)
 
 
+# TODO: FIXME
 h <- paste0(
   "https://www.canada.ca/en/environment-climate-change/services/",
   "climate-change/canadian-centre-climate-services/display-download/",
   "technical-documentation-climate-normals.html"
-) |>
-  xml2::read_html()
+)
 
+r <- request(h) |>
+  req_perform() |>
+  resp_body_html()
 
-ECCC_name <- html_nodes(h, "h3") |>
+ECCC_name <- html_elements(r, "h3") |>
   html_text() |>
   str_subset(
     "(Environment and Climate Change Canada)|(Government of Canada)",
@@ -162,7 +166,7 @@ ECCC_name <- html_nodes(h, "h3") |>
 
 glossary_normals <- tibble(
   ECCC_name,
-  description = html_nodes(h, "h3+p") |> html_text()
+  description = html_elements(r, "h3+p") |> html_text()
 ) |>
   filter(!str_detect(ECCC_name, "Thank you")) |>
   mutate(
