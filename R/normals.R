@@ -254,7 +254,7 @@ normals_html <- function(prov, station_id, climate_id, normals_years) {
 normals_raw <- function(html, nrows = -1) {
   # Extract file
   html |>
-    httr::content(as = "text", encoding = "latin1") |>
+    httr2::resp_body_string(encoding = "latin1") |>
     stringr::str_split(pattern = "\n") |>
     unlist() |>
     # Get rid of all special symbols

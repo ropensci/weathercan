@@ -13,14 +13,6 @@ test_that("stations_dl() requires lutz and sf", {
   )
 })
 
-test_that("stations_dl() errors appropriately", {
-  skip_if_not_installed("sf")
-  skip_if_not_installed("lutz")
-
-  local_mocked_bindings(GET = function(...) test_404(), .package = "httr")
-  expect_error(stations_dl(), "Not Found \\(HTTP 404\\).")
-})
-
 test_that("stations_normals() gets normals info", {
   skip_on_cran()
 

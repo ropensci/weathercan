@@ -584,7 +584,7 @@ weather_raw <- function(
   header = TRUE,
   encoding = "UTF-8"
 ) {
-  raw <- httr::content(html, type = "raw")
+  raw <- httr2::resp_body_raw(html)
 
   # Look for and remove BOM
   if (
@@ -893,20 +893,19 @@ weather_list_cols <- function(w_all, interval, names) {
 }
 
 meta_raw <- function(html, encoding = "UTF-8", interval, return = "meta") {
-  split <- httr::content(html, as = "text", encoding = encoding) |>
+  split <- httr2::resp_body_string(html, encoding = encoding) |>
     stringr::str_split("\n", simplify = TRUE) |>
     stringr::str_subset("^\r$", negate = TRUE)
 
   if (return == "meta") {
     i <- stringr::str_which(split, "If Local Standard Time|Legend")[1] - 1
 
-    r <- httr::content(
+    r <- httr2::resp_body_string(
       html,
-      as = "text",
-      type = "text/csv",
       encoding = encoding
     ) |>
       stringr::str_replace_all("(\\t)+", "\\\t") |>
+      I() |>
       readr::read_tsv(
         n_max = i,
         col_names = FALSE,
@@ -922,16 +921,12 @@ meta_raw <- function(html, encoding = "UTF-8", interval, return = "meta") {
       )
     }
   } else if (return == "legend") {
-    r <- httr::content(
-      html,
-      as = "text",
-      type = "text/csv",
-      encoding = encoding
-    ) |>
+    r <- httr2::resp_body_string(html, encoding = encoding) |>
       stringr::str_replace_all("(\\t)+", "\\\t") |>
       stringr::str_remove(
         "\\*https\\:\\/\\/climate.weather.gc.ca\\/FAQ_e.html#Q5"
       ) |>
+      I() |>
       readr::read_tsv(
         skip = stringr::str_which(split, "Legend") + 1,
         col_names = FALSE,

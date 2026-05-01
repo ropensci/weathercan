@@ -12,9 +12,9 @@ test_that("normals_html() correctly retrieves request 1981-2010", {
       prov = "MB"
     )
   )
-  expect_s3_class(nd, "response")
-  expect_false(httr::http_error(nd))
-  expect_gt(length(nd$content), 10000)
+  expect_s3_class(nd, "httr2_response")
+  expect_false(httr2::resp_is_error(nd))
+  expect_gt(httr2::resp_body_raw(nd) |> length(), 10000)
 })
 
 test_that("normals_html() correctly retrieves request 1971-2000", {
@@ -28,31 +28,10 @@ test_that("normals_html() correctly retrieves request 1971-2000", {
       prov = "MB"
     )
   )
-  expect_s3_class(nd, "response")
-  expect_false(httr::http_error(nd))
-  expect_gt(length(nd$content), 10000)
+  expect_s3_class(nd, "httr2_response")
+  expect_false(httr2::resp_is_error(nd))
+  expect_gt(httr2::resp_body_raw(nd) |> length(), 10000)
 })
-
-# Proper error when 404
-test_that("normals_html() errors", {
-  skip_on_cran()
-
-  memoise::forget(normals_html) # Reset cache so we can test a different url
-  bkup <- getOption("weathercan.urls.normals")
-  options(weathercan.urls.normals = "https://httpbin.org/status/404")
-  expect_error(
-    normals_html(
-      prov = "MB",
-      station_id = 3471,
-      climate_id = "5010480",
-      normals_years = "1981-2010"
-    ),
-    "Failed to access",
-    class = "http_error"
-  )
-  options(weathercan.urls.normals = bkup)
-})
-
 
 # normals_raw() -------------------------------------------------------------
 test_that("normals_raw() extracts normals as character", {

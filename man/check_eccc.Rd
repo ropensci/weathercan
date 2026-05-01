@@ -15,7 +15,5 @@ and eccc sites are available and accessible, and whether we're NOT running
 on cran
 }
 \examples{
-
 check_eccc()
-
 }

@@ -194,12 +194,12 @@ stations_dl_internal <- function(
   }
 
   resp <- get_check(
-    getOption("weathercan.urls.stations"),
+    url = getOption("weathercan.urls.stations"),
     task = "access stations list"
   )
 
   headings <- readr::read_lines(
-    httr::content(resp, as = "text", encoding = "Latin1"),
+    I(httr2::resp_body_string(resp, encoding = "Latin1")),
     n_max = 5,
     progress = FALSE
   )
@@ -256,10 +256,10 @@ stations_dl_internal <- function(
     message("Downloading stations data frame")
   }
 
-  raw <- httr::content(resp, as = "text", encoding = "Latin1")
+  raw <- httr2::resp_body_string(resp, encoding = "Latin1")
 
   s <- readr::read_delim(
-    raw,
+    I(raw),
     skip = skip,
     col_types = readr::cols(),
     progress = FALSE
@@ -634,15 +634,12 @@ stations_search <- function(
 
 normals_stn_list <- function(yr) {
   get_check(
-    getOption("weathercan.urls.stations.normals"),
+    url = getOption("weathercan.urls.stations.normals"),
     query = list(yr = yr)
   ) |>
-    httr::content(
-      type = "text/csv",
-      col_types = readr::cols(),
-      encoding = "Latin1",
-      progress = FALSE
-    ) |>
+    httr2::resp_body_string() |>
+    I() |>
+    readr::read_csv(show_col_types = FALSE) |>
     dplyr::rename_with(tolower) |>
     dplyr::select(dplyr::any_of(c("station_name", "climate_id")))
 }

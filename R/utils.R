@@ -92,18 +92,16 @@ na_tibble <- function(cols) {
     dplyr::as_tibble(.rows = 0)
 }
 
-get_check <- function(..., task = NULL) {
-  req <- httr::GET(...)
+get_check <- function(url, query = NULL, task = NULL) {
+  req <- httr2::request(url)
+  if (!is.null(query)) {
+    req <- httr2::req_url_query(req, !!!query)
+  }
+  req <- httr2::req_perform(req)
 
-  httr::stop_for_status(req, task = task)
   if (grepl("^https://climate.weather.gc.ca/error", req$url)) {
     stop("Service is currently down!")
-  } else if (
-    any(grepl(
-      "error was found",
-      httr::content(req, as = "text", encoding = "UTF-8")
-    ))
-  ) {
+  } else if (any(grepl("error was found", httr2::resp_body_string(req)))) {
     stop(
       "API could not fetch data with this query\n",
       "Please, open an issue on https://github.com/ropensci/weathercan/issues and share ",
@@ -135,31 +133,22 @@ min_na <- function(..., na.rm = TRUE) {
 #' @export
 #'
 #' @examples
-#'
 #' check_eccc()
-#'
-check_eccc <- function() {
-  if (isFALSE(Sys.getenv("NOT_CRAN"))) {
-    # If CRAN
-    return(FALSE)
-  }
-  if (is_error(httr::HEAD("r-project.org"))) {
-    return(FALSE)
-  }
-  if (is_error(httr::HEAD(getOption("weathercan.urls.weather")))) {
-    return(FALSE)
-  }
-  if (is_error(httr::HEAD(getOption("weathercan.urls.normals")))) {
-    return(FALSE)
-  }
-  if (is_error(httr::HEAD("https://climate.weather.gc.ca"))) {
-    return(FALSE)
-  }
 
-  TRUE
+check_eccc <- function() {
+  (Sys.getenv("NOT_CRAN") == "" || isTRUE(Sys.getenv("NOT_CRAN"))) &&
+    is_up(getOption("weathercan.urls.weather")) &&
+    is_up("https://climate.weather.gc.ca")
 }
 
-is_error <- function(x) "try-error" %in% class(try(x, silent = TRUE))
+is_up <- function(x) {
+  err <- httr2::request(x) |>
+    httr2::req_method("HEAD") |>
+    httr2::req_perform() |>
+    httr2::resp_is_error()
+
+  !err
+}
 
 #' Make pretty column names
 #'
