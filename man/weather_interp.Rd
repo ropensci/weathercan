@@ -53,12 +53,22 @@ and 12PM will be returned as NA.)
 \dontshow{if (check_eccc()) withAutoprint(\{ # examplesIf}
 
 # Weather data only
-head(kamloops)
+kamloops
 
 # Data about finch observations at RFID feeders in Kamloops, BC
-head(finches)
+finches
 
 # Match weather to finches
-finch_weather <- weather_interp(data = finches, weather = kamloops)
+
+# First line up the timezones
+# - Finches are in Pacific Time (inc. Daylight savings),
+#   Kamloops is in Pacific Time *without* daylight savings, but is marked as UTC for
+#   simplicity (see ?weather_dl for details)
+# - First we convert finches to remove daylight savings, then we mark as UTC
+finches <- dplyr::mutate(finches, time = lubridate::with_tz(time, "Etc/GMT+8"))
+finches <- dplyr::mutate(finches, time = lubridate::force_tz(time, "UTC"))
+
+# Then interpolate over the first 30 observations
+finch_weather <- weather_interp(data = finches[1:30,], weather = kamloops)
 \dontshow{\}) # examplesIf}
 }

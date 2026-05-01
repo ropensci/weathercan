@@ -63,7 +63,7 @@ Ooops! What happened?
 
 Well the weather data on Kamloops returned by `weathercan` has times set in the
 'local' timezone (without) daylight savings. For simplicity, these times are
-scored as "UTC" according to R.
+marked as "UTC" according to R (although it's important to remember that they're not *actually* UTC).
 
 ```{r}
 kamloops$time[1:5]
@@ -79,7 +79,7 @@ This means that it also has daylight savings applied in the summer, eep!
 
 To interpolate, the data must be in the same timezone. The easiest way forward
 is to convert the `finches` data to the same, 'local' time without daylight
-savings as the `kamloops` data.
+savings as the `kamloops` data, and then to likewise mark it as "UTC".
 
 First we'll transform it to non-daylight savings
 (i.e. Etc/GMT+8, note that the +8 is [intentionally inverted](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones))

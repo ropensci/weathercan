@@ -17,13 +17,13 @@
 #'   start and end date of the range (this could result in downloading a lot of
 #'   data!).
 #'
-#'   For hourly data, timezones are always "UTC", but the actual times are
-#'   either local time (default; `time_disp = "none"`), or UTC (`time_disp =
-#'   "UTC"`). When `time_disp = "none"`, times reflect the local time without
-#'   daylight savings. This means that relative measures of time, such as
-#'   "nighttime", "daytime", "dawn", and "dusk" are comparable among stations in
-#'   different timezones. This is useful for comparing daily cycles. When
-#'   `time_disp = "UTC"` the times are transformed into UTC timezone. Thus
+#'   For hourly data, timezones are always marked "UTC", but the actual times
+#'   are either local time (default; `time_disp = "none"`), or UTC
+#'   (`time_disp = "UTC"`). When `time_disp = "none"`, times reflect the local
+#'   time without daylight savings. This means that relative measures of time,
+#'   such as "nighttime", "daytime", "dawn", and "dusk" are comparable among
+#'   stations in different timezones. This is useful for comparing daily cycles.
+#'   When `time_disp = "UTC"` the times are transformed into UTC timezone. Thus
 #'   midnight in Kamloops would register as 08:00:00 (Pacific time is 8 hours
 #'   behind UTC). This is useful for tracking weather events through time, but
 #'   will result in odd 'daily' measures of weather (e.g., data collected in the
