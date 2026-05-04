@@ -1,6 +1,5 @@
 ---
 title: "weathercan and tidyhydat"
-author: "Steffi LaZerte"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_document
 ---

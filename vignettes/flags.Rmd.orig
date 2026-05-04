@@ -1,6 +1,5 @@
 ---
 title: "Flags and codes"
-author: "Steffi LaZerte"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -22,50 +21,7 @@ The data output of the `weather_dl()` function include corresponding `_flag` col
 
 Similarly, the data output of the `normals_dl()` function include corresponding `_code` columns. These columns are used by ECCC to add notes regarding the amount of data used to calculate the normals.
 
-
-### Flags
-In the `weather_dl()` function if `format = TRUE` (the default), data corresponding to flags `M`, `NA`, `[empty]` and `L` are all replaced with `NA`.
-
-For example, a sample of unformatted data from Magog station in Quebec looks like:
-
-```{r, echo = FALSE}
-old <- options(width = 100)
-w <- weather_dl(
-  station_id = 5401,
-  start = "2017-01-01",
-  interval = "month",
-  format = FALSE
-)
-
-dplyr::select(
-  w,
-  station_name,
-  `Date/Time`,
-  `Total Precip (mm)`,
-  `Total Precip Flag`,
-  `Snow Grnd Last Day (cm)`,
-  `Snow Grnd Last Day Flag`
-) |>
-  tail(n = 12)
-```
-
-In this output, you can see two flags: `^` in `Total Precip` and `M` in `Snow Grnd Last Day`
-
-This same sample, formatted looks like:
-
-```{r, echo = FALSE}
-weather_dl(station_id = 5401, start = "2017-01-01", interval = "month") |>
-  dplyr::select(
-    date,
-    total_precip,
-    total_precip_flag,
-    snow_grnd_last_day,
-    snow_grnd_last_day_flag
-  ) |>
-  tail(n = 12)
-```
-
-As you can see, we still have the two flags, but the missing data flag (`M`) is now replaced with NA. The other flag `^` is not, as it indicates that "The value displayed is based on incomplete data" (see below).
+In the `weather_dl()` function if `format = TRUE` (the default), data corresponding to flags `M`, `NA`, and `[empty]` are all replaced with `NA` (if they are not already `NA`).
 
 ### Flags - Weather Data
 
@@ -79,12 +35,19 @@ knitr::kable(flags)
 In the `normals_dl`() function, codes are associated with each variable:
 
 ```{r, echo = FALSE}
-n <- normals_dl(climate_ids = "5010480") |>
-  unnest(normals)
-select(n, period, contains("temp_daily"))
+n <- normals_dl(climate_ids = "5010480")
+select(n, period, contains("daily"))
 ```
 
-For example, here, the code indicates that these temperature variables meet the WMO '3 and 5 rule' (no more than 3 consecutive and no more than 5 total missing for either temperature or precipitation).                                                                   
+For example, here, the code indicates that these temperature variables meet the WMO '3 and 5 rule' (no more than 3 consecutive and no more than 5 total missing for either temperature or precipitation).      
+
+Older climate normals are in a different format, but the codes are the same
+
+```{r, echo = FALSE}
+n <- normals_dl(climate_ids = "5010480", normals_years = "1981-2010") |>
+  unnest("normals")
+select(n, period, contains("daily"))
+```
 
 
 ### Codes - Climate Normals
@@ -94,10 +57,3 @@ The codes index for climate normals can be accessed through the built-in data fr
 ```{r, echo = FALSE}
 knitr::kable(codes)
 ```
-
-
-```{r, include = FALSE}
-# Reset options
-options(old)
-```
-

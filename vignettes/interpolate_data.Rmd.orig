@@ -1,6 +1,5 @@
 ---
 title: "Interpolating"
-author: "Steffi LaZerte"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
