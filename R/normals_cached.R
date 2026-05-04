@@ -231,6 +231,23 @@ normals_cached_fmt <- function(locs, normals_years = "1991-2020") {
   n1
 }
 
+#' Location of the cached normals data
+#'
+#' Returns the *expected* file path of the location of cached normals data. Only the most
+#' current normals data are provided as a full data download by ECCC, so only
+#' these normals are cached locally. Note that if you haven't downloaded
+#' the normals files yet (call `normals_dl(...)`) these files will not exist.
+#'
+#' @param normals_years Character. Years to load. Currently only `1991-2020` is available.
+#' @param type Character. Data type to load, one of "normals", or "meta" (the
+#'   composite station inventory).
+#'
+#' @returns Character file path.
+#'
+#' @export
+#' @examples
+#' normals_file()
+
 normals_file <- function(normals_years = "1991-2020", type = "normals") {
   f <- dplyr::case_when(
     normals_years == "1991-2020" && type == "normals" ~
