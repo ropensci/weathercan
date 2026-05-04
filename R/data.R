@@ -197,18 +197,47 @@
 
 #' Glossary of terms for Climate Normals
 #'
-#' A reference dataset matching information on columns in climate normals data
-#' downloaded using the `normals_dl()` function. Indicates the names and
-#' descriptions of different data measurements.
+#' A reference dataset matching information on general columns in older
+#' climate normals (pre 1991-2020) data downloaded using the `normals_dl()` function.
+#' Indicates the names and descriptions of different data measurements.
 #'
 #' @format A data frame with 18 rows and 3 variables:
 #' \describe{
-#'   \item{ECCC_name}{Original measurement type from ECCC}
-#'   \item{weathercan_name}{R-compatible name given when downloaded with the
+#'   \item{ECCC}{Original measurement type from ECCC}
+#'   \item{weathercan}{R-compatible name given when downloaded with the
 #'   `normals_dl()` function}
 #'   \item{description}{Description of the measurement type from ECCC}
 #' }
 "glossary_normals"
+
+#' Index of variables for new Climate Normals
+#'
+#' An index matching variables named in weathercan and downloaded with the
+#' `normals_dl()` function to those in the original *new* (1991-2020) climate
+#' normals data from ECCC.
+#'
+#' @format A data frame with 18 rows and 3 variables:
+#' \describe{
+#'   \item{measurement_type}{Measurement category}
+#'   \item{ECCC}{Original variable name from ECCC}
+#'   \item{weathercan}{R-compatible name given when formating the data with the
+#'   `normals_dl()` function}
+#' }
+"variables_normals_new"
+
+#' Index of variables for new Climate Normals
+#'
+#' An index matching variables named in weathercan and downloaded with the
+#' `normals_dl()` function to those in the original *old* (1981-2010 and
+#' 1971-2000) climate normals data from ECCC.
+#'
+#' @format A data frame with 18 rows and 3 variables:
+#' \describe{
+#'   \item{ECCC}{Original variable name from ECCC}
+#'   \item{weathercan}{R-compatible name given when formating the data with the
+#'   `normals_dl()` function}
+#' }
+"variables_normals_old"
 
 
 #' List of climate normals measurements for each station
@@ -222,7 +251,7 @@
 #'   \item{station_name}{Station Name}
 #'   \item{climate_id}{Climate ID}
 #'   \item{normals}{Year range of climate normals}
-#'   \item{measurement_type}{Type of measurement (relevant only for 1990-2020)
+#'   \item{measurement_type}{Type of measurement (relevant only for 1990-2020)}
 #'   \item{measurement}{Climate normals measurement available for this station}
 #' }
 "normals_measurements"

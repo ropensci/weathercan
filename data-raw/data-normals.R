@@ -67,6 +67,7 @@ check_and_load <- function(climate_id, years) {
   c(names(r$normals[[1]]), names(r$frost[[1]]))
 }
 
+# Load older normals ------------------------------------------------------
 normals_measurements <- readr::read_csv(
   "./data-raw/normals/normals_check.csv"
 ) |>
@@ -76,5 +77,51 @@ normals_measurements <- readr::read_csv(
   tidyr::unnest(measurement) |>
   dplyr::filter(measurement != "period") |>
   dplyr::select(-"checked")
+
+# Add 1991-2020 normals -----------------------------------------------
+m <- readr::read_csv(normals_file(type = "meta")) |>
+  dplyr::select(
+    station_name = COMPOSITE_STATION_NAME,
+    climate_id = CLIMATE_ID
+  ) |>
+  dplyr::summarize(
+    climate_id = paste(climate_id, collapse = ", "),
+    .by = "station_name"
+  )
+
+n <- readr::read_csv(normals_file()) |>
+  # Doesn't actually remove anything
+  dplyr::filter(
+    n,
+    !all(
+      is.na(Jan) &
+        is.na(Feb) &
+        is.na(Mar) &
+        is.na(Apr) &
+        is.na(May) &
+        is.na(Jun) &
+        is.na(Jul) &
+        is.na(Aug) &
+        is.na(Sep) &
+        is.na(Oct) &
+        is.na(Nov) &
+        is.na(Dec) &
+        is.na(Year)
+    )
+  ) |>
+  dplyr::select(
+    prov = PROVINCE_OR_TERRITORY,
+    station_name = LOCATION_NAME,
+    measurement_type = ELEMENT_GROUP,
+    measurement = NORMALS_ELEMENT
+  ) |>
+  dplyr::mutate(
+    normals = "1991-2020",
+    measurement = pretty_names(measurement)
+  ) |>
+  dplyr::left_join(m, by = "station_name") |>
+  dplyr::relocate("climate_id", "normals", .before = "measurement_type")
+
+normals_measurements <- dplyr::bind_rows(n, normals_measurements)
 
 usethis::use_data(normals_measurements, overwrite = TRUE)

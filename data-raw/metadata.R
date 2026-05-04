@@ -3,6 +3,8 @@ library(rvest)
 library(dplyr)
 library(stringr)
 
+
+# Flags ---------------------------------
 # Add flags data set to package data
 # Get legend of flags (same for all intervals where duplicated)
 flags <- tibble(
@@ -29,7 +31,7 @@ flags <- tibble(
   mutate(meaning = str_remove(meaning, "\\*"))
 usethis::use_data(flags, overwrite = TRUE)
 
-
+# weather glossary ----------------------------------------------
 gloss_url <- list(
   "hour" = c(
     "temp" = "temp",
@@ -146,7 +148,18 @@ codes <- codes[8:11] |>
 usethis::use_data(codes, overwrite = TRUE)
 
 
-# TODO: FIXME
+# new normals ---------------------------------------------
+variables_normals_new <- readr::read_csv(normals_file()) |>
+  dplyr::select(
+    "measurement_type" = "ELEMENT_GROUP",
+    "ECCC" = "NORMALS_ELEMENT"
+  ) |>
+  unique() |>
+  dplyr::mutate(weathercan = pretty_names(ECCC))
+
+usethis::use_data(variables_normals_new, overwrite = TRUE)
+
+# normals 1981 and older ----------------------------------
 h <- paste0(
   "https://www.canada.ca/en/environment-climate-change/services/",
   "climate-change/canadian-centre-climate-services/display-download/",
@@ -157,20 +170,20 @@ r <- request(h) |>
   req_perform() |>
   resp_body_html()
 
-ECCC_name <- html_elements(r, "h3") |>
+ECCC <- html_elements(r, "h3") |>
   html_text() |>
   str_subset(
     "(Environment and Climate Change Canada)|(Government of Canada)",
     negate = TRUE
   )
 
-glossary_normals <- tibble(
-  ECCC_name,
+variables_normals_old <- tibble(
+  ECCC,
   description = html_elements(r, "h3+p") |> html_text()
 ) |>
-  filter(!str_detect(ECCC_name, "Thank you")) |>
+  filter(!str_detect(ECCC, "Thank you")) |>
   mutate(
-    weathercan_name = c(
+    weathercan = c(
       "temp",
       "precip",
       "snow_depth",
@@ -191,21 +204,21 @@ glossary_normals <- tibble(
       "cloud"
     )
   ) |>
-  select("ECCC_name", "weathercan_name", "description") |>
+  select("ECCC", "weathercan", "description") |>
   bind_rows(select(
     n_names,
-    "weathercan_name" = "new_var",
-    "ECCC_name" = "variable"
+    "weathercan" = "new_var",
+    "ECCC" = "variable"
   )) |>
   bind_rows(select(
     f_names,
-    "weathercan_name" = "new_var",
-    "ECCC_name" = "variable"
+    "weathercan" = "new_var",
+    "ECCC" = "variable"
   )) |>
   mutate(
-    ECCC_name = str_to_title(ECCC_name),
-    ECCC_name = str_replace_all(
-      ECCC_name,
+    ECCC = str_to_title(ECCC),
+    ECCC = str_replace_all(
+      ECCC,
       c(
         "Mm" = "mm",
         "Cm" = "cm",
@@ -221,6 +234,10 @@ glossary_normals <- tibble(
       )
     )
   ) |>
-  filter(weathercan_name != "probability")
+  filter(weathercan != "probability")
+
+glossary_normals <- variables_normals_old[1:18, ]
+variables_normals_old <- variables_normals_old[-c(1:18), -3]
 
 usethis::use_data(glossary_normals, overwrite = TRUE)
+usethis::use_data(variables_normals_old, overwrite = TRUE)
