@@ -3,7 +3,7 @@ Type: Package
 Title: Download Weather Data from Environment and Climate Change Canada
 Version: 0.7.8
 Authors@R: c(
-     person("Steffi", "LaZerte", email = "sel@steffilazerte.ca", role = c("aut","cre"), comment = c(ORCID = "0000-0002-7690-8360")),
+     person("Steffi", "LaZerte", email = "sel@steffilazerte.ca", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-7690-8360")),
      person("Sam", "Albers", email = "sam.albers@gmail.com", role = c("ctb"), comment = c(ORCID = "0000-0002-9270-7884")),
      person("Nick", "Brown", email = "nicholas512@gmail.com", role = c("ctb"), comment = c(ORCID = "0000-0002-2719-0671")),
      person("Kevin", "Cazelles", email = "kevin.cazelles@gmail.com", role = c("ctb"), comment = c(ORCID = "0000-0001-6619-9874")),
@@ -37,7 +37,6 @@ Imports:
     purrr (>= 0.3.4),
     rlang (>= 0.1.4),
     readr (>= 2.0.0),
-    rvest (>= 0.3.4),
     stringi (>= 1.1.2),
     stringr (>= 1.4.0),
     tidyr (>= 1.1.3),
@@ -50,10 +49,8 @@ Suggests:
     ggplot2,
     htmltools,
     knitr,
-    leaflet,
     lutz,
     mockery,
-    naniar,
     rmarkdown,
     sf,
     testthat (>= 3.0.0),

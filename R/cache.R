@@ -26,7 +26,7 @@ cache_dir <- function() {
 
 cache_remove <- function() {
   if (interactive()) {
-    remove <- askYesNo(
+    remove <- utils::askYesNo(
       paste0(
         "This will remove the weathercan cache directory and it's contents:\n",
         cache_dir(),

@@ -58,7 +58,7 @@ normals_cached_check <- function(normals_years = "1991-2020") {
       !file.exists(normals_file(normals_years))
   ) {
     if (interactive()) {
-      dl <- askYesNo(paste0(
+      dl <- utils::askYesNo(paste0(
         "Cannot find cached normals for ",
         normals_years,
         "\nDownload?"
@@ -166,10 +166,10 @@ normals_cached_fmt <- function(locs, normals_years = "1991-2020") {
     dplyr::rename("location_name" = "composite_station_name") |>
     dplyr::filter(.data$location_name %in% .env$locs) |>
     dplyr::rename(dplyr::any_of(c(!!!nms))) |>
-    dplyr::mutate(prov = stringr::str_replace_all(prov, .env$province)) |>
+    dplyr::mutate(prov = stringr::str_replace_all(.data$prov, .env$province)) |>
     dplyr::summarize(
       composite_stations = paste0(
-        paste0(station_name, " (", climate_id, ")"),
+        paste0(.data$station_name, " (", .data$climate_id, ")"),
         collapse = "; "
       ),
       .by = c("location_name", "prov")
@@ -206,7 +206,7 @@ normals_cached_fmt <- function(locs, normals_years = "1991-2020") {
   # Extract Codes to separate columns paired with the element
   codes <- n |>
     dplyr::filter(.data$period == "Code") |>
-    dplyr::mutate(normals_element = paste(normals_element, "Code")) |>
+    dplyr::mutate(normals_element = paste(.data$normals_element, "Code")) |>
     dplyr::select(
       "location_name",
       "period_of_record",

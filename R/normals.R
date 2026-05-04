@@ -2,8 +2,9 @@
 #'
 #' Downloads climate normals from Environment and Climate Change Canada (ECCC)
 #' for one or more stations (defined by `climate_id`s). For details and units,
-#' see the [`glossary_normals`] data frame or the `glossary_normals` vignette:
-#' \code{vignette("glossary_normals", package = "weathercan")}
+#' see the [`glossary_normals`], [`variables_normals_old`], and
+#' [`variables_normals_new`] included data sets and/or the `glossary_normals`
+#' vignette: \code{vignette("glossary_normals", package = "weathercan")}.
 #'
 #' @param climate_ids Character. A vector containing the Climate ID(s) of the
 #'   station(s) you wish to download data from. See the [stations()]

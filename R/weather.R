@@ -11,7 +11,7 @@
 #'   in traditionally numeric fields (e.g., weather speed may have values such
 #'   as "< 30"), they can be replaced with a character specified by `string_as`.
 #'   The default is NA. Formatting also replaces data associated with certain
-#'   flags with NA (M = Missing).
+#'   flags with NA (M = Missing), if they are not already marked as NA.
 #'
 #'   Start and end date can be specified, but if not, it will default to the
 #'   start and end date of the range (this could result in downloading a lot of
@@ -324,7 +324,7 @@ weather_dl <- function(
 
       ## Check if all missing, remove and message
       n <- c("time", "date", "year", "month", "day", "hour")
-      temp <- dplyr::select(w, -tidyselect::any_of(n))
+      temp <- dplyr::select(w, -dplyr::any_of(n))
 
       if (nrow(temp) == 0 || all(is.na(temp) | temp == "")) {
         if (length(station_ids) > 1) {
@@ -814,7 +814,7 @@ weather_format <- function(
         )
 
         replacement <- apply(
-          dplyr::select(w, -tidyselect::any_of(valid_cols)),
+          dplyr::select(w, -dplyr::any_of(valid_cols)),
           MARGIN = 2,
           FUN = as.numeric
         )
