@@ -6,8 +6,7 @@ output: github_document
 library(weathercan)
 library(dplyr)
 library(tibble)
-knitr::opts_chunk$set(cache = FALSE,
-                      fig.path = "tools/readme/")
+knitr::opts_chunk$set(cache = FALSE, fig.path = "tools/readme/")
 old <- options(width = 160)
 ```
 
@@ -15,7 +14,7 @@ old <- options(width = 160)
 
 [![:name status badge](https://ropensci.r-universe.dev/badges/:name)](https://ropensci.r-universe.dev)
 [![weathercan status badge](https://ropensci.r-universe.dev/badges/weathercan)](https://ropensci.r-universe.dev)
-[![R-CMD-check](https://github.com/ropensci/weathercan/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/weathercan/actions)
+[![R-CMD-check](https://github.com/ropensci/weathercan/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/weathercan/actions)
 [![codecov](https://codecov.io/gh/ropensci/weathercan/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ropensci/weathercan)
 
 [![](https://badges.ropensci.org/160_status.svg)](https://github.com/ropensci/software-review/issues/160) [![DOI](https://zenodo.org/badge/60650396.svg)](https://zenodo.org/badge/latestdoi/60650396) [![DOI](http://joss.theoj.org/papers/10.21105/joss.00571/status.svg)](https://doi.org/10.21105/joss.00571)
@@ -37,9 +36,10 @@ For more details and tutorials checkout the [weathercan website](https://docs.ro
 You can install `weathercan` from the [rOpenSci r-Universe](https://ropensci.r-universe.dev/):
 
 ```{r, eval = FALSE}
-install.packages("weathercan", 
-                 repos = c("https://ropensci.r-universe.dev", 
-                           "https://cloud.r-project.org"))
+install.packages(
+  "weathercan",
+  repos = c("https://ropensci.r-universe.dev", "https://cloud.r-project.org")
+)
 ```
 
 
@@ -71,7 +71,11 @@ Time frame must be one of "hour", "day", or "month".
 You can also search by proximity:
 
 ```{r}
-stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour")
+stations_search(
+  coords = c(50.667492, -120.329049),
+  dist = 20,
+  interval = "hour"
+)
 ```
 
 You can update this list of stations with 
@@ -100,8 +104,12 @@ kam
 
 You can also download data from multiple stations at once:
 
-```{r, R.options = list(tibble.max_extra_cols = 0)}
-kam_pg <- weather_dl(station_ids = c(48248, 51423), start = "2018-02-01", end = "2018-04-15")
+```{r}
+kam_pg <- weather_dl(
+  station_ids = c(48248, 51423),
+  start = "2018-02-01",
+  end = "2018-04-15"
+)
 ```
 
 ## Climate Normals
@@ -116,6 +124,7 @@ Then you can download the climate normals with the `normals_dl()` function.
 
 ```{r}
 n <- normals_dl("5023222")
+n
 ```
 
 See the [Getting Started](https://docs.ropensci.org/weathercan/articles/weathercan.html) 
@@ -135,11 +144,9 @@ The data and the code in this repository are licensed under multiple licences. A
 ## `weathercan` in the wild!
 
 - Browse [`weathercan` use cases](https://ropensci.org/usecases/) on rOpenSci.org
-- Checkout the [`weathercan` Shiny App](https://nickrongkp.shinyapps.io/WeatherCan/) by Nick Rong (@nickyrong) and Nathan Smith (@WraySmith)
-- R package [`RavenR`](https://github.com/rchlumsk/RavenR/tree/master/R) has functions for converting 
+- Checkout the [`weathercan` Shiny App](https://nickrongkp.shinyapps.io/WeatherCan/) by Nick Rong (\@nickyrong) and Nathan Smith (\@WraySmith)
+- R package [`RavenR`](https://github.com/rchlumsk/RavenR/) has functions for converting 
   ECCC data downloaded by `weathercan` to the .rvt format for Raven.
-- R package [`meteoland`](https://github.com/emf-creaf/meteoland) has functions for converting ECCC
-  data downloaded by `weathercan` to the format required for use in `meteoland`.
 
 ## Similar packages
 
