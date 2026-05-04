@@ -77,7 +77,7 @@ converts data to numeric where possible. If character strings are contained
 in traditionally numeric fields (e.g., weather speed may have values such
 as "< 30"), they can be replaced with a character specified by \code{string_as}.
 The default is NA. Formatting also replaces data associated with certain
-flags with NA (M = Missing).
+flags with NA (M = Missing), if they are not already marked as NA.
 
 Start and end date can be specified, but if not, it will default to the
 start and end date of the range (this could result in downloading a lot of

@@ -44,8 +44,9 @@ normals, a tibble with \emph{nested} normals and first/last frost data.
 \description{
 Downloads climate normals from Environment and Climate Change Canada (ECCC)
 for one or more stations (defined by \code{climate_id}s). For details and units,
-see the \code{\link{glossary_normals}} data frame or the \code{glossary_normals} vignette:
-\code{vignette("glossary_normals", package = "weathercan")}
+see the \code{\link{glossary_normals}}, \code{\link{variables_normals_old}}, and
+\code{\link{variables_normals_new}} included data sets and/or the \code{glossary_normals}
+vignette: \code{vignette("glossary_normals", package = "weathercan")}.
 }
 \details{
 The format and method of downloading climate normals from ECCC

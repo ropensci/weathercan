@@ -7,8 +7,8 @@
 \format{
 A data frame with 18 rows and 3 variables:
 \describe{
-\item{ECCC_name}{Original measurement type from ECCC}
-\item{weathercan_name}{R-compatible name given when downloaded with the
+\item{ECCC}{Original measurement type from ECCC}
+\item{weathercan}{R-compatible name given when downloaded with the
 \code{normals_dl()} function}
 \item{description}{Description of the measurement type from ECCC}
 }
@@ -17,8 +17,8 @@ A data frame with 18 rows and 3 variables:
 glossary_normals
 }
 \description{
-A reference dataset matching information on columns in climate normals data
-downloaded using the \code{normals_dl()} function. Indicates the names and
-descriptions of different data measurements.
+A reference dataset matching information on general columns in older
+climate normals (pre 1991-2020) data downloaded using the \code{normals_dl()} function.
+Indicates the names and descriptions of different data measurements.
 }
 \keyword{datasets}
