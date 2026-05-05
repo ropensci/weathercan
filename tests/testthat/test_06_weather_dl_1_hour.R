@@ -146,13 +146,13 @@ test_that("weather (hour) gets all", {
 
 test_that("weather (hour) trims NAs", {
   skip_on_cran()
+
   expect_equal(
     nrow(weather_dl(
       6819,
       start = "2017-08-20",
       end = "2017-09-01",
-      interval = "hour",
-      trim = TRUE
+      interval = "hour"
     )),
     96
   )

@@ -61,6 +61,11 @@
 #'   "month".
 #' @param trim Logical. Trim missing values from the start and end of the
 #'   weather dataframe. Only applies if `format = TRUE`
+#' @param trim_by_stn Logical. Data from different stations are generally padded
+#'   with NAs to have the same date range. If this isn't desirable, use `trim =
+#'   TRUE` and `trim_by_stn = TRUE` to trim `NA`s from the start and end of each
+#'   station. `trim_by_stn = FALSE` (default), only the sides of the entire
+#'   range are trimmed.
 #' @param format Logical. If TRUE, formats data for immediate use. If FALSE,
 #'   returns data exactly as downloaded from Environment and Climate Change
 #'   Canada. Useful for dealing with changes by Environment Canada to the format
@@ -104,6 +109,7 @@ weather_dl <- function(
   end = NULL,
   interval = "hour",
   trim = TRUE,
+  trim_by_stn = FALSE,
   format = TRUE,
   string_as = NA,
   time_disp = "none",
@@ -334,7 +340,7 @@ weather_dl <- function(
     ## Trim to available data provided it is formatted
 
     if (trim) {
-      w_all <- weather_trim(w_all, format)
+      w_all <- weather_trim(w_all, format, trim_by_stn)
     }
 
     m <- names(m_names)[names(m_names) %in% names(w_all)]
@@ -553,12 +559,22 @@ weather_raw <- function(
 }
 
 
-weather_trim <- function(w, format) {
-  if (format && nrow(w) > 0) {
-    wc_progress("Trimming missing values before and after")
+weather_trim <- function(w, format, trim_by_stn) {
+  if (!format || nrow(w) == 0) {
+    return(w)
+  }
 
-    temp <- dplyr::select(
-      w,
+  wc_progress("Trimming missing values before and after")
+
+  if (trim_by_stn) {
+    temp <- dplyr::group_split(w, .data$station_id)
+  } else {
+    temp <- list(w)
+  }
+
+  w <- purrr::map(temp, \(x) {
+    trimable <- dplyr::select(
+      x,
       -dplyr::any_of(c(
         names(m_names),
         "date",
@@ -570,10 +586,15 @@ weather_trim <- function(w, format) {
         "qual"
       ))
     )
-    temp <- w$date[which(rowSums(is.na(temp) | temp == "") != ncol(temp))]
 
-    w <- w[w$date >= min(temp) & w$date <= max(temp), ]
-  }
+    trim <- x$date[which(
+      rowSums(is.na(trimable) | trimable == "") != ncol(trimable)
+    )]
+
+    x <- x[x$date >= min(trim) & x$date <= max(trim), ]
+  }) |>
+    purrr::list_rbind()
+
   w
 }
 

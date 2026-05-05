@@ -135,6 +135,44 @@ test_that("weather (day) trims NAs", {
   )
 })
 
+test_that("weather (day) trim_by_stn", {
+  skip_on_cran()
+  withr::local_options(list(weathercan.verbosity = "quiet"))
+
+  w0 <- weather_dl(
+    c(47407, 27174),
+    start = "2013-10-01",
+    end = "2013-12-31",
+    interval = "day"
+  )
+  r1 <- range(w0$date[w0$station_id == 47407])
+  r2 <- range(w0$date[w0$station_id == 27174])
+  expect_equal(r1, r2)
+
+  # NAs not Trimmed for shorter data set
+  expect_true(all(is.na(tail(w0[
+    w0$station_id == 47407,
+    c("max_temp", "mean_temp", "min_temp")
+  ]))))
+
+  w1 <- weather_dl(
+    c(47407, 27174),
+    start = "2013-10-01",
+    end = "2013-12-31",
+    interval = "day",
+    trim_by_stn = TRUE
+  )
+  r1 <- range(w1$date[w1$station_id == 47407])
+  r2 <- range(w1$date[w1$station_id == 27174])
+  expect_false(all(r1 == r2))
+
+  # NAs Trimmed for shorter data set
+  expect_false(all(is.na(tail(w1[
+    w1$station_id == 47407,
+    c("max_temp", "mean_temp", "min_temp")
+  ]))))
+})
+
 test_that("weather (day) mutliple stations", {
   skip_on_cran()
   expect_message(
