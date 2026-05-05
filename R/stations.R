@@ -65,6 +65,14 @@ stations <- function() {
     }
   }
 
+  if (!getOption("weathercan.normals.message")) {
+    wc_inform(
+      "As of v0.7.2, the `normals` column in `stations()` reflects whether or not ",
+      "there\nare *any* normals available (not just the most recent)."
+    )
+    options("weathercan.normals.message" = TRUE)
+  }
+
   stations_read()$stn
 }
 
@@ -207,10 +215,10 @@ stations_dl_internal <- function(
   }
 
   wc_inform(
-      "According to Environment Canada, ",
-      stringr::str_subset(headings, "Modified Date") |>
-        stringr::str_remove_all("[^\001-\177]")
-    )
+    "According to Environment Canada, ",
+    stringr::str_subset(headings, "Modified Date") |>
+      stringr::str_remove_all("[^\001-\177]")
+  )
 
   eccc_meta <- stringr::str_subset(headings, "Modified Date") |>
     stringr::str_remove(stringr::regex(
@@ -219,11 +227,11 @@ stations_dl_internal <- function(
     )) |>
     lubridate::ymd_hms(truncated = 3)
 
-    disclaimer <- paste0(
-      grep("Disclaimer", headings, value = TRUE),
-      collapse = "\n"
-    )
-    if (nchar(disclaimer) > 0) {
+  disclaimer <- paste0(
+    grep("Disclaimer", headings, value = TRUE),
+    collapse = "\n"
+  )
+  if (nchar(disclaimer) > 0) {
     wc_inform("Environment Canada Disclaimers:\n", disclaimer)
   }
 
@@ -340,11 +348,11 @@ stations_dl_internal <- function(
   readr::write_rds(x = stn, file = f, compress = "gz")
 
   wc_inform(
-      "Stations data saved...\n",
-      "Use `stations()` to access most recent version and ",
-      "`stations_meta()` to see when this was last updated"
-    )
-  }
+    "Stations data saved...\n",
+    "Use `stations()` to access most recent version and ",
+    "`stations_meta()` to see when this was last updated"
+  )
+}
 
 #' Search for stations by name or location
 #'
@@ -506,12 +514,12 @@ stations_search <- function(
   }
 
   if (!is.null(name)) {
-      if (length(name) == 2 && is.numeric(name)) {
+    if (length(name) == 2 && is.numeric(name)) {
       wc_inform(
-          "The `name` argument looks like a pair of coordinates. ",
+        "The `name` argument looks like a pair of coordinates. ",
         "Did you mean `coords = c({name[1]}, {name[2]})`?"
-        )
-      }
+      )
+    }
 
     wc_progress("Searching by name")
 
