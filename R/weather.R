@@ -113,7 +113,6 @@ weather_dl <- function(
   format = TRUE,
   string_as = NA,
   time_disp = "none",
-  stn = NULL,
   encoding = "UTF-8",
   list_col = FALSE
 ) {
@@ -132,15 +131,6 @@ weather_dl <- function(
 
   if (length(interval) > 1 || !(interval %in% c('hour', 'day', 'month'))) {
     wc_stop("'interval' must be either 'hour', 'day', OR 'month'")
-  }
-
-  if (!is.null(stn)) {
-    wc_stop(
-      "`stn` is defunct, to use an updated stations data frame ",
-      "use `stations_dl()` to update the internal data, and ",
-      "`stations_meta()` to check when it was last updated",
-      call. = FALSE
-    )
   }
 
   stn <- stations_read()

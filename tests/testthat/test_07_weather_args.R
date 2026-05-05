@@ -166,19 +166,3 @@ test_that("weather_dl() (invalid end string) verifies error return when end is n
     "'start' and 'end' must be either a standard date format "
   )
 })
-
-
-test_that("weather_dl() (invalid stn) verifies error return when defunct stn", {
-  skip_on_cran()
-  expect_error(
-    weather_dl(
-      station_ids = 5401,
-      start = "2017-01-01",
-      end = "2017-05-01",
-      stn = "invalid defunct",
-      interval = "month",
-      format = FALSE
-    ),
-    "`stn` is defunct, to use an updated stations data frame use "
-  )
-})

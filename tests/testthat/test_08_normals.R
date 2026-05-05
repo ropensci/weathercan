@@ -304,11 +304,6 @@ test_that("normals_dl() - multi 1971", {
   )
 })
 
-test_that("normals_dl() stops if stn argument is provided", {
-  expect_error(normals_dl(stn = "BRANDON A"))
-  expect_error(normals_dl(stn = ""))
-})
-
 test_that("normals_dl() stops if climate normals are not available for stations", {
   expect_error(normals_dl(
     climate_ids = c("301AR54", "301B6L0", "301B8LR"),

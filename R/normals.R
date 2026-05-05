@@ -126,16 +126,8 @@
 normals_dl <- function(
   climate_ids,
   normals_years = "current",
-  format = TRUE,
-  stn = NULL
+  format = TRUE
 ) {
-  if (!is.null(stn)) {
-    wc_stop(
-      "`stn` is defunct, to use an updated stations data frame ",
-      "use `stations_dl()` to update the internal data, and ",
-      "`stations_meta()` to check when it was last updated"
-    )
-  }
   stn <- stations()
 
   check_ids(climate_ids, stn, type = "climate_id")
