@@ -118,3 +118,7 @@ pretty_names <- function(x) {
     stringr::str_replace_all(" |-|_", "_") |>
     stringr::str_replace_all("_+", "_")
 }
+
+wc_read <- function(path) {
+  readr::read_csv(path, show_col_types = FALSE, progress = FALSE)
+}

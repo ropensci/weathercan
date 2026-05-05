@@ -137,7 +137,7 @@ weather_dl <- function(
     )
   }
 
-  stn <- stations()
+  stn <- stations_read()
 
   check_int(interval)
 

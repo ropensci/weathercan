@@ -3,6 +3,7 @@
 - Added access to 1991-2020 Climate normals 
 - Added caching functions to support downloading and caching the full 1991-2020 dataset
   - `cache_dir()`, `cache_remove()`
+- No longer include stations data frame in weathercan, prompt user to download always (ensures it's up to date)
 
 
 # weathercan 0.7.8

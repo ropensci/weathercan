@@ -73,7 +73,7 @@ stations <- function() {
     options("weathercan.normals.message" = TRUE)
   }
 
-  stations_read()$stn
+  stations_read()
 }
 
 #' Show stations list meta data
@@ -85,32 +85,20 @@ stations <- function() {
 #' @examplesIf check_eccc()
 #' stations_meta()
 stations_meta <- function() {
-  stations_read()$meta
+  wc_read(stations_meta_file())
 }
 
 stations_read <- function() {
-  pkg_file <- system.file("extdata", "stations.rds", package = "weathercan") |>
-    readr::read_rds()
-
-  if (file.exists(stations_file())) {
-    local_file <- stations_file() |>
-      readr::read_rds()
-    # If pkg version is newer than local, use pkg else use local
-    if (
-      pkg_file$meta$weathercan_modified > local_file$meta$weathercan_modified
-    ) {
-      r <- pkg_file
-    } else {
-      r <- local_file
-    }
-  } else {
-    r <- pkg_file
-  }
-  r
+  cache_stations_check()
+  wc_read(stations_file())
 }
 
 stations_file <- function() {
-  file.path(cache_dir(), "stations.rds")
+  file.path(cache_dir(), "stations.csv")
+}
+
+stations_meta_file <- function() {
+  file.path(cache_dir(), "stations_meta.csv")
 }
 
 #' Get available stations
@@ -143,7 +131,6 @@ stations_file <- function() {
 #' @param skip Numeric. Number of lines to skip at the beginning of the csv. If
 #'   NULL, automatically derived.
 #'
-#'
 #' @examplesIf check_eccc()
 #'
 #' # Update stations data frame
@@ -161,21 +148,9 @@ stations_dl <- function(skip = NULL) {
 }
 
 stations_dl_internal <- function(
-  skip = NULL,
-  internal = TRUE
+  skip = NULL
 ) {
-  # If called internally use inst
-  if (internal) {
-    d <- system.file("extdata", package = "weathercan")
-    f <- file.path(d, "stations.rds")
-  } else {
-    f <- stations_file()
-  }
-
-  if (!internal) {
     cache_check()
-  }
-
   rlang::check_installed(c("lutz", "sf"), "to add timezones to stations ata.")
 
   # Get normals data
@@ -338,14 +313,16 @@ stations_dl_internal <- function(
     ) |>
     dplyr::relocate(dplyr::contains("normals_"), .after = dplyr::last_col())
 
-  stn <- list(
-    stn = s,
-    meta = list(ECCC_modified = eccc_meta, weathercan_modified = Sys.Date())
+  meta <- data.frame(
+    ECCC_modified = eccc_meta,
+    weathercan_modified = Sys.Date()
   )
 
-  wc_progress("Saving stations data to ", f)
+  wc_progress("Saving stations data to ", f_s)
+  wc_progress("Saving stations metadata to ", f_m)
 
-  readr::write_rds(x = stn, file = f, compress = "gz")
+  readr::write_csv(x = s, file = stations_file())
+  readr::write_csv(x = meta, file = stations_meta_file())
 
   wc_inform(
     "Stations data saved...\n",
