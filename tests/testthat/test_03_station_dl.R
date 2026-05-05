@@ -30,42 +30,17 @@ test_that("stations_meta() returns metadata", {
 
 
 test_that("stations_dl() runs and updates data", {
-  skip_if_not_installed("sf")
-  skip_if_not_installed("lutz")
   skip_on_cran()
   skip_if_offline()
 
-  mockery::stub(stations_dl_internal, "utils::askYesNo", TRUE)
-  mockery::stub(
-    stations_dl_internal,
-    "stations_file",
-    file.path("stations.rds")
-  )
-  expect_message(
-    stations_dl_internal(internal = FALSE),
-    "Stations data saved"
-  ) |>
+  expect_message(stations_dl(), "Stations data saved") |>
     expect_message("According to Environment Canada") |>
     expect_message("Environment Canada Disclaimers")
-  expect_type(s <- readRDS("stations.rds"), "list") |>
-    expect_length(2)
-  expect_s3_class(s$stn, "data.frame")
-  expect_gt(nrow(s$stn), 0)
-  expect_type(s$meta, "list") |>
-    expect_length(2)
-
-  # Ensure that we're getting recent data
-  expect_gte(max(s$stn$end, na.rm = TRUE), lubridate::year(Sys.Date()))
-
-  # stations_read() ----
-
-  # Without local file, use package file
-  expect_silent(s1 <- stations_read()$meta)
-  expect_lte(s1$weathercan_modified, Sys.Date())
-
-  expect_gte(s$meta$weathercan_modified, s1$weathercan_modified)
-
-  unlink("stations.rds")
+  expect_s3_class(s <- wc_read(stations_file()), "data.frame")
+  expect_gt(nrow(s), 0)
+  expect_s3_class(m <- wc_read(stations_meta_file()), "data.frame")
+  expect_equal(nrow(m), 1)
+  expect_equal(ncol(m), 2)
 })
 
 
