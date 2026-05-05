@@ -16,9 +16,7 @@ weather_dl(
   time_disp = "none",
   stn = NULL,
   encoding = "UTF-8",
-  list_col = FALSE,
-  verbose = FALSE,
-  quiet = FALSE
+  list_col = FALSE
 )
 }
 \arguments{
@@ -55,11 +53,6 @@ numeric measurement with. See Details.}
 
 \item{list_col}{Logical. Return data as nested data set? Defaults to FALSE.
 Only applies if \code{format = TRUE}}
-
-\item{verbose}{Logical. Include progress messages}
-
-\item{quiet}{Logical. Suppress all messages (including messages regarding
-missing data, etc.)}
 }
 \value{
 A tibble with station ID, name and weather data.
@@ -110,6 +103,13 @@ not be available depending on the date of the file (e.g., station operator
 was added as of April 1st 2018, so will be in all data which includes dates
 on or after April 2018).
 }
+\section{Verbosity}{
+Verbosity (how 'chatty' weathercan is) can be specified using the option
+\code{weathercan.verbosity}. Which takes "standard" (default), "quiet" (suppress
+all messages including those regarding missing data, etc.), or "verbose"
+(extra progress messages).
+}
+
 \examples{
 \dontshow{if (check_eccc()) withAutoprint(\{ # examplesIf}
 

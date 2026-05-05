@@ -1,5 +1,7 @@
 ## Get up-to-date stations data
-stations_dl_internal(verbose = TRUE)
+withr::with_options(list("weathercan.verbosity" = "verbose"), {
+  stations_dl_internal()
+})
 
 kamloops_day <- weather_dl(
   51423,

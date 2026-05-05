@@ -80,7 +80,7 @@ gloss_url <- tibble(interval = names(gloss_url), data = gloss_url) |>
   mutate(
     value = paste0("https://climate.weather.gc.ca/glossary_e.html#", values)
   ) |>
-  select("interval", "weathercan_name" = "ind", "ECCC_ref" = "value")
+  select("interval", "weathercan" = "ind", "ECCC_ref" = "value")
 
 
 glossary <- tibble(
@@ -89,43 +89,43 @@ glossary <- tibble(
     rep("day", length(w_names$day)),
     rep("month", length(w_names$month))
   ),
-  ECCC_name = unlist(w_names, use.names = FALSE),
-  weathercan_name = names(unlist(c(w_names, use.names = FALSE))),
-  units = str_replace_all(str_extract(ECCC_name, "\\(.*\\)"), "\\(|\\)", "")
+  ECCC = unlist(w_names, use.names = FALSE),
+  weathercan = names(unlist(c(w_names, use.names = FALSE))),
+  units = str_replace_all(str_extract(ECCC, "\\(.*\\)"), "\\(|\\)", "")
 ) |>
-  left_join(gloss_url, by = c("interval", "weathercan_name")) |>
+  left_join(gloss_url, by = c("interval", "weathercan")) |>
   mutate(
     ECCC_ref = replace(
       ECCC_ref,
-      weathercan_name == "qual",
+      weathercan == "qual",
       "https://climate.weather.gc.ca/climate_data/data_quality_e.html"
     ),
     ECCC_ref = replace(
       ECCC_ref,
-      str_detect(weathercan_name, "_flag"),
+      str_detect(weathercan, "_flag"),
       "See `flags` vignette or dataset for more details"
     ),
     ECCC_ref = replace(ECCC_ref, str_detect(ECCC_ref, "#NA"), NA),
     units = replace(
       units,
-      weathercan_name %in% c("year", "month", "day", "hour"),
-      weathercan_name[weathercan_name %in% c("year", "month", "day", "hour")]
+      weathercan %in% c("year", "month", "day", "hour"),
+      weathercan[weathercan %in% c("year", "month", "day", "hour")]
     ),
     ECCC_ref = replace(
       ECCC_ref,
-      weathercan_name %in% c("year", "month", "day", "hour"),
+      weathercan %in% c("year", "month", "day", "hour"),
       "https://climate.weather.gc.ca/glossary_e.html#dataInt"
     ),
-    units = replace(units, weathercan_name == "time", "ISO date/time"),
-    units = replace(units, weathercan_name == "date", "ISO date"),
+    units = replace(units, weathercan == "time", "ISO date/time"),
+    units = replace(units, weathercan == "date", "ISO date"),
     units = replace(
       units,
-      weathercan_name %in% c("hmdx", "wind_chill"),
+      weathercan %in% c("hmdx", "wind_chill"),
       "index"
     ),
     units = replace(
       units,
-      str_detect(weathercan_name, c("(qual)|(_flag)|(weather)")),
+      str_detect(weathercan, c("(qual)|(_flag)|(weather)")),
       "note"
     )
   ) |>

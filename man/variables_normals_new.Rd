@@ -7,6 +7,7 @@
 \format{
 A data frame with 18 rows and 3 variables:
 \describe{
+\item{measurement_type}{Measurement category}
 \item{ECCC}{Original variable name from ECCC}
 \item{weathercan}{R-compatible name given when formating the data with the
 \code{normals_dl()} function}

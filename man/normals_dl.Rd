@@ -4,14 +4,7 @@
 \alias{normals_dl}
 \title{Download climate normals from Environment and Climate Change Canada}
 \usage{
-normals_dl(
-  climate_ids,
-  normals_years = "current",
-  format = TRUE,
-  stn = NULL,
-  verbose = FALSE,
-  quiet = FALSE
-)
+normals_dl(climate_ids, normals_years = "current", format = TRUE, stn = NULL)
 }
 \arguments{
 \item{climate_ids}{Character. A vector containing the Climate ID(s) of the
@@ -31,11 +24,6 @@ data frame without doing so.}
 
 \item{stn}{DEFUNCT. Now use \code{stations_dl()} to update internal data and
 \code{stations_meta()} to check the date it was last updated.}
-
-\item{verbose}{Logical. Include progress messages}
-
-\item{quiet}{Logical. Suppress all messages (including messages regarding
-missing data, etc.)}
 }
 \value{
 For new climate normals, a tibble of normals. For older climate
@@ -96,6 +84,8 @@ Older climate normals are downloaded from the url stored in option
 \code{weathercan.urls.normals}. To change this location use:
 \code{options(weathercan.urls.normals = "your_new_url")}.
 }
+
+@inheritSection weather_dl Verbosity
 }
 \examples{
 \dontshow{if (check_eccc()) withAutoprint(\{ # examplesIf}
