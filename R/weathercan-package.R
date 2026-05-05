@@ -105,7 +105,9 @@ NULL
 
 .onAttach <- function(libname, pkgname) {
   packageStartupMessage(
-    "As of v0.7.2, the `normals` column in `stations()` reflects whether or not ",
-    "there\nare *any* normals available (not just the most recent)."
+    "Citation reminder:\n",
+    "- Environment and Climate Change Canada (ECCC) is the *source* of this data\n",
+    "- weathercan is software for *downloading* the data\n",
+    "- See ECCC's terms and conditions: https://climate.weather.gc.ca/prods_servs/attachment1_e.html"
   )
 }
