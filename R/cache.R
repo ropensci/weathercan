@@ -82,3 +82,39 @@ cache_check <- function() {
   }
   okay
 }
+
+#' Check when stations last updated and inform user
+#'
+#' If it's been more than a month, remind user to update.
+#'
+#' @returns Nothing. Message if it's been a while.
+#'
+#' @noRd
+#' @examples
+#' cache_stations_check()
+
+cache_stations_check <- function() {
+  cache_check()
+  if (!file.exists(stations_file()) || !file.exists(stations_meta_file())) {
+    if (interactive()) {
+      dl <- utils::askYesNo("No stations data frame found, download?")
+    } else {
+      dl <- TRUE
+    }
+    if (dl) stations_dl() else wc_stop("Need download stations data first")
+  }
+
+  time_since_update <- difftime(
+    stations_meta()$weathercan_modified,
+    Sys.Date(),
+    units = "days"
+  )
+  if (time_since_update > 28) {
+    if (!identical(Sys.getenv("TESTTHAT"), "true")) {
+      wc_always(
+        "The stations data frame hasn't been updated in over 4 weeks. ",
+        "Consider running `stations_dl()`"
+      )
+    }
+  }
+}

@@ -48,23 +48,6 @@
 #' filter(stations(), interval == "hour", normals, prov == "MB")
 
 stations <- function() {
-  if (
-    abs(difftime(
-      stations_meta()$weathercan_modified,
-      Sys.Date(),
-      units = "days"
-    )) >
-      28
-  ) {
-    if (!identical(Sys.getenv("TESTTHAT"), "true")) {
-      wc_always(
-        "The stations data frame hasn't been updated in over 4 weeks. ",
-        "Consider running `stations_dl()` to check for updates and make ",
-        "sure you have the most recent stations list available"
-      )
-    }
-  }
-
   if (!getOption("weathercan.normals.message")) {
     wc_inform(
       "As of v0.7.2, the `normals` column in `stations()` reflects whether or not ",
@@ -150,7 +133,7 @@ stations_dl <- function(skip = NULL) {
 stations_dl_internal <- function(
   skip = NULL
 ) {
-    cache_check()
+  cache_check()
   rlang::check_installed(c("lutz", "sf"), "to add timezones to stations ata.")
 
   # Get normals data
