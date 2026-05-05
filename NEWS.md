@@ -1,9 +1,10 @@
-# weathercan 0.7.9
-- Fix ECCC change to normals download query parameters again
-- Added access to 1991-2020 Climate normals 
-- Added caching functions to support downloading and caching the full 1991-2020 dataset
-  - `cache_dir()`, `cache_remove()`
+# weathercan 1.0.0
+- Fix ECCC change to normals download query parameters again (#207)
+- Added access to 1991-2020 Climate normals (#141)
+  - Added caching functions to support downloading and caching the full 1991-2020 dataset (`cache_dir()`, `cache_remove()`)
 - No longer include stations data frame in weathercan, prompt user to download always (ensures it's up to date)
+- Add better message control via option `weathercan.verbosity` which can be "standard" (default), "verbose" (extra progress messages) or "quiet" (little to no messages). 
+- Use cli for messaging (#211)
 - Add progress bars for downloads (#58)
 
 
