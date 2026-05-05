@@ -301,8 +301,8 @@ stations_dl_internal <- function(
     weathercan_modified = Sys.Date()
   )
 
-  wc_progress("Saving stations data to ", f_s)
-  wc_progress("Saving stations metadata to ", f_m)
+  wc_progress("Saving stations data to ", stations_file())
+  wc_progress("Saving stations metadata to ", stations_meta_file())
 
   readr::write_csv(x = s, file = stations_file())
   readr::write_csv(x = meta, file = stations_meta_file())
