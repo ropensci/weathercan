@@ -57,7 +57,6 @@ for (t in seq_len(nrow(g))) {
 ## 1981-2010 and 1971-2000
 ```{r, results = "asis", echo = FALSE}
 g <- variables_normals_old |>
-  select(-description) |>
   mutate(group = str_detect(weathercan, "title"), group = cumsum(group)) |>
   filter(weathercan != "probability") |>
   group_by(group) |>
