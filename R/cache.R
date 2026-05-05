@@ -44,7 +44,7 @@ cache_remove <- function() {
   if (!dir.exists(cache_dir())) {
     wc_inform("Cache successfully removed")
   } else {
-    stop("Cache could not be removed", call. = FALSE)
+    wc_stop("Cache could not be removed")
   }
 }
 
@@ -77,7 +77,7 @@ cache_check <- function() {
     if (dir.exists(cache_dir())) {
       wc_inform("Cache successfully created")
     } else {
-      stop("Cache could not be created", call. = FALSE)
+      wc_stop("Cache could not be created")
     }
   }
   okay

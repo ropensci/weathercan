@@ -24,26 +24,21 @@ tz_hours <- function(tz) {
 
 check_int <- function(interval) {
   if (!all(interval %in% c("hour", "day", "month"))) {
-    stop("'interval' can only be 'hour', 'day', or 'month'")
+    wc_stop("'interval' can only be 'hour', 'day', or 'month'")
   }
 }
 
 check_ids <- function(ids, stn, type) {
   if (!all(ids %in% stn[[type]])) {
     if (type == "climate_id" && any(nchar(as.character(ids)) != 7)) {
-      stop(
+      wc_stop(
         "'climate_id's expect an id with 7 characters (e.g., 301AR54). ",
-        "Did you use 'station_id' by accident?",
-        call. = FALSE
+        "Did you use 'station_id' by accident?"
       )
     }
-    stop(
-      "'",
-      type,
-      "'",
-      paste0(ids[!ids %in% stn[[type]]], collapse = ", "),
-      "are not present in the stations data frame",
-      call. = FALSE
+    wc_stop(
+      "'{type}' {paste0(ids[!ids %in% stn[[type]]], collapse = ', ')} ",
+      "are not present in the stations data frame"
     )
   }
 }
@@ -65,9 +60,8 @@ check_normals <- function(normals_years, null_ok = FALSE) {
       !is.character(normals_years) ||
       !stringr::str_detect(normals_years, "^[0-9]{4}-[0-9]{4}$")
   ) {
-    stop(
-      "'normals_years' must be either 'current' or a text string in the format YYYY-YYYY e.g., '1991-2020'",
-      call. = FALSE
+    wc_stop(
+      "'normals_years' must be either 'current' or a text string in the format YYYY-YYYY e.g., '1991-2020'"
     )
   }
   normals_years
@@ -94,13 +88,12 @@ get_check <- function(url, query = NULL, task = NULL) {
   req <- httr2::req_perform(req)
 
   if (grepl("^https://climate.weather.gc.ca/error", req$url)) {
-    stop("Service is currently down!")
+    wc_stop("Service is currently down!")
   } else if (any(grepl("error was found", httr2::resp_body_string(req)))) {
-    stop(
+    wc_stop(
       "API could not fetch data with this query\n",
       "Please, open an issue on https://github.com/ropensci/weathercan/issues and share ",
-      "the details of your attempted download.",
-      call. = FALSE
+      "the details of your attempted download."
     )
   }
   req

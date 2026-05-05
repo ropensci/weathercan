@@ -130,11 +130,10 @@ normals_dl <- function(
   stn = NULL
 ) {
   if (!is.null(stn)) {
-    stop(
+    wc_stop(
       "`stn` is defunct, to use an updated stations data frame ",
       "use `stations_dl()` to update the internal data, and ",
-      "`stations_meta()` to check when it was last updated",
-      call. = FALSE
+      "`stations_meta()` to check when it was last updated"
     )
   }
   stn <- stations()
@@ -160,10 +159,8 @@ normals_dl <- function(
     dplyr::distinct() |>
     dplyr::mutate(climate_id = as.character(.data$climate_id))
 
-  # if(nrow(n) == 0) stop("No stations matched these climate ids", call. = FALSE)
-
   if (!any(n$normals)) {
-    stop("No stations had climate normals available", call. = FALSE)
+    wc_stop("No stations had climate normals available")
   } else if (!all(n$normals)) {
     wc_inform(
       "Not all stations have climate normals available (climate ids: ",
@@ -343,20 +340,15 @@ data_extract <- function(n, climate_id) {
   )
 
   if (nrow(missing_names) > 0) {
-    stop(
-      "Not all variables for climate station ",
-      climate_id,
-      " were identified.\nPlease report this here: ",
-      "https://github.com/ropensci/weathercan/issues",
-      call. = FALSE
+    wc_stop(
+      "Not all variables for climate station {climate_id} ",
+      "were identified.\nPlease report this here: ",
+      "https://github.com/ropensci/weathercan/issues"
     )
   } else if (nrow(nn) != nrow(n)) {
-    stop(
-      "Variables for climate station ",
-      climate_id,
-      " were misidentified. Please report this here: ",
-      "https://github.com/ropensci/weathercan/issues",
-      call. = FALSE
+    wc_stop(
+      "Variables for climate station {climate_id} were misidentified. ",
+      "Please report this here: https://github.com/ropensci/weathercan/issues"
     )
   }
 
@@ -369,10 +361,9 @@ data_extract <- function(n, climate_id) {
 
   # Check for problems
   if (!all(nn$variable[nn$new_var %in% n_nice$new_var] %in% n$variable)) {
-    stop(
+    wc_stop(
       "Variable names did not align correctly during formating, ",
-      "consider using 'format = FALSE' and/or reporting this error.",
-      call. = FALSE
+      "consider using 'format = FALSE' and/or reporting this error."
     )
   }
 
@@ -457,7 +448,7 @@ data_format <- function(n, climate_id) {
       )
     },
     warning = function(w) {
-      stop(climate_id, " has a formating issue with dates", call. = FALSE)
+      wc_stop("{climate_id} has a formating issue with dates")
     }
   )
 
@@ -472,7 +463,7 @@ data_format <- function(n, climate_id) {
       )
     },
     warning = function(w) {
-      stop(climate_id, " has a formating issue with numbers", call. = FALSE)
+      wc_stop("{climate_id} has a formating issue with numbers")
     }
   )
 
@@ -489,7 +480,7 @@ data_format <- function(n, climate_id) {
       )
     },
     warning = function(w) {
-      stop(climate_id, " has a formating issue with characters", call. = FALSE)
+      wc_stop("{climate_id} has a formating issue with characters")
     }
   )
 
@@ -621,10 +612,9 @@ frost_find <- function(n, type = "extract") {
     }
     if (type == "remove") r <- n
   } else {
-    stop(
+    wc_stop(
       "Problem identifying frost data in normals\nPlease report this here: ",
-      "https://github.com/ropensci/weathercan/issues",
-      call. = FALSE
+      "https://github.com/ropensci/weathercan/issues"
     )
   }
   r
@@ -657,7 +647,7 @@ frost_format <- function(f, climate_id) {
       )
     },
     warning = function(w) {
-      stop(climate_id, " has a formating issue with dates", call. = FALSE)
+      wc_stop("{climate_id} has a formating issue with dates")
     }
   )
   tryCatch(
@@ -668,7 +658,7 @@ frost_format <- function(f, climate_id) {
       )
     },
     warning = function(w) {
-      stop(climate_id, " has a formating issue with numbers", call. = FALSE)
+      wc_stop("{climate_id} has a formating issue with numbers")
     }
   )
   tryCatch(
@@ -681,7 +671,7 @@ frost_format <- function(f, climate_id) {
       )
     },
     warning = function(w) {
-      stop(climate_id, " has a formating issue with characters", call. = FALSE)
+      wc_stop("{climate_id} has a formating issue with characters")
     }
   )
   f_fmt

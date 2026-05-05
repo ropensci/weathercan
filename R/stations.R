@@ -186,11 +186,8 @@ stations_dl_internal <- function(
     progress = FALSE
   )
   if (!any(stringr::str_detect(headings, "Climate ID"))) {
-    stop(
-      "Could not read stations list (",
-      getOption("weathercan.urls.stations"),
-      ")",
-      call. = FALSE
+    wc_stop(
+      "Could not read stations list ({getOption('weathercan.urls.stations')})"
     )
   }
 
@@ -420,10 +417,8 @@ stations_search <- function(
   ends_earliest = NULL
 ) {
   if (!is.null(normals_only)) {
-    warning(
-      "`normals_only` is deprecated, switching to ",
-      "`normals_years = 'current'`",
-      call. = FALSE
+    wc_warn(
+      "`normals_only` is deprecated, switching to `normals_years = 'current'`"
     )
     normals_years <- "current"
   }
@@ -431,10 +426,9 @@ stations_search <- function(
     !is.null(normals_years) &&
       !normals_years %in% c("current", "1991-2020", "1981-2010", "1971-2000")
   ) {
-    stop(
+    wc_stop(
       "`normals_years` must either be `NULL` (don't filter by normals),",
-      "'current', '1991-2020', '1981-2010' or '1971-2000'",
-      call. = FALSE
+      "'current', '1991-2020', '1981-2010' or '1971-2000'"
     )
   }
 
@@ -442,15 +436,14 @@ stations_search <- function(
     all(is.null(name), is.null(coords)) ||
       all(!is.null(name), !is.null(coords))
   ) {
-    stop("Need a search name OR search coordinate", call. = FALSE)
+    wc_stop("Need a search name OR search coordinate")
   }
 
   if (!is.null(stn)) {
-    stop(
+    wc_stop(
       "`stn` is defunct, to use an updated stations data frame ",
       "use `stations_dl()` to update the internal data, and ",
-      "`stations_meta()` to check when it was last updated",
-      call. = FALSE
+      "`stations_meta()` to check when it was last updated"
     )
   }
   stn <- stations()
@@ -462,17 +455,13 @@ stations_search <- function(
     if (
       length(coords) != 2 || all(is.na(coords)) || inherits(coords, "try-error")
     ) {
-      stop(
-        "'coord' takes one pair of lat and lon in a numeric vector",
-        call. = FALSE
-      )
+      wc_stop("'coord' takes one pair of lat and lon in a numeric vector")
     }
 
     if (!requireNamespace("sf", quietly = TRUE)) {
-      stop(
+      wc_stop(
         "Package 'sf' required to search for stations using coordinates. ",
-        "Use the code \"install.packages('sf')\" to install.",
-        call. = FALSE
+        "Use the code \"install.packages('sf')\" to install."
       )
     }
   }
@@ -498,7 +487,7 @@ stations_search <- function(
       )
     })
     if (is.na(starts_latest) || inherits(starts_latest, "try-error")) {
-      stop("'starts_latest' needs to be a year (YYYY)", call. = FALSE)
+      wc_stop("'starts_latest' needs to be a year (YYYY)")
     }
     stn <- dplyr::filter(stn, .data$start <= starts_latest)
   }
@@ -511,7 +500,7 @@ stations_search <- function(
       )
     })
     if (is.na(ends_earliest) || inherits(ends_earliest, "try-error")) {
-      stop("'ends_earliest' needs to be a year (YYYY)", call. = FALSE)
+      wc_stop("'ends_earliest' needs to be a year (YYYY)")
     }
     stn <- dplyr::filter(stn, .data$end >= ends_earliest)
   }

@@ -19,23 +19,18 @@ normals_cached <- function(climate_ids, normals_years = "1991-2020") {
 
   locs <- normals_cached_location(climate_ids, normals_years)
   if (!length(locs)) {
-    stop(
-      "No climate normals for ",
-      normals_years,
-      " for climate IDs: ",
-      paste0(climate_ids, collapse = ", "),
-      call. = FALSE
+    wc_stop(
+      "No climate normals for {normals_years} for climate IDs: ",
+      paste0(climate_ids, collapse = ", ")
     )
   }
   n <- normals_cached_fmt(locs, normals_years)
 
   if (nrow(n) == 0) {
-    stop(
+    wc_stop(
       "Climate IDs present in station inventory (metadata) but not in data for ",
-      normals_years,
-      " for climate IDs: ",
-      paste0(climate_ids, collapse = ", "),
-      call. = FALSE
+      "{normals_years}  for climate IDs: ",
+      paste0(climate_ids, collapse = ", ")
     )
   }
   n
@@ -70,10 +65,7 @@ normals_cached_check <- function(normals_years = "1991-2020") {
     if (dl) {
       normals_cached_dl(normals_years)
     } else {
-      stop(
-        "Must download and cache full normals data for this year range",
-        call. = FALSE
-      )
+      wc_stop("Must download and cache full normals data for this year range")
     }
   }
 

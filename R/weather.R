@@ -118,18 +118,18 @@ weather_dl <- function(
       (!is.null(end) &&
         inherits(try(as.Date(end), silent = TRUE), "try-error"))
   ) {
-    stop(
+    wc_stop(
       "'start' and 'end' must be either a standard date format ",
       "(YYYY-MM-DD) or NULL"
     )
   }
 
   if (length(interval) > 1 || !(interval %in% c('hour', 'day', 'month'))) {
-    stop("'interval' must be either 'hour', 'day', OR 'month'")
+    wc_stop("'interval' must be either 'hour', 'day', OR 'month'")
   }
 
   if (!is.null(stn)) {
-    stop(
+    wc_stop(
       "`stn` is defunct, to use an updated stations data frame ",
       "use `stations_dl()` to update the internal data, and ",
       "`stations_meta()` to check when it was last updated",
@@ -307,11 +307,11 @@ weather_dl <- function(
             "({msg_start} to {msg_end}), for this interval ({interval})",
             df_title = "Available Station Data:",
             df = dplyr::filter(
-                    stn,
+              stn,
               .data$station_id %in% .env$s,
-                    !is.na(.data$start)
-                  )
-              )
+              !is.na(.data$start)
+            )
+          )
           return(dplyr::tibble())
         }
       }
@@ -366,7 +366,7 @@ weather_dl <- function(
         .data$station_id %in% .env$missing,
         !is.na(.data$start)
       )
-      )
+    )
   }
 
   if (length(end_dates) > 0) {
@@ -382,11 +382,11 @@ weather_dl <- function(
       "for this interval ({interval})",
       df_title = "Available Station Data:",
       df = dplyr::filter(
-            stn,
+        stn,
         .data$station_id %in% .env$end_dates,
-            !is.na(.data$start)
-          )
+        !is.na(.data$start)
       )
+    )
   }
   ## Return Format messages
   if (nrow(msg_fmt) > 0) {
@@ -408,14 +408,14 @@ weather_dl <- function(
       )
     }
 
-      show <- msg_fmt |>
-        dplyr::select("station_id", "problems")
+    show <- msg_fmt |>
+      dplyr::select("station_id", "problems")
 
-      if (utils::packageVersion("tidyr") > "0.8.99") {
-        show <- tidyr::unnest(show, "problems")
-      } else {
-        show <- tidyr::unnest(show)
-      }
+    if (utils::packageVersion("tidyr") > "0.8.99") {
+      show <- tidyr::unnest(show, "problems")
+    } else {
+      show <- tidyr::unnest(show)
+    }
 
     wc_progress(
       "Examples:\n",
@@ -836,10 +836,9 @@ meta_raw <- function(html, encoding = "UTF-8", interval, return = "meta") {
       )
 
     if (ncol(r) > 2) {
-      stop(
+      wc_stop(
         "Problems parsing metadata. Submit an issue at ",
-        "https://github.com/ropensci/weathercan/issues",
-        call. = FALSE
+        "https://github.com/ropensci/weathercan/issues"
       )
     }
   } else if (return == "legend") {
