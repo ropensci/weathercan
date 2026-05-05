@@ -34,8 +34,8 @@ temp <- glossary |>
   ) |>
   select(
     Interval = interval,
-    `ECCC Name` = ECCC_name,
-    `Formatted weathercan name` = weathercan_name,
+    `ECCC variable` = ECCC,
+    `weathercan variable` = weathercan,
     units,
     Reference = ECCC_ref
   )
