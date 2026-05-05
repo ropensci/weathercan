@@ -751,6 +751,49 @@ specification. Contributions of any kind are welcome!
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Abusmansholiday">busmansholiday</a>
 </td>
 
+<tr>
+<td align="center">
+<a href="https://github.com/JBauerPower">
+<img src="https://avatars.githubusercontent.com/u/147277460?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3AJBauerPower">JBauerPower</a>
+</td>
+<td align="center">
+<a href="https://github.com/x22925580-commits">
+<img src="https://avatars.githubusercontent.com/u/242810550?u=4d778bfc33f734c22bbc53428ed06a998e7319b0&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Ax22925580-commits">x22925580-commits</a>
+</td>
+<td align="center">
+<a href="https://github.com/zacharybelisle">
+<img src="https://avatars.githubusercontent.com/u/205228980?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Azacharybelisle">zacharybelisle</a>
+</td>
+<td align="center">
+<a href="https://github.com/ryanthrendyle-work">
+<img src="https://avatars.githubusercontent.com/u/254770210?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Aryanthrendyle-work">ryanthrendyle-work</a>
+</td>
+<td align="center">
+<a href="https://github.com/BraveCapricon">
+<img src="https://avatars.githubusercontent.com/u/124315780?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3ABraveCapricon">BraveCapricon</a>
+</td>
+<td align="center">
+<a href="https://github.com/Quan-Cui">
+<img src="https://avatars.githubusercontent.com/u/86018749?u=95ea4030bf73fc222cfeba7c246555bea62f6dbc&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3AQuan-Cui">Quan-Cui</a>
+</td>
+<td align="center">
+<a href="https://github.com/mohamedsmabdelhamed-stack">
+<img src="https://avatars.githubusercontent.com/u/275818807?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Amohamedsmabdelhamed-stack">mohamedsmabdelhamed-stack</a>
+</td>
 </tr>
 
 </table>
@@ -826,5 +869,6 @@ specification. Contributions of any kind are welcome!
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
 
 [![ropensci_footer](http://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)
