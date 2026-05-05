@@ -441,11 +441,13 @@ weather_single <- function(date_range, s, interval, encoding) {
     w,
     html = purrr::map(
       .data$date_range,
-      \(d) weather_html(station_id = s, date = d, interval = interval)
+      \(d) weather_html(station_id = s, date = d, interval = interval),
+      .progress = wc_noise("noisy")
     ),
     data = purrr::map(
       .data$html,
-      \(w) weather_raw(w, encoding = encoding, header = TRUE)
+      \(w) weather_raw(w, encoding = encoding, header = TRUE),
+      .progress = wc_noise("noisy")
     ),
     n = purrr::map_int(.data$data, ncol)
   )

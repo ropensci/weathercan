@@ -176,7 +176,8 @@ normals_dl <- function(
     dplyr::mutate(
       html = purrr::pmap(
         list(.data$prov, .data$station_id, .data$climate_id),
-        \(p, s, c) normals_html(p, s, c, normals_years)
+        \(p, s, c) normals_html(p, s, c, normals_years),
+        .progress = wc_noise("noisy")
       ),
       normals = purrr::map(.data$html, normals_raw),
       meets_wmo = purrr::map_lgl(.data$normals, meets_wmo),
