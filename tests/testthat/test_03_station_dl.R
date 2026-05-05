@@ -1,18 +1,5 @@
 # stations_dl() ------------------------------------------------------------
 
-test_that("stations_dl() requires lutz and sf", {
-  skip_on_cran()
-  mockery::stub(
-    stations_dl_internal,
-    'requireNamespace',
-    mockery::mock(FALSE, FALSE)
-  )
-  expect_error(
-    stations_dl_internal(),
-    "Package 'lutz' and its dependency, 'sf'"
-  )
-})
-
 test_that("stations_normals() gets normals info", {
   skip_on_cran()
 
@@ -84,6 +71,8 @@ test_that("stations_dl() runs and updates data", {
 
 # stations() --------------------------------------------------------------
 test_that("stations() /stations_meta() return data", {
+  withr::local_options(list("weathercan.normals.message" = TRUE))
+
   expect_silent(s <- stations()) |>
     expect_s3_class("data.frame")
 
@@ -201,20 +190,17 @@ test_that("stations_search 'coords' returns correct data", {
 })
 
 test_that("stations_search quiet/verbose", {
-  expect_silent(stations_search(c(54, -122), quiet = TRUE))
-  expect_silent(stations_search(coords = c(54, -122), quiet = TRUE))
+  withr::local_options("weathercan.verbosity" = "quiet")
 
-  expect_message(
-    stations_search(c(54, -122), verbose = TRUE),
-    "Searching by name"
-  ) |>
+  expect_silent(stations_search(c(54, -122)))
+  expect_silent(stations_search(coords = c(54, -122)))
+
+  withr::local_options("weathercan.verbosity" = "verbose")
+  expect_message(stations_search(c(54, -122)), "Searching by name") |>
     expect_message("The `name` argument looks like a pair of coordinates")
+  expect_message(stations_search("Kamloops"), "Searching by name")
   expect_message(
-    stations_search("Kamloops", verbose = TRUE),
-    "Searching by name"
-  )
-  expect_message(
-    stations_search(coords = c(54, -122), verbose = TRUE),
+    stations_search(coords = c(54, -122)),
     "Calculating station distances"
   ) |>
     expect_message("No stations within 10km")

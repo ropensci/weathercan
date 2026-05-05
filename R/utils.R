@@ -54,16 +54,10 @@ check_normals <- function(normals_years, null_ok = FALSE) {
   }
 
   if (normals_years == "current") {
-    message(
+    wc_inform(
       "The most current normals available for download by weathercan are '1991-2020'"
     )
     normals_years <- "1991-2020"
-  }
-
-  if (!null_ok) {
-    new_message <- stop
-  } else {
-    new_message <- message
   }
 
   if (

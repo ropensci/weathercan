@@ -95,7 +95,8 @@ normals_cached_dl <- function(normals_years = "1991-2020") {
   cache_check()
 
   f <- file.path(cache_dir(), "normals_temp.zip")
-  message("Downloading ", normals_years, " Canadian Climate Normals...")
+
+  wc_inform("Downloading {normals_years} Canadian Climate Normals...")
   httr2::request(getOption(paste0(
     "weathercan.urls.normals_",
     stringr::str_replace(normals_years, "-", "_")
@@ -103,15 +104,13 @@ normals_cached_dl <- function(normals_years = "1991-2020") {
     httr2::req_progress() |>
     httr2::req_perform(path = f)
 
-  message("Unzipping...")
+  wc_inform("Unzipping...")
   utils::unzip(f, exdir = cache_dir(), overwrite = TRUE, junkpaths = TRUE)
 
   if (file.exists(normals_file())) {
-    message(
-      "Climate normals for ",
-      normals_years,
-      " successfully downloaded"
-    )
+    wc_inform("Climate normals for {normals_years} successfully downloaded")
+  } else {
+    wc_inform("Climate normals were *not* succesfully downloaded and unzipped")
   }
 
   # Cleanup
@@ -145,7 +144,7 @@ normals_cached_location <- function(climate_ids, normals_years = "1991-2020") {
     dplyr::pull(.data$composite_station_name) |>
     unique()
 
-  message("Using composite locations: ", paste0(locs, collapse = ", "))
+  wc_inform("Using composite locations: {paste0(locs, collapse = ', ')}")
 
   locs
 }

@@ -57,7 +57,7 @@ stations <- function() {
       28
   ) {
     if (!identical(Sys.getenv("TESTTHAT"), "true")) {
-      message(
+      wc_always(
         "The stations data frame hasn't been updated in over 4 weeks. ",
         "Consider running `stations_dl()` to check for updates and make ",
         "sure you have the most recent stations list available"
@@ -130,11 +130,10 @@ stations_file <- function() {
 #' The column `normals` represents the most current year range of climate
 #' normals (i.e. currently 1981-2010)
 #'
+#' @details @inheritSection weather_dl Verbosity
+#'
 #' @param skip Numeric. Number of lines to skip at the beginning of the csv. If
 #'   NULL, automatically derived.
-#' @param verbose Logical. Include progress messages
-#' @param quiet Logical. Suppress all messages (including messages regarding
-#'   missing data, etc.)
 #'
 #'
 #' @examplesIf check_eccc()
@@ -147,19 +146,14 @@ stations_file <- function() {
 #'
 #' @export
 
-stations_dl <- function(skip = NULL, verbose = FALSE, quiet = FALSE) {
+stations_dl <- function(skip = NULL) {
   stations_dl_internal(
-    skip = skip,
-    verbose = verbose,
-    quiet = quiet,
-    internal = FALSE
+    skip = skip
   )
 }
 
 stations_dl_internal <- function(
   skip = NULL,
-  verbose = FALSE,
-  quiet = FALSE,
   internal = TRUE
 ) {
   # If called internally use inst
@@ -174,24 +168,12 @@ stations_dl_internal <- function(
     cache_check()
   }
 
-  if (
-    !requireNamespace("lutz", quietly = TRUE) ||
-      !requireNamespace("sf", quietly = TRUE)
-  ) {
-    stop(
-      "Package 'lutz' and its dependency, 'sf', are required to get ",
-      "timezones for the updated stations dataframe. ",
-      "Use the code \"install.packages(c('lutz', 'sf'))\" to install.",
-      call. = FALSE
-    )
-  }
+  rlang::check_installed(c("lutz", "sf"), "to add timezones to stations ata.")
 
   # Get normals data
   normals <- stations_normals()
 
-  if (verbose) {
-    message("Trying to access stations data frame")
-  }
+  wc_progress("Trying to access stations data frame")
 
   resp <- get_check(
     url = getOption("weathercan.urls.stations"),
@@ -227,13 +209,11 @@ stations_dl_internal <- function(
       1
   }
 
-  if (!quiet) {
-    message(
+  wc_inform(
       "According to Environment Canada, ",
       stringr::str_subset(headings, "Modified Date") |>
         stringr::str_remove_all("[^\001-\177]")
     )
-  }
 
   eccc_meta <- stringr::str_subset(headings, "Modified Date") |>
     stringr::str_remove(stringr::regex(
@@ -242,19 +222,15 @@ stations_dl_internal <- function(
     )) |>
     lubridate::ymd_hms(truncated = 3)
 
-  if (!quiet) {
     disclaimer <- paste0(
       grep("Disclaimer", headings, value = TRUE),
       collapse = "\n"
     )
     if (nchar(disclaimer) > 0) {
-      message("Environment Canada Disclaimers:\n", disclaimer)
-    }
+    wc_inform("Environment Canada Disclaimers:\n", disclaimer)
   }
 
-  if (verbose) {
-    message("Downloading stations data frame")
-  }
+  wc_progress("Downloading stations data frame")
 
   raw <- httr2::resp_body_string(resp, encoding = "Latin1")
 
@@ -362,19 +338,16 @@ stations_dl_internal <- function(
     meta = list(ECCC_modified = eccc_meta, weathercan_modified = Sys.Date())
   )
 
-  if (verbose) {
-    message("Saving stations data to ", f)
-  }
+  wc_progress("Saving stations data to ", f)
+
   readr::write_rds(x = stn, file = f, compress = "gz")
 
-  if (!quiet) {
-    message(
+  wc_inform(
       "Stations data saved...\n",
       "Use `stations()` to access most recent version and ",
       "`stations_meta()` to see when this was last updated"
     )
   }
-}
 
 #' Search for stations by name or location
 #'
@@ -405,9 +378,6 @@ stations_dl_internal <- function(
 #'   collection beginning in or before the specified year.
 #' @param ends_earliest Numeric. Restrict results to stations with data
 #'   collection ending in or after the specified year.
-#' @param verbose Logical. Include progress messages
-#' @param quiet Logical. Suppress all messages (including messages regarding
-#'   missing data, etc.)
 #' @param stn DEFUNCT. Now use `stations_dl()` to update internal data and
 #'   `stations_meta()` to check the date it was last updated.
 #'
@@ -447,9 +417,7 @@ stations_search <- function(
   normals_only = NULL,
   stn = NULL,
   starts_latest = NULL,
-  ends_earliest = NULL,
-  verbose = FALSE,
-  quiet = FALSE
+  ends_earliest = NULL
 ) {
   if (!is.null(normals_only)) {
     warning(
@@ -549,24 +517,17 @@ stations_search <- function(
   }
 
   if (!is.null(name)) {
-    if (!quiet) {
       if (length(name) == 2 && is.numeric(name)) {
-        message(
+      wc_inform(
           "The `name` argument looks like a pair of coordinates. ",
-          "Did you mean `coords = c(",
-          name[1],
-          ", ",
-          name[2],
-          ")`?"
+        "Did you mean `coords = c({name[1]}, {name[2]})`?"
         )
       }
-    }
 
-    if (verbose) {
-      message("Searching by name")
-    }
+    wc_progress("Searching by name")
+
     if (inherits(try(as.character(name), silent = TRUE), "try-error")) {
-      stop("'name' needs to be coercible into a character", call. = FALSE)
+      wc_stop("'name' needs to be coercible into a character")
     }
 
     name <- gsub("([A-Z]*)", "\\L\\1", name, perl = TRUE)
@@ -580,9 +541,7 @@ stations_search <- function(
   }
 
   if (!is.null(coords)) {
-    if (verbose) {
-      message("Calculating station distances")
-    }
+    wc_progress("Calculating station distances")
 
     coords <- sf::st_point(coords[c(2, 1)]) |>
       sf::st_sfc(crs = 4326)
@@ -602,9 +561,7 @@ stations_search <- function(
     i <- which(stn$distance <= dist)
     if (length(i) == 0) {
       i <- 1:10
-      if (!quiet) {
-        message("No stations within ", dist, "km. Returning closest 10 records")
-      }
+      wc_inform("No stations within {dist}km. Returning closest 10 records")
     }
   }
 

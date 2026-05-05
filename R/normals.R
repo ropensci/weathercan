@@ -65,6 +65,8 @@
 #' `weathercan.urls.normals`. To change this location use:
 #' `options(weathercan.urls.normals = "your_new_url")`.
 #'
+#' @details @inheritSection weather_dl Verbosity
+#'
 #' @return For new climate normals, a tibble of normals. For older climate
 #' normals, a tibble with *nested* normals and first/last frost data.
 #'
@@ -125,9 +127,7 @@ normals_dl <- function(
   climate_ids,
   normals_years = "current",
   format = TRUE,
-  stn = NULL,
-  verbose = FALSE,
-  quiet = FALSE
+  stn = NULL
 ) {
   if (!is.null(stn)) {
     stop(
@@ -165,7 +165,7 @@ normals_dl <- function(
   if (!any(n$normals)) {
     stop("No stations had climate normals available", call. = FALSE)
   } else if (!all(n$normals)) {
-    message(
+    wc_inform(
       "Not all stations have climate normals available (climate ids: ",
       paste0(n$climate_id[!n$normals], collapse = ", "),
       ")"
@@ -201,7 +201,7 @@ normals_dl <- function(
 
   no_data <- n$n_data + n$n_frost == 0
   if (any(no_data)) {
-    message(
+    wc_inform(
       "All climate normals missing for some stations (climate_ids: ",
       paste0(n$climate_id[no_data], collapse = ", "),
       ")"

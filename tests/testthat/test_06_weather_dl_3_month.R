@@ -3,14 +3,14 @@
 test_that("weather_dl month", {
   skip_on_cran()
   skip_if_offline()
+  withr::local_options("weathercan.verbosity" = "quiet")
 
   expect_silent(
     w <- weather_dl(
       station_ids = 5401,
       start = "2014-01-01",
       end = "2014-05-01",
-      interval = "month",
-      quiet = TRUE
+      interval = "month"
     )
   )
 
@@ -61,12 +61,15 @@ test_that("weather (month) no data fails nicely", {
       end = "2012-02-01"
     ),
     paste0(
-      "There are no data for some stations \\(51423\\), ",
-      "in this time range \\(2012-01-01 to 2012-02-01\\), ",
+      "There are no data for some stations \\(51423\\) ",
+      "in this time range \\(2012-01-01 to 2012-02-01\\) ",
       "for this interval \\(month\\)"
     )
   ) |>
-    suppressMessages()
+    expect_message("Available Station Data:") |>
+    expect_message("# A tibble") |>
+    expect_message("Some variables") |>
+    expect_message("Replaced all non-numeric")
 
   # Cached
   expect_message(
@@ -76,12 +79,10 @@ test_that("weather (month) no data fails nicely", {
       start = "2012-01-01",
       end = "2012-02-01"
     ),
-    paste0(
-      "There are no data for station 51423 for this ",
-      "interval \\(month\\)"
-    )
+    "There are no data for station 51423 for this interval \\(month\\)"
   ) |>
-    suppressMessages()
+    expect_message("Available Station Data:") |>
+    expect_message("# A tibble")
 
   expect_s3_class(w0, "data.frame")
   expect_length(w0, 0)
@@ -97,12 +98,10 @@ test_that("weather (month) no data fails nicely", {
       start = "2017-01-01",
       end = "2017-02-01"
     ),
-    paste0(
-      "There are no data for station 1274, in ",
-      "this time range \\(2017-01-01 to 2017-02-01\\)."
-    )
+    "There are no data for station 1274 in this time range \\(2017-01-01 to 2017-02-01\\)."
   ) |>
-    suppressMessages()
+    expect_message("Available Station Data:") |>
+    expect_message("# A tibble")
 
   #Cached
   expect_message(
@@ -114,11 +113,14 @@ test_that("weather (month) no data fails nicely", {
     ),
     paste0(
       "There are no data for all stations ",
-      "\\(1274, 1275\\), in this time range ",
+      "\\(1274, 1275\\) in this time range ",
       "\\(2017-01-01 to 2017-02-01\\)"
     )
   ) |>
-    suppressMessages()
+    expect_message("Available Station Data:") |>
+    expect_message("# A tibble") |>
+    expect_message("Some variables") |>
+    expect_message("Replaced all non-numeric")
 
   expect_s3_class(w0, "data.frame")
   expect_length(w0, 0)
@@ -145,6 +147,7 @@ test_that("weather (month) multiple stations", {
 
 test_that("weather (month) multiple stations (one NA)", {
   skip_on_cran()
+  withr::local_options("weathercan.verbosity" = "quiet")
 
   # Cached
   expect_silent(
@@ -152,8 +155,7 @@ test_that("weather (month) multiple stations (one NA)", {
       station_ids = c(5401, 51423),
       start = "2014-01-01",
       end = "2014-05-01",
-      interval = "month",
-      quiet = TRUE
+      interval = "month"
     )
   )
   expect_equal(unique(w$station_name), c("MAGOG"))
@@ -173,21 +175,21 @@ test_that("weather (month) verbose and quiet", {
     "There are no data"
   )
 
+  withr::local_options("weathercan.verbosity" = "quiet")
   expect_silent(weather_dl(
     c(5401, 51423),
     interval = "month",
     start = "2017-01-01",
-    end = "2017-02-01",
-    quiet = TRUE
+    end = "2017-02-01"
   ))
 
+  withr::local_options("weathercan.verbosity" = "verbose")
   expect_message(
     weather_dl(
       c(5401, 51423),
       interval = "month",
       start = "2017-01-01",
-      end = "2017-02-01",
-      verbose = TRUE
+      end = "2017-02-01"
     ),
     "Getting station"
   ) |>
@@ -275,7 +277,10 @@ test_that("weather (month) crosses the year line", {
 
 test_that("list_col=TRUE and interval=hour groups on the right level", {
   skip_on_cran()
-  withr::local_options(list("weathercan.time.message" = TRUE))
+  withr::local_options(list(
+    "weathercan.time.message" = TRUE,
+    "weathercan.verbosity" = "quiet"
+  ))
 
   # Cached
   if (packageVersion("tidyr") > "0.8.99") {
@@ -285,8 +290,7 @@ test_that("list_col=TRUE and interval=hour groups on the right level", {
           station_ids = 51423,
           start = "2014-01-01",
           end = "2014-01-15",
-          interval = "hour",
-          quiet = TRUE
+          interval = "hour"
         ) |>
           tidyr::nest(key = -tidyr::one_of(names(m_names), "date"))
       ),
@@ -295,8 +299,7 @@ test_that("list_col=TRUE and interval=hour groups on the right level", {
         start = "2014-01-01",
         end = "2014-01-15",
         interval = "hour",
-        list_col = TRUE,
-        quiet = TRUE
+        list_col = TRUE
       ))
     )
   } else {
@@ -307,7 +310,6 @@ test_that("list_col=TRUE and interval=hour groups on the right level", {
           start = "2014-01-01",
           end = "2014-01-15",
           interval = "hour",
-          quiet = TRUE
         ) |>
           tidyr::nest(-dplyr::one_of(names(m_names), "date"))
       ),
@@ -317,7 +319,6 @@ test_that("list_col=TRUE and interval=hour groups on the right level", {
         end = "2014-01-15",
         interval = "hour",
         list_col = TRUE,
-        quiet = TRUE
       ))
     )
   }
@@ -325,6 +326,7 @@ test_that("list_col=TRUE and interval=hour groups on the right level", {
 
 test_that("list_col=TRUE and interval=day groups on the right level", {
   skip_on_cran()
+  withr::local_options(list("weathercan.verbosity" = "quiet"))
 
   if (packageVersion("tidyr") > "0.8.99") {
     expect_equal(
@@ -333,8 +335,7 @@ test_that("list_col=TRUE and interval=day groups on the right level", {
           station_ids = 51423,
           start = "2014-01-01",
           end = "2014-01-15",
-          interval = "day",
-          quiet = TRUE
+          interval = "day"
         ) |>
           tidyr::nest(key = -dplyr::one_of(names(m_names), "month"))
       ),
@@ -343,8 +344,7 @@ test_that("list_col=TRUE and interval=day groups on the right level", {
         start = "2014-01-01",
         end = "2014-01-15",
         interval = "day",
-        list_col = TRUE,
-        quiet = TRUE
+        list_col = TRUE
       ))
     )
   } else {
@@ -354,8 +354,7 @@ test_that("list_col=TRUE and interval=day groups on the right level", {
           station_ids = 51423,
           start = "2014-01-01",
           end = "2014-01-15",
-          interval = "day",
-          quiet = TRUE
+          interval = "day"
         ) |>
           tidyr::nest(-dplyr::one_of(names(m_names)), -month)
       ),
@@ -364,8 +363,7 @@ test_that("list_col=TRUE and interval=day groups on the right level", {
         start = "2014-01-01",
         end = "2014-01-15",
         interval = "day",
-        list_col = TRUE,
-        quiet = TRUE
+        list_col = TRUE
       ))
     )
   }
@@ -374,6 +372,8 @@ test_that("list_col=TRUE and interval=day groups on the right level", {
 
 test_that("list_col=TRUE and interval=month groups on the right level", {
   skip_on_cran()
+  withr::local_options(list("weathercan.verbosity" = "quiet"))
+
   if (packageVersion("tidyr") > "0.8.99") {
     expect_equal(
       ncol(
@@ -381,8 +381,7 @@ test_that("list_col=TRUE and interval=month groups on the right level", {
           station_ids = 5401,
           start = "2017-01-01",
           end = "2017-01-15",
-          interval = "month",
-          quiet = TRUE
+          interval = "month"
         ) |>
           tidyr::nest(key = -dplyr::one_of(names(m_names), "year"))
       ),
@@ -391,8 +390,7 @@ test_that("list_col=TRUE and interval=month groups on the right level", {
         start = "2017-01-01",
         end = "2017-01-15",
         interval = "month",
-        list_col = TRUE,
-        quiet = TRUE
+        list_col = TRUE
       ))
     )
   } else {
@@ -402,8 +400,7 @@ test_that("list_col=TRUE and interval=month groups on the right level", {
           station_ids = 5401,
           start = "2017-01-01",
           end = "2017-01-15",
-          interval = "month",
-          quiet = TRUE
+          interval = "month"
         ) |>
           tidyr::nest(-dplyr::one_of(names(m_names)), -year)
       ),
@@ -412,8 +409,7 @@ test_that("list_col=TRUE and interval=month groups on the right level", {
         start = "2017-01-01",
         end = "2017-01-15",
         interval = "month",
-        list_col = TRUE,
-        quiet = TRUE
+        list_col = TRUE
       ))
     )
   }

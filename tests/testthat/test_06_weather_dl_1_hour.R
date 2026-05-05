@@ -4,13 +4,12 @@ withr::local_options(list("weathercan.time.message" = TRUE))
 test_that("weather_dl hour", {
   skip_on_cran()
   skip_if_offline()
-
+  withr::local_options(list("weathercan.verbosity" = "quiet"))
   expect_silent(
     w <- weather_dl(
       station_ids = 51423,
       start = "2014-01-01",
-      end = "2014-01-31",
-      quiet = TRUE
+      end = "2014-01-31"
     )
   )
 
@@ -29,14 +28,14 @@ test_that("weather_dl hour alerts to change in time handling", {
 
 test_that("weather (hour) returns a data frame", {
   skip_on_cran()
+  withr::local_options(list("weathercan.verbosity" = "quiet"))
 
   # Cached
   expect_silent(
     w <- weather_dl(
       station_ids = 51423,
       start = "2014-01-01",
-      end = "2014-01-31",
-      quiet = TRUE
+      end = "2014-01-31"
     )
   )
 
@@ -181,7 +180,9 @@ test_that("weather (hour) no data fails nicely", {
       end = "2012-11-30"
     ),
     "There are no data for some stations \\(1274\\)"
-  )
+  ) |>
+    expect_message("Available Station Data:") |>
+    expect_message("# A tibble:")
 
   # Cached
   expect_message(
@@ -191,11 +192,10 @@ test_that("weather (hour) no data fails nicely", {
       start = "2012-11-01",
       end = "2012-11-30"
     ),
-    paste0(
-      "There are no data for station 1274 for this ",
-      "interval \\(hour\\)"
-    )
-  )
+    "There are no data for station 1274 for this interval \\(hour\\)"
+  ) |>
+    expect_message("Available Station Data:") |>
+    expect_message("# A tibble:")
 
   expect_s3_class(w0, "data.frame")
   expect_length(w0, 0)
@@ -212,11 +212,13 @@ test_that("weather (hour) no data fails nicely", {
       end = "2017-01-30"
     ),
     paste0(
-      "There are no data for all stations \\(1275, 1001\\), ",
-      "in this time range \\(2017-01-01 to 2017-01-30\\), ",
+      "There are no data for all stations \\(1275, 1001\\) ",
+      "in this time range \\(2017-01-01 to 2017-01-30\\) ",
       "for this interval \\(hour\\)"
     )
-  )
+  ) |>
+    expect_message("Available Station Data:") |>
+    expect_message("# A tibble")
 
   # Cache
   expect_message(
@@ -227,11 +229,13 @@ test_that("weather (hour) no data fails nicely", {
       end = "2017-01-30"
     ),
     paste0(
-      "There are no data for station 1275, ",
+      "There are no data for station 1275 ",
       "in this time range \\(2017-01-01 to 2017-01-30\\), ",
       "for this interval \\(hour\\)"
     )
-  )
+  ) |>
+    expect_message("Available Station Data:") |>
+    expect_message("# A tibble")
 
   expect_s3_class(w0, "data.frame")
   expect_length(w0, 0)
@@ -243,6 +247,7 @@ test_that("weather (hour) no data fails nicely", {
 
 test_that("weather (hour) verbose and quiet", {
   skip_on_cran()
+
   # Cached
   expect_message(
     weather_dl(
@@ -252,23 +257,25 @@ test_that("weather (hour) verbose and quiet", {
       end = "2012-11-30"
     ),
     "There are no data"
-  )
+  ) |>
+    expect_message("Available Station Data:") |>
+    expect_message("# A tibble")
 
+  withr::local_options(list("weathercan.verbosity" = "quiet"))
   expect_silent(weather_dl(
     c(1274, 1274),
     interval = "hour",
     start = "2012-11-01",
-    end = "2012-11-30",
-    quiet = TRUE
+    end = "2012-11-30"
   ))
 
+  withr::local_options(list("weathercan.verbosity" = "verbose"))
   expect_message(
     weather_dl(
       c(1274, 1275),
       interval = "hour",
       start = "2012-11-01",
-      end = "2012-11-30",
-      verbose = TRUE
+      end = "2012-11-30"
     ),
     "Getting station"
   ) |>
@@ -277,7 +284,9 @@ test_that("weather (hour) verbose and quiet", {
     expect_message("Formatting station") |>
     expect_message("Adding header data") |>
     expect_message("Trimming missing") |>
-    expect_message("There are no data")
+    expect_message("There are no data") |>
+    expect_message("Available Station Data:") |>
+    expect_message("# A tibble")
 })
 
 test_that("weather (hour) handles data with different numbers of columns", {

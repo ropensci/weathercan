@@ -44,6 +44,12 @@
 #'   was added as of April 1st 2018, so will be in all data which includes dates
 #'   on or after April 2018).
 #'
+#'   # Verbosity
+#'   Verbosity (how 'chatty' weathercan is) can be specified using the option
+#'   `weathercan.verbosity`. Which takes "standard" (default), "quiet" (suppress
+#'   all messages including those regarding missing data, etc.), or "verbose"
+#'   (extra progress messages).
+#'
 #' @param station_ids Numeric/Character. A vector containing the ID(s) of the
 #'   station(s) you wish to download data from. See the \code{\link{stations}}
 #'   data frame or the \code{\link{stations_search}} function to find IDs.
@@ -65,9 +71,6 @@
 #' @param encoding Character. Text encoding for download.
 #' @param list_col Logical. Return data as nested data set? Defaults to FALSE.
 #'   Only applies if `format = TRUE`
-#' @param verbose Logical. Include progress messages
-#' @param quiet Logical. Suppress all messages (including messages regarding
-#'   missing data, etc.)
 #' @param stn DEFUNCT. Now use `stations_dl()` to update internal data and
 #'   `stations_meta()` to check the date it was last updated.
 #'
@@ -94,6 +97,7 @@
 #' @aliases weather
 #'
 #' @export
+
 weather_dl <- function(
   station_ids,
   start = NULL,
@@ -105,9 +109,7 @@ weather_dl <- function(
   time_disp = "none",
   stn = NULL,
   encoding = "UTF-8",
-  list_col = FALSE,
-  verbose = FALSE,
-  quiet = FALSE
+  list_col = FALSE
 ) {
   # Address as.POSIXct...
   if (
@@ -145,9 +147,7 @@ weather_dl <- function(
   msg_fmt <- dplyr::tibble()
 
   for (s in station_ids) {
-    if (verbose) {
-      message("Getting station: ", s)
-    }
+    wc_progress("Getting station: {s}")
 
     stn1 <- stn |>
       dplyr::filter(
@@ -161,28 +161,16 @@ weather_dl <- function(
     if (nrow(stn1) == 0) {
       if (length(station_ids) > 1) {
         missing <- c(missing, s)
-        if (verbose) {
-          message("No data for station ", s)
-        }
+        wc_progress("No data for station {s}")
+
         next
       } else {
-        if (!quiet) {
-          message(paste0(
-            "There are no data for station ",
-            s,
-            " ",
-            "for this interval (",
-            interval,
-            ")",
-            "\nAvailable Station Data:\n",
-            paste0(
-              utils::capture.output(print(
-                dplyr::filter(stn, .data$station_id %in% s, !is.na(.data$start))
-              )),
-              collapse = "\n"
-            )
-          ))
-        }
+        wc_inform_df(
+          "There are no data for station {s} for this interval ({interval})\n",
+          df_title = "Available Station Data:",
+          df = dplyr::filter(stn, .data$station_id %in% s, !is.na(.data$start))
+        )
+
         return(dplyr::tibble())
       }
     }
@@ -213,102 +201,84 @@ weather_dl <- function(
       )
 
     if (is.null(start)) {
-      s.start <- stn1$start
-      msg.start <- "earliest date"
+      s_start <- stn1$start
+      msg_start <- "earliest date"
     } else {
-      s.start <- as.Date(start)
-      if (s.start > Sys.Date()) {
-        s.start <- Sys.Date()
+      s_start <- as.Date(start)
+      if (s_start > Sys.Date()) {
+        s_start <- Sys.Date()
       }
-      if (s.start < as.Date("1840-01-01")) {
-        s.start <- as.Date("1840-01-01")
+      if (s_start < as.Date("1840-01-01")) {
+        s_start <- as.Date("1840-01-01")
       } # Earliest date API will return
-      msg.start <- start
+      msg_start <- start
     }
 
     if (is.null(end)) {
-      s.end <- Sys.Date()
+      s_end <- Sys.Date()
     } else {
-      s.end <- as.Date(end)
+      s_end <- as.Date(end)
     }
-    msg.end <- as.character(s.end)
+    msg_end <- as.character(s_end)
 
-    dates <- lubridate::interval(s.start, s.end)
+    dates <- lubridate::interval(s_start, s_end)
 
     if (lubridate::int_end(dates) < lubridate::int_start(dates)) {
       if (length(station_ids) > 1) {
-        if (!quiet) {
-          message("End date earlier than start date for station ", s)
-        }
+        wc_inform("End date earlier than start date for station {s}")
+
         end_dates <- c(end_dates, s)
         next
       } else {
-        if (!quiet) {
-          message(paste0(
-            "The end date (",
-            msg.end,
-            ") ",
-            "is earlier than the start date (",
-            as.character(s.start),
-            ") for station ",
-            s,
-            " for this interval (",
-            interval,
-            "), ",
-            "\nAvailable Station Data:\n",
-            paste0(
-              utils::capture.output(print(
-                dplyr::filter(stn, .data$station_id %in% s, !is.na(.data$start))
-              )),
-              collapse = "\n"
-            )
-          ))
-        }
+        wc_inform_df(
+          "The end date ({msg_end}) is earlier than the start date ",
+          "({as.character(s_start)}) for station {s} for this interval ",
+          "({interval})",
+          df_title = "Available Station Data:",
+          df = dplyr::filter(stn, .data$station_id %in% s, !is.na(.data$start))
+        )
         return(dplyr::tibble())
       }
     }
 
     if (interval == "hour") {
       date_range <- seq(
-        lubridate::floor_date(s.start, unit = "month"),
-        lubridate::floor_date(s.end, unit = "month"),
+        lubridate::floor_date(s_start, unit = "month"),
+        lubridate::floor_date(s_end, unit = "month"),
         by = dplyr::if_else(interval %in% c("hour"), "month", "year")
       )
     } else if (interval == "day") {
       date_range <- seq(
-        lubridate::floor_date(s.start, unit = "year"),
-        lubridate::floor_date(s.end, unit = "year"),
+        lubridate::floor_date(s_start, unit = "year"),
+        lubridate::floor_date(s_end, unit = "year"),
         by = "year"
       )
     } else if (interval == "month") {
       # Monthly data always downloads the entire data set, but still needs full
       # year/month/day data to be submitted
-      date_range <- lubridate::floor_date(s.start, unit = "year")
+      date_range <- lubridate::floor_date(s_start, unit = "year")
     }
 
     w <- weather_single(date_range, s, interval, encoding)
 
     # Extract only most recent meta
-    meta <- meta_html(station_id = s, date = s.end, interval = interval) |>
+    meta <- meta_html(station_id = s, date = s_end, interval = interval) |>
       meta_raw(encoding = encoding, interval = interval) |>
       meta_format(s = s)
 
     ## Format data if requested
     if (format) {
-      if (verbose) {
-        message("Formatting station data: ", s)
-      }
+      wc_progress("Formatting station data: {s}")
 
       w <- weather_format(
         w,
         meta = meta,
         stn = stn,
         interval = interval,
-        s.start = s.start,
-        s.end = s.end,
+        s_start = s_start,
+        s_end = s_end,
         time_disp = time_disp,
-        string_as = string_as,
-        quiet = quiet
+        string_as = string_as
       )
 
       # Catch messages
@@ -328,46 +298,28 @@ weather_dl <- function(
 
       if (nrow(temp) == 0 || all(is.na(temp) | temp == "")) {
         if (length(station_ids) > 1) {
-          if (verbose) {
-            message("No data for station ", s)
-          }
+          wc_progress("No data for station {s}")
           missing <- c(missing, s)
           next
         } else {
-          if (!quiet) {
-            message(paste0(
-              "There are no data for station ",
-              s,
-              ", ",
-              "in this time range (",
-              msg.start,
-              " to ",
-              msg.end,
-              "), for this interval (",
-              interval,
-              "), ",
-              "\nAvailable Station Data:\n",
-              paste0(
-                utils::capture.output(print(
-                  dplyr::filter(
+          wc_inform_df(
+            "There are no data for station {s} in this time range ",
+            "({msg_start} to {msg_end}), for this interval ({interval})",
+            df_title = "Available Station Data:",
+            df = dplyr::filter(
                     stn,
-                    .data$station_id %in% s,
+              .data$station_id %in% .env$s,
                     !is.na(.data$start)
                   )
-                )),
-                collapse = "\n"
               )
-            ))
-          }
           return(dplyr::tibble())
         }
       }
     }
 
     ## Add header info
-    if (verbose) {
-      message("Adding header data: ", s)
-    }
+    wc_progress("Adding header data: {s}")
+
     if (nrow(w) > 0) {
       w <- cbind(meta, w)
     }
@@ -382,7 +334,7 @@ weather_dl <- function(
     ## Trim to available data provided it is formatted
 
     if (trim) {
-      w_all <- weather_trim(w_all, format, verbose)
+      w_all <- weather_trim(w_all, format)
     }
 
     m <- names(m_names)[names(m_names) %in% names(w_all)]
@@ -397,95 +349,65 @@ weather_dl <- function(
   }
 
   # Return messages
-  if (length(missing) > 0 && !quiet) {
+  if (length(missing) > 0) {
     if (all(station_ids %in% missing)) {
       type <- "all"
     } else {
       type <- "some"
     }
 
-    message(paste0(
-      "There are no data for ",
-      type,
-      " stations (",
-      paste0(missing, collapse = ", "),
-      "), ",
-      "in this time range (",
-      msg.start,
-      " to ",
-      msg.end,
-      "), ",
-      "for this interval (",
-      interval,
-      ")",
-      "\nAvailable Station Data:\n",
-      paste0(
-        utils::capture.output(print(
-          dplyr::filter(stn, .data$station_id %in% missing, !is.na(.data$start))
-        )),
-        collapse = "\n"
+    wc_inform_df(
+      "There are no data for {type} stations ",
+      "({paste0(missing, collapse = ', ')}) in this time range ({msg_start} ",
+      "to {msg_end}) for this interval ({interval})",
+      df_title = "Available Station Data:",
+      df = dplyr::filter(
+        stn,
+        .data$station_id %in% .env$missing,
+        !is.na(.data$start)
       )
-    ))
+      )
   }
 
-  if (length(end_dates) > 0 && !quiet) {
+  if (length(end_dates) > 0) {
     if (all(station_ids %in% missing)) {
       type <- "all"
     } else {
       type <- "some"
     }
 
-    message(paste0(
-      "The end dates (",
-      msg.end,
-      ") are earlier than the ",
-      "start dates (",
-      msg.start,
-      ") for ",
-      type,
-      " stations (",
-      paste0(end_dates, collapse = ", "),
-      "), for this interval (",
-      interval,
-      "), ",
-      "\nAvailable Station Data:\n",
-      paste0(
-        utils::capture.output(print(
-          dplyr::filter(
+    wc_inform_df(
+      "The end dates ({msg_end}) are earlier than the start dates ({msg_start}) ",
+      "for {type} stations ({paste0(end_dates, collapse = ', ')}) ",
+      "for this interval ({interval})",
+      df_title = "Available Station Data:",
+      df = dplyr::filter(
             stn,
-            .data$station_id %in% end_dates,
+        .data$station_id %in% .env$end_dates,
             !is.na(.data$start)
           )
-        )),
-        collapse = "\n"
       )
-    ))
   }
   ## Return Format messages
-  if (!quiet && nrow(msg_fmt) > 0) {
+  if (nrow(msg_fmt) > 0) {
     cols <- paste0(unique(msg_fmt$col), collapse = ", ")
     stations_msg <- paste0(unique(msg_fmt$station_id), collapse = ", ")
-    message(
-      "Some variables have non-numeric values (",
-      cols,
-      "), for stations: ",
+    wc_inform(
+      "Some variables have non-numeric values ({cols}) for stations: ",
       stations_msg
     )
     if (all(is.na(msg_fmt$replace) | msg_fmt$replace != "no_replace")) {
-      message(
-        "  Replaced all non-numeric entries with ",
-        msg_fmt$replace[1],
-        ". ",
+      wc_inform(
+        "Replaced all non-numeric entries with {msg_fmt$replace[1]}. ",
         "Use 'string_as = NULL' to keep as characters (see ?weather_dl)."
       )
     } else {
-      message(
-        "  Left all non-numeric entries as characters. ",
+      wc_inform(
+        "Left all non-numeric entries as characters. ",
         "Couldn't summarize these columns."
       )
     }
 
-    if (verbose) {
       show <- msg_fmt |>
         dplyr::select("station_id", "problems")
 
@@ -495,13 +417,14 @@ weather_dl <- function(
         show <- tidyr::unnest(show)
       }
 
-      message("  Examples:  ")
-      message(paste0("  ", utils::capture.output(show), collapse = "\n"))
-    }
+    wc_progress(
+      "Examples:\n",
+      paste0("  ", utils::capture.output(show), collapse = "\n")
+    )
   }
 
   if (interval == "hour" && !getOption("weathercan.time.message")) {
-    message(
+    wc_inform(
       "As of weathercan v0.3.0 time display is either local time or UTC\n",
       "See Details under ?weather_dl for more information.\n",
       "This message is shown once per session"
@@ -628,11 +551,10 @@ weather_raw <- function(
 }
 
 
-weather_trim <- function(w, format, verbose) {
+weather_trim <- function(w, format) {
   if (format && nrow(w) > 0) {
-    if (verbose) {
-      message("Trimming missing values before and after")
-    }
+    wc_progress("Trimming missing values before and after")
+
     temp <- dplyr::select(
       w,
       -dplyr::any_of(c(
@@ -658,11 +580,10 @@ weather_format <- function(
   stn,
   meta,
   interval = "hour",
-  s.start,
-  s.end,
+  s_start,
+  s_end,
   string_as = "NA",
-  time_disp = NULL,
-  quiet = FALSE
+  time_disp = NULL
 ) {
   w <- dplyr::select(
     w,
@@ -743,6 +664,7 @@ weather_format <- function(
       )
     )
   }
+
   w <- w |>
     tidyr::gather(key = "type", value = "value", "flag", "value") |>
     dplyr::mutate(
@@ -860,7 +782,7 @@ weather_format <- function(
   }
 
   ## Trim to match date range
-  w <- dplyr::filter(w, .data$date >= s.start & .data$date <= s.end)
+  w <- dplyr::filter(w, .data$date >= s_start & .data$date <= s_end)
 
   list(data = w, msg = non_num)
 }

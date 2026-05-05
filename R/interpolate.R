@@ -13,6 +13,8 @@
 #' 12PM, but not 10AM or 11AM, no interpolation will happen and data between 9AM
 #' and 12PM will be returned as NA.)
 #'
+#' @details @inheritSection weather_dl Verbosity
+#'
 #' @param data Dataframe. Data with dates or times to which weather data should
 #'   be added.
 #' @param weather Dataframe. Weather data downloaded with \code{\link{weather}}
@@ -24,8 +26,6 @@
 #'   "day".
 #' @param na_gap How many hours or days (depending on the interval) is it
 #'   acceptable to skip over when interpolating over NAs (see details).
-#' @param quiet Logical. Suppress all messages (including messages regarding
-#'   missing data, etc.)
 #'
 #' @examplesIf check_eccc()
 #'
@@ -57,8 +57,7 @@ weather_interp <- function(
   weather,
   cols = "all",
   interval = "hour",
-  na_gap = 2,
-  quiet = FALSE
+  na_gap = 2
 ) {
   ## Check for multiple stations
   if ("station_id" %in% names(weather)) {
@@ -157,13 +156,10 @@ weather_interp <- function(
   ## (is linear interpolation relevant for each?)
   omit <- cols[!(vapply(weather[, cols], is.numeric, FUN.VALUE = TRUE))]
   cols <- cols[!(cols %in% omit)]
-  if (length(omit) > 0 && !quiet) {
-    message(
-      "Some columns (",
-      paste0(omit, collapse = ", "),
-      ") ",
-      "are not numeric and will thus be omitted from the ",
-      "interpolation."
+  if (length(omit) > 0) {
+    wc_inform(
+      "Some columns ({paste0(omit, collapse = ', ')}) ",
+      "are not numeric and will thus be omitted from the interpolation."
     )
   }
 
@@ -181,24 +177,15 @@ weather_interp <- function(
     }
     w <- weather[!is.na(weather[[col]]), ]
     if (nrow(w) < 2) {
-      if (!quiet) {
-        message(
-          col,
-          " does not have at least 2 points of ",
-          "non-missing data, skipping..."
+      wc_inform(
+        "{col} does not have at least 2 points of non-missing data, ",
+        "skipping..."
         )
-      }
     } else {
-      if (nrow(w) < nrow(weather) && !quiet) {
-        message(
-          col,
-          " is missing ",
-          nrow(weather) - nrow(w),
-          " ",
-          "out of ",
-          nrow(weather),
-          " data, interpolation ",
-          "may be less accurate as a result."
+      if (nrow(w) < nrow(weather)) {
+        wc_inform(
+          "{col} is missing {nrow(weather) - nrow(w)} out of {nrow(weather)} ",
+          "data, interpolation may be less accurate as a result."
         )
       }
 

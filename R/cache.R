@@ -42,7 +42,7 @@ cache_remove <- function() {
   }
 
   if (!dir.exists(cache_dir())) {
-    message("Cache successfully removed")
+    wc_inform("Cache successfully removed")
   } else {
     stop("Cache could not be removed", call. = FALSE)
   }
@@ -75,7 +75,7 @@ cache_check <- function() {
     }
     dir.create(cache_dir(), recursive = TRUE)
     if (dir.exists(cache_dir())) {
-      message("Cache successfully created")
+      wc_inform("Cache successfully created")
     } else {
       stop("Cache could not be created", call. = FALSE)
     }

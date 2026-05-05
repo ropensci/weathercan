@@ -3,14 +3,14 @@
 test_that("weather_dl day", {
   skip_on_cran()
   skip_if_offline()
+  withr::local_options("weathercan.verbosity" = "quiet")
 
   expect_silent(
     w <- weather_dl(
       station_ids = 51423,
       start = "2014-01-01",
       end = "2014-04-01",
-      interval = "day",
-      quiet = TRUE
+      interval = "day"
     )
   )
 
@@ -19,13 +19,14 @@ test_that("weather_dl day", {
 
 test_that("weather (day) returns a data frame", {
   skip_on_cran()
+  withr::local_options("weathercan.verbosity" = "quiet")
+
   expect_silent(
     w <- weather_dl(
       station_ids = 51423,
       start = "2014-01-01",
       end = "2014-04-01",
-      interval = "day",
-      quiet = TRUE
+      interval = "day"
     )
   )
 
@@ -164,12 +165,14 @@ test_that("weather (day) no data fails nicely", {
       end = "2017-02-01"
     ),
     paste0(
-      "There are no data for some stations \\(42013\\), ",
+      "There are no data for some stations \\(42013\\) ",
       "in this time range \\("
     )
   ) |>
     expect_message("Some variables") |>
-    expect_message("Replaced")
+    expect_message("Replaced") |>
+    expect_message("Available Station Data:") |>
+    expect_message("# A tibble")
 
   # Cached
   expect_message(
@@ -179,8 +182,10 @@ test_that("weather (day) no data fails nicely", {
       start = "2017-01-01",
       end = "2017-02-01"
     ),
-    paste0("There are no data for station 42013, ", "in this time range")
-  )
+    paste0("There are no data for station 42013 in this time range")
+  ) |>
+    expect_message("Available Station Data:") |>
+    expect_message("# A tibble")
 
   expect_s3_class(w0, "data.frame")
   expect_length(w0, 0)
@@ -196,12 +201,10 @@ test_that("weather (day) no data fails nicely", {
       start = "2017-01-01",
       end = "2017-03-01"
     ),
-    paste0(
-      "There are no data for all stations ",
-      "\\(1274, 1275\\), in this time range ",
-      "\\(2017-01-01 to 2017-03-01\\)"
-    )
-  )
+    "There are no data for all stations \\(1274, 1275\\) in this time range \\(2017-01-01 to 2017-03-01\\)"
+  ) |>
+    expect_message("Available Station Data:") |>
+    expect_message("# A tibble")
 
   # Cached
   expect_message(
@@ -211,11 +214,10 @@ test_that("weather (day) no data fails nicely", {
       start = "2017-01-01",
       end = "2017-03-01"
     ),
-    paste0(
-      "There are no data for station 1274, in ",
-      "this time range \\(2017-01-01 to 2017-03-01\\)."
-    )
-  )
+    "There are no data for station 1274 in this time range \\(2017-01-01 to 2017-03-01\\)."
+  ) |>
+    expect_message("Available Station Data:") |>
+    expect_message("# A tibble")
 
   ## Basics
   expect_s3_class(w0, "data.frame")
@@ -240,25 +242,27 @@ test_that("weather (day) verbose and quiet", {
     "Some variables have non-numeric values"
   ) |>
     expect_message("Replaced all non-numeric") |>
-    expect_message("There are no data")
+    expect_message("There are no data") |>
+    expect_message("Available Station Data:") |>
+    expect_message("# A tibble")
 
   # Cached
+  withr::local_options("weathercan.verbosity" = "quiet")
   expect_silent(weather_dl(
     c(51423, 42013),
     interval = "day",
     start = "2017-01-01",
-    end = "2017-02-01",
-    quiet = TRUE
+    end = "2017-02-01"
   ))
 
   # Warning about number to character
+  withr::local_options("weathercan.verbosity" = "verbose")
   expect_message(
     weather_dl(
       c(51423, 42013),
       interval = "day",
       start = "2017-01-01",
-      end = "2017-02-01",
-      verbose = TRUE
+      end = "2017-02-01"
     ),
     "Getting station"
   ) |>
@@ -272,18 +276,20 @@ test_that("weather (day) verbose and quiet", {
     expect_message("Some variables") |>
     expect_message("Replaced") |>
     expect_message("Examples") |>
-    expect_message("A tibble:")
+    expect_message("Available Station Data:") |>
+    expect_message("# A tibble")
 })
 
 test_that("weather (day) handles data with different numbers of columns", {
   skip_on_cran()
+  withr::local_options("weathercan.verbosity" = "quiet")
+
   expect_silent(
     d <- weather_dl(
       station_ids = 51423,
       start = "2018-03-20",
       end = "2018-04-10",
-      interval = "day",
-      quiet = TRUE
+      interval = "day"
     )
   )
 
@@ -295,8 +301,7 @@ test_that("weather (day) handles data with different numbers of columns", {
       c(6819, 51423),
       start = "2017-08-01",
       end = "2018-05-01",
-      interval = "day",
-      quiet = TRUE
+      interval = "day"
     )
   )
 

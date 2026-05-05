@@ -72,6 +72,7 @@ NULL
   )
 
   options(
+    weathercan.verbosity = "standard",
     weathercan.urls.weather = "https://climate.weather.gc.ca/climate_data/bulk_data_e.html",
     weathercan.urls.normals = "https://climate.weather.gc.ca/climate_normals/bulk_data_e.html",
     weathercan.urls.normals_1991_2020 = "https://climate.weather.gc.ca/climate_normals/download/1991_e.html?area=canada_wide&product%5B%5D=data&product%5B%5D=station_inventory",

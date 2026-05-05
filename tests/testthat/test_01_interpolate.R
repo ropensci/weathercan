@@ -359,7 +359,9 @@ test_that("weather_interp (hour) quiet", {
   f <- finches[1:20, ] |>
     dplyr::mutate(time = lubridate::force_tz(time, "UTC"))
   expect_message(weather_interp(f, k, cols = "temp"))
-  expect_silent(weather_interp(f, k, cols = "temp", quiet = TRUE))
+
+  withr::local_options(list("weathercan.verbosity" = "quiet"))
+  expect_silent(weather_interp(f, k, cols = "temp"))
 })
 
 # Add interpolation (day) -------------------------------------------------
@@ -518,13 +520,9 @@ test_that("weather_interp messages", {
     weather_interp(f, k, interval = "day", cols = "max_temp"),
     "max_temp is missing 10 out of 91 data"
   )
-  expect_silent(weather_interp(
-    f,
-    k,
-    interval = "day",
-    cols = "max_temp",
-    quiet = TRUE
-  ))
+
+  withr::local_options(list("weathercan.verbosity" = "quiet"))
+  expect_silent(weather_interp(f, k, interval = "day", cols = "max_temp"))
 
   expect_error(
     weather_interp(f, k2, interval = "day", cols = "max_temp"),
