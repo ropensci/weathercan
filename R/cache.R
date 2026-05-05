@@ -111,7 +111,7 @@ cache_stations_check <- function() {
   )
   if (time_since_update > 28) {
     if (!identical(Sys.getenv("TESTTHAT"), "true")) {
-      wc_always(
+      wc_warn(
         "The stations data frame hasn't been updated in over 4 weeks. ",
         "Consider running `stations_dl()`"
       )

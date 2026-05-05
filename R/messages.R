@@ -30,10 +30,6 @@ wc_inform_df <- function(..., df_title, df, .envir = rlang::caller_env()) {
   }
 }
 
-wc_always <- function(..., .envir = rlang::caller_env()) {
-  wc_msg(..., .envir = .envir)
-}
-
 wc_warn <- function(..., .envir = rlang::caller_env()) {
   cli::cli_warn(paste0(..., collapse = ""), .envir = .envir)
 }
