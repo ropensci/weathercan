@@ -5,14 +5,7 @@
 \alias{add_weather}
 \title{Interpolate and add weather data to a dataframe}
 \usage{
-weather_interp(
-  data,
-  weather,
-  cols = "all",
-  interval = "hour",
-  na_gap = 2,
-  quiet = FALSE
-)
+weather_interp(data, weather, cols = "all", interval = "hour", na_gap = 2)
 }
 \arguments{
 \item{data}{Dataframe. Data with dates or times to which weather data should
@@ -30,9 +23,6 @@ cannot be linearly interpolated (e.g., wind direction).}
 
 \item{na_gap}{How many hours or days (depending on the interval) is it
 acceptable to skip over when interpolating over NAs (see details).}
-
-\item{quiet}{Logical. Suppress all messages (including messages regarding
-missing data, etc.)}
 }
 \description{
 When data and the weather measurements do not perfectly line up, perform a
@@ -48,6 +38,8 @@ interpolated over (i.e. if you have data for 9AM and 11AM, but not 10AM, the
 data between 9AM and 11AM will be interpolated. If, however, you have 9AM and
 12PM, but not 10AM or 11AM, no interpolation will happen and data between 9AM
 and 12PM will be returned as NA.)
+
+@inheritSection weather_dl Verbosity
 }
 \examples{
 \dontshow{if (check_eccc()) withAutoprint(\{ # examplesIf}

@@ -4,7 +4,7 @@
 \alias{normals_dl}
 \title{Download climate normals from Environment and Climate Change Canada}
 \usage{
-normals_dl(climate_ids, normals_years = "current", format = TRUE, stn = NULL)
+normals_dl(climate_ids, normals_years = "current", format = TRUE)
 }
 \arguments{
 \item{climate_ids}{Character. A vector containing the Climate ID(s) of the
@@ -21,9 +21,6 @@ from the most recent \emph{complete} normals year range (i.e. \code{1991-2020}).
 date accordingly. Unlike \code{weather_dl()}, \code{normals_dl()} will always format
 column headings as normals data from ECCC cannot be directly made into a
 data frame without doing so.}
-
-\item{stn}{DEFUNCT. Now use \code{stations_dl()} to update internal data and
-\code{stations_meta()} to check the date it was last updated.}
 }
 \value{
 For new climate normals, a tibble of normals. For older climate

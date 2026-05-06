@@ -13,9 +13,7 @@ stations_search(
   normals_only = NULL,
   stn = NULL,
   starts_latest = NULL,
-  ends_earliest = NULL,
-  verbose = FALSE,
-  quiet = FALSE
+  ends_earliest = NULL
 )
 }
 \arguments{
@@ -52,11 +50,6 @@ collection beginning in or before the specified year.}
 
 \item{ends_earliest}{Numeric. Restrict results to stations with data
 collection ending in or after the specified year.}
-
-\item{verbose}{Logical. Include progress messages}
-
-\item{quiet}{Logical. Suppress all messages (including messages regarding
-missing data, etc.)}
 }
 \value{
 Returns a subset of the stations data frame which match the search

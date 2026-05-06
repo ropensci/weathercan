@@ -76,8 +76,6 @@
 #' @param encoding Character. Text encoding for download.
 #' @param list_col Logical. Return data as nested data set? Defaults to FALSE.
 #'   Only applies if `format = TRUE`
-#' @param stn DEFUNCT. Now use `stations_dl()` to update internal data and
-#'   `stations_meta()` to check the date it was last updated.
 #'
 #' @return A tibble with station ID, name and weather data.
 #'

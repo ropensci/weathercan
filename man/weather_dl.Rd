@@ -10,11 +10,12 @@ weather_dl(
   start = NULL,
   end = NULL,
   interval = "hour",
+  months = NULL,
   trim = TRUE,
+  trim_by_stn = FALSE,
   format = TRUE,
   string_as = NA,
   time_disp = "none",
-  stn = NULL,
   encoding = "UTF-8",
   list_col = FALSE
 )
@@ -36,6 +37,11 @@ data frame or the \code{\link{stations_search}} function to find IDs.}
 \item{trim}{Logical. Trim missing values from the start and end of the
 weather dataframe. Only applies if \code{format = TRUE}}
 
+\item{trim_by_stn}{Logical. Data from different stations are generally padded
+with NAs to have the same date range. If this isn't desirable, use \code{trim = TRUE} and \code{trim_by_stn = TRUE} to trim \code{NA}s from the start and end of each
+station. \code{trim_by_stn = FALSE} (default), only the sides of the entire
+range are trimmed.}
+
 \item{format}{Logical. If TRUE, formats data for immediate use. If FALSE,
 returns data exactly as downloaded from Environment and Climate Change
 Canada. Useful for dealing with changes by Environment Canada to the format
@@ -45,9 +51,6 @@ of data downloads.}
 numeric measurement with. See Details.}
 
 \item{time_disp}{Character. Either "none" (default) or "UTC". See details.}
-
-\item{stn}{DEFUNCT. Now use \code{stations_dl()} to update internal data and
-\code{stations_meta()} to check the date it was last updated.}
 
 \item{encoding}{Character. Text encoding for download.}
 
