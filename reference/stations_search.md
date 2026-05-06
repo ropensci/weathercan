@@ -17,9 +17,7 @@ stations_search(
   normals_only = NULL,
   stn = NULL,
   starts_latest = NULL,
-  ends_earliest = NULL,
-  verbose = FALSE,
-  quiet = FALSE
+  ends_earliest = NULL
 )
 ```
 
@@ -75,15 +73,6 @@ stations_search(
 
   Numeric. Restrict results to stations with data collection ending in
   or after the specified year.
-
-- verbose:
-
-  Logical. Include progress messages
-
-- quiet:
-
-  Logical. Suppress all messages (including messages regarding missing
-  data, etc.)
 
 ## Value
 

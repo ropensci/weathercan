@@ -1,13 +1,13 @@
 {
   "commit": {
-    "commit": "f709c0d3224e33859508d291305cce35614812e4",
+    "commit": "436925fb2bd61e4a699850c6063e86f81564adb5",
     "author": "Steffi LaZerte <steffi@steffi.ca>",
-    "time": "2026-04-29T19:36:51Z",
+    "time": "2026-05-06T20:59:47Z",
     "files": "NA",
     "merge": false,
-    "message": "Fix normals URL (fixes #207)\n"
+    "message": "Housekeeping\n"
   },
   "repo": "https://github.com/ropensci/weathercan",
   "pkg": "weathercan",
-  "time": "2026-04-29T19:45:28Z"
+  "time": "2026-05-06T21:04:21Z"
 }

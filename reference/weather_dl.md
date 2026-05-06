@@ -13,15 +13,14 @@ weather_dl(
   start = NULL,
   end = NULL,
   interval = "hour",
+  months = NULL,
   trim = TRUE,
+  trim_by_stn = FALSE,
   format = TRUE,
   string_as = NA,
   time_disp = "none",
-  stn = NULL,
   encoding = "UTF-8",
-  list_col = FALSE,
-  verbose = FALSE,
-  quiet = FALSE
+  list_col = FALSE
 )
 ```
 
@@ -55,6 +54,14 @@ weather_dl(
   Logical. Trim missing values from the start and end of the weather
   dataframe. Only applies if `format = TRUE`
 
+- trim_by_stn:
+
+  Logical. Data from different stations are generally padded with NAs to
+  have the same date range. If this isn't desirable, use `trim = TRUE`
+  and `trim_by_stn = TRUE` to trim `NA`s from the start and end of each
+  station. `trim_by_stn = FALSE` (default), only the sides of the entire
+  range are trimmed.
+
 - format:
 
   Logical. If TRUE, formats data for immediate use. If FALSE, returns
@@ -71,14 +78,6 @@ weather_dl(
 
   Character. Either "none" (default) or "UTC". See details.
 
-- stn:
-
-  DEFUNCT. Now use
-  [`stations_dl()`](https://docs.ropensci.org/weathercan/reference/stations_dl.md)
-  to update internal data and
-  [`stations_meta()`](https://docs.ropensci.org/weathercan/reference/stations_meta.md)
-  to check the date it was last updated.
-
 - encoding:
 
   Character. Text encoding for download.
@@ -87,15 +86,6 @@ weather_dl(
 
   Logical. Return data as nested data set? Defaults to FALSE. Only
   applies if `format = TRUE`
-
-- verbose:
-
-  Logical. Include progress messages
-
-- quiet:
-
-  Logical. Suppress all messages (including messages regarding missing
-  data, etc.)
 
 ## Value
 
@@ -109,14 +99,15 @@ and converts data to numeric where possible. If character strings are
 contained in traditionally numeric fields (e.g., weather speed may have
 values such as "\< 30"), they can be replaced with a character specified
 by `string_as`. The default is NA. Formatting also replaces data
-associated with certain flags with NA (M = Missing).
+associated with certain flags with NA (M = Missing), if they are not
+already marked as NA.
 
 Start and end date can be specified, but if not, it will default to the
 start and end date of the range (this could result in downloading a lot
 of data!).
 
-For hourly data, timezones are always "UTC", but the actual times are
-either local time (default; `time_disp = "none"`), or UTC
+For hourly data, timezones are always marked "UTC", but the actual times
+are either local time (default; `time_disp = "none"`), or UTC
 (`time_disp = "UTC"`). When `time_disp = "none"`, times reflect the
 local time without daylight savings. This means that relative measures
 of time, such as "nighttime", "daytime", "dawn", and "dusk" are
@@ -141,6 +132,13 @@ lat, lon) is unlikely to change between files (i.e. dates), but some
 data may or may not be available depending on the date of the file
 (e.g., station operator was added as of April 1st 2018, so will be in
 all data which includes dates on or after April 2018).
+
+## Verbosity
+
+Verbosity (how 'chatty' weathercan is) can be specified using the option
+`weathercan.verbosity`. Which takes "standard" (default), "quiet"
+(suppress all messages including those regarding missing data, etc.), or
+"verbose" (extra progress messages).
 
 ## Examples
 

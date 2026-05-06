@@ -58,14 +58,7 @@ into the provided dataset. Only applies to numerical weather columns (see
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">weather_interp</span><span class="op">(</span></span>
-<span>  <span class="va">data</span>,</span>
-<span>  <span class="va">weather</span>,</span>
-<span>  cols <span class="op">=</span> <span class="st">"all"</span>,</span>
-<span>  interval <span class="op">=</span> <span class="st">"hour"</span>,</span>
-<span>  na_gap <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  quiet <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">weather_interp</span><span class="op">(</span><span class="va">data</span>, <span class="va">weather</span>, cols <span class="op">=</span> <span class="st">"all"</span>, interval <span class="op">=</span> <span class="st">"hour"</span>, na_gap <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -97,11 +90,6 @@ cannot be linearly interpolated (e.g., wind direction).</p></dd>
 <dd><p>How many hours or days (depending on the interval) is it
 acceptable to skip over when interpolating over NAs (see details).</p></dd>
 
-
-<dt id="arg-quiet">quiet<a class="anchor" aria-label="anchor" href="#arg-quiet"></a></dt>
-<dd><p>Logical. Suppress all messages (including messages regarding
-missing data, etc.)</p></dd>
-
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -112,6 +100,7 @@ interpolated over (i.e. if you have data for 9AM and 11AM, but not 10AM, the
 data between 9AM and 11AM will be interpolated. If, however, you have 9AM and
 12PM, but not 10AM or 11AM, no interpolation will happen and data between 9AM
 and 12PM will be returned as NA.)</p>
+<p>@inheritSection weather_dl Verbosity</p>
     </div>
 
     <div class="section level2">
@@ -119,13 +108,23 @@ and 12PM will be returned as NA.)</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># check_eccc()</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Weather data only</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">kamloops</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">kamloops</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Data about finch observations at RFID feeders in Kamloops, BC</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">finches</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">finches</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Match weather to finches</span></span></span>
-<span class="r-in"><span><span class="va">finch_weather</span> <span class="op">&lt;-</span> <span class="fu">weather_interp</span><span class="op">(</span>data <span class="op">=</span> <span class="va">finches</span>, weather <span class="op">=</span> <span class="va">kamloops</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># First line up the timezones</span></span></span>
+<span class="r-in"><span><span class="co"># - Finches are in Pacific Time (inc. Daylight savings),</span></span></span>
+<span class="r-in"><span><span class="co">#   Kamloops is in Pacific Time *without* daylight savings, but is marked as UTC for</span></span></span>
+<span class="r-in"><span><span class="co">#   simplicity (see ?weather_dl for details)</span></span></span>
+<span class="r-in"><span><span class="co"># - First we convert finches to remove daylight savings, then we mark as UTC</span></span></span>
+<span class="r-in"><span><span class="va">finches</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">finches</span>, time <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/with_tz.html" class="external-link">with_tz</a></span><span class="op">(</span><span class="va">time</span>, <span class="st">"Etc/GMT+8"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">finches</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">finches</span>, time <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/force_tz.html" class="external-link">force_tz</a></span><span class="op">(</span><span class="va">time</span>, <span class="st">"UTC"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Then interpolate over the first 30 observations</span></span></span>
+<span class="r-in"><span><span class="va">finch_weather</span> <span class="op">&lt;-</span> <span class="fu">weather_interp</span><span class="op">(</span>data <span class="op">=</span> <span class="va">finches</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">30</span>,<span class="op">]</span>, weather <span class="op">=</span> <span class="va">kamloops</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>

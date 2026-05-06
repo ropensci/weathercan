@@ -43,8 +43,15 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.7.9" id="weathercan-079">weathercan 0.7.9<a class="anchor" aria-label="anchor" href="#weathercan-079"></a></h2>
-<ul><li>Fix ECCC change to normals download query parameters again</li>
+<h2 class="pkg-version" data-toc-text="1.0.0" id="weathercan-100">weathercan 1.0.0<a class="anchor" aria-label="anchor" href="#weathercan-100"></a></h2>
+<ul><li>Fix ECCC change to normals download query parameters again (<a href="https://github.com/ropensci/weathercan/issues/207" class="external-link">#207</a>)</li>
+<li>Added access to 1991-2020 Climate normals (<a href="https://github.com/ropensci/weathercan/issues/141" class="external-link">#141</a>)
+<ul><li>Added caching functions to support downloading and caching the full 1991-2020 dataset (<code><a href="../reference/cache_dir.html">cache_dir()</a></code>, <code><a href="../reference/cache_remove.html">cache_remove()</a></code>)</li>
+</ul></li>
+<li>No longer include stations data frame in weathercan, prompt user to download always (ensures it’s up to date)</li>
+<li>Add better message control via option <code>weathercan.verbosity</code> which can be “standard” (default), “verbose” (extra progress messages) or “quiet” (little to no messages).</li>
+<li>Use cli for messaging (<a href="https://github.com/ropensci/weathercan/issues/211" class="external-link">#211</a>)</li>
+<li>Add progress bars for downloads (<a href="https://github.com/ropensci/weathercan/issues/58" class="external-link">#58</a>)</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.7.8" id="weathercan-078">weathercan 0.7.8<a class="anchor" aria-label="anchor" href="#weathercan-078"></a></h2>

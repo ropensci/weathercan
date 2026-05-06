@@ -1,6 +1,7 @@
 # Getting Started
 
 ``` r
+
 library(dplyr)
 library(ggplot2)
 library(weathercan)
@@ -14,6 +15,7 @@ which returns a list of stations and their details (including
 `station_id`).
 
 ``` r
+
 head(stations())
 ```
 
@@ -29,10 +31,11 @@ head(stations())
     ## # ℹ 1 more variable: normals_1971_2000 <lgl>
 
 ``` r
+
 glimpse(stations())
 ```
 
-    ## Rows: 26,445
+    ## Rows: 26,439
     ## Columns: 17
     ## $ prov              <chr> "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", …
     ## $ station_name      <chr> "DAYSLAND", "DAYSLAND", "DAYSLAND", "EDMONTON CORONATION", "EDMONTON CORONATION", "EDMONTON CORONATION", "FLEET", "FLEET", "FLEET", …
@@ -56,6 +59,7 @@ You can look through this data frame directly, or you can use the
 `stations_search` function:
 
 ``` r
+
 stations_search("Kamloops")
 ```
 
@@ -67,11 +71,11 @@ stations_search("Kamloops")
     ##  3 BC    KAMLOOPS A                 1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 day       1951  2013 TRUE    TRUE              TRUE             
     ##  4 BC    KAMLOOPS A                 1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE             
     ##  5 BC    KAMLOOPS A                 1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 month     1951  2013 TRUE    TRUE              TRUE             
-    ##  6 BC    KAMLOOPS A                51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 day       2013  2025 TRUE    TRUE              FALSE            
-    ##  7 BC    KAMLOOPS A                51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2025 TRUE    TRUE              FALSE            
+    ##  6 BC    KAMLOOPS A                51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 day       2013  2026 TRUE    TRUE              FALSE            
+    ##  7 BC    KAMLOOPS A                51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2026 TRUE    TRUE              FALSE            
     ##  8 BC    KAMLOOPS AFTON MINES       1276 1163790        NA <NA>   50.7 -120.  701  Etc/GMT+8 day       1977  1993 TRUE    FALSE             FALSE            
     ##  9 BC    KAMLOOPS AFTON MINES       1276 1163790        NA <NA>   50.7 -120.  701  Etc/GMT+8 month     1977  1993 TRUE    FALSE             FALSE            
-    ## 10 BC    KAMLOOPS AUT              42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 day       2006  2025 TRUE    TRUE              FALSE            
+    ## 10 BC    KAMLOOPS AUT              42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 day       2006  2026 TRUE    TRUE              FALSE            
     ## # ℹ 30 more rows
     ## # ℹ 1 more variable: normals_1971_2000 <lgl>
 
@@ -79,6 +83,7 @@ You can narrow down your search by specifying time intervals (options
 are “hour”, “day”, or “month”):
 
 ``` r
+
 stations_search("Kamloops", interval = "hour")
 ```
 
@@ -86,13 +91,14 @@ stations_search("Kamloops", interval = "hour")
     ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1991_2020 normals_1981_2010
     ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
     ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE             
-    ## 2 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2025 TRUE    TRUE              FALSE            
-    ## 3 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2025 TRUE    TRUE              FALSE            
+    ## 2 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2026 TRUE    TRUE              FALSE            
+    ## 3 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2026 TRUE    TRUE              FALSE            
     ## # ℹ 1 more variable: normals_1971_2000 <lgl>
 
 You can specify more than one interval:
 
 ``` r
+
 stations_search("Kamloops", interval = c("hour", "month"))
 ```
 
@@ -102,9 +108,9 @@ stations_search("Kamloops", interval = c("hour", "month"))
     ##  1 BC    KAMLOOPS                      1274 1163779        NA <NA>   50.7 -120.  379. Etc/GMT+8 month     1878  1982 FALSE   FALSE             FALSE            
     ##  2 BC    KAMLOOPS A                    1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE             
     ##  3 BC    KAMLOOPS A                    1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 month     1951  2013 TRUE    TRUE              TRUE             
-    ##  4 BC    KAMLOOPS A                   51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2025 TRUE    TRUE              FALSE            
+    ##  4 BC    KAMLOOPS A                   51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2026 TRUE    TRUE              FALSE            
     ##  5 BC    KAMLOOPS AFTON MINES          1276 1163790        NA <NA>   50.7 -120.  701  Etc/GMT+8 month     1977  1993 TRUE    FALSE             FALSE            
-    ##  6 BC    KAMLOOPS AUT                 42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2025 TRUE    TRUE              FALSE            
+    ##  6 BC    KAMLOOPS AUT                 42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2026 TRUE    TRUE              FALSE            
     ##  7 BC    KAMLOOPS AUT                 42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 month     2006  2006 TRUE    TRUE              FALSE            
     ##  8 BC    KAMLOOPS CDA                  1277 1163810        NA <NA>   50.7 -120.  345  Etc/GMT+8 month     1949  1977 FALSE   FALSE             FALSE            
     ##  9 BC    KAMLOOPS CHERRY CREEK         1278 1163814        NA <NA>   50.7 -121.  556. Etc/GMT+8 month     1970  1974 FALSE   FALSE             FALSE            
@@ -116,15 +122,20 @@ You can also search by proximity. These results include a new column
 `distance` specifying the distance in km from the coordinates:
 
 ``` r
-stations_search(coords = c(50.667492, -120.329049), dist = 20, interval = "hour")
+
+stations_search(
+  coords = c(50.667492, -120.329049),
+  dist = 20,
+  interval = "hour"
+)
 ```
 
     ## # A tibble: 3 × 18
     ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1991_2020 normals_1981_2010
     ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
     ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE             
-    ## 2 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2025 TRUE    TRUE              FALSE            
-    ## 3 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2025 TRUE    TRUE              FALSE            
+    ## 2 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2026 TRUE    TRUE              FALSE            
+    ## 3 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2026 TRUE    TRUE              FALSE            
     ## # ℹ 2 more variables: normals_1971_2000 <lgl>, distance <dbl>
 
 We can also perform more complex searches using
@@ -132,12 +143,13 @@ We can also perform more complex searches using
 from the `dplyr` package direction on the data returned by stations():
 
 ``` r
-BCstations <- stations() %>%
-  filter(prov %in% c("BC")) %>%
-  filter(interval == "hour") %>%
-  filter(lat > 49 & lat < 49.5) %>%
-  filter(lon > -119 & lon < -116) %>%
-  filter(start <= 2002) %>%
+
+BCstations <- stations() |>
+  filter(prov %in% c("BC")) |>
+  filter(interval == "hour") |>
+  filter(lat > 49 & lat < 49.5) |>
+  filter(lon > -119 & lon < -116) |>
+  filter(start <= 2002) |>
   filter(end >= 2016)
 BCstations
 ```
@@ -145,12 +157,13 @@ BCstations
     ## # A tibble: 3 × 17
     ##   prov  station_name                station_id climate_id WMO_id TC_id   lat   lon  elev tz     interval start   end normals normals_1991_2020 normals_1981_2010
     ##   <chr> <chr>                            <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>  <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
-    ## 1 BC    CRESTON CAMPBELL SCIENTIFIC       6838 114B1F0     71770 WJR    49.1 -116.  641. Etc/G… hour      1994  2025 TRUE    TRUE              FALSE            
-    ## 2 BC    NELSON CS                         6839 1145M29     71776 WNM    49.5 -117.  535. Etc/G… hour      1994  2025 TRUE    TRUE              FALSE            
-    ## 3 BC    WARFIELD RCS                     31067 1148705     71401 XWF    49.1 -118.  567. Etc/G… hour      2001  2025 TRUE    TRUE              FALSE            
+    ## 1 BC    CRESTON CAMPBELL SCIENTIFIC       6838 114B1F0     71770 WJR    49.1 -116.  641. Etc/G… hour      1994  2026 TRUE    TRUE              FALSE            
+    ## 2 BC    NELSON CS                         6839 1145M29     71776 WNM    49.5 -117.  535. Etc/G… hour      1994  2026 TRUE    TRUE              FALSE            
+    ## 3 BC    WARFIELD RCS                     31067 1148705     71401 XWF    49.1 -118.  567. Etc/G… hour      2001  2026 TRUE    TRUE              FALSE            
     ## # ℹ 1 more variable: normals_1971_2000 <lgl>
 
 ``` r
+
 ## weather_dl() accepts numbers so we can create a vector to input into weather:
 stn_vector <- BCstations$station_id
 stn_vector
@@ -161,26 +174,29 @@ stn_vector
 You can update this list of stations with
 
 ``` r
+
 stations_dl()
 ```
 
 And check when it was last updated with
 
 ``` r
+
 stations_meta()
 ```
 
     ## $ECCC_modified
-    ## [1] "2025-07-01 23:30:00 UTC"
+    ## [1] "2026-05-03 23:30:00 UTC"
     ## 
     ## $weathercan_modified
-    ## [1] "2025-07-25"
+    ## [1] "2026-05-04"
 
 ## Weather
 
 Once you have your `station_id`(s) you can download weather data:
 
 ``` r
+
 kam <- weather_dl(station_ids = 51423, start = "2016-01-01", end = "2016-02-15")
 ```
 
@@ -189,6 +205,7 @@ kam <- weather_dl(station_ids = 51423, start = "2016-01-01", end = "2016-02-15")
     ## This message is shown once per session
 
 ``` r
+
 kam
 ```
 
@@ -213,7 +230,12 @@ kam
 You can also download data from multiple stations at once:
 
 ``` r
-kam.pg <- weather_dl(station_ids = c(48248, 51423), start = "2016-01-01", end = "2016-02-15")
+
+kam.pg <- weather_dl(
+  station_ids = c(48248, 51423),
+  start = "2016-01-01",
+  end = "2016-02-15"
+)
 
 kam.pg
 ```
@@ -239,7 +261,11 @@ kam.pg
 And plot it:
 
 ``` r
-ggplot(data = kam.pg, aes(x = time, y = temp, group = station_name, colour = station_name)) +
+
+ggplot(
+  data = kam.pg,
+  aes(x = time, y = temp, group = station_name, colour = station_name)
+) +
   theme(legend.position = "top") +
   geom_line() +
   theme_minimal()
@@ -253,7 +279,12 @@ plot of chunk unnamed-chunk-12
 Or you can use the vector created above:
 
 ``` r
-stn_vec_df <- weather_dl(station_ids = stn_vector, start = "2016-01-01", end = "2016-02-15")
+
+stn_vec_df <- weather_dl(
+  station_ids = stn_vector,
+  start = "2016-01-01",
+  end = "2016-02-15"
+)
 
 stn_vec_df
 ```
@@ -287,25 +318,42 @@ To access climate normals, you first need to know the `climate_id`
 associated with the station you’re interested in.
 
 ``` r
+
 stations_search("Winnipeg", normals_years = "current")
 ```
 
-    ## # A tibble: 1 × 14
-    ##   prov  station_name                station_id climate_id WMO_id TC_id   lat   lon  elev tz        normals normals_1991_2020 normals_1981_2010 normals_1971_2000
-    ##   <chr> <chr>                            <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <lgl>   <lgl>             <lgl>             <lgl>            
-    ## 1 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/GMT+6 TRUE    TRUE              TRUE              TRUE
+    ## The most current normals available for download by weathercan are '1991-2020'
 
-The current year range is 1981-2010, but you can also search for
+    ## # A tibble: 10 × 17
+    ##    prov  station_name                station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval start   end normals normals_1991_2020 normals_1981_2010
+    ##    <chr> <chr>                            <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr> <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
+    ##  1 MB    WINNIPEG A CS                    27174 502S001     71849 XWG    49.9 -97.2  239. Etc/… day       1996  2026 TRUE    TRUE              FALSE            
+    ##  2 MB    WINNIPEG A CS                    27174 502S001     71849 XWG    49.9 -97.2  239. Etc/… hour      2013  2026 TRUE    TRUE              FALSE            
+    ##  3 MB    WINNIPEG A CS                    27174 502S001     71849 XWG    49.9 -97.2  239. Etc/… month     1996  2007 TRUE    TRUE              FALSE            
+    ##  4 MB    WINNIPEG INTL A                  51097 5023227        NA YWG    49.9 -97.2  239. Etc/… day       2018  2026 TRUE    TRUE              FALSE            
+    ##  5 MB    WINNIPEG INTL A                  51097 5023227        NA YWG    49.9 -97.2  239. Etc/… hour      2013  2026 TRUE    TRUE              FALSE            
+    ##  6 MB    WINNIPEG RICHARDSON AWOS         47407 5023226     71852 YWG    49.9 -97.2  239. Etc/… day       2008  2013 TRUE    TRUE              FALSE            
+    ##  7 MB    WINNIPEG RICHARDSON AWOS         47407 5023226     71852 YWG    49.9 -97.2  239. Etc/… hour      2008  2013 TRUE    TRUE              FALSE            
+    ##  8 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… day       1938  2008 TRUE    TRUE              TRUE             
+    ##  9 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… hour      1953  2013 TRUE    TRUE              TRUE             
+    ## 10 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… month     1938  2007 TRUE    TRUE              TRUE             
+    ## # ℹ 1 more variable: normals_1971_2000 <lgl>
+
+The current year range is 1991-2020, but you can also search for
 stations in the previous year range:
 
 ``` r
-stations_search("Winnipeg", normals_years = "1971-2000")
+
+stations_search("Winnipeg", normals_years = "1981-2010")
 ```
 
-    ## # A tibble: 1 × 14
-    ##   prov  station_name                station_id climate_id WMO_id TC_id   lat   lon  elev tz        normals normals_1991_2020 normals_1981_2010 normals_1971_2000
-    ##   <chr> <chr>                            <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <lgl>   <lgl>             <lgl>             <lgl>            
-    ## 1 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/GMT+6 TRUE    TRUE              TRUE              TRUE
+    ## # A tibble: 3 × 17
+    ##   prov  station_name                station_id climate_id WMO_id TC_id   lat   lon  elev tz     interval start   end normals normals_1991_2020 normals_1981_2010
+    ##   <chr> <chr>                            <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>  <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
+    ## 1 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/G… day       1938  2008 TRUE    TRUE              TRUE             
+    ## 2 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/G… hour      1953  2013 TRUE    TRUE              TRUE             
+    ## 3 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/G… month     1938  2007 TRUE    TRUE              TRUE             
+    ## # ℹ 1 more variable: normals_1971_2000 <lgl>
 
 Note that the Winnipeg station has normals for both year ranges.
 
@@ -314,13 +362,58 @@ Then you can download the climate normals with the
 function.
 
 ``` r
+
 n <- normals_dl("5023222")
 ```
 
-There are two parts to the normals data, average weather measurements
-and average frost dates.
+    ## The most current normals available for download by weathercan are '1991-2020'
+
+    ## Using composite locations: WINNIPEG RICHARDSON (AIRPORT)
 
 ``` r
+
+n
+```
+
+    ## # A tibble: 325 × 314
+    ##    location_name                 prov  composite_stations      period_of_record element_group period daily_average_c daily_average_c_code stddev_mean_monthly_…¹
+    ##    <chr>                         <chr> <chr>                   <chr>            <chr>         <chr>            <dbl> <chr>                                 <dbl>
+    ##  1 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   Jan              -16.3 A                                       3.6
+    ##  2 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   Feb              -14.1 A                                       4  
+    ##  3 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   Mar               -6.1 A                                       3.7
+    ##  4 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   Apr                3.8 A                                       2.9
+    ##  5 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   May               11.1 A                                       1.9
+    ##  6 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   Jun               17.1 A                                       1.5
+    ##  7 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   Jul               19.5 A                                       1.4
+    ##  8 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   Aug               18.7 A                                       1.5
+    ##  9 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   Sep               13.3 A                                       1.6
+    ## 10 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   Oct                5.1 A                                       2.1
+    ## # ℹ 315 more rows
+    ## # ℹ abbreviated name: ¹​stddev_mean_monthly_temperature_c
+    ## # ℹ 305 more variables: stddev_mean_monthly_temperature_c_code <chr>, daily_maximum_c <dbl>, daily_maximum_c_code <chr>, daily_minimum_c <dbl>,
+    ## #   daily_minimum_c_code <chr>, maximum_daily_mean_c <dbl>, maximum_daily_mean_c_code <lgl>, maximum_daily_mean_c_date <date>,
+    ## #   maximum_daily_mean_c_date_code <lgl>, minimum_daily_mean_c <dbl>, minimum_daily_mean_c_code <lgl>, minimum_daily_mean_c_date <date>,
+    ## #   minimum_daily_mean_c_date_code <lgl>, extreme_maximum_c <dbl>, extreme_maximum_c_code <lgl>, extreme_maximum_c_date <date>,
+    ## #   extreme_maximum_c_date_code <lgl>, minimum_daily_maximum_c <dbl>, minimum_daily_maximum_c_code <lgl>, minimum_daily_maximum_c_date <date>, …
+
+Older normals can be downloaded by changing the year
+
+``` r
+
+n <- normals_dl("5023222", normals_year = "1981-2010")
+n
+```
+
+    ## # A tibble: 1 × 7
+    ##   prov  station_name                climate_id normals_years meets_wmo normals             frost           
+    ##   <chr> <chr>                       <chr>      <chr>         <lgl>     <list>              <list>          
+    ## 1 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble [13 × 197]> <tibble [7 × 8]>
+
+Note that older normals have two parts to the data, average weather
+measurements and average frost dates.
+
+``` r
+
 library(tidyr)
 unnest(n, normals)
 ```
@@ -350,6 +443,7 @@ unnest(n, normals)
     ## #   precip_extreme_daily_code <chr>, precip_extreme_daily_date <date>, precip_extreme_daily_date_code <chr>, snow_extreme_depth <dbl>, …
 
 ``` r
+
 unnest(n, frost)
 ```
 
@@ -364,41 +458,3 @@ unnest(n, frost)
     ## 6 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                            265                    143               121 75%  
     ## 7 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                            265                    143               121 90%  
     ## # ℹ 3 more variables: prob_last_spring_temp_below_0_on_date <dbl>, prob_first_fall_temp_below_0_on_date <dbl>, prob_length_frost_free <dbl>
-
-Alternatively, download the 1971-2000 normals:
-
-``` r
-n <- normals_dl("5023222", normals_years = "1971-2000")
-unnest(n, normals)
-```
-
-    ## # A tibble: 13 × 229
-    ##    prov  station_name                climate_id normals_years meets_wmo period temp_daily_average temp_daily_average_code temp_sd temp_sd_code temp_daily_max
-    ##    <chr> <chr>                       <chr>      <chr>         <lgl>     <fct>               <dbl> <chr>                     <dbl> <chr>                 <dbl>
-    ##  1 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Jan                 -17.8 A                           3.9 A                     -12.7
-    ##  2 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Feb                 -13.6 A                           4.2 A                      -8.5
-    ##  3 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Mar                  -6.1 A                           3.5 A                      -1.1
-    ##  4 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Apr                   4   A                           2.7 A                      10.3
-    ##  5 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      May                  12   A                           2.5 A                      19.2
-    ##  6 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Jun                  17   A                           1.8 A                      23.3
-    ##  7 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Jul                  19.5 A                           1.5 A                      25.8
-    ##  8 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Aug                  18.5 A                           1.8 A                      25  
-    ##  9 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Sep                  12.3 A                           1.4 A                      18.6
-    ## 10 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Oct                   5.3 A                           1.6 A                      10.8
-    ## 11 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Nov                  -5.3 A                           3.3 A                      -0.9
-    ## 12 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Dec                 -14.4 A                           4.2 A                      -9.7
-    ## 13 MB    WINNIPEG RICHARDSON INT'L A 5023222    1971-2000     TRUE      Year                  2.6 A                           1.3 A                       8.3
-    ## # ℹ 218 more variables: temp_daily_max_code <chr>, temp_daily_min <dbl>, temp_daily_min_code <chr>, temp_extreme_max <dbl>, temp_extreme_max_code <chr>,
-    ## #   temp_extreme_max_date <date>, temp_extreme_max_date_code <chr>, temp_extreme_min <dbl>, temp_extreme_min_code <chr>, temp_extreme_min_date <date>,
-    ## #   temp_extreme_min_date_code <chr>, rain <dbl>, rain_code <chr>, snow <dbl>, snow_code <chr>, precip <dbl>, precip_code <chr>, snow_mean_depth <dbl>,
-    ## #   snow_mean_depth_code <chr>, snow_median_depth <dbl>, snow_median_depth_code <chr>, snow_depth_month_end <dbl>, snow_depth_month_end_code <chr>,
-    ## #   rain_extreme_daily <dbl>, rain_extreme_daily_code <chr>, rain_extreme_daily_date <date>, rain_extreme_daily_date_code <chr>, snow_extreme_daily <dbl>,
-    ## #   snow_extreme_daily_code <chr>, snow_extreme_daily_date <date>, snow_extreme_daily_date_code <chr>, precip_extreme_daily <dbl>,
-    ## #   precip_extreme_daily_code <chr>, precip_extreme_daily_date <date>, precip_extreme_daily_date_code <chr>, snow_extreme_depth <dbl>, …
-
-``` r
-unnest(n, frost)
-```
-
-    ## # A tibble: 0 × 6
-    ## # ℹ 6 variables: prov <chr>, station_name <chr>, climate_id <chr>, normals_years <chr>, meets_wmo <lgl>, normals <list>

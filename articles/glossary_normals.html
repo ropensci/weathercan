@@ -67,10 +67,8 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Climate Normals: Terms and Units</h1>
-                        <h4 data-toc-skip class="author">Steffi
-LaZerte</h4>
             
-            <h4 data-toc-skip class="date">2026-04-29</h4>
+            <h4 data-toc-skip class="date">2026-05-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/weathercan/blob/HEAD/vignettes/glossary_normals.Rmd" class="external-link"><code>vignettes/glossary_normals.Rmd</code></a></small>
       <div class="d-none name"><code>glossary_normals.Rmd</code></div>
@@ -81,21 +79,25 @@ LaZerte</h4>
 <p>This table shows details regarding original column (measurement)
 names and units of all climate normals measurements. It further provides
 links back to the ECCC glossary for more details.</p>
-<p>See the ECCC website on climate normals for more details: <a href="https://www.canada.ca/en/environment-climate-change/services/climate-change/canadian-centre-climate-services/display-download/technical-documentation-climate-normals.html" class="external-link uri">https://www.canada.ca/en/environment-climate-change/services/climate-change/canadian-centre-climate-services/display-download/technical-documentation-climate-normals.html</a></p>
-<p>For details on weather measurements, see the <code>glossary</code>
-vignette.</p>
-<div class="section level3">
-<h3 id="general-descriptions">General descriptions<a class="anchor" aria-label="anchor" href="#general-descriptions"></a>
-</h3>
+<p>See the ECCC documentation on climate normals for more details:</p>
+<ul>
+<li><a href="https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1991_2020_Calculation_Information.pdf" class="external-link">1991-2020</a></li>
+<li><a href="https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf" class="external-link">1981-2010</a></li>
+<li><a href="https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1971_2000_Calculation_Information.pdf" class="external-link">1971-2000</a></li>
+</ul>
+<p>For details on weather measurements, see the <a href="glossary.html">glossary</a> vignette.</p>
+<div class="section level2">
+<h2 id="general-descriptions">General descriptions<a class="anchor" aria-label="anchor" href="#general-descriptions"></a>
+</h2>
 <table class="table">
 <colgroup>
 <col width="6%">
-<col width="2%">
+<col width="1%">
 <col width="91%">
 </colgroup>
 <thead><tr class="header">
-<th align="left">ECCC_name</th>
-<th align="left">weathercan_name</th>
+<th align="left">ECCC</th>
+<th align="left">weathercan</th>
 <th align="left">description</th>
 </tr></thead>
 <tbody>
@@ -280,24 +282,1636 @@ surface around which water vapour can condense and create clouds.</td>
 </tbody>
 </table>
 </div>
-<div class="section level3">
-<h3 id="original-names-and-units">Original names and units<a class="anchor" aria-label="anchor" href="#original-names-and-units"></a>
-</h3>
+<div class="section level2">
+<h2 id="original-names-and-units">Original names and units<a class="anchor" aria-label="anchor" href="#original-names-and-units"></a>
+</h2>
 <p>These represent the original ECCC measurement names with units and
 their corresponding measurements in <code>weathercan</code>.</p>
-<center>
-<h4>
-Temperature
-
-</h4>
-</center>
+<p>Note that because the format of normals from 1991-2020 differs from
+that in previous years, we treat them separately.</p>
+</div>
+<div class="section level2">
+<h2 id="section">1991-2020<a class="anchor" aria-label="anchor" href="#section"></a>
+</h2>
+<div class="section level3">
+<h3 id="temperature">Temperature<a class="anchor" aria-label="anchor" href="#temperature"></a>
+</h3>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
-ECCC_name
+ECCC
 </th>
 <th style="text-align:left;">
-weathercan_name
+weathercan
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Daily Average (°C)
+</td>
+<td style="text-align:left;">
+daily_average_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+StdDev Mean Monthly Temperature (°C)
+</td>
+<td style="text-align:left;">
+stddev_mean_monthly_temperature_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Daily Maximum (°C)
+</td>
+<td style="text-align:left;">
+daily_maximum_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Daily Minimum (°C)
+</td>
+<td style="text-align:left;">
+daily_minimum_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Maximum Daily Mean (°C)
+</td>
+<td style="text-align:left;">
+maximum_daily_mean_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Maximum Daily Mean (°C) Date (yyyy/mm/dd)
+</td>
+<td style="text-align:left;">
+maximum_daily_mean_c_date
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Minimum Daily Mean (°C)
+</td>
+<td style="text-align:left;">
+minimum_daily_mean_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Minimum Daily Mean (°C) Date (yyyy/mm/dd)
+</td>
+<td style="text-align:left;">
+minimum_daily_mean_c_date
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Extreme Maximum (°C)
+</td>
+<td style="text-align:left;">
+extreme_maximum_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Extreme Maximum (°C) Date (yyyy/mm/dd)
+</td>
+<td style="text-align:left;">
+extreme_maximum_c_date
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Minimum Daily Maximum (°C)
+</td>
+<td style="text-align:left;">
+minimum_daily_maximum_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Minimum Daily Maximum (°C) Date (yyyy/mm/dd)
+</td>
+<td style="text-align:left;">
+minimum_daily_maximum_c_date
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Maximum Daily Minimum (°C)
+</td>
+<td style="text-align:left;">
+maximum_daily_minimum_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Maximum Daily Minimum (°C) Date (yyyy/mm/dd)
+</td>
+<td style="text-align:left;">
+maximum_daily_minimum_c_date
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Extreme Minimum (°C)
+</td>
+<td style="text-align:left;">
+extreme_minimum_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Extreme Minimum (°C) Date (yyyy/mm/dd)
+</td>
+<td style="text-align:left;">
+extreme_minimum_c_date
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="precipitation">Precipitation<a class="anchor" aria-label="anchor" href="#precipitation"></a>
+</h3>
+<table class="table">
+<thead><tr>
+<th style="text-align:left;">
+ECCC
+</th>
+<th style="text-align:left;">
+weathercan
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Rainfall (mm)
+</td>
+<td style="text-align:left;">
+rainfall_mm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Snowfall (cm)
+</td>
+<td style="text-align:left;">
+snowfall_cm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Precipitation (mm)
+</td>
+<td style="text-align:left;">
+precipitation_mm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Average Snow Depth (cm)
+</td>
+<td style="text-align:left;">
+average_snow_depth_cm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Median Snow Depth (cm)
+</td>
+<td style="text-align:left;">
+median_snow_depth_cm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Snow Depth at Month-end (cm)
+</td>
+<td style="text-align:left;">
+snow_depth_at_month_end_cm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Extreme Daily Rainfall (mm)
+</td>
+<td style="text-align:left;">
+extreme_daily_rainfall_mm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Extreme Daily Rainfall (mm) Date (yyyy/mm/dd)
+</td>
+<td style="text-align:left;">
+extreme_daily_rainfall_mm_date
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Extreme Daily Snowfall (cm)
+</td>
+<td style="text-align:left;">
+extreme_daily_snowfall_cm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Extreme Daily Snowfall (cm) Date (yyyy/mm/dd)
+</td>
+<td style="text-align:left;">
+extreme_daily_snowfall_cm_date
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Extreme Daily Precipitation (mm)
+</td>
+<td style="text-align:left;">
+extreme_daily_precipitation_mm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Extreme Daily Precipitation (mm) Date (yyyy/mm/dd)
+</td>
+<td style="text-align:left;">
+extreme_daily_precipitation_mm_date
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Extreme Snow Depth (cm)
+</td>
+<td style="text-align:left;">
+extreme_snow_depth_cm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Extreme Snow Depth (cm) Date (yyyy/mm/dd)
+</td>
+<td style="text-align:left;">
+extreme_snow_depth_cm_date
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="days-with-maximum-temperature">Days With Maximum Temperature<a class="anchor" aria-label="anchor" href="#days-with-maximum-temperature"></a>
+</h3>
+<table class="table">
+<thead><tr>
+<th style="text-align:left;">
+ECCC
+</th>
+<th style="text-align:left;">
+weathercan
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Days with Maximum Temperature &lt;= -30 °C
+</td>
+<td style="text-align:left;">
+days_with_maximum_temperature_&lt;=_30_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Maximum Temperature &lt;= -20 °C
+</td>
+<td style="text-align:left;">
+days_with_maximum_temperature_&lt;=_20_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Maximum Temperature &lt;= -10 °C
+</td>
+<td style="text-align:left;">
+days_with_maximum_temperature_&lt;=_10_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Maximum Temperature &lt;= 0 °C
+</td>
+<td style="text-align:left;">
+days_with_maximum_temperature_&lt;=_0_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Maximum Temperature &gt; 0 °C
+</td>
+<td style="text-align:left;">
+days_with_maximum_temperature_&gt;_0_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Maximum Temperature &gt; 10 °C
+</td>
+<td style="text-align:left;">
+days_with_maximum_temperature_&gt;_10_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Maximum Temperature &gt; 20 °C
+</td>
+<td style="text-align:left;">
+days_with_maximum_temperature_&gt;_20_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Maximum Temperature &gt; 30 °C
+</td>
+<td style="text-align:left;">
+days_with_maximum_temperature_&gt;_30_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Maximum Temperature &gt; 35 °C
+</td>
+<td style="text-align:left;">
+days_with_maximum_temperature_&gt;_35_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Maximum Temperature &gt; 40 °C
+</td>
+<td style="text-align:left;">
+days_with_maximum_temperature_&gt;_40_c
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="days-with-minimum-temperature">Days With Minimum Temperature<a class="anchor" aria-label="anchor" href="#days-with-minimum-temperature"></a>
+</h3>
+<table class="table">
+<thead><tr>
+<th style="text-align:left;">
+ECCC
+</th>
+<th style="text-align:left;">
+weathercan
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Days with Minimum Temperature &gt; 20 °C
+</td>
+<td style="text-align:left;">
+days_with_minimum_temperature_&gt;_20_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Minimum Temperature &gt; 10 °C
+</td>
+<td style="text-align:left;">
+days_with_minimum_temperature_&gt;_10_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Minimum Temperature &gt; 0 °C
+</td>
+<td style="text-align:left;">
+days_with_minimum_temperature_&gt;_0_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Minimum Temperature &lt;= 2 °C
+</td>
+<td style="text-align:left;">
+days_with_minimum_temperature_&lt;=_2_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Minimum Temperature &lt;= 0 °C
+</td>
+<td style="text-align:left;">
+days_with_minimum_temperature_&lt;=_0_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Minimum Temperature &lt; -2 °C
+</td>
+<td style="text-align:left;">
+days_with_minimum_temperature_&lt;_2_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Minimum Temperature &lt; -10 °C
+</td>
+<td style="text-align:left;">
+days_with_minimum_temperature_&lt;_10_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Minimum Temperature &lt; -20 °C
+</td>
+<td style="text-align:left;">
+days_with_minimum_temperature_&lt;_20_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Minimum Temperature &lt; -30 °C
+</td>
+<td style="text-align:left;">
+days_with_minimum_temperature_&lt;_30_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Minimum Temperature &lt; -40 °C
+</td>
+<td style="text-align:left;">
+days_with_minimum_temperature_&lt;_40_c
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="days-with-rainfall">Days With Rainfall<a class="anchor" aria-label="anchor" href="#days-with-rainfall"></a>
+</h3>
+<table class="table">
+<thead><tr>
+<th style="text-align:left;">
+ECCC
+</th>
+<th style="text-align:left;">
+weathercan
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Days with Rainfall &gt;= 0.2 mm
+</td>
+<td style="text-align:left;">
+days_with_rainfall_&gt;=_02_mm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Rainfall &gt;= 5 mm
+</td>
+<td style="text-align:left;">
+days_with_rainfall_&gt;=_5_mm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Rainfall &gt;= 10 mm
+</td>
+<td style="text-align:left;">
+days_with_rainfall_&gt;=_10_mm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Rainfall &gt;= 25 mm
+</td>
+<td style="text-align:left;">
+days_with_rainfall_&gt;=_25_mm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Rainfall &gt;= 50 mm
+</td>
+<td style="text-align:left;">
+days_with_rainfall_&gt;=_50_mm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Rainfall &gt;= 100 mm
+</td>
+<td style="text-align:left;">
+days_with_rainfall_&gt;=_100_mm
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="days-with-snowfall">Days With Snowfall<a class="anchor" aria-label="anchor" href="#days-with-snowfall"></a>
+</h3>
+<table class="table">
+<thead><tr>
+<th style="text-align:left;">
+ECCC
+</th>
+<th style="text-align:left;">
+weathercan
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Days with Snowfall &gt;= 0.2 cm
+</td>
+<td style="text-align:left;">
+days_with_snowfall_&gt;=_02_cm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Snowfall &gt;= 5 cm
+</td>
+<td style="text-align:left;">
+days_with_snowfall_&gt;=_5_cm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Snowfall &gt;= 10 cm
+</td>
+<td style="text-align:left;">
+days_with_snowfall_&gt;=_10_cm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Snowfall &gt;= 25 cm
+</td>
+<td style="text-align:left;">
+days_with_snowfall_&gt;=_25_cm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Snowfall &gt;= 40 cm
+</td>
+<td style="text-align:left;">
+days_with_snowfall_&gt;=_40_cm
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="days-with-precipitation">Days With Precipitation<a class="anchor" aria-label="anchor" href="#days-with-precipitation"></a>
+</h3>
+<table class="table">
+<thead><tr>
+<th style="text-align:left;">
+ECCC
+</th>
+<th style="text-align:left;">
+weathercan
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Days with Precipitation &gt;= 0.2 mm
+</td>
+<td style="text-align:left;">
+days_with_precipitation_&gt;=_02_mm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Precipitation &gt;= 1 mm
+</td>
+<td style="text-align:left;">
+days_with_precipitation_&gt;=_1_mm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Precipitation &gt;= 5 mm
+</td>
+<td style="text-align:left;">
+days_with_precipitation_&gt;=_5_mm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Precipitation &gt;= 10 mm
+</td>
+<td style="text-align:left;">
+days_with_precipitation_&gt;=_10_mm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Precipitation &gt;= 25 mm
+</td>
+<td style="text-align:left;">
+days_with_precipitation_&gt;=_25_mm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Precipitation &gt;= 50 mm
+</td>
+<td style="text-align:left;">
+days_with_precipitation_&gt;=_50_mm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Precipitation &gt;= 100 mm
+</td>
+<td style="text-align:left;">
+days_with_precipitation_&gt;=_100_mm
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="days-with-snow-depth">Days With Snow Depth<a class="anchor" aria-label="anchor" href="#days-with-snow-depth"></a>
+</h3>
+<table class="table">
+<thead><tr>
+<th style="text-align:left;">
+ECCC
+</th>
+<th style="text-align:left;">
+weathercan
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Days with Snow Depth &gt;= 1 cm
+</td>
+<td style="text-align:left;">
+days_with_snow_depth_&gt;=_1_cm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Snow Depth &gt;= 5 cm
+</td>
+<td style="text-align:left;">
+days_with_snow_depth_&gt;=_5_cm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Snow Depth &gt;= 10 cm
+</td>
+<td style="text-align:left;">
+days_with_snow_depth_&gt;=_10_cm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Snow Depth &gt;= 20 cm
+</td>
+<td style="text-align:left;">
+days_with_snow_depth_&gt;=_20_cm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Snow Depth &gt;= 30 cm
+</td>
+<td style="text-align:left;">
+days_with_snow_depth_&gt;=_30_cm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Snow Depth &gt;= 50 cm
+</td>
+<td style="text-align:left;">
+days_with_snow_depth_&gt;=_50_cm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Snow Depth &gt;= 100 cm
+</td>
+<td style="text-align:left;">
+days_with_snow_depth_&gt;=_100_cm
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="wind">Wind<a class="anchor" aria-label="anchor" href="#wind"></a>
+</h3>
+<table class="table">
+<thead><tr>
+<th style="text-align:left;">
+ECCC
+</th>
+<th style="text-align:left;">
+weathercan
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Wind Speed (km/h)
+</td>
+<td style="text-align:left;">
+wind_speed_kmh
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Most Frequent Wind Direction
+</td>
+<td style="text-align:left;">
+most_frequent_wind_direction
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Gusts &gt;= 90 km/h
+</td>
+<td style="text-align:left;">
+days_with_gusts_&gt;=_90_kmh
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Extreme Wind Speed (km/h)
+</td>
+<td style="text-align:left;">
+extreme_wind_speed_kmh
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Extreme Wind Speed (km/h) Date (yyyy/mm/dd hh:mi)
+</td>
+<td style="text-align:left;">
+extreme_wind_speed_kmh_date_hhmi
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Direction of Extreme Wind Speed
+</td>
+<td style="text-align:left;">
+direction_of_extreme_wind_speed
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Direction of Extreme Wind Speed Date (yyyy/mm/dd hh:mi)
+</td>
+<td style="text-align:left;">
+direction_of_extreme_wind_speed_date_hhmi
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Extreme Gust Speed (km/h)
+</td>
+<td style="text-align:left;">
+extreme_gust_speed_kmh
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Extreme Gust Speed (km/h) Date (yyyy/mm/dd)
+</td>
+<td style="text-align:left;">
+extreme_gust_speed_kmh_date
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Direction of Extreme Gust Speed
+</td>
+<td style="text-align:left;">
+direction_of_extreme_gust_speed
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Direction of Extreme Gust Speed Date (yyyy/mm/dd)
+</td>
+<td style="text-align:left;">
+direction_of_extreme_gust_speed_date
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Winds &gt;= 52 km/h
+</td>
+<td style="text-align:left;">
+days_with_winds_&gt;=_52_kmh
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Winds &gt;= 63 km/h
+</td>
+<td style="text-align:left;">
+days_with_winds_&gt;=_63_kmh
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="degree-days">Degree Days<a class="anchor" aria-label="anchor" href="#degree-days"></a>
+</h3>
+<table class="table">
+<thead><tr>
+<th style="text-align:left;">
+ECCC
+</th>
+<th style="text-align:left;">
+weathercan
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Degree Days Above 24 °C
+</td>
+<td style="text-align:left;">
+degree_days_above_24_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Degree Days Above 18 °C
+</td>
+<td style="text-align:left;">
+degree_days_above_18_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Degree Days Above 15 °C
+</td>
+<td style="text-align:left;">
+degree_days_above_15_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Degree Days Above 10 °C
+</td>
+<td style="text-align:left;">
+degree_days_above_10_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Degree Days Above 5 °C
+</td>
+<td style="text-align:left;">
+degree_days_above_5_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Degree Days Above 0 °C
+</td>
+<td style="text-align:left;">
+degree_days_above_0_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Degree Days Below 0 °C
+</td>
+<td style="text-align:left;">
+degree_days_below_0_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Degree Days Below 5 °C
+</td>
+<td style="text-align:left;">
+degree_days_below_5_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Degree Days Below 10 °C
+</td>
+<td style="text-align:left;">
+degree_days_below_10_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Degree Days Below 15 °C
+</td>
+<td style="text-align:left;">
+degree_days_below_15_c
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Degree Days Below 18 °C
+</td>
+<td style="text-align:left;">
+degree_days_below_18_c
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="quintiles">Quintiles<a class="anchor" aria-label="anchor" href="#quintiles"></a>
+</h3>
+<table class="table">
+<thead><tr>
+<th style="text-align:left;">
+ECCC
+</th>
+<th style="text-align:left;">
+weathercan
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Quintile 1 (Lower Bound)
+</td>
+<td style="text-align:left;">
+quintile_1_lower_bound
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Quintile 1 (Upper Bound)
+</td>
+<td style="text-align:left;">
+quintile_1_upper_bound
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Quintile 2 (Upper Bound)
+</td>
+<td style="text-align:left;">
+quintile_2_upper_bound
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Quintile 3 (Upper Bound)
+</td>
+<td style="text-align:left;">
+quintile_3_upper_bound
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Quintile 4 (Upper Bound)
+</td>
+<td style="text-align:left;">
+quintile_4_upper_bound
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Quintile 5 (Upper Bound)
+</td>
+<td style="text-align:left;">
+quintile_5_upper_bound
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="humidex">Humidex<a class="anchor" aria-label="anchor" href="#humidex"></a>
+</h3>
+<table class="table">
+<thead><tr>
+<th style="text-align:left;">
+ECCC
+</th>
+<th style="text-align:left;">
+weathercan
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Days with Humidex &gt;= 30
+</td>
+<td style="text-align:left;">
+days_with_humidex_&gt;=_30
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Humidex &gt;= 35
+</td>
+<td style="text-align:left;">
+days_with_humidex_&gt;=_35
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Humidex &gt;= 40
+</td>
+<td style="text-align:left;">
+days_with_humidex_&gt;=_40
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Extreme Humidex
+</td>
+<td style="text-align:left;">
+extreme_humidex
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Extreme Humidex Date (yyyy/mm/dd)
+</td>
+<td style="text-align:left;">
+extreme_humidex_date
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="wind-chill">Wind Chill<a class="anchor" aria-label="anchor" href="#wind-chill"></a>
+</h3>
+<table class="table">
+<thead><tr>
+<th style="text-align:left;">
+ECCC
+</th>
+<th style="text-align:left;">
+weathercan
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Days with Wind Chill &lt; -20
+</td>
+<td style="text-align:left;">
+days_with_wind_chill_&lt;_20
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Wind Chill &lt; -30
+</td>
+<td style="text-align:left;">
+days_with_wind_chill_&lt;_30
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Wind Chill &lt; -40
+</td>
+<td style="text-align:left;">
+days_with_wind_chill_&lt;_40
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Days with Wind Chill &lt; -50
+</td>
+<td style="text-align:left;">
+days_with_wind_chill_&lt;_50
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Extreme Wind Chill
+</td>
+<td style="text-align:left;">
+extreme_wind_chill
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Extreme Wind Chill Date (yyyy/mm/dd)
+</td>
+<td style="text-align:left;">
+extreme_wind_chill_date
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="humidity">Humidity<a class="anchor" aria-label="anchor" href="#humidity"></a>
+</h3>
+<table class="table">
+<thead><tr>
+<th style="text-align:left;">
+ECCC
+</th>
+<th style="text-align:left;">
+weathercan
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Average Vapour Pressure (kPa)
+</td>
+<td style="text-align:left;">
+average_vapour_pressure_kpa
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Average Relative Humidity - 0600LST (%)
+</td>
+<td style="text-align:left;">
+average_relative_humidity_0600lst
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Average Relative Humidity - 1500LST (%)
+</td>
+<td style="text-align:left;">
+average_relative_humidity_1500lst
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="pressure">Pressure<a class="anchor" aria-label="anchor" href="#pressure"></a>
+</h3>
+<table class="table">
+<thead><tr>
+<th style="text-align:left;">
+ECCC
+</th>
+<th style="text-align:left;">
+weathercan
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Average Station Pressure (kPa)
+</td>
+<td style="text-align:left;">
+average_station_pressure_kpa
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Average Sea Level Pressure (kPa)
+</td>
+<td style="text-align:left;">
+average_sea_level_pressure_kpa
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="frost-free">Frost-Free<a class="anchor" aria-label="anchor" href="#frost-free"></a>
+</h3>
+<table class="table">
+<thead><tr>
+<th style="text-align:left;">
+ECCC
+</th>
+<th style="text-align:left;">
+weathercan
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Average Date of Last Spring Frost
+</td>
+<td style="text-align:left;">
+average_date_of_last_spring_frost
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Average Date of First Fall Frost
+</td>
+<td style="text-align:left;">
+average_date_of_first_fall_frost
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Average Length of Frost-Free Period
+</td>
+<td style="text-align:left;">
+average_length_of_frost_free_period
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Probability of last temperature in spring &lt;= 0°C, on or after
+indicated date (10%)
+</td>
+<td style="text-align:left;">
+probability_of_last_temperature_in_spring_&lt;=_0c_on_or_after_indicated_date_10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Probability of last temperature in spring &lt;= 0°C, on or after
+indicated date (25%)
+</td>
+<td style="text-align:left;">
+probability_of_last_temperature_in_spring_&lt;=_0c_on_or_after_indicated_date_25
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Probability of last temperature in spring &lt;= 0°C, on or after
+indicated date (33%)
+</td>
+<td style="text-align:left;">
+probability_of_last_temperature_in_spring_&lt;=_0c_on_or_after_indicated_date_33
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Probability of last temperature in spring &lt;= 0°C, on or after
+indicated date (50%)
+</td>
+<td style="text-align:left;">
+probability_of_last_temperature_in_spring_&lt;=_0c_on_or_after_indicated_date_50
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Probability of last temperature in spring &lt;= 0°C, on or after
+indicated date (66%)
+</td>
+<td style="text-align:left;">
+probability_of_last_temperature_in_spring_&lt;=_0c_on_or_after_indicated_date_66
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Probability of last temperature in spring &lt;= 0°C, on or after
+indicated date (75%)
+</td>
+<td style="text-align:left;">
+probability_of_last_temperature_in_spring_&lt;=_0c_on_or_after_indicated_date_75
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Probability of last temperature in spring &lt;= 0°C, on or after
+indicated date (90%)
+</td>
+<td style="text-align:left;">
+probability_of_last_temperature_in_spring_&lt;=_0c_on_or_after_indicated_date_90
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Probability of first temperature in fall &lt;= 0°C, on or before
+indicated date (10%)
+</td>
+<td style="text-align:left;">
+probability_of_first_temperature_in_fall_&lt;=_0c_on_or_before_indicated_date_10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Probability of first temperature in fall &lt;= 0°C, on or before
+indicated date (25%)
+</td>
+<td style="text-align:left;">
+probability_of_first_temperature_in_fall_&lt;=_0c_on_or_before_indicated_date_25
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Probability of first temperature in fall &lt;= 0°C, on or before
+indicated date (33%)
+</td>
+<td style="text-align:left;">
+probability_of_first_temperature_in_fall_&lt;=_0c_on_or_before_indicated_date_33
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Probability of first temperature in fall &lt;= 0°C, on or before
+indicated date (50%)
+</td>
+<td style="text-align:left;">
+probability_of_first_temperature_in_fall_&lt;=_0c_on_or_before_indicated_date_50
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Probability of first temperature in fall &lt;= 0°C, on or before
+indicated date (66%)
+</td>
+<td style="text-align:left;">
+probability_of_first_temperature_in_fall_&lt;=_0c_on_or_before_indicated_date_66
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Probability of first temperature in fall &lt;= 0°C, on or before
+indicated date (75%)
+</td>
+<td style="text-align:left;">
+probability_of_first_temperature_in_fall_&lt;=_0c_on_or_before_indicated_date_75
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Probability of first temperature in fall &lt;= 0°C, on or before
+indicated date (90%)
+</td>
+<td style="text-align:left;">
+probability_of_first_temperature_in_fall_&lt;=_0c_on_or_before_indicated_date_90
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Probability of frost-free period equal to or less than indicated period
+(Days) (10%)
+</td>
+<td style="text-align:left;">
+probability_of_frost_free_period_equal_to_or_less_than_indicated_period_days_10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Probability of frost-free period equal to or less than indicated period
+(Days) (25%)
+</td>
+<td style="text-align:left;">
+probability_of_frost_free_period_equal_to_or_less_than_indicated_period_days_25
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Probability of frost-free period equal to or less than indicated period
+(Days) (33%)
+</td>
+<td style="text-align:left;">
+probability_of_frost_free_period_equal_to_or_less_than_indicated_period_days_33
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Probability of frost-free period equal to or less than indicated period
+(Days) (50%)
+</td>
+<td style="text-align:left;">
+probability_of_frost_free_period_equal_to_or_less_than_indicated_period_days_50
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Probability of frost-free period equal to or less than indicated period
+(Days) (66%)
+</td>
+<td style="text-align:left;">
+probability_of_frost_free_period_equal_to_or_less_than_indicated_period_days_66
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Probability of frost-free period equal to or less than indicated period
+(Days) (75%)
+</td>
+<td style="text-align:left;">
+probability_of_frost_free_period_equal_to_or_less_than_indicated_period_days_75
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Probability of frost-free period equal to or less than indicated period
+(Days) (90%)
+</td>
+<td style="text-align:left;">
+probability_of_frost_free_period_equal_to_or_less_than_indicated_period_days_90
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="days-with">Days With …<a class="anchor" aria-label="anchor" href="#days-with"></a>
+</h3>
+<table class="table">
+<thead><tr>
+<th style="text-align:left;">
+ECCC
+</th>
+<th style="text-align:left;">
+weathercan
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Freezing Rain or Freezing Drizzle
+</td>
+<td style="text-align:left;">
+freezing_rain_or_freezing_drizzle
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Thunderstorms
+</td>
+<td style="text-align:left;">
+thunderstorms
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hail
+</td>
+<td style="text-align:left;">
+hail
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Fog, Ice Fog, or Freezing Fog
+</td>
+<td style="text-align:left;">
+fog_ice_fog_or_freezing_fog
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Smoke or Haze
+</td>
+<td style="text-align:left;">
+smoke_or_haze
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="visibility">Visibility<a class="anchor" aria-label="anchor" href="#visibility"></a>
+</h3>
+<table class="table">
+<thead><tr>
+<th style="text-align:left;">
+ECCC
+</th>
+<th style="text-align:left;">
+weathercan
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Visibility &lt; 1 km (hours with)
+</td>
+<td style="text-align:left;">
+visibility_&lt;_1_km_hours_with
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Visibility 1 to 9 km (hours with)
+</td>
+<td style="text-align:left;">
+visibility_1_to_9_km_hours_with
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Visibility &gt; 9 km (hours with)
+</td>
+<td style="text-align:left;">
+visibility_&gt;_9_km_hours_with
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="cloud-amount">Cloud Amount<a class="anchor" aria-label="anchor" href="#cloud-amount"></a>
+</h3>
+<table class="table">
+<thead><tr>
+<th style="text-align:left;">
+ECCC
+</th>
+<th style="text-align:left;">
+weathercan
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Cloud Amount 0 to 2 tenths (hours with)
+</td>
+<td style="text-align:left;">
+cloud_amount_0_to_2_tenths_hours_with
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cloud Amount 3 to 7 tenths (hours with)
+</td>
+<td style="text-align:left;">
+cloud_amount_3_to_7_tenths_hours_with
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cloud Amount 8 to 10 tenths (hours with)
+</td>
+<td style="text-align:left;">
+cloud_amount_8_to_10_tenths_hours_with
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="snow-period">Snow-Period<a class="anchor" aria-label="anchor" href="#snow-period"></a>
+</h3>
+<table class="table">
+<thead><tr>
+<th style="text-align:left;">
+ECCC
+</th>
+<th style="text-align:left;">
+weathercan
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Average Date of Last Spring Snowfall
+</td>
+<td style="text-align:left;">
+average_date_of_last_spring_snowfall
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Average Date of First Fall Snowfall
+</td>
+<td style="text-align:left;">
+average_date_of_first_fall_snowfall
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section level2">
+<h2 id="and-1971-2000">1981-2010 and 1971-2000<a class="anchor" aria-label="anchor" href="#and-1971-2000"></a>
+</h2>
+<div class="section level3">
+<h3 id="temperature-1">Temperature<a class="anchor" aria-label="anchor" href="#temperature-1"></a>
+</h3>
+<table class="table">
+<thead><tr>
+<th style="text-align:left;">
+ECCC
+</th>
+<th style="text-align:left;">
+weathercan
 </th>
 </tr></thead>
 <tbody>
@@ -367,19 +1981,17 @@ temp_extreme_min_date
 </tr>
 </tbody>
 </table>
-<center>
-<h4>
-Precipitation
-
-</h4>
-</center>
+</div>
+<div class="section level3">
+<h3 id="precipitation-1">Precipitation<a class="anchor" aria-label="anchor" href="#precipitation-1"></a>
+</h3>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
-ECCC_name
+ECCC
 </th>
 <th style="text-align:left;">
-weathercan_name
+weathercan
 </th>
 </tr></thead>
 <tbody>
@@ -497,19 +2109,17 @@ snow_extreme_depth_date
 </tr>
 </tbody>
 </table>
-<center>
-<h4>
-Days With Maximum Temperature
-
-</h4>
-</center>
+</div>
+<div class="section level3">
+<h3 id="days-with-maximum-temperature-1">Days With Maximum Temperature<a class="anchor" aria-label="anchor" href="#days-with-maximum-temperature-1"></a>
+</h3>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
-ECCC_name
+ECCC
 </th>
 <th style="text-align:left;">
-weathercan_name
+weathercan
 </th>
 </tr></thead>
 <tbody>
@@ -563,19 +2173,17 @@ temp_max_days_&gt;35
 </tr>
 </tbody>
 </table>
-<center>
-<h4>
-Days With Minimum Temperature
-
-</h4>
-</center>
+</div>
+<div class="section level3">
+<h3 id="days-with-minimum-temperature-1">Days With Minimum Temperature<a class="anchor" aria-label="anchor" href="#days-with-minimum-temperature-1"></a>
+</h3>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
-ECCC_name
+ECCC
 </th>
 <th style="text-align:left;">
-weathercan_name
+weathercan
 </th>
 </tr></thead>
 <tbody>
@@ -637,19 +2245,17 @@ temp_min_days_&lt;-30
 </tr>
 </tbody>
 </table>
-<center>
-<h4>
-Days With Rainfall
-
-</h4>
-</center>
+</div>
+<div class="section level3">
+<h3 id="days-with-rainfall-1">Days With Rainfall<a class="anchor" aria-label="anchor" href="#days-with-rainfall-1"></a>
+</h3>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
-ECCC_name
+ECCC
 </th>
 <th style="text-align:left;">
-weathercan_name
+weathercan
 </th>
 </tr></thead>
 <tbody>
@@ -687,19 +2293,17 @@ rain_days_&gt;=25
 </tr>
 </tbody>
 </table>
-<center>
-<h4>
-Days With Snowfall
-
-</h4>
-</center>
+</div>
+<div class="section level3">
+<h3 id="days-with-snowfall-1">Days With Snowfall<a class="anchor" aria-label="anchor" href="#days-with-snowfall-1"></a>
+</h3>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
-ECCC_name
+ECCC
 </th>
 <th style="text-align:left;">
-weathercan_name
+weathercan
 </th>
 </tr></thead>
 <tbody>
@@ -737,19 +2341,17 @@ snow_days_&gt;=25
 </tr>
 </tbody>
 </table>
-<center>
-<h4>
-Days With Precipitation
-
-</h4>
-</center>
+</div>
+<div class="section level3">
+<h3 id="days-with-precipitation-1">Days With Precipitation<a class="anchor" aria-label="anchor" href="#days-with-precipitation-1"></a>
+</h3>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
-ECCC_name
+ECCC
 </th>
 <th style="text-align:left;">
-weathercan_name
+weathercan
 </th>
 </tr></thead>
 <tbody>
@@ -787,19 +2389,17 @@ precip_days_&gt;=25
 </tr>
 </tbody>
 </table>
-<center>
-<h4>
-Days With Snow Depth
-
-</h4>
-</center>
+</div>
+<div class="section level3">
+<h3 id="days-with-snow-depth-1">Days With Snow Depth<a class="anchor" aria-label="anchor" href="#days-with-snow-depth-1"></a>
+</h3>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
-ECCC_name
+ECCC
 </th>
 <th style="text-align:left;">
-weathercan_name
+weathercan
 </th>
 </tr></thead>
 <tbody>
@@ -837,19 +2437,17 @@ snow_depth_days_&gt;=20
 </tr>
 </tbody>
 </table>
-<center>
-<h4>
-Wind
-
-</h4>
-</center>
+</div>
+<div class="section level3">
+<h3 id="wind-1">Wind<a class="anchor" aria-label="anchor" href="#wind-1"></a>
+</h3>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
-ECCC_name
+ECCC
 </th>
 <th style="text-align:left;">
-weathercan_name
+weathercan
 </th>
 </tr></thead>
 <tbody>
@@ -935,19 +2533,17 @@ wind_days_&gt;=63
 </tr>
 </tbody>
 </table>
-<center>
-<h4>
-Degree Days
-
-</h4>
-</center>
+</div>
+<div class="section level3">
+<h3 id="degree-days-1">Degree Days<a class="anchor" aria-label="anchor" href="#degree-days-1"></a>
+</h3>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
-ECCC_name
+ECCC
 </th>
 <th style="text-align:left;">
-weathercan_name
+weathercan
 </th>
 </tr></thead>
 <tbody>
@@ -1041,19 +2637,17 @@ dd_below_18
 </tr>
 </tbody>
 </table>
-<center>
-<h4>
-Soil Temperature
-
-</h4>
-</center>
+</div>
+<div class="section level3">
+<h3 id="soil-temperature">Soil Temperature<a class="anchor" aria-label="anchor" href="#soil-temperature"></a>
+</h3>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
-ECCC_name
+ECCC
 </th>
 <th style="text-align:left;">
-weathercan_name
+weathercan
 </th>
 </tr></thead>
 <tbody>
@@ -1171,19 +2765,17 @@ soil_temp_pm_300
 </tr>
 </tbody>
 </table>
-<center>
-<h4>
-Evaporation
-
-</h4>
-</center>
+</div>
+<div class="section level3">
+<h3 id="evaporation">Evaporation<a class="anchor" aria-label="anchor" href="#evaporation"></a>
+</h3>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
-ECCC_name
+ECCC
 </th>
 <th style="text-align:left;">
-weathercan_name
+weathercan
 </th>
 </tr></thead>
 <tbody><tr>
@@ -1195,19 +2787,17 @@ lake_evaporation
 </td>
 </tr></tbody>
 </table>
-<center>
-<h4>
-Bright Sunshine
-
-</h4>
-</center>
+</div>
+<div class="section level3">
+<h3 id="bright-sunshine">Bright Sunshine<a class="anchor" aria-label="anchor" href="#bright-sunshine"></a>
+</h3>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
-ECCC_name
+ECCC
 </th>
 <th style="text-align:left;">
-weathercan_name
+weathercan
 </th>
 </tr></thead>
 <tbody>
@@ -1253,19 +2843,17 @@ sun_extreme_daily_date
 </tr>
 </tbody>
 </table>
-<center>
-<h4>
-Humidex
-
-</h4>
-</center>
+</div>
+<div class="section level3">
+<h3 id="humidex-1">Humidex<a class="anchor" aria-label="anchor" href="#humidex-1"></a>
+</h3>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
-ECCC_name
+ECCC
 </th>
 <th style="text-align:left;">
-weathercan_name
+weathercan
 </th>
 </tr></thead>
 <tbody>
@@ -1311,19 +2899,17 @@ hmdx_days_&gt;=40
 </tr>
 </tbody>
 </table>
-<center>
-<h4>
-Wind Chill
-
-</h4>
-</center>
+</div>
+<div class="section level3">
+<h3 id="wind-chill-1">Wind Chill<a class="anchor" aria-label="anchor" href="#wind-chill-1"></a>
+</h3>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
-ECCC_name
+ECCC
 </th>
 <th style="text-align:left;">
-weathercan_name
+weathercan
 </th>
 </tr></thead>
 <tbody>
@@ -1369,19 +2955,17 @@ wind_chill_days_&lt;-40
 </tr>
 </tbody>
 </table>
-<center>
-<h4>
-Humidity
-
-</h4>
-</center>
+</div>
+<div class="section level3">
+<h3 id="humidity-1">Humidity<a class="anchor" aria-label="anchor" href="#humidity-1"></a>
+</h3>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
-ECCC_name
+ECCC
 </th>
 <th style="text-align:left;">
-weathercan_name
+weathercan
 </th>
 </tr></thead>
 <tbody>
@@ -1411,19 +2995,17 @@ humidity_mean_1500LST
 </tr>
 </tbody>
 </table>
-<center>
-<h4>
-Pressure
-
-</h4>
-</center>
+</div>
+<div class="section level3">
+<h3 id="pressure-1">Pressure<a class="anchor" aria-label="anchor" href="#pressure-1"></a>
+</h3>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
-ECCC_name
+ECCC
 </th>
 <th style="text-align:left;">
-weathercan_name
+weathercan
 </th>
 </tr></thead>
 <tbody>
@@ -1445,19 +3027,17 @@ pressure_sea_mean
 </tr>
 </tbody>
 </table>
-<center>
-<h4>
-Radiation
-
-</h4>
-</center>
+</div>
+<div class="section level3">
+<h3 id="radiation">Radiation<a class="anchor" aria-label="anchor" href="#radiation"></a>
+</h3>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
-ECCC_name
+ECCC
 </th>
 <th style="text-align:left;">
-weathercan_name
+weathercan
 </th>
 </tr></thead>
 <tbody>
@@ -1559,19 +3139,17 @@ rad_extreme_net_rf4_date
 </tr>
 </tbody>
 </table>
-<center>
-<h4>
-Visibility (Hours With)
-
-</h4>
-</center>
+</div>
+<div class="section level3">
+<h3 id="visibility-hours-with">Visibility (Hours With)<a class="anchor" aria-label="anchor" href="#visibility-hours-with"></a>
+</h3>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
-ECCC_name
+ECCC
 </th>
 <th style="text-align:left;">
-weathercan_name
+weathercan
 </th>
 </tr></thead>
 <tbody>
@@ -1601,19 +3179,17 @@ visibility_&gt;9
 </tr>
 </tbody>
 </table>
-<center>
-<h4>
-Cloud Amount (Hours With)
-
-</h4>
-</center>
+</div>
+<div class="section level3">
+<h3 id="cloud-amount-hours-with">Cloud Amount (Hours With)<a class="anchor" aria-label="anchor" href="#cloud-amount-hours-with"></a>
+</h3>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
-ECCC_name
+ECCC
 </th>
 <th style="text-align:left;">
-weathercan_name
+weathercan
 </th>
 </tr></thead>
 <tbody>
@@ -1694,6 +3270,7 @@ prob_length_frost_free
 </tr>
 </tbody>
 </table>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

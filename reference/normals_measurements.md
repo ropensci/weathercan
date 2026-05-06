@@ -29,6 +29,10 @@ A data frame with 113,325 rows and 5 variables:
 
   Year range of climate normals
 
+- measurement_type:
+
+  Type of measurement (relevant only for 1990-2020)
+
 - measurement:
 
   Climate normals measurement available for this station

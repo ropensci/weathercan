@@ -8,14 +8,7 @@ columns (see `weather` for more details).
 ## Usage
 
 ``` r
-weather_interp(
-  data,
-  weather,
-  cols = "all",
-  interval = "hour",
-  na_gap = 2,
-  quiet = FALSE
-)
+weather_interp(data, weather, cols = "all", interval = "hour", na_gap = 2)
 ```
 
 ## Arguments
@@ -46,11 +39,6 @@ weather_interp(
   How many hours or days (depending on the interval) is it acceptable to
   skip over when interpolating over NAs (see details).
 
-- quiet:
-
-  Logical. Suppress all messages (including messages regarding missing
-  data, etc.)
-
 ## Details
 
 **Dealing with NA values** If there are NAs in the weather data,
@@ -61,18 +49,30 @@ the data between 9AM and 11AM will be interpolated. If, however, you
 have 9AM and 12PM, but not 10AM or 11AM, no interpolation will happen
 and data between 9AM and 12PM will be returned as NA.)
 
+@inheritSection weather_dl Verbosity
+
 ## Examples
 
 ``` r
 if (FALSE) { # check_eccc()
 
 # Weather data only
-head(kamloops)
+kamloops
 
 # Data about finch observations at RFID feeders in Kamloops, BC
-head(finches)
+finches
 
 # Match weather to finches
-finch_weather <- weather_interp(data = finches, weather = kamloops)
+
+# First line up the timezones
+# - Finches are in Pacific Time (inc. Daylight savings),
+#   Kamloops is in Pacific Time *without* daylight savings, but is marked as UTC for
+#   simplicity (see ?weather_dl for details)
+# - First we convert finches to remove daylight savings, then we mark as UTC
+finches <- dplyr::mutate(finches, time = lubridate::with_tz(time, "Etc/GMT+8"))
+finches <- dplyr::mutate(finches, time = lubridate::force_tz(time, "UTC"))
+
+# Then interpolate over the first 30 observations
+finch_weather <- weather_interp(data = finches[1:30,], weather = kamloops)
 }
 ```

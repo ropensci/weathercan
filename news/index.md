@@ -1,8 +1,24 @@
 # Changelog
 
-## weathercan 0.7.9
+## weathercan 1.0.0
 
 - Fix ECCC change to normals download query parameters again
+  ([\#207](https://github.com/ropensci/weathercan/issues/207))
+- Added access to 1991-2020 Climate normals
+  ([\#141](https://github.com/ropensci/weathercan/issues/141))
+  - Added caching functions to support downloading and caching the full
+    1991-2020 dataset
+    ([`cache_dir()`](https://docs.ropensci.org/weathercan/reference/cache_dir.md),
+    [`cache_remove()`](https://docs.ropensci.org/weathercan/reference/cache_remove.md))
+- No longer include stations data frame in weathercan, prompt user to
+  download always (ensures it’s up to date)
+- Add better message control via option `weathercan.verbosity` which can
+  be “standard” (default), “verbose” (extra progress messages) or
+  “quiet” (little to no messages).
+- Use cli for messaging
+  ([\#211](https://github.com/ropensci/weathercan/issues/211))
+- Add progress bars for downloads
+  ([\#58](https://github.com/ropensci/weathercan/issues/58))
 
 ## weathercan 0.7.8
 

@@ -130,3 +130,9 @@ Other contributors:
 
 - Everett Snieder <everett.snieder@gmail.com>
   ([ORCID](https://orcid.org/0000-0003-4997-3404)) \[contributor\]
+
+- Josh Persi <joshpersi@gmail.com>
+  ([ORCID](https://orcid.org/0000-0002-2700-6483)) \[contributor\]
+
+- Mahjabin Oyshi <oyshimahjabin3@gmail.com>
+  ([ORCID](https://orcid.org/0009-0000-7992-6727)) \[contributor\]

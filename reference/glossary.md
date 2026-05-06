@@ -20,11 +20,11 @@ A data frame with 77 rows and 5 variables:
 
   Data interval type, 'hour', 'day', or 'month'.
 
-- ECCC_name:
+- ECCC:
 
   Original column name when downloaded directly from ECCC
 
-- weathercan_name:
+- weathercan:
 
   R-compatible name given when downloaded with the
   [`weather_dl()`](https://docs.ropensci.org/weathercan/reference/weather_dl.md)

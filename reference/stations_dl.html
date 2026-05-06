@@ -61,7 +61,7 @@ compiled. This function may take a few minutes to run.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">stations_dl</span><span class="op">(</span>skip <span class="op">=</span> <span class="cn">NULL</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">stations_dl</span><span class="op">(</span>skip <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -71,15 +71,6 @@ compiled. This function may take a few minutes to run.</p>
 <dl><dt id="arg-skip">skip<a class="anchor" aria-label="anchor" href="#arg-skip"></a></dt>
 <dd><p>Numeric. Number of lines to skip at the beginning of the csv. If
 NULL, automatically derived.</p></dd>
-
-
-<dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
-<dd><p>Logical. Include progress messages</p></dd>
-
-
-<dt id="arg-quiet">quiet<a class="anchor" aria-label="anchor" href="#arg-quiet"></a></dt>
-<dd><p>Logical. Suppress all messages (including messages regarding
-missing data, etc.)</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -95,6 +86,7 @@ location use <code>options(weathercan.urls.normals = "your_new_url")</code>.</p>
 specified in <code>normals_1981_2010</code> and <code>normals_1971_2000</code>, respectively.</p>
 <p>The column <code>normals</code> represents the most current year range of climate
 normals (i.e. currently 1981-2010)</p>
+<p>@inheritSection weather_dl Verbosity</p>
     </div>
 
     <div class="section level2">

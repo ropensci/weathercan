@@ -131,9 +131,10 @@ information can be updated by running <code><a href="stations_dl.html">stations_
 <span class="r-in"><span><span class="fu"><a href="stations_meta.html">stations_meta</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Which Manitoba stations have *any* climate normals?</span></span></span>
+<span class="r-in"><span><span class="co"># Note `normals` is TRUE or FALSE, so we can included it as is for normals == TRUE</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">stations</span><span class="op">(</span><span class="op">)</span>, <span class="va">interval</span> <span class="op">==</span> <span class="st">"hour"</span>, <span class="va">normals</span> <span class="op">==</span> <span class="cn">TRUE</span>, <span class="va">prov</span> <span class="op">==</span> <span class="st">"MB"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">stations</span><span class="op">(</span><span class="op">)</span>, <span class="va">interval</span> <span class="op">==</span> <span class="st">"hour"</span>, <span class="va">normals</span>, <span class="va">prov</span> <span class="op">==</span> <span class="st">"MB"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>

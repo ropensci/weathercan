@@ -2,6 +2,10 @@
 
 ## All functions
 
+- [`cache_dir()`](https://docs.ropensci.org/weathercan/reference/cache_dir.md)
+  : Cache Directory
+- [`cache_remove()`](https://docs.ropensci.org/weathercan/reference/cache_remove.md)
+  : Remove cached directory and contents
 - [`check_eccc()`](https://docs.ropensci.org/weathercan/reference/check_eccc.md)
   : Check access to ECCC
 - [`codes`](https://docs.ropensci.org/weathercan/reference/codes.md) :
@@ -20,6 +24,8 @@
   : Daily weather data for Kamloops
 - [`normals_dl()`](https://docs.ropensci.org/weathercan/reference/normals_dl.md)
   : Download climate normals from Environment and Climate Change Canada
+- [`normals_file()`](https://docs.ropensci.org/weathercan/reference/normals_file.md)
+  : Location of the cached normals data
 - [`normals_measurements`](https://docs.ropensci.org/weathercan/reference/normals_measurements.md)
   : List of climate normals measurements for each station
 - [`pg`](https://docs.ropensci.org/weathercan/reference/pg.md) : Hourly
@@ -33,6 +39,10 @@
   : Show stations list meta data
 - [`stations_search()`](https://docs.ropensci.org/weathercan/reference/stations_search.md)
   : Search for stations by name or location
+- [`variables_normals_new`](https://docs.ropensci.org/weathercan/reference/variables_normals_new.md)
+  : Index of variables for new Climate Normals
+- [`variables_normals_old`](https://docs.ropensci.org/weathercan/reference/variables_normals_old.md)
+  : Index of variables for new Climate Normals
 - [`weather_dl()`](https://docs.ropensci.org/weathercan/reference/weather_dl.md)
   : Download weather data from Environment and Climate Change Canada
 - [`weather_interp()`](https://docs.ropensci.org/weathercan/reference/weather_interp.md)

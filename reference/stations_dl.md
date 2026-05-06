@@ -9,7 +9,7 @@ package was last compiled. This function may take a few minutes to run.
 ## Usage
 
 ``` r
-stations_dl(skip = NULL, verbose = FALSE, quiet = FALSE)
+stations_dl(skip = NULL)
 ```
 
 ## Arguments
@@ -18,15 +18,6 @@ stations_dl(skip = NULL, verbose = FALSE, quiet = FALSE)
 
   Numeric. Number of lines to skip at the beginning of the csv. If NULL,
   automatically derived.
-
-- verbose:
-
-  Logical. Include progress messages
-
-- quiet:
-
-  Logical. Suppress all messages (including messages regarding missing
-  data, etc.)
 
 ## Details
 
@@ -45,6 +36,8 @@ respectively.
 
 The column `normals` represents the most current year range of climate
 normals (i.e. currently 1981-2010)
+
+@inheritSection weather_dl Verbosity
 
 ## Examples
 

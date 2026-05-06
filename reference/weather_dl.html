@@ -63,15 +63,14 @@ more stations. For details and units, see the glossary vignette
 <span>  start <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  end <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  interval <span class="op">=</span> <span class="st">"hour"</span>,</span>
+<span>  months <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  trim <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  trim_by_stn <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  format <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  string_as <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  time_disp <span class="op">=</span> <span class="st">"none"</span>,</span>
-<span>  stn <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  encoding <span class="op">=</span> <span class="st">"UTF-8"</span>,</span>
-<span>  list_col <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  quiet <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  list_col <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -105,6 +104,13 @@ data frame or the <code><a href="stations_search.html">stations_search</a></code
 weather dataframe. Only applies if <code>format = TRUE</code></p></dd>
 
 
+<dt id="arg-trim-by-stn">trim_by_stn<a class="anchor" aria-label="anchor" href="#arg-trim-by-stn"></a></dt>
+<dd><p>Logical. Data from different stations are generally padded
+with NAs to have the same date range. If this isn't desirable, use <code>trim = TRUE</code> and <code>trim_by_stn = TRUE</code> to trim <code>NA</code>s from the start and end of each
+station. <code>trim_by_stn = FALSE</code> (default), only the sides of the entire
+range are trimmed.</p></dd>
+
+
 <dt id="arg-format">format<a class="anchor" aria-label="anchor" href="#arg-format"></a></dt>
 <dd><p>Logical. If TRUE, formats data for immediate use. If FALSE,
 returns data exactly as downloaded from Environment and Climate Change
@@ -121,11 +127,6 @@ numeric measurement with. See Details.</p></dd>
 <dd><p>Character. Either "none" (default) or "UTC". See details.</p></dd>
 
 
-<dt id="arg-stn">stn<a class="anchor" aria-label="anchor" href="#arg-stn"></a></dt>
-<dd><p>DEFUNCT. Now use <code><a href="stations_dl.html">stations_dl()</a></code> to update internal data and
-<code><a href="stations_meta.html">stations_meta()</a></code> to check the date it was last updated.</p></dd>
-
-
 <dt id="arg-encoding">encoding<a class="anchor" aria-label="anchor" href="#arg-encoding"></a></dt>
 <dd><p>Character. Text encoding for download.</p></dd>
 
@@ -133,15 +134,6 @@ numeric measurement with. See Details.</p></dd>
 <dt id="arg-list-col">list_col<a class="anchor" aria-label="anchor" href="#arg-list-col"></a></dt>
 <dd><p>Logical. Return data as nested data set? Defaults to FALSE.
 Only applies if <code>format = TRUE</code></p></dd>
-
-
-<dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
-<dd><p>Logical. Include progress messages</p></dd>
-
-
-<dt id="arg-quiet">quiet<a class="anchor" aria-label="anchor" href="#arg-quiet"></a></dt>
-<dd><p>Logical. Suppress all messages (including messages regarding
-missing data, etc.)</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -156,16 +148,17 @@ converts data to numeric where possible. If character strings are contained
 in traditionally numeric fields (e.g., weather speed may have values such
 as "&lt; 30"), they can be replaced with a character specified by <code>string_as</code>.
 The default is NA. Formatting also replaces data associated with certain
-flags with NA (M = Missing).</p>
+flags with NA (M = Missing), if they are not already marked as NA.</p>
 <p>Start and end date can be specified, but if not, it will default to the
 start and end date of the range (this could result in downloading a lot of
 data!).</p>
-<p>For hourly data, timezones are always "UTC", but the actual times are
-either local time (default; <code>time_disp = "none"</code>), or UTC (<code>time_disp = "UTC"</code>). When <code>time_disp = "none"</code>, times reflect the local time without
-daylight savings. This means that relative measures of time, such as
-"nighttime", "daytime", "dawn", and "dusk" are comparable among stations in
-different timezones. This is useful for comparing daily cycles. When
-<code>time_disp = "UTC"</code> the times are transformed into UTC timezone. Thus
+<p>For hourly data, timezones are always marked "UTC", but the actual times
+are either local time (default; <code>time_disp = "none"</code>), or UTC
+(<code>time_disp = "UTC"</code>). When <code>time_disp = "none"</code>, times reflect the local
+time without daylight savings. This means that relative measures of time,
+such as "nighttime", "daytime", "dawn", and "dusk" are comparable among
+stations in different timezones. This is useful for comparing daily cycles.
+When <code>time_disp = "UTC"</code> the times are transformed into UTC timezone. Thus
 midnight in Kamloops would register as 08:00:00 (Pacific time is 8 hours
 behind UTC). This is useful for tracking weather events through time, but
 will result in odd 'daily' measures of weather (e.g., data collected in the
@@ -183,6 +176,13 @@ is unlikely to change between files (i.e. dates), but some data may or may
 not be available depending on the date of the file (e.g., station operator
 was added as of April 1st 2018, so will be in all data which includes dates
 on or after April 2018).</p>
+    </div>
+    <div class="section level2">
+    <h2 id="verbosity">Verbosity<a class="anchor" aria-label="anchor" href="#verbosity"></a></h2>
+    <p>Verbosity (how 'chatty' weathercan is) can be specified using the option
+<code>weathercan.verbosity</code>. Which takes "standard" (default), "quiet" (suppress
+all messages including those regarding missing data, etc.), or "verbose"
+(extra progress messages).</p>
     </div>
 
     <div class="section level2">
