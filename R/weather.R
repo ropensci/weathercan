@@ -108,6 +108,7 @@ weather_dl <- function(
   start = NULL,
   end = NULL,
   interval = "hour",
+  months = NULL,
   trim = TRUE,
   trim_by_stn = FALSE,
   format = TRUE,
@@ -116,328 +117,107 @@ weather_dl <- function(
   encoding = "UTF-8",
   list_col = FALSE
 ) {
-  # Address as.POSIXct...
-  if (
-    (!is.null(start) &&
-      inherits(try(as.Date(start), silent = TRUE), "try-error")) ||
-      (!is.null(end) &&
-        inherits(try(as.Date(end), silent = TRUE), "try-error"))
-  ) {
-    wc_stop(
-      "'start' and 'end' must be either a standard date format ",
-      "(YYYY-MM-DD) or NULL"
+  check_dates(start, end)
+  check_int(interval, n = 1)
+
+  stn <- prep_stations(station_ids, interval) |>
+    prep_start_end(start, end) |>
+    prep_paging()
+
+  weather <- purrr::pmap(stn, \(...) {
+    weather_combine(
+      ...,
+      format = format,
+      time_disp = time_disp,
+      string_as = string_as,
+      encoding = encoding
     )
+  })
+  msg_fmt <- purrr::map(weather, "msg") |>
+    purrr::list_rbind()
+
+  weather <- purrr::map(weather, "data") |>
+    purrr::list_rbind() |>
+    weather_trim(format, trim, trim_by_stn) |>
+    weather_arrange() |>
+    weather_list_cols(interval, list_col, format)
+
+  # Messages
+  weather_msgs(station_ids, stn, weather, interval, start, end)
+  if (!nrow(weather)) {
+    return(weather)
   }
 
-  if (length(interval) > 1 || !(interval %in% c('hour', 'day', 'month'))) {
-    wc_stop("'interval' must be either 'hour', 'day', OR 'month'")
-  }
+  weather_fmt_msgs(msg_fmt)
 
-  stn <- stations_read()
+  # START HERE CHECK WHEN ONESTATION HAS DATA BUT NOT OTHER
 
-  check_int(interval)
+  # - List missing stations
+  # - format messages
 
-  w_all <- data.frame()
-  missing <- c()
-  end_dates <- c()
-  msg_fmt <- dplyr::tibble()
+  # for (s in station_ids) {
+  #   ## Check if station missing that interval
+  #   if (nrow(stn1) == 0) {
+  #     missing <- c(missing, s)
+  #     wc_progress("No data for station {s}")
+  #     next
+  #   }
+  # }
 
-  for (s in station_ids) {
-    wc_progress("Getting station: {s}")
+  ## Format data if requested
+  #     # Catch messages
+  # if (nrow(w$msg) > 0) {
+  #   msg_fmt <- dplyr::bind_rows(
+  #     dplyr::bind_cols(station_id = s, w$msg),
+  #     msg_fmt
+  #   )
+  # }
 
-    stn1 <- stn |>
-      dplyr::filter(
-        .data$station_id %in% s,
-        !is.na(.data$start),
-        .data$interval == !!interval
-      ) |>
-      dplyr::arrange(.data$interval)
+  # format stuff -----------------------------
+  ## Check if all missing, remove and message
+  # n <- c("time", "date", "year", "month", "day", "hour")
+  # temp <- dplyr::select(w, -dplyr::any_of(n))
 
-    ## Check if station missing that interval
-    if (nrow(stn1) == 0) {
-      if (length(station_ids) > 1) {
-        missing <- c(missing, s)
-        wc_progress("No data for station {s}")
-
-        next
-      } else {
-        wc_inform_df(
-          "There are no data for station {s} for this interval ({interval})\n",
-          df_title = "Available Station Data:",
-          df = dplyr::filter(stn, .data$station_id %in% s, !is.na(.data$start))
-        )
-
-        return(dplyr::tibble())
-      }
-    }
-
-    if (!lubridate::is.Date(stn1$start)) {
-      stn1 <- dplyr::mutate(
-        stn1,
-        start = lubridate::ymd(as.character(.data$start), truncated = 2),
-        start = lubridate::floor_date(.data$start, "year")
-      )
-    }
-    if (!lubridate::is.Date(stn1$end)) {
-      stn1 <- dplyr::mutate(
-        stn1,
-        end = lubridate::ymd(as.character(.data$end), truncated = 2),
-        end = lubridate::ceiling_date(.data$end, "year")
-      )
-    }
-    stn1 <- stn1 |>
-      dplyr::mutate(
-        end = replace(.data$end, .data$end > Sys.Date(), Sys.Date()),
-        int = lubridate::interval(.data$start, .data$end),
-        interval = factor(
-          .data$interval,
-          levels = c("hour", "day", "month"),
-          ordered = TRUE
-        )
-      )
-
-    if (is.null(start)) {
-      s_start <- stn1$start
-      msg_start <- "earliest date"
-    } else {
-      s_start <- as.Date(start)
-      if (s_start > Sys.Date()) {
-        s_start <- Sys.Date()
-      }
-      if (s_start < as.Date("1840-01-01")) {
-        s_start <- as.Date("1840-01-01")
-      } # Earliest date API will return
-      msg_start <- start
-    }
-
-    if (is.null(end)) {
-      s_end <- Sys.Date()
-    } else {
-      s_end <- as.Date(end)
-    }
-    msg_end <- as.character(s_end)
-
-    dates <- lubridate::interval(s_start, s_end)
-
-    if (lubridate::int_end(dates) < lubridate::int_start(dates)) {
-      if (length(station_ids) > 1) {
-        wc_inform("End date earlier than start date for station {s}")
-
-        end_dates <- c(end_dates, s)
-        next
-      } else {
-        wc_inform_df(
-          "The end date ({msg_end}) is earlier than the start date ",
-          "({as.character(s_start)}) for station {s} for this interval ",
-          "({interval})",
-          df_title = "Available Station Data:",
-          df = dplyr::filter(stn, .data$station_id %in% s, !is.na(.data$start))
-        )
-        return(dplyr::tibble())
-      }
-    }
-
-    if (interval == "hour") {
-      date_range <- seq(
-        lubridate::floor_date(s_start, unit = "month"),
-        lubridate::floor_date(s_end, unit = "month"),
-        by = dplyr::if_else(interval %in% c("hour"), "month", "year")
-      )
-    } else if (interval == "day") {
-      date_range <- seq(
-        lubridate::floor_date(s_start, unit = "year"),
-        lubridate::floor_date(s_end, unit = "year"),
-        by = "year"
-      )
-    } else if (interval == "month") {
-      # Monthly data always downloads the entire data set, but still needs full
-      # year/month/day data to be submitted
-      date_range <- lubridate::floor_date(s_start, unit = "year")
-    }
-
-    w <- weather_single(date_range, s, interval, encoding)
-
-    # Extract only most recent meta
-    meta <- meta_html(station_id = s, date = s_end, interval = interval) |>
-      meta_raw(encoding = encoding, interval = interval) |>
-      meta_format(s = s)
-
-    ## Format data if requested
-    if (format) {
-      wc_progress("Formatting station data: {s}")
-
-      w <- weather_format(
-        w,
-        meta = meta,
-        stn = stn,
-        interval = interval,
-        s_start = s_start,
-        s_end = s_end,
-        time_disp = time_disp,
-        string_as = string_as
-      )
-
-      # Catch messages
-      if (nrow(w$msg) > 0) {
-        msg_fmt <- dplyr::bind_rows(
-          dplyr::bind_cols(station_id = s, w$msg),
-          msg_fmt
-        )
-      }
-
-      # Get formatted data
-      w <- w$data
-
-      ## Check if all missing, remove and message
-      n <- c("time", "date", "year", "month", "day", "hour")
-      temp <- dplyr::select(w, -dplyr::any_of(n))
-
-      if (nrow(temp) == 0 || all(is.na(temp) | temp == "")) {
-        if (length(station_ids) > 1) {
-          wc_progress("No data for station {s}")
-          missing <- c(missing, s)
-          next
-        } else {
-          wc_inform_df(
-            "There are no data for station {s} in this time range ",
-            "({msg_start} to {msg_end}), for this interval ({interval})",
-            df_title = "Available Station Data:",
-            df = dplyr::filter(
-              stn,
-              .data$station_id %in% .env$s,
-              !is.na(.data$start)
-            )
-          )
-          return(dplyr::tibble())
-        }
-      }
-    }
-
-    ## Add header info
-    wc_progress("Adding header data: {s}")
-
-    if (nrow(w) > 0) {
-      w <- cbind(meta, w)
-    }
-
-    ## Fill missing headers with NA
-    w[names(m_names)[!names(m_names) %in% names(w)]] <- NA
-
-    w_all <- rbind(w_all, w)
-  }
-
-  if (nrow(w_all) > 0) {
-    ## Trim to available data provided it is formatted
-
-    if (trim) {
-      w_all <- weather_trim(w_all, format, trim_by_stn)
-    }
-
-    m <- names(m_names)[names(m_names) %in% names(w_all)]
-
-    ## Arrange
-    w_all <- dplyr::select(w_all, dplyr::one_of(m), dplyr::everything())
-
-    ## If list_col is TRUE and data is formatted
-    if (list_col && format) {
-      w_all <- weather_list_cols(w_all, interval, names = m)
-    }
-  }
-
-  # Return messages
-  if (length(missing) > 0) {
-    if (all(station_ids %in% missing)) {
-      type <- "all"
-    } else {
-      type <- "some"
-    }
-
-    wc_inform_df(
-      "There are no data for {type} stations ",
-      "({paste0(missing, collapse = ', ')}) in this time range ({msg_start} ",
-      "to {msg_end}) for this interval ({interval})",
-      df_title = "Available Station Data:",
-      df = dplyr::filter(
-        stn,
-        .data$station_id %in% .env$missing,
-        !is.na(.data$start)
-      )
-    )
-  }
-
-  if (length(end_dates) > 0) {
-    if (all(station_ids %in% missing)) {
-      type <- "all"
-    } else {
-      type <- "some"
-    }
-
-    wc_inform_df(
-      "The end dates ({msg_end}) are earlier than the start dates ({msg_start}) ",
-      "for {type} stations ({paste0(end_dates, collapse = ', ')}) ",
-      "for this interval ({interval})",
-      df_title = "Available Station Data:",
-      df = dplyr::filter(
-        stn,
-        .data$station_id %in% .env$end_dates,
-        !is.na(.data$start)
-      )
-    )
-  }
-  ## Return Format messages
-  if (nrow(msg_fmt) > 0) {
-    cols <- paste0(unique(msg_fmt$col), collapse = ", ")
-    stations_msg <- paste0(unique(msg_fmt$station_id), collapse = ", ")
-    wc_inform(
-      "Some variables have non-numeric values ({cols}) for stations: ",
-      stations_msg
-    )
-    if (all(is.na(msg_fmt$replace) | msg_fmt$replace != "no_replace")) {
-      wc_inform(
-        "Replaced all non-numeric entries with {msg_fmt$replace[1]}. ",
-        "Use 'string_as = NULL' to keep as characters (see ?weather_dl)."
-      )
-    } else {
-      wc_inform(
-        "Left all non-numeric entries as characters. ",
-        "Couldn't summarize these columns."
-      )
-    }
-
-    show <- msg_fmt |>
-      dplyr::select("station_id", "problems")
-
-    if (utils::packageVersion("tidyr") > "0.8.99") {
-      show <- tidyr::unnest(show, "problems")
-    } else {
-      show <- tidyr::unnest(show)
-    }
-
-    wc_progress(
-      "Examples:\n",
-      paste0("  ", utils::capture.output(show), collapse = "\n")
-    )
-  }
+  # if (nrow(temp) == 0 || all(is.na(temp) | temp == "")) {
+  #   if (length(station_ids) > 1) {
+  #     wc_progress("No data for station {s}")
+  #     missing <- c(missing, s)
+  #     next
+  #   } else {
+  #     wc_msg_df(
+  #       "There are no data for station {s} in this time range ",
+  #       "({msg_start} to {msg_end}), for this interval ({interval})",
+  #       df_title = "Available Station Data:",
+  #       df = dplyr::filter(
+  #         stn,
+  #         .data$station_id %in% .env$s,
+  #         !is.na(.data$start)
+  #       )
+  #     )
+  #     return(dplyr::tibble())
+  #   }
+  # }
+  #------------------------
 
   if (interval == "hour" && !getOption("weathercan.time.message")) {
     wc_inform(
       "As of weathercan v0.3.0 time display is either local time or UTC\n",
-      "See Details under ?weather_dl for more information.\n",
+      "See Details under {.help [{.fun weather_dl}](weather_dl)} for more information.\n",
       "This message is shown once per session"
     )
     options("weathercan.time.message" = TRUE)
   }
 
-  dplyr::as_tibble(w_all)
+  weather
 }
 
-weather_single <- function(date_range, s, interval, encoding) {
+weather_single <- function(station_id, date_range, interval, encoding) {
   w <- dplyr::tibble(date_range = date_range)
   w <- dplyr::mutate(
     w,
     html = purrr::map(
       .data$date_range,
-      \(d) weather_html(station_id = s, date = d, interval = interval),
+      \(d) weather_html(station_id = station_id, date = d, interval = interval),
       .progress = wc_noise("noisy")
     ),
     data = purrr::map(
@@ -549,8 +329,8 @@ weather_raw <- function(
 }
 
 
-weather_trim <- function(w, format, trim_by_stn) {
-  if (!format || nrow(w) == 0) {
+weather_trim <- function(w, format, trim, trim_by_stn) {
+  if (!trim || !format || nrow(w) == 0) {
     return(w)
   }
 
@@ -577,11 +357,15 @@ weather_trim <- function(w, format, trim_by_stn) {
       ))
     )
 
-    trim <- x$date[which(
+    keep <- x$date[which(
       rowSums(is.na(trimable) | trimable == "") != ncol(trimable)
     )]
 
-    x <- x[x$date >= min(trim) & x$date <= max(trim), ]
+    if (!length(keep)) {
+      return(dplyr::tibble())
+    }
+
+    x <- x[x$date >= min(keep) & x$date <= max(keep), ]
   }) |>
     purrr::list_rbind()
 
@@ -590,11 +374,11 @@ weather_trim <- function(w, format, trim_by_stn) {
 
 weather_format <- function(
   w,
-  stn,
-  meta,
+  station_id,
+  tz,
   interval = "hour",
-  s_start,
-  s_end,
+  start,
+  end,
   string_as = "NA",
   time_disp = NULL
 ) {
@@ -624,8 +408,7 @@ weather_format <- function(
   if (interval == "hour") {
     w <- dplyr::mutate(w, time = as.POSIXct(.data$time, tz = "UTC"))
     if (time_disp == "UTC") {
-      offset <- tz_hours(stn$tz[stn$station_id == meta$station_id[1]][1])
-      w <- dplyr::mutate(w, time = .data$time + lubridate::hours(offset))
+      w <- dplyr::mutate(w, time = .data$time + lubridate::hours(tz_hours(tz)))
     }
     w <- dplyr::mutate(w, date = lubridate::as_date(.data$time))
   }
@@ -720,7 +503,10 @@ weather_format <- function(
 
   if (any(warn)) {
     m <- paste0(names(num)[warn], collapse = ", ")
-    non_num <- dplyr::tibble(col = names(num)[warn])
+    non_num <- dplyr::tibble(
+      station_id = .env$station_id,
+      col = names(num)[warn]
+    )
     for (i in names(num)[warn]) {
       problems <- w[
         grep("<|>|\\)|\\(", w[[i]]),
@@ -795,36 +581,23 @@ weather_format <- function(
   }
 
   ## Trim to match date range
-  w <- dplyr::filter(w, .data$date >= s_start & .data$date <= s_end)
+  w <- dplyr::filter(w, .data$date >= start & .data$date <= end)
 
   list(data = w, msg = non_num)
 }
 
-weather_list_cols <- function(w_all, interval, names) {
-  w_all <- dplyr::as_tibble(w_all)
-  ## Appropriate grouping levels
-  if (utils::packageVersion("tidyr") > "0.8.99") {
-    col <- dplyr::case_when(
-      interval == "hour" ~ "date",
-      interval == "day" ~ "month",
-      interval == "month" ~ "year"
-    )
-
-    w_all <- tidyr::nest(w_all, key = -dplyr::one_of(names, col))
-  } else {
-    if (interval == "hour") {
-      w_all <- tidyr::nest(w_all, -dplyr::one_of(names), -"date")
-    }
-
-    if (interval == "day") {
-      w_all <- tidyr::nest(w_all, -dplyr::one_of(names), -"month")
-    }
-
-    if (interval == "month") {
-      w_all <- tidyr::nest(w_all, -dplyr::one_of(names), -"year")
-    }
+weather_list_cols <- function(w, interval, list_col, format) {
+  if (!list_col || !format) {
+    return(w)
   }
-  w_all
+
+  int_col <- dplyr::case_when(
+    interval == "hour" ~ "date",
+    interval == "day" ~ "month",
+    interval == "month" ~ "year"
+  )
+
+  tidyr::nest(w, data = -dplyr::any_of(c(names(m_names), int_col)))
 }
 
 meta_raw <- function(html, encoding = "UTF-8", interval, return = "meta") {
@@ -872,7 +645,7 @@ meta_raw <- function(html, encoding = "UTF-8", interval, return = "meta") {
   remove_sym(r)
 }
 
-meta_format <- function(meta, s) {
+meta_format <- function(meta, station_id) {
   m <- paste0("(", paste0(m_names, collapse = ")|("), ")")
 
   meta <- meta |>
@@ -885,10 +658,16 @@ meta_format <- function(meta, s) {
   meta |>
     dplyr::select(dplyr::all_of(m)) |>
     dplyr::mutate(
-      station_id = s,
+      station_id = station_id,
       prov = province[[.data$prov]],
       lat = as.numeric(as.character(.data$lat)),
       lon = as.numeric(as.character(.data$lon)),
       elev = as.numeric(as.character(.data$elev))
     )
+}
+
+meta_single <- function(station_id, end, interval, encoding) {
+  meta_html(station_id = station_id, date = end, interval = interval) |>
+    meta_raw(encoding = encoding, interval = interval) |>
+    meta_format(station_id = station_id)
 }

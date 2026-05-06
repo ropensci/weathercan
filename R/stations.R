@@ -73,7 +73,11 @@ stations_meta <- function() {
 
 stations_read <- function() {
   cache_stations_check()
-  wc_read(stations_file())
+  wc_read(stations_file()) |>
+    dplyr::mutate(
+      interval = factor(.data$interval, levels = c("hour", "day", "month"))
+    ) |>
+    dplyr::arrange(.data$prov, .data$station_id, .data$interval)
 }
 
 stations_file <- function() {
