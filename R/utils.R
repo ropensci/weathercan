@@ -35,24 +35,6 @@ na_tibble <- function(cols) {
     dplyr::as_tibble(.rows = 0)
 }
 
-get_check <- function(url, query = NULL, task = NULL) {
-  req <- httr2::request(url)
-  if (!is.null(query)) {
-    req <- httr2::req_url_query(req, !!!query)
-  }
-  req <- httr2::req_perform(req)
-
-  if (grepl("^https://climate.weather.gc.ca/error", req$url)) {
-    wc_stop("Service is currently down!")
-  } else if (any(grepl("error was found", httr2::resp_body_string(req)))) {
-    wc_stop(
-      "API could not fetch data with this query\n",
-      "Please, open an issue on https://github.com/ropensci/weathercan/issues and share ",
-      "the details of your attempted download."
-    )
-  }
-  req
-}
 
 min_na <- function(..., na.rm = TRUE) {
   l <- list(...)
@@ -121,4 +103,10 @@ pretty_names <- function(x) {
 
 wc_read <- function(path) {
   readr::read_csv(path, show_col_types = FALSE, progress = FALSE)
+}
+
+remove_sym <- function(df) {
+  dplyr::rename_with(df, \(x) {
+    stringr::str_remove_all(x, "\\u00BB|\\u00BF|\\u00EF|\\u00C2|\\u00B0")
+  })
 }

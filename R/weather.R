@@ -150,55 +150,6 @@ weather_dl <- function(
 
   weather_fmt_msgs(msg_fmt)
 
-  # START HERE CHECK WHEN ONESTATION HAS DATA BUT NOT OTHER
-
-  # - List missing stations
-  # - format messages
-
-  # for (s in station_ids) {
-  #   ## Check if station missing that interval
-  #   if (nrow(stn1) == 0) {
-  #     missing <- c(missing, s)
-  #     wc_progress("No data for station {s}")
-  #     next
-  #   }
-  # }
-
-  ## Format data if requested
-  #     # Catch messages
-  # if (nrow(w$msg) > 0) {
-  #   msg_fmt <- dplyr::bind_rows(
-  #     dplyr::bind_cols(station_id = s, w$msg),
-  #     msg_fmt
-  #   )
-  # }
-
-  # format stuff -----------------------------
-  ## Check if all missing, remove and message
-  # n <- c("time", "date", "year", "month", "day", "hour")
-  # temp <- dplyr::select(w, -dplyr::any_of(n))
-
-  # if (nrow(temp) == 0 || all(is.na(temp) | temp == "")) {
-  #   if (length(station_ids) > 1) {
-  #     wc_progress("No data for station {s}")
-  #     missing <- c(missing, s)
-  #     next
-  #   } else {
-  #     wc_msg_df(
-  #       "There are no data for station {s} in this time range ",
-  #       "({msg_start} to {msg_end}), for this interval ({interval})",
-  #       df_title = "Available Station Data:",
-  #       df = dplyr::filter(
-  #         stn,
-  #         .data$station_id %in% .env$s,
-  #         !is.na(.data$start)
-  #       )
-  #     )
-  #     return(dplyr::tibble())
-  #   }
-  # }
-  #------------------------
-
   if (interval == "hour" && !getOption("weathercan.time.message")) {
     wc_inform(
       "As of weathercan v0.3.0 time display is either local time or UTC\n",
@@ -211,463 +162,90 @@ weather_dl <- function(
   weather
 }
 
-weather_single <- function(station_id, date_range, interval, encoding) {
-  w <- dplyr::tibble(date_range = date_range)
-  w <- dplyr::mutate(
-    w,
-    html = purrr::map(
-      .data$date_range,
-      \(d) weather_html(station_id = station_id, date = d, interval = interval),
-      .progress = wc_noise("noisy")
-    ),
-    data = purrr::map(
-      .data$html,
-      \(w) weather_raw(w, encoding = encoding, header = TRUE),
-      .progress = wc_noise("noisy")
-    ),
-    n = purrr::map_int(.data$data, ncol)
-  )
+#' Process one stations worth of data
+#'
+#' Grab meta data, and all the weather data requested, combine and format.
+#'
+#' @param station_id Character. Station ID to collect data for.
+#' @param start_use Date. Start date, prepared by `prep_start_end()`
+#' @param end_use Date. End date, prepared by `prep_start_end()`
+#' @param pages Character. Dates (pages) to access from the API
+#' @param tz Character. Timezone of the weather data (local timezone w/o
+#'   daylight savings)
+#' @param interval Character. "hour", "day", "month"
+#' @param format Logical. Format the data?
+#' @param time_disp Character. Time to display "none" or "UTC" (see [weather_dl()]
+#'   details)
+#' @param string_as Character. Value to replace character strings with (see
+#'   weather_dl() details)
+#' @param encoding Character. Text encoding
+#' @param ... Only used to ignore extra columns when [weather_dl] passes data
+#'   frame through `purrr::pmap()`
+#'
+#' @returns List with 'data' = Weather data frame with metadata and 'msg' =
+#' formatting messages
+#'
+#' @noRd
 
-  w <- dplyr::filter(w, .data$n > 1) # Drop requests with no data
-  w <- dplyr::select(w, "data")
-
-  if (utils::packageVersion("tidyr") > "0.8.99") {
-    w <- tidyr::unnest(w, "data")
-  } else {
-    w <- tidyr::unnest(w)
-  }
-  w
-}
-
-
-get_html <- function(
+weather_combine <- function(
   station_id,
-  date = NULL,
-  interval = "hour",
-  format = "csv"
-) {
-  q <- list(
-    format = format,
-    stationID = station_id,
-    timeframe = ifelse(interval == "hour", 1, ifelse(interval == "day", 2, 3)),
-    Year = format(date, "%Y"),
-    Month = format(date, "%m"),
-    Day = "01",
-    submit = 'Download+Data'
-  )
-
-  get_check(
-    url = getOption("weathercan.urls.weather"),
-    query = q,
-    task = "access historical weather data"
-  )
-}
-
-weather_html <- function(station_id, date, interval = "hour") {
-  get_html(station_id, date, interval, format = "csv")
-}
-
-meta_html <- function(station_id, date, interval = "hour") {
-  get_html(station_id, date, interval, format = "txt")
-}
-
-remove_sym <- function(df) {
-  dplyr::rename_with(df, \(x) {
-    stringr::str_remove_all(x, "\\u00BB|\\u00BF|\\u00EF|\\u00C2|\\u00B0")
-  })
-}
-
-
-weather_raw <- function(
-  html,
-  skip = 0,
-  nrows = Inf,
-  header = TRUE,
-  encoding = "UTF-8"
-) {
-  raw <- httr2::resp_body_raw(html)
-
-  # Look for and remove BOM
-  if (
-    raw[1] == as.raw(0xef) &&
-      raw[2] == as.raw(0xbb) &&
-      raw[3] == as.raw(0xbf)
-  ) {
-    raw <- raw[4:length(raw)]
-  }
-
-  # Get number of columns
-  ncols <- readr::read_csv(
-    I(raw),
-    n_max = 1,
-    col_names = FALSE,
-    col_types = readr::cols(),
-    progress = FALSE
-  ) |>
-    ncol()
-  readr::local_edition(1)
-  suppressWarnings({
-    # when some data are missing, final columns not present
-    w <- readr::read_csv(
-      I(raw),
-      n_max = nrows,
-      skip = skip,
-      col_types = paste(rep("c", ncols), collapse = ""),
-      progress = FALSE
-    )
-  })
-  # Get rid of special symbols right away
-  w <- remove_sym(w)
-
-  # For some reason the flags "^" are replaced with "I",
-  # change back to match flags on ECCC website
-  w <- dplyr::mutate(
-    w,
-    dplyr::across(dplyr::ends_with("Flag"), \(x) gsub("^I$", "^", x))
-  )
-  w
-}
-
-
-weather_trim <- function(w, format, trim, trim_by_stn) {
-  if (!trim || !format || nrow(w) == 0) {
-    return(w)
-  }
-
-  wc_progress("Trimming missing values before and after")
-
-  if (trim_by_stn) {
-    temp <- dplyr::group_split(w, .data$station_id)
-  } else {
-    temp <- list(w)
-  }
-
-  w <- purrr::map(temp, \(x) {
-    trimable <- dplyr::select(
-      x,
-      -dplyr::any_of(c(
-        names(m_names),
-        "date",
-        "time",
-        "year",
-        "month",
-        "day",
-        "hour",
-        "qual"
-      ))
-    )
-
-    keep <- x$date[which(
-      rowSums(is.na(trimable) | trimable == "") != ncol(trimable)
-    )]
-
-    if (!length(keep)) {
-      return(dplyr::tibble())
-    }
-
-    x <- x[x$date >= min(keep) & x$date <= max(keep), ]
-  }) |>
-    purrr::list_rbind()
-
-  w
-}
-
-weather_format <- function(
-  w,
-  station_id,
+  start_use,
+  end_use,
+  pages,
   tz,
-  interval = "hour",
-  start,
-  end,
-  string_as = "NA",
-  time_disp = NULL
+  interval,
+  format,
+  time_disp,
+  string_as,
+  encoding,
+  ...
 ) {
-  w <- dplyr::select(
-    w,
-    -dplyr::any_of(c("Station Name", "Climate ID")),
-    -dplyr::contains("Latitude"),
-    -dplyr::contains("Longitude")
+  if (is.null(pages)) {
+    return(dplyr::tibble())
+  }
+
+  # Extract only most recent meta (i.e. end date)
+  wc_progress("Getting station: {station_id}")
+
+  wc_progress("Metadata", add = TRUE)
+  meta <- meta_single(
+    station_id = station_id,
+    end = end_use,
+    interval,
+    encoding
   )
 
-  ## Get names from stored name list
-  n <- w_names[[interval]]
-
-  ## Trim to match names in data
-  n <- n[n %in% names(w)]
-
-  w <- dplyr::rename(w, !!n)
-
-  if (interval == "day") {
-    w <- dplyr::mutate(w, date = as.Date(.data$date))
-  }
-  if (interval == "month") {
-    w <- dplyr::mutate(w, date = as.Date(paste0(.data$date, "-01")))
-  }
-
-  ## Get correct timezone
-  if (interval == "hour") {
-    w <- dplyr::mutate(w, time = as.POSIXct(.data$time, tz = "UTC"))
-    if (time_disp == "UTC") {
-      w <- dplyr::mutate(w, time = .data$time + lubridate::hours(tz_hours(tz)))
-    }
-    w <- dplyr::mutate(w, date = lubridate::as_date(.data$time))
-  }
-
-  ## Replace some flagged values with NA
-  w <- w |>
-    tidyr::gather(
-      key = "variable",
-      value = "value",
-      names(w)[
-        !(names(w) %in%
-          c("date", "year", "month", "day", "hour", "time", "qual", "weather"))
-      ]
-    ) |>
-    tidyr::separate(
-      "variable",
-      into = c("variable", "type"),
-      sep = "_flag",
-      fill = "right"
-    ) |>
-    dplyr::mutate(
-      type = replace(.data$type, .data$type == "", "flag"),
-      type = replace(.data$type, is.na(.data$type), "value")
-    ) |>
-    tidyr::spread("type", "value") |>
-    dplyr::mutate(
-      value = replace(.data$value, .data$value == "", NA), ## No data
-      value = replace(.data$value, .data$flag == "M", NA)
-    ) ## Missing
-
-  if ("qual" %in% names(w)) {
-    w <- dplyr::mutate(
+  wc_progress("Weather data", add = TRUE)
+  w <- weather_single(station_id, pages, interval, encoding)
+  if (format) {
+    wc_progress("Formatting", add = TRUE)
+    w <- weather_format(
       w,
-      # Convert to ascii
-      qual = stringi::stri_escape_unicode(.data$qual),
-      qual = replace(
-        .data$qual,
-        .data$qual == "\\u2020",
-        "Only preliminary quality checking"
-      ),
-      qual = replace(
-        .data$qual,
-        .data$qual == "\\u2021",
-        paste0(
-          "Partner data that is not subject",
-          " to review by the National ",
-          "Climate Archives"
-        )
-      )
-    )
-  }
-
-  w <- w |>
-    tidyr::gather(key = "type", value = "value", "flag", "value") |>
-    dplyr::mutate(
-      variable = replace(
-        .data$variable,
-        .data$type == "flag",
-        paste0(.data$variable[.data$type == "flag"], "_flag")
-      )
-    ) |>
-    dplyr::select("date", dplyr::everything(), -"type") |>
-    tidyr::spread("variable", "value")
-
-  ## Can we convert to numeric?
-  #w$wind_spd[c(54, 89, 92)] <- c(">3", ">5", ">10")
-
-  num <- apply(
-    dplyr::select(
-      w,
-      -dplyr::any_of(c(
-        "date",
-        "year",
-        "month",
-        "day",
-        "hour",
-        "time",
-        "qual",
-        "weather",
-        grep("flag", names(w), value = TRUE)
-      ))
-    ),
-    MARGIN = 2,
-    FUN = function(x) tryCatch(as.numeric(x), warning = function(w) w)
-  )
-
-  warn <- vapply(
-    num,
-    FUN = function(x) methods::is(x, "warning"),
-    FUN.VALUE = TRUE
-  )
-
-  if (any(warn)) {
-    m <- paste0(names(num)[warn], collapse = ", ")
-    non_num <- dplyr::tibble(
-      station_id = .env$station_id,
-      col = names(num)[warn]
-    )
-    for (i in names(num)[warn]) {
-      problems <- w[
-        grep("<|>|\\)|\\(", w[[i]]),
-        names(w) %in% c("date", "year", "month", "day", "hour", "time", i)
-      ]
-      if (nrow(problems) > 20) {
-        rows <- 20
-      } else {
-        rows <- nrow(problems)
-      }
-      non_num$problems <- list(problems[1:rows, ])
-    }
-    if (!is.null(string_as)) {
-      non_num$replace <- string_as
-      suppressWarnings({
-        valid_cols <- c(
-          "date",
-          "year",
-          "month",
-          "day",
-          "hour",
-          "time",
-          "qual",
-          "weather",
-          grep("flag", names(w), value = TRUE)
-        )
-
-        replacement <- apply(
-          dplyr::select(w, -dplyr::any_of(valid_cols)),
-          MARGIN = 2,
-          FUN = as.numeric
-        )
-
-        w[!(names(w) %in% valid_cols)] <- as.data.frame(replacement)
-      })
-    } else {
-      m <- paste0(names(num)[warn], collapse = ", ")
-
-      non_num <- dplyr::mutate(non_num, replace = "no_replace")
-
-      replace <- c(
-        "date",
-        "year",
-        "month",
-        "day",
-        "hour",
-        "time",
-        "qual",
-        "weather",
-        grep("flag", names(w), value = TRUE),
-        names(num)[warn]
-      )
-
-      w[!(names(w) %in% replace)] <- as.data.frame(num[!warn])
-    }
-  } else {
-    non_num <- data.frame()
-    w[
-      !(names(w) %in%
-        c(
-          "date",
-          "year",
-          "month",
-          "day",
-          "hour",
-          "time",
-          "qual",
-          "weather",
-          grep("flag", names(w), value = TRUE)
-        ))
-    ] <- as.data.frame(num)
-  }
-
-  ## Trim to match date range
-  w <- dplyr::filter(w, .data$date >= start & .data$date <= end)
-
-  list(data = w, msg = non_num)
-}
-
-weather_list_cols <- function(w, interval, list_col, format) {
-  if (!list_col || !format) {
-    return(w)
-  }
-
-  int_col <- dplyr::case_when(
-    interval == "hour" ~ "date",
-    interval == "day" ~ "month",
-    interval == "month" ~ "year"
-  )
-
-  tidyr::nest(w, data = -dplyr::any_of(c(names(m_names), int_col)))
-}
-
-meta_raw <- function(html, encoding = "UTF-8", interval, return = "meta") {
-  split <- httr2::resp_body_string(html, encoding = encoding) |>
-    stringr::str_split("\n", simplify = TRUE) |>
-    stringr::str_subset("^\r$", negate = TRUE)
-
-  if (return == "meta") {
-    i <- stringr::str_which(split, "If Local Standard Time|Legend")[1] - 1
-
-    r <- httr2::resp_body_string(
-      html,
-      encoding = encoding
-    ) |>
-      stringr::str_replace_all("(\\t)+", "\\\t") |>
-      I() |>
-      readr::read_tsv(
-        n_max = i,
-        col_names = FALSE,
-        col_types = readr::cols(),
-        progress = FALSE
-      )
-
-    if (ncol(r) > 2) {
-      wc_stop(
-        "Problems parsing metadata. Submit an issue at ",
-        "https://github.com/ropensci/weathercan/issues"
-      )
-    }
-  } else if (return == "legend") {
-    r <- httr2::resp_body_string(html, encoding = encoding) |>
-      stringr::str_replace_all("(\\t)+", "\\\t") |>
-      stringr::str_remove(
-        "\\*https\\:\\/\\/climate.weather.gc.ca\\/FAQ_e.html#Q5"
-      ) |>
-      I() |>
-      readr::read_tsv(
-        skip = stringr::str_which(split, "Legend") + 1,
-        col_names = FALSE,
-        col_types = readr::cols(),
-        progress = FALSE
-      )
-  }
-  # Get rid of any special symbols
-  remove_sym(r)
-}
-
-meta_format <- function(meta, station_id) {
-  m <- paste0("(", paste0(m_names, collapse = ")|("), ")")
-
-  meta <- meta |>
-    dplyr::mutate(X1 = stringr::str_extract(.data$X1, pattern = m)) |>
-    dplyr::filter(!is.na(.data$X1)) |>
-    tidyr::spread("X1", "X2")
-
-  m <- m_names[m_names %in% names(meta)]
-
-  meta |>
-    dplyr::select(dplyr::all_of(m)) |>
-    dplyr::mutate(
       station_id = station_id,
-      prov = province[[.data$prov]],
-      lat = as.numeric(as.character(.data$lat)),
-      lon = as.numeric(as.character(.data$lon)),
-      elev = as.numeric(as.character(.data$elev))
+      tz = tz,
+      interval = interval,
+      start = start_use,
+      end = end_use,
+      time_disp = time_disp,
+      string_as = string_as
     )
-}
+  } else {
+    w <- list(data = w, msg_fmt = data.frame())
+  }
 
-meta_single <- function(station_id, end, interval, encoding) {
-  meta_html(station_id = station_id, date = end, interval = interval) |>
-    meta_raw(encoding = encoding, interval = interval) |>
-    meta_format(station_id = station_id)
+  # Some stations return all NAs depending on time frame...
+  #  - If all missing values, omit
+  n <- c("time", "date", "year", "month", "day", "hour")
+  w_check <- dplyr::select(w$data, -dplyr::any_of(.env$n))
+  if (all(is.na(w_check))) {
+    w$data <- dplyr::tibble()
+  }
+
+  if (nrow(w$data) > 0) {
+    w$data <- dplyr::bind_cols(meta, w$data)
+    ## Fill missing headers with NA - Synchronizes older meta with new
+    w$data[names(m_names)[!names(m_names) %in% names(w$data)]] <- NA
+  }
+
+  w
 }
