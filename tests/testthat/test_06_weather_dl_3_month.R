@@ -53,23 +53,6 @@ test_that("weather (month) returns a data frame", {
 
 test_that("weather (month) no data fails nicely", {
   skip_on_cran()
-  expect_message(
-    w1 <- weather_dl(
-      station_ids = c(1275, 51423),
-      interval = "month",
-      start = "2012-01-01",
-      end = "2012-02-01"
-    ),
-    paste0(
-      "There are no data for some stations \\(51423\\) ",
-      "in this time range \\(2012-01-01 to 2012-02-01\\) ",
-      "for this interval \\(month\\)"
-    )
-  ) |>
-    expect_message("Available Station Data:") |>
-    expect_message("# A tibble") |>
-    expect_message("Some variables") |>
-    expect_message("Replaced all non-numeric")
 
   # Cached
   expect_message(
@@ -79,14 +62,33 @@ test_that("weather (month) no data fails nicely", {
       start = "2012-01-01",
       end = "2012-02-01"
     ),
-    "There are no data for station 51423 for this interval \\(month\\)"
+    "Data unavailable for all stations"
   ) |>
-    expect_message("Available Station Data:") |>
-    expect_message("# A tibble")
+    expect_message("51423") |>
+    expect_message("Available Station Data") |>
+    expect_message("station_id")
 
   expect_s3_class(w0, "data.frame")
   expect_length(w0, 0)
   expect_equal(nrow(w0), 0)
+
+  expect_message(
+    w1 <- weather_dl(
+      station_ids = c(1275, 51423),
+      interval = "month",
+      start = "2012-01-01",
+      end = "2012-02-01"
+    ),
+    "Data unavailable for some stations"
+  ) |>
+    expect_message("51423") |>
+    expect_message("Available Station Data") |>
+    expect_message("station_id") |>
+    expect_message("Formatting messages") |>
+    expect_message("Some variables") |>
+    expect_message("Replaced") |>
+    expect_message("Use 'string_as = NULL'")
+
   expect_s3_class(w1, "data.frame")
   expect_length(w1, 35)
   expect_equal(nrow(w1), 2)
@@ -98,12 +100,16 @@ test_that("weather (month) no data fails nicely", {
       start = "2017-01-01",
       end = "2017-02-01"
     ),
-    "There are no data for station 1274 in this time range \\(2017-01-01 to 2017-02-01\\)."
+    "Data unavailable for all stations"
   ) |>
-    expect_message("Available Station Data:") |>
-    expect_message("# A tibble")
+    expect_message("1274") |>
+    expect_message("Available Station Data") |>
+    expect_message("station_id")
 
-  #Cached
+  expect_s3_class(w0, "data.frame")
+  expect_length(w0, 0)
+  expect_equal(nrow(w0), 0)
+
   expect_message(
     w1 <- weather_dl(
       c(1274, 1275),
@@ -111,20 +117,12 @@ test_that("weather (month) no data fails nicely", {
       start = "2017-01-01",
       end = "2017-02-01"
     ),
-    paste0(
-      "There are no data for all stations ",
-      "\\(1274, 1275\\) in this time range ",
-      "\\(2017-01-01 to 2017-02-01\\)"
-    )
+    "Data unavailable for all stations"
   ) |>
-    expect_message("Available Station Data:") |>
-    expect_message("# A tibble") |>
-    expect_message("Some variables") |>
-    expect_message("Replaced all non-numeric")
+    expect_message("1274, 1275 \\(none for date range") |>
+    expect_message("Available Station Data") |>
+    expect_message("station_id")
 
-  expect_s3_class(w0, "data.frame")
-  expect_length(w0, 0)
-  expect_equal(nrow(w0), 0)
   expect_s3_class(w1, "data.frame")
   expect_length(w1, 0)
   expect_equal(nrow(w1), 0)
@@ -172,8 +170,11 @@ test_that("weather (month) verbose and quiet", {
       start = "2017-01-01",
       end = "2017-02-01"
     ),
-    "There are no data"
-  )
+    "Data unavailable for some stations"
+  ) |>
+    expect_message("51423 \\(none for interval month") |>
+    expect_message("Available Station Data:") |>
+    expect_message("station_id")
 
   withr::local_options("weathercan.verbosity" = "quiet")
   expect_silent(weather_dl(
@@ -184,21 +185,21 @@ test_that("weather (month) verbose and quiet", {
   ))
 
   withr::local_options("weathercan.verbosity" = "verbose")
-  expect_message(
-    weather_dl(
-      c(5401, 51423),
-      interval = "month",
-      start = "2017-01-01",
-      end = "2017-02-01"
-    ),
-    "Getting station"
+  weather_dl(
+    c(5401, 51423),
+    interval = "month",
+    start = "2017-01-01",
+    end = "2017-02-01"
   ) |>
+    expect_message("Getting station: 5401") |>
+    expect_message("Metadata") |>
+    expect_message("Weather data") |>
     expect_message("Formatting") |>
-    expect_message("Adding header") |>
-    expect_message("Getting station") |>
-    expect_message("No data") |>
-    expect_message("Trimming") |>
-    expect_message("There are no data")
+    expect_message("Trimming missing values") |>
+    expect_message("Data unavailable for some stations") |>
+    expect_message("51423 \\(none for interval month") |>
+    expect_message("Available Station Data:") |>
+    expect_message("station_id")
 })
 
 test_that("weather (month) handles data with different numbers of columns", {
@@ -232,28 +233,40 @@ test_that("weather (month) handles data with different numbers of columns", {
 
 test_that("weather (month) skips with message if end date < start date", {
   skip_on_cran()
-  # Cached
-  expect_message(
-    weather_dl(
-      station_ids = 27534,
-      start = "2005-01-31",
-      end = "2005-01-01",
-      interval = "month"
-    ),
-    "The end date"
+
+  weather_dl(
+    station_ids = 27534,
+    start = "2005-01-31",
+    end = "2005-01-01",
+    interval = "month"
   ) |>
+    expect_error("'end' date is earlier than the 'start' date")
+
+  weather_dl(station_ids = 27534, end = "1995-01-01", interval = "month") |>
+    expect_message("Data unavailable for all stations") |>
+    expect_message("27534 \\(none for date range") |>
     suppressMessages()
-  expect_message(
-    weather_dl(station_ids = 27534, end = "1995-01-01", interval = "month"),
-    "The end date"
-  ) |>
-    suppressMessages()
+
   expect_message(
     w <- weather_dl(c(27534, 4291), end = "1928-11-10", interval = "month"),
-    "End date earlier"
+    "Data unavailable for some stations"
   ) |>
+    expect_message("27534 \\(none for date range") |>
     suppressMessages()
+
   expect_true(nrow(w) > 0)
+})
+
+test_that("weather (month) message if no time range and no end", {
+  skip_on_cran()
+
+  expect_message(
+    weather_dl(station_ids = 5203, interval = "month", start = "2020-01-01"),
+    "Data unavailable for all stations"
+  ) |>
+    expect_message("none for date range 2020-01-01 to today") |>
+    expect_message("Available Station Data") |>
+    expect_message("station_id")
 })
 
 test_that("weather (month) crosses the year line", {
@@ -275,142 +288,26 @@ test_that("weather (month) crosses the year line", {
 
 # list_cols ---------------------------------------------------------------
 
-test_that("list_col=TRUE and interval=hour groups on the right level", {
-  skip_on_cran()
-  withr::local_options(list(
-    "weathercan.time.message" = TRUE,
-    "weathercan.verbosity" = "quiet"
-  ))
-
-  # Cached
-  if (packageVersion("tidyr") > "0.8.99") {
-    expect_equal(
-      ncol(
-        weather_dl(
-          station_ids = 51423,
-          start = "2014-01-01",
-          end = "2014-01-15",
-          interval = "hour"
-        ) |>
-          tidyr::nest(key = -tidyr::one_of(names(m_names), "date"))
-      ),
-      ncol(weather_dl(
-        station_ids = 51423,
-        start = "2014-01-01",
-        end = "2014-01-15",
-        interval = "hour",
-        list_col = TRUE
-      ))
-    )
-  } else {
-    expect_equal(
-      ncol(
-        weather_dl(
-          station_ids = 51423,
-          start = "2014-01-01",
-          end = "2014-01-15",
-          interval = "hour",
-        ) |>
-          tidyr::nest(-dplyr::one_of(names(m_names), "date"))
-      ),
-      ncol(weather_dl(
-        station_ids = 51423,
-        start = "2014-01-01",
-        end = "2014-01-15",
-        interval = "hour",
-        list_col = TRUE,
-      ))
-    )
-  }
-})
-
-test_that("list_col=TRUE and interval=day groups on the right level", {
+test_that("list_col=TRUE", {
   skip_on_cran()
   withr::local_options(list("weathercan.verbosity" = "quiet"))
 
-  if (packageVersion("tidyr") > "0.8.99") {
-    expect_equal(
-      ncol(
-        weather_dl(
-          station_ids = 51423,
-          start = "2014-01-01",
-          end = "2014-01-15",
-          interval = "day"
-        ) |>
-          tidyr::nest(key = -dplyr::one_of(names(m_names), "month"))
-      ),
-      ncol(weather_dl(
-        station_ids = 51423,
-        start = "2014-01-01",
-        end = "2014-01-15",
-        interval = "day",
-        list_col = TRUE
-      ))
-    )
-  } else {
-    expect_equal(
-      ncol(
-        weather_dl(
-          station_ids = 51423,
-          start = "2014-01-01",
-          end = "2014-01-15",
-          interval = "day"
-        ) |>
-          tidyr::nest(-dplyr::one_of(names(m_names)), -month)
-      ),
-      ncol(weather_dl(
-        station_ids = 51423,
-        start = "2014-01-01",
-        end = "2014-01-15",
-        interval = "day",
-        list_col = TRUE
-      ))
-    )
-  }
-})
-
-
-test_that("list_col=TRUE and interval=month groups on the right level", {
-  skip_on_cran()
-  withr::local_options(list("weathercan.verbosity" = "quiet"))
-
-  if (packageVersion("tidyr") > "0.8.99") {
-    expect_equal(
-      ncol(
-        weather_dl(
-          station_ids = 5401,
-          start = "2017-01-01",
-          end = "2017-01-15",
-          interval = "month"
-        ) |>
-          tidyr::nest(key = -dplyr::one_of(names(m_names), "year"))
-      ),
-      ncol(weather_dl(
+  expect_equal(
+    ncol(
+      weather_dl(
         station_ids = 5401,
         start = "2017-01-01",
         end = "2017-01-15",
-        interval = "month",
-        list_col = TRUE
-      ))
-    )
-  } else {
-    expect_equal(
-      ncol(
-        weather_dl(
-          station_ids = 5401,
-          start = "2017-01-01",
-          end = "2017-01-15",
-          interval = "month"
-        ) |>
-          tidyr::nest(-dplyr::one_of(names(m_names)), -year)
-      ),
-      ncol(weather_dl(
-        station_ids = 5401,
-        start = "2017-01-01",
-        end = "2017-01-15",
-        interval = "month",
-        list_col = TRUE
-      ))
-    )
-  }
+        interval = "month"
+      ) |>
+        tidyr::nest(data = -dplyr::any_of(c(names(m_names), "year")))
+    ),
+    ncol(weather_dl(
+      station_ids = 5401,
+      start = "2017-01-01",
+      end = "2017-01-15",
+      interval = "month",
+      list_col = TRUE
+    ))
+  )
 })

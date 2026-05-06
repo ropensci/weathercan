@@ -9,8 +9,8 @@ test_that("check_int() as expected", {
   expect_silent(check_int("hour"))
   expect_silent(check_int("day"))
   expect_silent(check_int("month"))
-  expect_error(check_int("h"), "'interval' can only be")
-  expect_error(check_int("year"), "'interval' can only be")
+  expect_error(check_int("h"), "'interval' can only contain")
+  expect_error(check_int("year"), "'interval' can only contain")
 })
 
 test_that("check_ids() as expected", {

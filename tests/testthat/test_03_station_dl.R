@@ -64,7 +64,10 @@ test_that("stations() /stations_meta() return data", {
   expect_type(s$prov, "character")
   expect_type(s$station_name, "character")
   expect_gt(nrow(s), 10)
-  expect_equal(unique(s$interval), c("day", "hour", "month"))
+  expect_equal(
+    unique(s$interval),
+    factor(c("hour", "day", "month"), levels = c("hour", "day", "month"))
+  )
 
   # Check content
   expect_equal(nrow(s[is.na(s$station_name), ]), 0)
@@ -279,6 +282,7 @@ test_that("stations_search returns normals only", {
 })
 
 test_that("stations_search checks arguments", {
+  withr::local_options(list("weathercan.normals.message" = TRUE))
   # Check each valid intervals
   expect_silent(stations_search("Brandon", interval = "hour"))
   expect_silent(stations_search("Brandon", interval = "day"))
@@ -290,6 +294,6 @@ test_that("stations_search checks arguments", {
   # Check invalid intervals
   expect_error(
     stations_search("Brandon", interval = "minute"),
-    "'interval' can only be 'hour', 'day', or 'month'"
+    "'interval' can only contain 'hour', 'day', or 'month'"
   )
 })
