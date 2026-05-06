@@ -174,7 +174,7 @@ normals_cached_fmt <- function(locs, normals_years = "1991-2020") {
   ) |>
     dplyr::filter(.data$LOCATION_NAME %in% locs) |>
     tidyr::pivot_longer(
-      cols = c(month.abb, "Year", "Code"),
+      cols = dplyr::all_of(c(month.abb, "Year", "Code")),
       names_to = "period"
     ) |>
     dplyr::rename_with(tolower) |>
@@ -206,7 +206,7 @@ normals_cached_fmt <- function(locs, normals_years = "1991-2020") {
     ) |>
     tidyr::pivot_wider(names_from = "normals_element")
 
-  # Pivote normals elements wide
+  # Pivot normals elements wide
   #  - add codes
   #  - update formats
   #  - rearrange to match original element order.
