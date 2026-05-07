@@ -16,7 +16,6 @@ prep_stations <- function(station_ids, interval) {
     ) |>
     # Formatting
     dplyr::mutate(
-      int = lubridate::interval(.data$start, .data$end),
       interval = factor(
         .data$interval,
         levels = c("hour", "day", "month"),
