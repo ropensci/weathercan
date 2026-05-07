@@ -1,13 +1,13 @@
 {
   "commit": {
-    "commit": "1dbfa07ef3b228ae5d68a2b1c1f1a39a8fa788c1",
+    "commit": "a8337cffa9b9273794ff9ad5ac9e0d3ca7ed84f9",
     "author": "Steffi LaZerte <steffi@steffi.ca>",
-    "time": "2026-05-07T21:29:06Z",
+    "time": "2026-05-07T22:20:29Z",
     "files": "NA",
     "merge": false,
-    "message": "Fix mocked cache tests\n"
+    "message": "More doc updates\n"
   },
   "repo": "https://github.com/ropensci/weathercan",
   "pkg": "weathercan",
-  "time": "2026-05-07T21:31:46Z"
+  "time": "2026-05-07T22:23:45Z"
 }

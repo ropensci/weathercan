@@ -46,30 +46,24 @@ We also include several practice data sets:
 
 - [`pg`](https://docs.ropensci.org/weathercan/reference/pg.md)
 
-As well as several vignettes available in the package and
+As well as several articles available
 [Online](https://docs.ropensci.org/weathercan/):
 
 - [General
-  Usage](https://docs.ropensci.org/weathercan/articles/weathercan.html):
-  [`vignette("weathercan", package = "weathercan")`](https://docs.ropensci.org/weathercan/articles/weathercan.md)
+  Usage](https://docs.ropensci.org/weathercan/articles/weathercan.html)
 
-- [Interpolating](https://docs.ropensci.org/weathercan/articles/interpolate_data.html):
-  `vignette("interpolation", package = "weathercan")`
+- [Interpolating](https://docs.ropensci.org/weathercan/articles/interpolate_data.html)
 
-- [Reproducibility](https://docs.ropensci.org/weathercan/articles/reproducibility.html):
-  [`vignette("reproducibility", package = "weathercan")`](https://docs.ropensci.org/weathercan/articles/reproducibility.md)
+- [Reproducibility](https://docs.ropensci.org/weathercan/articles/reproducibility.html)
 
 - [Flags and
-  Codes](https://docs.ropensci.org/weathercan/articles/flags.html):
-  [`vignette("flags", package = "weathercan")`](https://docs.ropensci.org/weathercan/articles/flags.md)
+  Codes](https://docs.ropensci.org/weathercan/articles/flags.html)
 
 - [Weather: Terms and
-  Units](https://docs.ropensci.org/weathercan/articles/glossary.html):
-  [`vignette("glossary", package = "weathercan")`](https://docs.ropensci.org/weathercan/articles/glossary.md)
+  Units](https://docs.ropensci.org/weathercan/articles/glossary.html)
 
 - [Climate Normals: Terms and
-  Units](https://docs.ropensci.org/weathercan/articles/glossary_normals.html):
-  [`vignette("glossary_normals", package = "weathercan")`](https://docs.ropensci.org/weathercan/articles/glossary_normals.md)
+  Units](https://docs.ropensci.org/weathercan/articles/glossary_normals.html)
 
 We also have some advanced articles:
 

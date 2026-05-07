@@ -15,7 +15,6 @@ stations_search(
   interval = c("hour", "day", "month"),
   normals_years = NULL,
   normals_only = NULL,
-  stn = NULL,
   starts_latest = NULL,
   ends_earliest = NULL
 )
@@ -55,14 +54,6 @@ stations_search(
 - normals_only:
 
   DEPRECATED. Logical. Return only stations with climate normals?
-
-- stn:
-
-  DEFUNCT. Now use
-  [`stations_dl()`](https://docs.ropensci.org/weathercan/reference/stations_dl.md)
-  to update internal data and
-  [`stations_meta()`](https://docs.ropensci.org/weathercan/reference/stations_meta.md)
-  to check the date it was last updated.
 
 - starts_latest:
 
