@@ -2,6 +2,7 @@
 #'
 #' @param interval Character vector of intervals to validate
 #' @param n Integer. Max number of intervals allowed
+#' @param .envir Environment for error reporting
 #'
 #' @returns Nothing, errors if not valid
 #'
@@ -93,10 +94,11 @@ check_ids <- function(ids, stn, type, .envir = rlang::caller_env()) {
         .envir = .envir
       )
     }
+
     wc_stop(
       "'{type}' {paste0(ids[!ids %in% stn[[type]]], collapse = ', ')} ",
       "are not present in the stations data frame",
-      .envir = .envir
+      call = .envir # call only, because 'type' is in this env, not the parent
     )
   }
 }
