@@ -110,3 +110,19 @@ remove_sym <- function(df) {
     stringr::str_remove_all(x, "\\u00BB|\\u00BF|\\u00EF|\\u00C2|\\u00B0")
   })
 }
+
+var_names <- function(names, variable = TRUE) {
+  # fmt: skip
+  non_var <- c(
+    "date", "year", "month", "day", "hour", "time", "qual", "weather",
+    stringr::str_subset(names, "_flag$")
+  )
+
+  if (variable) {
+    v <- names[!names %in% non_var]
+  } else {
+    v <- non_var
+  }
+
+  v
+}

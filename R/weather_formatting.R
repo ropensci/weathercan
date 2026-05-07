@@ -1,5 +1,19 @@
+#' Arrange columns
+#'
+#' Arrange by metadata (m_names) then by variables (w_names). Use any_of to
+#' catch all present, but not to error if missing. Used by [weather_dl()].
+#'
+#' @param w weather data frame
+#'
+#' @returns
+#'
+#' @noRd
 weather_arrange <- function(w) {
-  dplyr::relocate(w, dplyr::any_of(names(m_names)))
+  vars <- purrr::map(w_names, names) |>
+    unlist(use.names = FALSE) |>
+    unique()
+
+  dplyr::relocate(w, dplyr::any_of(c(names(m_names), "date", vars)))
 }
 
 
@@ -61,203 +75,89 @@ weather_format <- function(
     -dplyr::any_of(c("Station Name", "Climate ID")),
     -dplyr::contains("Latitude"),
     -dplyr::contains("Longitude")
-  )
+  ) |>
+    dplyr::rename(dplyr::any_of(w_names[[interval]]))
 
-  ## Get names from stored name list
-  n <- w_names[[interval]]
-
-  ## Trim to match names in data
-  n <- n[n %in% names(w)]
-
-  w <- dplyr::rename(w, !!n)
-
-  if (interval == "day") {
-    w <- dplyr::mutate(w, date = as.Date(.data$date))
-  }
-  if (interval == "month") {
-    w <- dplyr::mutate(w, date = as.Date(paste0(.data$date, "-01")))
-  }
-
+  # Format dates and times (for 'hour')
+  if (interval %in% c("day", "month")) {
+    w <- dplyr::mutate(w, date = lubridate::ymd(.data$date, truncated = 2))
+  } else if (interval == "hour") {
   ## Get correct timezone
-  if (interval == "hour") {
     w <- dplyr::mutate(w, time = as.POSIXct(.data$time, tz = "UTC"))
     if (time_disp == "UTC") {
       w <- dplyr::mutate(w, time = .data$time + lubridate::hours(tz_hours(tz)))
     }
-    w <- dplyr::mutate(w, date = lubridate::as_date(.data$time))
+    w <- dplyr::mutate(w, date = lubridate::as_date(.data$time)) |>
+      dplyr::relocate("date")
   }
 
-  ## Replace some flagged values with NA
-  w <- w |>
-    tidyr::gather(
-      key = "variable",
-      value = "value",
-      names(w)[
-        !(names(w) %in%
-          c("date", "year", "month", "day", "hour", "time", "qual", "weather"))
-      ]
-    ) |>
-    tidyr::separate(
-      "variable",
-      into = c("variable", "type"),
-      sep = "_flag",
-      fill = "right"
-    ) |>
-    dplyr::mutate(
-      type = replace(.data$type, .data$type == "", "flag"),
-      type = replace(.data$type, is.na(.data$type), "value")
-    ) |>
-    tidyr::spread("type", "value") |>
-    dplyr::mutate(
-      value = replace(.data$value, .data$value == "", NA), ## No data
-      value = replace(.data$value, .data$flag == "M", NA)
-    ) ## Missing
+  non_vars <- var_names(names(w), variable = FALSE)
+  vars <- var_names(names(w))
 
+  ## Replace values with "M" flags and "" values with NA
+  for (v in vars) {
+    w[[v]][w[[paste0(v, "_flag")]] == "M"] <- NA_character_ # If flag == "M"
+    w[[v]][w[[v]] == ""] <- NA_character_ # If value == ""
+  }
+
+  # Replace quality symbols
   if ("qual" %in% names(w)) {
+    fix <- c(
+      "\\u2020" = "Only preliminary quality checking",
+      "\\u2021" = "Partner data that is not subject to review by the National Climate Archives"
+    )
+
     w <- dplyr::mutate(
       w,
-      # Convert to ascii
-      qual = stringi::stri_escape_unicode(.data$qual),
-      qual = replace(
-        .data$qual,
-        .data$qual == "\\u2020",
-        "Only preliminary quality checking"
-      ),
-      qual = replace(
-        .data$qual,
-        .data$qual == "\\u2021",
-        paste0(
-          "Partner data that is not subject",
-          " to review by the National ",
-          "Climate Archives"
-        )
-      )
+      qual = stringi::stri_escape_unicode(.data$qual), # Convert to ascii
+      qual = stringr::str_replace_all(.data$qual, fix)
     )
   }
 
-  w <- w |>
-    tidyr::gather(key = "type", value = "value", "flag", "value") |>
+  # Fix/flag numeric conversions
+  num <- purrr::imap_lgl(w[vars], \(x, i) {
+    tryCatch(is.numeric(as.numeric(x)), warning = function(w) FALSE)
+  })
+  not_num <- names(num)[!num]
+  is_num <- names(num[num])
+
+  # Convert each possible type
+  # - Flags are all character
+  # - Month, Day are integers, Qual is character
+  types <- rlang::set_names(rep("c", length(vars)), paste0(vars, "_flag"))
+  types <- readr::cols("month" = "i", "day" = "i", "qual" = "c", !!!types)
+  w <- readr::type_convert(w, col_types = types)
+
+  # Capture problems for messages
+  non_num_deets <- dplyr::tibble(
+    station_id = .env$station_id,
+    col = not_num
+  ) |>
     dplyr::mutate(
-      variable = replace(
-        .data$variable,
-        .data$type == "flag",
-        paste0(.data$variable[.data$type == "flag"], "_flag")
-      )
-    ) |>
-    dplyr::select("date", dplyr::everything(), -"type") |>
-    tidyr::spread("variable", "value")
-
-  ## Can we convert to numeric?
-  #w$wind_spd[c(54, 89, 92)] <- c(">3", ">5", ">10")
-
-  num <- apply(
-    dplyr::select(
-      w,
-      -dplyr::any_of(c(
-        "date",
-        "year",
-        "month",
-        "day",
-        "hour",
-        "time",
-        "qual",
-        "weather",
-        grep("flag", names(w), value = TRUE)
-      ))
-    ),
-    MARGIN = 2,
-    FUN = function(x) tryCatch(as.numeric(x), warning = function(w) w)
-  )
-
-  warn <- vapply(
-    num,
-    FUN = function(x) methods::is(x, "warning"),
-    FUN.VALUE = TRUE
-  )
-
-  if (any(warn)) {
-    m <- paste0(names(num)[warn], collapse = ", ")
-    non_num <- dplyr::tibble(
-      station_id = .env$station_id,
-      col = names(num)[warn]
-    )
-    for (i in names(num)[warn]) {
-      problems <- w[
-        grep("<|>|\\)|\\(", w[[i]]),
-        names(w) %in% c("date", "year", "month", "day", "hour", "time", i)
-      ]
-      if (nrow(problems) > 20) {
-        rows <- 20
-      } else {
-        rows <- nrow(problems)
-      }
-      non_num$problems <- list(problems[1:rows, ])
-    }
-    if (!is.null(string_as)) {
-      non_num$replace <- string_as
-      suppressWarnings({
-        valid_cols <- c(
-          "date",
-          "year",
-          "month",
-          "day",
-          "hour",
-          "time",
-          "qual",
-          "weather",
-          grep("flag", names(w), value = TRUE)
-        )
-
-        replacement <- apply(
-          dplyr::select(w, -dplyr::any_of(valid_cols)),
-          MARGIN = 2,
-          FUN = as.numeric
-        )
-
-        w[!(names(w) %in% valid_cols)] <- as.data.frame(replacement)
+      problems = purrr::map(.data$col, \(v) {
+        dplyr::filter(w, stringr::str_detect(.data[[v]], "<|>|\\)|\\(")) |>
+          dplyr::select(dplyr::any_of(c("date", "time", v))) |>
+          dplyr::slice(1:20)
       })
-    } else {
-      m <- paste0(names(num)[warn], collapse = ", ")
+  )
 
-      non_num <- dplyr::mutate(non_num, replace = "no_replace")
+  # Fix problems?
+  if (!is.null(string_as)) {
+    # Force numeric - Replace characters like "<1" with NA
+    non_num_deets$replace <- string_as
 
-      replace <- c(
-        "date",
-        "year",
-        "month",
-        "day",
-        "hour",
-        "time",
-        "qual",
-        "weather",
-        grep("flag", names(w), value = TRUE),
-        names(num)[warn]
-      )
-
-      w[!(names(w) %in% replace)] <- as.data.frame(num[!warn])
-    }
+    suppressWarnings(
+      w <- dplyr::mutate(w, dplyr::across(dplyr::any_of(vars), as.numeric))
+    )
   } else {
-    non_num <- data.frame()
-    w[
-      !(names(w) %in%
-        c(
-          "date",
-          "year",
-          "month",
-          "day",
-          "hour",
-          "time",
-          "qual",
-          "weather",
-          grep("flag", names(w), value = TRUE)
-        ))
-    ] <- as.data.frame(num)
+    # Do not force
+    non_num_deets$replace <- "no_replace"
   }
 
-  ## Trim to match date range
-  w <- dplyr::filter(w, .data$date >= start & .data$date <= end)
+  ## Trim to match date range and months
+  w <- dplyr::filter(w, .data$date >= .env$start & .data$date <= .env$end)
 
-  list(data = w, msg = non_num)
+  list(data = w, msg = non_num_deets)
 }
 
 weather_list_cols <- function(w, interval, list_col, format) {

@@ -6,6 +6,10 @@
 - Add better message control via option `weathercan.verbosity` which can be "standard" (default), "verbose" (extra progress messages) or "quiet" (little to no messages). 
 - Use cli for messaging (#211)
 - Add progress bars for downloads (#58)
+- Rewrite formatting functions
+  - Increases speed
+  - Columns have better types (e.g., year, month, day all numeric now)
+  - Column order now reflects original data
 
 
 # weathercan 0.7.8
