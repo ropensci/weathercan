@@ -19,6 +19,12 @@
   ([\#211](https://github.com/ropensci/weathercan/issues/211))
 - Add progress bars for downloads
   ([\#58](https://github.com/ropensci/weathercan/issues/58))
+- Rewrite formatting functions
+  - Increases speed
+  - Columns have better types (e.g., year, month, day all numeric now)
+  - Column order now reflects original data
+- Add option to download only specific months
+  ([\#68](https://github.com/ropensci/weathercan/issues/68))
 
 ## weathercan 0.7.8
 

@@ -1,13 +1,13 @@
 {
   "commit": {
-    "commit": "436925fb2bd61e4a699850c6063e86f81564adb5",
+    "commit": "fff89ebea9c8d6fd7655240c3cda619d72128933",
     "author": "Steffi LaZerte <steffi@steffi.ca>",
-    "time": "2026-05-06T20:59:47Z",
+    "time": "2026-05-07T20:36:54Z",
     "files": "NA",
     "merge": false,
-    "message": "Housekeeping\n"
+    "message": "Add option to fetch weather data by month (Fixes #68)\n"
   },
   "repo": "https://github.com/ropensci/weathercan",
   "pkg": "weathercan",
-  "time": "2026-05-06T21:04:21Z"
+  "time": "2026-05-07T20:40:08Z"
 }
