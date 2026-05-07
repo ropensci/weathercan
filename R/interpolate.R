@@ -247,7 +247,7 @@ approx_na_rm <- function(x, y, xout, na_gap = NULL) {
     if (lubridate::is.Date(x) || lubridate::is.POSIXct(x)) {
       if (!lubridate::is.period(na_gap)) {
         wc_stop(
-          "With date/time data in x, na_gap must be a lubridate ",
+          "With date/time data in x, `na_gap` must be a lubridate ",
           "period object"
         )
       }
@@ -276,7 +276,7 @@ approx_na_rm <- function(x, y, xout, na_gap = NULL) {
       new$y[missing] <- NA
     } else if (is.numeric(x)) {
       if (lubridate::is.period(na_gap) || !is.numeric(na_gap)) {
-        wc_stop("With numeric x, na_gap must also be numeric")
+        wc_stop("With numeric x, `na_gap` must also be numeric")
       }
 
       x <- x[!is.na(y)]
@@ -300,7 +300,7 @@ approx_na_rm <- function(x, y, xout, na_gap = NULL) {
       new$y[missing] <- NA
     }
   } else if (anyNA(y) && is.null(na_gap)) {
-    wc_stop("Missing values in y but no na_gap set")
+    wc_stop("Missing values in y but no `na_gap` set")
   }
 
   new
