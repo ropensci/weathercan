@@ -1,3 +1,14 @@
+#' Prepare stations data for weather download
+#'
+#' Filters stations by station IDs and interval, converts start/end to dates.
+#'
+#' @param station_ids Character/Numeric vector. Station IDs to prepare
+#' @param interval Character. "hour", "day", or "month"
+#'
+#' @returns Tibble of prepared stations data with date ranges
+#'
+#' @noRd
+
 prep_stations <- function(station_ids, interval) {
   stn <- stations_read() |>
     dplyr::filter(
@@ -25,6 +36,21 @@ prep_stations <- function(station_ids, interval) {
   stn
 }
 
+#' Prepare start and end dates for weather download
+#'
+#' Processes start and end dates for each station, handling NULL values,
+#' date limits, and detecting invalid date ranges.
+#'
+#' @param stn Data frame. Prepared stations data
+#' @param start Date. Requested start date for download or NULL for earliest
+#'   available
+#' @param end Date. Requested end date for download or NULL for today
+#'
+#' @returns Tibble of stations data with start_use, end_use, and labels for
+#'   later messages
+#'
+#' @noRd
+
 prep_start_end <- function(stn, start, end) {
   # Check start/ends
   min_dt <- as.Date("1840-01-01") # Earliest date API will return
@@ -51,6 +77,18 @@ prep_start_end <- function(stn, start, end) {
 
   stn
 }
+
+#' Prepare pagination for weather download
+#'
+#' Creates sequences of dates for paginated API requests based on interval
+#' (hourly by month, daily by year, monthly downloads full dataset).
+#'
+#' @param stn Data frame. Stations data with start_use and end_use dates
+#' @param months Numeric vector. Optional months to filter for hourly data
+#'
+#' @returns Tibble of stations data with pages column containing date sequences
+#'
+#' @noRd
 
 prep_paging <- function(stn, months) {
   stn |>

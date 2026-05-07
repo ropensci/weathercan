@@ -1,6 +1,6 @@
 #' Easy downloading of weather data from Environment and Climate Change Canada
 #'
-#' \code{weathercan} is an R package for simplifying the downloading of
+#' `weathercan` is an R package for simplifying the downloading of
 #' Historical Climate Data from the Environment and Climate Change Canada (ECCC)
 #' website (<https://climate.weather.gc.ca>)
 #'
@@ -33,14 +33,14 @@
 #'  - [`kamloops_day`]
 #'  - [`pg`]
 #'
-#' As well as several vignettes available in the package and [Online](https://docs.ropensci.org/weathercan/):
+#' As well as several articles available [Online](https://docs.ropensci.org/weathercan/):
 #'
-#'  - [General Usage](https://docs.ropensci.org/weathercan/articles/weathercan.html): `vignette("weathercan", package = "weathercan")`
-#'  - [Interpolating](https://docs.ropensci.org/weathercan/articles/interpolate_data.html): `vignette("interpolation", package = "weathercan")`
-#'  - [Reproducibility](https://docs.ropensci.org/weathercan/articles/reproducibility.html): `vignette("reproducibility", package = "weathercan")`
-#'  - [Flags and Codes](https://docs.ropensci.org/weathercan/articles/flags.html): `vignette("flags", package = "weathercan")`
-#'  - [Weather: Terms and Units](https://docs.ropensci.org/weathercan/articles/glossary.html): `vignette("glossary", package = "weathercan")`
-#'  - [Climate Normals: Terms and Units](https://docs.ropensci.org/weathercan/articles/glossary_normals.html): `vignette("glossary_normals", package = "weathercan")`
+#'  - [General Usage](https://docs.ropensci.org/weathercan/articles/weathercan.html)
+#'  - [Interpolating](https://docs.ropensci.org/weathercan/articles/interpolate_data.html)
+#'  - [Reproducibility](https://docs.ropensci.org/weathercan/articles/reproducibility.html)
+#'  - [Flags and Codes](https://docs.ropensci.org/weathercan/articles/flags.html)
+#'  - [Weather: Terms and Units](https://docs.ropensci.org/weathercan/articles/glossary.html)
+#'  - [Climate Normals: Terms and Units](https://docs.ropensci.org/weathercan/articles/glossary_normals.html)
 #'
 #' We also have some advanced articles:
 #'
