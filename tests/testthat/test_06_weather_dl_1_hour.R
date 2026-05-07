@@ -173,6 +173,18 @@ test_that("weather (hour) trims NAs", {
   )
 })
 
+test_that("weather_dl hour filters by month", {
+  skip_on_cran()
+
+  w <- weather_dl(
+    station_ids = 51423,
+    start = "2014-01-01",
+    end = "2015-10-31",
+    months = c(1, 10)
+  )
+  expect_equal(unique(w$month), c(1, 10))
+})
+
 test_that("weather (hour) no data fails nicely", {
   skip_on_cran()
 

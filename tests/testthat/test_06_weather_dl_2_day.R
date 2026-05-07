@@ -135,6 +135,19 @@ test_that("weather (day) trims NAs", {
   )
 })
 
+test_that("weather_dl month filters by month", {
+  skip_on_cran()
+
+  w <- weather_dl(
+    station_ids = 51423,
+    start = "2014-01-01",
+    end = "2015-04-01",
+    interval = "day",
+    months = c(1, 10)
+  )
+  expect_equal(unique(w$month), c(1, 10))
+})
+
 test_that("weather (day) trim_by_stn", {
   skip_on_cran()
   withr::local_options(list(weathercan.verbosity = "quiet"))

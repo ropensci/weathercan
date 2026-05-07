@@ -3,9 +3,9 @@
 #' Arrange by metadata (m_names) then by variables (w_names). Use any_of to
 #' catch all present, but not to error if missing. Used by [weather_dl()].
 #'
-#' @param w weather data frame
+#' @param w Weather data frame / tibble
 #'
-#' @returns
+#' @returns Arranged tibble
 #'
 #' @noRd
 weather_arrange <- function(w) {
@@ -67,6 +67,7 @@ weather_format <- function(
   interval = "hour",
   start,
   end,
+  months,
   string_as = "NA",
   time_disp = NULL
 ) {
@@ -82,7 +83,7 @@ weather_format <- function(
   if (interval %in% c("day", "month")) {
     w <- dplyr::mutate(w, date = lubridate::ymd(.data$date, truncated = 2))
   } else if (interval == "hour") {
-  ## Get correct timezone
+    ## Get correct timezone
     w <- dplyr::mutate(w, time = as.POSIXct(.data$time, tz = "UTC"))
     if (time_disp == "UTC") {
       w <- dplyr::mutate(w, time = .data$time + lubridate::hours(tz_hours(tz)))
@@ -139,7 +140,7 @@ weather_format <- function(
           dplyr::select(dplyr::any_of(c("date", "time", v))) |>
           dplyr::slice(1:20)
       })
-  )
+    )
 
   # Fix problems?
   if (!is.null(string_as)) {
@@ -156,6 +157,9 @@ weather_format <- function(
 
   ## Trim to match date range and months
   w <- dplyr::filter(w, .data$date >= .env$start & .data$date <= .env$end)
+  if (!is.null(months)) {
+    w <- dplyr::filter(w, lubridate::month(.data$date) %in% .env$months)
+  }
 
   list(data = w, msg = non_num_deets)
 }

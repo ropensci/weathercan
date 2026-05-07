@@ -53,7 +53,7 @@ prep_start_end <- function(stn, start, end) {
   stn
 }
 
-prep_paging <- function(stn) {
+prep_paging <- function(stn, months) {
   stn |>
     dplyr::mutate(
       pages = purrr::pmap(
@@ -80,6 +80,9 @@ prep_paging <- function(stn) {
               lubridate::floor_date(e, unit = page_by),
               by = page_by
             )
+            if (i == "hour" && !is.null(months)) {
+              pages <- pages[lubridate::month(pages) %in% months]
+            }
           }
           pages
         }

@@ -59,6 +59,11 @@
 #'   (applies to all station_ids). Defaults to end of range.
 #' @param interval Character. Interval of the data, one of "hour", "day",
 #'   "month".
+#' @param months Numeric vector. Can supply 1-12 to optionally filter the data
+#'   to only specific months. For "hour" interval, this selectively downloads
+#'   data by month so can speed up downloads. For intervals of "day" and "month"
+#'   this only filters the data after full years or full data ranges have been
+#'   downloaded.
 #' @param trim Logical. Trim missing values from the start and end of the
 #'   weather dataframe. Only applies if `format = TRUE`
 #' @param trim_by_stn Logical. Data from different stations are generally padded
@@ -97,6 +102,14 @@
 #'                           colour = station_name)) +
 #'        geom_line()
 #'
+#' # Download only January and December
+#' kam <- weather_dl(
+#'   station_ids = 51423,
+#'   start = "2016-01-01",
+#'   end = "2018-02-15",
+#'   months = c(1, 10)
+#' )
+#'
 #' @aliases weather
 #'
 #' @export
@@ -120,11 +133,12 @@ weather_dl <- function(
 
   stn <- prep_stations(station_ids, interval) |>
     prep_start_end(start, end) |>
-    prep_paging()
+    prep_paging(months)
 
   weather <- purrr::pmap(stn, \(...) {
     weather_combine(
       ...,
+      months = months,
       format = format,
       time_disp = time_disp,
       string_as = string_as,
@@ -189,6 +203,7 @@ weather_combine <- function(
   station_id,
   start_use,
   end_use,
+  months,
   pages,
   tz,
   interval,
@@ -224,6 +239,7 @@ weather_combine <- function(
       interval = interval,
       start = start_use,
       end = end_use,
+      months = months,
       time_disp = time_disp,
       string_as = string_as
     )

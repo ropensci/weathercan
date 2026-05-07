@@ -51,6 +51,19 @@ test_that("weather (month) returns a data frame", {
   expect_equal(w$prov[1], "QC")
 })
 
+test_that("weather_dl month filters by month", {
+  skip_on_cran()
+
+  w <- weather_dl(
+    station_ids = 5401,
+    start = "2014-01-01",
+    end = "2015-04-01",
+    interval = "month",
+    months = c(1, 10)
+  )
+  expect_equal(unique(w$month), c(1, 10))
+})
+
 test_that("weather (month) no data fails nicely", {
   skip_on_cran()
 

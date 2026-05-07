@@ -34,6 +34,12 @@ data frame or the \code{\link{stations_search}} function to find IDs.}
 \item{interval}{Character. Interval of the data, one of "hour", "day",
 "month".}
 
+\item{months}{Numeric vector. Can supply 1-12 to optionally filter the data
+to only specific months. For "hour" interval, this selectively downloads
+data by month so can speed up downloads. For intervals of "day" and "month"
+this only filters the data after full years or full data ranges have been
+downloaded.}
+
 \item{trim}{Logical. Trim missing values from the start and end of the
 weather dataframe. Only applies if \code{format = TRUE}}
 
@@ -131,5 +137,13 @@ ggplot(data = kam.pg, aes(x = time, y = temp,
                           group = station_name,
                           colour = station_name)) +
        geom_line()
+
+# Download only January and December
+kam <- weather_dl(
+  station_ids = 51423,
+  start = "2016-01-01",
+  end = "2018-02-15",
+  months = c(1, 10)
+)
 \dontshow{\}) # examplesIf}
 }
