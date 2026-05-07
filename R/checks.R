@@ -22,10 +22,31 @@ check_int <- function(interval, n = Inf, .envir = rlang::caller_env()) {
   }
 }
 
+#' Check if a date is valid
+#'
+#' @param dt Date to check
+#'
+#' @returns Logical. TRUE if date is invalid or cannot be coerced to Date
+#'
+#' @noRd
+
 check_date <- function(dt) {
   !is.null(dt) &&
     tryCatch(!lubridate::is.Date(as.Date(dt)), error = \(err) TRUE)
 }
+
+#' Check start and end dates
+#'
+#' Validates that start and end dates are valid date formats and that the end
+#' date is not earlier than the start date.
+#'
+#' @param start Start date to validate
+#' @param end End date to validate
+#' @param .envir Environment for error reporting
+#'
+#' @returns Nothing, errors if dates are invalid
+#'
+#' @noRd
 
 check_dates <- function(start, end, .envir = rlang::caller_env()) {
   if (check_date(start) || check_date(end)) {
@@ -45,6 +66,24 @@ check_dates <- function(start, end, .envir = rlang::caller_env()) {
   }
 }
 
+#' Check station IDs
+#'
+#' Validates that station/climate IDs are present in the stations data frame.
+#'
+#' @param ids Station IDs to check
+#' @param stn Stations data frame
+#' @param type Character. Type of ID ("station_id" or "climate_id")
+#' @param .envir Environment for error reporting
+#'
+#' @returns Nothing, errors if IDs are not found
+#'
+#' @noRd
+#' @examplesIf interactive
+#' check_ids("301AR54", stations(), type = "climate_id") # Okay
+#' check_ids("xxx", stations(), type = "climate_id")     # Error
+#' check_ids("1797", stations(), type = "station_id") # Okay
+#' check_ids("xxx", stations(), type = "station_id") # Error
+
 check_ids <- function(ids, stn, type, .envir = rlang::caller_env()) {
   if (!all(ids %in% stn[[type]])) {
     if (type == "climate_id" && any(nchar(as.character(ids)) != 7)) {
@@ -61,6 +100,23 @@ check_ids <- function(ids, stn, type, .envir = rlang::caller_env()) {
     )
   }
 }
+
+#' Check normals years format
+#'
+#' Validates that normals_years is in the correct format (YYYY-YYYY) or "current".
+#' Converts "current" to the most recent available normals period.
+#'
+#' @param normals_years Character. Normals years to validate
+#' @param null_ok Logical. Whether NULL is acceptable
+#' @param .envir Environment for error reporting
+#'
+#' @returns Validated normals_years string or NULL if null_ok is TRUE
+#'
+#' @noRd
+#' @examplesIf interactive()
+#' check_normals("xxx") # Error
+#' check_normals("1991-2020")
+#' check_normals("current")
 
 check_normals <- function(
   normals_years,

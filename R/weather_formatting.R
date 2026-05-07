@@ -17,6 +17,23 @@ weather_arrange <- function(w) {
 }
 
 
+#' Trims weather data NAs
+#'
+#' Trims all NA data before and after a data range. If trim_by_stn == FALSE,
+#' then trims by the entire data range. If trim_by_stn == TRUE, then trims
+#' each stations data range individually.
+#'
+#' @param w Weather data frame
+#' @param format Logical. Whether or not formatting is performed (trim only
+#'   applies if formatted)
+#' @param trim Logical. Whether or not to perform the trim.
+#' @param trim_by_stn Logical. Whether or not to trim by station or by all
+#'   combined data.
+#'
+#' @returns Trimmed data frame or original if format or trim are FALSE
+#'
+#' @noRd
+
 weather_trim <- function(w, format, trim, trim_by_stn) {
   if (!trim || !format || nrow(w) == 0) {
     return(w)
@@ -59,6 +76,28 @@ weather_trim <- function(w, format, trim, trim_by_stn) {
 
   w
 }
+
+#' Format the weather data
+#'
+#' Format weather data, fixing column names, dates, times and timezones, quality
+#' symbols and column types.
+#'
+#' @param w Weather data frame
+#' @param station_id Station id to format
+#' @param tz Timezone of the station
+#' @param interval "hour", "day", "month"
+#' @param start Requested start date (used for filtering)
+#' @param end Requested end date (used for filtering)
+#' @param months Numeric months to include (used for filtering)
+#' @param string_as Character. If there are character strings in numeric columns
+#'   (e.g., `>31` in wind speed), they are replaced with this (defaults to `NA`)
+#'   and the user is alerted.
+#' @param time_disp Character. Either "none" (default) or "UTC". How the time
+#'   should be displayed.
+#'
+#' @returns Formatted weather data frame.
+#'
+#' @noRd
 
 weather_format <- function(
   w,
@@ -163,6 +202,18 @@ weather_format <- function(
 
   list(data = w, msg = non_num_deets)
 }
+
+#' Convert to list cols
+#'
+#' @param w Weather data frame
+#' @param interval "hour", "day", "month"
+#' @param list_col Logical. Whether to make into list cols
+#' @param format Logical. Whether formatting was applied (cannot use list_col if
+#'   not formatted).
+#'
+#' @returns Weather data collapsed into list cols.
+#'
+#' @noRd
 
 weather_list_cols <- function(w, interval, list_col, format) {
   if (!list_col || !format) {

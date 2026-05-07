@@ -141,6 +141,21 @@ normals_cached_location <- function(climate_ids, normals_years = "1991-2020") {
   locs
 }
 
+#' Format cached normals data
+#'
+#' Reads cached normals data and metadata, filters by composite location,
+#' and formats into a wide format with standardized column names.
+#'
+#' @param locs Character vector. Composite location names to filter by
+#' @param normals_years Character. Normals years to return. Currently only
+#'   "1991-2020" is possible.
+#'
+#' @returns Data frame of formatted normals data
+#'
+#' @noRd
+#' @examplesIf interactive()
+#' normals_cached_fmt("BRANDON")
+
 normals_cached_fmt <- function(locs, normals_years = "1991-2020") {
   # Standardize some names to match weathercan general standards
   nms <- m_names |>

@@ -71,6 +71,15 @@ stations_meta <- function() {
   wc_read(stations_meta_file())
 }
 
+#' Read stations data from cache
+#'
+#' Reads cached stations data, formats intervals as factors, and arranges by
+#' province, station ID, and interval.
+#'
+#' @returns Tibble of stations data
+#'
+#' @noRd
+
 stations_read <- function() {
   cache_stations_check()
   wc_read(stations_file()) |>
@@ -80,9 +89,21 @@ stations_read <- function() {
     dplyr::arrange(.data$prov, .data$station_id, .data$interval)
 }
 
+#' Get path to cached stations data file
+#'
+#' @returns Character. File path to cached stations.csv
+#'
+#' @noRd
+
 stations_file <- function() {
   file.path(cache_dir(), "stations.csv")
 }
+
+#' Get path to cached stations metadata file
+#'
+#' @returns Character. File path to cached stations_meta.csv
+#'
+#' @noRd
 
 stations_meta_file <- function() {
   file.path(cache_dir(), "stations_meta.csv")
@@ -133,6 +154,19 @@ stations_dl <- function(skip = NULL) {
     skip = skip
   )
 }
+
+#' Internal function to download stations data
+#'
+#' Downloads station inventory from ECCC, processes and formats the data,
+#' adds timezone information, merges with climate normals availability,
+#' and saves to cache.
+#'
+#' @param skip Numeric. Number of lines to skip at the beginning of the csv.
+#'   If NULL, automatically derived.
+#'
+#' @returns Nothing, called for side effects (saves stations data to cache)
+#'
+#' @noRd
 
 stations_dl_internal <- function(
   skip = NULL
@@ -539,6 +573,15 @@ stations_search <- function(
   stn
 }
 
+#' Get list of stations with climate normals
+#'
+#' Downloads the station inventory for a specific normals year from ECCC.
+#'
+#' @param yr Character. Year to query (e.g., "1991" for 1991-2020)
+#'
+#' @returns Tibble with station_name and climate_id columns
+#'
+#' @noRd
 
 normals_stn_list <- function(yr) {
   get_check(
@@ -551,6 +594,15 @@ normals_stn_list <- function(yr) {
     dplyr::rename_with(tolower) |>
     dplyr::select(dplyr::any_of(c("station_name", "climate_id")))
 }
+
+#' Get climate normals availability for all stations
+#'
+#' Downloads station lists for all normals periods and combines into a single
+#' data frame with separate columns for each normals period.
+#'
+#' @returns Tibble with station_name, climate_id, and normals_YYYY_YYYY columns
+#'
+#' @noRd
 
 stations_normals <- function() {
   dplyr::tibble(years = c("1991-2020", "1981-2010", "1971-2000")) |>

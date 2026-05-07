@@ -1,3 +1,17 @@
+#' Fetch weather data for a single station
+#'
+#' Downloads and combines weather data for a single station across multiple
+#' date ranges, filtering out empty responses.
+#'
+#' @param station_id Character/Numeric. Station ID to download data for
+#' @param date_range Date vector. Dates to download data for
+#' @param interval Character. "hour", "day", or "month"
+#' @param encoding Character. Encoding to use when reading data
+#'
+#' @returns Tibble of combined weather data for all date ranges
+#'
+#' @noRd
+
 weather_single <- function(station_id, date_range, interval, encoding) {
   w <- dplyr::tibble(date_range = date_range)
   w <- dplyr::mutate(
@@ -26,9 +40,37 @@ weather_single <- function(station_id, date_range, interval, encoding) {
   w
 }
 
+#' Fetch weather HTML response
+#'
+#' Makes an API request to download weather data for a specific station and
+#' date.
+#'
+#' @param station_id Character/Numeric. Station ID
+#' @param date Date. Date to download data for
+#' @param interval Character. "hour", "day", or "month"
+#'
+#' @returns httr2 response object
+#'
+#' @noRd
+
 weather_html <- function(station_id, date, interval = "hour") {
   get_html(station_id, date, interval, format = "csv")
 }
+
+#' Parse raw weather data from HTML response
+#'
+#' Extracts and parses CSV weather data from an HTML response body, handling
+#' BOM markers, removing special symbols, and correcting flag values.
+#'
+#' @param html httr2 response object. Response from `weather_html()`
+#' @param skip Numeric. Number of rows to skip
+#' @param nrows Numeric. Maximum number of rows to read
+#' @param header Logical. Whether first row contains headers
+#' @param encoding Character. Encoding to use when reading data
+#'
+#' @returns Tibble of parsed weather data
+#'
+#' @noRd
 
 weather_raw <- function(
   html,

@@ -51,14 +51,14 @@ We also include several practice data sets:
 \item \code{\link{pg}}
 }
 
-As well as several vignettes available in the package and \href{https://docs.ropensci.org/weathercan/}{Online}:
+As well as several articles available \href{https://docs.ropensci.org/weathercan/}{Online}:
 \itemize{
-\item \href{https://docs.ropensci.org/weathercan/articles/weathercan.html}{General Usage}: \code{vignette("weathercan", package = "weathercan")}
-\item \href{https://docs.ropensci.org/weathercan/articles/interpolate_data.html}{Interpolating}: \code{vignette("interpolation", package = "weathercan")}
-\item \href{https://docs.ropensci.org/weathercan/articles/reproducibility.html}{Reproducibility}: \code{vignette("reproducibility", package = "weathercan")}
-\item \href{https://docs.ropensci.org/weathercan/articles/flags.html}{Flags and Codes}: \code{vignette("flags", package = "weathercan")}
-\item \href{https://docs.ropensci.org/weathercan/articles/glossary.html}{Weather: Terms and Units}: \code{vignette("glossary", package = "weathercan")}
-\item \href{https://docs.ropensci.org/weathercan/articles/glossary_normals.html}{Climate Normals: Terms and Units}: \code{vignette("glossary_normals", package = "weathercan")}
+\item \href{https://docs.ropensci.org/weathercan/articles/weathercan.html}{General Usage}
+\item \href{https://docs.ropensci.org/weathercan/articles/interpolate_data.html}{Interpolating}
+\item \href{https://docs.ropensci.org/weathercan/articles/reproducibility.html}{Reproducibility}
+\item \href{https://docs.ropensci.org/weathercan/articles/flags.html}{Flags and Codes}
+\item \href{https://docs.ropensci.org/weathercan/articles/glossary.html}{Weather: Terms and Units}
+\item \href{https://docs.ropensci.org/weathercan/articles/glossary_normals.html}{Climate Normals: Terms and Units}
 }
 
 We also have some advanced articles:

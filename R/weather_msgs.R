@@ -1,3 +1,20 @@
+#' Display weather data availability messages
+#'
+#' Checks which stations are missing from the requested interval or date
+#' range and displays messages about data availability. Checks if stations found
+#' for a given interval, then if weather data downloaded for a given time range.
+#'
+#' @param station_ids Character/Numeric vector. Station IDs requested
+#' @param stn Data frame. Stations data that was found
+#' @param w Data frame. Weather data that was retrieved
+#' @param interval Character. "hour", "day", or "month"
+#' @param start Date. Start date of requested range
+#' @param end Date. End date of requested range
+#'
+#' @returns Nothing, called for side effects (displays messages)
+#'
+#' @noRd
+
 weather_msgs <- function(station_ids, stn, w, interval, start, end) {
   end <- end %||% "today"
 
@@ -42,6 +59,17 @@ weather_msgs <- function(station_ids, stn, w, interval, start, end) {
     )
   }
 }
+
+#' Display weather formatting messages
+#'
+#' Displays messages about non-numeric values encountered during data formatting,
+#' showing which columns and stations were affected.
+#'
+#' @param msg_fmt Data frame. Formatting message details
+#'
+#' @returns Nothing, called for side effects (displays messages)
+#'
+#' @noRd
 
 weather_fmt_msgs <- function(msg_fmt) {
   if (nrow(msg_fmt) > 0) {

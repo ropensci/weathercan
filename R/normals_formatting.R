@@ -1,3 +1,16 @@
+#' Extract normals data or metadata
+#'
+#' Extracts either the data portion or full content from raw normals text,
+#' removing WMO standards rows and cleaning trailing commas.
+#'
+#' @param n Character vector. Raw normals data lines
+#' @param return Character. Either "data" to extract data portion or anything
+#'   else to return full content
+#'
+#' @returns Character vector of extracted normals content
+#'
+#' @noRd
+
 normals_extract <- function(n, return = "data") {
   wmo <- find_line(n, cols = "meets WMO standards")
   skip <- find_line(n, cols = c("Jan", "Feb", "Mar"))
@@ -18,6 +31,18 @@ normals_extract <- function(n, return = "data") {
   n
 }
 
+
+#' Extract and format normals measurements
+#'
+#' Reads raw normals CSV data, identifies measurement variables, aligns
+#' variable names, and reshapes into wide format with codes.
+#'
+#' @param n Character vector. Raw normals data to parse
+#' @param climate_id Character. Climate ID for error reporting
+#'
+#' @returns Tibble of extracted and formatted normals measurements
+#'
+#' @noRd
 
 data_extract <- function(n, climate_id) {
   # Remove frost dates
@@ -142,6 +167,18 @@ data_extract <- function(n, climate_id) {
     dplyr::as_tibble()
 }
 
+#' Format normals data
+#'
+#' Converts normals measurement columns to appropriate data types (dates,
+#' numerics, characters) based on predefined formats.
+#'
+#' @param n Data frame. Extracted normals data to format
+#' @param climate_id Character. Climate ID for error reporting
+#'
+#' @returns Tibble with properly formatted columns
+#'
+#' @noRd
+
 data_format <- function(n, climate_id) {
   fmts <- dplyr::filter(n_formats, .data$new_var %in% names(n))
   dates <- dplyr::filter(fmts, .data$format == "date") |>
@@ -229,6 +266,18 @@ data_format <- function(n, climate_id) {
 
   n_fmt
 }
+
+#' Extract frost-free period data
+#'
+#' Extracts and formats frost-free period information including dates and
+#' probabilities from raw normals data.
+#'
+#' @param f Character vector. Frost data lines from normals
+#' @param climate_id Character. Climate ID for joining data
+#'
+#' @returns Tibble of frost-free period data
+#'
+#' @noRd
 
 frost_extract <- function(f, climate_id) {
   if (all(f == "")) {
@@ -333,6 +382,19 @@ frost_extract <- function(f, climate_id) {
   dplyr::as_tibble(r)
 }
 
+#' Find frost data in normals
+#'
+#' Locates the frost-free period section in raw normals data and either
+#' extracts it or removes it from the data.
+#'
+#' @param n Character vector. Raw normals data lines
+#' @param type Character. Either "extract" to return frost data or "remove"
+#'   to return data without frost section
+#'
+#' @returns Character vector of frost data or data without frost section
+#'
+#' @noRd
+
 frost_find <- function(n, type = "extract") {
   frost <- find_line(n, "station data \\(Frost-Free\\)")
 
@@ -362,6 +424,18 @@ frost_find <- function(n, type = "extract") {
   }
   r
 }
+
+#' Format frost data
+#'
+#' Converts frost data columns to appropriate data types (dates, numerics,
+#' characters) based on predefined formats.
+#'
+#' @param f Data frame. Extracted frost data to format
+#' @param climate_id Character. Climate ID for error reporting
+#'
+#' @returns Tibble with properly formatted frost columns
+#'
+#' @noRd
 
 frost_format <- function(f, climate_id) {
   fmts <- dplyr::filter(f_formats, .data$new_var %in% names(f))
@@ -419,6 +493,17 @@ frost_format <- function(f, climate_id) {
   )
   f_fmt
 }
+
+#' Check if station meets WMO standards
+#'
+#' Determines whether a station meets World Meteorological Organization (WMO)
+#' standards by checking for asterisk indicator in station metadata.
+#'
+#' @param n Character vector. Raw normals data lines
+#'
+#' @returns Logical. TRUE if station meets WMO standards
+#'
+#' @noRd
 
 meets_wmo <- function(n) {
   start <- stringr::str_which(n, "STATION_NAME")

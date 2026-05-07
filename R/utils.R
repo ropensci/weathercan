@@ -1,3 +1,16 @@
+#' Calculate timezone difference from UTC
+#'
+#' Calculates the difference between a given timezone and UTC, returning either
+#' as Etc/GMT format or as numeric hours.
+#'
+#' @param tz Character. Timezone name
+#' @param as Character. Output format - "tz" for Etc/GMT format or anything else
+#'   for numeric hours
+#'
+#' @returns Character timezone string (Etc/GMT format) or numeric hours difference
+#'
+#' @noRd
+
 tz_diff <- function(tz, as = "tz") {
   if (!is.na(tz)) {
     t <- as.numeric(difftime(
@@ -18,9 +31,30 @@ tz_diff <- function(tz, as = "tz") {
   t
 }
 
+#' Extract numeric hours from timezone string
+#'
+#' Extracts the numeric hour offset from a timezone string (e.g., "Etc/GMT-5").
+#'
+#' @param tz Character. Timezone string
+#'
+#' @returns Numeric. Hour offset from timezone string
+#'
+#' @noRd
+
 tz_hours <- function(tz) {
   as.numeric(stringr::str_extract(tz, "[0-9+-.]{1,4}"))
 }
+
+#' Find line number matching column pattern
+#'
+#' Searches for a line in text that contains all specified column names in any order.
+#'
+#' @param headings Character vector. Lines of text to search
+#' @param cols Character vector. Column names to find
+#'
+#' @returns Numeric. Line number(s) matching the pattern
+#'
+#' @noRd
 
 find_line <- function(headings, cols) {
   grep(
@@ -29,12 +63,33 @@ find_line <- function(headings, cols) {
   )
 }
 
+#' Create empty tibble with NA columns
+#'
+#' Creates a zero-row tibble with specified column names, all initialized to NA.
+#'
+#' @param cols Character vector. Column names for the tibble
+#'
+#' @returns Tibble with zero rows and specified columns
+#'
+#' @noRd
+
 na_tibble <- function(cols) {
   as.list(rep(as.numeric(NA), length(cols))) |>
     stats::setNames(cols) |>
     dplyr::as_tibble(.rows = 0)
 }
 
+#' Minimum value handling empty inputs
+#'
+#' Calculates minimum value but returns empty numeric vector if all inputs
+#' are empty, rather than erroring.
+#'
+#' @param ... Numeric values to find minimum of
+#' @param na.rm Logical. Whether to remove NA values
+#'
+#' @returns Numeric. Minimum value or empty numeric vector
+#'
+#' @noRd
 
 min_na <- function(..., na.rm = TRUE) {
   l <- list(...)
@@ -64,6 +119,17 @@ check_eccc <- function() {
     is_up(getOption("weathercan.urls.weather")) &&
     is_up("https://climate.weather.gc.ca")
 }
+
+#' Check if URL is accessible
+#'
+#' Sends a HEAD request to check if a URL is accessible and returns a
+#' successful response.
+#'
+#' @param x Character. URL to check
+#'
+#' @returns Logical. TRUE if URL is accessible, FALSE otherwise
+#'
+#' @noRd
 
 is_up <- function(x) {
   err <- httr2::request(x) |>
@@ -101,15 +167,49 @@ pretty_names <- function(x) {
     stringr::str_replace_all("_+", "_")
 }
 
+#' Read CSV file with weathercan defaults
+#'
+#' Wrapper around [readr::read_csv()] with `show_col_types` and `progress`
+#' disabled.
+#'
+#' @param path Character. Path to CSV file
+#'
+#' @returns Tibble of CSV data
+#'
+#' @noRd
+
 wc_read <- function(path) {
   readr::read_csv(path, show_col_types = FALSE, progress = FALSE)
 }
+
+#' Remove special symbols from column names
+#'
+#' Removes specific Unicode symbols from data frame column names.
+#'
+#' @param df Data frame. Data frame with column names to clean
+#'
+#' @returns Data frame with cleaned column names
+#'
+#' @noRd
 
 remove_sym <- function(df) {
   dplyr::rename_with(df, \(x) {
     stringr::str_remove_all(x, "\\u00BB|\\u00BF|\\u00EF|\\u00C2|\\u00B0")
   })
 }
+
+#' Get variable or non-variable column names
+#'
+#' Extracts either measurement variable names or metadata/flag column names
+#' from a vector of column names.
+#'
+#' @param names Character vector. Column names to filter
+#' @param variable Logical. If `TRUE`, return variable names; if `FALSE`, return
+#'   non-variable names (metadata and flags)
+#'
+#' @returns Character vector of filtered column names
+#'
+#' @noRd
 
 var_names <- function(names, variable = TRUE) {
   # fmt: skip

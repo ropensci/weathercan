@@ -204,6 +204,27 @@ weather_interp <- function(
   data
 }
 
+#' Linear interpolation with NA gap handling
+#'
+#' Performs linear interpolation while respecting gaps in the data. If NA values
+#' are present in y and na_gap is specified, interpolation will not occur across
+#' gaps larger than the specified tolerance.
+#'
+#' @param x Numeric, Date, or POSIXct. X values for interpolation
+#' @param y Numeric. Y values to interpolate
+#' @param xout Numeric, Date, or POSIXct. Points at which to interpolate (must
+#'   match class of x)
+#' @param na_gap Numeric or lubridate period. Maximum gap size to interpolate
+#'   over when y has NA values
+#'
+#' @returns Data frame with columns x and y containing interpolated values
+#'
+#' @noRd
+#' @examples
+#' approx_na_rm(x = 1:10, y = 1:10, xout = c(0.5, 4.5))
+#' # approx_na_rm(x = 1:10, y = c(1:5, NA, NA, NA, 9, 10), xout = c(0.5, 6.5))
+#' approx_na_rm(x = 1:10, y = c(1:5, NA, NA, NA, 9, 10), xout = c(0.5, 6.5), na_gap = 2)
+#' approx_na_rm(x = 1:10, y = c(1:5, NA, NA, NA, 9, 10), xout = c(0.5, 6.5), na_gap = 4)
 
 approx_na_rm <- function(x, y, xout, na_gap = NULL) {
   if (!all(class(x) == class(xout)) && !(is.numeric(xout) && is.numeric(x))) {

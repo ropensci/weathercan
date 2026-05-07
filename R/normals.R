@@ -192,6 +192,18 @@ normals_dl <- function(
   )
 }
 
+#' Download and combine normals data
+#'
+#' Downloads normals data from ECCC for multiple stations, extracts both
+#' regular measurements and frost data, and combines into a single data frame.
+#'
+#' @param n Data frame. Stations data with prov, station_id, and climate_id
+#' @param normals_years Character. Normals years in format YYYY-YYYY
+#'
+#' @returns Data frame with nested normals and frost data columns
+#'
+#' @noRd
+
 normals_combine <- function(n, normals_years) {
   # Download data
   n |>

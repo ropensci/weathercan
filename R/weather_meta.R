@@ -1,12 +1,53 @@
+#' Fetch and format metadata for a single station
+#'
+#' Downloads weather metadata for a station, parses it, and formats into a
+#' standardized structure.
+#'
+#' @param station_id Character/Numeric. Station ID to download metadata for
+#' @param end Date. Date to use for the metadata request
+#' @param interval Character. "hour", "day", or "month"
+#' @param encoding Character. Encoding to use when reading data
+#'
+#' @returns Tibble of formatted station metadata
+#'
+#' @noRd
+
 meta_single <- function(station_id, end, interval, encoding) {
   meta_html(station_id = station_id, date = end, interval = interval) |>
     meta_raw(encoding = encoding, interval = interval) |>
     meta_format(station_id = station_id)
 }
 
+#' Fetch metadata HTML response
+#'
+#' Makes an API request to download station metadata for a specific date.
+#'
+#' @param station_id Character/Numeric. Station ID
+#' @param date Date. Date to download metadata for
+#' @param interval Character. "hour", "day", or "month"
+#'
+#' @returns httr2 response object
+#'
+#' @noRd
+
 meta_html <- function(station_id, date, interval = "hour") {
   get_html(station_id, date, interval, format = "txt")
 }
+
+#' Parse raw metadata from HTML response
+#'
+#' Extracts and parses metadata or legend information from a text-formatted
+#' HTML response, removing special symbols.
+#'
+#' @param html httr2 response object. Response from `meta_html()`
+#' @param encoding Character. Encoding to use when reading data
+#' @param interval Character. "hour", "day", or "month"
+#' @param return Character. Either "meta" to return metadata or "legend" to
+#'   return legend information
+#'
+#' @returns Tibble of parsed metadata or legend data
+#'
+#' @noRd
 
 meta_raw <- function(html, encoding = "UTF-8", interval, return = "meta") {
   split <- httr2::resp_body_string(html, encoding = encoding) |>
@@ -52,6 +93,18 @@ meta_raw <- function(html, encoding = "UTF-8", interval, return = "meta") {
   # Get rid of any special symbols
   remove_sym(r)
 }
+
+#' Format metadata into standardized structure
+#'
+#' Converts raw metadata into a standardized format with proper column names
+#' and data types.
+#'
+#' @param meta Data frame. Raw metadata to format
+#' @param station_id Character/Numeric. Station ID to include in output
+#'
+#' @returns Tibble of formatted metadata with station information
+#'
+#' @noRd
 
 meta_format <- function(meta, station_id) {
   m <- paste0("(", paste0(m_names, collapse = ")|("), ")")
