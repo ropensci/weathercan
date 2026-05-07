@@ -2,22 +2,24 @@ test_that("cache_dir() works on different operating systems", {
   # Test Linux
   with_mocked_bindings(
     expect_equal(cache_dir(), "~/.local/share/weathercan"),
-    Sys.info = function() c(sysname = "Linux"),
-    .package = "base"
+    get_os = function() "unix",
+    .package = "rappdirs"
   )
 
   # Test Windows
-  with_mocked_bindings(
-    expect_match(cache_dir(), "weathercan"),
-    Sys.info = function() c(sysname = "Windows"),
-    .package = "base"
-  )
+  withr::with_envvar(c("USERPROFILE" = "testcache"), {
+    with_mocked_bindings(
+      expect_match(cache_dir(), "weathercan"),
+      get_os = function() "win",
+      .package = "rappdirs"
+    )
+  })
 
   # Test macOS
   with_mocked_bindings(
     expect_match(cache_dir(), "weathercan"),
-    Sys.info = function() c(sysname = "Darwin"),
-    .package = "base"
+    get_os = function() "mac",
+    .package = "rappdirs"
   )
 })
 
