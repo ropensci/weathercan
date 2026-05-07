@@ -255,12 +255,12 @@ stations_dl_internal <- function(
 
   s <- s |>
     dplyr::left_join(station_tz, by = c("station_id", "prov", "lat", "lon")) |>
-    tidyr::gather(
-      key = "interval",
-      value = "date",
-      dplyr::matches("(start)|(end)")
+    tidyr::pivot_longer(
+      cols = dplyr::matches("(start)|(end)"),
+      names_to = c("interval", "type"),
+      names_sep = "_",
+      values_to = "date"
     ) |>
-    tidyr::separate("interval", c("interval", "type"), sep = "_") |>
     dplyr::mutate(
       type = factor(.data$type, levels = c("start", "end")),
       station_name = as.character(.data$station_name),
@@ -283,7 +283,7 @@ stations_dl_internal <- function(
       ),
       prov = as.character(.data$prov)
     ) |>
-    tidyr::spread("type", "date") |>
+    tidyr::pivot_wider(names_from = "type", values_from = "date") |>
     dplyr::arrange(.data$prov, .data$station_id, .data$interval) |>
     dplyr::as_tibble()
 

@@ -113,13 +113,17 @@ data_extract <- function(n, climate_id) {
   # Get codes
   codes <- dplyr::select(n_nice, "code" = "Code", "new_var") |>
     dplyr::mutate(new_var = paste0(.data$new_var, "_code")) |>
-    tidyr::spread(key = "new_var", value = "code")
+    tidyr::pivot_wider(names_from = "new_var", values_from = "code")
 
   # Spread variables
   n_nice <- n_nice |>
     dplyr::select(-"Code", -"variable", -"subgroup", -"variable_sub") |>
-    tidyr::gather(key = "period", value = "measure", -"new_var") |>
-    tidyr::spread(key = "new_var", value = "measure") |>
+    tidyr::pivot_longer(
+      cols = -"new_var",
+      names_to = "period",
+      values_to = "measure"
+    ) |>
+    tidyr::pivot_wider(names_from = "new_var", values_from = "measure") |>
     # Add Codes
     cbind(codes)
 
@@ -249,7 +253,7 @@ frost_extract <- function(f, climate_id) {
       col_types = readr::cols(),
       progress = FALSE
     ) |>
-      tidyr::spread(key = "variable", value = "value")
+      tidyr::pivot_wider(names_from = "variable", values_from = "value")
 
     nms <- purrr::map(stats::setNames(f_names$match, f_names$new_var), \(x) {
       stringr::str_subset(names(f1), x)

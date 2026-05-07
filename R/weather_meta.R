@@ -59,7 +59,7 @@ meta_format <- function(meta, station_id) {
   meta <- meta |>
     dplyr::mutate(X1 = stringr::str_extract(.data$X1, pattern = m)) |>
     dplyr::filter(!is.na(.data$X1)) |>
-    tidyr::spread("X1", "X2")
+    tidyr::pivot_wider(names_from = "X1", values_from = "X2")
 
   m <- m_names[m_names %in% names(meta)]
 
