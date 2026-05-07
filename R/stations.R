@@ -179,10 +179,7 @@ stations_dl_internal <- function(
 
   wc_progress("Trying to access stations data frame")
 
-  resp <- get_check(
-    url = getOption("weathercan.urls.stations"),
-    task = "access stations list"
-  )
+  resp <- get_check(url = getOption("weathercan.urls.stations"))
 
   headings <- readr::read_lines(
     I(httr2::resp_body_string(resp, encoding = "Latin1")),
