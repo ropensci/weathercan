@@ -347,8 +347,6 @@ stations_dl_internal <- function(
 #'   collection beginning in or before the specified year.
 #' @param ends_earliest Numeric. Restrict results to stations with data
 #'   collection ending in or after the specified year.
-#' @param stn DEFUNCT. Now use `stations_dl()` to update internal data and
-#'   `stations_meta()` to check the date it was last updated.
 #'
 #' @details To search by coordinates, users must make sure they have the
 #'  [sp](https://cran.r-project.org/package=sp) package installed.
@@ -384,7 +382,6 @@ stations_search <- function(
   interval = c("hour", "day", "month"),
   normals_years = NULL,
   normals_only = NULL,
-  stn = NULL,
   starts_latest = NULL,
   ends_earliest = NULL
 ) {
@@ -411,13 +408,6 @@ stations_search <- function(
     wc_stop("Need a search name OR search coordinate")
   }
 
-  if (!is.null(stn)) {
-    wc_stop(
-      "`stn` is defunct, to use an updated stations data frame ",
-      "use `stations_dl()` to update the internal data, and ",
-      "`stations_meta()` to check when it was last updated"
-    )
-  }
   stn <- stations()
 
   if (!is.null(coords)) {
