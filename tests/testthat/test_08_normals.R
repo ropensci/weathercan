@@ -226,8 +226,9 @@ test_that("normals_dl() - single - 1981", {
 
   memoise::forget(normals_html) # Reset cache so we can test fully
 
-  expect_silent(
-    nd <- normals_dl(climate_id = "5010480", normals_years = "1981-2010")
+  expect_message(
+    nd <- normals_dl(climate_id = "5010480", normals_years = "1981-2010"),
+    "`normals` column in `stations\\(\\)` reflects whether or not there"
   )
   expect_s3_class(nd, "tbl_df")
   expect_snapshot_value(nd, style = "json2", tolerance = 0.001)
@@ -236,7 +237,6 @@ test_that("normals_dl() - single - 1981", {
 test_that("normals_dl() - single - 1971", {
   skip_on_cran()
   skip_if_offline()
-
   memoise::forget(normals_html) # Reset cache so we can test fully
 
   expect_silent(
