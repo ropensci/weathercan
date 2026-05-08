@@ -146,7 +146,8 @@ data_extract <- function(n, climate_id) {
     tidyr::pivot_longer(
       cols = -"new_var",
       names_to = "period",
-      values_to = "measure"
+      values_to = "measure",
+      values_transform = as.character
     ) |>
     tidyr::pivot_wider(names_from = "new_var", values_from = "measure") |>
     # Add Codes
