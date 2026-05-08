@@ -5,7 +5,7 @@
 - **[Steffi LaZerte](https://steffilazerte.ca/)**. Author, maintainer.
   [](https://orcid.org/0000-0002-7690-8360)
 
-- **Sam Albers**. Contributor. [](https://orcid.org/0000-0002-9270-7884)
+- **Sam Albers**. Author. [](https://orcid.org/0000-0002-9270-7884)
 
 - **Nick Brown**. Contributor. [](https://orcid.org/0000-0002-2719-0671)
 

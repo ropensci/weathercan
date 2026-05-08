@@ -1,13 +1,13 @@
 {
   "commit": {
-    "commit": "e0904bbee647686fbc222918ae0c11c4a289cb33",
+    "commit": "9dcf02b54c5c0cde70550d63505ca8ade63b2ccb",
     "author": "Steffi LaZerte <steffi@steffi.ca>",
-    "time": "2026-05-08T16:24:44Z",
+    "time": "2026-05-08T16:36:45Z",
     "files": "NA",
     "merge": false,
-    "message": "Catch message\n"
+    "message": "Fix authors\n"
   },
   "repo": "https://github.com/ropensci/weathercan",
   "pkg": "weathercan",
-  "time": "2026-05-08T16:40:09Z"
+  "time": "2026-05-08T16:42:31Z"
 }
