@@ -94,10 +94,12 @@ Useful links:
 **Maintainer**: Steffi LaZerte <sel@steffilazerte.ca>
 ([ORCID](https://orcid.org/0000-0002-7690-8360))
 
-Other contributors:
+Authors:
 
 - Sam Albers <sam.albers@gmail.com>
-  ([ORCID](https://orcid.org/0000-0002-9270-7884)) \[contributor\]
+  ([ORCID](https://orcid.org/0000-0002-9270-7884))
+
+Other contributors:
 
 - Nick Brown <nicholas512@gmail.com>
   ([ORCID](https://orcid.org/0000-0002-2719-0671)) \[contributor\]

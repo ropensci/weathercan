@@ -125,7 +125,7 @@ unique(dplyr::select(n, "location_name", "composite_stations"))
 
 # Download climate normals 1981-2010
 # - Note: Very different data format from current normals!
-n <- normals_dl(climate_ids = "5010480", normals_year = "1981-2010")
+n <- normals_dl(climate_ids = "5010480", normals_years = "1981-2010")
 
 # Pull out last frost data *with* station information
 library(tidyr)

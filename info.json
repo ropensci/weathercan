@@ -1,13 +1,13 @@
 {
   "commit": {
-    "commit": "4f86bca9324a57f138b50aac06a69e4d6144102f",
-    "author": "Steffi LaZerte <sel@steffilazerte.ca>",
-    "time": "2026-05-28T15:18:49Z",
+    "commit": "28487b44359943bbdc847702f4f89cb071ed7d20",
+    "author": "Steffi LaZerte <steffi@steffi.ca>",
+    "time": "2026-05-28T15:24:21Z",
     "files": "NA",
     "merge": false,
-    "message": "Update R/normals_cached.R\n\nCo-authored-by: Sam Albers <sam.albers@hakai.org>"
+    "message": "Update docs\n"
   },
   "repo": "https://github.com/ropensci/weathercan",
   "pkg": "weathercan",
-  "time": "2026-05-28T15:23:25Z"
+  "time": "2026-05-28T15:26:47Z"
 }
