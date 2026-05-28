@@ -85,9 +85,13 @@ Useful links:
 \author{
 \strong{Maintainer}: Steffi LaZerte \email{sel@steffilazerte.ca} (\href{https://orcid.org/0000-0002-7690-8360}{ORCID})
 
+Authors:
+\itemize{
+  \item Sam Albers \email{sam.albers@gmail.com} (\href{https://orcid.org/0000-0002-9270-7884}{ORCID})
+}
+
 Other contributors:
 \itemize{
-  \item Sam Albers \email{sam.albers@gmail.com} (\href{https://orcid.org/0000-0002-9270-7884}{ORCID}) [contributor]
   \item Nick Brown \email{nicholas512@gmail.com} (\href{https://orcid.org/0000-0002-2719-0671}{ORCID}) [contributor]
   \item Kevin Cazelles \email{kevin.cazelles@gmail.com} (\href{https://orcid.org/0000-0001-6619-9874}{ORCID}) [contributor]
   \item Richard Littauer \email{richard.littauer@gmail.com} (\href{https://orcid.org/0000-0001-5428-7535}{ORCID}) [contributor]
