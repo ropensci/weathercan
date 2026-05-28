@@ -50,7 +50,7 @@ normals_cached <- function(climate_ids, normals_years = "1991-2020") {
 normals_cached_check <- function(normals_years = "1991-2020") {
   if (
     !file.exists(normals_file(normals_years)) ||
-      !file.exists(normals_file(normals_years))
+      !file.exists(normals_file(normals_years, "meta"))
   ) {
     if (interactive()) {
       dl <- utils::askYesNo(paste0(

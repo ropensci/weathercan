@@ -105,8 +105,8 @@ cache_stations_check <- function() {
   }
 
   time_since_update <- difftime(
-    stations_meta()$weathercan_modified,
     Sys.Date(),
+    stations_meta()$weathercan_modified,
     units = "days"
   )
   if (time_since_update > 28) {
