@@ -1,13 +1,13 @@
 {
   "commit": {
-    "commit": "9dcf02b54c5c0cde70550d63505ca8ade63b2ccb",
-    "author": "Steffi LaZerte <steffi@steffi.ca>",
-    "time": "2026-05-08T16:36:45Z",
+    "commit": "c6739538ea10b9bbcbde7bc7f2ba151835edb45c",
+    "author": "Steffi LaZerte <sel@steffilazerte.ca>",
+    "time": "2026-05-28T15:18:22Z",
     "files": "NA",
     "merge": false,
-    "message": "Fix authors\n"
+    "message": "Update R/normals.R\n\nCo-authored-by: Sam Albers <sam.albers@hakai.org>"
   },
   "repo": "https://github.com/ropensci/weathercan",
   "pkg": "weathercan",
-  "time": "2026-05-08T16:42:31Z"
+  "time": "2026-05-28T15:21:09Z"
 }
