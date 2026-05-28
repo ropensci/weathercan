@@ -102,7 +102,7 @@ normals_cached_dl <- function(normals_years = "1991-2020") {
   if (file.exists(normals_file())) {
     wc_inform("Climate normals for {normals_years} successfully downloaded")
   } else {
-    wc_inform("Climate normals were *not* succesfully downloaded and unzipped")
+    wc_inform("Climate normals were *not* successfully downloaded and unzipped")
   }
 
   # Cleanup
