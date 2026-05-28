@@ -85,8 +85,7 @@ NULL
     #  paste0("https://drive.google.com/uc?export=download&id=",
     #         "1HDRnj41YBWpMioLPwAFiLlK4SK8NV72C"),
     weathercan.urls.stations.normals = "https://climate.weather.gc.ca/climate_normals/station_inventory_e.html",
-    weathercan.time.message = FALSE,
-    weathercan.normals.message = FALSE
+    weathercan.time.message = FALSE
   )
 
   # CRAN Note avoidance

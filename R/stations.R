@@ -48,14 +48,7 @@
 #' filter(stations(), interval == "hour", normals, prov == "MB")
 
 stations <- function() {
-  if (!getOption("weathercan.normals.message")) {
-    wc_inform(
-      "As of v0.7.2, the `normals` column in `stations()` reflects whether or not ",
-      "there\nare *any* normals available (not just the most recent)."
-    )
-    options("weathercan.normals.message" = TRUE)
-  }
-
+  # Wrapper in case messages required in future
   stations_read()
 }
 

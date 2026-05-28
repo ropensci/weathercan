@@ -46,8 +46,6 @@ test_that("stations_dl() runs and updates data", {
 
 # stations() --------------------------------------------------------------
 test_that("stations() /stations_meta() return data", {
-  withr::local_options(list("weathercan.normals.message" = TRUE))
-
   expect_silent(s <- stations()) |>
     expect_s3_class("data.frame")
 
@@ -282,7 +280,6 @@ test_that("stations_search returns normals only", {
 })
 
 test_that("stations_search checks arguments", {
-  withr::local_options(list("weathercan.normals.message" = TRUE))
   # Check each valid intervals
   expect_silent(stations_search("Brandon", interval = "hour"))
   expect_silent(stations_search("Brandon", interval = "day"))
