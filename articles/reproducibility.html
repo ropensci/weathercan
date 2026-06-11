@@ -25,7 +25,7 @@
     <a href="https://ropensci.org" class="external-link"><img src="https://ropensci.org/img/icon_short_white.svg" id="hexlogo" alt="rOpenSci"></a>
     <a class="navbar-brand me-2" href="../index.html">weathercan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.8</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,7 +68,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Reproducibility</h1>
             
-            <h4 data-toc-skip class="date">2026-05-04</h4>
+            <h4 data-toc-skip class="date">2026-06-11</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/weathercan/blob/HEAD/vignettes/reproducibility.Rmd" class="external-link"><code>vignettes/reproducibility.Rmd</code></a></small>
       <div class="d-none name"><code>reproducibility.Rmd</code></div>
@@ -106,16 +106,14 @@ information:</p>
 <span><span class="fu"><a href="../reference/stations_meta.html">stations_meta</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">'weathercan'</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://sessioninfo.r-lib.org/reference/session_info.html" class="external-link">session_info</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Install devtools if you don't have it</span></span></code></pre></div>
-<pre><code><span><span class="co">## $ECCC_modified</span></span>
-<span><span class="co">## [1] "2026-05-03 23:30:00 UTC"</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $weathercan_modified</span></span>
-<span><span class="co">## [1] "2026-05-04"</span></span></code></pre>
+<pre><code><span><span class="co">## # A tibble: 1 × 2</span></span>
+<span><span class="co">##   ECCC_modified       weathercan_modified</span></span>
+<span><span class="co">##   &lt;dttm&gt;              &lt;date&gt;             </span></span>
+<span><span class="co">## 1 2026-06-03 23:30:00 2026-06-11</span></span></code></pre>
 <pre><code><span><span class="co">## To cite 'weathercan' in publications, please use:</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">##   LaZerte, Stefanie E and Sam Albers (2018). weathercan: Download and format</span></span>
-<span><span class="co">##   weather data from Environment and Climate Change Canada. The Journal of</span></span>
-<span><span class="co">##   Open Source Software 3(22):571. doi:10.21105/joss.00571.</span></span>
+<span><span class="co">##   LaZerte, Stefanie E and Sam Albers (2018). weathercan: Download and format weather data from Environment and</span></span>
+<span><span class="co">##   Climate Change Canada. The Journal of Open Source Software 3(22):571. doi:10.21105/joss.00571.</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## A BibTeX entry for LaTeX users is</span></span>
 <span><span class="co">## </span></span>
@@ -129,7 +127,7 @@ information:</p>
 <span><span class="co">##     year = {2018},</span></span>
 <span><span class="co">##     url = {https://joss.theoj.org/papers/10.21105/joss.00571},</span></span>
 <span><span class="co">##   }</span></span></code></pre>
-<pre><code><span><span class="co">## ─ Session info ──────────────────────────────────────────────────────────────────────</span></span>
+<pre><code><span><span class="co">## ─ Session info ────────────────────────────────────────────────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">##  setting  value</span></span>
 <span><span class="co">##  version  R version 4.6.0 (2026-04-24)</span></span>
 <span><span class="co">##  os       Ubuntu 24.04.4 LTS</span></span>
@@ -139,95 +137,93 @@ information:</p>
 <span><span class="co">##  collate  en_US.UTF-8</span></span>
 <span><span class="co">##  ctype    en_US.UTF-8</span></span>
 <span><span class="co">##  tz       America/Winnipeg</span></span>
-<span><span class="co">##  date     2026-05-04</span></span>
-<span><span class="co">##  pandoc   3.8.3 @ /usr/share/positron/resources/app/quarto/bin/tools/x86_64/ (via rmarkdown)</span></span>
+<span><span class="co">##  date     2026-06-11</span></span>
+<span><span class="co">##  pandoc   3.1.3 @ /usr/bin/pandoc</span></span>
 <span><span class="co">##  quarto   1.6.39 @ /opt/quarto/bin/quarto</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## ─ Packages ──────────────────────────────────────────────────────────────────────────</span></span>
-<span><span class="co">##  ! package      * version date (UTC) lib source</span></span>
-<span><span class="co">##    bit            4.6.0   2025-03-06 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    bit64          4.8.0   2026-04-21 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    blob           1.3.0   2026-01-14 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    brio           1.1.5   2024-04-24 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    bslib          0.10.0  2026-01-26 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    cachem         1.1.0   2024-05-16 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    callr          3.7.6   2024-03-25 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    cli            3.6.6   2026-04-09 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    crayon         1.5.3   2024-06-20 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    curl           7.1.0   2026-04-22 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    DBI            1.3.0   2026-02-25 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    dbplyr         2.5.2   2026-02-13 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    desc           1.4.3   2023-12-10 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    devtools       2.5.2   2026-04-30 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    digest         0.6.39  2025-11-19 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    downlit        0.4.5   2025-11-14 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    dplyr        * 1.2.1   2026-04-03 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    ellipsis       0.3.3   2026-04-04 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    evaluate       1.0.5   2025-08-27 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    fansi          1.0.7   2025-11-19 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    farver         2.1.2   2024-05-13 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    fastmap        1.2.0   2024-05-15 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    fs             2.1.0   2026-04-18 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    generics       0.1.4   2025-05-09 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    ggplot2      * 4.0.3   2026-04-22 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    glue         * 1.8.1   2026-04-17 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    gt             1.3.0   2026-01-22 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    gtable         0.3.6   2024-10-25 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    hms            1.1.4   2025-10-17 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    htmltools      0.5.9   2025-12-04 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    httr2          1.2.2   2025-12-08 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    jquerylib      0.1.4   2021-04-26 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    jsonlite       2.0.0   2025-03-27 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    knitr        * 1.51    2025-12-20 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    labeling       0.4.3   2023-08-29 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    lifecycle      1.0.5   2026-01-08 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    lubridate    * 1.9.5   2026-02-04 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    magrittr       2.0.5   2026-04-04 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    memoise        2.0.1   2021-11-26 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    naniar       * 1.1.0   2024-03-05 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    otel           0.2.0   2025-08-29 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    pak            0.9.5   2026-04-27 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    pillar         1.11.1  2025-09-17 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    pkgbuild       1.4.8   2025-05-26 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    pkgconfig      2.0.3   2019-09-22 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    pkgdown        2.2.0   2025-11-06 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    pkgload        1.5.2   2026-04-22 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    processx       3.9.0   2026-04-22 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    ps             1.9.3   2026-04-20 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    purrr          1.2.2   2026-04-10 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    R6             2.6.1   2025-02-15 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    rappdirs       0.3.4   2026-01-17 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    RColorBrewer   1.1-3   2022-04-03 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    readr        * 2.2.0   2026-02-19 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    rlang          1.2.0   2026-04-06 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    rmarkdown      2.31    2026-03-26 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    rprojroot      2.1.1   2025-08-26 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    RSQLite        2.4.6   2026-02-06 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    rstudioapi     0.18.0  2026-01-16 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    S7             0.2.2   2026-04-22 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    sass           0.4.10  2025-04-11 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    scales         1.4.0   2025-04-24 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    sessioninfo    1.2.3   2025-02-05 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    stringi        1.8.7   2025-03-27 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    stringr      * 1.6.0   2025-11-04 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    testthat     * 3.3.2   2026-01-11 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    tibble         3.3.1   2026-01-11 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    tidyhydat    * 1.0.0   2026-02-03 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    tidyr        * 1.3.2   2025-12-19 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    tidyselect     1.2.1   2024-03-11 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    timechange     0.4.0   2026-01-29 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    tzdb           0.5.0   2025-03-15 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    usethis        3.2.1   2025-09-06 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    utf8           1.2.6   2025-06-08 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    vctrs          0.7.3   2026-04-11 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    visdat         0.6.0   2023-02-02 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    vroom          1.7.1   2026-03-31 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##  P weathercan   * 0.7.8   2026-05-04 [?] local</span></span>
-<span><span class="co">##    whisker        0.4.1   2022-12-05 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    withr          3.0.2   2024-10-28 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    xfun           0.57    2026-03-20 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    xml2           1.5.2   2026-01-17 [1] CRAN (R 4.6.0)</span></span>
-<span><span class="co">##    yaml           2.3.12  2025-12-10 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">## ─ Packages ────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span></span>
+<span><span class="co">##  ! package      * version   date (UTC) lib source</span></span>
+<span><span class="co">##    bit            4.6.0     2025-03-06 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    bit64          4.8.2     2026-05-19 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    blob           1.3.0     2026-01-14 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    brio           1.1.5     2024-04-24 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    cachem         1.1.0     2024-05-16 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    class          7.3-23    2025-01-01 [4] CRAN (R 4.4.2)</span></span>
+<span><span class="co">##    classInt       0.4-11    2025-01-08 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    cli            3.6.6     2026-04-09 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    commonmark     2.0.0     2025-07-07 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    crayon         1.5.3     2024-06-20 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    curl           7.1.0     2026-04-22 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    DBI            1.3.0     2026-02-25 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    dbplyr         2.5.2     2026-02-13 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    desc           1.4.3     2023-12-10 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    devtools       2.5.2     2026-04-30 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    diffobj        0.3.6     2025-04-21 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    dplyr        * 1.2.1     2026-04-03 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    e1071          1.7-17    2025-12-18 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    ellipsis       0.3.3     2026-04-04 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    evaluate       1.0.5     2025-08-27 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    farver         2.1.2     2024-05-13 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    fastmap        1.2.0     2024-05-15 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    fs             2.1.0     2026-04-18 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    generics       0.1.4     2025-05-09 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    ggplot2      * 4.0.3     2026-04-22 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    glue         * 1.8.1     2026-04-17 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    gtable         0.3.6     2024-10-25 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    hms            1.1.4     2025-10-17 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    httr2          1.2.2     2025-12-08 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    KernSmooth     2.23-26   2025-01-01 [4] CRAN (R 4.4.2)</span></span>
+<span><span class="co">##    knitr        * 1.51      2025-12-20 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    labeling       0.4.3     2023-08-29 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    lifecycle      1.0.5     2026-01-08 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    lubridate    * 1.9.5     2026-02-04 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    lutz           0.3.2     2023-10-17 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    magrittr       2.0.5     2026-04-04 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    memoise        2.0.1     2021-11-26 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    naniar       * 1.1.0     2024-03-05 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    otel           0.2.0     2025-08-29 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    pillar         1.11.1    2025-09-17 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    pkgbuild       1.4.8     2025-05-26 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    pkgconfig      2.0.3     2019-09-22 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    pkgload        1.5.2     2026-04-22 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    proxy          0.4-29    2025-12-29 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    purrr          1.2.2     2026-04-10 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    R6             2.6.1     2025-02-15 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    rappdirs       0.3.4     2026-01-17 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    RColorBrewer   1.1-3     2022-04-03 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    Rcpp           1.1.1-1.1 2026-04-24 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    readr        * 2.2.0     2026-02-19 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    rlang          1.2.0     2026-04-06 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    roxygen2       7.3.3     2025-09-03 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    rprojroot      2.1.1     2025-08-26 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    RSQLite        2.4.6     2026-02-06 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    rstudioapi     0.18.0    2026-01-16 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    s2             1.1.9     2025-05-23 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    S7             0.2.2     2026-04-22 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    scales         1.4.0     2025-04-24 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    sessioninfo    1.2.3     2025-02-05 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    sf             1.1-1     2026-05-06 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    stringi        1.8.7     2025-03-27 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    stringr      * 1.6.0     2025-11-04 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    testthat     * 3.3.2     2026-01-11 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    tibble         3.3.1     2026-01-11 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    tidyhydat    * 1.0.0     2026-02-03 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    tidyr        * 1.3.2     2025-12-19 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    tidyselect     1.2.1     2024-03-11 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    timechange     0.4.0     2026-01-29 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    tzdb           0.5.0     2025-03-15 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    units          1.0-1     2026-03-11 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    usethis        3.2.1     2025-09-06 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    utf8           1.2.6     2025-06-08 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    vctrs          0.7.3     2026-04-11 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    visdat         0.6.0     2023-02-02 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    vroom          1.7.1     2026-03-31 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    waldo          0.6.2     2025-07-11 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##  P weathercan   * 0.7.8     2026-05-05 [?] local</span></span>
+<span><span class="co">##    withr          3.0.2     2024-10-28 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    wk             0.9.5     2025-12-18 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    xfun           0.57      2026-03-20 [1] CRAN (R 4.6.0)</span></span>
+<span><span class="co">##    xml2           1.5.2     2026-01-17 [1] CRAN (R 4.6.0)</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">##  [1] /home/steffi/R/x86_64-pc-linux-gnu-library/4.6</span></span>
 <span><span class="co">##  [2] /usr/local/lib/R/site-library</span></span>
@@ -237,7 +233,7 @@ information:</p>
 <span><span class="co">##  * ── Packages attached to the search path.</span></span>
 <span><span class="co">##  P ── Loaded and on-disk path mismatch.</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## ─────────────────────────────────────────────────────────────────────────────────────</span></span></code></pre>
+<span><span class="co">## ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></code></pre>
   </main>
 </div>
 

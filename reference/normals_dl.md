@@ -13,7 +13,12 @@ included data sets and/or the `glossary_normals` vignette:
 ## Usage
 
 ``` r
-normals_dl(climate_ids, normals_years = "current", format = TRUE)
+normals_dl(
+  climate_ids,
+  normals_years = "current",
+  format = TRUE,
+  measurement_type = NULL
+)
 ```
 
 ## Arguments
@@ -41,6 +46,15 @@ normals_dl(climate_ids, normals_years = "current", format = TRUE)
   [`weather_dl()`](https://docs.ropensci.org/weathercan/reference/weather_dl.md),
   `normals_dl()` will always format column headings as normals data from
   ECCC cannot be directly made into a data frame without doing so.
+
+- measurement_type:
+
+  Character vector. Measurement types (called element groups in original
+  ECCC data) to include in normals data (only relevant for new normals
+  \>= `1991-2020`). Will return only the measurements included in the
+  these groups. If `NULL` (default) returns all normals measurements.
+  See `normals_measurement_types` of a list of types and which
+  measurements are included.
 
 ## Value
 
@@ -151,7 +165,7 @@ n <- normals_dl(
 unnest(n, frost)
 
 # Note, putting both normals and frost data into the same data set can be
-# done, but makes for a very unweildly dataset (there is lots of repetition).
+# done, but makes for a very unwieldy dataset (there is lots of repetition).
 nm <- unnest(n, normals) |>
   unnest(frost)
 }

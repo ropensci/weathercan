@@ -357,7 +357,7 @@ CRAN release: 2018-07-05
 - Streamline messages from multiple stations
 - Accepts older R version
 - `stations_dl` fails gracefully on R versions \< 3.3.4
-- Update `stations` dataframe
+- Update `stations` data frame
 
 ### Bug fixes
 

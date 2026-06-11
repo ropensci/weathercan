@@ -25,7 +25,7 @@
     <a href="https://ropensci.org" class="external-link"><img src="https://ropensci.org/img/icon_short_white.svg" id="hexlogo" alt="rOpenSci"></a>
     <a class="navbar-brand me-2" href="../index.html">weathercan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.8</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,7 +68,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Interpolating</h1>
             
-            <h4 data-toc-skip class="date">2026-05-04</h4>
+            <h4 data-toc-skip class="date">2026-06-11</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/weathercan/blob/HEAD/vignettes/interpolate_data.Rmd" class="external-link"><code>vignettes/interpolate_data.Rmd</code></a></small>
       <div class="d-none name"><code>interpolate_data.Rmd</code></div>
@@ -97,59 +97,59 @@ interpolating between points.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">kamloops</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Rows: 4,368</span></span>
 <span><span class="co">## Columns: 38</span></span>
-<span><span class="co">## $ station_name     &lt;chr&gt; "KAMLOOPS A", "KAMLOOPS A", "KAMLOOPS A", "KAMLOOPS A", "KAM…</span></span>
-<span><span class="co">## $ station_id       &lt;dbl&gt; 51423, 51423, 51423, 51423, 51423, 51423, 51423, 51423, 5142…</span></span>
-<span><span class="co">## $ station_operator &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
-<span><span class="co">## $ prov             &lt;chr&gt; "BC", "BC", "BC", "BC", "BC", "BC", "BC", "BC", "BC", "BC", …</span></span>
-<span><span class="co">## $ lat              &lt;dbl&gt; 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, …</span></span>
-<span><span class="co">## $ lon              &lt;dbl&gt; -120.45, -120.45, -120.45, -120.45, -120.45, -120.45, -120.4…</span></span>
-<span><span class="co">## $ elev             &lt;dbl&gt; 345.3, 345.3, 345.3, 345.3, 345.3, 345.3, 345.3, 345.3, 345.…</span></span>
-<span><span class="co">## $ climate_id       &lt;chr&gt; "1163781", "1163781", "1163781", "1163781", "1163781", "1163…</span></span>
-<span><span class="co">## $ WMO_id           &lt;chr&gt; "71887", "71887", "71887", "71887", "71887", "71887", "71887…</span></span>
-<span><span class="co">## $ TC_id            &lt;chr&gt; "YKA", "YKA", "YKA", "YKA", "YKA", "YKA", "YKA", "YKA", "YKA…</span></span>
-<span><span class="co">## $ date             &lt;date&gt; 2016-01-01, 2016-01-01, 2016-01-01, 2016-01-01, 2016-01-01,…</span></span>
-<span><span class="co">## $ time             &lt;dttm&gt; 2016-01-01 00:00:00, 2016-01-01 01:00:00, 2016-01-01 02:00:…</span></span>
-<span><span class="co">## $ year             &lt;chr&gt; "2016", "2016", "2016", "2016", "2016", "2016", "2016", "201…</span></span>
-<span><span class="co">## $ month            &lt;chr&gt; "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", …</span></span>
-<span><span class="co">## $ day              &lt;chr&gt; "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", …</span></span>
-<span><span class="co">## $ hour             &lt;chr&gt; "00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00…</span></span>
-<span><span class="co">## $ qual             &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
-<span><span class="co">## $ weather          &lt;chr&gt; NA, "Mostly Cloudy", NA, NA, "Cloudy", NA, NA, "Cloudy", NA,…</span></span>
-<span><span class="co">## $ hmdx             &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
-<span><span class="co">## $ hmdx_flag        &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
-<span><span class="co">## $ precip_amt       &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
-<span><span class="co">## $ precip_amt_flag  &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
-<span><span class="co">## $ pressure         &lt;dbl&gt; 99.95, 99.93, 99.92, 99.90, 99.86, 99.82, 99.80, 99.78, 99.7…</span></span>
-<span><span class="co">## $ pressure_flag    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
-<span><span class="co">## $ rel_hum          &lt;dbl&gt; 74, 76, 74, 73, 70, 71, 69, 69, 71, 71, 71, 70, 69, 70, 68, …</span></span>
-<span><span class="co">## $ rel_hum_flag     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
-<span><span class="co">## $ temp             &lt;dbl&gt; -9.1, -9.6, -9.9, -9.5, -9.4, -9.8, -10.0, -10.2, -10.1, -9.…</span></span>
-<span><span class="co">## $ temp_dew         &lt;dbl&gt; -12.9, -13.1, -13.7, -13.5, -13.9, -14.1, -14.7, -14.9, -14.…</span></span>
-<span><span class="co">## $ temp_dew_flag    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
-<span><span class="co">## $ temp_flag        &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
-<span><span class="co">## $ visib            &lt;dbl&gt; 64.4, 64.4, 64.4, 64.4, 64.4, 64.4, 64.4, 64.4, 48.3, 48.3, …</span></span>
-<span><span class="co">## $ visib_flag       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
-<span><span class="co">## $ wind_chill       &lt;dbl&gt; -17, -17, -18, -17, -17, -17, -18, -17, -17, -16, -15, -14, …</span></span>
-<span><span class="co">## $ wind_chill_flag  &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
-<span><span class="co">## $ wind_dir         &lt;dbl&gt; 13, 11, 11, 11, 11, 10, 9, 7, 7, 10, 11, 10, 10, 13, 11, 10,…</span></span>
-<span><span class="co">## $ wind_dir_flag    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
-<span><span class="co">## $ wind_spd         &lt;dbl&gt; 19, 20, 20, 18, 18, 16, 23, 15, 14, 15, 12, 11, 12, 9, 10, 1…</span></span>
-<span><span class="co">## $ wind_spd_flag    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span></code></pre>
+<span><span class="co">## $ station_name     &lt;chr&gt; "KAMLOOPS A", "KAMLOOPS A", "KAMLOOPS A", "KAMLOOPS A", "KAMLOOPS A", "KAMLOOPS A", "KAMLOOPS A", …</span></span>
+<span><span class="co">## $ station_id       &lt;dbl&gt; 51423, 51423, 51423, 51423, 51423, 51423, 51423, 51423, 51423, 51423, 51423, 51423, 51423, 51423, …</span></span>
+<span><span class="co">## $ station_operator &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
+<span><span class="co">## $ prov             &lt;chr&gt; "BC", "BC", "BC", "BC", "BC", "BC", "BC", "BC", "BC", "BC", "BC", "BC", "BC", "BC", "BC", "BC", "B…</span></span>
+<span><span class="co">## $ lat              &lt;dbl&gt; 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50.7, 50…</span></span>
+<span><span class="co">## $ lon              &lt;dbl&gt; -120.45, -120.45, -120.45, -120.45, -120.45, -120.45, -120.45, -120.45, -120.45, -120.45, -120.45,…</span></span>
+<span><span class="co">## $ elev             &lt;dbl&gt; 345.3, 345.3, 345.3, 345.3, 345.3, 345.3, 345.3, 345.3, 345.3, 345.3, 345.3, 345.3, 345.3, 345.3, …</span></span>
+<span><span class="co">## $ climate_id       &lt;chr&gt; "1163781", "1163781", "1163781", "1163781", "1163781", "1163781", "1163781", "1163781", "1163781",…</span></span>
+<span><span class="co">## $ WMO_id           &lt;chr&gt; "71887", "71887", "71887", "71887", "71887", "71887", "71887", "71887", "71887", "71887", "71887",…</span></span>
+<span><span class="co">## $ TC_id            &lt;chr&gt; "YKA", "YKA", "YKA", "YKA", "YKA", "YKA", "YKA", "YKA", "YKA", "YKA", "YKA", "YKA", "YKA", "YKA", …</span></span>
+<span><span class="co">## $ date             &lt;date&gt; 2016-01-01, 2016-01-01, 2016-01-01, 2016-01-01, 2016-01-01, 2016-01-01, 2016-01-01, 2016-01-01, 2…</span></span>
+<span><span class="co">## $ time             &lt;dttm&gt; 2016-01-01 00:00:00, 2016-01-01 01:00:00, 2016-01-01 02:00:00, 2016-01-01 03:00:00, 2016-01-01 04…</span></span>
+<span><span class="co">## $ year             &lt;chr&gt; "2016", "2016", "2016", "2016", "2016", "2016", "2016", "2016", "2016", "2016", "2016", "2016", "2…</span></span>
+<span><span class="co">## $ month            &lt;chr&gt; "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "0…</span></span>
+<span><span class="co">## $ day              &lt;chr&gt; "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "01", "0…</span></span>
+<span><span class="co">## $ hour             &lt;chr&gt; "00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00",…</span></span>
+<span><span class="co">## $ qual             &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
+<span><span class="co">## $ weather          &lt;chr&gt; NA, "Mostly Cloudy", NA, NA, "Cloudy", NA, NA, "Cloudy", NA, "Snow", "Snow", "Snow", "Snow", "Snow…</span></span>
+<span><span class="co">## $ hmdx             &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
+<span><span class="co">## $ hmdx_flag        &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
+<span><span class="co">## $ precip_amt       &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
+<span><span class="co">## $ precip_amt_flag  &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
+<span><span class="co">## $ pressure         &lt;dbl&gt; 99.95, 99.93, 99.92, 99.90, 99.86, 99.82, 99.80, 99.78, 99.77, 99.78, 99.79, 99.74, 99.69, 99.62, …</span></span>
+<span><span class="co">## $ pressure_flag    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
+<span><span class="co">## $ rel_hum          &lt;dbl&gt; 74, 76, 74, 73, 70, 71, 69, 69, 71, 71, 71, 70, 69, 70, 68, 68, 70, 74, 73, 74, 74, 74, 77, 72, 72…</span></span>
+<span><span class="co">## $ rel_hum_flag     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
+<span><span class="co">## $ temp             &lt;dbl&gt; -9.1, -9.6, -9.9, -9.5, -9.4, -9.8, -10.0, -10.2, -10.1, -9.7, -9.4, -9.0, -8.6, -8.2, -8.1, -7.7,…</span></span>
+<span><span class="co">## $ temp_dew         &lt;dbl&gt; -12.9, -13.1, -13.7, -13.5, -13.9, -14.1, -14.7, -14.9, -14.4, -14.0, -13.7, -13.5, -13.3, -12.8, …</span></span>
+<span><span class="co">## $ temp_dew_flag    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
+<span><span class="co">## $ temp_flag        &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
+<span><span class="co">## $ visib            &lt;dbl&gt; 64.4, 64.4, 64.4, 64.4, 64.4, 64.4, 64.4, 64.4, 48.3, 48.3, 48.3, 48.3, 48.3, 48.3, 48.3, 48.3, 24…</span></span>
+<span><span class="co">## $ visib_flag       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
+<span><span class="co">## $ wind_chill       &lt;dbl&gt; -17, -17, -18, -17, -17, -17, -18, -17, -17, -16, -15, -14, -14, -13, -13, -13, -13, -14, -13, -14…</span></span>
+<span><span class="co">## $ wind_chill_flag  &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
+<span><span class="co">## $ wind_dir         &lt;dbl&gt; 13, 11, 11, 11, 11, 10, 9, 7, 7, 10, 11, 10, 10, 13, 11, 10, 10, 9, 12, 10, 13, 12, 10, 12, NA, 32…</span></span>
+<span><span class="co">## $ wind_dir_flag    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
+<span><span class="co">## $ wind_spd         &lt;dbl&gt; 19, 20, 20, 18, 18, 16, 23, 15, 14, 15, 12, 11, 12, 9, 10, 12, 11, 12, 10, 11, 11, 6, 6, 4, 0, 4, …</span></span>
+<span><span class="co">## $ wind_spd_flag    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span></code></pre>
 <p>As well as a data set of finch visits to an RFID feeder</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">finches</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Rows: 16,886</span></span>
 <span><span class="co">## Columns: 10</span></span>
-<span><span class="co">## $ animal_id &lt;fct&gt; 041868FF93, 041868FF93, 041868FF93, 06200003BB, 06200003BB, 0620000…</span></span>
-<span><span class="co">## $ date      &lt;date&gt; 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-0…</span></span>
-<span><span class="co">## $ time      &lt;dttm&gt; 2016-03-01 06:57:42, 2016-03-01 06:58:41, 2016-03-01 07:07:21, 201…</span></span>
-<span><span class="co">## $ logger_id &lt;fct&gt; 2300, 2300, 2300, 2400, 2400, 2400, 2400, 2400, 2300, 2300, 2300, 2…</span></span>
-<span><span class="co">## $ species   &lt;chr&gt; "Mountain Chickadee", "Mountain Chickadee", "Mountain Chickadee", "…</span></span>
-<span><span class="co">## $ age       &lt;chr&gt; "AHY", "AHY", "AHY", "SY", "SY", "SY", "SY", "SY", "AHY", "AHY", "A…</span></span>
-<span><span class="co">## $ sex       &lt;chr&gt; "U", "U", "U", "M", "M", "M", "M", "M", "F", "F", "F", "F", "F", "M…</span></span>
-<span><span class="co">## $ site_name &lt;chr&gt; "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Ka…</span></span>
-<span><span class="co">## $ lon       &lt;dbl&gt; -120.3622, -120.3622, -120.3622, -120.3635, -120.3635, -120.3635, -…</span></span>
-<span><span class="co">## $ lat       &lt;dbl&gt; 50.66967, 50.66967, 50.66967, 50.66938, 50.66938, 50.66938, 50.6693…</span></span></code></pre>
+<span><span class="co">## $ animal_id &lt;fct&gt; 041868FF93, 041868FF93, 041868FF93, 06200003BB, 06200003BB, 06200003BB, 06200003BB, 06200003BB, 041868BED…</span></span>
+<span><span class="co">## $ date      &lt;date&gt; 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-…</span></span>
+<span><span class="co">## $ time      &lt;dttm&gt; 2016-03-01 06:57:42, 2016-03-01 06:58:41, 2016-03-01 07:07:21, 2016-03-01 07:32:34, 2016-03-01 07:32:35,…</span></span>
+<span><span class="co">## $ logger_id &lt;fct&gt; 2300, 2300, 2300, 2400, 2400, 2400, 2400, 2400, 2300, 2300, 2300, 2300, 2300, 2400, 2300, 2400, 2400, 240…</span></span>
+<span><span class="co">## $ species   &lt;chr&gt; "Mountain Chickadee", "Mountain Chickadee", "Mountain Chickadee", "House Finch", "House Finch", "House Fi…</span></span>
+<span><span class="co">## $ age       &lt;chr&gt; "AHY", "AHY", "AHY", "SY", "SY", "SY", "SY", "SY", "AHY", "AHY", "AHY", "AHY", "AHY", "SY", "AHY", "SY", …</span></span>
+<span><span class="co">## $ sex       &lt;chr&gt; "U", "U", "U", "M", "M", "M", "M", "M", "F", "F", "F", "F", "F", "M", "F", "M", "M", "M", "M", "M", "F", …</span></span>
+<span><span class="co">## $ site_name &lt;chr&gt; "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops…</span></span>
+<span><span class="co">## $ lon       &lt;dbl&gt; -120.3622, -120.3622, -120.3622, -120.3635, -120.3635, -120.3635, -120.3635, -120.3635, -120.3622, -120.3…</span></span>
+<span><span class="co">## $ lat       &lt;dbl&gt; 50.66967, 50.66967, 50.66967, 50.66938, 50.66938, 50.66938, 50.66938, 50.66938, 50.66967, 50.66967, 50.66…</span></span></code></pre>
 <p>Although the times in the weather data do not exactly match those in
 the finch data, we can merge them together through linear <a href="https://en.wikipedia.org/wiki/Linear_interpolation" class="external-link">interpolation</a>.
 This function uses the <code>approx</code> function from the
@@ -162,7 +162,7 @@ column:</p>
 <span>  weather <span class="op">=</span> <span class="va">kamloops</span>,</span>
 <span>  cols <span class="op">=</span> <span class="st">"temp"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Error:</span></span>
+<pre><code><span><span class="co">## Error in `weather_interp()`:</span></span>
 <span><span class="co">## ! `data` and `weather` timezones must match</span></span></code></pre>
 <p>Ooops! What happened?</p>
 <p>Well the weather data on Kamloops returned by <code>weathercan</code>
@@ -171,14 +171,14 @@ simplicity, these times are marked as “UTC” according to R (although
 it’s important to remember that they’re not <em>actually</em> UTC).</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">kamloops</span><span class="op">$</span><span class="va">time</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "2016-01-01 00:00:00 UTC" "2016-01-01 01:00:00 UTC" "2016-01-01 02:00:00 UTC"</span></span>
-<span><span class="co">## [4] "2016-01-01 03:00:00 UTC" "2016-01-01 04:00:00 UTC"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "2016-01-01 00:00:00 UTC" "2016-01-01 01:00:00 UTC" "2016-01-01 02:00:00 UTC" "2016-01-01 03:00:00 UTC"</span></span>
+<span><span class="co">## [5] "2016-01-01 04:00:00 UTC"</span></span></code></pre>
 <p>The <code>finches</code> data, on the other hand, is set in a true
 timezone:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">finches</span><span class="op">$</span><span class="va">time</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "2016-03-01 06:57:42 PST" "2016-03-01 06:58:41 PST" "2016-03-01 07:07:21 PST"</span></span>
-<span><span class="co">## [4] "2016-03-01 07:32:34 PST" "2016-03-01 07:32:35 PST"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "2016-03-01 06:57:42 PST" "2016-03-01 06:58:41 PST" "2016-03-01 07:07:21 PST" "2016-03-01 07:32:34 PST"</span></span>
+<span><span class="co">## [5] "2016-03-01 07:32:35 PST"</span></span></code></pre>
 <p>This means that it also has daylight savings applied in the summer,
 eep!</p>
 <p>To interpolate, the data must be in the same timezone. The easiest
@@ -207,45 +207,37 @@ same nominal and actual timezones!</p>
 <pre><code><span><span class="co">## temp is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></span></code></pre>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">finches_temperature</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##       animal_id         date                 time                     logger_id  </span></span>
-<span><span class="co">##  0620000513:7624   Min.   :2016-03-01   Min.   :2016-03-01 06:57:42   1500:6370  </span></span>
-<span><span class="co">##  041868D861:2767   1st Qu.:2016-03-05   1st Qu.:2016-03-05 13:54:13   2100: 968  </span></span>
-<span><span class="co">##  0620000514:1844   Median :2016-03-09   Median :2016-03-09 16:54:47   2200:2266  </span></span>
-<span><span class="co">##  06200004F8:1386   Mean   :2016-03-08   Mean   :2016-03-09 07:30:05   2300:3531  </span></span>
-<span><span class="co">##  041868BED6: 944   3rd Qu.:2016-03-13   3rd Qu.:2016-03-13 07:24:58   2400:1477  </span></span>
-<span><span class="co">##  06200003BB: 708   Max.   :2016-03-16   Max.   :2016-03-16 15:39:30   2700:2274  </span></span>
-<span><span class="co">##  (Other)   :1613                                                                 </span></span>
-<span><span class="co">##       species             age               sex            site_name    </span></span>
-<span><span class="co">##  Length   :16886   Length   :16886   Length   :16886   Length   :16886  </span></span>
-<span><span class="co">##  N.unique :    2   N.unique :    4   N.unique :    3   N.unique :    1  </span></span>
-<span><span class="co">##  N.blank  :    0   N.blank  :    0   N.blank  :    0   N.blank  :    0  </span></span>
-<span><span class="co">##  Min.nchar:   11   Min.nchar:    2   Min.nchar:    1   Min.nchar:   12  </span></span>
-<span><span class="co">##  Max.nchar:   18   Max.nchar:    3   Max.nchar:    1   Max.nchar:   12  </span></span>
-<span><span class="co">##                                                                         </span></span>
-<span><span class="co">##                                                                         </span></span>
-<span><span class="co">##       lon              lat             temp       </span></span>
-<span><span class="co">##  Min.   :-120.4   Min.   :50.67   Min.   :-2.268  </span></span>
-<span><span class="co">##  1st Qu.:-120.4   1st Qu.:50.67   1st Qu.: 4.707  </span></span>
-<span><span class="co">##  Median :-120.4   Median :50.67   Median : 8.972  </span></span>
-<span><span class="co">##  Mean   :-120.4   Mean   :50.67   Mean   : 8.443  </span></span>
-<span><span class="co">##  3rd Qu.:-120.4   3rd Qu.:50.67   3rd Qu.:11.943  </span></span>
-<span><span class="co">##  Max.   :-120.4   Max.   :50.67   Max.   :16.353  </span></span>
+<pre><code><span><span class="co">##       animal_id         date                 time                     logger_id        species             age       </span></span>
+<span><span class="co">##  0620000513:7624   Min.   :2016-03-01   Min.   :2016-03-01 06:57:42   1500:6370   Length   :16886   Length   :16886  </span></span>
+<span><span class="co">##  041868D861:2767   1st Qu.:2016-03-05   1st Qu.:2016-03-05 13:54:13   2100: 968   N.unique :    2   N.unique :    4  </span></span>
+<span><span class="co">##  0620000514:1844   Median :2016-03-09   Median :2016-03-09 16:54:47   2200:2266   N.blank  :    0   N.blank  :    0  </span></span>
+<span><span class="co">##  06200004F8:1386   Mean   :2016-03-08   Mean   :2016-03-09 07:30:05   2300:3531   Min.nchar:   11   Min.nchar:    2  </span></span>
+<span><span class="co">##  041868BED6: 944   3rd Qu.:2016-03-13   3rd Qu.:2016-03-13 07:24:58   2400:1477   Max.nchar:   18   Max.nchar:    3  </span></span>
+<span><span class="co">##  06200003BB: 708   Max.   :2016-03-16   Max.   :2016-03-16 15:39:30   2700:2274                                      </span></span>
+<span><span class="co">##  (Other)   :1613                                                                                                     </span></span>
+<span><span class="co">##         sex            site_name          lon              lat             temp       </span></span>
+<span><span class="co">##  Length   :16886   Length   :16886   Min.   :-120.4   Min.   :50.67   Min.   :-2.268  </span></span>
+<span><span class="co">##  N.unique :    3   N.unique :    1   1st Qu.:-120.4   1st Qu.:50.67   1st Qu.: 4.707  </span></span>
+<span><span class="co">##  N.blank  :    0   N.blank  :    0   Median :-120.4   Median :50.67   Median : 8.972  </span></span>
+<span><span class="co">##  Min.nchar:    1   Min.nchar:   12   Mean   :-120.4   Mean   :50.67   Mean   : 8.443  </span></span>
+<span><span class="co">##  Max.nchar:    1   Max.nchar:   12   3rd Qu.:-120.4   3rd Qu.:50.67   3rd Qu.:11.943  </span></span>
+<span><span class="co">##                                      Max.   :-120.4   Max.   :50.67   Max.   :16.353  </span></span>
 <span><span class="co">## </span></span></code></pre>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">finches_temperature</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Rows: 16,886</span></span>
 <span><span class="co">## Columns: 11</span></span>
-<span><span class="co">## $ animal_id &lt;fct&gt; 041868FF93, 041868FF93, 041868FF93, 06200003BB, 06200003BB, 0620000…</span></span>
-<span><span class="co">## $ date      &lt;date&gt; 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-0…</span></span>
-<span><span class="co">## $ time      &lt;dttm&gt; 2016-03-01 06:57:42, 2016-03-01 06:58:41, 2016-03-01 07:07:21, 201…</span></span>
-<span><span class="co">## $ logger_id &lt;fct&gt; 2300, 2300, 2300, 2400, 2400, 2400, 2400, 2400, 2300, 2300, 2300, 2…</span></span>
-<span><span class="co">## $ species   &lt;chr&gt; "Mountain Chickadee", "Mountain Chickadee", "Mountain Chickadee", "…</span></span>
-<span><span class="co">## $ age       &lt;chr&gt; "AHY", "AHY", "AHY", "SY", "SY", "SY", "SY", "SY", "AHY", "AHY", "A…</span></span>
-<span><span class="co">## $ sex       &lt;chr&gt; "U", "U", "U", "M", "M", "M", "M", "M", "F", "F", "F", "F", "F", "M…</span></span>
-<span><span class="co">## $ site_name &lt;chr&gt; "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Ka…</span></span>
-<span><span class="co">## $ lon       &lt;dbl&gt; -120.3622, -120.3622, -120.3622, -120.3635, -120.3635, -120.3635, -…</span></span>
-<span><span class="co">## $ lat       &lt;dbl&gt; 50.66967, 50.66967, 50.66967, 50.66938, 50.66938, 50.66938, 50.6693…</span></span>
-<span><span class="co">## $ temp      &lt;dbl&gt; 2.396167, 2.397806, 2.424500, 2.508556, 2.508611, 2.508667, 2.50872…</span></span></code></pre>
+<span><span class="co">## $ animal_id &lt;fct&gt; 041868FF93, 041868FF93, 041868FF93, 06200003BB, 06200003BB, 06200003BB, 06200003BB, 06200003BB, 041868BED…</span></span>
+<span><span class="co">## $ date      &lt;date&gt; 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-…</span></span>
+<span><span class="co">## $ time      &lt;dttm&gt; 2016-03-01 06:57:42, 2016-03-01 06:58:41, 2016-03-01 07:07:21, 2016-03-01 07:32:34, 2016-03-01 07:32:35,…</span></span>
+<span><span class="co">## $ logger_id &lt;fct&gt; 2300, 2300, 2300, 2400, 2400, 2400, 2400, 2400, 2300, 2300, 2300, 2300, 2300, 2400, 2300, 2400, 2400, 240…</span></span>
+<span><span class="co">## $ species   &lt;chr&gt; "Mountain Chickadee", "Mountain Chickadee", "Mountain Chickadee", "House Finch", "House Finch", "House Fi…</span></span>
+<span><span class="co">## $ age       &lt;chr&gt; "AHY", "AHY", "AHY", "SY", "SY", "SY", "SY", "SY", "AHY", "AHY", "AHY", "AHY", "AHY", "SY", "AHY", "SY", …</span></span>
+<span><span class="co">## $ sex       &lt;chr&gt; "U", "U", "U", "M", "M", "M", "M", "M", "F", "F", "F", "F", "F", "M", "F", "M", "M", "M", "M", "M", "F", …</span></span>
+<span><span class="co">## $ site_name &lt;chr&gt; "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops…</span></span>
+<span><span class="co">## $ lon       &lt;dbl&gt; -120.3622, -120.3622, -120.3622, -120.3635, -120.3635, -120.3635, -120.3635, -120.3635, -120.3622, -120.3…</span></span>
+<span><span class="co">## $ lat       &lt;dbl&gt; 50.66967, 50.66967, 50.66967, 50.66938, 50.66938, 50.66938, 50.66938, 50.66938, 50.66967, 50.66967, 50.66…</span></span>
+<span><span class="co">## $ temp      &lt;dbl&gt; 2.396167, 2.397806, 2.424500, 2.508556, 2.508611, 2.508667, 2.508722, 2.508778, 2.520278, 2.520500, 2.522…</span></span></code></pre>
 <p>Let’s take a look at the interpolate points specifically</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">compare1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">finches_temperature</span>, <span class="va">time</span>, <span class="va">temp</span><span class="op">)</span></span>
@@ -257,8 +249,7 @@ same nominal and actual timezones!</p>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">compare</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">time</span>, y <span class="op">=</span> <span class="va">temp</span>, colour <span class="op">=</span> <span class="va">type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html" class="external-link">scale_x_datetime</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">compare1</span><span class="op">$</span><span class="va">time</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Warning: Removed 4001 rows containing missing values or values outside the scale range</span></span>
-<span><span class="co">## (`geom_point()`).</span></span></code></pre>
+<pre><code><span><span class="co">## Warning: Removed 4001 rows containing missing values or values outside the scale range (`geom_point()`).</span></span></code></pre>
 <div class="figure" style="text-align: center">
 <img src="figures/interp-unnamed-chunk-10-1.png" alt="plot of chunk unnamed-chunk-10" width="80%"><p class="caption">
 plot of chunk unnamed-chunk-10
@@ -300,30 +291,22 @@ weather dataset:</p>
 <pre><code><span><span class="co">## temp is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></span></code></pre>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">finches_temperature</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##       animal_id         date                 time                     logger_id  </span></span>
-<span><span class="co">##  0620000513:7624   Min.   :2016-03-01   Min.   :2016-03-01 06:57:42   1500:6370  </span></span>
-<span><span class="co">##  041868D861:2767   1st Qu.:2016-03-05   1st Qu.:2016-03-05 13:54:13   2100: 968  </span></span>
-<span><span class="co">##  0620000514:1844   Median :2016-03-09   Median :2016-03-09 16:54:47   2200:2266  </span></span>
-<span><span class="co">##  06200004F8:1386   Mean   :2016-03-08   Mean   :2016-03-09 07:30:05   2300:3531  </span></span>
-<span><span class="co">##  041868BED6: 944   3rd Qu.:2016-03-13   3rd Qu.:2016-03-13 07:24:58   2400:1477  </span></span>
-<span><span class="co">##  06200003BB: 708   Max.   :2016-03-16   Max.   :2016-03-16 15:39:30   2700:2274  </span></span>
-<span><span class="co">##  (Other)   :1613                                                                 </span></span>
-<span><span class="co">##       species             age               sex            site_name    </span></span>
-<span><span class="co">##  Length   :16886   Length   :16886   Length   :16886   Length   :16886  </span></span>
-<span><span class="co">##  N.unique :    2   N.unique :    4   N.unique :    3   N.unique :    1  </span></span>
-<span><span class="co">##  N.blank  :    0   N.blank  :    0   N.blank  :    0   N.blank  :    0  </span></span>
-<span><span class="co">##  Min.nchar:   11   Min.nchar:    2   Min.nchar:    1   Min.nchar:   12  </span></span>
-<span><span class="co">##  Max.nchar:   18   Max.nchar:    3   Max.nchar:    1   Max.nchar:   12  </span></span>
-<span><span class="co">##                                                                         </span></span>
-<span><span class="co">##                                                                         </span></span>
-<span><span class="co">##       lon              lat             temp       </span></span>
-<span><span class="co">##  Min.   :-120.4   Min.   :50.67   Min.   :-2.268  </span></span>
-<span><span class="co">##  1st Qu.:-120.4   1st Qu.:50.67   1st Qu.: 4.619  </span></span>
-<span><span class="co">##  Median :-120.4   Median :50.67   Median : 8.964  </span></span>
-<span><span class="co">##  Mean   :-120.4   Mean   :50.67   Mean   : 8.434  </span></span>
-<span><span class="co">##  3rd Qu.:-120.4   3rd Qu.:50.67   3rd Qu.:11.951  </span></span>
-<span><span class="co">##  Max.   :-120.4   Max.   :50.67   Max.   :16.353  </span></span>
-<span><span class="co">##                                   NAs    :195</span></span></code></pre>
+<pre><code><span><span class="co">##       animal_id         date                 time                     logger_id        species             age       </span></span>
+<span><span class="co">##  0620000513:7624   Min.   :2016-03-01   Min.   :2016-03-01 06:57:42   1500:6370   Length   :16886   Length   :16886  </span></span>
+<span><span class="co">##  041868D861:2767   1st Qu.:2016-03-05   1st Qu.:2016-03-05 13:54:13   2100: 968   N.unique :    2   N.unique :    4  </span></span>
+<span><span class="co">##  0620000514:1844   Median :2016-03-09   Median :2016-03-09 16:54:47   2200:2266   N.blank  :    0   N.blank  :    0  </span></span>
+<span><span class="co">##  06200004F8:1386   Mean   :2016-03-08   Mean   :2016-03-09 07:30:05   2300:3531   Min.nchar:   11   Min.nchar:    2  </span></span>
+<span><span class="co">##  041868BED6: 944   3rd Qu.:2016-03-13   3rd Qu.:2016-03-13 07:24:58   2400:1477   Max.nchar:   18   Max.nchar:    3  </span></span>
+<span><span class="co">##  06200003BB: 708   Max.   :2016-03-16   Max.   :2016-03-16 15:39:30   2700:2274                                      </span></span>
+<span><span class="co">##  (Other)   :1613                                                                                                     </span></span>
+<span><span class="co">##         sex            site_name          lon              lat             temp       </span></span>
+<span><span class="co">##  Length   :16886   Length   :16886   Min.   :-120.4   Min.   :50.67   Min.   :-2.268  </span></span>
+<span><span class="co">##  N.unique :    3   N.unique :    1   1st Qu.:-120.4   1st Qu.:50.67   1st Qu.: 4.619  </span></span>
+<span><span class="co">##  N.blank  :    0   N.blank  :    0   Median :-120.4   Median :50.67   Median : 8.964  </span></span>
+<span><span class="co">##  Min.nchar:    1   Min.nchar:   12   Mean   :-120.4   Mean   :50.67   Mean   : 8.434  </span></span>
+<span><span class="co">##  Max.nchar:    1   Max.nchar:   12   3rd Qu.:-120.4   3rd Qu.:50.67   3rd Qu.:11.951  </span></span>
+<span><span class="co">##                                      Max.   :-120.4   Max.   :50.67   Max.   :16.353  </span></span>
+<span><span class="co">##                                                                       NAs    :195</span></span></code></pre>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">finches_temperature</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">time</span>, <span class="va">temp</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -364,51 +347,43 @@ weather dataset:</p>
 <span>  weather <span class="op">=</span> <span class="va">kamloops</span>,</span>
 <span>  cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"temp"</span>, <span class="st">"wind_spd"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## temp is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></span></code></pre>
-<pre><code><span><span class="co">## wind_spd is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></span></code></pre>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## temp is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></span>
+<span><span class="co">## wind_spd is missing 4 out of 4368 data, interpolation may be less accurate as a result.</span></span></code></pre>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">finches_weather</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##       animal_id         date                 time                     logger_id  </span></span>
-<span><span class="co">##  0620000513:7624   Min.   :2016-03-01   Min.   :2016-03-01 06:57:42   1500:6370  </span></span>
-<span><span class="co">##  041868D861:2767   1st Qu.:2016-03-05   1st Qu.:2016-03-05 13:54:13   2100: 968  </span></span>
-<span><span class="co">##  0620000514:1844   Median :2016-03-09   Median :2016-03-09 16:54:47   2200:2266  </span></span>
-<span><span class="co">##  06200004F8:1386   Mean   :2016-03-08   Mean   :2016-03-09 07:30:05   2300:3531  </span></span>
-<span><span class="co">##  041868BED6: 944   3rd Qu.:2016-03-13   3rd Qu.:2016-03-13 07:24:58   2400:1477  </span></span>
-<span><span class="co">##  06200003BB: 708   Max.   :2016-03-16   Max.   :2016-03-16 15:39:30   2700:2274  </span></span>
-<span><span class="co">##  (Other)   :1613                                                                 </span></span>
-<span><span class="co">##       species             age               sex            site_name    </span></span>
-<span><span class="co">##  Length   :16886   Length   :16886   Length   :16886   Length   :16886  </span></span>
-<span><span class="co">##  N.unique :    2   N.unique :    4   N.unique :    3   N.unique :    1  </span></span>
-<span><span class="co">##  N.blank  :    0   N.blank  :    0   N.blank  :    0   N.blank  :    0  </span></span>
-<span><span class="co">##  Min.nchar:   11   Min.nchar:    2   Min.nchar:    1   Min.nchar:   12  </span></span>
-<span><span class="co">##  Max.nchar:   18   Max.nchar:    3   Max.nchar:    1   Max.nchar:   12  </span></span>
-<span><span class="co">##                                                                         </span></span>
-<span><span class="co">##                                                                         </span></span>
-<span><span class="co">##       lon              lat             temp           wind_spd    </span></span>
-<span><span class="co">##  Min.   :-120.4   Min.   :50.67   Min.   :-2.268   Min.   : 0.00  </span></span>
-<span><span class="co">##  1st Qu.:-120.4   1st Qu.:50.67   1st Qu.: 4.707   1st Qu.:10.27  </span></span>
-<span><span class="co">##  Median :-120.4   Median :50.67   Median : 8.972   Median :17.33  </span></span>
-<span><span class="co">##  Mean   :-120.4   Mean   :50.67   Mean   : 8.443   Mean   :16.79  </span></span>
-<span><span class="co">##  3rd Qu.:-120.4   3rd Qu.:50.67   3rd Qu.:11.943   3rd Qu.:22.10  </span></span>
-<span><span class="co">##  Max.   :-120.4   Max.   :50.67   Max.   :16.353   Max.   :40.93  </span></span>
+<pre><code><span><span class="co">##       animal_id         date                 time                     logger_id        species             age       </span></span>
+<span><span class="co">##  0620000513:7624   Min.   :2016-03-01   Min.   :2016-03-01 06:57:42   1500:6370   Length   :16886   Length   :16886  </span></span>
+<span><span class="co">##  041868D861:2767   1st Qu.:2016-03-05   1st Qu.:2016-03-05 13:54:13   2100: 968   N.unique :    2   N.unique :    4  </span></span>
+<span><span class="co">##  0620000514:1844   Median :2016-03-09   Median :2016-03-09 16:54:47   2200:2266   N.blank  :    0   N.blank  :    0  </span></span>
+<span><span class="co">##  06200004F8:1386   Mean   :2016-03-08   Mean   :2016-03-09 07:30:05   2300:3531   Min.nchar:   11   Min.nchar:    2  </span></span>
+<span><span class="co">##  041868BED6: 944   3rd Qu.:2016-03-13   3rd Qu.:2016-03-13 07:24:58   2400:1477   Max.nchar:   18   Max.nchar:    3  </span></span>
+<span><span class="co">##  06200003BB: 708   Max.   :2016-03-16   Max.   :2016-03-16 15:39:30   2700:2274                                      </span></span>
+<span><span class="co">##  (Other)   :1613                                                                                                     </span></span>
+<span><span class="co">##         sex            site_name          lon              lat             temp           wind_spd    </span></span>
+<span><span class="co">##  Length   :16886   Length   :16886   Min.   :-120.4   Min.   :50.67   Min.   :-2.268   Min.   : 0.00  </span></span>
+<span><span class="co">##  N.unique :    3   N.unique :    1   1st Qu.:-120.4   1st Qu.:50.67   1st Qu.: 4.707   1st Qu.:10.27  </span></span>
+<span><span class="co">##  N.blank  :    0   N.blank  :    0   Median :-120.4   Median :50.67   Median : 8.972   Median :17.33  </span></span>
+<span><span class="co">##  Min.nchar:    1   Min.nchar:   12   Mean   :-120.4   Mean   :50.67   Mean   : 8.443   Mean   :16.79  </span></span>
+<span><span class="co">##  Max.nchar:    1   Max.nchar:   12   3rd Qu.:-120.4   3rd Qu.:50.67   3rd Qu.:11.943   3rd Qu.:22.10  </span></span>
+<span><span class="co">##                                      Max.   :-120.4   Max.   :50.67   Max.   :16.353   Max.   :40.93  </span></span>
 <span><span class="co">## </span></span></code></pre>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">finches_weather</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Rows: 16,886</span></span>
 <span><span class="co">## Columns: 12</span></span>
-<span><span class="co">## $ animal_id &lt;fct&gt; 041868FF93, 041868FF93, 041868FF93, 06200003BB, 06200003BB, 0620000…</span></span>
-<span><span class="co">## $ date      &lt;date&gt; 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-0…</span></span>
-<span><span class="co">## $ time      &lt;dttm&gt; 2016-03-01 06:57:42, 2016-03-01 06:58:41, 2016-03-01 07:07:21, 201…</span></span>
-<span><span class="co">## $ logger_id &lt;fct&gt; 2300, 2300, 2300, 2400, 2400, 2400, 2400, 2400, 2300, 2300, 2300, 2…</span></span>
-<span><span class="co">## $ species   &lt;chr&gt; "Mountain Chickadee", "Mountain Chickadee", "Mountain Chickadee", "…</span></span>
-<span><span class="co">## $ age       &lt;chr&gt; "AHY", "AHY", "AHY", "SY", "SY", "SY", "SY", "SY", "AHY", "AHY", "A…</span></span>
-<span><span class="co">## $ sex       &lt;chr&gt; "U", "U", "U", "M", "M", "M", "M", "M", "F", "F", "F", "F", "F", "M…</span></span>
-<span><span class="co">## $ site_name &lt;chr&gt; "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Ka…</span></span>
-<span><span class="co">## $ lon       &lt;dbl&gt; -120.3622, -120.3622, -120.3622, -120.3635, -120.3635, -120.3635, -…</span></span>
-<span><span class="co">## $ lat       &lt;dbl&gt; 50.66967, 50.66967, 50.66967, 50.66938, 50.66938, 50.66938, 50.6693…</span></span>
-<span><span class="co">## $ temp      &lt;dbl&gt; 2.396167, 2.397806, 2.424500, 2.508556, 2.508611, 2.508667, 2.50872…</span></span>
-<span><span class="co">## $ wind_spd  &lt;dbl&gt; 19.00000, 19.00000, 18.51000, 16.82889, 16.82778, 16.82667, 16.8255…</span></span></code></pre>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<span><span class="co">## $ animal_id &lt;fct&gt; 041868FF93, 041868FF93, 041868FF93, 06200003BB, 06200003BB, 06200003BB, 06200003BB, 06200003BB, 041868BED…</span></span>
+<span><span class="co">## $ date      &lt;date&gt; 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-01, 2016-03-…</span></span>
+<span><span class="co">## $ time      &lt;dttm&gt; 2016-03-01 06:57:42, 2016-03-01 06:58:41, 2016-03-01 07:07:21, 2016-03-01 07:32:34, 2016-03-01 07:32:35,…</span></span>
+<span><span class="co">## $ logger_id &lt;fct&gt; 2300, 2300, 2300, 2400, 2400, 2400, 2400, 2400, 2300, 2300, 2300, 2300, 2300, 2400, 2300, 2400, 2400, 240…</span></span>
+<span><span class="co">## $ species   &lt;chr&gt; "Mountain Chickadee", "Mountain Chickadee", "Mountain Chickadee", "House Finch", "House Finch", "House Fi…</span></span>
+<span><span class="co">## $ age       &lt;chr&gt; "AHY", "AHY", "AHY", "SY", "SY", "SY", "SY", "SY", "AHY", "AHY", "AHY", "AHY", "AHY", "SY", "AHY", "SY", …</span></span>
+<span><span class="co">## $ sex       &lt;chr&gt; "U", "U", "U", "M", "M", "M", "M", "M", "F", "F", "F", "F", "F", "M", "F", "M", "M", "M", "M", "M", "F", …</span></span>
+<span><span class="co">## $ site_name &lt;chr&gt; "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops, BC", "Kamloops…</span></span>
+<span><span class="co">## $ lon       &lt;dbl&gt; -120.3622, -120.3622, -120.3622, -120.3635, -120.3635, -120.3635, -120.3635, -120.3635, -120.3622, -120.3…</span></span>
+<span><span class="co">## $ lat       &lt;dbl&gt; 50.66967, 50.66967, 50.66967, 50.66938, 50.66938, 50.66938, 50.66938, 50.66938, 50.66967, 50.66967, 50.66…</span></span>
+<span><span class="co">## $ temp      &lt;dbl&gt; 2.396167, 2.397806, 2.424500, 2.508556, 2.508611, 2.508667, 2.508722, 2.508778, 2.520278, 2.520500, 2.522…</span></span>
+<span><span class="co">## $ wind_spd  &lt;dbl&gt; 19.00000, 19.00000, 18.51000, 16.82889, 16.82778, 16.82667, 16.82556, 16.82444, 16.59444, 16.59000, 16.54…</span></span></code></pre>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">finches_weather</span> <span class="op">&lt;-</span> <span class="va">finches_weather</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">time</span><span class="op">)</span>, temp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span>, wind_spd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">wind_spd</span><span class="op">)</span><span class="op">)</span></span>

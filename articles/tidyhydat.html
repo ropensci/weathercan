@@ -25,7 +25,7 @@
     <a href="https://ropensci.org" class="external-link"><img src="https://ropensci.org/img/icon_short_white.svg" id="hexlogo" alt="rOpenSci"></a>
     <a class="navbar-brand me-2" href="../index.html">weathercan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.8</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,7 +68,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>weathercan and tidyhydat</h1>
             
-            <h4 data-toc-skip class="date">2026-05-04</h4>
+            <h4 data-toc-skip class="date">2026-06-11</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/weathercan/blob/HEAD/vignettes/articles/tidyhydat.Rmd" class="external-link"><code>vignettes/articles/tidyhydat.Rmd</code></a></small>
       <div class="d-none name"><code>tidyhydat.Rmd</code></div>
@@ -133,12 +133,11 @@ this range</p>
 <span>  ends_earliest <span class="op">=</span> <span class="fl">2020</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## # A tibble: 2 × 17</span></span>
-<span><span class="co">##   prov  station_name   station_id climate_id WMO_id TC_id   lat    lon  elev tz       </span></span>
-<span><span class="co">##   &lt;chr&gt; &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    </span></span>
-<span><span class="co">## 1 MB    BRANDON MUNI A      50821 5010481     71140 YBR    49.9 -100.0  409. Etc/GMT+6</span></span>
-<span><span class="co">## 2 MB    BRANDON RCS         49909 5010490     71136 PBO    49.9 -100.0  409. Etc/GMT+6</span></span>
-<span><span class="co">## # ℹ 7 more variables: interval &lt;chr&gt;, start &lt;dbl&gt;, end &lt;dbl&gt;, normals &lt;lgl&gt;,</span></span>
-<span><span class="co">## #   normals_1991_2020 &lt;lgl&gt;, normals_1981_2010 &lt;lgl&gt;, normals_1971_2000 &lt;lgl&gt;</span></span></code></pre>
+<span><span class="co">##   prov  station_name   station_id climate_id WMO_id TC_id   lat    lon  elev tz        interval start   end normals</span></span>
+<span><span class="co">##   &lt;chr&gt; &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;fct&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;  </span></span>
+<span><span class="co">## 1 MB    BRANDON MUNI A      50821 5010481     71140 YBR    49.9 -100.0  409. Etc/GMT+6 day       2012  2026 TRUE   </span></span>
+<span><span class="co">## 2 MB    BRANDON RCS         49909 5010490     71136 PBO    49.9 -100.0  409. Etc/GMT+6 day       2012  2026 FALSE  </span></span>
+<span><span class="co">## # ℹ 3 more variables: normals_1991_2020 &lt;lgl&gt;, normals_1981_2010 &lt;lgl&gt;, normals_1971_2000 &lt;lgl&gt;</span></span></code></pre>
 <p>In this case “A” is for “Airport”, let’s go with that!</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rain</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/weather_dl.html">weather_dl</a></span><span class="op">(</span></span>
@@ -164,12 +163,12 @@ station</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">search_stn_name</span><span class="op">(</span><span class="st">"brandon"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## # A tibble: 4 × 5</span></span>
-<span><span class="co">##   STATION_NUMBER STATION_NAME                    PROV_TERR_STATE_LOC LATITUDE LONGITUDE</span></span>
-<span><span class="co">##   &lt;chr&gt;          &lt;chr&gt;                           &lt;chr&gt;                  &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">## 1 05MH001        ASSINIBOINE RIVER AT BRANDON    MB                      49.9    -100.0</span></span>
-<span><span class="co">## 2 05MH006        LITTLE SOURIS RIVER NEAR BRAND… MB                      49.7     -99.8</span></span>
-<span><span class="co">## 3 02OC007        MASKINONGE (LAC) A SAINT GABRI… QC                      46.3     -73.4</span></span>
-<span><span class="co">## 4 05MH013        ASSINIBOINE RIVER NEAR BRANDON  MB                      49.9    -100.</span></span></code></pre>
+<span><span class="co">##   STATION_NUMBER STATION_NAME                                PROV_TERR_STATE_LOC LATITUDE LONGITUDE</span></span>
+<span><span class="co">##   &lt;chr&gt;          &lt;chr&gt;                                       &lt;chr&gt;                  &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span><span class="co">## 1 05MH001        ASSINIBOINE RIVER AT BRANDON                MB                      49.9    -100.0</span></span>
+<span><span class="co">## 2 05MH006        LITTLE SOURIS RIVER NEAR BRANDON            MB                      49.7     -99.8</span></span>
+<span><span class="co">## 3 02OC007        MASKINONGE (LAC) A SAINT GABRIEL DE BRANDON QC                      46.3     -73.4</span></span>
+<span><span class="co">## 4 05MH013        ASSINIBOINE RIVER NEAR BRANDON              MB                      49.9    -100.</span></span></code></pre>
 <p>There are a couple of options, but whoops, one’s from Quebec! Let’s
 filter this to only Manitoba and only stations with 2020 data with the
 <code>hy_stn_data_range()</code> function.</p>

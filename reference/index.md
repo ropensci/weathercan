@@ -26,6 +26,9 @@
   : Download climate normals from Environment and Climate Change Canada
 - [`normals_file()`](https://docs.ropensci.org/weathercan/reference/normals_file.md)
   : Location of the cached normals data
+- [`normals_measurement_types`](https://docs.ropensci.org/weathercan/reference/normals_measurement_types.md)
+  : List of climate normals measurements and types for each set of
+  normals
 - [`normals_measurements`](https://docs.ropensci.org/weathercan/reference/normals_measurements.md)
   : List of climate normals measurements for each station
 - [`pg`](https://docs.ropensci.org/weathercan/reference/pg.md) : Hourly

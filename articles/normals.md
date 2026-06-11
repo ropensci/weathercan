@@ -37,16 +37,16 @@ stations_search("Winnipeg", normals_years = "current")
 
     ## # A tibble: 10 × 17
     ##    prov  station_name  station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval
-    ##    <chr> <chr>              <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr> <chr>   
-    ##  1 MB    WINNIPEG A CS      27174 502S001     71849 XWG    49.9 -97.2  239. Etc/… day     
-    ##  2 MB    WINNIPEG A CS      27174 502S001     71849 XWG    49.9 -97.2  239. Etc/… hour    
+    ##    <chr> <chr>              <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr> <fct>   
+    ##  1 MB    WINNIPEG A CS      27174 502S001     71849 XWG    49.9 -97.2  239. Etc/… hour    
+    ##  2 MB    WINNIPEG A CS      27174 502S001     71849 XWG    49.9 -97.2  239. Etc/… day     
     ##  3 MB    WINNIPEG A CS      27174 502S001     71849 XWG    49.9 -97.2  239. Etc/… month   
-    ##  4 MB    WINNIPEG INT…      51097 5023227        NA YWG    49.9 -97.2  239. Etc/… day     
-    ##  5 MB    WINNIPEG INT…      51097 5023227        NA YWG    49.9 -97.2  239. Etc/… hour    
-    ##  6 MB    WINNIPEG RIC…      47407 5023226     71852 YWG    49.9 -97.2  239. Etc/… day     
-    ##  7 MB    WINNIPEG RIC…      47407 5023226     71852 YWG    49.9 -97.2  239. Etc/… hour    
-    ##  8 MB    WINNIPEG RIC…       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… day     
-    ##  9 MB    WINNIPEG RIC…       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… hour    
+    ##  4 MB    WINNIPEG INT…      51097 5023227        NA YWG    49.9 -97.2  239. Etc/… hour    
+    ##  5 MB    WINNIPEG INT…      51097 5023227        NA YWG    49.9 -97.2  239. Etc/… day     
+    ##  6 MB    WINNIPEG RIC…      47407 5023226     71852 YWG    49.9 -97.2  239. Etc/… hour    
+    ##  7 MB    WINNIPEG RIC…      47407 5023226     71852 YWG    49.9 -97.2  239. Etc/… day     
+    ##  8 MB    WINNIPEG RIC…       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… hour    
+    ##  9 MB    WINNIPEG RIC…       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… day     
     ## 10 MB    WINNIPEG RIC…       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… month
 
 Let’s look at the climate normals from one of these stations in
@@ -73,7 +73,6 @@ n <- normals_dl(climate_ids = "5023222")
 ```
 
     ## The most current normals available for download by weathercan are '1991-2020'
-
     ## Using composite locations: WINNIPEG RICHARDSON (AIRPORT)
 
 ``` r
@@ -81,20 +80,20 @@ n <- normals_dl(climate_ids = "5023222")
 n
 ```
 
-    ## # A tibble: 325 × 314
-    ##    location_name            prov  composite_stations period_of_record element_group period
-    ##    <chr>                    <chr> <chr>              <chr>            <chr>         <chr> 
-    ##  1 WINNIPEG RICHARDSON (AI… MB    WINNIPEG A CS (50… Normal           Temperature   Jan   
-    ##  2 WINNIPEG RICHARDSON (AI… MB    WINNIPEG A CS (50… Normal           Temperature   Feb   
-    ##  3 WINNIPEG RICHARDSON (AI… MB    WINNIPEG A CS (50… Normal           Temperature   Mar   
-    ##  4 WINNIPEG RICHARDSON (AI… MB    WINNIPEG A CS (50… Normal           Temperature   Apr   
-    ##  5 WINNIPEG RICHARDSON (AI… MB    WINNIPEG A CS (50… Normal           Temperature   May   
-    ##  6 WINNIPEG RICHARDSON (AI… MB    WINNIPEG A CS (50… Normal           Temperature   Jun   
-    ##  7 WINNIPEG RICHARDSON (AI… MB    WINNIPEG A CS (50… Normal           Temperature   Jul   
-    ##  8 WINNIPEG RICHARDSON (AI… MB    WINNIPEG A CS (50… Normal           Temperature   Aug   
-    ##  9 WINNIPEG RICHARDSON (AI… MB    WINNIPEG A CS (50… Normal           Temperature   Sep   
-    ## 10 WINNIPEG RICHARDSON (AI… MB    WINNIPEG A CS (50… Normal           Temperature   Oct   
-    ## # ℹ 315 more rows
+    ## # A tibble: 26 × 313
+    ##    location_name          prov  composite_stations period_of_record period daily_average_c
+    ##    <chr>                  <chr> <chr>              <chr>            <chr>            <dbl>
+    ##  1 WINNIPEG RICHARDSON (… MB    WINNIPEG A CS (50… Normal           Jan              -16.3
+    ##  2 WINNIPEG RICHARDSON (… MB    WINNIPEG A CS (50… Normal           Feb              -14.1
+    ##  3 WINNIPEG RICHARDSON (… MB    WINNIPEG A CS (50… Normal           Mar               -6.1
+    ##  4 WINNIPEG RICHARDSON (… MB    WINNIPEG A CS (50… Normal           Apr                3.8
+    ##  5 WINNIPEG RICHARDSON (… MB    WINNIPEG A CS (50… Normal           May               11.1
+    ##  6 WINNIPEG RICHARDSON (… MB    WINNIPEG A CS (50… Normal           Jun               17.1
+    ##  7 WINNIPEG RICHARDSON (… MB    WINNIPEG A CS (50… Normal           Jul               19.5
+    ##  8 WINNIPEG RICHARDSON (… MB    WINNIPEG A CS (50… Normal           Aug               18.7
+    ##  9 WINNIPEG RICHARDSON (… MB    WINNIPEG A CS (50… Normal           Sep               13.3
+    ## 10 WINNIPEG RICHARDSON (… MB    WINNIPEG A CS (50… Normal           Oct                5.1
+    ## # ℹ 16 more rows
 
 The more recent climate normals actually reflect composite stations.
 Stations included are stored in the `composite_stations` column.
@@ -155,6 +154,157 @@ n_orig
     ## 10 BANFF         AB                    Normal           Temperature   Extreme Maximum (°C…
     ## # ℹ 69,058 more rows
 
+You can also pre-select specific measurements by `measurement_type`
+(also called ELEMENT GROUP by ECCC). These must be one of those listed
+in the `normals_measurement_types` data frame.
+
+``` r
+
+normals_measurement_types
+```
+
+    ## # A tibble: 158 × 3
+    ##    normals   measurement_type measurement                      
+    ##    <chr>     <chr>            <chr>                            
+    ##  1 1991-2020 Temperature      daily_average_c                  
+    ##  2 1991-2020 Temperature      stddev_mean_monthly_temperature_c
+    ##  3 1991-2020 Temperature      daily_maximum_c                  
+    ##  4 1991-2020 Temperature      daily_minimum_c                  
+    ##  5 1991-2020 Temperature      maximum_daily_mean_c             
+    ##  6 1991-2020 Temperature      maximum_daily_mean_c_date        
+    ##  7 1991-2020 Temperature      minimum_daily_mean_c             
+    ##  8 1991-2020 Temperature      minimum_daily_mean_c_date        
+    ##  9 1991-2020 Temperature      extreme_maximum_c                
+    ## 10 1991-2020 Temperature      extreme_maximum_c_date           
+    ## # ℹ 148 more rows
+
+``` r
+
+unique(normals_measurement_types$measurement_type)
+```
+
+    ##  [1] "Temperature"                   "Precipitation"                
+    ##  [3] "Days with Maximum Temperature" "Days with Minimum Temperature"
+    ##  [5] "Days with Rainfall"            "Days with Snowfall"           
+    ##  [7] "Days with Precipitation"       "Days with Snow Depth"         
+    ##  [9] "Wind"                          "Degree Days"                  
+    ## [11] "Quintiles"                     "Humidex"                      
+    ## [13] "Wind Chill"                    "Humidity"                     
+    ## [15] "Pressure"                      "Frost-Free"                   
+    ## [17] "Days With ..."                 "Visibility"                   
+    ## [19] "Cloud Amount"                  "Snow-Period"
+
+``` r
+
+filter(normals_measurement_types, measurement_type == "Wind Chill")
+```
+
+    ## # A tibble: 6 × 3
+    ##   normals   measurement_type measurement              
+    ##   <chr>     <chr>            <chr>                    
+    ## 1 1991-2020 Wind Chill       days_with_wind_chill_<_20
+    ## 2 1991-2020 Wind Chill       days_with_wind_chill_<_30
+    ## 3 1991-2020 Wind Chill       days_with_wind_chill_<_40
+    ## 4 1991-2020 Wind Chill       days_with_wind_chill_<_50
+    ## 5 1991-2020 Wind Chill       extreme_wind_chill       
+    ## 6 1991-2020 Wind Chill       extreme_wind_chill_date
+
+``` r
+
+filter(normals_measurement_types, measurement_type == "Temperature")
+```
+
+    ## # A tibble: 16 × 3
+    ##    normals   measurement_type measurement                      
+    ##    <chr>     <chr>            <chr>                            
+    ##  1 1991-2020 Temperature      daily_average_c                  
+    ##  2 1991-2020 Temperature      stddev_mean_monthly_temperature_c
+    ##  3 1991-2020 Temperature      daily_maximum_c                  
+    ##  4 1991-2020 Temperature      daily_minimum_c                  
+    ##  5 1991-2020 Temperature      maximum_daily_mean_c             
+    ##  6 1991-2020 Temperature      maximum_daily_mean_c_date        
+    ##  7 1991-2020 Temperature      minimum_daily_mean_c             
+    ##  8 1991-2020 Temperature      minimum_daily_mean_c_date        
+    ##  9 1991-2020 Temperature      extreme_maximum_c                
+    ## 10 1991-2020 Temperature      extreme_maximum_c_date           
+    ## 11 1991-2020 Temperature      minimum_daily_maximum_c          
+    ## 12 1991-2020 Temperature      minimum_daily_maximum_c_date     
+    ## 13 1991-2020 Temperature      maximum_daily_minimum_c          
+    ## 14 1991-2020 Temperature      maximum_daily_minimum_c_date     
+    ## 15 1991-2020 Temperature      extreme_minimum_c                
+    ## 16 1991-2020 Temperature      extreme_minimum_c_date
+
+You can supply these to `normals_dl` to return normals with only these
+measurements.
+
+``` r
+
+n <- normals_dl(
+  climate_ids = "5023222",
+  measurement_type = c("Wind Chill", "Temperature")
+)
+```
+
+    ## The most current normals available for download by weathercan are '1991-2020'
+    ## Using composite locations: WINNIPEG RICHARDSON (AIRPORT)
+
+``` r
+
+glimpse(n)
+```
+
+    ## Rows: 26
+    ## Columns: 49
+    ## $ location_name                          <chr> "WINNIPEG RICHARDSON (AIRPORT)", "WINNIPE…
+    ## $ prov                                   <chr> "MB", "MB", "MB", "MB", "MB", "MB", "MB",…
+    ## $ composite_stations                     <chr> "WINNIPEG A CS (502S001); WINNIPEG INTL A…
+    ## $ period_of_record                       <chr> "Normal", "Normal", "Normal", "Normal", "…
+    ## $ period                                 <chr> "Jan", "Feb", "Mar", "Apr", "May", "Jun",…
+    ## $ daily_average_c                        <dbl> -16.3, -14.1, -6.1, 3.8, 11.1, 17.1, 19.5…
+    ## $ daily_average_c_code                   <chr> "A", "A", "A", "A", "A", "A", "A", "A", "…
+    ## $ stddev_mean_monthly_temperature_c      <dbl> 3.6, 4.0, 3.7, 2.9, 1.9, 1.5, 1.4, 1.5, 1…
+    ## $ stddev_mean_monthly_temperature_c_code <chr> "A", "A", "A", "A", "A", "A", "A", "A", "…
+    ## $ daily_maximum_c                        <dbl> -11.4, -8.8, -0.9, 10.0, 18.1, 23.3, 25.8…
+    ## $ daily_maximum_c_code                   <chr> "A", "A", "A", "A", "A", "A", "A", "A", "…
+    ## $ daily_minimum_c                        <dbl> -21.2, -19.3, -11.2, -2.5, 4.2, 10.9, 13.…
+    ## $ daily_minimum_c_code                   <chr> "A", "A", "A", "A", "A", "A", "A", "A", "…
+    ## $ maximum_daily_mean_c                   <dbl> 2.5, 3.5, 18.5, 19.7, 26.3, 30.9, 28.8, 3…
+    ## $ maximum_daily_mean_c_code              <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+    ## $ maximum_daily_mean_c_date              <date> 2003-01-07, 2000-02-25, 2012-03-19, 2001…
+    ## $ maximum_daily_mean_c_date_code         <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+    ## $ minimum_daily_mean_c                   <dbl> -36.3, -38.6, -31.5, -15.6, -3.4, 4.6, 11…
+    ## $ minimum_daily_mean_c_code              <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+    ## $ minimum_daily_mean_c_date              <date> 2004-01-29, 1996-02-01, 2014-03-01, 1996…
+    ## $ minimum_daily_mean_c_date_code         <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+    ## $ extreme_maximum_c                      <dbl> 6.7, 9.0, 23.7, 28.3, 35.2, 37.8, 35.9, 3…
+    ## $ extreme_maximum_c_code                 <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+    ## $ extreme_maximum_c_date                 <date> 2012-01-05, 2000-02-28, 2012-03-19, 2001…
+    ## $ extreme_maximum_c_date_code            <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+    ## $ minimum_daily_maximum_c                <dbl> -32.0, -35.3, -26.0, -11.6, 0.2, 10.0, 13…
+    ## $ minimum_daily_maximum_c_code           <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+    ## $ minimum_daily_maximum_c_date           <date> 2004-01-29, 1996-02-01, 2014-03-01, 1997…
+    ## $ minimum_daily_maximum_c_date_code      <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+    ## $ maximum_daily_minimum_c                <dbl> 0.9, 1.8, 13.3, 12.3, 20.2, 24.0, 22.8, 2…
+    ## $ maximum_daily_minimum_c_code           <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+    ## $ maximum_daily_minimum_c_date           <date> 2017-01-21, 2000-02-25, 2012-03-19, 1991…
+    ## $ maximum_daily_minimum_c_date_code      <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+    ## $ extreme_minimum_c                      <dbl> -41.0, -41.8, -37.4, -22.9, -10.3, -4.6, …
+    ## $ extreme_minimum_c_code                 <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+    ## $ extreme_minimum_c_date                 <date> 2004-01-30, 1996-02-01, 2003-03-02, 1996…
+    ## $ extreme_minimum_c_date_code            <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+    ## $ `days_with_wind_chill_<_20`            <dbl> 24.2, 21.0, 11.8, 1.2, 0.0, 0.0, 0.0, 0.0…
+    ## $ `days_with_wind_chill_<_20_code`       <chr> "A", "A", "A", "A", "A", "A", "A", "A", "…
+    ## $ `days_with_wind_chill_<_30`            <dbl> 16.50, 12.10, 3.90, 0.03, 0.00, 0.00, 0.0…
+    ## $ `days_with_wind_chill_<_30_code`       <chr> "A", "A", "A", "A", "A", "A", "A", "A", "…
+    ## $ `days_with_wind_chill_<_40`            <dbl> 5.90, 2.70, 0.52, 0.00, 0.00, 0.00, 0.00,…
+    ## $ `days_with_wind_chill_<_40_code`       <chr> "A", "A", "A", "A", "A", "A", "A", "A", "…
+    ## $ `days_with_wind_chill_<_50`            <dbl> 0.34, 0.14, 0.00, 0.00, 0.00, 0.00, 0.00,…
+    ## $ `days_with_wind_chill_<_50_code`       <chr> "A", "A", "A", "A", "A", "A", "A", "A", "…
+    ## $ extreme_wind_chill                     <dbl> -54.1, -57.1, -49.4, -30.3, -15.4, -7.9, …
+    ## $ extreme_wind_chill_code                <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+    ## $ extreme_wind_chill_date                <date> 2004-01-29, 1996-02-01, 2014-03-01, 1995…
+    ## $ extreme_wind_chill_date_code           <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+
 ### Downloading previous normals (1981-2010 and 1971-2000)
 
 Similar to current normals, we first find the stations and then download
@@ -169,9 +319,9 @@ stations_search("Winnipeg", normals_years = "1981-2010")
 
     ## # A tibble: 3 × 17
     ##   prov  station_name   station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval
-    ##   <chr> <chr>               <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr> <chr>   
-    ## 1 MB    WINNIPEG RICH…       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… day     
-    ## 2 MB    WINNIPEG RICH…       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… hour    
+    ##   <chr> <chr>               <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr> <fct>   
+    ## 1 MB    WINNIPEG RICH…       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… hour    
+    ## 2 MB    WINNIPEG RICH…       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… day     
     ## 3 MB    WINNIPEG RICH…       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… month
 
 ``` r

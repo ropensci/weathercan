@@ -21,12 +21,12 @@ head(stations())
 
     ## # A tibble: 6 × 17
     ##   prov  station_name        station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1991_2020 normals_1981_2010
-    ##   <chr> <chr>                    <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
-    ## 1 AB    DAYSLAND                  1795 301AR54        NA <NA>   52.9 -112.  689. Etc/GMT+7 day       1908  1922 FALSE   FALSE             FALSE            
-    ## 2 AB    DAYSLAND                  1795 301AR54        NA <NA>   52.9 -112.  689. Etc/GMT+7 hour        NA    NA FALSE   FALSE             FALSE            
+    ##   <chr> <chr>                    <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <fct>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
+    ## 1 AB    DAYSLAND                  1795 301AR54        NA <NA>   52.9 -112.  689. Etc/GMT+7 hour        NA    NA FALSE   FALSE             FALSE            
+    ## 2 AB    DAYSLAND                  1795 301AR54        NA <NA>   52.9 -112.  689. Etc/GMT+7 day       1908  1922 FALSE   FALSE             FALSE            
     ## 3 AB    DAYSLAND                  1795 301AR54        NA <NA>   52.9 -112.  689. Etc/GMT+7 month     1908  1922 FALSE   FALSE             FALSE            
-    ## 4 AB    EDMONTON CORONATION       1796 301BK03        NA <NA>   53.6 -114.  671. Etc/GMT+7 day       1978  1979 FALSE   FALSE             FALSE            
-    ## 5 AB    EDMONTON CORONATION       1796 301BK03        NA <NA>   53.6 -114.  671. Etc/GMT+7 hour        NA    NA FALSE   FALSE             FALSE            
+    ## 4 AB    EDMONTON CORONATION       1796 301BK03        NA <NA>   53.6 -114.  671. Etc/GMT+7 hour        NA    NA FALSE   FALSE             FALSE            
+    ## 5 AB    EDMONTON CORONATION       1796 301BK03        NA <NA>   53.6 -114.  671. Etc/GMT+7 day       1978  1979 FALSE   FALSE             FALSE            
     ## 6 AB    EDMONTON CORONATION       1796 301BK03        NA <NA>   53.6 -114.  671. Etc/GMT+7 month     1978  1979 FALSE   FALSE             FALSE            
     ## # ℹ 1 more variable: normals_1971_2000 <lgl>
 
@@ -35,7 +35,7 @@ head(stations())
 glimpse(stations())
 ```
 
-    ## Rows: 26,439
+    ## Rows: 26,448
     ## Columns: 17
     ## $ prov              <chr> "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", …
     ## $ station_name      <chr> "DAYSLAND", "DAYSLAND", "DAYSLAND", "EDMONTON CORONATION", "EDMONTON CORONATION", "EDMONTON CORONATION", "FLEET", "FLEET", "FLEET", …
@@ -47,9 +47,9 @@ glimpse(stations())
     ## $ lon               <dbl> -112.28, -112.28, -112.28, -113.57, -113.57, -113.57, -111.73, -111.73, -111.73, -110.15, -110.15, -110.15, -115.20, -115.20, -115.2…
     ## $ elev              <dbl> 688.8, 688.8, 688.8, 670.6, 670.6, 670.6, 838.2, 838.2, 838.2, 640.0, 640.0, 640.0, 1036.0, 1036.0, 1036.0, 585.2, 585.2, 585.2, 668…
     ## $ tz                <chr> "Etc/GMT+7", "Etc/GMT+7", "Etc/GMT+7", "Etc/GMT+7", "Etc/GMT+7", "Etc/GMT+7", "Etc/GMT+7", "Etc/GMT+7", "Etc/GMT+7", "Etc/GMT+7", "E…
-    ## $ interval          <chr> "day", "hour", "month", "day", "hour", "month", "day", "hour", "month", "day", "hour", "month", "day", "hour", "month", "day", "hour…
-    ## $ start             <dbl> 1908, NA, 1908, 1978, NA, 1978, 1987, NA, 1987, 1987, NA, 1987, 1980, NA, 1980, 1980, NA, 1980, 1986, NA, 1986, 1987, NA, 1987, 1986…
-    ## $ end               <dbl> 1922, NA, 1922, 1979, NA, 1979, 1990, NA, 1990, 1998, NA, 1998, 2009, NA, 2007, 1981, NA, 1981, 2019, NA, 2007, 1991, NA, 1991, 1995…
+    ## $ interval          <fct> hour, day, month, hour, day, month, hour, day, month, hour, day, month, hour, day, month, hour, day, month, hour, day, month, hour, …
+    ## $ start             <dbl> NA, 1908, 1908, NA, 1978, 1978, NA, 1987, 1987, NA, 1987, 1987, NA, 1980, 1980, NA, 1980, 1980, NA, 1986, 1986, NA, 1987, 1987, NA, …
+    ## $ end               <dbl> NA, 1922, 1922, NA, 1979, 1979, NA, 1990, 1990, NA, 1998, 1998, NA, 2009, 2007, NA, 1981, 1981, NA, 2019, 2007, NA, 1991, 1991, NA, …
     ## $ normals           <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, TRU…
     ## $ normals_1991_2020 <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,…
     ## $ normals_1981_2010 <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, TRU…
@@ -65,17 +65,17 @@ stations_search("Kamloops")
 
     ## # A tibble: 40 × 17
     ##    prov  station_name         station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1991_2020 normals_1981_2010
-    ##    <chr> <chr>                     <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
+    ##    <chr> <chr>                     <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <fct>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
     ##  1 BC    KAMLOOPS                   1274 1163779        NA <NA>   50.7 -120.  379. Etc/GMT+8 day       1878  1982 FALSE   FALSE             FALSE            
     ##  2 BC    KAMLOOPS                   1274 1163779        NA <NA>   50.7 -120.  379. Etc/GMT+8 month     1878  1982 FALSE   FALSE             FALSE            
-    ##  3 BC    KAMLOOPS A                 1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 day       1951  2013 TRUE    TRUE              TRUE             
-    ##  4 BC    KAMLOOPS A                 1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE             
+    ##  3 BC    KAMLOOPS A                 1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE             
+    ##  4 BC    KAMLOOPS A                 1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 day       1951  2013 TRUE    TRUE              TRUE             
     ##  5 BC    KAMLOOPS A                 1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 month     1951  2013 TRUE    TRUE              TRUE             
-    ##  6 BC    KAMLOOPS A                51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 day       2013  2026 TRUE    TRUE              FALSE            
-    ##  7 BC    KAMLOOPS A                51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2026 TRUE    TRUE              FALSE            
+    ##  6 BC    KAMLOOPS A                51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2026 TRUE    TRUE              FALSE            
+    ##  7 BC    KAMLOOPS A                51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 day       2013  2026 TRUE    TRUE              FALSE            
     ##  8 BC    KAMLOOPS AFTON MINES       1276 1163790        NA <NA>   50.7 -120.  701  Etc/GMT+8 day       1977  1993 TRUE    FALSE             FALSE            
     ##  9 BC    KAMLOOPS AFTON MINES       1276 1163790        NA <NA>   50.7 -120.  701  Etc/GMT+8 month     1977  1993 TRUE    FALSE             FALSE            
-    ## 10 BC    KAMLOOPS AUT              42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 day       2006  2026 TRUE    TRUE              FALSE            
+    ## 10 BC    KAMLOOPS AUT              42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2026 TRUE    TRUE              FALSE            
     ## # ℹ 30 more rows
     ## # ℹ 1 more variable: normals_1971_2000 <lgl>
 
@@ -89,7 +89,7 @@ stations_search("Kamloops", interval = "hour")
 
     ## # A tibble: 3 × 17
     ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1991_2020 normals_1981_2010
-    ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
+    ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <fct>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
     ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE             
     ## 2 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2026 TRUE    TRUE              FALSE            
     ## 3 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2026 TRUE    TRUE              FALSE            
@@ -104,7 +104,7 @@ stations_search("Kamloops", interval = c("hour", "month"))
 
     ## # A tibble: 21 × 17
     ##    prov  station_name            station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1991_2020 normals_1981_2010
-    ##    <chr> <chr>                        <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
+    ##    <chr> <chr>                        <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <fct>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
     ##  1 BC    KAMLOOPS                      1274 1163779        NA <NA>   50.7 -120.  379. Etc/GMT+8 month     1878  1982 FALSE   FALSE             FALSE            
     ##  2 BC    KAMLOOPS A                    1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE             
     ##  3 BC    KAMLOOPS A                    1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 month     1951  2013 TRUE    TRUE              TRUE             
@@ -132,7 +132,7 @@ stations_search(
 
     ## # A tibble: 3 × 18
     ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1991_2020 normals_1981_2010
-    ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
+    ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <fct>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
     ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE             
     ## 2 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2026 TRUE    TRUE              FALSE            
     ## 3 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2026 TRUE    TRUE              FALSE            
@@ -156,7 +156,7 @@ BCstations
 
     ## # A tibble: 3 × 17
     ##   prov  station_name                station_id climate_id WMO_id TC_id   lat   lon  elev tz     interval start   end normals normals_1991_2020 normals_1981_2010
-    ##   <chr> <chr>                            <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>  <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
+    ##   <chr> <chr>                            <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>  <fct>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
     ## 1 BC    CRESTON CAMPBELL SCIENTIFIC       6838 114B1F0     71770 WJR    49.1 -116.  641. Etc/G… hour      1994  2026 TRUE    TRUE              FALSE            
     ## 2 BC    NELSON CS                         6839 1145M29     71776 WNM    49.5 -117.  535. Etc/G… hour      1994  2026 TRUE    TRUE              FALSE            
     ## 3 BC    WARFIELD RCS                     31067 1148705     71401 XWF    49.1 -118.  567. Etc/G… hour      2001  2026 TRUE    TRUE              FALSE            
@@ -185,11 +185,10 @@ And check when it was last updated with
 stations_meta()
 ```
 
-    ## $ECCC_modified
-    ## [1] "2026-05-03 23:30:00 UTC"
-    ## 
-    ## $weathercan_modified
-    ## [1] "2026-05-04"
+    ## # A tibble: 1 × 2
+    ##   ECCC_modified       weathercan_modified
+    ##   <dttm>              <date>             
+    ## 1 2026-06-03 23:30:00 2026-06-11
 
 ## Weather
 
@@ -200,9 +199,8 @@ Once you have your `station_id`(s) you can download weather data:
 kam <- weather_dl(station_ids = 51423, start = "2016-01-01", end = "2016-02-15")
 ```
 
-    ## As of weathercan v0.3.0 time display is either local time or UTC
-    ## See Details under ?weather_dl for more information.
-    ## This message is shown once per session
+    ## As of weathercan v0.3.0 time display is either local time or UTC See Details under 
+    ## is shown once per session
 
 ``` r
 
@@ -210,22 +208,22 @@ kam
 ```
 
     ## # A tibble: 1,104 × 38
-    ##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id date       time                year  month day   hour  qual  weather
-    ##    <chr>             <dbl> <lgl>            <chr> <dbl> <dbl> <dbl> <chr>      <chr>  <chr> <date>     <dttm>              <chr> <chr> <chr> <chr> <chr> <chr>  
-    ##  1 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 00:00:00 2016  01    01    00:00 <NA>  <NA>   
-    ##  2 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 01:00:00 2016  01    01    01:00 <NA>  Mostly…
-    ##  3 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 02:00:00 2016  01    01    02:00 <NA>  <NA>   
-    ##  4 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 03:00:00 2016  01    01    03:00 <NA>  <NA>   
-    ##  5 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 04:00:00 2016  01    01    04:00 <NA>  Cloudy 
-    ##  6 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 05:00:00 2016  01    01    05:00 <NA>  <NA>   
-    ##  7 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 06:00:00 2016  01    01    06:00 <NA>  <NA>   
-    ##  8 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 07:00:00 2016  01    01    07:00 <NA>  Cloudy 
-    ##  9 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 08:00:00 2016  01    01    08:00 <NA>  <NA>   
-    ## 10 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 09:00:00 2016  01    01    09:00 <NA>  Snow   
+    ##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id date       time                 year month   day hour   qual   temp
+    ##    <chr>             <dbl> <lgl>            <chr> <dbl> <dbl> <dbl> <chr>      <chr>  <chr> <date>     <dttm>              <dbl> <int> <int> <time> <chr> <dbl>
+    ##  1 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 00:00:00  2016     1     1 00:00  <NA>   -9.1
+    ##  2 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 01:00:00  2016     1     1 01:00  <NA>   -9.6
+    ##  3 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 02:00:00  2016     1     1 02:00  <NA>   -9.9
+    ##  4 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 03:00:00  2016     1     1 03:00  <NA>   -9.5
+    ##  5 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 04:00:00  2016     1     1 04:00  <NA>   -9.4
+    ##  6 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 05:00:00  2016     1     1 05:00  <NA>   -9.8
+    ##  7 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 06:00:00  2016     1     1 06:00  <NA>  -10  
+    ##  8 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 07:00:00  2016     1     1 07:00  <NA>  -10.2
+    ##  9 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 08:00:00  2016     1     1 08:00  <NA>  -10.1
+    ## 10 KAMLOOPS A        51423 NA               BC     50.7 -120.  345. 1163781    71887  YKA   2016-01-01 2016-01-01 09:00:00  2016     1     1 09:00  <NA>   -9.7
     ## # ℹ 1,094 more rows
-    ## # ℹ 20 more variables: hmdx <dbl>, hmdx_flag <chr>, precip_amt <dbl>, precip_amt_flag <chr>, pressure <dbl>, pressure_flag <chr>, rel_hum <dbl>,
-    ## #   rel_hum_flag <chr>, temp <dbl>, temp_dew <dbl>, temp_dew_flag <chr>, temp_flag <chr>, visib <dbl>, visib_flag <chr>, wind_chill <dbl>,
-    ## #   wind_chill_flag <chr>, wind_dir <dbl>, wind_dir_flag <chr>, wind_spd <dbl>, wind_spd_flag <chr>
+    ## # ℹ 20 more variables: temp_flag <chr>, temp_dew <dbl>, temp_dew_flag <chr>, rel_hum <dbl>, rel_hum_flag <chr>, precip_amt <dbl>, precip_amt_flag <chr>,
+    ## #   wind_dir <dbl>, wind_dir_flag <chr>, wind_spd <dbl>, wind_spd_flag <chr>, visib <dbl>, visib_flag <chr>, pressure <dbl>, pressure_flag <chr>, hmdx <dbl>,
+    ## #   hmdx_flag <chr>, wind_chill <dbl>, wind_chill_flag <chr>, weather <chr>
 
 You can also download data from multiple stations at once:
 
@@ -241,22 +239,22 @@ kam.pg
 ```
 
     ## # A tibble: 2,208 × 38
-    ##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id date       time                year  month day   hour  qual  weather
-    ##    <chr>             <dbl> <lgl>            <chr> <dbl> <dbl> <dbl> <chr>      <chr>  <chr> <date>     <dttm>              <chr> <chr> <chr> <chr> <chr> <chr>  
-    ##  1 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 00:00:00 2016  01    01    00:00 <NA>  <NA>   
-    ##  2 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 01:00:00 2016  01    01    01:00 <NA>  <NA>   
-    ##  3 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 02:00:00 2016  01    01    02:00 <NA>  <NA>   
-    ##  4 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 03:00:00 2016  01    01    03:00 <NA>  <NA>   
-    ##  5 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 04:00:00 2016  01    01    04:00 <NA>  <NA>   
-    ##  6 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 05:00:00 2016  01    01    05:00 <NA>  <NA>   
-    ##  7 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 06:00:00 2016  01    01    06:00 <NA>  <NA>   
-    ##  8 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 07:00:00 2016  01    01    07:00 <NA>  <NA>   
-    ##  9 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 08:00:00 2016  01    01    08:00 <NA>  <NA>   
-    ## 10 PRINCE GEOR…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 09:00:00 2016  01    01    09:00 <NA>  <NA>   
+    ##    station_name   station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id date       time                 year month   day hour  qual   temp
+    ##    <chr>               <dbl> <lgl>            <chr> <dbl> <dbl> <dbl> <chr>      <chr>  <chr> <date>     <dttm>              <dbl> <int> <int> <tim> <chr> <dbl>
+    ##  1 PRINCE GEORGE…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 00:00:00  2016     1     1 00:00 <NA>  -21.2
+    ##  2 PRINCE GEORGE…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 01:00:00  2016     1     1 01:00 <NA>  -21.4
+    ##  3 PRINCE GEORGE…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 02:00:00  2016     1     1 02:00 <NA>  -22.8
+    ##  4 PRINCE GEORGE…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 03:00:00  2016     1     1 03:00 <NA>  -23.1
+    ##  5 PRINCE GEORGE…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 04:00:00  2016     1     1 04:00 <NA>  -22.9
+    ##  6 PRINCE GEORGE…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 05:00:00  2016     1     1 05:00 <NA>  -24.2
+    ##  7 PRINCE GEORGE…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 06:00:00  2016     1     1 06:00 <NA>  -21.8
+    ##  8 PRINCE GEORGE…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 07:00:00  2016     1     1 07:00 <NA>  -22.7
+    ##  9 PRINCE GEORGE…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 08:00:00  2016     1     1 08:00 <NA>  -22.7
+    ## 10 PRINCE GEORGE…      48248 NA               BC     53.9 -123.   680 1096453    71302  VXS   2016-01-01 2016-01-01 09:00:00  2016     1     1 09:00 <NA>  -22.9
     ## # ℹ 2,198 more rows
-    ## # ℹ 20 more variables: hmdx <dbl>, hmdx_flag <chr>, precip_amt <dbl>, precip_amt_flag <chr>, pressure <dbl>, pressure_flag <chr>, rel_hum <dbl>,
-    ## #   rel_hum_flag <chr>, temp <dbl>, temp_dew <dbl>, temp_dew_flag <chr>, temp_flag <chr>, visib <dbl>, visib_flag <chr>, wind_chill <dbl>,
-    ## #   wind_chill_flag <chr>, wind_dir <dbl>, wind_dir_flag <chr>, wind_spd <dbl>, wind_spd_flag <chr>
+    ## # ℹ 20 more variables: temp_flag <chr>, temp_dew <dbl>, temp_dew_flag <chr>, rel_hum <dbl>, rel_hum_flag <chr>, precip_amt <dbl>, precip_amt_flag <chr>,
+    ## #   wind_dir <dbl>, wind_dir_flag <chr>, wind_spd <dbl>, wind_spd_flag <chr>, visib <dbl>, visib_flag <chr>, pressure <dbl>, pressure_flag <chr>, hmdx <dbl>,
+    ## #   hmdx_flag <chr>, wind_chill <dbl>, wind_chill_flag <chr>, weather <chr>
 
 And plot it:
 
@@ -290,22 +288,22 @@ stn_vec_df
 ```
 
     ## # A tibble: 3,312 × 38
-    ##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id date       time                year  month day   hour  qual  weather
-    ##    <chr>             <dbl> <lgl>            <chr> <dbl> <dbl> <dbl> <chr>      <chr>  <chr> <date>     <dttm>              <chr> <chr> <chr> <chr> <chr> <chr>  
-    ##  1 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 00:00:00 2016  01    01    00:00 <NA>  <NA>   
-    ##  2 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 01:00:00 2016  01    01    01:00 <NA>  <NA>   
-    ##  3 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 02:00:00 2016  01    01    02:00 <NA>  <NA>   
-    ##  4 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 03:00:00 2016  01    01    03:00 <NA>  <NA>   
-    ##  5 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 04:00:00 2016  01    01    04:00 <NA>  <NA>   
-    ##  6 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 05:00:00 2016  01    01    05:00 <NA>  <NA>   
-    ##  7 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 06:00:00 2016  01    01    06:00 <NA>  <NA>   
-    ##  8 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 07:00:00 2016  01    01    07:00 <NA>  <NA>   
-    ##  9 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 08:00:00 2016  01    01    08:00 <NA>  <NA>   
-    ## 10 CRESTON CAM…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 09:00:00 2016  01    01    09:00 <NA>  <NA>   
+    ##    station_name   station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id date       time                 year month   day hour  qual   temp
+    ##    <chr>               <dbl> <lgl>            <chr> <dbl> <dbl> <dbl> <chr>      <chr>  <chr> <date>     <dttm>              <dbl> <int> <int> <tim> <chr> <dbl>
+    ##  1 CRESTON CAMPB…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 00:00:00  2016     1     1 00:00 <NA>   -7.2
+    ##  2 CRESTON CAMPB…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 01:00:00  2016     1     1 01:00 <NA>   -7.8
+    ##  3 CRESTON CAMPB…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 02:00:00  2016     1     1 02:00 <NA>   -8  
+    ##  4 CRESTON CAMPB…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 03:00:00  2016     1     1 03:00 <NA>   -8.1
+    ##  5 CRESTON CAMPB…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 04:00:00  2016     1     1 04:00 <NA>   -8.4
+    ##  6 CRESTON CAMPB…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 05:00:00  2016     1     1 05:00 <NA>   -8.5
+    ##  7 CRESTON CAMPB…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 06:00:00  2016     1     1 06:00 <NA>   -8.9
+    ##  8 CRESTON CAMPB…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 07:00:00  2016     1     1 07:00 <NA>   -9.1
+    ##  9 CRESTON CAMPB…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 08:00:00  2016     1     1 08:00 <NA>   -9.2
+    ## 10 CRESTON CAMPB…       6838 NA               BC     49.1 -116.  641. 114B1F0    71770  WJR   2016-01-01 2016-01-01 09:00:00  2016     1     1 09:00 <NA>   -9.5
     ## # ℹ 3,302 more rows
-    ## # ℹ 20 more variables: hmdx <dbl>, hmdx_flag <chr>, precip_amt <dbl>, precip_amt_flag <chr>, pressure <dbl>, pressure_flag <chr>, rel_hum <dbl>,
-    ## #   rel_hum_flag <chr>, temp <dbl>, temp_dew <dbl>, temp_dew_flag <chr>, temp_flag <chr>, visib <dbl>, visib_flag <chr>, wind_chill <dbl>,
-    ## #   wind_chill_flag <chr>, wind_dir <dbl>, wind_dir_flag <chr>, wind_spd <dbl>, wind_spd_flag <chr>
+    ## # ℹ 20 more variables: temp_flag <chr>, temp_dew <dbl>, temp_dew_flag <chr>, rel_hum <dbl>, rel_hum_flag <chr>, precip_amt <dbl>, precip_amt_flag <chr>,
+    ## #   wind_dir <dbl>, wind_dir_flag <chr>, wind_spd <dbl>, wind_spd_flag <chr>, visib <dbl>, visib_flag <chr>, pressure <dbl>, pressure_flag <chr>, hmdx <dbl>,
+    ## #   hmdx_flag <chr>, wind_chill <dbl>, wind_chill_flag <chr>, weather <lgl>
 
 For more information on the data flags, see the [Flags
 vignette](https://docs.ropensci.org/weathercan/articles/flags.md), for
@@ -326,16 +324,16 @@ stations_search("Winnipeg", normals_years = "current")
 
     ## # A tibble: 10 × 17
     ##    prov  station_name                station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval start   end normals normals_1991_2020 normals_1981_2010
-    ##    <chr> <chr>                            <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr> <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
-    ##  1 MB    WINNIPEG A CS                    27174 502S001     71849 XWG    49.9 -97.2  239. Etc/… day       1996  2026 TRUE    TRUE              FALSE            
-    ##  2 MB    WINNIPEG A CS                    27174 502S001     71849 XWG    49.9 -97.2  239. Etc/… hour      2013  2026 TRUE    TRUE              FALSE            
+    ##    <chr> <chr>                            <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr> <fct>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
+    ##  1 MB    WINNIPEG A CS                    27174 502S001     71849 XWG    49.9 -97.2  239. Etc/… hour      2013  2026 TRUE    TRUE              FALSE            
+    ##  2 MB    WINNIPEG A CS                    27174 502S001     71849 XWG    49.9 -97.2  239. Etc/… day       1996  2026 TRUE    TRUE              FALSE            
     ##  3 MB    WINNIPEG A CS                    27174 502S001     71849 XWG    49.9 -97.2  239. Etc/… month     1996  2007 TRUE    TRUE              FALSE            
-    ##  4 MB    WINNIPEG INTL A                  51097 5023227        NA YWG    49.9 -97.2  239. Etc/… day       2018  2026 TRUE    TRUE              FALSE            
-    ##  5 MB    WINNIPEG INTL A                  51097 5023227        NA YWG    49.9 -97.2  239. Etc/… hour      2013  2026 TRUE    TRUE              FALSE            
-    ##  6 MB    WINNIPEG RICHARDSON AWOS         47407 5023226     71852 YWG    49.9 -97.2  239. Etc/… day       2008  2013 TRUE    TRUE              FALSE            
-    ##  7 MB    WINNIPEG RICHARDSON AWOS         47407 5023226     71852 YWG    49.9 -97.2  239. Etc/… hour      2008  2013 TRUE    TRUE              FALSE            
-    ##  8 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… day       1938  2008 TRUE    TRUE              TRUE             
-    ##  9 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… hour      1953  2013 TRUE    TRUE              TRUE             
+    ##  4 MB    WINNIPEG INTL A                  51097 5023227        NA YWG    49.9 -97.2  239. Etc/… hour      2013  2026 TRUE    TRUE              FALSE            
+    ##  5 MB    WINNIPEG INTL A                  51097 5023227        NA YWG    49.9 -97.2  239. Etc/… day       2018  2026 TRUE    TRUE              FALSE            
+    ##  6 MB    WINNIPEG RICHARDSON AWOS         47407 5023226     71852 YWG    49.9 -97.2  239. Etc/… hour      2008  2013 TRUE    TRUE              FALSE            
+    ##  7 MB    WINNIPEG RICHARDSON AWOS         47407 5023226     71852 YWG    49.9 -97.2  239. Etc/… day       2008  2013 TRUE    TRUE              FALSE            
+    ##  8 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… hour      1953  2013 TRUE    TRUE              TRUE             
+    ##  9 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… day       1938  2008 TRUE    TRUE              TRUE             
     ## 10 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… month     1938  2007 TRUE    TRUE              TRUE             
     ## # ℹ 1 more variable: normals_1971_2000 <lgl>
 
@@ -349,9 +347,9 @@ stations_search("Winnipeg", normals_years = "1981-2010")
 
     ## # A tibble: 3 × 17
     ##   prov  station_name                station_id climate_id WMO_id TC_id   lat   lon  elev tz     interval start   end normals normals_1991_2020 normals_1981_2010
-    ##   <chr> <chr>                            <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>  <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
-    ## 1 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/G… day       1938  2008 TRUE    TRUE              TRUE             
-    ## 2 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/G… hour      1953  2013 TRUE    TRUE              TRUE             
+    ##   <chr> <chr>                            <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>  <fct>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
+    ## 1 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/G… hour      1953  2013 TRUE    TRUE              TRUE             
+    ## 2 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/G… day       1938  2008 TRUE    TRUE              TRUE             
     ## 3 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/G… month     1938  2007 TRUE    TRUE              TRUE             
     ## # ℹ 1 more variable: normals_1971_2000 <lgl>
 
@@ -367,7 +365,6 @@ n <- normals_dl("5023222")
 ```
 
     ## The most current normals available for download by weathercan are '1991-2020'
-
     ## Using composite locations: WINNIPEG RICHARDSON (AIRPORT)
 
 ``` r
@@ -375,26 +372,26 @@ n <- normals_dl("5023222")
 n
 ```
 
-    ## # A tibble: 325 × 314
-    ##    location_name                 prov  composite_stations      period_of_record element_group period daily_average_c daily_average_c_code stddev_mean_monthly_…¹
-    ##    <chr>                         <chr> <chr>                   <chr>            <chr>         <chr>            <dbl> <chr>                                 <dbl>
-    ##  1 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   Jan              -16.3 A                                       3.6
-    ##  2 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   Feb              -14.1 A                                       4  
-    ##  3 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   Mar               -6.1 A                                       3.7
-    ##  4 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   Apr                3.8 A                                       2.9
-    ##  5 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   May               11.1 A                                       1.9
-    ##  6 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   Jun               17.1 A                                       1.5
-    ##  7 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   Jul               19.5 A                                       1.4
-    ##  8 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   Aug               18.7 A                                       1.5
-    ##  9 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   Sep               13.3 A                                       1.6
-    ## 10 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   Oct                5.1 A                                       2.1
-    ## # ℹ 315 more rows
-    ## # ℹ abbreviated name: ¹​stddev_mean_monthly_temperature_c
-    ## # ℹ 305 more variables: stddev_mean_monthly_temperature_c_code <chr>, daily_maximum_c <dbl>, daily_maximum_c_code <chr>, daily_minimum_c <dbl>,
-    ## #   daily_minimum_c_code <chr>, maximum_daily_mean_c <dbl>, maximum_daily_mean_c_code <lgl>, maximum_daily_mean_c_date <date>,
-    ## #   maximum_daily_mean_c_date_code <lgl>, minimum_daily_mean_c <dbl>, minimum_daily_mean_c_code <lgl>, minimum_daily_mean_c_date <date>,
-    ## #   minimum_daily_mean_c_date_code <lgl>, extreme_maximum_c <dbl>, extreme_maximum_c_code <lgl>, extreme_maximum_c_date <date>,
-    ## #   extreme_maximum_c_date_code <lgl>, minimum_daily_maximum_c <dbl>, minimum_daily_maximum_c_code <lgl>, minimum_daily_maximum_c_date <date>, …
+    ## # A tibble: 26 × 313
+    ##    location_name             prov  composite_stations period_of_record period daily_average_c daily_average_c_code stddev_mean_monthly_…¹ stddev_mean_monthly_…²
+    ##    <chr>                     <chr> <chr>              <chr>            <chr>            <dbl> <chr>                                 <dbl> <chr>                 
+    ##  1 WINNIPEG RICHARDSON (AIR… MB    WINNIPEG A CS (50… Normal           Jan              -16.3 A                                       3.6 A                     
+    ##  2 WINNIPEG RICHARDSON (AIR… MB    WINNIPEG A CS (50… Normal           Feb              -14.1 A                                       4   A                     
+    ##  3 WINNIPEG RICHARDSON (AIR… MB    WINNIPEG A CS (50… Normal           Mar               -6.1 A                                       3.7 A                     
+    ##  4 WINNIPEG RICHARDSON (AIR… MB    WINNIPEG A CS (50… Normal           Apr                3.8 A                                       2.9 A                     
+    ##  5 WINNIPEG RICHARDSON (AIR… MB    WINNIPEG A CS (50… Normal           May               11.1 A                                       1.9 A                     
+    ##  6 WINNIPEG RICHARDSON (AIR… MB    WINNIPEG A CS (50… Normal           Jun               17.1 A                                       1.5 A                     
+    ##  7 WINNIPEG RICHARDSON (AIR… MB    WINNIPEG A CS (50… Normal           Jul               19.5 A                                       1.4 A                     
+    ##  8 WINNIPEG RICHARDSON (AIR… MB    WINNIPEG A CS (50… Normal           Aug               18.7 A                                       1.5 A                     
+    ##  9 WINNIPEG RICHARDSON (AIR… MB    WINNIPEG A CS (50… Normal           Sep               13.3 A                                       1.6 A                     
+    ## 10 WINNIPEG RICHARDSON (AIR… MB    WINNIPEG A CS (50… Normal           Oct                5.1 A                                       2.1 A                     
+    ## # ℹ 16 more rows
+    ## # ℹ abbreviated names: ¹​stddev_mean_monthly_temperature_c, ²​stddev_mean_monthly_temperature_c_code
+    ## # ℹ 304 more variables: daily_maximum_c <dbl>, daily_maximum_c_code <chr>, daily_minimum_c <dbl>, daily_minimum_c_code <chr>, maximum_daily_mean_c <dbl>,
+    ## #   maximum_daily_mean_c_code <lgl>, maximum_daily_mean_c_date <date>, maximum_daily_mean_c_date_code <lgl>, minimum_daily_mean_c <dbl>,
+    ## #   minimum_daily_mean_c_code <lgl>, minimum_daily_mean_c_date <date>, minimum_daily_mean_c_date_code <lgl>, extreme_maximum_c <dbl>,
+    ## #   extreme_maximum_c_code <lgl>, extreme_maximum_c_date <date>, extreme_maximum_c_date_code <lgl>, minimum_daily_maximum_c <dbl>,
+    ## #   minimum_daily_maximum_c_code <lgl>, minimum_daily_maximum_c_date <date>, minimum_daily_maximum_c_date_code <lgl>, maximum_daily_minimum_c <dbl>, …
 
 Older normals can be downloaded by changing the year
 
@@ -448,13 +445,13 @@ unnest(n, frost)
 ```
 
     ## # A tibble: 7 × 14
-    ##   prov  station_name                climate_id normals_years meets_wmo normals  frost_code date_first_fall_frost date_last_spring_frost length_frost_free prob 
-    ##   <chr> <chr>                       <chr>      <chr>         <lgl>     <list>   <chr>                      <dbl>                  <dbl>             <dbl> <chr>
-    ## 1 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                            265                    143               121 10%  
-    ## 2 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                            265                    143               121 25%  
-    ## 3 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                            265                    143               121 33%  
-    ## 4 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                            265                    143               121 50%  
-    ## 5 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                            265                    143               121 66%  
-    ## 6 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                            265                    143               121 75%  
-    ## 7 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                            265                    143               121 90%  
+    ##   prov  station_name                climate_id normals_years meets_wmo normals  frost_code date_last_spring_frost date_first_fall_frost length_frost_free prob 
+    ##   <chr> <chr>                       <chr>      <chr>         <lgl>     <list>   <chr>                       <dbl>                 <dbl>             <dbl> <chr>
+    ## 1 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                             143                   265               121 10%  
+    ## 2 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                             143                   265               121 25%  
+    ## 3 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                             143                   265               121 33%  
+    ## 4 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                             143                   265               121 50%  
+    ## 5 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                             143                   265               121 66%  
+    ## 6 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                             143                   265               121 75%  
+    ## 7 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A                             143                   265               121 90%  
     ## # ℹ 3 more variables: prob_last_spring_temp_below_0_on_date <dbl>, prob_first_fall_temp_below_0_on_date <dbl>, prob_length_frost_free <dbl>

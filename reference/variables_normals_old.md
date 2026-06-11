@@ -21,6 +21,6 @@ A data frame with 18 rows and 3 variables:
 
 - weathercan:
 
-  R-compatible name given when formating the data with the
+  R-compatible name given when formatting the data with the
   [`normals_dl()`](https://docs.ropensci.org/weathercan/reference/normals_dl.md)
   function
