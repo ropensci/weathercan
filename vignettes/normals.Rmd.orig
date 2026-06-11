@@ -71,6 +71,24 @@ n_orig <- read_csv(normals_file())
 n_orig
 ```
 
+You can also pre-select specific measurements by `measurement_type` (also called ELEMENT GROUP by ECCC). These must be one of those listed in the `normals_measurement_types` data frame.
+
+```{r}
+normals_measurement_types
+unique(normals_measurement_types$measurement_type)
+filter(normals_measurement_types, measurement_type == "Wind Chill")
+filter(normals_measurement_types, measurement_type == "Temperature")
+```
+
+You can supply these to `normals_dl` to return normals with only these measurements.
+```{r}
+n <- normals_dl(
+  climate_ids = "5023222",
+  measurement_type = c("Wind Chill", "Temperature")
+)
+glimpse(n)
+```
+
 
 ### Downloading previous normals (1981-2010 and 1971-2000)
 
