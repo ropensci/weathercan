@@ -129,6 +129,15 @@ normals_dl <- function(
 ) {
   stn <- stations()
 
+  if (missing(normals_years) && !getOption("weathercan.normals.message")) {
+    wc_inform(
+      "As of weathercan v1.0.0 the default normals are 1991-2020. Note that these normals are in a different format from previous years. See ?normals_dl for more details or use `normals_years = '1981-2010'` to revert to the previous set of normals.\n",
+      "This message is shown once per session"
+    )
+    message("")
+    options("weathercan.normals.message" = TRUE)
+  }
+
   check_ids(climate_ids, stn, type = "climate_id")
   normals_years <- check_normals(normals_years)
 
