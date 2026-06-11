@@ -255,3 +255,17 @@
 #'   \item{measurement}{Climate normals measurement available for this station}
 #' }
 "normals_measurements"
+
+#' List of climate normals measurements and types for each set of normals
+#'
+#' A data frame listing the climate normals measurements classified by
+#' measurement_type available for each set of climate normals. This is very
+#' similar to `normals_measurements` and just omits the stations.
+#'
+#' @format A data frame with 158 rows and 3 variables:
+#' \describe{
+#'   \item{normals}{Year range of climate normals}
+#'   \item{measurement_type}{Type of measurement (relevant only for 1990-2020)}
+#'   \item{measurement}{Climate normals measurement available for this station}
+#' }
+"normals_measurement_types"

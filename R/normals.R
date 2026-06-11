@@ -18,6 +18,12 @@
 #'   date accordingly. Unlike `weather_dl()`, `normals_dl()` will always format
 #'   column headings as normals data from ECCC cannot be directly made into a
 #'   data frame without doing so.
+#' @param measurement_type Character vector. Measurement types (called element
+#'   groups in original ECCC data) to include in normals data (only relevant for
+#'   new normals >= `1991-2020`). Will return only the measurements included in
+#'   the these groups. If `NULL` (default) returns all normals measurements.
+#'   See `normals_measurement_types` of a list of types and which measurements
+#'   are included.
 #'
 #' @details The format and method of downloading climate normals from ECCC
 #' varies by year span.
@@ -125,7 +131,8 @@
 normals_dl <- function(
   climate_ids,
   normals_years = "current",
-  format = TRUE
+  format = TRUE,
+  measurement_type = NULL
 ) {
   stn <- stations()
 
@@ -143,7 +150,7 @@ normals_dl <- function(
 
   # For new normals, download and access locally cached data
   if (normals_years == "1991-2020") {
-    return(normals_cached(climate_ids))
+    return(normals_cached(climate_ids, measurement_type = measurement_type))
   }
 
   yrs <- paste0("normals_", stringr::str_replace(normals_years, "-", "_"))

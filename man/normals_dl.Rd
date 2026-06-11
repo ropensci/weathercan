@@ -4,7 +4,12 @@
 \alias{normals_dl}
 \title{Download climate normals from Environment and Climate Change Canada}
 \usage{
-normals_dl(climate_ids, normals_years = "current", format = TRUE)
+normals_dl(
+  climate_ids,
+  normals_years = "current",
+  format = TRUE,
+  measurement_type = NULL
+)
 }
 \arguments{
 \item{climate_ids}{Character. A vector containing the Climate ID(s) of the
@@ -21,6 +26,13 @@ from the most recent \emph{complete} normals year range (i.e. \code{1991-2020}).
 date accordingly. Unlike \code{weather_dl()}, \code{normals_dl()} will always format
 column headings as normals data from ECCC cannot be directly made into a
 data frame without doing so.}
+
+\item{measurement_type}{Character vector. Measurement types (called element
+groups in original ECCC data) to include in normals data (only relevant for
+new normals >= \code{1991-2020}). Will return only the measurements included in
+the these groups. If \code{NULL} (default) returns all normals measurements.
+See \code{normals_measurement_types} of a list of types and which measurements
+are included.}
 }
 \value{
 For new climate normals, a tibble of normals. For older climate

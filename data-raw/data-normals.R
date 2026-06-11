@@ -92,7 +92,6 @@ m <- readr::read_csv(normals_file(type = "meta")) |>
 n <- readr::read_csv(normals_file()) |>
   # Doesn't actually remove anything
   dplyr::filter(
-    n,
     !all(
       is.na(Jan) &
         is.na(Feb) &
@@ -124,4 +123,12 @@ n <- readr::read_csv(normals_file()) |>
 
 normals_measurements <- dplyr::bind_rows(n, normals_measurements)
 
-usethis::use_data(normals_measurements, overwrite = TRUE)
+normals_measurement_types <- n |>
+  dplyr::select("normals", "measurement_type", "measurement") |>
+  dplyr::distinct()
+
+usethis::use_data(
+  normals_measurement_types,
+  normals_measurements,
+  overwrite = TRUE
+)

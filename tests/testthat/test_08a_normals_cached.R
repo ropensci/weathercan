@@ -53,11 +53,14 @@ test_that("normals_cached()", {
       "prov",
       "composite_stations",
       "period_of_record",
-      "element_group",
       "period"
     ) %in%
       names(n)
   )
+
+  # 12 months Plus 1 year and two periods of record
+  expect_equal(nrow(n), (12 + 1) * 2)
+  expect_equal(ncol(n), 321)
 })
 
 
@@ -80,11 +83,44 @@ test_that("normals_dl() - multi 1991", {
       "prov",
       "composite_stations",
       "period_of_record",
-      "element_group",
       "period"
     ) %in%
       names(n)
   )
+
+  # 12 months Plus 1 year, two periods of record, 3 stations
+  expect_equal(nrow(n), (12 + 1) * 2 * 3)
+  expect_equal(ncol(n), 321)
+})
+
+test_that("normals_dl() - measurement_type", {
+  skip_on_cran()
+  skip_if_offline()
+  local_mocked_bindings(cache_dir = function() test_cache())
+
+  expect_message(
+    n <- normals_dl(
+      climate_id = c("2403500", "5010480", "1096450"),
+      normals_years = "1991-2020",
+      measurement_type = c("Wind Chill", "Precipitation")
+    ),
+    "Using composite locations"
+  )
+  expect_s3_class(n, c("tbl_df", "data.frame"))
+  expect_all_true(
+    c(
+      "location_name",
+      "prov",
+      "composite_stations",
+      "period_of_record",
+      "period"
+    ) %in%
+      names(n)
+  )
+
+  # 12 months Plus 1 year, two periods of record, 3 stations
+  expect_equal(nrow(n), (12 + 1) * 2 * 3)
+  expect_equal(ncol(n), 45)
 })
 
 unlink(test_cache(), recursive = TRUE)

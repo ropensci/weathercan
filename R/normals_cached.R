@@ -14,7 +14,11 @@
 #' normals_cached(climate_ids = "5010480")
 #' normals_cached(climate_ids = c("5010480", "5023222"))
 
-normals_cached <- function(climate_ids, normals_years = "1991-2020") {
+normals_cached <- function(
+  climate_ids,
+  normals_years = "1991-2020",
+  measurement_type = NULL
+) {
   normals_cached_check(normals_years)
 
   locs <- normals_cached_location(climate_ids, normals_years)
@@ -24,7 +28,7 @@ normals_cached <- function(climate_ids, normals_years = "1991-2020") {
       paste0(climate_ids, collapse = ", ")
     )
   }
-  n <- normals_cached_fmt(locs, normals_years)
+  n <- normals_cached_fmt(locs, normals_years, measurement_type)
 
   if (nrow(n) == 0) {
     wc_stop(
@@ -149,6 +153,8 @@ normals_cached_location <- function(climate_ids, normals_years = "1991-2020") {
 #' @param locs Character vector. Composite location names to filter by
 #' @param normals_years Character. Normals years to return. Currently only
 #'   "1991-2020" is possible.
+#' @param measurement_type Character vector. Optional list of element groups to
+#'   filter data to
 #'
 #' @returns Data frame of formatted normals data
 #'
@@ -156,7 +162,11 @@ normals_cached_location <- function(climate_ids, normals_years = "1991-2020") {
 #' @examplesIf interactive()
 #' normals_cached_fmt("BRANDON")
 
-normals_cached_fmt <- function(locs, normals_years = "1991-2020") {
+normals_cached_fmt <- function(
+  locs,
+  normals_years = "1991-2020",
+  measurement_type = NULL
+) {
   # Standardize some names to match weathercan general standards
   nms <- m_names |>
     tolower() |>
@@ -195,6 +205,16 @@ normals_cached_fmt <- function(locs, normals_years = "1991-2020") {
     dplyr::rename_with(tolower) |>
     dplyr::rename(dplyr::any_of(c(!!!nms))) |>
     dplyr::left_join(meta, by = c("location_name", "prov"))
+
+  if (!is.null(measurement_type)) {
+    e <- unique(n$element_group)
+    if (!all(measurement_type %in% e)) {
+      wc_stop("`measurement_type` must be one of {paste0(e, collapse = ', ')}")
+    }
+    n <- dplyr::filter(n, .data$element_group %in% .env$measurement_type)
+  }
+
+  n <- dplyr::select(n, -"element_group")
 
   # Get order of normals elements to use as column order later
   col_order <- dplyr::mutate(
