@@ -73,6 +73,10 @@ cache_check <- function() {
         )
       )
     }
+    if (is.na(okay) || !okay) {
+      wc_stop("Cannot proceed without a cache directory")
+    }
+
     dir.create(cache_dir(), recursive = TRUE)
     if (dir.exists(cache_dir())) {
       wc_inform("Cache successfully created")
