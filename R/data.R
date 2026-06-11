@@ -220,7 +220,7 @@
 #' \describe{
 #'   \item{measurement_type}{Measurement category}
 #'   \item{ECCC}{Original variable name from ECCC}
-#'   \item{weathercan}{R-compatible name given when formating the data with the
+#'   \item{weathercan}{R-compatible name given when formatting the data with the
 #'   `normals_dl()` function}
 #' }
 "variables_normals_new"
@@ -234,7 +234,7 @@
 #' @format A data frame with 18 rows and 3 variables:
 #' \describe{
 #'   \item{ECCC}{Original variable name from ECCC}
-#'   \item{weathercan}{R-compatible name given when formating the data with the
+#'   \item{weathercan}{R-compatible name given when formatting the data with the
 #'   `normals_dl()` function}
 #' }
 "variables_normals_old"

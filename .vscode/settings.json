@@ -6,5 +6,36 @@
     "[quarto]": {
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "quarto.quarto"
-    }
+    },
+    "cSpell.words": [
+        "codemeta",
+        "covr",
+        "donttest",
+        "eccc",
+        "ECCC",
+        "envirocan",
+        "github",
+        "goodpractice",
+        "grnd",
+        "hmdx",
+        "httr",
+        "Humidex",
+        "hunspell",
+        "interp",
+        "kamloops",
+        "Kamloops",
+        "listcol",
+        "Meteoland",
+        "NOAA",
+        "oldrel",
+        "precip",
+        "qual",
+        "rappdirs",
+        "rhub",
+        "Temperatureflag",
+        "tibbles",
+        "timeframe",
+        "urlchecker",
+        "visib"
+    ]
 }

@@ -144,7 +144,7 @@ n <- normals_dl(
 unnest(n, frost)
 
 # Note, putting both normals and frost data into the same data set can be
-# done, but makes for a very unweildly dataset (there is lots of repetition).
+# done, but makes for a very unwieldy dataset (there is lots of repetition).
 nm <- unnest(n, normals) |>
   unnest(frost)
 \dontshow{\}) # examplesIf}
