@@ -1,6 +1,6 @@
 ---
 title: "Climate Normals"
-date: "2026-06-11"
+date: "2026-06-16"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Climate Normals}
