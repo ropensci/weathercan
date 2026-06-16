@@ -188,7 +188,7 @@ stations_meta()
     ## # A tibble: 1 × 2
     ##   ECCC_modified       weathercan_modified
     ##   <dttm>              <date>             
-    ## 1 2026-06-03 23:30:00 2026-06-11
+    ## 1 2026-06-03 23:30:00 2026-06-16
 
 ## Weather
 

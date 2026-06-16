@@ -68,7 +68,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Flags and codes</h1>
             
-            <h4 data-toc-skip class="date">2026-06-11</h4>
+            <h4 data-toc-skip class="date">2026-06-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/weathercan/blob/HEAD/vignettes/flags.Rmd" class="external-link"><code>vignettes/flags.Rmd</code></a></small>
       <div class="d-none name"><code>flags.Rmd</code></div>
@@ -179,739 +179,94 @@ Climate Archives</td>
 </h3>
 <p>In the <code>normals_dl</code>() function, codes are associated with
 each variable:</p>
-<pre><code><span><span class="co">## As of weathercan v1.0.0 the default normals are 1991-2020. Note that these normals are in a different format from previous</span></span>
-<span><span class="co">## years. See ?normals_dl for more details or use `normals_years = '1981-2010'` to revert to the previous set of normals. This</span></span>
-<span><span class="co">## message is shown once per session</span></span>
+<pre><code><span><span class="co">## As of weathercan v1.0.0 the default normals are 1991-2020. Note that these normals are in a</span></span>
+<span><span class="co">## different format from previous years. See ?normals_dl for more details or use `normals_years =</span></span>
+<span><span class="co">## '1981-2010'` to revert to the previous set of normals. This message is shown once per session</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## The most current normals available for download by weathercan are '1991-2020'</span></span>
 <span><span class="co">## Using composite locations: BRANDON</span></span></code></pre>
 <pre><code><span><span class="co">## # A tibble: 26 × 35</span></span>
-<span><span class="co">##    period daily_average_c daily_average_c_code daily_maximum_c daily_maximum_c_code daily_minimum_c daily_minimum_c_code</span></span>
-<span><span class="co">##    &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;               </span></span>
-<span><span class="co">##  1 Jan              -16.7 A                              -11.4 A                              -21.9 A                   </span></span>
-<span><span class="co">##  2 Feb              -14.1 A                               -8.5 A                              -19.7 A                   </span></span>
-<span><span class="co">##  3 Mar               -7   A                               -1.6 A                              -12.5 A                   </span></span>
-<span><span class="co">##  4 Apr                3.1 A                                9.6 A                               -3.3 A                   </span></span>
-<span><span class="co">##  5 May               10.3 A                               17.4 A                                3.2 A                   </span></span>
-<span><span class="co">##  6 Jun               16.2 A                               22.6 A                                9.7 A                   </span></span>
-<span><span class="co">##  7 Jul               18.4 A                               24.9 A                               11.8 A                   </span></span>
-<span><span class="co">##  8 Aug               17.7 A                               25.1 A                               10.2 A                   </span></span>
-<span><span class="co">##  9 Sep               12.2 A                               19.5 A                                4.9 A                   </span></span>
-<span><span class="co">## 10 Oct                4   A                               10.1 A                               -2.2 A                   </span></span>
+<span><span class="co">##    period daily_average_c daily_average_c_code daily_maximum_c daily_maximum_c_code</span></span>
+<span><span class="co">##    &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;               </span></span>
+<span><span class="co">##  1 Jan              -16.7 A                              -11.4 A                   </span></span>
+<span><span class="co">##  2 Feb              -14.1 A                               -8.5 A                   </span></span>
+<span><span class="co">##  3 Mar               -7   A                               -1.6 A                   </span></span>
+<span><span class="co">##  4 Apr                3.1 A                                9.6 A                   </span></span>
+<span><span class="co">##  5 May               10.3 A                               17.4 A                   </span></span>
+<span><span class="co">##  6 Jun               16.2 A                               22.6 A                   </span></span>
+<span><span class="co">##  7 Jul               18.4 A                               24.9 A                   </span></span>
+<span><span class="co">##  8 Aug               17.7 A                               25.1 A                   </span></span>
+<span><span class="co">##  9 Sep               12.2 A                               19.5 A                   </span></span>
+<span><span class="co">## 10 Oct                4   A                               10.1 A                   </span></span>
 <span><span class="co">## # ℹ 16 more rows</span></span>
-<span><span class="co">## # ℹ 28 more variables: maximum_daily_mean_c &lt;dbl&gt;, maximum_daily_mean_c_code &lt;lgl&gt;, maximum_daily_mean_c_date &lt;date&gt;,</span></span>
-<span><span class="co">## #   maximum_daily_mean_c_date_code &lt;lgl&gt;, minimum_daily_mean_c &lt;dbl&gt;, minimum_daily_mean_c_code &lt;lgl&gt;,</span></span>
-<span><span class="co">## #   minimum_daily_mean_c_date &lt;date&gt;, minimum_daily_mean_c_date_code &lt;lgl&gt;, minimum_daily_maximum_c &lt;dbl&gt;,</span></span>
-<span><span class="co">## #   minimum_daily_maximum_c_code &lt;lgl&gt;, minimum_daily_maximum_c_date &lt;date&gt;, minimum_daily_maximum_c_date_code &lt;lgl&gt;,</span></span>
-<span><span class="co">## #   maximum_daily_minimum_c &lt;dbl&gt;, maximum_daily_minimum_c_code &lt;lgl&gt;, maximum_daily_minimum_c_date &lt;date&gt;,</span></span>
-<span><span class="co">## #   maximum_daily_minimum_c_date_code &lt;lgl&gt;, extreme_daily_rainfall_mm &lt;dbl&gt;, extreme_daily_rainfall_mm_code &lt;lgl&gt;, …</span></span></code></pre>
+<span><span class="co">## # ℹ 30 more variables: daily_minimum_c &lt;dbl&gt;, daily_minimum_c_code &lt;chr&gt;,</span></span>
+<span><span class="co">## #   maximum_daily_mean_c &lt;dbl&gt;, maximum_daily_mean_c_code &lt;lgl&gt;,</span></span>
+<span><span class="co">## #   maximum_daily_mean_c_date &lt;date&gt;, maximum_daily_mean_c_date_code &lt;lgl&gt;,</span></span>
+<span><span class="co">## #   minimum_daily_mean_c &lt;dbl&gt;, minimum_daily_mean_c_code &lt;lgl&gt;,</span></span>
+<span><span class="co">## #   minimum_daily_mean_c_date &lt;date&gt;, minimum_daily_mean_c_date_code &lt;lgl&gt;,</span></span>
+<span><span class="co">## #   minimum_daily_maximum_c &lt;dbl&gt;, minimum_daily_maximum_c_code &lt;lgl&gt;, …</span></span></code></pre>
 <p>For example, here, the code indicates that these temperature
 variables meet the WMO ‘3 and 5 rule’ (no more than 3 consecutive and no
 more than 5 total missing for either temperature or precipitation).</p>
 <p>Older climate normals are in a different format, but the codes are
 the same</p>
 <pre><code><span><span class="co">## # A tibble: 13 × 23</span></span>
-<span><span class="co">##    period temp_daily_average temp_daily_average_code temp_daily_max temp_daily_max_code temp_daily_min temp_daily_min_code</span></span>
-<span><span class="co">##    &lt;fct&gt;               &lt;dbl&gt; &lt;chr&gt;                            &lt;dbl&gt; &lt;chr&gt;                        &lt;dbl&gt; &lt;chr&gt;              </span></span>
-<span><span class="co">##  1 Jan                 -16.6 A                                -11.1 A                            -21.9 A                  </span></span>
-<span><span class="co">##  2 Feb                 -13.6 A                                 -8.1 A                            -19   A                  </span></span>
-<span><span class="co">##  3 Mar                  -6.2 A                                 -1   A                            -11.4 A                  </span></span>
-<span><span class="co">##  4 Apr                   4   A                                 10.5 A                             -2.6 A                  </span></span>
-<span><span class="co">##  5 May                  10.6 A                                 17.8 A                              3.4 A                  </span></span>
-<span><span class="co">##  6 Jun                  15.9 A                                 22.4 A                              9.3 A                  </span></span>
-<span><span class="co">##  7 Jul                  18.5 A                                 25.2 A                             11.7 A                  </span></span>
-<span><span class="co">##  8 Aug                  17.7 A                                 24.9 A                             10.4 A                  </span></span>
-<span><span class="co">##  9 Sep                  11.8 A                                 18.9 A                              4.7 A                  </span></span>
-<span><span class="co">## 10 Oct                   4.1 A                                 10.4 A                             -2.2 A                  </span></span>
-<span><span class="co">## 11 Nov                  -5.6 A                                 -0.5 A                            -10.6 A                  </span></span>
-<span><span class="co">## 12 Dec                 -14   A                                 -9   A                            -19   A                  </span></span>
-<span><span class="co">## 13 Year                  2.2 A                                  8.4 A                             -3.9 A                  </span></span>
-<span><span class="co">## # ℹ 16 more variables: rain_extreme_daily &lt;dbl&gt;, rain_extreme_daily_code &lt;chr&gt;, rain_extreme_daily_date &lt;date&gt;,</span></span>
-<span><span class="co">## #   rain_extreme_daily_date_code &lt;chr&gt;, snow_extreme_daily &lt;dbl&gt;, snow_extreme_daily_code &lt;chr&gt;,</span></span>
-<span><span class="co">## #   snow_extreme_daily_date &lt;date&gt;, snow_extreme_daily_date_code &lt;chr&gt;, precip_extreme_daily &lt;dbl&gt;,</span></span>
-<span><span class="co">## #   precip_extreme_daily_code &lt;chr&gt;, precip_extreme_daily_date &lt;date&gt;, precip_extreme_daily_date_code &lt;chr&gt;,</span></span>
-<span><span class="co">## #   sun_extreme_daily &lt;dbl&gt;, sun_extreme_daily_code &lt;chr&gt;, sun_extreme_daily_date &lt;date&gt;, sun_extreme_daily_date_code &lt;chr&gt;</span></span></code></pre>
+<span><span class="co">##    period temp_daily_average temp_daily_average_code temp_daily_max temp_daily_max_code</span></span>
+<span><span class="co">##    &lt;fct&gt;               &lt;dbl&gt; &lt;chr&gt;                            &lt;dbl&gt; &lt;chr&gt;              </span></span>
+<span><span class="co">##  1 Jan                 -16.6 A                                -11.1 A                  </span></span>
+<span><span class="co">##  2 Feb                 -13.6 A                                 -8.1 A                  </span></span>
+<span><span class="co">##  3 Mar                  -6.2 A                                 -1   A                  </span></span>
+<span><span class="co">##  4 Apr                   4   A                                 10.5 A                  </span></span>
+<span><span class="co">##  5 May                  10.6 A                                 17.8 A                  </span></span>
+<span><span class="co">##  6 Jun                  15.9 A                                 22.4 A                  </span></span>
+<span><span class="co">##  7 Jul                  18.5 A                                 25.2 A                  </span></span>
+<span><span class="co">##  8 Aug                  17.7 A                                 24.9 A                  </span></span>
+<span><span class="co">##  9 Sep                  11.8 A                                 18.9 A                  </span></span>
+<span><span class="co">## 10 Oct                   4.1 A                                 10.4 A                  </span></span>
+<span><span class="co">## 11 Nov                  -5.6 A                                 -0.5 A                  </span></span>
+<span><span class="co">## 12 Dec                 -14   A                                 -9   A                  </span></span>
+<span><span class="co">## 13 Year                  2.2 A                                  8.4 A                  </span></span>
+<span><span class="co">## # ℹ 18 more variables: temp_daily_min &lt;dbl&gt;, temp_daily_min_code &lt;chr&gt;,</span></span>
+<span><span class="co">## #   rain_extreme_daily &lt;dbl&gt;, rain_extreme_daily_code &lt;chr&gt;, rain_extreme_daily_date &lt;date&gt;,</span></span>
+<span><span class="co">## #   rain_extreme_daily_date_code &lt;chr&gt;, snow_extreme_daily &lt;dbl&gt;,</span></span>
+<span><span class="co">## #   snow_extreme_daily_code &lt;chr&gt;, snow_extreme_daily_date &lt;date&gt;,</span></span>
+<span><span class="co">## #   snow_extreme_daily_date_code &lt;chr&gt;, precip_extreme_daily &lt;dbl&gt;,</span></span>
+<span><span class="co">## #   precip_extreme_daily_code &lt;chr&gt;, precip_extreme_daily_date &lt;date&gt;,</span></span>
+<span><span class="co">## #   precip_extreme_daily_date_code &lt;chr&gt;, sun_extreme_daily &lt;dbl&gt;, …</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="codes---climate-normals">Codes - Climate Normals<a class="anchor" aria-label="anchor" href="#codes---climate-normals"></a>
 </h3>
 <p>The codes index for climate normals can be accessed through the
 built-in data frame: <code>codes</code></p>
-<table style="width:100%;" class="table">
+<table class="table">
 <colgroup>
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="1%">
-<col width="1%">
-<col width="1%">
-<col width="1%">
-<col width="1%">
-<col width="1%">
-<col width="1%">
-<col width="1%">
-<col width="1%">
-<col width="1%">
-<col width="1%">
-<col width="1%">
-<col width="1%">
-<col width="1%">
-<col width="1%">
-<col width="1%">
-<col width="1%">
-<col width="1%">
-<col width="1%">
-<col width="1%">
-<col width="1%">
-<col width="0%">
-<col width="0%">
+<col width="3%">
+<col width="96%">
 </colgroup>
 <thead><tr class="header">
-<th align="left">location_name</th>
-<th align="left">period_of_record</th>
-<th align="left">Daily Average (°C) Code</th>
-<th align="left">StdDev Mean Monthly Temperature (°C) Code</th>
-<th align="left">Daily Maximum (°C) Code</th>
-<th align="left">Daily Minimum (°C) Code</th>
-<th align="left">Maximum Daily Mean (°C) Code</th>
-<th align="left">Maximum Daily Mean (°C) Date (yyyy/mm/dd) Code</th>
-<th align="left">Minimum Daily Mean (°C) Code</th>
-<th align="left">Minimum Daily Mean (°C) Date (yyyy/mm/dd) Code</th>
-<th align="left">Extreme Maximum (°C) Code</th>
-<th align="left">Extreme Maximum (°C) Date (yyyy/mm/dd) Code</th>
-<th align="left">Minimum Daily Maximum (°C) Code</th>
-<th align="left">Minimum Daily Maximum (°C) Date (yyyy/mm/dd) Code</th>
-<th align="left">Maximum Daily Minimum (°C) Code</th>
-<th align="left">Maximum Daily Minimum (°C) Date (yyyy/mm/dd) Code</th>
-<th align="left">Extreme Minimum (°C) Code</th>
-<th align="left">Extreme Minimum (°C) Date (yyyy/mm/dd) Code</th>
-<th align="left">Rainfall (mm) Code</th>
-<th align="left">Snowfall (cm) Code</th>
-<th align="left">Precipitation (mm) Code</th>
-<th align="left">Average Snow Depth (cm) Code</th>
-<th align="left">Median Snow Depth (cm) Code</th>
-<th align="left">Snow Depth at Month-end (cm) Code</th>
-<th align="left">Extreme Daily Rainfall (mm) Code</th>
-<th align="left">Extreme Daily Rainfall (mm) Date (yyyy/mm/dd) Code</th>
-<th align="left">Extreme Daily Snowfall (cm) Code</th>
-<th align="left">Extreme Daily Snowfall (cm) Date (yyyy/mm/dd) Code</th>
-<th align="left">Extreme Daily Precipitation (mm) Code</th>
-<th align="left">Extreme Daily Precipitation (mm) Date (yyyy/mm/dd)
-Code</th>
-<th align="left">Extreme Snow Depth (cm) Code</th>
-<th align="left">Extreme Snow Depth (cm) Date (yyyy/mm/dd) Code</th>
-<th align="left">Freezing Rain or Freezing Drizzle Code</th>
-<th align="left">Thunderstorms Code</th>
-<th align="left">Hail Code</th>
-<th align="left">Fog, Ice Fog, or Freezing Fog Code</th>
-<th align="left">Smoke or Haze Code</th>
-<th align="left">Days with Maximum Temperature &lt;= -30 °C Code</th>
-<th align="left">Days with Maximum Temperature &lt;= -20 °C Code</th>
-<th align="left">Days with Maximum Temperature &lt;= -10 °C Code</th>
-<th align="left">Days with Maximum Temperature &lt;= 0 °C Code</th>
-<th align="left">Days with Maximum Temperature &gt; 0 °C Code</th>
-<th align="left">Days with Maximum Temperature &gt; 10 °C Code</th>
-<th align="left">Days with Maximum Temperature &gt; 20 °C Code</th>
-<th align="left">Days with Maximum Temperature &gt; 30 °C Code</th>
-<th align="left">Days with Maximum Temperature &gt; 35 °C Code</th>
-<th align="left">Days with Maximum Temperature &gt; 40 °C Code</th>
-<th align="left">Days with Minimum Temperature &gt; 20 °C Code</th>
-<th align="left">Days with Minimum Temperature &gt; 10 °C Code</th>
-<th align="left">Days with Minimum Temperature &gt; 0 °C Code</th>
-<th align="left">Days with Minimum Temperature &lt;= 2 °C Code</th>
-<th align="left">Days with Minimum Temperature &lt;= 0 °C Code</th>
-<th align="left">Days with Minimum Temperature &lt; -2 °C Code</th>
-<th align="left">Days with Minimum Temperature &lt; -10 °C Code</th>
-<th align="left">Days with Minimum Temperature &lt; -20 °C Code</th>
-<th align="left">Days with Minimum Temperature &lt; -30 °C Code</th>
-<th align="left">Days with Minimum Temperature &lt; -40 °C Code</th>
-<th align="left">Days with Rainfall &gt;= 0.2 mm Code</th>
-<th align="left">Days with Rainfall &gt;= 5 mm Code</th>
-<th align="left">Days with Rainfall &gt;= 10 mm Code</th>
-<th align="left">Days with Rainfall &gt;= 25 mm Code</th>
-<th align="left">Days with Rainfall &gt;= 50 mm Code</th>
-<th align="left">Days with Rainfall &gt;= 100 mm Code</th>
-<th align="left">Days with Snowfall &gt;= 0.2 cm Code</th>
-<th align="left">Days with Snowfall &gt;= 5 cm Code</th>
-<th align="left">Days with Snowfall &gt;= 10 cm Code</th>
-<th align="left">Days with Snowfall &gt;= 25 cm Code</th>
-<th align="left">Days with Snowfall &gt;= 40 cm Code</th>
-<th align="left">Days with Precipitation &gt;= 0.2 mm Code</th>
-<th align="left">Days with Precipitation &gt;= 1 mm Code</th>
-<th align="left">Days with Precipitation &gt;= 5 mm Code</th>
-<th align="left">Days with Precipitation &gt;= 10 mm Code</th>
-<th align="left">Days with Precipitation &gt;= 25 mm Code</th>
-<th align="left">Days with Precipitation &gt;= 50 mm Code</th>
-<th align="left">Days with Precipitation &gt;= 100 mm Code</th>
-<th align="left">Days with Snow Depth &gt;= 1 cm Code</th>
-<th align="left">Days with Snow Depth &gt;= 5 cm Code</th>
-<th align="left">Days with Snow Depth &gt;= 10 cm Code</th>
-<th align="left">Days with Snow Depth &gt;= 20 cm Code</th>
-<th align="left">Days with Snow Depth &gt;= 30 cm Code</th>
-<th align="left">Days with Snow Depth &gt;= 50 cm Code</th>
-<th align="left">Days with Snow Depth &gt;= 100 cm Code</th>
-<th align="left">Wind Speed (km/h) Code</th>
-<th align="left">Most Frequent Wind Direction Code</th>
-<th align="left">Days with Winds &gt;= 52 km/h Code</th>
-<th align="left">Days with Winds &gt;= 63 km/h Code</th>
-<th align="left">Days with Gusts &gt;= 90 km/h Code</th>
-<th align="left">Extreme Wind Speed (km/h) Code</th>
-<th align="left">Extreme Wind Speed (km/h) Date (yyyy/mm/dd hh:mi)
-Code</th>
-<th align="left">Direction of Extreme Wind Speed Code</th>
-<th align="left">Direction of Extreme Wind Speed Date (yyyy/mm/dd hh:mi)
-Code</th>
-<th align="left">Extreme Gust Speed (km/h) Code</th>
-<th align="left">Extreme Gust Speed (km/h) Date (yyyy/mm/dd) Code</th>
-<th align="left">Direction of Extreme Gust Speed Code</th>
-<th align="left">Direction of Extreme Gust Speed Date (yyyy/mm/dd)
-Code</th>
-<th align="left">Degree Days Above 24 °C Code</th>
-<th align="left">Degree Days Above 18 °C Code</th>
-<th align="left">Degree Days Above 15 °C Code</th>
-<th align="left">Degree Days Above 10 °C Code</th>
-<th align="left">Degree Days Above 5 °C Code</th>
-<th align="left">Degree Days Above 0 °C Code</th>
-<th align="left">Degree Days Below 0 °C Code</th>
-<th align="left">Degree Days Below 5 °C Code</th>
-<th align="left">Degree Days Below 10 °C Code</th>
-<th align="left">Degree Days Below 15 °C Code</th>
-<th align="left">Degree Days Below 18 °C Code</th>
-<th align="left">Quintile 1 (Lower Bound) Code</th>
-<th align="left">Quintile 1 (Upper Bound) Code</th>
-<th align="left">Quintile 2 (Upper Bound) Code</th>
-<th align="left">Quintile 3 (Upper Bound) Code</th>
-<th align="left">Quintile 4 (Upper Bound) Code</th>
-<th align="left">Quintile 5 (Upper Bound) Code</th>
-<th align="left">Days with Humidex &gt;= 30 Code</th>
-<th align="left">Days with Humidex &gt;= 35 Code</th>
-<th align="left">Days with Humidex &gt;= 40 Code</th>
-<th align="left">Extreme Humidex Code</th>
-<th align="left">Extreme Humidex Date (yyyy/mm/dd) Code</th>
-<th align="left">Days with Wind Chill &lt; -20 Code</th>
-<th align="left">Days with Wind Chill &lt; -30 Code</th>
-<th align="left">Days with Wind Chill &lt; -40 Code</th>
-<th align="left">Days with Wind Chill &lt; -50 Code</th>
-<th align="left">Extreme Wind Chill Code</th>
-<th align="left">Extreme Wind Chill Date (yyyy/mm/dd) Code</th>
-<th align="left">Average Vapour Pressure (kPa) Code</th>
-<th align="left">Average Relative Humidity - 0600LST (%) Code</th>
-<th align="left">Average Relative Humidity - 1500LST (%) Code</th>
-<th align="left">Average Station Pressure (kPa) Code</th>
-<th align="left">Average Sea Level Pressure (kPa) Code</th>
-<th align="left">Visibility &lt; 1 km (hours with) Code</th>
-<th align="left">Visibility 1 to 9 km (hours with) Code</th>
-<th align="left">Visibility &gt; 9 km (hours with) Code</th>
-<th align="left">Cloud Amount 0 to 2 tenths (hours with) Code</th>
-<th align="left">Cloud Amount 3 to 7 tenths (hours with) Code</th>
-<th align="left">Cloud Amount 8 to 10 tenths (hours with) Code</th>
-<th align="left">Average Date of Last Spring Frost Code</th>
-<th align="left">Average Date of First Fall Frost Code</th>
-<th align="left">Average Length of Frost-Free Period Code</th>
-<th align="left">Probability of last temperature in spring &lt;= 0°C, on
-or after indicated date (10%) Code</th>
-<th align="left">Probability of last temperature in spring &lt;= 0°C, on
-or after indicated date (25%) Code</th>
-<th align="left">Probability of last temperature in spring &lt;= 0°C, on
-or after indicated date (33%) Code</th>
-<th align="left">Probability of last temperature in spring &lt;= 0°C, on
-or after indicated date (50%) Code</th>
-<th align="left">Probability of last temperature in spring &lt;= 0°C, on
-or after indicated date (66%) Code</th>
-<th align="left">Probability of last temperature in spring &lt;= 0°C, on
-or after indicated date (75%) Code</th>
-<th align="left">Probability of last temperature in spring &lt;= 0°C, on
-or after indicated date (90%) Code</th>
-<th align="left">Probability of first temperature in fall &lt;= 0°C, on
-or before indicated date (10%) Code</th>
-<th align="left">Probability of first temperature in fall &lt;= 0°C, on
-or before indicated date (25%) Code</th>
-<th align="left">Probability of first temperature in fall &lt;= 0°C, on
-or before indicated date (33%) Code</th>
-<th align="left">Probability of first temperature in fall &lt;= 0°C, on
-or before indicated date (50%) Code</th>
-<th align="left">Probability of first temperature in fall &lt;= 0°C, on
-or before indicated date (66%) Code</th>
-<th align="left">Probability of first temperature in fall &lt;= 0°C, on
-or before indicated date (75%) Code</th>
-<th align="left">Probability of first temperature in fall &lt;= 0°C, on
-or before indicated date (90%) Code</th>
-<th align="left">Probability of frost-free period equal to or less than
-indicated period (Days) (10%) Code</th>
-<th align="left">Probability of frost-free period equal to or less than
-indicated period (Days) (25%) Code</th>
-<th align="left">Probability of frost-free period equal to or less than
-indicated period (Days) (33%) Code</th>
-<th align="left">Probability of frost-free period equal to or less than
-indicated period (Days) (50%) Code</th>
-<th align="left">Probability of frost-free period equal to or less than
-indicated period (Days) (66%) Code</th>
-<th align="left">Probability of frost-free period equal to or less than
-indicated period (Days) (75%) Code</th>
-<th align="left">Probability of frost-free period equal to or less than
-indicated period (Days) (90%) Code</th>
-<th align="left">Average Date of Last Spring Snowfall Code</th>
-<th align="left">Average Date of First Fall Snowfall Code</th>
+<th align="left">code</th>
+<th align="left">meaning</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">BRANDON</td>
-<td align="left">Normal</td>
 <td align="left">A</td>
-<td align="left">A</td>
-<td align="left">A</td>
-<td align="left">A</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">A</td>
-<td align="left">A</td>
-<td align="left">A</td>
-<td align="left">A</td>
-<td align="left">A</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">A</td>
-<td align="left">A</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">D</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">C</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">A</td>
-<td align="left">A</td>
-<td align="left">A</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">A</td>
-<td align="left">A</td>
-<td align="left">A</td>
-<td align="left">A</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">A</td>
-<td align="left">A</td>
-<td align="left">A</td>
-<td align="left">A</td>
-<td align="left">A</td>
-<td align="left">A</td>
-<td align="left">A</td>
-<td align="left">A</td>
-<td align="left">D</td>
-<td align="left">D</td>
-<td align="left">D</td>
-<td align="left">D</td>
-<td align="left">D</td>
-<td align="left">D</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">A</td>
-<td align="left">A</td>
+<td align="left">WMO ‘3 and 5 rule’ (i.e. no more than 3 consecutive and
+no more than 5 total missing for either temperature or
+precipitation)</td>
 </tr>
 <tr class="even">
-<td align="left">BRANDON</td>
-<td align="left">Long-Term</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
+<td align="left">B</td>
+<td align="left">At least 25 years</td>
+</tr>
+<tr class="odd">
+<td align="left">C</td>
+<td align="left">At least 20 years</td>
+</tr>
+<tr class="even">
+<td align="left">D</td>
+<td align="left">At least 15 years</td>
 </tr>
 </tbody>
 </table>

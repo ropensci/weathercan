@@ -70,11 +70,12 @@ stations_search(
 ```
 
     ## # A tibble: 2 × 17
-    ##   prov  station_name   station_id climate_id WMO_id TC_id   lat    lon  elev tz        interval start   end normals
-    ##   <chr> <chr>               <dbl> <chr>       <dbl> <chr> <dbl>  <dbl> <dbl> <chr>     <fct>    <dbl> <dbl> <lgl>  
-    ## 1 MB    BRANDON MUNI A      50821 5010481     71140 YBR    49.9 -100.0  409. Etc/GMT+6 day       2012  2026 TRUE   
-    ## 2 MB    BRANDON RCS         49909 5010490     71136 PBO    49.9 -100.0  409. Etc/GMT+6 day       2012  2026 FALSE  
-    ## # ℹ 3 more variables: normals_1991_2020 <lgl>, normals_1981_2010 <lgl>, normals_1971_2000 <lgl>
+    ##   prov  station_name station_id climate_id WMO_id TC_id   lat    lon  elev tz    interval start
+    ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl>  <dbl> <dbl> <chr> <fct>    <dbl>
+    ## 1 MB    BRANDON MUN…      50821 5010481     71140 YBR    49.9 -100.0  409. Etc/… day       2012
+    ## 2 MB    BRANDON RCS       49909 5010490     71136 PBO    49.9 -100.0  409. Etc/… day       2012
+    ## # ℹ 5 more variables: end <dbl>, normals <lgl>, normals_1991_2020 <lgl>,
+    ## #   normals_1981_2010 <lgl>, normals_1971_2000 <lgl>
 
 In this case “A” is for “Airport”, let’s go with that!
 
@@ -114,12 +115,12 @@ search_stn_name("brandon")
 ```
 
     ## # A tibble: 4 × 5
-    ##   STATION_NUMBER STATION_NAME                                PROV_TERR_STATE_LOC LATITUDE LONGITUDE
-    ##   <chr>          <chr>                                       <chr>                  <dbl>     <dbl>
-    ## 1 05MH001        ASSINIBOINE RIVER AT BRANDON                MB                      49.9    -100.0
-    ## 2 05MH006        LITTLE SOURIS RIVER NEAR BRANDON            MB                      49.7     -99.8
-    ## 3 02OC007        MASKINONGE (LAC) A SAINT GABRIEL DE BRANDON QC                      46.3     -73.4
-    ## 4 05MH013        ASSINIBOINE RIVER NEAR BRANDON              MB                      49.9    -100.
+    ##   STATION_NUMBER STATION_NAME                            PROV_TERR_STATE_LOC LATITUDE LONGITUDE
+    ##   <chr>          <chr>                                   <chr>                  <dbl>     <dbl>
+    ## 1 05MH001        ASSINIBOINE RIVER AT BRANDON            MB                      49.9    -100.0
+    ## 2 05MH006        LITTLE SOURIS RIVER NEAR BRANDON        MB                      49.7     -99.8
+    ## 3 02OC007        MASKINONGE (LAC) A SAINT GABRIEL DE BR… QC                      46.3     -73.4
+    ## 4 05MH013        ASSINIBOINE RIVER NEAR BRANDON          MB                      49.9    -100.
 
 There are a couple of options, but whoops, one’s from Quebec! Let’s
 filter this to only Manitoba and only stations with 2020 data with the
