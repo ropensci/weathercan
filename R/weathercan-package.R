@@ -105,7 +105,7 @@ NULL
 
 .onAttach <- function(libname, pkgname) {
   packageStartupMessage(
-    "Citation reminder:\n",
+    "Consider citing *both* ECCC and weathercan:\n",
     "- Environment and Climate Change Canada (ECCC) is the *source* of this data\n",
     "- weathercan is software for *downloading* the data\n",
     "- See ECCC's terms and conditions: https://climate.weather.gc.ca/prods_servs/attachment1_e.html"
