@@ -35,26 +35,11 @@ devtools::build_readme()
 # Update Contributors
 allcontributors::add_contributors()
 
-# Precompile Vignettes
-source("vignettes/precompile.R")
-
-## Checks
-# Run WITH and WITHOUT internet
-
-devtools::run_examples(run_donttest = TRUE)
-devtools::test()
-
-# Local tests
-devtools::check(cran = FALSE, manual = TRUE, run_dont_test = TRUE)
-devtools::check(
-  cran = FALSE,
-  manual = TRUE,
-  args = c("--no-examples", "--no-tests")
-) # Quick re-check as needed
-devtools::check_win_devel()
-
 ## Update codemeta
 codemetar::write_codemeta()
+
+# Precompile Vignettes - BUILD PACKAGE FIRST!
+source("vignettes/precompile.R")
 
 ## Build site (so website uses newest version)
 ## Update website
@@ -68,7 +53,24 @@ codemetar::write_codemeta()
 pkgdown::build_site(lazy = FALSE)
 
 
-# Finalize --------------------
+## Checks
+# Run WITH and WITHOUT internet
+
+devtools::run_examples(run_donttest = TRUE)
+devtools::test()
+
+
+# Local tests
+devtools::check(cran = FALSE, manual = TRUE, run_dont_test = TRUE)
+devtools::check(
+  cran = FALSE,
+  manual = TRUE,
+  args = c("--no-examples", "--no-tests")
+) # Quick re-check as needed
+devtools::check_win_devel()
+
+
+# Finalize -------------------------------------------------
 
 ## Merge when ready!
 usethis::pr_view()
