@@ -33,6 +33,10 @@ cache_remove <- function() {
         "\nOkay to proceed?"
       )
     )
+    if (is.na(remove)) {
+      wc_inform("Cancelling cache removal")
+      return(invisible())
+    }
   } else {
     remove <- TRUE
   }
@@ -105,7 +109,12 @@ cache_stations_check <- function() {
     } else {
       dl <- TRUE
     }
-    if (dl) stations_dl() else wc_stop("Need download stations data first")
+
+    if (is.na(dl) || !dl) {
+      wc_stop("Need download stations data first")
+    }
+
+    stations_dl()
   }
 
   time_since_update <- difftime(
