@@ -153,6 +153,15 @@ normals_dl <- function(
     return(normals_cached(climate_ids, measurement_type = measurement_type))
   }
 
+  if (!missing(measurement_type)) {
+    wc_inform(
+      c(
+        "The argument `measurement_type` is only used for 'new' normals ",
+        "(1991-2020). It has no effect with older normals downloads."
+      )
+    )
+  }
+
   yrs <- paste0("normals_", stringr::str_replace(normals_years, "-", "_"))
 
   n <- dplyr::filter(stn, .data$climate_id %in% climate_ids) |>

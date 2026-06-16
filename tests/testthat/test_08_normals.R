@@ -325,6 +325,22 @@ test_that("normals_dl() messages if climate normals are not available some stati
 })
 
 
+test_that("normals_dl() messages if using 'measurement_type' for old normals", {
+  skip_on_cran()
+  skip_if_offline()
+
+  expect_message(
+    normals_dl(
+      climate_ids = c("301AR54", "2100685", "301B8LR"),
+      normals_years = "1971-2000",
+      measurement_type = "Temperature"
+    ),
+    "The argument `measurement_type` is only used for 'new' normals"
+  ) |>
+    suppressMessages()
+})
+
+
 # Bug fixes ------------------------------------------------------------------
 # Fix issue #106 - Added (C) to extreme wind chill
 test_that("normals_dl() gets extreme wind chill correctly", {
