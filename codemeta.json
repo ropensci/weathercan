@@ -8,13 +8,13 @@
   "codeRepository": "https://github.com/ropensci/weathercan/",
   "issueTracker": "https://github.com/ropensci/weathercan/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.7.2",
+  "version": "1.0.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.4.0 (2024-04-24)",
+  "runtimePlatform": "R version 4.6.0 (2026-04-24)",
   "author": [
     {
       "@type": "Person",
@@ -22,16 +22,16 @@
       "familyName": "LaZerte",
       "email": "sel@steffilazerte.ca",
       "@id": "https://orcid.org/0000-0002-7690-8360"
-    }
-  ],
-  "contributor": [
+    },
     {
       "@type": "Person",
       "givenName": "Sam",
       "familyName": "Albers",
       "email": "sam.albers@gmail.com",
       "@id": "https://orcid.org/0000-0002-9270-7884"
-    },
+    }
+  ],
+  "contributor": [
     {
       "@type": "Person",
       "givenName": "Nick",
@@ -45,6 +45,66 @@
       "familyName": "Cazelles",
       "email": "kevin.cazelles@gmail.com",
       "@id": "https://orcid.org/0000-0001-6619-9874"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Richard",
+      "familyName": "Littauer",
+      "email": "richard.littauer@gmail.com",
+      "@id": "https://orcid.org/0000-0001-5428-7535"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Shandiya",
+      "familyName": "Balasubramaniam",
+      "@id": "https://orcid.org/0000-0001-9928-9964"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Mark",
+      "familyName": "Ciechanowski",
+      "@id": "https://orcid.org/0000-0002-3732-5939"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Jeremy",
+      "familyName": "Selva",
+      "email": "jeremy1189.jjs@gmail.com",
+      "@id": "https://orcid.org/0000-0002-4498-2662"
+    },
+    {
+      "@type": "Person",
+      "givenName": ["Kelli", "F."],
+      "familyName": "Johnson",
+      "email": "kelli.johnson@noaa.gov",
+      "@id": "https://orcid.org/0000-0002-5149-451X"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Russ",
+      "familyName": "Allen",
+      "email": "mbr@historicip.com"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Everett",
+      "familyName": "Snieder",
+      "email": "everett.snieder@gmail.com",
+      "@id": "https://orcid.org/0000-0003-4997-3404"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Josh",
+      "familyName": "Persi",
+      "email": "joshpersi@gmail.com",
+      "@id": "https://orcid.org/0000-0002-2700-6483"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Mahjabin",
+      "familyName": "Oyshi",
+      "email": "oyshimahjabin3@gmail.com",
+      "@id": "https://orcid.org/0009-0000-7992-6727"
     }
   ],
   "maintainer": [
@@ -107,18 +167,6 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "leaflet",
-      "name": "leaflet",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=leaflet"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "lutz",
       "name": "lutz",
       "provider": {
@@ -140,18 +188,6 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=mockery"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "naniar",
-      "name": "naniar",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=naniar"
     },
     {
       "@type": "SoftwareApplication",
@@ -192,19 +228,6 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "vcr",
-      "name": "vcr",
-      "version": ">= 1.0.2",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=vcr"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "withr",
       "name": "withr",
       "provider": {
@@ -238,19 +261,6 @@
     },
     "3": {
       "@type": "SoftwareApplication",
-      "identifier": "httr",
-      "name": "httr",
-      "version": ">= 1.4.2",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=httr"
-    },
-    "4": {
-      "@type": "SoftwareApplication",
       "identifier": "lubridate",
       "name": "lubridate",
       "version": ">= 1.7.1",
@@ -262,7 +272,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=lubridate"
     },
-    "5": {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "memoise",
       "name": "memoise",
@@ -275,17 +285,11 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=memoise"
     },
-    "6": {
-      "@type": "SoftwareApplication",
-      "identifier": "methods",
-      "name": "methods",
-      "version": ">= 3.2.2"
-    },
-    "7": {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "purrr",
       "name": "purrr",
-      "version": ">= 0.3.4",
+      "version": ">= 1.0.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -294,7 +298,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=purrr"
     },
-    "8": {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "rlang",
       "name": "rlang",
@@ -307,7 +311,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=rlang"
     },
-    "9": {
+    "7": {
       "@type": "SoftwareApplication",
       "identifier": "readr",
       "name": "readr",
@@ -320,20 +324,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=readr"
     },
-    "10": {
-      "@type": "SoftwareApplication",
-      "identifier": "rvest",
-      "name": "rvest",
-      "version": ">= 0.3.4",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=rvest"
-    },
-    "11": {
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "stringi",
       "name": "stringi",
@@ -346,7 +337,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=stringi"
     },
-    "12": {
+    "9": {
       "@type": "SoftwareApplication",
       "identifier": "stringr",
       "name": "stringr",
@@ -359,7 +350,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=stringr"
     },
-    "13": {
+    "10": {
       "@type": "SoftwareApplication",
       "identifier": "tidyr",
       "name": "tidyr",
@@ -372,33 +363,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=tidyr"
     },
-    "14": {
-      "@type": "SoftwareApplication",
-      "identifier": "tidyselect",
-      "name": "tidyselect",
-      "version": ">= 1.0.0",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=tidyselect"
-    },
-    "15": {
-      "@type": "SoftwareApplication",
-      "identifier": "xml2",
-      "name": "xml2",
-      "version": ">= 0.1.2",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=xml2"
-    },
-    "16": {
+    "11": {
       "@type": "SoftwareApplication",
       "identifier": "rappdirs",
       "name": "rappdirs",
@@ -411,9 +376,35 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=rappdirs"
     },
+    "12": {
+      "@type": "SoftwareApplication",
+      "identifier": "httr2",
+      "name": "httr2",
+      "version": ">= 1.2.2",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=httr2"
+    },
+    "13": {
+      "@type": "SoftwareApplication",
+      "identifier": "cli",
+      "name": "cli",
+      "version": ">= 3.6.6",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=cli"
+    },
     "SystemRequirements": null
   },
-  "fileSize": "11844.435KB",
+  "fileSize": "2218.768KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -445,7 +436,7 @@
       }
     }
   ],
-  "releaseNotes": "https://github.com/ropensci/weathercan/blob/master/NEWS.md",
+  "releaseNotes": "https://github.com/ropensci/weathercan/blob/main/NEWS.md",
   "readme": "https://github.com/ropensci/weathercan/blob/main/README.md",
   "contIntegration": ["https://github.com/ropensci/weathercan/actions", "https://app.codecov.io/gh/ropensci/weathercan"],
   "review": {
