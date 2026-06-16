@@ -64,12 +64,12 @@ head(stations())
 
     ## # A tibble: 6 × 17
     ##   prov  station_name        station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1991_2020 normals_1981_2010
-    ##   <chr> <chr>                    <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
-    ## 1 AB    DAYSLAND                  1795 301AR54        NA <NA>   52.9 -112.  689. Etc/GMT+7 day       1908  1922 FALSE   FALSE             FALSE            
-    ## 2 AB    DAYSLAND                  1795 301AR54        NA <NA>   52.9 -112.  689. Etc/GMT+7 hour        NA    NA FALSE   FALSE             FALSE            
+    ##   <chr> <chr>                    <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <fct>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
+    ## 1 AB    DAYSLAND                  1795 301AR54        NA <NA>   52.9 -112.  689. Etc/GMT+7 hour        NA    NA FALSE   FALSE             FALSE            
+    ## 2 AB    DAYSLAND                  1795 301AR54        NA <NA>   52.9 -112.  689. Etc/GMT+7 day       1908  1922 FALSE   FALSE             FALSE            
     ## 3 AB    DAYSLAND                  1795 301AR54        NA <NA>   52.9 -112.  689. Etc/GMT+7 month     1908  1922 FALSE   FALSE             FALSE            
-    ## 4 AB    EDMONTON CORONATION       1796 301BK03        NA <NA>   53.6 -114.  671. Etc/GMT+7 day       1978  1979 FALSE   FALSE             FALSE            
-    ## 5 AB    EDMONTON CORONATION       1796 301BK03        NA <NA>   53.6 -114.  671. Etc/GMT+7 hour        NA    NA FALSE   FALSE             FALSE            
+    ## 4 AB    EDMONTON CORONATION       1796 301BK03        NA <NA>   53.6 -114.  671. Etc/GMT+7 hour        NA    NA FALSE   FALSE             FALSE            
+    ## 5 AB    EDMONTON CORONATION       1796 301BK03        NA <NA>   53.6 -114.  671. Etc/GMT+7 day       1978  1979 FALSE   FALSE             FALSE            
     ## 6 AB    EDMONTON CORONATION       1796 301BK03        NA <NA>   53.6 -114.  671. Etc/GMT+7 month     1978  1979 FALSE   FALSE             FALSE            
     ## # ℹ 1 more variable: normals_1971_2000 <lgl>
 
@@ -77,7 +77,7 @@ head(stations())
 glimpse(stations())
 ```
 
-    ## Rows: 26,439
+    ## Rows: 26,448
     ## Columns: 17
     ## $ prov              <chr> "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", "AB", …
     ## $ station_name      <chr> "DAYSLAND", "DAYSLAND", "DAYSLAND", "EDMONTON CORONATION", "EDMONTON CORONATION", "EDMONTON CORONATION", "FLEET", "FLEET", "FLEET", …
@@ -89,9 +89,9 @@ glimpse(stations())
     ## $ lon               <dbl> -112.28, -112.28, -112.28, -113.57, -113.57, -113.57, -111.73, -111.73, -111.73, -110.15, -110.15, -110.15, -115.20, -115.20, -115.2…
     ## $ elev              <dbl> 688.8, 688.8, 688.8, 670.6, 670.6, 670.6, 838.2, 838.2, 838.2, 640.0, 640.0, 640.0, 1036.0, 1036.0, 1036.0, 585.2, 585.2, 585.2, 668…
     ## $ tz                <chr> "Etc/GMT+7", "Etc/GMT+7", "Etc/GMT+7", "Etc/GMT+7", "Etc/GMT+7", "Etc/GMT+7", "Etc/GMT+7", "Etc/GMT+7", "Etc/GMT+7", "Etc/GMT+7", "E…
-    ## $ interval          <chr> "day", "hour", "month", "day", "hour", "month", "day", "hour", "month", "day", "hour", "month", "day", "hour", "month", "day", "hour…
-    ## $ start             <dbl> 1908, NA, 1908, 1978, NA, 1978, 1987, NA, 1987, 1987, NA, 1987, 1980, NA, 1980, 1980, NA, 1980, 1986, NA, 1986, 1987, NA, 1987, 1986…
-    ## $ end               <dbl> 1922, NA, 1922, 1979, NA, 1979, 1990, NA, 1990, 1998, NA, 1998, 2009, NA, 2007, 1981, NA, 1981, 2019, NA, 2007, 1991, NA, 1991, 1995…
+    ## $ interval          <fct> hour, day, month, hour, day, month, hour, day, month, hour, day, month, hour, day, month, hour, day, month, hour, day, month, hour, …
+    ## $ start             <dbl> NA, 1908, 1908, NA, 1978, 1978, NA, 1987, 1987, NA, 1987, 1987, NA, 1980, 1980, NA, 1980, 1980, NA, 1986, 1986, NA, 1987, 1987, NA, …
+    ## $ end               <dbl> NA, 1922, 1922, NA, 1979, 1979, NA, 1990, 1990, NA, 1998, 1998, NA, 2009, 2007, NA, 1981, 1981, NA, 2019, 2007, NA, 1991, 1991, NA, …
     ## $ normals           <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, TRU…
     ## $ normals_1991_2020 <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,…
     ## $ normals_1981_2010 <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, TRU…
@@ -106,7 +106,7 @@ stations_search("Kamloops", interval = "hour")
 
     ## # A tibble: 3 × 17
     ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1991_2020 normals_1981_2010
-    ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
+    ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <fct>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
     ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE             
     ## 2 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2026 TRUE    TRUE              FALSE            
     ## 3 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2026 TRUE    TRUE              FALSE            
@@ -126,7 +126,7 @@ stations_search(
 
     ## # A tibble: 3 × 18
     ##   prov  station_name station_id climate_id WMO_id TC_id   lat   lon  elev tz        interval start   end normals normals_1991_2020 normals_1981_2010
-    ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
+    ##   <chr> <chr>             <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr>     <fct>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
     ## 1 BC    KAMLOOPS A         1275 1163780     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      1953  2013 TRUE    TRUE              TRUE             
     ## 2 BC    KAMLOOPS AUT      42203 1163842     71741 ZKA    50.7 -120.  345  Etc/GMT+8 hour      2006  2026 TRUE    TRUE              FALSE            
     ## 3 BC    KAMLOOPS A        51423 1163781     71887 YKA    50.7 -120.  345. Etc/GMT+8 hour      2013  2026 TRUE    TRUE              FALSE            
@@ -138,14 +138,11 @@ You can update this list of stations with
 stations_dl()
 ```
 
-    ## According to Environment Canada, Modified Date: 2026-05-03 23:30 UTC
-
-    ## Environment Canada Disclaimers:
-    ## "Station Inventory Disclaimer: Please note that this inventory list is a snapshot of stations on our website as of the modified date, and may be subject to change without notice."
-    ## "Station ID Disclaimer: Station IDs are an internal index numbering system and may be subject to change without notice."
-
-    ## Stations data saved...
-    ## Use `stations()` to access most recent version and `stations_meta()` to see when this was last updated
+    ## According to Environment Canada, Modified Date: 2026-06-03 23:30 UTC
+    ## Environment Canada Disclaimers: "Station Inventory Disclaimer: Please note that this inventory list is a snapshot of stations on our website as of the modified
+    ## date, and may be subject to change without notice." "Station ID Disclaimer: Station IDs are an internal index numbering system and may be subject to change
+    ## without notice."
+    ## Stations data saved... Use `stations()` to access most recent version and `stations_meta()` to see when this was last updated
 
 And check when it was last updated with
 
@@ -153,11 +150,10 @@ And check when it was last updated with
 stations_meta()
 ```
 
-    ## $ECCC_modified
-    ## [1] "2026-05-03 23:30:00 UTC"
-    ## 
-    ## $weathercan_modified
-    ## [1] "2026-05-04"
+    ## # A tibble: 1 × 2
+    ##   ECCC_modified       weathercan_modified
+    ##   <dttm>              <date>             
+    ## 1 2026-06-03 23:30:00 2026-06-16
 
 **Note:** For reproducibility, if you are using the stations list to
 gather your data, it can be a good idea to take note of the ECCC date of
@@ -171,27 +167,26 @@ Once you have your `station_id`(s) you can download weather data:
 kam <- weather_dl(station_ids = 51423, start = "2018-02-01", end = "2018-04-15")
 ```
 
-    ## As of weathercan v0.3.0 time display is either local time or UTC
-    ## See Details under ?weather_dl for more information.
-    ## This message is shown once per session
+    ## As of weathercan v0.3.0 time display is either local time or UTC See Details under `weather_dl()` (`?weather_dl()`) for more information. This message is shown
+    ## once per session
 
 ``` r
 kam
 ```
 
     ## # A tibble: 1,776 × 38
-    ##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id date       time                year  month day   hour  qual  weather
-    ##    <chr>             <dbl> <chr>            <chr> <dbl> <dbl> <dbl> <chr>      <chr>  <chr> <date>     <dttm>              <chr> <chr> <chr> <chr> <chr> <chr>  
-    ##  1 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 00:00:00 2018  02    01    00:00 <NA>  <NA>   
-    ##  2 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 01:00:00 2018  02    01    01:00 <NA>  Snow   
-    ##  3 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 02:00:00 2018  02    01    02:00 <NA>  <NA>   
-    ##  4 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 03:00:00 2018  02    01    03:00 <NA>  <NA>   
-    ##  5 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 04:00:00 2018  02    01    04:00 <NA>  Cloudy 
-    ##  6 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 05:00:00 2018  02    01    05:00 <NA>  <NA>   
-    ##  7 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 06:00:00 2018  02    01    06:00 <NA>  <NA>   
-    ##  8 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 07:00:00 2018  02    01    07:00 <NA>  Cloudy 
-    ##  9 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 08:00:00 2018  02    01    08:00 <NA>  <NA>   
-    ## 10 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 09:00:00 2018  02    01    09:00 <NA>  <NA>   
+    ##    station_name station_id station_operator prov    lat   lon  elev climate_id WMO_id TC_id date       time                 year month   day hour   qual   temp
+    ##    <chr>             <dbl> <chr>            <chr> <dbl> <dbl> <dbl> <chr>      <chr>  <chr> <date>     <dttm>              <dbl> <int> <int> <time> <chr> <dbl>
+    ##  1 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 00:00:00  2018     2     1 00:00  <NA>    0.2
+    ##  2 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 01:00:00  2018     2     1 01:00  <NA>   -0.8
+    ##  3 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 02:00:00  2018     2     1 02:00  <NA>   -0.4
+    ##  4 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 03:00:00  2018     2     1 03:00  <NA>   -0.7
+    ##  5 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 04:00:00  2018     2     1 04:00  <NA>   -1  
+    ##  6 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 05:00:00  2018     2     1 05:00  <NA>   -1  
+    ##  7 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 06:00:00  2018     2     1 06:00  <NA>   -1  
+    ##  8 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 07:00:00  2018     2     1 07:00  <NA>   -0.9
+    ##  9 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 08:00:00  2018     2     1 08:00  <NA>   -0.9
+    ## 10 KAMLOOPS A        51423 NAV Canada       BC     50.7 -120.  345. 1163781    71887  YKA   2018-02-01 2018-02-01 09:00:00  2018     2     1 09:00  <NA>   -0.7
     ## # ℹ 1,766 more rows
 
 You can also download data from multiple stations at once:
@@ -217,16 +212,16 @@ stations_search("Winnipeg", normals_years = "current")
 
     ## # A tibble: 10 × 17
     ##    prov  station_name                station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval start   end normals normals_1991_2020 normals_1981_2010
-    ##    <chr> <chr>                            <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr> <chr>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
-    ##  1 MB    WINNIPEG A CS                    27174 502S001     71849 XWG    49.9 -97.2  239. Etc/… day       1996  2026 TRUE    TRUE              FALSE            
-    ##  2 MB    WINNIPEG A CS                    27174 502S001     71849 XWG    49.9 -97.2  239. Etc/… hour      2013  2026 TRUE    TRUE              FALSE            
+    ##    <chr> <chr>                            <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr> <fct>    <dbl> <dbl> <lgl>   <lgl>             <lgl>            
+    ##  1 MB    WINNIPEG A CS                    27174 502S001     71849 XWG    49.9 -97.2  239. Etc/… hour      2013  2026 TRUE    TRUE              FALSE            
+    ##  2 MB    WINNIPEG A CS                    27174 502S001     71849 XWG    49.9 -97.2  239. Etc/… day       1996  2026 TRUE    TRUE              FALSE            
     ##  3 MB    WINNIPEG A CS                    27174 502S001     71849 XWG    49.9 -97.2  239. Etc/… month     1996  2007 TRUE    TRUE              FALSE            
-    ##  4 MB    WINNIPEG INTL A                  51097 5023227        NA YWG    49.9 -97.2  239. Etc/… day       2018  2026 TRUE    TRUE              FALSE            
-    ##  5 MB    WINNIPEG INTL A                  51097 5023227        NA YWG    49.9 -97.2  239. Etc/… hour      2013  2026 TRUE    TRUE              FALSE            
-    ##  6 MB    WINNIPEG RICHARDSON AWOS         47407 5023226     71852 YWG    49.9 -97.2  239. Etc/… day       2008  2013 TRUE    TRUE              FALSE            
-    ##  7 MB    WINNIPEG RICHARDSON AWOS         47407 5023226     71852 YWG    49.9 -97.2  239. Etc/… hour      2008  2013 TRUE    TRUE              FALSE            
-    ##  8 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… day       1938  2008 TRUE    TRUE              TRUE             
-    ##  9 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… hour      1953  2013 TRUE    TRUE              TRUE             
+    ##  4 MB    WINNIPEG INTL A                  51097 5023227        NA YWG    49.9 -97.2  239. Etc/… hour      2013  2026 TRUE    TRUE              FALSE            
+    ##  5 MB    WINNIPEG INTL A                  51097 5023227        NA YWG    49.9 -97.2  239. Etc/… day       2018  2026 TRUE    TRUE              FALSE            
+    ##  6 MB    WINNIPEG RICHARDSON AWOS         47407 5023226     71852 YWG    49.9 -97.2  239. Etc/… hour      2008  2013 TRUE    TRUE              FALSE            
+    ##  7 MB    WINNIPEG RICHARDSON AWOS         47407 5023226     71852 YWG    49.9 -97.2  239. Etc/… day       2008  2013 TRUE    TRUE              FALSE            
+    ##  8 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… hour      1953  2013 TRUE    TRUE              TRUE             
+    ##  9 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… day       1938  2008 TRUE    TRUE              TRUE             
     ## 10 MB    WINNIPEG RICHARDSON INT'L A       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… month     1938  2007 TRUE    TRUE              TRUE             
     ## # ℹ 1 more variable: normals_1971_2000 <lgl>
 
@@ -237,34 +232,37 @@ function.
 n <- normals_dl("5023222")
 ```
 
+    ## As of weathercan v1.0.0 the default normals are 1991-2020. Note that these normals are in a different format from previous years. See ?normals_dl for more
+    ## details or use `normals_years = '1981-2010'` to revert to the previous set of normals. This message is shown once per session
+    ## 
+    ## 
     ## The most current normals available for download by weathercan are '1991-2020'
-
     ## Using composite locations: WINNIPEG RICHARDSON (AIRPORT)
 
 ``` r
 n
 ```
 
-    ## # A tibble: 325 × 314
-    ##    location_name                 prov  composite_stations      period_of_record element_group period daily_average_c daily_average_c_code stddev_mean_monthly_…¹
-    ##    <chr>                         <chr> <chr>                   <chr>            <chr>         <chr>            <dbl> <chr>                                 <dbl>
-    ##  1 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   Jan              -16.3 A                                       3.6
-    ##  2 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   Feb              -14.1 A                                       4  
-    ##  3 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   Mar               -6.1 A                                       3.7
-    ##  4 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   Apr                3.8 A                                       2.9
-    ##  5 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   May               11.1 A                                       1.9
-    ##  6 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   Jun               17.1 A                                       1.5
-    ##  7 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   Jul               19.5 A                                       1.4
-    ##  8 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   Aug               18.7 A                                       1.5
-    ##  9 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   Sep               13.3 A                                       1.6
-    ## 10 WINNIPEG RICHARDSON (AIRPORT) MB    WINNIPEG A CS (502S001… Normal           Temperature   Oct                5.1 A                                       2.1
-    ## # ℹ 315 more rows
-    ## # ℹ abbreviated name: ¹​stddev_mean_monthly_temperature_c
-    ## # ℹ 305 more variables: stddev_mean_monthly_temperature_c_code <chr>, daily_maximum_c <dbl>, daily_maximum_c_code <chr>, daily_minimum_c <dbl>,
-    ## #   daily_minimum_c_code <chr>, maximum_daily_mean_c <dbl>, maximum_daily_mean_c_code <lgl>, maximum_daily_mean_c_date <date>,
-    ## #   maximum_daily_mean_c_date_code <lgl>, minimum_daily_mean_c <dbl>, minimum_daily_mean_c_code <lgl>, minimum_daily_mean_c_date <date>,
-    ## #   minimum_daily_mean_c_date_code <lgl>, extreme_maximum_c <dbl>, extreme_maximum_c_code <lgl>, extreme_maximum_c_date <date>,
-    ## #   extreme_maximum_c_date_code <lgl>, minimum_daily_maximum_c <dbl>, minimum_daily_maximum_c_code <lgl>, minimum_daily_maximum_c_date <date>, …
+    ## # A tibble: 26 × 313
+    ##    location_name             prov  composite_stations period_of_record period daily_average_c daily_average_c_code stddev_mean_monthly_…¹ stddev_mean_monthly_…²
+    ##    <chr>                     <chr> <chr>              <chr>            <chr>            <dbl> <chr>                                 <dbl> <chr>                 
+    ##  1 WINNIPEG RICHARDSON (AIR… MB    WINNIPEG A CS (50… Normal           Jan              -16.3 A                                       3.6 A                     
+    ##  2 WINNIPEG RICHARDSON (AIR… MB    WINNIPEG A CS (50… Normal           Feb              -14.1 A                                       4   A                     
+    ##  3 WINNIPEG RICHARDSON (AIR… MB    WINNIPEG A CS (50… Normal           Mar               -6.1 A                                       3.7 A                     
+    ##  4 WINNIPEG RICHARDSON (AIR… MB    WINNIPEG A CS (50… Normal           Apr                3.8 A                                       2.9 A                     
+    ##  5 WINNIPEG RICHARDSON (AIR… MB    WINNIPEG A CS (50… Normal           May               11.1 A                                       1.9 A                     
+    ##  6 WINNIPEG RICHARDSON (AIR… MB    WINNIPEG A CS (50… Normal           Jun               17.1 A                                       1.5 A                     
+    ##  7 WINNIPEG RICHARDSON (AIR… MB    WINNIPEG A CS (50… Normal           Jul               19.5 A                                       1.4 A                     
+    ##  8 WINNIPEG RICHARDSON (AIR… MB    WINNIPEG A CS (50… Normal           Aug               18.7 A                                       1.5 A                     
+    ##  9 WINNIPEG RICHARDSON (AIR… MB    WINNIPEG A CS (50… Normal           Sep               13.3 A                                       1.6 A                     
+    ## 10 WINNIPEG RICHARDSON (AIR… MB    WINNIPEG A CS (50… Normal           Oct                5.1 A                                       2.1 A                     
+    ## # ℹ 16 more rows
+    ## # ℹ abbreviated names: ¹​stddev_mean_monthly_temperature_c, ²​stddev_mean_monthly_temperature_c_code
+    ## # ℹ 304 more variables: daily_maximum_c <dbl>, daily_maximum_c_code <chr>, daily_minimum_c <dbl>, daily_minimum_c_code <chr>, maximum_daily_mean_c <dbl>,
+    ## #   maximum_daily_mean_c_code <lgl>, maximum_daily_mean_c_date <date>, maximum_daily_mean_c_date_code <lgl>, minimum_daily_mean_c <dbl>,
+    ## #   minimum_daily_mean_c_code <lgl>, minimum_daily_mean_c_date <date>, minimum_daily_mean_c_date_code <lgl>, extreme_maximum_c <dbl>,
+    ## #   extreme_maximum_c_code <lgl>, extreme_maximum_c_date <date>, extreme_maximum_c_date_code <lgl>, minimum_daily_maximum_c <dbl>,
+    ## #   minimum_daily_maximum_c_code <lgl>, minimum_daily_maximum_c_date <date>, minimum_daily_maximum_c_date_code <lgl>, maximum_daily_minimum_c <dbl>, …
 
 See the [Getting
 Started](https://docs.ropensci.org/weathercan/articles/weathercan.html)
@@ -360,7 +358,7 @@ contributing](CONTRIBUTING.md)
 
 All contributions to this project are gratefully acknowledged using the
 [`allcontributors` package](https://github.com/ropensci/allcontributors)
-following the [all-contributors](https://allcontributors.org)
+following the [allcontributors](https://allcontributors.org)
 specification. Contributions of any kind are welcome!
 
 ### Code
@@ -383,6 +381,14 @@ specification. Contributions of any kind are welcome!
 <img src="https://avatars.githubusercontent.com/u/18472598?v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/commits?author=boshek">boshek</a>
+</td>
+
+<td align="center">
+
+<a href="https://github.com/mustberuss">
+<img src="https://avatars.githubusercontent.com/u/14958432?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/commits?author=mustberuss">mustberuss</a>
 </td>
 
 <td align="center">
@@ -417,6 +423,18 @@ specification. Contributions of any kind are welcome!
 <a href="https://github.com/ropensci/weathercan/commits?author=mciechanumich">mciechanumich</a>
 </td>
 
+</tr>
+
+<tr>
+
+<td align="center">
+
+<a href="https://github.com/mahjabinoyshi">
+<img src="https://avatars.githubusercontent.com/u/197597579?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/commits?author=mahjabinoyshi">mahjabinoyshi</a>
+</td>
+
 <td align="center">
 
 <a href="https://github.com/jeroen">
@@ -425,9 +443,13 @@ specification. Contributions of any kind are welcome!
 <a href="https://github.com/ropensci/weathercan/commits?author=jeroen">jeroen</a>
 </td>
 
-</tr>
+<td align="center">
 
-<tr>
+<a href="https://github.com/joshpersi">
+<img src="https://avatars.githubusercontent.com/u/38633218?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/commits?author=joshpersi">joshpersi</a>
+</td>
 
 <td align="center">
 
@@ -444,6 +466,26 @@ specification. Contributions of any kind are welcome!
 </a><br>
 <a href="https://github.com/ropensci/weathercan/commits?author=shandiya">shandiya</a>
 </td>
+
+<td align="center">
+
+<a href="https://github.com/everettsp">
+<img src="https://avatars.githubusercontent.com/u/24480376?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/commits?author=everettsp">everettsp</a>
+</td>
+
+<td align="center">
+
+<a href="https://github.com/farhanreynaldo">
+<img src="https://avatars.githubusercontent.com/u/8732795?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/commits?author=farhanreynaldo">farhanreynaldo</a>
+</td>
+
+</tr>
+
+<tr>
 
 <td align="center">
 
@@ -466,7 +508,7 @@ specification. Contributions of any kind are welcome!
 <td align="center">
 
 <a href="https://github.com/paleolimbot">
-<img src="https://avatars.githubusercontent.com/u/10995762?u=964d5dc69b45b5f96975903f08c42457b3b6f8bb&v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/10995762?u=e59fac54d0c9e857e0740e63579a7a10df3acf24&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Apaleolimbot">paleolimbot</a>
 </td>
@@ -490,7 +532,7 @@ specification. Contributions of any kind are welcome!
 <td align="center">
 
 <a href="https://github.com/durraniu">
-<img src="https://avatars.githubusercontent.com/u/7092652?u=35c3f6ca06e50fae23addf2ea0530dd0ea3c619b&v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/7092652?u=39e2ddc26666c054fec46b0a43e8f3b3e51ff57a&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Adurraniu">durraniu</a>
 </td>
@@ -506,7 +548,7 @@ specification. Contributions of any kind are welcome!
 <td align="center">
 
 <a href="https://github.com/adamhsparks">
-<img src="https://avatars.githubusercontent.com/u/3195906?u=ff1ca92ae028fe7eb18d006f92cb8a725625e69c&v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/3195906?u=5d16842aa4ede1ddaa8911e126cc57b76ff22255&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Aadamhsparks">adamhsparks</a>
 </td>
@@ -534,7 +576,7 @@ specification. Contributions of any kind are welcome!
 <td align="center">
 
 <a href="https://github.com/essicolo">
-<img src="https://avatars.githubusercontent.com/u/5118227?u=998bb82ad723f4a34d26337184270105d45065c5&v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/5118227?u=96e19b82af1f2cfcfbfd1a108ce2434b279f8079&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Aessicolo">essicolo</a>
 </td>
@@ -738,7 +780,7 @@ specification. Contributions of any kind are welcome!
 <td align="center">
 
 <a href="https://github.com/gilberto-sassi">
-<img src="https://avatars.githubusercontent.com/u/47753866?u=be2874420e4d6c3d6690a62e1ecf8dec8a6bae26&v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/47753866?u=9584d0785aadf5034aaf35be1c34dbd60ec8c877&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Agilberto-sassi">gilberto-sassi</a>
 </td>
@@ -751,49 +793,86 @@ specification. Contributions of any kind are welcome!
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Abusmansholiday">busmansholiday</a>
 </td>
 
-<tr>
 <td align="center">
+
+<a href="https://github.com/gdelaplante">
+<img src="https://avatars.githubusercontent.com/u/91148465?u=5ea48bdcf7c6f467924e89069d3c4697bb6342dc&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Agdelaplante">gdelaplante</a>
+</td>
+
+</tr>
+
+<tr>
+
+<td align="center">
+
 <a href="https://github.com/JBauerPower">
 <img src="https://avatars.githubusercontent.com/u/147277460?v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3AJBauerPower">JBauerPower</a>
 </td>
+
 <td align="center">
+
 <a href="https://github.com/x22925580-commits">
 <img src="https://avatars.githubusercontent.com/u/242810550?u=4d778bfc33f734c22bbc53428ed06a998e7319b0&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Ax22925580-commits">x22925580-commits</a>
 </td>
+
 <td align="center">
+
 <a href="https://github.com/zacharybelisle">
 <img src="https://avatars.githubusercontent.com/u/205228980?v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Azacharybelisle">zacharybelisle</a>
 </td>
+
 <td align="center">
+
 <a href="https://github.com/ryanthrendyle-work">
 <img src="https://avatars.githubusercontent.com/u/254770210?v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Aryanthrendyle-work">ryanthrendyle-work</a>
 </td>
+
 <td align="center">
+
 <a href="https://github.com/BraveCapricon">
 <img src="https://avatars.githubusercontent.com/u/124315780?v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3ABraveCapricon">BraveCapricon</a>
 </td>
+
 <td align="center">
+
 <a href="https://github.com/Quan-Cui">
 <img src="https://avatars.githubusercontent.com/u/86018749?u=95ea4030bf73fc222cfeba7c246555bea62f6dbc&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3AQuan-Cui">Quan-Cui</a>
 </td>
+
 <td align="center">
+
 <a href="https://github.com/mohamedsmabdelhamed-stack">
 <img src="https://avatars.githubusercontent.com/u/275818807?v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Amohamedsmabdelhamed-stack">mohamedsmabdelhamed-stack</a>
 </td>
+
+</tr>
+
+<tr>
+
+<td align="center">
+
+<a href="https://github.com/alex-koiter">
+<img src="https://avatars.githubusercontent.com/u/19999020?u=20b660be0038fcd1f9da8f6ff59d45ca151b97e9&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+author%3Aalex-koiter">alex-koiter</a>
+</td>
+
 </tr>
 
 </table>
@@ -847,7 +926,7 @@ specification. Contributions of any kind are welcome!
 <td align="center">
 
 <a href="https://github.com/salix-d">
-<img src="https://avatars.githubusercontent.com/u/31168746?u=bdf7cc91649a046d6b6b159d153ac37557954c64&v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/31168746?v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+commenter%3Asalix-d">salix-d</a>
 </td>
@@ -855,9 +934,37 @@ specification. Contributions of any kind are welcome!
 <td align="center">
 
 <a href="https://github.com/wgieni">
-<img src="https://avatars.githubusercontent.com/u/38118614?v=4" width="100px;" alt=""/>
+<img src="https://avatars.githubusercontent.com/u/38118614?u=7a28ed517ee2ce279a06617ee858132ae8bbb72a&v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+commenter%3Awgieni">wgieni</a>
+</td>
+
+</tr>
+
+<tr>
+
+<td align="center">
+
+<a href="https://github.com/tanmaydimriGSOC">
+<img src="https://avatars.githubusercontent.com/u/105608756?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+commenter%3AtanmaydimriGSOC">tanmaydimriGSOC</a>
+</td>
+
+<td align="center">
+
+<a href="https://github.com/EmmaGRiley">
+<img src="https://avatars.githubusercontent.com/u/132517733?u=c2e80b5e8bd790206e726098d803632d0234db54&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+commenter%3AEmmaGRiley">EmmaGRiley</a>
+</td>
+
+<td align="center">
+
+<a href="https://github.com/egdevoie">
+<img src="https://avatars.githubusercontent.com/u/52979477?u=5b3ff7314872530433984e6c7fdd765927a91152&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropensci/weathercan/issues?q=is%3Aissue+commenter%3Aegdevoie">egdevoie</a>
 </td>
 
 </tr>
@@ -869,6 +976,5 @@ specification. Contributions of any kind are welcome!
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
-
 
 [![ropensci_footer](http://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)
