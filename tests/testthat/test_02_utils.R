@@ -64,7 +64,7 @@ test_that("check_eccc() as expected", {
   expect_type(check_eccc(), "logical")
 
   # Expect FALSE if on cran
-  withr::with_options(list(NOT_CRAN = ""), {
+  withr::with_envvar(c(NOT_CRAN = ""), {
     expect_false(check_eccc())
   })
 
