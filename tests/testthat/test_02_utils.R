@@ -64,10 +64,12 @@ test_that("check_eccc() as expected", {
   expect_type(check_eccc(), "logical")
 
   # Expect FALSE if on cran
-  if (Sys.getenv("NOT_CRAN") == "") {
+  withr::with_options(list(NOT_CRAN = ""), {
     expect_false(check_eccc())
-  }
+  })
 
   skip_if_offline()
-  if (Sys.getenv("NOT_CRAN") == TRUE) expect_true(check_eccc())
+  withr::with_envvar(c(NOT_CRAN = TRUE), {
+    expect_true(check_eccc())
+  })
 })

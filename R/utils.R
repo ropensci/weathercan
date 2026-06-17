@@ -115,7 +115,15 @@ min_na <- function(..., na.rm = TRUE) {
 #' check_eccc()
 
 check_eccc <- function() {
-  (Sys.getenv("NOT_CRAN") == "" || isTRUE(Sys.getenv("NOT_CRAN"))) &&
+  # Based on testthat:::on_cran
+  not_cran <- Sys.getenv("NOT_CRAN")
+  on_cran <- if (not_cran == "") {
+    !interactive()
+  } else {
+    !isTRUE(as.logical(not_cran))
+  }
+
+  !on_cran &&
     is_up(getOption("weathercan.urls.weather")) &&
     is_up("https://climate.weather.gc.ca")
 }
