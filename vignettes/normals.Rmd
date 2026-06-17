@@ -1,7 +1,6 @@
 ---
 title: "Climate Normals"
-author: "Steffi LaZerte"
-date: "2025-07-25"
+date: "2026-06-16"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Climate Normals}
@@ -25,11 +24,9 @@ library(dplyr)
 library(naniar) # For exploring missing values
 ```
 
-```
-## Error in library(naniar): there is no package called 'naniar'
-```
+### Downloading current normals (1991-2020)
 
-To download climate normals, we'll first find the stations we're interested in using the `stations_search()` function. We'll use the `normals_years = "current"` argument to filter to only stations with available climate normals for the `1981-2010` year range.
+To download climate normals, we'll first find the stations we're interested in using the `stations_search()` function. We'll use the `normals_years = "current"` argument to filter to only stations with the most recent available climate normals, `1991-2020`.
 
 
 ``` r
@@ -37,17 +34,304 @@ stations_search("Winnipeg", normals_years = "current")
 ```
 
 ```
-## # A tibble: 1 × 14
-##   prov  station_name    station_id climate_id WMO_id TC_id   lat   lon  elev tz    normals
-##   <chr> <chr>                <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr> <lgl>  
-## 1 MB    WINNIPEG RICHA…       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… TRUE
+## The most current normals available for download by weathercan are '1991-2020'
 ```
 
-Let's look at the climate normals from this station in Winnipeg, MB. Note that unlike the `weather_dl()` function, the `normals_dl()` function requires `climate_id` not `station_id`. By default the normals are downloaded for the years "1981-2010" (currently 1981-2010 and 1971-2000 are the only year ranges available)
+```
+## # A tibble: 10 × 17
+##    prov  station_name  station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval
+##    <chr> <chr>              <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr> <fct>   
+##  1 MB    WINNIPEG A CS      27174 502S001     71849 XWG    49.9 -97.2  239. Etc/… hour    
+##  2 MB    WINNIPEG A CS      27174 502S001     71849 XWG    49.9 -97.2  239. Etc/… day     
+##  3 MB    WINNIPEG A CS      27174 502S001     71849 XWG    49.9 -97.2  239. Etc/… month   
+##  4 MB    WINNIPEG INT…      51097 5023227        NA YWG    49.9 -97.2  239. Etc/… hour    
+##  5 MB    WINNIPEG INT…      51097 5023227        NA YWG    49.9 -97.2  239. Etc/… day     
+##  6 MB    WINNIPEG RIC…      47407 5023226     71852 YWG    49.9 -97.2  239. Etc/… hour    
+##  7 MB    WINNIPEG RIC…      47407 5023226     71852 YWG    49.9 -97.2  239. Etc/… day     
+##  8 MB    WINNIPEG RIC…       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… hour    
+##  9 MB    WINNIPEG RIC…       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… day     
+## 10 MB    WINNIPEG RIC…       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… month
+```
+
+Let's look at the climate normals from one of these stations in Winnipeg, MB. Note that unlike the `weather_dl()` function, the `normals_dl()` function requires `climate_id`, not `station_id`.
+
+In contrast to previous climate normals the most recent normals are provided as a single
+download from ECCC which is stored in a local data cache, and then referenced by `normals_dl()`.
+
+If you haven't already created a cache folder, weathercan will prompt you to do so.
+Otherwise `normals_dl()` will load, format and filter the cached data to the climate ids specified.
 
 
 ``` r
 n <- normals_dl(climate_ids = "5023222")
+```
+
+```
+## The most current normals available for download by weathercan are '1991-2020'
+## Using composite locations: WINNIPEG RICHARDSON (AIRPORT)
+```
+
+``` r
+n
+```
+
+```
+## # A tibble: 26 × 313
+##    location_name          prov  composite_stations period_of_record period daily_average_c
+##    <chr>                  <chr> <chr>              <chr>            <chr>            <dbl>
+##  1 WINNIPEG RICHARDSON (… MB    WINNIPEG A CS (50… Normal           Jan              -16.3
+##  2 WINNIPEG RICHARDSON (… MB    WINNIPEG A CS (50… Normal           Feb              -14.1
+##  3 WINNIPEG RICHARDSON (… MB    WINNIPEG A CS (50… Normal           Mar               -6.1
+##  4 WINNIPEG RICHARDSON (… MB    WINNIPEG A CS (50… Normal           Apr                3.8
+##  5 WINNIPEG RICHARDSON (… MB    WINNIPEG A CS (50… Normal           May               11.1
+##  6 WINNIPEG RICHARDSON (… MB    WINNIPEG A CS (50… Normal           Jun               17.1
+##  7 WINNIPEG RICHARDSON (… MB    WINNIPEG A CS (50… Normal           Jul               19.5
+##  8 WINNIPEG RICHARDSON (… MB    WINNIPEG A CS (50… Normal           Aug               18.7
+##  9 WINNIPEG RICHARDSON (… MB    WINNIPEG A CS (50… Normal           Sep               13.3
+## 10 WINNIPEG RICHARDSON (… MB    WINNIPEG A CS (50… Normal           Oct                5.1
+## # ℹ 16 more rows
+```
+
+The more recent climate normals actually reflect composite stations. 
+Stations included are stored in the `composite_stations` column.
+
+
+``` r
+n$composite_stations[1]
+```
+
+```
+## [1] "WINNIPEG A CS (502S001); WINNIPEG INTL A (5023227); WINNIPEG RICHARDSON AWOS (5023226); WINNIPEG RICHARDSON INT'L A (5023222)"
+```
+
+So we can see that these climate normals are actually composed of several different
+stations mostly from the Airport.
+
+Once you have used `normals_dl()` and have downloaded and cached the normals data,
+you can also access the original, cached, data from ECCC.
+
+
+``` r
+library(readr)
+normals_file() # Location of the cached data (if you've downloaded it!)
+```
+
+```
+## [1] "~/.local/share/weathercan/1991-2020_Canadian_Climate_Normals_CANADA_Data.csv"
+```
+
+``` r
+n_orig <- read_csv(normals_file())
+```
+
+```
+## Rows: 69068 Columns: 19
+## ── Column specification ──────────────────────────────────────────────────────────────────
+## Delimiter: ","
+## chr (19): LOCATION_NAME, PROVINCE_OR_TERRITORY, PERIOD_OF_RECORD, ELEMENT_GROUP, NORMA...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+```
+
+``` r
+n_orig
+```
+
+```
+## # A tibble: 69,068 × 19
+##    LOCATION_NAME PROVINCE_OR_TERRITORY PERIOD_OF_RECORD ELEMENT_GROUP NORMALS_ELEMENT     
+##    <chr>         <chr>                 <chr>            <chr>         <chr>               
+##  1 BANFF         AB                    Normal           Temperature   Daily Average (°C)  
+##  2 BANFF         AB                    Normal           Temperature   StdDev Mean Monthly…
+##  3 BANFF         AB                    Normal           Temperature   Daily Maximum (°C)  
+##  4 BANFF         AB                    Normal           Temperature   Daily Minimum (°C)  
+##  5 BANFF         AB                    Normal           Temperature   Maximum Daily Mean …
+##  6 BANFF         AB                    Normal           Temperature   Maximum Daily Mean …
+##  7 BANFF         AB                    Normal           Temperature   Minimum Daily Mean …
+##  8 BANFF         AB                    Normal           Temperature   Minimum Daily Mean …
+##  9 BANFF         AB                    Normal           Temperature   Extreme Maximum (°C)
+## 10 BANFF         AB                    Normal           Temperature   Extreme Maximum (°C…
+## # ℹ 69,058 more rows
+```
+
+You can also pre-select specific measurements by `measurement_type` (also called ELEMENT GROUP by ECCC). These must be one of those listed in the `normals_measurement_types` data frame.
+
+
+``` r
+normals_measurement_types
+```
+
+```
+## # A tibble: 158 × 3
+##    normals   measurement_type measurement                      
+##    <chr>     <chr>            <chr>                            
+##  1 1991-2020 Temperature      daily_average_c                  
+##  2 1991-2020 Temperature      stddev_mean_monthly_temperature_c
+##  3 1991-2020 Temperature      daily_maximum_c                  
+##  4 1991-2020 Temperature      daily_minimum_c                  
+##  5 1991-2020 Temperature      maximum_daily_mean_c             
+##  6 1991-2020 Temperature      maximum_daily_mean_c_date        
+##  7 1991-2020 Temperature      minimum_daily_mean_c             
+##  8 1991-2020 Temperature      minimum_daily_mean_c_date        
+##  9 1991-2020 Temperature      extreme_maximum_c                
+## 10 1991-2020 Temperature      extreme_maximum_c_date           
+## # ℹ 148 more rows
+```
+
+``` r
+unique(normals_measurement_types$measurement_type)
+```
+
+```
+##  [1] "Temperature"                   "Precipitation"                
+##  [3] "Days with Maximum Temperature" "Days with Minimum Temperature"
+##  [5] "Days with Rainfall"            "Days with Snowfall"           
+##  [7] "Days with Precipitation"       "Days with Snow Depth"         
+##  [9] "Wind"                          "Degree Days"                  
+## [11] "Quintiles"                     "Humidex"                      
+## [13] "Wind Chill"                    "Humidity"                     
+## [15] "Pressure"                      "Frost-Free"                   
+## [17] "Days With ..."                 "Visibility"                   
+## [19] "Cloud Amount"                  "Snow-Period"
+```
+
+``` r
+filter(normals_measurement_types, measurement_type == "Wind Chill")
+```
+
+```
+## # A tibble: 6 × 3
+##   normals   measurement_type measurement              
+##   <chr>     <chr>            <chr>                    
+## 1 1991-2020 Wind Chill       days_with_wind_chill_<_20
+## 2 1991-2020 Wind Chill       days_with_wind_chill_<_30
+## 3 1991-2020 Wind Chill       days_with_wind_chill_<_40
+## 4 1991-2020 Wind Chill       days_with_wind_chill_<_50
+## 5 1991-2020 Wind Chill       extreme_wind_chill       
+## 6 1991-2020 Wind Chill       extreme_wind_chill_date
+```
+
+``` r
+filter(normals_measurement_types, measurement_type == "Temperature")
+```
+
+```
+## # A tibble: 16 × 3
+##    normals   measurement_type measurement                      
+##    <chr>     <chr>            <chr>                            
+##  1 1991-2020 Temperature      daily_average_c                  
+##  2 1991-2020 Temperature      stddev_mean_monthly_temperature_c
+##  3 1991-2020 Temperature      daily_maximum_c                  
+##  4 1991-2020 Temperature      daily_minimum_c                  
+##  5 1991-2020 Temperature      maximum_daily_mean_c             
+##  6 1991-2020 Temperature      maximum_daily_mean_c_date        
+##  7 1991-2020 Temperature      minimum_daily_mean_c             
+##  8 1991-2020 Temperature      minimum_daily_mean_c_date        
+##  9 1991-2020 Temperature      extreme_maximum_c                
+## 10 1991-2020 Temperature      extreme_maximum_c_date           
+## 11 1991-2020 Temperature      minimum_daily_maximum_c          
+## 12 1991-2020 Temperature      minimum_daily_maximum_c_date     
+## 13 1991-2020 Temperature      maximum_daily_minimum_c          
+## 14 1991-2020 Temperature      maximum_daily_minimum_c_date     
+## 15 1991-2020 Temperature      extreme_minimum_c                
+## 16 1991-2020 Temperature      extreme_minimum_c_date
+```
+
+You can supply these to `normals_dl` to return normals with only these measurements.
+
+``` r
+n <- normals_dl(
+  climate_ids = "5023222",
+  measurement_type = c("Wind Chill", "Temperature")
+)
+```
+
+```
+## The most current normals available for download by weathercan are '1991-2020'
+## Using composite locations: WINNIPEG RICHARDSON (AIRPORT)
+```
+
+``` r
+glimpse(n)
+```
+
+```
+## Rows: 26
+## Columns: 49
+## $ location_name                          <chr> "WINNIPEG RICHARDSON (AIRPORT)", "WINNIPE…
+## $ prov                                   <chr> "MB", "MB", "MB", "MB", "MB", "MB", "MB",…
+## $ composite_stations                     <chr> "WINNIPEG A CS (502S001); WINNIPEG INTL A…
+## $ period_of_record                       <chr> "Normal", "Normal", "Normal", "Normal", "…
+## $ period                                 <chr> "Jan", "Feb", "Mar", "Apr", "May", "Jun",…
+## $ daily_average_c                        <dbl> -16.3, -14.1, -6.1, 3.8, 11.1, 17.1, 19.5…
+## $ daily_average_c_code                   <chr> "A", "A", "A", "A", "A", "A", "A", "A", "…
+## $ stddev_mean_monthly_temperature_c      <dbl> 3.6, 4.0, 3.7, 2.9, 1.9, 1.5, 1.4, 1.5, 1…
+## $ stddev_mean_monthly_temperature_c_code <chr> "A", "A", "A", "A", "A", "A", "A", "A", "…
+## $ daily_maximum_c                        <dbl> -11.4, -8.8, -0.9, 10.0, 18.1, 23.3, 25.8…
+## $ daily_maximum_c_code                   <chr> "A", "A", "A", "A", "A", "A", "A", "A", "…
+## $ daily_minimum_c                        <dbl> -21.2, -19.3, -11.2, -2.5, 4.2, 10.9, 13.…
+## $ daily_minimum_c_code                   <chr> "A", "A", "A", "A", "A", "A", "A", "A", "…
+## $ maximum_daily_mean_c                   <dbl> 2.5, 3.5, 18.5, 19.7, 26.3, 30.9, 28.8, 3…
+## $ maximum_daily_mean_c_code              <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ maximum_daily_mean_c_date              <date> 2003-01-07, 2000-02-25, 2012-03-19, 2001…
+## $ maximum_daily_mean_c_date_code         <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ minimum_daily_mean_c                   <dbl> -36.3, -38.6, -31.5, -15.6, -3.4, 4.6, 11…
+## $ minimum_daily_mean_c_code              <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ minimum_daily_mean_c_date              <date> 2004-01-29, 1996-02-01, 2014-03-01, 1996…
+## $ minimum_daily_mean_c_date_code         <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ extreme_maximum_c                      <dbl> 6.7, 9.0, 23.7, 28.3, 35.2, 37.8, 35.9, 3…
+## $ extreme_maximum_c_code                 <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ extreme_maximum_c_date                 <date> 2012-01-05, 2000-02-28, 2012-03-19, 2001…
+## $ extreme_maximum_c_date_code            <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ minimum_daily_maximum_c                <dbl> -32.0, -35.3, -26.0, -11.6, 0.2, 10.0, 13…
+## $ minimum_daily_maximum_c_code           <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ minimum_daily_maximum_c_date           <date> 2004-01-29, 1996-02-01, 2014-03-01, 1997…
+## $ minimum_daily_maximum_c_date_code      <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ maximum_daily_minimum_c                <dbl> 0.9, 1.8, 13.3, 12.3, 20.2, 24.0, 22.8, 2…
+## $ maximum_daily_minimum_c_code           <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ maximum_daily_minimum_c_date           <date> 2017-01-21, 2000-02-25, 2012-03-19, 1991…
+## $ maximum_daily_minimum_c_date_code      <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ extreme_minimum_c                      <dbl> -41.0, -41.8, -37.4, -22.9, -10.3, -4.6, …
+## $ extreme_minimum_c_code                 <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ extreme_minimum_c_date                 <date> 2004-01-30, 1996-02-01, 2003-03-02, 1996…
+## $ extreme_minimum_c_date_code            <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ `days_with_wind_chill_<_20`            <dbl> 24.2, 21.0, 11.8, 1.2, 0.0, 0.0, 0.0, 0.0…
+## $ `days_with_wind_chill_<_20_code`       <chr> "A", "A", "A", "A", "A", "A", "A", "A", "…
+## $ `days_with_wind_chill_<_30`            <dbl> 16.50, 12.10, 3.90, 0.03, 0.00, 0.00, 0.0…
+## $ `days_with_wind_chill_<_30_code`       <chr> "A", "A", "A", "A", "A", "A", "A", "A", "…
+## $ `days_with_wind_chill_<_40`            <dbl> 5.90, 2.70, 0.52, 0.00, 0.00, 0.00, 0.00,…
+## $ `days_with_wind_chill_<_40_code`       <chr> "A", "A", "A", "A", "A", "A", "A", "A", "…
+## $ `days_with_wind_chill_<_50`            <dbl> 0.34, 0.14, 0.00, 0.00, 0.00, 0.00, 0.00,…
+## $ `days_with_wind_chill_<_50_code`       <chr> "A", "A", "A", "A", "A", "A", "A", "A", "…
+## $ extreme_wind_chill                     <dbl> -54.1, -57.1, -49.4, -30.3, -15.4, -7.9, …
+## $ extreme_wind_chill_code                <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ extreme_wind_chill_date                <date> 2004-01-29, 1996-02-01, 2014-03-01, 1995…
+## $ extreme_wind_chill_date_code           <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+```
+
+
+### Downloading previous normals (1981-2010 and 1971-2000)
+
+Similar to current normals, we first find the stations and then download the normals.
+The main difference is specifying that we want older normals, and then dealing with the different format these normals come in. 
+
+
+``` r
+stations_search("Winnipeg", normals_years = "1981-2010")
+```
+
+```
+## # A tibble: 3 × 17
+##   prov  station_name   station_id climate_id WMO_id TC_id   lat   lon  elev tz    interval
+##   <chr> <chr>               <dbl> <chr>       <dbl> <chr> <dbl> <dbl> <dbl> <chr> <fct>   
+## 1 MB    WINNIPEG RICH…       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… hour    
+## 2 MB    WINNIPEG RICH…       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… day     
+## 3 MB    WINNIPEG RICH…       3698 5023222     71852 YWG    49.9 -97.2  239. Etc/… month
+```
+
+``` r
+n <- normals_dl(climate_ids = "5023222", normals_years = "1981-2010")
 n
 ```
 
@@ -58,7 +342,10 @@ n
 ## 1 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> <tibble>
 ```
 
-Because there are two different types of climate normals (weather measurements and first/last frost dates), the data are nested as two different datasets. We can see that the Airport (Richardson Int'l) has 197 average weather measurements/codes as well as first/last frost dates.
+In older climate normals, there are two different data formats (one for weather measurements and one for first/last frost dates). 
+Therefore, the data are nested as two different datasets. We can see that the Airport (Richardson Int'l) has 197 average weather measurements/codes as well as first/last frost dates.
+
+Note that these older normals do not use composite stations.
 
 We can also see that this station has data quality sufficient to meet the WMO standards for temperature and precipitation (i.e. both these measurements have code >= A). See the [ECCC calculations document](https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf) for more details.
 
@@ -96,52 +383,30 @@ normals
 ## 13 MB    WINNIPEG RICHARDSON… 5023222    1981-2010     TRUE      Year                  3
 ```
 
-To visualize missing data we can use the `gg_miss_var()` function from the `naniar` package.
-
-``` r
-select(normals, -contains("_code")) %>%  # Remove '_code' columns
-  gg_miss_var(facet = station_name)
-```
-
-
-``` r
-suppressWarnings({select(normals, -contains("_code")) %>%  # Remove '_code' columns
-    gg_miss_var(facet = station_name)})
-```
-
-```
-## Error in gg_miss_var(., facet = station_name): could not find function "gg_miss_var"
-```
 
 Let's take a look at the frost data.
 
 
 ``` r
-if("normals" %in% names(frost)) frost <- select(frost, -normals) # tidyr v1
-glimpse(frost)
+frost
 ```
 
 ```
-## Rows: 7
-## Columns: 13
-## $ prov                                  <chr> "MB", "MB", "MB", "MB", "MB", "MB", "MB"
-## $ station_name                          <chr> "WINNIPEG RICHARDSON INT'L A", "WINNIPEG R…
-## $ climate_id                            <chr> "5023222", "5023222", "5023222", "5023222"…
-## $ normals_years                         <chr> "1981-2010", "1981-2010", "1981-2010", "19…
-## $ meets_wmo                             <lgl> TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE
-## $ frost_code                            <chr> "A", "A", "A", "A", "A", "A", "A"
-## $ date_first_fall_frost                 <dbl> 265, 265, 265, 265, 265, 265, 265
-## $ date_last_spring_frost                <dbl> 143, 143, 143, 143, 143, 143, 143
-## $ length_frost_free                     <dbl> 121, 121, 121, 121, 121, 121, 121
-## $ prob                                  <chr> "10%", "25%", "33%", "50%", "66%", "75%", …
-## $ prob_last_spring_temp_below_0_on_date <dbl> 158, 152, 148, 144, 140, 137, 129
-## $ prob_first_fall_temp_below_0_on_date  <dbl> 255, 259, 261, 265, 268, 270, 276
-## $ prob_length_frost_free                <dbl> 96, 109, 114, 119, 126, 129, 141
+## # A tibble: 7 × 14
+##   prov  station_name                climate_id normals_years meets_wmo normals  frost_code
+##   <chr> <chr>                       <chr>      <chr>         <lgl>     <list>   <chr>     
+## 1 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A         
+## 2 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A         
+## 3 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A         
+## 4 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A         
+## 5 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A         
+## 6 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A         
+## 7 MB    WINNIPEG RICHARDSON INT'L A 5023222    1981-2010     TRUE      <tibble> A
 ```
 
-### Finding stations with specific measurements
+## Finding stations with specific measurements
 
-The include data frame, `normals_measurements` contains a list of stations with their corresponding measurements. Be aware that this data might be out of date!
+The included data frame, `normals_measurements` contains a list of stations with their corresponding measurements. Be aware that this data might be out of date!
 
 
 ``` r
@@ -149,38 +414,93 @@ normals_measurements
 ```
 
 ```
-## # A tibble: 307,891 × 5
-##    prov  station_name climate_id normals   measurement            
-##    <chr> <chr>        <chr>      <chr>     <chr>                  
-##  1 AB    HORBURG      301C3D4    1981-2010 temp_daily_average     
-##  2 AB    HORBURG      301C3D4    1981-2010 temp_daily_average_code
-##  3 AB    HORBURG      301C3D4    1981-2010 temp_sd                
-##  4 AB    HORBURG      301C3D4    1981-2010 temp_sd_code           
-##  5 AB    HORBURG      301C3D4    1981-2010 temp_daily_max         
-##  6 AB    HORBURG      301C3D4    1981-2010 temp_daily_max_code    
-##  7 AB    HORBURG      301C3D4    1981-2010 temp_daily_min         
-##  8 AB    HORBURG      301C3D4    1981-2010 temp_daily_min_code    
-##  9 AB    HORBURG      301C3D4    1981-2010 temp_extreme_max       
-## 10 AB    HORBURG      301C3D4    1981-2010 temp_extreme_max_code  
-## # ℹ 307,881 more rows
+## # A tibble: 376,959 × 6
+##    prov  station_name climate_id                normals   measurement_type measurement    
+##    <chr> <chr>        <chr>                     <chr>     <chr>            <chr>          
+##  1 AB    BANFF        3050520, 3050521, 3050519 1991-2020 Temperature      daily_average_c
+##  2 AB    BANFF        3050520, 3050521, 3050519 1991-2020 Temperature      stddev_mean_mo…
+##  3 AB    BANFF        3050520, 3050521, 3050519 1991-2020 Temperature      daily_maximum_c
+##  4 AB    BANFF        3050520, 3050521, 3050519 1991-2020 Temperature      daily_minimum_c
+##  5 AB    BANFF        3050520, 3050521, 3050519 1991-2020 Temperature      maximum_daily_…
+##  6 AB    BANFF        3050520, 3050521, 3050519 1991-2020 Temperature      maximum_daily_…
+##  7 AB    BANFF        3050520, 3050521, 3050519 1991-2020 Temperature      minimum_daily_…
+##  8 AB    BANFF        3050520, 3050521, 3050519 1991-2020 Temperature      minimum_daily_…
+##  9 AB    BANFF        3050520, 3050521, 3050519 1991-2020 Temperature      extreme_maximu…
+## 10 AB    BANFF        3050520, 3050521, 3050519 1991-2020 Temperature      extreme_maximu…
+## # ℹ 376,949 more rows
 ```
 
+Because the new climate normals are so different from previous years, they include different `measurements` which are 
+organized by `measurement_type`. In older normals years, `measurement_type` is `NA`.
+
 For example, if you wanted all `climate_id`s for stations that have data on
-soil temperature for 1981-2010 normals:
+temperature for 1991-2020 normals:
 
 
 ``` r
-normals_measurements %>%
-  filter(stringr::str_detect(measurement, "soil"),
-         normals == "1981-2010") %>%
-  pull(climate_id) %>%
-  unique()
+library(stringr) # text pattern matching
+
+# Have a quick look
+normals_measurements |>
+  filter(str_detect(measurement_type, "Temp"), normals == "1991-2020")
 ```
 
 ```
-##  [1] "3070560" "1100119" "112G8L1" "5021054" "5021848" "8102234" "8403600" "8501900"
-##  [9] "8502800" "8202800" "8205990" "2403500" "6073960" "6104025" "6105976" "7040440"
-## [17] "7042388" "4012400" "4019035" "4028060" "4043900" "4075518"
+## # A tibble: 21,528 × 6
+##    prov  station_name climate_id                normals   measurement_type measurement    
+##    <chr> <chr>        <chr>                     <chr>     <chr>            <chr>          
+##  1 AB    BANFF        3050520, 3050521, 3050519 1991-2020 Temperature      daily_average_c
+##  2 AB    BANFF        3050520, 3050521, 3050519 1991-2020 Temperature      stddev_mean_mo…
+##  3 AB    BANFF        3050520, 3050521, 3050519 1991-2020 Temperature      daily_maximum_c
+##  4 AB    BANFF        3050520, 3050521, 3050519 1991-2020 Temperature      daily_minimum_c
+##  5 AB    BANFF        3050520, 3050521, 3050519 1991-2020 Temperature      maximum_daily_…
+##  6 AB    BANFF        3050520, 3050521, 3050519 1991-2020 Temperature      maximum_daily_…
+##  7 AB    BANFF        3050520, 3050521, 3050519 1991-2020 Temperature      minimum_daily_…
+##  8 AB    BANFF        3050520, 3050521, 3050519 1991-2020 Temperature      minimum_daily_…
+##  9 AB    BANFF        3050520, 3050521, 3050519 1991-2020 Temperature      extreme_maximu…
+## 10 AB    BANFF        3050520, 3050521, 3050519 1991-2020 Temperature      extreme_maximu…
+## # ℹ 21,518 more rows
+```
+
+``` r
+ids <- normals_measurements |>
+  filter(str_detect(measurement_type, "Temp"), normals == "1991-2020") |>
+  pull(climate_id) |>
+  unique()
+```
+
+Alternatively, if you wanted all `climate_id`s for stations that have data on
+soil temperature for 1981-2010 normals (which is no longer available in the 1991-2020 normals):
+
+
+``` r
+# Have a quick look
+normals_measurements |>
+  filter(stringr::str_detect(measurement, "soil"), normals == "1981-2010")
+```
+
+```
+## # A tibble: 314 × 6
+##    prov  station_name    climate_id normals   measurement_type measurement          
+##    <chr> <chr>           <chr>      <chr>     <chr>            <chr>                
+##  1 AB    BEAVERLODGE CDA 3070560    1981-2010 <NA>             soil_temp_am_5       
+##  2 AB    BEAVERLODGE CDA 3070560    1981-2010 <NA>             soil_temp_am_5_code  
+##  3 AB    BEAVERLODGE CDA 3070560    1981-2010 <NA>             soil_temp_am_10      
+##  4 AB    BEAVERLODGE CDA 3070560    1981-2010 <NA>             soil_temp_am_10_code 
+##  5 AB    BEAVERLODGE CDA 3070560    1981-2010 <NA>             soil_temp_am_20      
+##  6 AB    BEAVERLODGE CDA 3070560    1981-2010 <NA>             soil_temp_am_20_code 
+##  7 AB    BEAVERLODGE CDA 3070560    1981-2010 <NA>             soil_temp_am_50      
+##  8 AB    BEAVERLODGE CDA 3070560    1981-2010 <NA>             soil_temp_am_50_code 
+##  9 AB    BEAVERLODGE CDA 3070560    1981-2010 <NA>             soil_temp_am_100     
+## 10 AB    BEAVERLODGE CDA 3070560    1981-2010 <NA>             soil_temp_am_100_code
+## # ℹ 304 more rows
+```
+
+``` r
+ids <- normals_measurements |>
+  filter(stringr::str_detect(measurement, "soil"), normals == "1981-2010") |>
+  pull(climate_id) |>
+  unique()
 ```
 
 ## Understanding Climate Normals
@@ -190,7 +510,7 @@ The measurements contained in the climate normals are very specific. To better u
 - ECCC Climate Normals Calculations ([1991-2020](https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1991_2020_Calculation_Information.pdf) | ([1981-2010](https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf) | [1971-2000](https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1971_2000_Calculation_Information.pdf))
     - [`weathercan` Climate Normals Codes](flags.html)
 - [ECCC Climate Normals Technical Documentation](https://www.canada.ca/en/environment-climate-change/services/climate-change/canadian-centre-climate-services/display-download/technical-documentation-climate-normals.html)
-    - [`weathercan` Climate Normals Glossary](glossary_normals.html)
+    - [`weathercan` Climate Normals Terms and Units](glossary_normals.html)
 
 
 

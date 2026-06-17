@@ -11,8 +11,8 @@ for (i in v) {
   new <- stringr::str_remove(i, ".orig$")
   knit(i, new)
 
-  read_lines(new) %>%
-    str_replace_all("\"vignettes(/articles)*/", "\"") %>%
+  read_lines(new) |>
+    str_replace_all("\"vignettes(/articles)*/", "\"") |>
     write_lines(new)
 }
 

@@ -1,6 +1,5 @@
 ---
 title: "Interpolating"
-author: "Steffi LaZerte"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -11,12 +10,15 @@ vignette: >
 
 
 ```{r, include = FALSE}
-knitr::opts_chunk$set(cache = FALSE,
-                      fig.align = "center",
-                      fig.path = "vignettes/articles/figures/interp-",
-                      dpi = 200,
-                      fig.asp = 0.65, fig.width = 5,
-                      out.width = "80%")
+knitr::opts_chunk$set(
+  cache = FALSE,
+  fig.align = "center",
+  fig.path = "vignettes/articles/figures/interp-",
+  dpi = 200,
+  fig.asp = 0.65,
+  fig.width = 5,
+  out.width = "80%"
+)
 old <- options(tibble.max_extra_cols = 0)
 ```
 
@@ -49,14 +51,18 @@ Although the times in the weather data do not exactly match those in the finch d
 Here we specify that we only want the temperature (`temp`) column:
 
 ```{r, error = TRUE, out.width = "100%", fig.width = 8, dpi = 200}
-finches_temperature <- weather_interp(data = finches, weather = kamloops, cols = "temp")
+finches_temperature <- weather_interp(
+  data = finches,
+  weather = kamloops,
+  cols = "temp"
+)
 ```
 
 Ooops! What happened?
 
 Well the weather data on Kamloops returned by `weathercan` has times set in the
 'local' timezone (without) daylight savings. For simplicity, these times are
-scored as "UTC" according to R.
+marked as "UTC" according to R (although it's important to remember that they're not *actually* UTC).
 
 ```{r}
 kamloops$time[1:5]
@@ -72,7 +78,7 @@ This means that it also has daylight savings applied in the summer, eep!
 
 To interpolate, the data must be in the same timezone. The easiest way forward
 is to convert the `finches` data to the same, 'local' time without daylight
-savings as the `kamloops` data.
+savings as the `kamloops` data, and then to likewise mark it as "UTC".
 
 First we'll transform it to non-daylight savings
 (i.e. Etc/GMT+8, note that the +8 is [intentionally inverted](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones))
@@ -93,7 +99,11 @@ Now `finches` and `kamloops` data are in the same nominal and actual timezones!
 Let's continue
 
 ```{r}
-finches_temperature <- weather_interp(data = finches, weather = kamloops, cols = "temp")
+finches_temperature <- weather_interp(
+  data = finches,
+  weather = kamloops,
+  cols = "temp"
+)
 summary(finches_temperature)
 glimpse(finches_temperature)
 ```
@@ -127,16 +137,20 @@ By default, gaps of 2 hours (or 2 days, with a daily scale) will be interpolated
 In this example, note the larger number of `NA`s in `temp` and how it corresponds to the missing variables in the weather dataset:
 
 ```{r}
-finches_temperature <- weather_interp(data = finches, weather = kamloops,
-                                      cols = "temp", na_gap = 1)
+finches_temperature <- weather_interp(
+  data = finches,
+  weather = kamloops,
+  cols = "temp",
+  na_gap = 1
+)
 summary(finches_temperature)
 
-finches_temperature %>%
-  select(date, time, temp) %>%
+finches_temperature |>
+  select(date, time, temp) |>
   filter(is.na(temp))
 
-kamloops %>%
-  select(time, temp) %>%
+kamloops |>
+  select(time, temp) |>
   filter(is.na(temp))
 ```
 
@@ -145,17 +159,18 @@ kamloops %>%
 We could also add in more than one column at a time:
 
 ```{r, out.width = "100%", fig.width = 8, dpi = 200}
-finches_weather <- weather_interp(data = finches, weather = kamloops,
-                                  cols = c("temp", "wind_spd"))
+finches_weather <- weather_interp(
+  data = finches,
+  weather = kamloops,
+  cols = c("temp", "wind_spd")
+)
 summary(finches_weather)
 glimpse(finches_weather)
 
 
-finches_weather <- finches_weather %>%
-  group_by(date) %>%
-  summarize(n = length(time),
-            temp = mean(temp),
-            wind_spd = mean(wind_spd))
+finches_weather <- finches_weather |>
+  group_by(date) |>
+  summarize(n = length(time), temp = mean(temp), wind_spd = mean(wind_spd))
 
 ggplot(data = finches_weather, aes(x = date, y = n)) +
   theme_bw() +
@@ -166,7 +181,8 @@ ggplot(data = finches_weather, aes(x = date, y = n)) +
   scale_colour_discrete(name = "") +
   scale_y_continuous(
     name = "Activity Counts",
-    sec.axis = sec_axis(~. / 50, name = "Temperature (C) / Wind Speed (km/h)"))
+    sec.axis = sec_axis(~ . / 50, name = "Temperature (C) / Wind Speed (km/h)")
+  )
 ```
 
 

@@ -11,11 +11,8 @@ stations_search(
   interval = c("hour", "day", "month"),
   normals_years = NULL,
   normals_only = NULL,
-  stn = NULL,
   starts_latest = NULL,
-  ends_earliest = NULL,
-  verbose = FALSE,
-  quiet = FALSE
+  ends_earliest = NULL
 )
 }
 \arguments{
@@ -44,19 +41,11 @@ specifics.}
 \item{normals_only}{DEPRECATED. Logical. Return only stations with climate
 normals?}
 
-\item{stn}{DEFUNCT. Now use \code{stations_dl()} to update internal data and
-\code{stations_meta()} to check the date it was last updated.}
-
 \item{starts_latest}{Numeric. Restrict results to stations with data
 collection beginning in or before the specified year.}
 
 \item{ends_earliest}{Numeric. Restrict results to stations with data
 collection ending in or after the specified year.}
-
-\item{verbose}{Logical. Include progress messages}
-
-\item{quiet}{Logical. Suppress all messages (including messages regarding
-missing data, etc.)}
 }
 \value{
 Returns a subset of the stations data frame which match the search
@@ -76,7 +65,7 @@ To search by coordinates, users must make sure they have the
 The \code{current}, most recent, climate normals year range is \code{1981-2010}.
 }
 \examples{
-\dontshow{if (check_eccc()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (check_eccc()) withAutoprint(\{ # examplesIf}
 
 stations_search(name = "Kamloops")
 stations_search(name = "Kamloops", interval = "hour")

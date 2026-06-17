@@ -13,6 +13,8 @@
 #' 12PM, but not 10AM or 11AM, no interpolation will happen and data between 9AM
 #' and 12PM will be returned as NA.)
 #'
+#' @details @inheritSection weather_dl Verbosity
+#'
 #' @param data Dataframe. Data with dates or times to which weather data should
 #'   be added.
 #' @param weather Dataframe. Weather data downloaded with \code{\link{weather}}
@@ -24,40 +26,48 @@
 #'   "day".
 #' @param na_gap How many hours or days (depending on the interval) is it
 #'   acceptable to skip over when interpolating over NAs (see details).
-#' @param quiet Logical. Suppress all messages (including messages regarding
-#'   missing data, etc.)
 #'
 #' @examplesIf check_eccc()
 #'
 #' # Weather data only
-#' head(kamloops)
+#' kamloops
 #'
 #' # Data about finch observations at RFID feeders in Kamloops, BC
-#' head(finches)
+#' finches
 #'
 #' # Match weather to finches
-#' finch_weather <- weather_interp(data = finches, weather = kamloops)
+#'
+#' # First line up the timezones
+#' # - Finches are in Pacific Time (inc. Daylight savings),
+#' #   Kamloops is in Pacific Time *without* daylight savings, but is marked as UTC for
+#' #   simplicity (see ?weather_dl for details)
+#' # - First we convert finches to remove daylight savings, then we mark as UTC
+#' finches <- dplyr::mutate(finches, time = lubridate::with_tz(time, "Etc/GMT+8"))
+#' finches <- dplyr::mutate(finches, time = lubridate::force_tz(time, "UTC"))
+#'
+#' # Then interpolate over the first 30 observations
+#' finch_weather <- weather_interp(data = finches[1:30,], weather = kamloops)
 #'
 #' @aliases add_weather
 #'
 #' @export
+
 weather_interp <- function(
   data,
   weather,
   cols = "all",
   interval = "hour",
-  na_gap = 2,
-  quiet = FALSE
+  na_gap = 2
 ) {
   ## Check for multiple stations
   if ("station_id" %in% names(weather)) {
     if (length(unique(weather$station_id)) > 1) {
-      stop("Can only interpolate weather from one station at a time")
+      wc_stop("Can only interpolate weather from one station at a time")
     }
   }
 
   if (length(interval) > 1 || !(interval %in% c('hour', 'day'))) {
-    stop("'interval' must be either 'hour' OR 'day'", call. = FALSE)
+    wc_stop("'interval' must be either 'hour' OR 'day'")
   }
 
   ## Make sure data and weather properly matched
@@ -65,16 +75,16 @@ weather_interp <- function(
     "'data' and 'weather' must be data frames with columns 'time'",
     " in POSIXct format or 'date' in Date format."
   )
-  if (!is.data.frame(data) | !is.data.frame(weather)) {
-    stop(msg)
+  if (!is.data.frame(data) || !is.data.frame(weather)) {
+    wc_stop(msg)
   }
   if (
-    (interval == "hour" &
-      !("time" %in% names(data) & "time" %in% names(weather))) |
+    (interval == "hour" &&
+      !("time" %in% names(data) && "time" %in% names(weather))) ||
       (interval == "day" &
-        !("date" %in% names(data) & "date" %in% names(weather)))
+        !("date" %in% names(data) && "date" %in% names(weather)))
   ) {
-    stop(
+    wc_stop(
       "'interval' must be either 'hour' or 'day' and must correspond to a ",
       "column 'time' or 'date' in both the 'data' and 'weather' dataframes."
     )
@@ -86,24 +96,24 @@ weather_interp <- function(
 
   if (interval == "hour") {
     if (
-      !lubridate::is.POSIXct(data[['time']]) |
+      !lubridate::is.POSIXct(data[['time']]) ||
         !lubridate::is.POSIXct(weather[['time']])
     ) {
-      stop(msg)
+      wc_stop(msg)
     }
   }
   if (interval == "day") {
     if (
-      !lubridate::is.Date(data[['date']]) |
+      !lubridate::is.Date(data[['date']]) ||
         !lubridate::is.Date(weather[['date']])
     ) {
-      stop(msg)
+      wc_stop(msg)
     }
   }
 
   ## Make sure 'cols' is do-able
   if (!any((cols %in% c("all", names(weather))))) {
-    stop(
+    wc_stop(
       "'cols' should either be 'all', or should ",
       "match specific columns in 'weather'"
     )
@@ -112,13 +122,13 @@ weather_interp <- function(
   ## If 'time', convert to same timezone
   if (interval == "hour") {
     if (lubridate::tz(data$time) != lubridate::tz(weather$time)) {
-      stop("`data` and `weather` timezones must match", call. = FALSE)
+      wc_stop("`data` and `weather` timezones must match")
     }
   }
 
   ## Get proper units for 'na_gap'
   if (!is.numeric(na_gap)) {
-    stop("'na_gap' should be numeric.")
+    wc_stop("'na_gap' should be numeric.")
   }
   if (interval == "hour") {
     na_gap <- lubridate::hours(na_gap)
@@ -146,19 +156,16 @@ weather_interp <- function(
   ## (is linear interpolation relevant for each?)
   omit <- cols[!(vapply(weather[, cols], is.numeric, FUN.VALUE = TRUE))]
   cols <- cols[!(cols %in% omit)]
-  if (length(omit) > 0 & !quiet) {
-    message(
-      "Some columns (",
-      paste0(omit, collapse = ", "),
-      ") ",
-      "are not numeric and will thus be omitted from the ",
-      "interpolation."
+  if (length(omit) > 0) {
+    wc_inform(
+      "Some columns ({paste0(omit, collapse = ', ')}) ",
+      "are not numeric and will thus be omitted from the interpolation."
     )
   }
 
   ## Make sure there are still columns to work with
   if (length(cols) < 1) {
-    stop("No columns over which to interpolate.")
+    wc_stop("No columns over which to interpolate.")
   }
 
   ## For each obs, get interpolated weather...
@@ -170,24 +177,15 @@ weather_interp <- function(
     }
     w <- weather[!is.na(weather[[col]]), ]
     if (nrow(w) < 2) {
-      if (!quiet) {
-        message(
-          col,
-          " does not have at least 2 points of ",
-          "non-missing data, skipping..."
-        )
-      }
+      wc_inform(
+        "{col} does not have at least 2 points of non-missing data, ",
+        "skipping..."
+      )
     } else {
-      if (nrow(w) < nrow(weather) & !quiet) {
-        message(
-          col,
-          " is missing ",
-          nrow(weather) - nrow(w),
-          " ",
-          "out of ",
-          nrow(weather),
-          " data, interpolation ",
-          "may be less accurate as a result."
+      if (nrow(w) < nrow(weather)) {
+        wc_inform(
+          "{col} is missing {nrow(weather) - nrow(w)} out of {nrow(weather)} ",
+          "data, interpolation may be less accurate as a result."
         )
       }
 
@@ -196,7 +194,7 @@ weather_interp <- function(
         y = weather[[col]],
         xout = data[[t]],
         na_gap = na_gap
-      ) %>%
+      ) |>
         dplyr::rename(!!!stats::setNames(c('x', 'y'), c(t, col)))
 
       data <- dplyr::left_join(data, unique(new), by = t)
@@ -206,10 +204,31 @@ weather_interp <- function(
   data
 }
 
+#' Linear interpolation with NA gap handling
+#'
+#' Performs linear interpolation while respecting gaps in the data. If NA values
+#' are present in y and na_gap is specified, interpolation will not occur across
+#' gaps larger than the specified tolerance.
+#'
+#' @param x Numeric, Date, or POSIXct. X values for interpolation
+#' @param y Numeric. Y values to interpolate
+#' @param xout Numeric, Date, or POSIXct. Points at which to interpolate (must
+#'   match class of x)
+#' @param na_gap Numeric or lubridate period. Maximum gap size to interpolate
+#'   over when y has NA values
+#'
+#' @returns Data frame with columns x and y containing interpolated values
+#'
+#' @noRd
+#' @examples
+#' approx_na_rm(x = 1:10, y = 1:10, xout = c(0.5, 4.5))
+#' # approx_na_rm(x = 1:10, y = c(1:5, NA, NA, NA, 9, 10), xout = c(0.5, 6.5))
+#' approx_na_rm(x = 1:10, y = c(1:5, NA, NA, NA, 9, 10), xout = c(0.5, 6.5), na_gap = 2)
+#' approx_na_rm(x = 1:10, y = c(1:5, NA, NA, NA, 9, 10), xout = c(0.5, 6.5), na_gap = 4)
 
 approx_na_rm <- function(x, y, xout, na_gap = NULL) {
-  if (!all(class(x) == class(xout)) & !(is.numeric(xout) & is.numeric(x))) {
-    stop("'xout' must be the same class as 'x'")
+  if (!all(class(x) == class(xout)) && !(is.numeric(xout) && is.numeric(x))) {
+    wc_stop("'xout' must be the same class as 'x'")
   }
 
   if (
@@ -217,18 +236,18 @@ approx_na_rm <- function(x, y, xout, na_gap = NULL) {
       lubridate::is.POSIXct(xout) &&
       lubridate::tz(x) != lubridate::tz(xout)
   ) {
-    stop("Timezone of `x` doesn't match `xout`", call. = FALSE)
+    wc_stop("Timezone of `x` doesn't match `xout`")
   }
 
   new <- as.data.frame(
     stats::approx(x = x, y = y, xout = xout, yleft = NA, yright = NA)
   )
 
-  if (any(is.na(y)) & !is.null(na_gap)) {
-    if (lubridate::is.Date(x) | lubridate::is.POSIXct(x)) {
+  if (anyNA(y) && !is.null(na_gap)) {
+    if (lubridate::is.Date(x) || lubridate::is.POSIXct(x)) {
       if (!lubridate::is.period(na_gap)) {
-        stop(
-          "With date/time data in x, na_gap must be a lubridate ",
+        wc_stop(
+          "With date/time data in x, `na_gap` must be a lubridate ",
           "period object"
         )
       }
@@ -257,7 +276,7 @@ approx_na_rm <- function(x, y, xout, na_gap = NULL) {
       new$y[missing] <- NA
     } else if (is.numeric(x)) {
       if (lubridate::is.period(na_gap) || !is.numeric(na_gap)) {
-        stop("With numeric x, na_gap must also be numeric")
+        wc_stop("With numeric x, `na_gap` must also be numeric")
       }
 
       x <- x[!is.na(y)]
@@ -280,8 +299,8 @@ approx_na_rm <- function(x, y, xout, na_gap = NULL) {
       )
       new$y[missing] <- NA
     }
-  } else if (any(is.na(y)) & is.null(na_gap)) {
-    stop("Missing values in y but no na_gap set")
+  } else if (anyNA(y) && is.null(na_gap)) {
+    wc_stop("Missing values in y but no `na_gap` set")
   }
 
   new

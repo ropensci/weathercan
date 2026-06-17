@@ -11,6 +11,7 @@ A data frame with 113,325 rows and 5 variables:
 \item{station_name}{Station Name}
 \item{climate_id}{Climate ID}
 \item{normals}{Year range of climate normals}
+\item{measurement_type}{Type of measurement (relevant only for 1990-2020)}
 \item{measurement}{Climate normals measurement available for this station}
 }
 }

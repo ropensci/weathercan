@@ -1,6 +1,5 @@
 ---
 title: "Climate Normals"
-author: "Steffi LaZerte"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -12,8 +11,10 @@ vignette: >
 ```{r, include = FALSE}
 old <- options(tibble.max_extra_cols = 0, width = 90)
 
-knitr::opts_chunk$set(fig.align = "center",
-                      fig.path = "vignettes/articles/figures/normals-")
+knitr::opts_chunk$set(
+  fig.align = "center",
+  fig.path = "vignettes/articles/figures/normals-"
+)
 ```
 
 ## Downloading Climate Normals
@@ -29,20 +30,81 @@ library(dplyr)
 library(naniar) # For exploring missing values
 ```
 
-To download climate normals, we'll first find the stations we're interested in using the `stations_search()` function. We'll use the `normals_years = "current"` argument to filter to only stations with available climate normals for the `1981-2010` year range.
+### Downloading current normals (1991-2020)
+
+To download climate normals, we'll first find the stations we're interested in using the `stations_search()` function. We'll use the `normals_years = "current"` argument to filter to only stations with the most recent available climate normals, `1991-2020`.
 
 ```{r}
 stations_search("Winnipeg", normals_years = "current")
 ```
 
-Let's look at the climate normals from this station in Winnipeg, MB. Note that unlike the `weather_dl()` function, the `normals_dl()` function requires `climate_id` not `station_id`. By default the normals are downloaded for the years "1981-2010" (currently 1981-2010 and 1971-2000 are the only year ranges available)
+Let's look at the climate normals from one of these stations in Winnipeg, MB. Note that unlike the `weather_dl()` function, the `normals_dl()` function requires `climate_id`, not `station_id`.
+
+In contrast to previous climate normals the most recent normals are provided as a single
+download from ECCC which is stored in a local data cache, and then referenced by `normals_dl()`.
+
+If you haven't already created a cache folder, weathercan will prompt you to do so.
+Otherwise `normals_dl()` will load, format and filter the cached data to the climate ids specified.
 
 ```{r}
 n <- normals_dl(climate_ids = "5023222")
 n
 ```
 
-Because there are two different types of climate normals (weather measurements and first/last frost dates), the data are nested as two different datasets. We can see that the Airport (Richardson Int'l) has `r ncol(n$normals[[1]])` average weather measurements/codes as well as first/last frost dates.
+The more recent climate normals actually reflect composite stations. 
+Stations included are stored in the `composite_stations` column.
+
+```{r}
+n$composite_stations[1]
+```
+
+So we can see that these climate normals are actually composed of several different
+stations mostly from the Airport.
+
+Once you have used `normals_dl()` and have downloaded and cached the normals data,
+you can also access the original, cached, data from ECCC.
+
+```{r}
+library(readr)
+normals_file() # Location of the cached data (if you've downloaded it!)
+n_orig <- read_csv(normals_file())
+n_orig
+```
+
+You can also pre-select specific measurements by `measurement_type` (also called ELEMENT GROUP by ECCC). These must be one of those listed in the `normals_measurement_types` data frame.
+
+```{r}
+normals_measurement_types
+unique(normals_measurement_types$measurement_type)
+filter(normals_measurement_types, measurement_type == "Wind Chill")
+filter(normals_measurement_types, measurement_type == "Temperature")
+```
+
+You can supply these to `normals_dl` to return normals with only these measurements.
+```{r}
+n <- normals_dl(
+  climate_ids = "5023222",
+  measurement_type = c("Wind Chill", "Temperature")
+)
+glimpse(n)
+```
+
+
+### Downloading previous normals (1981-2010 and 1971-2000)
+
+Similar to current normals, we first find the stations and then download the normals.
+The main difference is specifying that we want older normals, and then dealing with the different format these normals come in. 
+
+```{r}
+stations_search("Winnipeg", normals_years = "1981-2010")
+n <- normals_dl(climate_ids = "5023222", normals_years = "1981-2010")
+n
+```
+
+In older climate normals, there are two different data formats (one for weather measurements and one for first/last frost dates). 
+Therefore, the data are nested as two different datasets. We can see that the Airport (Richardson Int'l) has `r ncol(n$normals[[1]])` average weather measurements/codes as well as first/last frost dates.
+
+Note that these older normals do not use composite stations.
 
 We can also see that this station has data quality sufficient to meet the WMO standards for temperature and precipitation (i.e. both these measurements have code >= A). See the [ECCC calculations document](https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf) for more details.
 
@@ -55,44 +117,55 @@ frost <- unnest(n, frost)
 
 Note that this extracts the measurements for all three stations (in the case of the `normals` data frame), but not all measurements are available for each station
 
-```{r, R.options = list(tibble.print_max = Inf)}
+```{r, R.options = list(width = 90)}
 normals
 ```
 
-To visualize missing data we can use the `gg_miss_var()` function from the `naniar` package.
-```{r, eval = FALSE, fig.asp = 2, out.width = "100%", fig.width = 8}
-select(normals, -contains("_code")) %>%  # Remove '_code' columns
-  gg_miss_var(facet = station_name)
-```
-
-```{r, warning = FALSE, fig.asp = 2, out.width = "100%", fig.width = 8}
-suppressWarnings({select(normals, -contains("_code")) %>%  # Remove '_code' columns
-    gg_miss_var(facet = station_name)})
-```
 
 Let's take a look at the frost data.
 
 ```{r, R.options = list(width = 90)}
-if("normals" %in% names(frost)) frost <- select(frost, -normals) # tidyr v1
-glimpse(frost)
+frost
 ```
 
-### Finding stations with specific measurements
+## Finding stations with specific measurements
 
-The include data frame, `normals_measurements` contains a list of stations with their corresponding measurements. Be aware that this data might be out of date!
+The included data frame, `normals_measurements` contains a list of stations with their corresponding measurements. Be aware that this data might be out of date!
 
 ```{r}
 normals_measurements
 ```
 
+Because the new climate normals are so different from previous years, they include different `measurements` which are 
+organized by `measurement_type`. In older normals years, `measurement_type` is `NA`.
+
 For example, if you wanted all `climate_id`s for stations that have data on
-soil temperature for 1981-2010 normals:
+temperature for 1991-2020 normals:
 
 ```{r}
-normals_measurements %>%
-  filter(stringr::str_detect(measurement, "soil"),
-         normals == "1981-2010") %>%
-  pull(climate_id) %>%
+library(stringr) # text pattern matching
+
+# Have a quick look
+normals_measurements |>
+  filter(str_detect(measurement_type, "Temp"), normals == "1991-2020")
+
+ids <- normals_measurements |>
+  filter(str_detect(measurement_type, "Temp"), normals == "1991-2020") |>
+  pull(climate_id) |>
+  unique()
+```
+
+Alternatively, if you wanted all `climate_id`s for stations that have data on
+soil temperature for 1981-2010 normals (which is no longer available in the 1991-2020 normals):
+
+```{r}
+# Have a quick look
+normals_measurements |>
+  filter(stringr::str_detect(measurement, "soil"), normals == "1981-2010")
+
+ids <- normals_measurements |>
+  filter(stringr::str_detect(measurement, "soil"), normals == "1981-2010") |>
+  pull(climate_id) |>
   unique()
 ```
 
@@ -103,7 +176,7 @@ The measurements contained in the climate normals are very specific. To better u
 - ECCC Climate Normals Calculations ([1991-2020](https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1991_2020_Calculation_Information.pdf) | ([1981-2010](https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf) | [1971-2000](https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1971_2000_Calculation_Information.pdf))
     - [`weathercan` Climate Normals Codes](flags.html)
 - [ECCC Climate Normals Technical Documentation](https://www.canada.ca/en/environment-climate-change/services/climate-change/canadian-centre-climate-services/display-download/technical-documentation-climate-normals.html)
-    - [`weathercan` Climate Normals Glossary](glossary_normals.html)
+    - [`weathercan` Climate Normals Terms and Units](glossary_normals.html)
 
 
 ```{r, include = FALSE}

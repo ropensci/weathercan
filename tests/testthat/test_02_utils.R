@@ -9,8 +9,8 @@ test_that("check_int() as expected", {
   expect_silent(check_int("hour"))
   expect_silent(check_int("day"))
   expect_silent(check_int("month"))
-  expect_error(check_int("h"), "'interval' can only be")
-  expect_error(check_int("year"), "'interval' can only be")
+  expect_error(check_int("h"), "'interval' can only contain")
+  expect_error(check_int("year"), "'interval' can only contain")
 })
 
 test_that("check_ids() as expected", {
@@ -25,7 +25,14 @@ test_that("check_ids() as expected", {
 })
 
 test_that("check_normals() as expected", {
+  expect_silent(check_normals("1991-2020"))
   expect_silent(check_normals("1981-2010"))
+  expect_silent(check_normals("1971-2000"))
+  expect_message(
+    check_normals("current"),
+    "The most current normals available for download by weathercan are"
+  )
+
   expect_silent(check_normals("1111-1111"))
   expect_error(check_normals(" 1981-2010"), "text string in the format")
   expect_error(check_normals("1981-2010 "), "text string in the format")
@@ -34,19 +41,21 @@ test_that("check_normals() as expected", {
   expect_error(check_normals(1981), "text string in the format")
 })
 
-test_that("get_check() as expected", {
+test_that("get_check() error handling", {
+  expect_error(
+    {
+      httr2::with_mocked_responses(
+        \(req) httr2::response(404),
+        get_check("canada.ca")
+      )
+    },
+    "HTTP 404 Not Found."
+  )
+
   skip_if_offline()
-  skip_on_cran()
   expect_error(
     get_check("https://climate.weather.gc.ca/error/dbdown_e.html"),
     "Service is currently down!"
-  )
-
-  skip_if_not(httr::status_code(httr::GET("http://httpbin.org/")) == 200)
-  expect_error(
-    get_check("http://httpbin.org/status/404", task = "test"),
-    "Not Found (HTTP 404). Failed to test.",
-    fixed = TRUE
   )
 })
 

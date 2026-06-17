@@ -51,14 +51,14 @@ We also include several practice data sets:
 \item \code{\link{pg}}
 }
 
-As well as several vignettes available in the package and \href{https://docs.ropensci.org/weathercan/}{Online}:
+As well as several articles available \href{https://docs.ropensci.org/weathercan/}{Online}:
 \itemize{
-\item \href{https://docs.ropensci.org/weathercan/articles/weathercan.html}{General Usage}: \code{vignette("weathercan", package = "weathercan")}
-\item \href{https://docs.ropensci.org/weathercan/articles/interpolate_data.html}{Interpolating}: \code{vignette("interpolation", package = "weathercan")}
-\item \href{https://docs.ropensci.org/weathercan/articles/reproducibility.html}{Reproducibility}: \code{vignette("reproducibility", package = "weathercan")}
-\item \href{https://docs.ropensci.org/weathercan/articles/flags.html}{Flags and Codes}: \code{vignette("flags", package = "weathercan")}
-\item \href{https://docs.ropensci.org/weathercan/articles/glossary.html}{Weather: Terms and Units}: \code{vignette("glossary", package = "weathercan")}
-\item \href{https://docs.ropensci.org/weathercan/articles/glossary_normals.html}{Climate Normals: Terms and Units}: \code{vignette("glossary_normals", package = "weathercan")}
+\item \href{https://docs.ropensci.org/weathercan/articles/weathercan.html}{General Usage}
+\item \href{https://docs.ropensci.org/weathercan/articles/interpolate_data.html}{Interpolating}
+\item \href{https://docs.ropensci.org/weathercan/articles/reproducibility.html}{Reproducibility}
+\item \href{https://docs.ropensci.org/weathercan/articles/flags.html}{Flags and Codes}
+\item \href{https://docs.ropensci.org/weathercan/articles/glossary.html}{Weather: Terms and Units}
+\item \href{https://docs.ropensci.org/weathercan/articles/glossary_normals.html}{Climate Normals: Terms and Units}
 }
 
 We also have some advanced articles:
@@ -85,9 +85,13 @@ Useful links:
 \author{
 \strong{Maintainer}: Steffi LaZerte \email{sel@steffilazerte.ca} (\href{https://orcid.org/0000-0002-7690-8360}{ORCID})
 
+Authors:
+\itemize{
+  \item Sam Albers \email{sam.albers@gmail.com} (\href{https://orcid.org/0000-0002-9270-7884}{ORCID})
+}
+
 Other contributors:
 \itemize{
-  \item Sam Albers \email{sam.albers@gmail.com} (\href{https://orcid.org/0000-0002-9270-7884}{ORCID}) [contributor]
   \item Nick Brown \email{nicholas512@gmail.com} (\href{https://orcid.org/0000-0002-2719-0671}{ORCID}) [contributor]
   \item Kevin Cazelles \email{kevin.cazelles@gmail.com} (\href{https://orcid.org/0000-0001-6619-9874}{ORCID}) [contributor]
   \item Richard Littauer \email{richard.littauer@gmail.com} (\href{https://orcid.org/0000-0001-5428-7535}{ORCID}) [contributor]
@@ -97,6 +101,8 @@ Other contributors:
   \item Kelli F. Johnson \email{kelli.johnson@noaa.gov} (\href{https://orcid.org/0000-0002-5149-451X}{ORCID}) [contributor]
   \item Russ Allen \email{mbr@historicip.com} [contributor]
   \item Everett Snieder \email{everett.snieder@gmail.com} (\href{https://orcid.org/0000-0003-4997-3404}{ORCID}) [contributor]
+  \item Josh Persi \email{joshpersi@gmail.com} (\href{https://orcid.org/0000-0002-2700-6483}{ORCID}) [contributor]
+  \item Mahjabin Oyshi \email{oyshimahjabin3@gmail.com} (\href{https://orcid.org/0009-0000-7992-6727}{ORCID}) [contributor]
 }
 
 }

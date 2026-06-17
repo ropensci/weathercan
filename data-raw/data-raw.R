@@ -1,6 +1,3 @@
-## Get up-to-date stations data
-stations_dl_internal(verbose = TRUE)
-
 kamloops_day <- weather_dl(
   51423,
   start = "2016-01-01",

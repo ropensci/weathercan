@@ -1,4 +1,4 @@
-# normals_dl() downloads normals/frost dates as tibble - single
+# normals_dl() - single - 1981
 
     {
       "type": "list",
@@ -1145,7 +1145,7 @@
                 "names": {
                   "type": "character",
                   "attributes": {},
-                  "value": ["frost_code", "date_first_fall_frost", "date_last_spring_frost", "length_frost_free", "prob", "prob_last_spring_temp_below_0_on_date", "prob_first_fall_temp_below_0_on_date", "prob_length_frost_free"]
+                  "value": ["frost_code", "date_last_spring_frost", "date_first_fall_frost", "length_frost_free", "prob", "prob_last_spring_temp_below_0_on_date", "prob_first_fall_temp_below_0_on_date", "prob_length_frost_free"]
                 },
                 "row.names": {
                   "type": "integer",
@@ -1167,12 +1167,12 @@
                 {
                   "type": "double",
                   "attributes": {},
-                  "value": [257, 257, 257, 257, 257, 257, 257]
+                  "value": [137, 137, 137, 137, 137, 137, 137]
                 },
                 {
                   "type": "double",
                   "attributes": {},
-                  "value": [137, 137, 137, 137, 137, 137, 137]
+                  "value": [257, 257, 257, 257, 257, 257, 257]
                 },
                 {
                   "type": "double",
@@ -1206,7 +1206,7 @@
       ]
     }
 
----
+# normals_dl() - single - 1971
 
     {
       "type": "list",

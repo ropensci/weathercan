@@ -4,16 +4,11 @@
 \alias{stations_dl}
 \title{Get available stations}
 \usage{
-stations_dl(skip = NULL, verbose = FALSE, quiet = FALSE)
+stations_dl(skip = NULL)
 }
 \arguments{
 \item{skip}{Numeric. Number of lines to skip at the beginning of the csv. If
 NULL, automatically derived.}
-
-\item{verbose}{Logical. Include progress messages}
-
-\item{quiet}{Logical. Suppress all messages (including messages regarding
-missing data, etc.)}
 }
 \description{
 This function can be used to download a Station Inventory CSV file from
@@ -37,9 +32,11 @@ specified in \code{normals_1981_2010} and \code{normals_1971_2000}, respectively
 
 The column \code{normals} represents the most current year range of climate
 normals (i.e. currently 1981-2010)
+
+@inheritSection weather_dl Verbosity
 }
 \examples{
-\dontshow{if (check_eccc()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (check_eccc()) withAutoprint(\{ # examplesIf}
 
 # Update stations data frame
 stations_dl()

@@ -1,44 +1,9 @@
 # stations_dl() ------------------------------------------------------------
 
-test_that("stations_dl() requires R 3.3.4", {
-  # Can't test stations_dl because requires depth = 2 which creates problems:
-  # https://github.com/r-lib/mockery/issues
-  skip_on_cran()
-  mockery::stub(stations_dl_internal, 'getRversion', package_version("3.3.3"))
-  expect_message(stations_dl_internal(), "Need R version")
-})
-
-test_that("stations_dl() requires lutz and sf", {
-  skip_on_cran()
-  mockery::stub(
-    stations_dl_internal,
-    'requireNamespace',
-    mockery::mock(FALSE, FALSE)
-  )
-  expect_error(
-    stations_dl_internal(),
-    "Package 'lutz' and its dependency, 'sf'"
-  )
-})
-
-test_that("stations_dl() errors appropriately", {
-  skip_on_cran()
-  skip_if_offline()
-  skip_if_not_installed("sf")
-  skip_if_not_installed("lutz")
-
-  skip()
-
-  bkup <- getOption("weathercan.urls.stations")
-  options(weathercan.urls.stations = "https://httpbin.org/status/404")
-  expect_error(stations_dl(), "Not Found (HTTP 404).", fixed = TRUE)
-  options(weathercan.urls.stations = bkup)
-})
-
 test_that("stations_normals() gets normals info", {
   skip_on_cran()
 
-  expect_silent(n <- stations_normals()) %>%
+  expect_silent(n <- stations_normals()) |>
     expect_s3_class("data.frame")
 
   expect_gt(nrow(n), 1500)
@@ -56,7 +21,7 @@ test_that("stations_normals() gets normals info", {
 
 test_that("stations_meta() returns metadata", {
   skip_on_cran()
-  expect_type(stations_meta(), "list") %>%
+  expect_type(stations_meta(), "list") |>
     expect_named(c("ECCC_modified", "weathercan_modified"))
 
   expect_s3_class(stations_meta()$ECCC_modified, "POSIXct")
@@ -65,51 +30,26 @@ test_that("stations_meta() returns metadata", {
 
 
 test_that("stations_dl() runs and updates data", {
-  skip_if_not_installed("sf")
-  skip_if_not_installed("lutz")
   skip_on_cran()
   skip_if_offline()
 
-  mockery::stub(stations_dl_internal, "utils::askYesNo", TRUE)
-  mockery::stub(
-    stations_dl_internal,
-    "stations_file",
-    file.path("stations.rds")
-  )
-  expect_message(
-    stations_dl_internal(internal = FALSE),
-    "Stations data saved"
-  ) %>%
-    expect_message("According to Environment Canada") %>%
+  expect_message(stations_dl(), "Stations data saved") |>
+    expect_message("According to Environment Canada") |>
     expect_message("Environment Canada Disclaimers")
-  expect_type(s <- readRDS("stations.rds"), "list") %>%
-    expect_length(2)
-  expect_s3_class(s$stn, "data.frame")
-  expect_gt(nrow(s$stn), 0)
-  expect_type(s$meta, "list") %>%
-    expect_length(2)
-
-  # Ensure that we're getting recent data
-  expect_gte(max(s$stn$end, na.rm = TRUE), lubridate::year(Sys.Date()))
-
-  # stations_read() ----
-
-  # Without local file, use package file
-  expect_silent(s1 <- stations_read()$meta)
-  expect_lte(s1$weathercan_modified, Sys.Date())
-
-  expect_gte(s$meta$weathercan_modified, s1$weathercan_modified)
-
-  unlink("stations.rds")
+  expect_s3_class(s <- wc_read(stations_file()), "data.frame")
+  expect_gt(nrow(s), 0)
+  expect_s3_class(m <- wc_read(stations_meta_file()), "data.frame")
+  expect_equal(nrow(m), 1)
+  expect_equal(ncol(m), 2)
 })
 
 
 # stations() --------------------------------------------------------------
 test_that("stations() /stations_meta() return data", {
-  expect_silent(s <- stations()) %>%
+  expect_silent(s <- stations()) |>
     expect_s3_class("data.frame")
 
-  expect_silent(stations_meta()) %>%
+  expect_silent(stations_meta()) |>
     expect_type("list")
 
   expect_named(stations_meta(), c("ECCC_modified", "weathercan_modified"))
@@ -122,7 +62,10 @@ test_that("stations() /stations_meta() return data", {
   expect_type(s$prov, "character")
   expect_type(s$station_name, "character")
   expect_gt(nrow(s), 10)
-  expect_equal(unique(s$interval), c("day", "hour", "month"))
+  expect_equal(
+    unique(s$interval),
+    factor(c("hour", "day", "month"), levels = c("hour", "day", "month"))
+  )
 
   # Check content
   expect_equal(nrow(s[is.na(s$station_name), ]), 0)
@@ -194,7 +137,7 @@ test_that("stations_search 'coords' returns correct format", {
 
 test_that("stations_search 'coords' returns correct data", {
   ## Check specific
-  expect_equal(nrow(stn <- stations_search(coords = c(54, -122))), 10) %>%
+  expect_equal(nrow(stn <- stations_search(coords = c(54, -122))), 10) |>
     expect_message("No stations within 10km")
   expect_equal(stn$station_name[1], "UPPER FRASER")
   expect_equal(round(stn$distance[1], 5), 13.73664)
@@ -223,22 +166,19 @@ test_that("stations_search 'coords' returns correct data", {
 })
 
 test_that("stations_search quiet/verbose", {
-  expect_silent(stations_search(c(54, -122), quiet = TRUE))
-  expect_silent(stations_search(coords = c(54, -122), quiet = TRUE))
+  withr::local_options("weathercan.verbosity" = "quiet")
 
-  expect_message(
-    stations_search(c(54, -122), verbose = TRUE),
-    "Searching by name"
-  ) %>%
+  expect_silent(stations_search(c(54, -122)))
+  expect_silent(stations_search(coords = c(54, -122)))
+
+  withr::local_options("weathercan.verbosity" = "verbose")
+  expect_message(stations_search(c(54, -122)), "Searching by name") |>
     expect_message("The `name` argument looks like a pair of coordinates")
+  expect_message(stations_search("Kamloops"), "Searching by name")
   expect_message(
-    stations_search("Kamloops", verbose = TRUE),
-    "Searching by name"
-  )
-  expect_message(
-    stations_search(coords = c(54, -122), verbose = TRUE),
+    stations_search(coords = c(54, -122)),
     "Calculating station distances"
-  ) %>%
+  ) |>
     expect_message("No stations within 10km")
 })
 
@@ -325,26 +265,18 @@ test_that("stations_search returns normals only", {
   expect_warning(
     s <- stations_search("Brandon", normals_only = TRUE),
     "`normals_only` is deprecated"
-  )
-  expect_message(
-    s <- stations_search("Brandon", normals_years = "current"),
-    "The most current normals available for download by weathercan are"
-  )
+  ) |>
+    expect_message(
+      "The most current normals available for download by weathercan are"
+    )
   expect_gt(nrow(stations()), nrow(s))
   expect_true(all(s$normals))
 
   expect_silent(s1 <- stations_search("Brandon", normals_years = "1981-2010"))
   expect_gt(nrow(stations()), nrow(s1))
-  expect_equal(s$station_id, s1$station_id)
 
   expect_silent(s2 <- stations_search("Brandon", normals_years = "1971-2000"))
   expect_gt(nrow(stations()), nrow(s2))
-  expect_equal(s$station_id, s1$station_id)
-
-  expect_message(
-    s3 <- stations_search("Brandon", normals_years = "1991-2020"),
-    "be aware that they are not yet available"
-  )
 })
 
 test_that("stations_search checks arguments", {
@@ -359,6 +291,6 @@ test_that("stations_search checks arguments", {
   # Check invalid intervals
   expect_error(
     stations_search("Brandon", interval = "minute"),
-    "'interval' can only be 'hour', 'day', or 'month'"
+    "'interval' can only contain 'hour', 'day', or 'month'"
   )
 })

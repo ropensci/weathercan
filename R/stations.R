@@ -42,29 +42,14 @@
 #' stations_meta()
 #'
 #' # Which Manitoba stations have *any* climate normals?
+#' # Note `normals` is TRUE or FALSE, so we can included it as is for normals == TRUE
 #'
 #' library(dplyr)
-#' filter(stations(), interval == "hour", normals == TRUE, prov == "MB")
+#' filter(stations(), interval == "hour", normals, prov == "MB")
 
 stations <- function() {
-  if (
-    abs(difftime(
-      stations_meta()$weathercan_modified,
-      Sys.Date(),
-      units = "days"
-    )) >
-      28
-  ) {
-    if (!identical(Sys.getenv("TESTTHAT"), "true")) {
-      message(
-        "The stations data frame hasn't been updated in over 4 weeks. ",
-        "Consider running `stations_dl()` to check for updates and make ",
-        "sure you have the most recent stations list available"
-      )
-    }
-  }
-
-  stations_read()$stn
+  # Wrapper in case messages required in future
+  stations_read()
 }
 
 #' Show stations list meta data
@@ -76,32 +61,45 @@ stations <- function() {
 #' @examplesIf check_eccc()
 #' stations_meta()
 stations_meta <- function() {
-  stations_read()$meta
+  wc_read(stations_meta_file())
 }
+
+#' Read stations data from cache
+#'
+#' Reads cached stations data, formats intervals as factors, and arranges by
+#' province, station ID, and interval.
+#'
+#' @returns Tibble of stations data
+#'
+#' @noRd
 
 stations_read <- function() {
-  pkg_file <- system.file("extdata", "stations.rds", package = "weathercan") %>%
-    readr::read_rds()
-
-  if (file.exists(stations_file())) {
-    local_file <- stations_file() %>%
-      readr::read_rds()
-    # If pkg version is newer than local, use pkg else use local
-    if (
-      pkg_file$meta$weathercan_modified > local_file$meta$weathercan_modified
-    ) {
-      r <- pkg_file
-    } else {
-      r <- local_file
-    }
-  } else {
-    r <- pkg_file
-  }
-  r
+  cache_stations_check()
+  wc_read(stations_file()) |>
+    dplyr::mutate(
+      interval = factor(.data$interval, levels = c("hour", "day", "month"))
+    ) |>
+    dplyr::arrange(.data$prov, .data$station_id, .data$interval)
 }
 
+#' Get path to cached stations data file
+#'
+#' @returns Character. File path to cached stations.csv
+#'
+#' @noRd
+
 stations_file <- function() {
-  file.path(rappdirs::user_data_dir("weathercan"), "stations.rds")
+  file.path(cache_dir(), "stations.csv")
+}
+
+#' Get path to cached stations metadata file
+#'
+#' @returns Character. File path to cached stations_meta.csv
+#'
+#' @noRd
+
+stations_meta_file <- function() {
+  file.path(cache_dir(), "stations_meta.csv")
 }
 
 #' Get available stations
@@ -129,12 +127,10 @@ stations_file <- function() {
 #' The column `normals` represents the most current year range of climate
 #' normals (i.e. currently 1981-2010)
 #'
+#' @details @inheritSection weather_dl Verbosity
+#'
 #' @param skip Numeric. Number of lines to skip at the beginning of the csv. If
 #'   NULL, automatically derived.
-#' @param verbose Logical. Include progress messages
-#' @param quiet Logical. Suppress all messages (including messages regarding
-#'   missing data, etc.)
-#'
 #'
 #' @examplesIf check_eccc()
 #'
@@ -146,93 +142,46 @@ stations_file <- function() {
 #'
 #' @export
 
-stations_dl <- function(skip = NULL, verbose = FALSE, quiet = FALSE) {
+stations_dl <- function(skip = NULL) {
   stations_dl_internal(
-    skip = skip,
-    verbose = verbose,
-    quiet = quiet,
-    internal = FALSE
+    skip = skip
   )
 }
 
+#' Internal function to download stations data
+#'
+#' Downloads station inventory from ECCC, processes and formats the data,
+#' adds timezone information, merges with climate normals availability,
+#' and saves to cache.
+#'
+#' @param skip Numeric. Number of lines to skip at the beginning of the csv.
+#'   If NULL, automatically derived.
+#'
+#' @returns Nothing, called for side effects (saves stations data to cache)
+#'
+#' @noRd
+
 stations_dl_internal <- function(
-  skip = NULL,
-  verbose = FALSE,
-  quiet = FALSE,
-  internal = TRUE
+  skip = NULL
 ) {
-  if (getRversion() <= "3.3.3") {
-    message("Need R version 3.3.4 or greater to update the stations data")
-    return()
-  }
-
-  # If called internally use inst
-  if (internal) {
-    d <- system.file("extdata", package = "weathercan")
-    f <- file.path(d, "stations.rds")
-  } else {
-    d <- dirname(stations_file())
-    f <- stations_file()
-  }
-
-  # Ask for permission to save data
-  if (!internal) {
-    if ((!dir.exists(d) || !file.exists(f)) && interactive()) {
-      cont <- utils::askYesNo(
-        paste0(
-          "weathercan would like to store the updated stations ",
-          "data to: \n",
-          f,
-          "\nIs that okay?"
-        )
-      )
-    } else {
-      cont <- TRUE
-    }
-
-    if (!cont) {
-      message("Not updating stations data")
-      return(invisible())
-    }
-
-    if (!dir.exists(d)) dir.create(d, recursive = TRUE)
-  }
-
-  if (
-    !requireNamespace("lutz", quietly = TRUE) |
-      !requireNamespace("sf", quietly = TRUE)
-  ) {
-    stop(
-      "Package 'lutz' and its dependency, 'sf', are required to get ",
-      "timezones for the updated stations dataframe. ",
-      "Use the code \"install.packages(c('lutz', 'sf'))\" to install.",
-      call. = FALSE
-    )
-  }
+  cache_check()
+  rlang::check_installed(c("lutz", "sf"), "to add timezones to stations ata.")
 
   # Get normals data
   normals <- stations_normals()
 
-  if (verbose) {
-    message("Trying to access stations data frame")
-  }
+  wc_progress("Trying to access stations data frame")
 
-  resp <- get_check(
-    getOption("weathercan.urls.stations"),
-    task = "access stations list"
-  )
+  resp <- get_check(url = getOption("weathercan.urls.stations"))
 
   headings <- readr::read_lines(
-    httr::content(resp, as = "text", encoding = "Latin1"),
+    I(httr2::resp_body_string(resp, encoding = "Latin1")),
     n_max = 5,
     progress = FALSE
   )
   if (!any(stringr::str_detect(headings, "Climate ID"))) {
-    stop(
-      "Could not read stations list (",
-      getOption("weathercan.urls.stations"),
-      ")",
-      call. = FALSE
+    wc_stop(
+      "Could not read stations list ({getOption('weathercan.urls.stations')})"
     )
   }
 
@@ -251,39 +200,33 @@ stations_dl_internal <- function(
       1
   }
 
-  if (!quiet) {
-    message(
-      "According to Environment Canada, ",
-      stringr::str_subset(headings, "Modified Date") %>%
-        stringr::str_remove_all("[^\001-\177]")
-    )
-  }
+  wc_inform(
+    "According to Environment Canada, ",
+    stringr::str_subset(headings, "Modified Date") |>
+      stringr::str_remove_all("[^\001-\177]")
+  )
 
-  eccc_meta <- stringr::str_subset(headings, "Modified Date") %>%
+  eccc_meta <- stringr::str_subset(headings, "Modified Date") |>
     stringr::str_remove(stringr::regex(
       "Modified Date:",
       ignore_case = TRUE
-    )) %>%
+    )) |>
     lubridate::ymd_hms(truncated = 3)
 
-  if (!quiet) {
-    disclaimer <- paste0(
-      grep("Disclaimer", headings, value = TRUE),
-      collapse = "\n"
-    )
-    if (nchar(disclaimer) > 0) {
-      message("Environment Canada Disclaimers:\n", disclaimer)
-    }
+  disclaimer <- paste0(
+    grep("Disclaimer", headings, value = TRUE),
+    collapse = "\n"
+  )
+  if (nchar(disclaimer) > 0) {
+    wc_inform("Environment Canada Disclaimers:\n", disclaimer)
   }
 
-  if (verbose) {
-    message("Downloading stations data frame")
-  }
+  wc_progress("Downloading stations data frame")
 
-  raw <- httr::content(resp, as = "text", encoding = "Latin1")
+  raw <- httr2::resp_body_string(resp, encoding = "Latin1")
 
   s <- readr::read_delim(
-    raw,
+    I(raw),
     skip = skip,
     col_types = readr::cols(),
     progress = FALSE
@@ -310,23 +253,23 @@ stations_dl_internal <- function(
   )
 
   # Transform lat/lon to decimal degrees
-  # s <- s %>%
+  # s <- s |>
   #   dplyr::mutate(lat = sprintf("%.f", lat),
-  #                 lon = sprintf("%.f", lon)) %>%
+  #                 lon = sprintf("%.f", lon)) |>
   #   tidyr::separate(lat, into = c("lat_d", "lat_m", "lat_s", "lat_sd"),
-  #                   sep = c(-7L, -5L, -3L), remove = FALSE, convert = TRUE) %>%
-  #   dplyr::mutate(lat = lat_d + lat_m/60 + (lat_s + lat_sd/1000)/3600) %>%
+  #                   sep = c(-7L, -5L, -3L), remove = FALSE, convert = TRUE) |>
+  #   dplyr::mutate(lat = lat_d + lat_m/60 + (lat_s + lat_sd/1000)/3600) |>
   #   tidyr::separate(lon, into = c("lon_d", "lon_m", "lon_s", "lon_sd"),
-  #                   sep = c(-7L, -5L, -3L), remove = FALSE, convert = TRUE) %>%
-  #   dplyr::mutate(lon = lon_d - lon_m/60 - (lon_s + lon_sd/1000)/3600) %>%
+  #                   sep = c(-7L, -5L, -3L), remove = FALSE, convert = TRUE) |>
+  #   dplyr::mutate(lon = lon_d - lon_m/60 - (lon_s + lon_sd/1000)/3600) |>
   #   dplyr::select(-dplyr::matches("(lat|lon)_(d|m|s|sd)$"))
 
   # Calculate Timezones
-  station_tz <- dplyr::select(s, "prov", "station_id", "lat", "lon") %>%
-    dplyr::distinct() %>%
+  station_tz <- dplyr::select(s, "prov", "station_id", "lat", "lon") |>
+    dplyr::distinct() |>
     dplyr::mutate(
       tz = lutz::tz_lookup_coords(.data$lat, .data$lon, method = "accurate"),
-      tz = purrr::map_chr(.data$tz, ~ tz_diff(.x)),
+      tz = purrr::map_chr(.data$tz, tz_diff),
       tz = dplyr::if_else(
         is.na(.data$lat) | is.na(.data$lon),
         NA_character_,
@@ -334,14 +277,14 @@ stations_dl_internal <- function(
       )
     )
 
-  s <- s %>%
-    dplyr::left_join(station_tz, by = c("station_id", "prov", "lat", "lon")) %>%
-    tidyr::gather(
-      key = "interval",
-      value = "date",
-      dplyr::matches("(start)|(end)")
-    ) %>%
-    tidyr::separate("interval", c("interval", "type"), sep = "_") %>%
+  s <- s |>
+    dplyr::left_join(station_tz, by = c("station_id", "prov", "lat", "lon")) |>
+    tidyr::pivot_longer(
+      cols = dplyr::matches("(start)|(end)"),
+      names_to = c("interval", "type"),
+      names_sep = "_",
+      values_to = "date"
+    ) |>
     dplyr::mutate(
       type = factor(.data$type, levels = c("start", "end")),
       station_name = as.character(.data$station_name),
@@ -363,39 +306,40 @@ stations_dl_internal <- function(
         labels = .env$province
       ),
       prov = as.character(.data$prov)
-    ) %>%
-    tidyr::spread("type", "date") %>%
-    dplyr::arrange(.data$prov, .data$station_id, .data$interval) %>%
+    ) |>
+    tidyr::pivot_wider(names_from = "type", values_from = "date") |>
+    dplyr::arrange(.data$prov, .data$station_id, .data$interval) |>
     dplyr::as_tibble()
 
-  s <- s %>%
-    dplyr::left_join(normals, by = c("station_name", "climate_id")) %>%
+  s <- s |>
+    dplyr::left_join(normals, by = c("station_name", "climate_id")) |>
     dplyr::mutate(
-      dplyr::across(dplyr::contains("normals"), ~ tidyr::replace_na(., FALSE)),
+      dplyr::across(dplyr::contains("normals"), \(x) {
+        tidyr::replace_na(x, FALSE)
+      }),
       normals = purrr::pmap_lgl(
         dplyr::pick(dplyr::starts_with("normals_")),
         any
       )
-    ) %>%
+    ) |>
     dplyr::relocate(dplyr::contains("normals_"), .after = dplyr::last_col())
 
-  stn <- list(
-    stn = s,
-    meta = list(ECCC_modified = eccc_meta, weathercan_modified = Sys.Date())
+  meta <- data.frame(
+    ECCC_modified = eccc_meta,
+    weathercan_modified = Sys.Date()
   )
 
-  if (verbose) {
-    message("Saving stations data to ", f)
-  }
-  readr::write_rds(x = stn, file = f, compress = "gz")
+  wc_progress("Saving stations data to ", stations_file())
+  wc_progress("Saving stations metadata to ", stations_meta_file())
 
-  if (!quiet) {
-    message(
-      "Stations data saved...\n",
-      "Use `stations()` to access most recent version and ",
-      "`stations_meta()` to see when this was last updated"
-    )
-  }
+  readr::write_csv(x = s, file = stations_file())
+  readr::write_csv(x = meta, file = stations_meta_file())
+
+  wc_inform(
+    "Stations data saved...\n",
+    "Use `stations()` to access most recent version and ",
+    "`stations_meta()` to see when this was last updated"
+  )
 }
 
 #' Search for stations by name or location
@@ -427,11 +371,6 @@ stations_dl_internal <- function(
 #'   collection beginning in or before the specified year.
 #' @param ends_earliest Numeric. Restrict results to stations with data
 #'   collection ending in or after the specified year.
-#' @param verbose Logical. Include progress messages
-#' @param quiet Logical. Suppress all messages (including messages regarding
-#'   missing data, etc.)
-#' @param stn DEFUNCT. Now use `stations_dl()` to update internal data and
-#'   `stations_meta()` to check the date it was last updated.
 #'
 #' @details To search by coordinates, users must make sure they have the
 #'  [sp](https://cran.r-project.org/package=sp) package installed.
@@ -467,17 +406,12 @@ stations_search <- function(
   interval = c("hour", "day", "month"),
   normals_years = NULL,
   normals_only = NULL,
-  stn = NULL,
   starts_latest = NULL,
-  ends_earliest = NULL,
-  verbose = FALSE,
-  quiet = FALSE
+  ends_earliest = NULL
 ) {
   if (!is.null(normals_only)) {
-    warning(
-      "`normals_only` is deprecated, switching to ",
-      "`normals_years = 'current'`",
-      call. = FALSE
+    wc_warn(
+      "`normals_only` is deprecated, switching to `normals_years = 'current'`"
     )
     normals_years <- "current"
   }
@@ -485,28 +419,19 @@ stations_search <- function(
     !is.null(normals_years) &&
       !normals_years %in% c("current", "1991-2020", "1981-2010", "1971-2000")
   ) {
-    stop(
+    wc_stop(
       "`normals_years` must either be `NULL` (don't filter by normals),",
-      "'current', '1991-2020', '1981-2010' or '1971-2000'",
-      call. = FALSE
+      "'current', '1991-2020', '1981-2010' or '1971-2000'"
     )
   }
 
   if (
-    all(is.null(name), is.null(coords)) |
+    all(is.null(name), is.null(coords)) ||
       all(!is.null(name), !is.null(coords))
   ) {
-    stop("Need a search name OR search coordinate", call. = FALSE)
+    wc_stop("Need a search name OR search coordinate")
   }
 
-  if (!is.null(stn)) {
-    stop(
-      "`stn` is defunct, to use an updated stations data frame ",
-      "use `stations_dl()` to update the internal data, and ",
-      "`stations_meta()` to check when it was last updated",
-      call. = FALSE
-    )
-  }
   stn <- stations()
 
   if (!is.null(coords)) {
@@ -514,19 +439,15 @@ stations_search <- function(
       coords <- try(as.numeric(as.character(coords)), silent = TRUE)
     })
     if (
-      length(coords) != 2 | all(is.na(coords)) | inherits(coords, "try-error")
+      length(coords) != 2 || all(is.na(coords)) || inherits(coords, "try-error")
     ) {
-      stop(
-        "'coord' takes one pair of lat and lon in a numeric vector",
-        call. = FALSE
-      )
+      wc_stop("'coord' takes one pair of lat and lon in a numeric vector")
     }
 
     if (!requireNamespace("sf", quietly = TRUE)) {
-      stop(
+      wc_stop(
         "Package 'sf' required to search for stations using coordinates. ",
-        "Use the code \"install.packages('sf')\" to install.",
-        call. = FALSE
+        "Use the code \"install.packages('sf')\" to install."
       )
     }
   }
@@ -551,8 +472,8 @@ stations_search <- function(
         silent = TRUE
       )
     })
-    if (is.na(starts_latest) | inherits(starts_latest, "try-error")) {
-      stop("'starts_latest' needs to be a year (YYYY)", call. = FALSE)
+    if (is.na(starts_latest) || inherits(starts_latest, "try-error")) {
+      wc_stop("'starts_latest' needs to be a year (YYYY)")
     }
     stn <- dplyr::filter(stn, .data$start <= starts_latest)
   }
@@ -564,31 +485,24 @@ stations_search <- function(
         silent = TRUE
       )
     })
-    if (is.na(ends_earliest) | inherits(ends_earliest, "try-error")) {
-      stop("'ends_earliest' needs to be a year (YYYY)", call. = FALSE)
+    if (is.na(ends_earliest) || inherits(ends_earliest, "try-error")) {
+      wc_stop("'ends_earliest' needs to be a year (YYYY)")
     }
     stn <- dplyr::filter(stn, .data$end >= ends_earliest)
   }
 
   if (!is.null(name)) {
-    if (!quiet) {
-      if (length(name) == 2 & is.numeric(name)) {
-        message(
-          "The `name` argument looks like a pair of coordinates. ",
-          "Did you mean `coords = c(",
-          name[1],
-          ", ",
-          name[2],
-          ")`?"
-        )
-      }
+    if (length(name) == 2 && is.numeric(name)) {
+      wc_inform(
+        "The `name` argument looks like a pair of coordinates. ",
+        "Did you mean `coords = c({name[1]}, {name[2]})`?"
+      )
     }
 
-    if (verbose) {
-      message("Searching by name")
-    }
+    wc_progress("Searching by name")
+
     if (inherits(try(as.character(name), silent = TRUE), "try-error")) {
-      stop("'name' needs to be coercible into a character", call. = FALSE)
+      wc_stop("'name' needs to be coercible into a character")
     }
 
     name <- gsub("([A-Z]*)", "\\L\\1", name, perl = TRUE)
@@ -602,31 +516,27 @@ stations_search <- function(
   }
 
   if (!is.null(coords)) {
-    if (verbose) {
-      message("Calculating station distances")
-    }
+    wc_progress("Calculating station distances")
 
-    coords <- sf::st_point(coords[c(2, 1)]) %>%
+    coords <- sf::st_point(coords[c(2, 1)]) |>
       sf::st_sfc(crs = 4326)
 
-    locs <- dplyr::select(stn, "station_id", "lon", "lat") %>%
-      tidyr::drop_na() %>%
-      dplyr::distinct() %>%
-      sf::st_as_sf(coords = c("lon", "lat"), crs = 4326) %>%
+    locs <- dplyr::select(stn, "station_id", "lon", "lat") |>
+      tidyr::drop_na() |>
+      dplyr::distinct() |>
+      sf::st_as_sf(coords = c("lon", "lat"), crs = 4326) |>
       dplyr::mutate(
         distance = as.vector(sf::st_distance(coords, .data$geometry)) / 1000
-      ) %>%
+      ) |>
       sf::st_drop_geometry()
 
-    stn <- dplyr::left_join(stn, locs, by = "station_id") %>%
+    stn <- dplyr::left_join(stn, locs, by = "station_id") |>
       dplyr::arrange(.data$distance)
 
     i <- which(stn$distance <= dist)
     if (length(i) == 0) {
       i <- 1:10
-      if (!quiet) {
-        message("No stations within ", dist, "km. Returning closest 10 records")
-      }
+      wc_inform("No stations within {dist}km. Returning closest 10 records")
     }
   }
 
@@ -653,34 +563,49 @@ stations_search <- function(
   stn
 }
 
+#' Get list of stations with climate normals
+#'
+#' Downloads the station inventory for a specific normals year from ECCC.
+#'
+#' @param yr Character. Year to query (e.g., "1991" for 1991-2020)
+#'
+#' @returns Tibble with station_name and climate_id columns
+#'
+#' @noRd
 
 normals_stn_list <- function(yr) {
   get_check(
-    getOption("weathercan.urls.stations.normals"),
+    url = getOption("weathercan.urls.stations.normals"),
     query = list(yr = yr)
-  ) %>%
-    httr::content(
-      type = "text/csv",
-      col_types = readr::cols(),
-      encoding = "Latin1",
-      progress = FALSE
-    ) %>%
-    dplyr::rename_with(tolower) %>%
+  ) |>
+    httr2::resp_body_string() |>
+    I() |>
+    readr::read_csv(show_col_types = FALSE) |>
+    dplyr::rename_with(tolower) |>
     dplyr::select(dplyr::any_of(c("station_name", "climate_id")))
 }
 
+#' Get climate normals availability for all stations
+#'
+#' Downloads station lists for all normals periods and combines into a single
+#' data frame with separate columns for each normals period.
+#'
+#' @returns Tibble with station_name, climate_id, and normals_YYYY_YYYY columns
+#'
+#' @noRd
+
 stations_normals <- function() {
-  dplyr::tibble(years = c("1991-2020", "1981-2010", "1971-2000")) %>%
+  dplyr::tibble(years = c("1991-2020", "1981-2010", "1971-2000")) |>
     dplyr::mutate(
       yr = stringr::str_extract(.data$years, "^[0-9]{4}"),
       stns = purrr::map(.data$yr, normals_stn_list)
-    ) %>%
-    tidyr::unnest("stns") %>%
-    dplyr::select(-"yr") %>%
+    ) |>
+    tidyr::unnest("stns") |>
+    dplyr::select(-"yr") |>
     dplyr::mutate(
       normals = TRUE,
       years = stringr::str_replace(.data$years, "-", "_"),
       years = paste0("normals_", .data$years)
-    ) %>%
+    ) |>
     tidyr::pivot_wider(names_from = "years", values_from = "normals")
 }

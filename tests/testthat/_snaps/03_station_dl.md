@@ -71,9 +71,20 @@
           "value": ["Etc/GMT+8", "Etc/GMT+8", "Etc/GMT+8", "Etc/GMT+8", "Etc/GMT+8", "Etc/GMT+8", "Etc/GMT+8", "Etc/GMT+8", "Etc/GMT+8", "Etc/GMT+8"]
         },
         {
-          "type": "character",
-          "attributes": {},
-          "value": ["day", "month", "day", "month", "day", "month", "day", "month", "day", "month"]
+          "type": "integer",
+          "attributes": {
+            "levels": {
+              "type": "character",
+              "attributes": {},
+              "value": ["hour", "day", "month"]
+            },
+            "class": {
+              "type": "character",
+              "attributes": {},
+              "value": ["factor"]
+            }
+          },
+          "value": [2, 3, 2, 3, 2, 3, 2, 3, 2, 3]
         },
         {
           "type": "double",

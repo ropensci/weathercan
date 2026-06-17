@@ -1,6 +1,6 @@
 #' Easy downloading of weather data from Environment and Climate Change Canada
 #'
-#' \code{weathercan} is an R package for simplifying the downloading of
+#' `weathercan` is an R package for simplifying the downloading of
 #' Historical Climate Data from the Environment and Climate Change Canada (ECCC)
 #' website (<https://climate.weather.gc.ca>)
 #'
@@ -33,14 +33,14 @@
 #'  - [`kamloops_day`]
 #'  - [`pg`]
 #'
-#' As well as several vignettes available in the package and [Online](https://docs.ropensci.org/weathercan/):
+#' As well as several articles available [Online](https://docs.ropensci.org/weathercan/):
 #'
-#'  - [General Usage](https://docs.ropensci.org/weathercan/articles/weathercan.html): `vignette("weathercan", package = "weathercan")`
-#'  - [Interpolating](https://docs.ropensci.org/weathercan/articles/interpolate_data.html): `vignette("interpolation", package = "weathercan")`
-#'  - [Reproducibility](https://docs.ropensci.org/weathercan/articles/reproducibility.html): `vignette("reproducibility", package = "weathercan")`
-#'  - [Flags and Codes](https://docs.ropensci.org/weathercan/articles/flags.html): `vignette("flags", package = "weathercan")`
-#'  - [Weather: Terms and Units](https://docs.ropensci.org/weathercan/articles/glossary.html): `vignette("glossary", package = "weathercan")`
-#'  - [Climate Normals: Terms and Units](https://docs.ropensci.org/weathercan/articles/glossary_normals.html): `vignette("glossary_normals", package = "weathercan")`
+#'  - [General Usage](https://docs.ropensci.org/weathercan/articles/weathercan.html)
+#'  - [Interpolating](https://docs.ropensci.org/weathercan/articles/interpolate_data.html)
+#'  - [Reproducibility](https://docs.ropensci.org/weathercan/articles/reproducibility.html)
+#'  - [Flags and Codes](https://docs.ropensci.org/weathercan/articles/flags.html)
+#'  - [Weather: Terms and Units](https://docs.ropensci.org/weathercan/articles/glossary.html)
+#'  - [Climate Normals: Terms and Units](https://docs.ropensci.org/weathercan/articles/glossary_normals.html)
 #'
 #' We also have some advanced articles:
 #'
@@ -56,7 +56,6 @@
 #'
 #' @keywords internal
 "_PACKAGE"
-#' @importFrom dplyr "%>%"
 #' @importFrom rlang .data .env
 NULL
 
@@ -73,8 +72,10 @@ NULL
   )
 
   options(
+    weathercan.verbosity = "standard",
     weathercan.urls.weather = "https://climate.weather.gc.ca/climate_data/bulk_data_e.html",
     weathercan.urls.normals = "https://climate.weather.gc.ca/climate_normals/bulk_data_e.html",
+    weathercan.urls.normals_1991_2020 = "https://climate.weather.gc.ca/climate_normals/download/1991_e.html?area=canada_wide&product%5B%5D=data&product%5B%5D=station_inventory",
     # Download from google drive: https://stackoverflow.com/a/50533232/3362144
     weathercan.urls.stations = paste0(
       "https://collaboration.cmc.ec.gc.ca/cmc/climate/",
@@ -84,7 +85,8 @@ NULL
     #  paste0("https://drive.google.com/uc?export=download&id=",
     #         "1HDRnj41YBWpMioLPwAFiLlK4SK8NV72C"),
     weathercan.urls.stations.normals = "https://climate.weather.gc.ca/climate_normals/station_inventory_e.html",
-    weathercan.time.message = FALSE
+    weathercan.time.message = FALSE,
+    weathercan.normals.message = FALSE
   )
 
   # CRAN Note avoidance
@@ -103,7 +105,9 @@ NULL
 
 .onAttach <- function(libname, pkgname) {
   packageStartupMessage(
-    "As of v0.7.2, the `normals` column in `stations()` reflects whether or not ",
-    "there\nare *any* normals available (not just the most recent)."
+    "Consider citing *both* ECCC and weathercan:\n",
+    "- Environment and Climate Change Canada (ECCC) is the *source* of this data\n",
+    "- weathercan is software for *downloading* the data\n",
+    "- See ECCC's terms and conditions: https://climate.weather.gc.ca/prods_servs/attachment1_e.html"
   )
 }

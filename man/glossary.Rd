@@ -8,8 +8,8 @@
 A data frame with 77 rows and 5 variables:
 \describe{
 \item{interval}{Data interval type, 'hour', 'day', or 'month'.}
-\item{ECCC_name}{Original column name when downloaded directly from ECCC}
-\item{weathercan_name}{R-compatible name given when downloaded with the
+\item{ECCC}{Original column name when downloaded directly from ECCC}
+\item{weathercan}{R-compatible name given when downloaded with the
 \code{weather_dl()} function using the default argument \code{format =
   TRUE}.}
 \item{units}{Units of the measurement.}

@@ -1,6 +1,5 @@
 ---
 title: "Reproducibility"
-author: "Steffi LaZerte"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -45,5 +44,7 @@ library(weathercan)
 # Reproducibility
 stations_meta()
 citation('weathercan')
-if(requireNamespace("devtools", quietly = TRUE)) devtools::session_info()
+if (requireNamespace("devtools", quietly = TRUE)) {
+  devtools::session_info()
+}
 ```

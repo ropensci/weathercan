@@ -1,6 +1,5 @@
 ---
 title: "Climate Normals: Terms and Units"
-author: "Steffi LaZerte"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -18,40 +17,57 @@ library(stringr)
 
 This table shows details regarding original column (measurement) names and units of all climate normals measurements. It further provides links back to the ECCC glossary for more details.
 
-See the ECCC website on climate normals for more details: <`r paste0("https://www.canada.ca/en/environment-climate-change/services/",
-            "climate-change/canadian-centre-climate-services/display-download/",
-            "technical-documentation-climate-normals.html")`>
+See the ECCC documentation on climate normals for more details: 
 
-For details on weather measurements, see the `glossary` vignette.
+- [1991-2020](https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1991_2020_Calculation_Information.pdf)
+- [1981-2010](https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1981_2010_Calculation_Information.pdf)
+- [1971-2000](https://collaboration.cmc.ec.gc.ca/cmc/climate/Normals/Canadian_Climate_Normals_1971_2000_Calculation_Information.pdf)
 
-### General descriptions
+For details on weather measurements, see the [glossary](glossary.html) vignette.
+
+## General descriptions
 ```{r, asis = TRUE, echo = FALSE}
-glossary_normals[1:18,] %>%
-  mutate(description = stringr::str_replace_all(description, "\\n", " ")) %>%
+glossary_normals |>
+  mutate(description = stringr::str_replace_all(description, "\\n", " ")) |>
   knitr::kable()
 ```
 
 
-### Original names and units
+## Original names and units
 These represent the original ECCC measurement names with units and their corresponding measurements in `weathercan`.
 
-```{r, echo = FALSE}
-g <- glossary_normals[19:nrow(glossary_normals),] %>%
-  select(-description) %>%
-  mutate(group = str_detect(weathercan_name, "title"),
-         group = cumsum(group)) %>%
-  filter(weathercan_name != "probability") %>%
-  group_by(group) %>% 
-  mutate(title = ECCC_name[1]) %>%
-  group_by(title) %>%
-  filter(!str_detect(weathercan_name, "title")) %>%
-  select(-group) %>%
-  nest()
-```
+Note that because the format of normals from 1991-2020 differs from that in previous years, 
+we treat them separately.
+
+## 1991-2020
 
 ```{r, results = "asis", echo = FALSE}
-for(t in seq_len(nrow(g))) {
-  cat("<center><h4>", str_to_title(g$title[t]), "</h3></center>\n")
+g <- variables_normals_new |>
+  nest(.by = "measurement_type")
+
+
+for (t in seq_len(nrow(g))) {
+  cat("### ", str_to_title(g$measurement_type[t]), "\n\n")
+  print(knitr::kable(g$data[[t]], format = "html"))
+  cat("\n\n")
+}
+```
+
+
+## 1981-2010 and 1971-2000
+```{r, results = "asis", echo = FALSE}
+g <- variables_normals_old |>
+  mutate(group = str_detect(weathercan, "title"), group = cumsum(group)) |>
+  filter(weathercan != "probability") |>
+  group_by(group) |>
+  mutate(title = ECCC[1]) |>
+  group_by(title) |>
+  filter(!str_detect(weathercan, "title")) |>
+  select(-group) |>
+  nest()
+
+for (t in seq_len(nrow(g))) {
+  cat("### ", str_to_title(g$title[t]), "\n\n")
   print(knitr::kable(g$data[[t]], format = "html"))
   cat("\n")
 }

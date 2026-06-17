@@ -10,15 +10,14 @@ weather_dl(
   start = NULL,
   end = NULL,
   interval = "hour",
+  months = NULL,
   trim = TRUE,
+  trim_by_stn = FALSE,
   format = TRUE,
   string_as = NA,
   time_disp = "none",
-  stn = NULL,
   encoding = "UTF-8",
-  list_col = FALSE,
-  verbose = FALSE,
-  quiet = FALSE
+  list_col = FALSE
 )
 }
 \arguments{
@@ -35,8 +34,19 @@ data frame or the \code{\link{stations_search}} function to find IDs.}
 \item{interval}{Character. Interval of the data, one of "hour", "day",
 "month".}
 
+\item{months}{Numeric vector. Can supply 1-12 to optionally filter the data
+to only specific months. For "hour" interval, this selectively downloads
+data by month so can speed up downloads. For intervals of "day" and "month"
+this only filters the data after full years or full data ranges have been
+downloaded.}
+
 \item{trim}{Logical. Trim missing values from the start and end of the
 weather dataframe. Only applies if \code{format = TRUE}}
+
+\item{trim_by_stn}{Logical. Data from different stations are generally padded
+with NAs to have the same date range. If this isn't desirable, use \code{trim = TRUE} and \code{trim_by_stn = TRUE} to trim \code{NA}s from the start and end of each
+station. \code{trim_by_stn = FALSE} (default), only the sides of the entire
+range are trimmed.}
 
 \item{format}{Logical. If TRUE, formats data for immediate use. If FALSE,
 returns data exactly as downloaded from Environment and Climate Change
@@ -48,18 +58,10 @@ numeric measurement with. See Details.}
 
 \item{time_disp}{Character. Either "none" (default) or "UTC". See details.}
 
-\item{stn}{DEFUNCT. Now use \code{stations_dl()} to update internal data and
-\code{stations_meta()} to check the date it was last updated.}
-
 \item{encoding}{Character. Text encoding for download.}
 
 \item{list_col}{Logical. Return data as nested data set? Defaults to FALSE.
 Only applies if \code{format = TRUE}}
-
-\item{verbose}{Logical. Include progress messages}
-
-\item{quiet}{Logical. Suppress all messages (including messages regarding
-missing data, etc.)}
 }
 \value{
 A tibble with station ID, name and weather data.
@@ -77,18 +79,19 @@ converts data to numeric where possible. If character strings are contained
 in traditionally numeric fields (e.g., weather speed may have values such
 as "< 30"), they can be replaced with a character specified by \code{string_as}.
 The default is NA. Formatting also replaces data associated with certain
-flags with NA (M = Missing).
+flags with NA (M = Missing), if they are not already marked as NA.
 
 Start and end date can be specified, but if not, it will default to the
 start and end date of the range (this could result in downloading a lot of
 data!).
 
-For hourly data, timezones are always "UTC", but the actual times are
-either local time (default; \code{time_disp = "none"}), or UTC (\code{time_disp = "UTC"}). When \code{time_disp = "none"}, times reflect the local time without
-daylight savings. This means that relative measures of time, such as
-"nighttime", "daytime", "dawn", and "dusk" are comparable among stations in
-different timezones. This is useful for comparing daily cycles. When
-\code{time_disp = "UTC"} the times are transformed into UTC timezone. Thus
+For hourly data, timezones are always marked "UTC", but the actual times
+are either local time (default; \code{time_disp = "none"}), or UTC
+(\code{time_disp = "UTC"}). When \code{time_disp = "none"}, times reflect the local
+time without daylight savings. This means that relative measures of time,
+such as "nighttime", "daytime", "dawn", and "dusk" are comparable among
+stations in different timezones. This is useful for comparing daily cycles.
+When \code{time_disp = "UTC"} the times are transformed into UTC timezone. Thus
 midnight in Kamloops would register as 08:00:00 (Pacific time is 8 hours
 behind UTC). This is useful for tracking weather events through time, but
 will result in odd 'daily' measures of weather (e.g., data collected in the
@@ -109,8 +112,15 @@ not be available depending on the date of the file (e.g., station operator
 was added as of April 1st 2018, so will be in all data which includes dates
 on or after April 2018).
 }
+\section{Verbosity}{
+Verbosity (how 'chatty' weathercan is) can be specified using the option
+\code{weathercan.verbosity}. Which takes "standard" (default), "quiet" (suppress
+all messages including those regarding missing data, etc.), or "verbose"
+(extra progress messages).
+}
+
 \examples{
-\dontshow{if (check_eccc()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (check_eccc()) withAutoprint(\{ # examplesIf}
 
 kam <- weather_dl(station_ids = 51423,
                   start = "2016-01-01", end = "2016-02-15")
@@ -127,5 +137,13 @@ ggplot(data = kam.pg, aes(x = time, y = temp,
                           group = station_name,
                           colour = station_name)) +
        geom_line()
+
+# Download only January and December
+kam <- weather_dl(
+  station_ids = 51423,
+  start = "2016-01-01",
+  end = "2018-02-15",
+  months = c(1, 10)
+)
 \dontshow{\}) # examplesIf}
 }

@@ -37,7 +37,13 @@ test_that("Functions cached correctly", {
   )
   expect_gt(t1[3], t2[3])
 
-  t1 <- system.time(normals_dl(climate_id = c("2403500", "5010480", "1096450")))
-  t2 <- system.time(normals_dl(climate_id = c("2403500", "5010480", "1096450")))
+  t1 <- system.time(normals_dl(
+    climate_id = c("2403500", "5010480", "1096450"),
+    normals_years = "1981-2010"
+  ))
+  t2 <- system.time(normals_dl(
+    climate_id = c("2403500", "5010480", "1096450"),
+    normals_years = "1981-2010"
+  ))
   expect_gt(t1[3], t2[3])
 })

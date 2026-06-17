@@ -4,13 +4,12 @@ withr::local_options(list("weathercan.time.message" = TRUE))
 test_that("weather_dl hour", {
   skip_on_cran()
   skip_if_offline()
-
+  withr::local_options(list("weathercan.verbosity" = "quiet"))
   expect_silent(
     w <- weather_dl(
       station_ids = 51423,
       start = "2014-01-01",
-      end = "2014-01-31",
-      quiet = TRUE
+      end = "2014-01-31"
     )
   )
 
@@ -22,21 +21,25 @@ test_that("weather_dl hour alerts to change in time handling", {
   withr::local_options(list("weathercan.time.message" = FALSE))
 
   expect_message(
-    weather_dl(station_ids = 51423, start = "2014-01-01", end = "2014-01-31"),
+    weather_dl(
+      station_ids = 51423,
+      start = "2014-01-01",
+      end = "2014-01-31"
+    ),
     "As of weathercan v0.3.0 time display is"
   )
 })
 
 test_that("weather (hour) returns a data frame", {
   skip_on_cran()
+  withr::local_options(list("weathercan.verbosity" = "quiet"))
 
   # Cached
   expect_silent(
     w <- weather_dl(
       station_ids = 51423,
       start = "2014-01-01",
-      end = "2014-01-31",
-      quiet = TRUE
+      end = "2014-01-31"
     )
   )
 
@@ -62,7 +65,6 @@ test_that("weather (hour) returns a data frame", {
   expect_equal(w$time[1], as.POSIXct("2014-01-01 00:00:00", tz = "UTC"))
 })
 
-
 test_that("weather (hour) formats timezone display", {
   skip_on_cran()
 
@@ -87,7 +89,7 @@ test_that("weather (hour) formats NL timezone", {
       start = "1965-01-01",
       end = "1965-01-15"
     )
-  }) %>%
+  }) |>
     expect_s3_class("data.frame")
   expect_equal(w$time[1], as.POSIXct("1965-01-01 00:30:00", tz = "UTC"))
 })
@@ -147,13 +149,13 @@ test_that("weather (hour) gets all", {
 
 test_that("weather (hour) trims NAs", {
   skip_on_cran()
+
   expect_equal(
     nrow(weather_dl(
       6819,
       start = "2017-08-20",
       end = "2017-09-01",
-      interval = "hour",
-      trim = TRUE
+      interval = "hour"
     )),
     96
   )
@@ -171,19 +173,22 @@ test_that("weather (hour) trims NAs", {
   )
 })
 
+test_that("weather_dl hour filters by month", {
+  skip_on_cran()
+
+  w <- weather_dl(
+    station_ids = 51423,
+    start = "2014-01-01",
+    end = "2015-10-31",
+    months = c(1, 10)
+  )
+  expect_equal(unique(w$month), c(1, 10))
+})
+
 test_that("weather (hour) no data fails nicely", {
   skip_on_cran()
-  expect_message(
-    w1 <- weather_dl(
-      c(1274, 1275),
-      interval = "hour",
-      start = "2012-11-01",
-      end = "2012-11-30"
-    ),
-    "There are no data for some stations \\(1274\\)"
-  )
 
-  # Cached
+  # One stn - no int
   expect_message(
     w0 <- weather_dl(
       1274,
@@ -191,34 +196,35 @@ test_that("weather (hour) no data fails nicely", {
       start = "2012-11-01",
       end = "2012-11-30"
     ),
-    paste0(
-      "There are no data for station 1274 for this ",
-      "interval \\(hour\\)"
-    )
-  )
+    "Data unavailable for all stations"
+  ) |>
+    expect_message("1274 \\(none for interval hour\\)") |>
+    expect_message("Available Station Data:") |>
+    expect_message("station_id")
 
   expect_s3_class(w0, "data.frame")
   expect_length(w0, 0)
   expect_equal(nrow(w0), 0)
+
+  # One stn of multiple - no int
+  expect_message(
+    w1 <- weather_dl(
+      c(1274, 1275),
+      interval = "hour",
+      start = "2012-11-01",
+      end = "2012-11-30"
+    ),
+    "Data unavailable for some stations"
+  ) |>
+    expect_message("1274 \\(none for interval hour\\)") |>
+    expect_message("Available Station Data:") |>
+    expect_message("station_id")
+
   expect_s3_class(w1, "data.frame")
   expect_length(w1, length(kamloops))
   expect_equal(nrow(w1), 720)
 
-  expect_message(
-    w1 <- weather_dl(
-      c(1275, 1001),
-      interval = "hour",
-      start = "2017-01-01",
-      end = "2017-01-30"
-    ),
-    paste0(
-      "There are no data for all stations \\(1275, 1001\\), ",
-      "in this time range \\(2017-01-01 to 2017-01-30\\), ",
-      "for this interval \\(hour\\)"
-    )
-  )
-
-  # Cache
+  # One no time
   expect_message(
     w0 <- weather_dl(
       1275,
@@ -226,16 +232,30 @@ test_that("weather (hour) no data fails nicely", {
       start = "2017-01-01",
       end = "2017-01-30"
     ),
-    paste0(
-      "There are no data for station 1275, ",
-      "in this time range \\(2017-01-01 to 2017-01-30\\), ",
-      "for this interval \\(hour\\)"
-    )
-  )
+    "Data unavailable for all stations"
+  ) |>
+    expect_message("1275 \\(none for date range") |>
+    expect_message("Available Station Data:") |>
+    expect_message("station_id")
 
   expect_s3_class(w0, "data.frame")
   expect_length(w0, 0)
   expect_equal(nrow(w0), 0)
+
+  # Mult no time
+  expect_message(
+    w1 <- weather_dl(
+      c(1275, 1001),
+      interval = "hour",
+      start = "2017-01-01",
+      end = "2017-01-30"
+    ),
+    "Data unavailable for all stations"
+  ) |>
+    expect_message("1275, 1001 \\(none for date range") |>
+    expect_message("Available Station Data:") |>
+    expect_message("station_id")
+
   expect_s3_class(w1, "data.frame")
   expect_length(w1, 0)
   expect_equal(nrow(w1), 0)
@@ -243,6 +263,7 @@ test_that("weather (hour) no data fails nicely", {
 
 test_that("weather (hour) verbose and quiet", {
   skip_on_cran()
+
   # Cached
   expect_message(
     weather_dl(
@@ -251,37 +272,43 @@ test_that("weather (hour) verbose and quiet", {
       start = "2012-11-01",
       end = "2012-11-30"
     ),
-    "There are no data"
-  )
+    "Data unavailable for some stations"
+  ) |>
+    expect_message("1274") |>
+    expect_message("Available Station Data:") |>
+    expect_message("station_id")
 
+  withr::local_options(list("weathercan.verbosity" = "quiet"))
   expect_silent(weather_dl(
     c(1274, 1274),
     interval = "hour",
     start = "2012-11-01",
-    end = "2012-11-30",
-    quiet = TRUE
+    end = "2012-11-30"
   ))
 
+  withr::local_options(list("weathercan.verbosity" = "verbose"))
   expect_message(
     weather_dl(
       c(1274, 1275),
       interval = "hour",
       start = "2012-11-01",
-      end = "2012-11-30",
-      verbose = TRUE
+      end = "2012-11-30"
     ),
-    "Getting station"
-  ) %>%
-    expect_message("No data for station") %>%
-    expect_message("Getting station") %>%
-    expect_message("Formatting station") %>%
-    expect_message("Adding header data") %>%
-    expect_message("Trimming missing") %>%
-    expect_message("There are no data")
+    "Getting station: 1275"
+  ) |>
+    expect_message("Metadata") |>
+    expect_message("Weather data") |>
+    expect_message("Formatting") |>
+    expect_message("Trimming missing values before and after") |>
+    expect_message("Data unavailable for some stations") |>
+    expect_message("1274") |>
+    expect_message("Available Station Data:") |>
+    expect_message("station_id")
 })
 
 test_that("weather (hour) handles data with different numbers of columns", {
   skip_on_cran()
+  withr::local_options(list(weathercan.verbosity = "quiet"))
   expect_silent(
     d <- weather_dl(
       c(6819, 51423),
@@ -293,19 +320,20 @@ test_that("weather (hour) handles data with different numbers of columns", {
   expect_gt(nrow(d), 0)
 })
 
-test_that("weather (hour) skips with message if end date < start date", {
+test_that("weather (hour) message if end date < start date", {
   skip_on_cran()
   # Cached
-  expect_message(
+  expect_error(
     weather_dl(station_ids = 51423, start = "2014-01-31", end = "2014-01-01"),
-    "The end date "
+    "'end' date is earlier than the 'start' date"
   )
   expect_message(
     weather_dl(station_ids = 51423, end = "2012-01-01"),
-    "The end date "
-  )
-
-  expect_message(w <- weather_dl(49909, end = "2007-04-20"), "The end date")
+    "Data unavailable for all stations"
+  ) |>
+    expect_message("none for date range to 2012-01-01") |>
+    expect_message("Available Station Data") |>
+    expect_message("station_id")
 })
 
 test_that("weather (hour) crosses the year line", {
@@ -324,10 +352,7 @@ test_that("weather (hour) crosses the year line", {
   expect_equal(max(w$date), as.Date("2002-01-05"))
 })
 
-test_that("weather (invalid_interval) verifies error return when interval is invalid", {
-  # The value of interval is invalid
-  skip_on_cran()
-
+test_that("weather_dl() invalid interval", {
   expect_error(
     weather_dl(
       c(6819, 51423),
@@ -335,13 +360,9 @@ test_that("weather (invalid_interval) verifies error return when interval is inv
       end = "2018-05-01",
       interval = "invalid_interval"
     ),
-    "'interval' must be either 'hour', 'day', OR 'month'"
+    "'interval' can only have 1 of 'hour', 'day', or 'month'"
   )
-})
 
-test_that("weather (too_large_interval_length) verifies error return when interval character vector length is greather than 1", {
-  # The values of interval are valid, but there are too many
-  skip_on_cran()
   expect_error(
     weather_dl(
       c(6819, 51423),
@@ -349,6 +370,34 @@ test_that("weather (too_large_interval_length) verifies error return when interv
       end = "2018-05-01",
       interval = c("hour", "day")
     ),
-    "'interval' must be either 'hour', 'day', OR 'month'"
+    "'interval' can only have 1 of 'hour', 'day', or 'month'"
+  )
+})
+
+test_that("list_col=TRUE", {
+  skip_on_cran()
+  withr::local_options(list(
+    "weathercan.time.message" = TRUE,
+    "weathercan.verbosity" = "quiet"
+  ))
+
+  # Cached
+  expect_equal(
+    ncol(
+      weather_dl(
+        station_ids = 51423,
+        start = "2014-01-01",
+        end = "2014-01-15",
+        interval = "day"
+      ) |>
+        tidyr::nest(data = c(-dplyr::any_of(c(names(m_names), "date"))))
+    ),
+    ncol(weather_dl(
+      station_ids = 51423,
+      start = "2014-01-01",
+      end = "2014-01-15",
+      interval = "day",
+      list_col = TRUE
+    ))
   )
 })

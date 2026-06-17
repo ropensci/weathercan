@@ -1,24 +1,5 @@
 # normals_html() ------------------------------------------------------------
 
-test_that("normals_html() correctly retrieves request 1991-2020", {
-  skip("New normals not ready yet")
-  skip_on_cran()
-  skip_if_offline()
-
-  expect_silent(
-    nd <- normals_html(
-      station_id = 3471,
-      climate_id = "5010480",
-      normals_years = "1991-2020",
-      prov = "MB"
-    )
-  )
-
-  expect_s3_class(nd, "response")
-  expect_false(httr::http_error(nd))
-  expect_gt(length(nd$content), 10000)
-})
-
 test_that("normals_html() correctly retrieves request 1981-2010", {
   skip_on_cran()
   skip_if_offline()
@@ -31,9 +12,9 @@ test_that("normals_html() correctly retrieves request 1981-2010", {
       prov = "MB"
     )
   )
-  expect_s3_class(nd, "response")
-  expect_false(httr::http_error(nd))
-  expect_gt(length(nd$content), 10000)
+  expect_s3_class(nd, "httr2_response")
+  expect_false(httr2::resp_is_error(nd))
+  expect_gt(httr2::resp_body_raw(nd) |> length(), 10000)
 })
 
 test_that("normals_html() correctly retrieves request 1971-2000", {
@@ -47,31 +28,10 @@ test_that("normals_html() correctly retrieves request 1971-2000", {
       prov = "MB"
     )
   )
-  expect_s3_class(nd, "response")
-  expect_false(httr::http_error(nd))
-  expect_gt(length(nd$content), 10000)
+  expect_s3_class(nd, "httr2_response")
+  expect_false(httr2::resp_is_error(nd))
+  expect_gt(httr2::resp_body_raw(nd) |> length(), 10000)
 })
-
-# Proper error when 404
-test_that("normals_html() errors", {
-  skip_on_cran()
-
-  memoise::forget(normals_html) # Reset cache so we can test a different url
-  bkup <- getOption("weathercan.urls.normals")
-  options(weathercan.urls.normals = "https://httpbin.org/status/404")
-  expect_error(
-    normals_html(
-      prov = "MB",
-      station_id = 3471,
-      climate_id = "5010480",
-      normals_years = "1981-2010"
-    ),
-    "Failed to access",
-    class = "http_error"
-  )
-  options(weathercan.urls.normals = bkup)
-})
-
 
 # normals_raw() -------------------------------------------------------------
 test_that("normals_raw() extracts normals as character", {
@@ -88,7 +48,7 @@ test_that("normals_raw() extracts normals as character", {
     )
   )
 
-  expect_silent(nd <- normals_raw(nd)) %>%
+  expect_silent(nd <- normals_raw(nd)) |>
     expect_type("character")
   expect_false(any(stringr::str_detect(nd, "[^\001-\177]")))
 
@@ -102,7 +62,7 @@ test_that("normals_raw() extracts normals as character", {
     )
   )
 
-  expect_silent(nd <- normals_raw(nd)) %>%
+  expect_silent(nd <- normals_raw(nd)) |>
     expect_type("character")
   expect_false(any(stringr::str_detect(nd, "[^\001-\177]")))
 })
@@ -125,7 +85,7 @@ test_that("normals_extract() cleans up raw data", {
 
   n <- normals_raw(nd)
 
-  expect_silent(n1 <- normals_extract(n)) %>%
+  expect_silent(n1 <- normals_extract(n)) |>
     expect_type("character")
   expect_lt(length(n1), length(n))
   expect_true(stringr::str_detect(n1[1], "Jan"))
@@ -142,7 +102,7 @@ test_that("normals_extract() cleans up raw data", {
 
   n <- normals_raw(nd)
 
-  expect_silent(n1 <- normals_extract(n)) %>%
+  expect_silent(n1 <- normals_extract(n)) |>
     expect_type("character")
   expect_lt(length(n1), length(n))
   expect_true(stringr::str_detect(n1[1], "Jan"))
@@ -164,13 +124,13 @@ test_that("data_extract() / frost_extract() extract data", {
     )
   )
 
-  n <- nd %>%
-    normals_raw() %>%
+  n <- nd |>
+    normals_raw() |>
     normals_extract()
 
-  expect_silent(data_extract(n, climate_id = "5010480")) %>%
+  expect_silent(data_extract(n, climate_id = "5010480")) |>
     expect_s3_class("data.frame")
-  expect_silent(frost_extract(n, climate_id = "5010480")) %>%
+  expect_silent(frost_extract(n, climate_id = "5010480")) |>
     expect_s3_class("data.frame")
 
   # 1971-2000
@@ -183,13 +143,13 @@ test_that("data_extract() / frost_extract() extract data", {
     )
   )
 
-  n <- nd %>%
-    normals_raw() %>%
+  n <- nd |>
+    normals_raw() |>
     normals_extract()
 
-  expect_silent(data_extract(n, climate_id = "5010480")) %>%
+  expect_silent(data_extract(n, climate_id = "5010480")) |>
     expect_s3_class("data.frame")
-  expect_silent(frost_extract(n, climate_id = "5010480")) %>%
+  expect_silent(frost_extract(n, climate_id = "5010480")) |>
     expect_s3_class("data.frame")
 })
 
@@ -209,20 +169,20 @@ test_that("normals_format()/frost_format() format data to correct class", {
     )
   )
 
-  n <- nd %>%
-    normals_raw() %>%
+  n <- nd |>
+    normals_raw() |>
     normals_extract()
 
   expect_silent(f <- frost_extract(n, climate_id = "5010480"))
   expect_silent(n <- data_extract(n, climate_id = "5010480"))
 
-  expect_silent(n_fmt <- data_format(n)) %>%
+  expect_silent(n_fmt <- data_format(n)) |>
     expect_s3_class("data.frame")
   expect_type(n_fmt[["temp_daily_average"]], "double")
   expect_s3_class(n_fmt[["temp_extreme_max_date"]], "Date")
   expect_type(n_fmt[["wind_dir"]], "character")
 
-  expect_silent(f_fmt <- frost_format(f)) %>%
+  expect_silent(f_fmt <- frost_format(f)) |>
     expect_s3_class("data.frame")
   expect_type(f_fmt[["date_first_fall_frost"]], "double")
   expect_type(f_fmt[["prob_first_fall_temp_below_0_on_date"]], "double")
@@ -238,20 +198,20 @@ test_that("normals_format()/frost_format() format data to correct class", {
     )
   )
 
-  n <- nd %>%
-    normals_raw() %>%
+  n <- nd |>
+    normals_raw() |>
     normals_extract()
 
   expect_silent(f <- frost_extract(n, climate_id = "5010480"))
   expect_silent(n <- data_extract(n, climate_id = "5010480"))
 
-  expect_silent(n_fmt <- data_format(n)) %>%
+  expect_silent(n_fmt <- data_format(n)) |>
     expect_s3_class("data.frame")
   expect_type(n_fmt[["temp_daily_average"]], "double")
   expect_s3_class(n_fmt[["temp_extreme_max_date"]], "Date")
   expect_type(n_fmt[["wind_dir"]], "character")
 
-  expect_silent(f_fmt <- frost_format(f)) %>%
+  expect_silent(f_fmt <- frost_format(f)) |>
     expect_s3_class("data.frame")
   expect_length(f_fmt[["date_first_fall_frost"]], 0)
   expect_length(f_fmt[["prob_first_fall_temp_below_0_on_date"]], 0)
@@ -260,66 +220,33 @@ test_that("normals_format()/frost_format() format data to correct class", {
 
 
 # normals_dl() ------------------------------------------------------------
-test_that("normals_dl() downloads normals/frost dates as tibble - single", {
+test_that("normals_dl() - single - 1981", {
   skip_on_cran()
   skip_if_offline()
 
   memoise::forget(normals_html) # Reset cache so we can test fully
 
-  # 1981-2010
+  # Message caught in test_00_onLoad.R
   expect_silent(
-    nd1 <- normals_dl(climate_id = "5010480", normals_years = "1981-2010")
-  ) %>%
-    expect_s3_class("tbl_df")
-
-  # 1971-2000
-  expect_silent(
-    nd2 <- normals_dl(climate_id = "5010480", normals_years = "1971-2000")
-  ) %>%
-    expect_s3_class("tbl_df")
-
-  expect_snapshot_value(nd1, style = "json2", tolerance = 0.001)
-  expect_snapshot_value(nd2, style = "json2", tolerance = 0.001)
-
-  skip("New normals not ready yet")
-  # 1991-2020
-  expect_silent(
-    nd1 <- normals_dl(climate_id = "5010480", normals_years = "1991-2020")
-  ) %>%
-    expect_s3_class("tbl_df")
+    nd <- normals_dl(climate_id = "5010480", normals_years = "1981-2010")
+  )
+  expect_s3_class(nd, "tbl_df")
+  expect_snapshot_value(nd, style = "json2", tolerance = 0.001)
 })
 
-test_that("normals_dl() downloads normals/frost dates as tibble - multi 1991", {
-  skip("New normals not ready yet")
+test_that("normals_dl() - single - 1971", {
   skip_on_cran()
   skip_if_offline()
+  memoise::forget(normals_html) # Reset cache so we can test fully
 
   expect_silent(
-    nd <- normals_dl(
-      climate_id = c("2403500", "5010480", "1096450"),
-      normals_years = "1991-2020"
-    )
-  ) %>%
-    expect_s3_class("tbl_df")
-
-  expect_equal(nrow(nd), 3)
-  expect_s3_class(tidyr::unnest(nd, normals), "data.frame")
-  expect_s3_class(tidyr::unnest(nd, frost), "data.frame")
-  expect_length(
-    tidyr::unnest(nd, normals) %>%
-      dplyr::pull(climate_id) %>%
-      unique(),
-    3
+    nd <- normals_dl(climate_id = "5010480", normals_years = "1971-2000")
   )
-  expect_length(
-    tidyr::unnest(nd, frost) %>%
-      dplyr::pull(climate_id) %>%
-      unique(),
-    0
-  )
+  expect_s3_class(nd, "tbl_df")
+  expect_snapshot_value(nd, style = "json2", tolerance = 0.001)
 })
 
-test_that("normals_dl() downloads normals/frost dates as tibble - multi 1981", {
+test_that("normals_dl() - multi 1981", {
   skip_on_cran()
   skip_if_offline()
 
@@ -328,27 +255,27 @@ test_that("normals_dl() downloads normals/frost dates as tibble - multi 1981", {
       climate_id = c("2403500", "5010480", "1096450"),
       normals_years = "1981-2010"
     )
-  ) %>%
+  ) |>
     expect_s3_class("tbl_df")
 
   expect_equal(nrow(nd), 3)
   expect_s3_class(tidyr::unnest(nd, normals), "data.frame")
   expect_s3_class(tidyr::unnest(nd, frost), "data.frame")
   expect_length(
-    tidyr::unnest(nd, normals) %>%
-      dplyr::pull(climate_id) %>%
+    tidyr::unnest(nd, normals) |>
+      dplyr::pull(climate_id) |>
       unique(),
     3
   )
   expect_length(
-    tidyr::unnest(nd, frost) %>%
-      dplyr::pull(climate_id) %>%
+    tidyr::unnest(nd, frost) |>
+      dplyr::pull(climate_id) |>
       unique(),
     3
   )
 })
 
-test_that("normals_dl() downloads normals/frost dates as tibble - multi 1971", {
+test_that("normals_dl() - multi 1971", {
   skip_on_cran()
   skip_if_offline()
 
@@ -357,29 +284,24 @@ test_that("normals_dl() downloads normals/frost dates as tibble - multi 1971", {
       climate_id = c("2403500", "5010480", "1096450"),
       normals_years = "1971-2000"
     )
-  ) %>%
+  ) |>
     expect_s3_class("tbl_df")
 
   expect_equal(nrow(nd), 3)
   expect_s3_class(tidyr::unnest(nd, normals), "data.frame")
   expect_s3_class(tidyr::unnest(nd, frost), "data.frame")
   expect_length(
-    tidyr::unnest(nd, normals) %>%
-      dplyr::pull(climate_id) %>%
+    tidyr::unnest(nd, normals) |>
+      dplyr::pull(climate_id) |>
       unique(),
     3
   )
   expect_length(
-    tidyr::unnest(nd, frost) %>%
-      dplyr::pull(climate_id) %>%
+    tidyr::unnest(nd, frost) |>
+      dplyr::pull(climate_id) |>
       unique(),
     0
   )
-})
-
-test_that("normals_dl() stops if stn argument is provided", {
-  expect_error(normals_dl(stn = "BRANDON A"))
-  expect_error(normals_dl(stn = ""))
 })
 
 test_that("normals_dl() stops if climate normals are not available for stations", {
@@ -403,29 +325,43 @@ test_that("normals_dl() messages if climate normals are not available some stati
 })
 
 
+test_that("normals_dl() messages if using 'measurement_type' for old normals", {
+  skip_on_cran()
+  skip_if_offline()
+
+  expect_message(
+    normals_dl(
+      climate_ids = c("301AR54", "2100685", "301B8LR"),
+      normals_years = "1971-2000",
+      measurement_type = "Temperature"
+    ),
+    "The argument `measurement_type` is only used for 'new' normals"
+  ) |>
+    suppressMessages()
+})
+
+
 # Bug fixes ------------------------------------------------------------------
 # Fix issue #106 - Added (C) to extreme wind chill
 test_that("normals_dl() gets extreme wind chill correctly", {
   skip_on_cran()
   skip_if_offline()
 
-  expect_message(nd <- normals_dl(climate_id = "2100517"), "current normals")
+  expect_silent(
+    nd <- normals_dl(climate_id = "2100517", normals_years = "1981-2010")
+  )
   expect_s3_class(nd, "tbl_df")
 })
 
 test_that("normals_dl() multiple weird stations", {
   skip_on_cran()
   skip_if_offline()
-  expect_message(
-    nd <- normals_dl(climate_ids = c("301C3D4", "301FFNJ", "301N49A")),
-    "current normals"
+  expect_silent(
+    nd <- normals_dl(
+      climate_ids = c("301C3D4", "301FFNJ", "301N49A"),
+      normals_years = "1981-2010"
+    )
   )
 
   expect_snapshot_value(nd, style = "json2", tolerance = 0.001)
-})
-test_that("normals_dl validates normals_years", {
-  expect_error(
-    normals_dl("5010480", normals_years = "abcd"),
-    "'normals_years' must be either 'current' or a text string in the format YYYY-YYYY e.g., '1981-2010'"
-  )
 })
