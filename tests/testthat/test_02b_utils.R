@@ -14,6 +14,7 @@ test_that("check_int() as expected", {
 })
 
 test_that("check_ids() as expected", {
+  stations() # Make sure we have the stations data set downloaded
   expect_silent(check_ids(1795, stations(), type = "station_id"))
   expect_silent(check_ids("301AR54", stations(), type = "climate_id"))
   expect_error(check_ids(1, stations(), type = "station_id"))
