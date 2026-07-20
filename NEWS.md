@@ -1,3 +1,7 @@
+# weathercan 1.0.1
+
+- Add request url to error message for easier debugging (#216)
+
 # weathercan 1.0.0
 
 - Fix ECCC change to normals download query parameters again (#207)

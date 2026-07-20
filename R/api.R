@@ -69,7 +69,8 @@ get_check <- function(url, query = NULL) {
     wc_stop(
       "API could not fetch data with this query\n",
       "Please, open an issue on https://github.com/ropensci/weathercan/issues and share ",
-      "the details of your attempted download."
+      "the details of your attempted download: ",
+      req$request$url
     )
   }
   req
